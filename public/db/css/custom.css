@@ -1,0 +1,28 @@
+.actions{
+	text-align: right;
+	float: right;
+	margin-right: 20px;
+}
+.actions ul li{
+	float: left;
+	margin-right: 10px;
+}
+.actions ul li a{
+	box-shadow: 0 3px 0 0 #117b66;
+	    color: #FFF;
+    background-color: #17A88B;
+    border-color: #17A88B;
+    padding: 10px 20px;
+    font-size: 16px;
+    outline: 0 !important;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+.tabcontrol > .content {
+    
+    height: 20em;
+    
+}

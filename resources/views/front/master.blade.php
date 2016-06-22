@@ -5,6 +5,8 @@
     </head>
     <body>
         <div class="container">
+            @include('inc.frontheader')
+            @include('inc.search')
             @yield('content')
         </div>
         @yield('scripts')

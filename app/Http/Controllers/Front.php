@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\listings;
+use App\Categories;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,23 +14,22 @@ use Illuminate\Support\Facades\Auth;
 
 use DB;
 use Illuminate\Routing\Controller;
-use App\listings;
 
 class Front extends Controller {
     //Front end Controller
     public function index() {
         // return 'index page';
-        $listings = DB::table('listings')->orderBy('createdAt', 'desc')->paginate(16);
-        return view('welcome', ['listings' => $listings]);
+        $listings = DB::table('listings')->orderBy('created_at', 'desc')->take(8)->get();
+        return view('index', ['listings' => $listings]);
     }
 
     public function products() {
-        $listings = DB::table('listings')->orderBy('createdAt', 'desc')->paginate(16);
+        $listings = DB::table('listings')->orderBy('created_at', 'desc')->paginate(16);
         return view('listings', ['listings' => $listings]);
     }
 
     public function product_details($id) {
-        return 'product details page';
+        return 'product details page' . $id;
     }
 
     public function categories() {
@@ -35,7 +37,15 @@ class Front extends Controller {
     }
 
     public function product_categories($id) {
-        return 'product categories page';
+        $cat = DB::table('categories')
+        ->where('slug',$id)
+        ->first();
+        // var_dump($cat);
+        $catID = $cat->id;
+        $listings = DB::table('listings')
+        ->where('categoryId', $catID)
+        ->paginate(16);
+        return view('category', ['cat' => $cat, 'listings' => $listings]);
     }
 
     public function product_brands($name) {
@@ -47,21 +57,22 @@ class Front extends Controller {
     }
 
     public function login() {
-        return view('login');
-    }
-
-    public function logout() {
-        return 'logout page';
+        return view('auth.login');
     }
 
     public function search() {
         $search = \Request::get('search');
         $search = urldecode($search);
 
+        $search_arr = array();
+        $search_arr[] = ['title','like','%'.$search.'%'];
+        $search_arr[] = ['description','like','%'.$search.'%'];
+
+        // var_dump($search_arr);
+
         $listings = DB::table('listings')
-        ->where('description','like','%'.$search.'%')
-        ->where('description','like','%'.$search.'%')
-        ->orderBy('createdAt', 'desc')
+        ->where($search_arr)
+        ->orderBy('created_at', 'desc')
         ->paginate(8);
         $listings->setPath('?search='.$search);
 

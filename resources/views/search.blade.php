@@ -9,9 +9,6 @@
 @section('content')
 
     <div class="panel panel-default">
-
-        @include('inc.search')
-
         <table class="table table-bordered table-hover" >
             <thead>
                 <th>Name</th>
@@ -32,7 +29,7 @@
                         ?>
                     </td>
                     <td>
-                        <img src="{{ $list->mainImageUrl }}" width="150" alt="{{ $list->title }}" />
+                        <img src="{{ func::img_url($list->mainImageUrl, 150, 200) }}" width="150" alt="{{ $list->title }}" />
                     </td>
                 </tr>
                 @endforeach

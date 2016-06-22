@@ -16,13 +16,13 @@ Route::get('/','Front@index');
 Route::get('/listings','Front@products');
 Route::get('/listing/{id}','Front@product_details');
 Route::get('/categories','Front@categories');
-Route::get('/categories/{id}','Front@product_categories');
+Route::get('/category/{id}','Front@product_categories');
 Route::get('/products/brands/{name}','Front@product_brands');
 // Route::get('/blog','Front@blog');
 // Route::get('/blog/post/{id}','Front@blog_post');
 Route::get('/contact-us','Front@contact_us');
 Route::get('/login','Front@login');
-Route::post('/login','Front@authenticate');
+Route::post('/login','LuxifyAuth@authenticate');
 Route::get('/logout','Front@logout');
 Route::get('/search','Front@search');
 
@@ -38,7 +38,19 @@ Route::get('/panel/products/add','Panel@products_add');
 Route::get('/panel/products/edit','Panel@products_edit');
 Route::get('/panel/products/delete/{id}','Panel@products_delete');
 Route::get('/panel/products/confirm','Panel@products_confirm');
+Route::get('/panel/categories/rebuild','Panel@cat_rebuild');
+Route::get('/panel/listings/rebuild','Panel@listing_rebuild');
 
 //routes for social oauth login/signup
 Route::get('/oauth/redirect/facebook', 'SocialAuthController@fb_redirect');
 Route::get('/oauth/callback/facebook', 'SocialAuthController@fb_callback');
+
+//routes for dashboard
+Route::get('/dashboard', 'Dashboard@index');
+Route::get('/dashboard/profile', 'Dashboard@profile');
+Route::post('/dashboard/profile', 'Dashboard@profile_update');
+Route::get('/dashboard/wishlist', 'Dashboard@wishlist');
+
+// Route::auth();
+
+Route::get('/home', 'HomeController@index');

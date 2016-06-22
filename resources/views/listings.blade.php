@@ -14,7 +14,7 @@
                                         <h3>{{ $list->title }}</h3>
                                     </a>
                                     <a href="/listing/{{ $list->id }}">
-                                        <img src="{{ $list->mainImageUrl }}" width="200" />
+                                        <img src="{{ func::img_url($list->mainImageUrl, 120, 120) }}" alt="{{ $list->title }}" />
                                     </a>
                                 </li>
                             @endforeach

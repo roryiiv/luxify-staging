@@ -51,7 +51,7 @@ class AuthController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'hashedPassword' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -66,7 +66,17 @@ class AuthController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'hashedPassword' => $data['hashedPassword'],
         ]);
+    }
+
+    protected function getCredentials(Request $request)
+    {
+        return $request->only($this->loginUsername(), 'hashedPassword');
+    }
+
+    public function loginUsername()
+    {
+        return property_exists($this, 'email') ? $this->tg_user_name : 'email';
     }
 }
