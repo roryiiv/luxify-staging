@@ -79,7 +79,6 @@
             var email = $('input#email').val(), pass = $('input#password').val();
             var token = $('input[name=_token]').val();
             var dataA = {email: email, action: 'get_email'};
-            console.log(email);
 
             // prepping first AJAX call
             $.ajax({
@@ -90,18 +89,16 @@
                 // contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(data){
-                    console.log(data);
-                    var hashed = encryptPassword(pass, data);
+                  if (data.result) {
+                    var hashed = encrypt.password(pass, data.salt);
                     $('input#action').val('login');
-                    $('input#salt').val(data);
+                    $('input#salt').val(data.salt);
                     $('input#hashed').val(hashed);
-                    // This function is put here to check hashed output if something goes wrong
-                    // console.log(hashed);
-                    // return false;
                     $('form[name="form_login"]').submit();
+                  }
                 },
                 failure: function(errMsg){
-                    alert(errMsg);
+                  alert(errMsg);
                 }
           });
             return false;

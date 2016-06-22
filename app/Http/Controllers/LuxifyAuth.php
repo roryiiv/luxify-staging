@@ -23,10 +23,15 @@ class LuxifyAuth extends Controller
             switch($action){
                 case 'get_email':
                     $email = $_POST['email'];
-                    $salt = User::select('salt')
+                    $user= User::select('salt')
                     ->where('email', $email)
                     ->first();
-                    echo json_encode($salt->salt);
+                    // validate the user can be found by email
+                    if ($user) {
+                      echo json_encode((object) ['result'=> 1, 'salt' => $user->salt]);
+                    } else {
+                      echo json_encode((object) ['result' => 0, 'message'=> 'Email not exists.']);
+                    }
                     exit();
                 break;
                 case 'login':
@@ -37,11 +42,11 @@ class LuxifyAuth extends Controller
 
                     $auth = User::where('email', '=', $email)->where('hashedPassword', '=', $password)->where('salt', '=', $salt)->first();
 
-                    if($auth){
+                    if($auth) {
                         // Authentication passed...
                         Auth::login($auth);
-                        // var_dump(Auth::user()); var_dump(Auth::user()->role); exit();
                         $role = Auth::user()->role;
+                        // var_dump(Auth::user()); var_dump(Auth::user()->role); exit();
                         switch($role){
                             case 'admin':
                             return redirect()->intended('/panel');
@@ -61,6 +66,32 @@ class LuxifyAuth extends Controller
 
         }
 
+    }
+    public function register() {
+      $email = $_POST['email'];      
+      $fullname = $_POST['fullname'];      
+      $hashed = $_POST['hashed'];
+      $salt= $_POST['salt'];
+      $password = $_POST['password'];
+      $password_confirmation = $_POST['password_confirmation'];
+      if ($password ===  $password_confirmation) {
+        $newUser = new User;
+        $newUser->hashedPassword = $hashed;
+        $newUser->salt = $salt;
+        $newUser->fullName = $fullname;
+        $newUser->email = $email;
+        $newUser->save();
+        if ($newUser->id ) {
+          return redirect()->intended('/dashboard/profile');
+        } else {
+          return redirect()->intended('/login');
+        }
+      } else {
+        //return redirect()->intended('/register'); 
+        return view('auth.register');
+      }
+      
+    
     }
 
     public function logout() {

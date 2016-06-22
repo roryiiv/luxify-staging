@@ -26,20 +26,6 @@
     <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
 @endsection
 
-@section('sidebar')
-    @if (Auth::user())
-        @if(Auth::user()->role == 'user')
-            @include('inc.db-sidebar-user')
-        @elseif(Auth::user()->role == 'seller')
-            @include('inc.db-sidebar-seller')
-        @else
-            @include('inc.db-sidebar-user')
-        @endif
-    @else
-        @include('inc.db-sidebar-user')
-    @endif
-@endsection
-
 @section('content')
     <div class="page-container">
             <div class="page-header clearfix">

@@ -15,9 +15,12 @@ Use DB;
 class Dashboard extends Controller
 {
     public function __construct() {
+        $this->middleware('auth'); // make sure no guests
+
         $this->user_id = 585;
         if(Auth::user()){
             $this->user_id = Auth::user()->id;
+            $this->user_role = Auth::user()->role;
         }
     }
     /**
@@ -26,7 +29,13 @@ class Dashboard extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('home');
+        if($this->user_role == 'seller'){
+            return view('home');
+        }elseif($this->user_role == 'user'){
+            return redirect('/dashboard/profile');
+        }else{
+            return view('home');
+        }
     }
 
     public function profile() {

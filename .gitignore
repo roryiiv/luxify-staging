@@ -6,4 +6,6 @@ Homestead.yaml
 Homestead.json
 .env
 .env.example
+*.swp
+*.zip
 

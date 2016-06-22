@@ -7,13 +7,14 @@ $(document).ready(function() {
             color: $("#inputBackgroundEvent").val()
         }, !0)
     }
+    var notifs = $('#num_notif').text();
     toastr.options = {
         closeButton: !0,
         progressBar: !0,
         showMethod: "fadeIn",
         hideMethod: "fadeOut",
         timeOut: 5e3
-    }, toastr.info("You have 6 notifications", "Welcome to Luxify"), $(".counter").counterUp({
+    }, toastr.info("You have "+notifs+" notifications", "Welcome to Luxify"), $(".counter").counterUp({
         delay: 10,
         time: 1e3
     });
@@ -131,7 +132,7 @@ $(document).ready(function() {
             earnings: "225"
         }, {
             latLng: [.33, 6.73],
-            name: "São Tomé and Príncipe",
+            name: "SÃ£o TomÃ© and PrÃ­ncipe",
             earnings: "150"
         }];
     $("#world-map").vectorMap({

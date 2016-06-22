@@ -21,9 +21,11 @@ Route::get('/products/brands/{name}','Front@product_brands');
 // Route::get('/blog','Front@blog');
 // Route::get('/blog/post/{id}','Front@blog_post');
 Route::get('/contact-us','Front@contact_us');
+Route::get('/register','Front@register');
+Route::post('/register','LuxifyAuth@register');
 Route::get('/login','Front@login');
 Route::post('/login','LuxifyAuth@authenticate');
-Route::get('/logout','Front@logout');
+Route::get('/logout','LuxifyAuth@logout');
 Route::get('/search','Front@search');
 
 //Panel (super admin) Routes

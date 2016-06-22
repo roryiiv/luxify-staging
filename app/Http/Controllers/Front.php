@@ -55,7 +55,9 @@ class Front extends Controller {
     public function contact_us() {
         return 'contact us page';
     }
-
+    public function register() {
+      return view('auth.register');
+    }
     public function login() {
         return view('auth.login');
     }

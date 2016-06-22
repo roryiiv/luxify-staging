@@ -6,6 +6,10 @@ use App\MyLibrary\Functions;
 
 use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+
 use DB;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
         $nav_array = $this->build_navigations($categories);
 
         view()->share('nav_array', $nav_array);
+
+        // $notifs = func::get_notif();
+        // view()->share('notifs', $notifs);
+
     }
 
     /**
