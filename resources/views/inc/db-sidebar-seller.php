@@ -13,8 +13,8 @@
         <li><a href="/dashboard/mailbox" class="bubble"><i class="ti-email"></i><span class="sidebar-title">Inquires</span><span class="badge bg-danger">9</span></a></li>
         <li class="panel"><a role="button" data-toggle="collapse" data-parent=".navigation" href="index.html#collapse18" aria-expanded="false" aria-controls="collapse18" class="collapsed"><i class="ti-shopping-cart"></i><span class="sidebar-title">Products</span></a>
             <ul id="collapse18" class="list-unstyled collapse">
-                <li><a href="/dashboard/viewproduct">Product list</a></li>
-                <li><a href="/dashboard/addproduct">Add product</a></li>
+                <li><a href="/dashboard/products">Product list</a></li>
+                <li><a href="/dashboard/products/add">Add product</a></li>
             </ul>
         </li>
         <li class="sidebar-category">Coming Soon</li>

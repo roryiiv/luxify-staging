@@ -10,6 +10,8 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+// Ajax endpoints
+Route::get('/api/category/{catId}/fields', 'Front@categories_optional_fields');
 
 //Front end Routes
 Route::get('/','Front@index');
@@ -27,17 +29,21 @@ Route::get('/login','Front@login');
 Route::post('/login','LuxifyAuth@authenticate');
 Route::get('/logout','LuxifyAuth@logout');
 Route::get('/search','Front@search');
+//Route::get('/build', 'Front@build');
 
 //Panel (super admin) Routes
 Route::get('/panel','Panel@index');
 Route::get('/panel/users','Panel@users');
-Route::get('/panel/users/add','Panel@user_add');
-Route::get('/panel/users/edit','Panel@user_edit');
-Route::get('/panel/users/confirm','Panel@user_confirm');
-Route::get('/panel/users/delete/{user_id}','Panel@user_delete');
+Route::get('/panel/user/add/{role}','Panel@user_add');
+Route::get('/panel/user/edit/{id}','Panel@user_edit');
+Route::post('/panel/add/user/register','Panel@user_register');
+Route::post('/panel/user/update','Panel@user_update');
+Route::post('/panel/upload','Panel@upload');
+Route::get('/panel/user/confirm','Panel@user_confirm');
+Route::get('/panel/user/delete/{id}','Panel@user_delete');
 Route::get('/panel/products','Panel@products');
 Route::get('/panel/products/add','Panel@products_add');
-Route::get('/panel/products/edit','Panel@products_edit');
+Route::get('/panel/products/edit/{id}','Panel@products_edit');
 Route::get('/panel/products/delete/{id}','Panel@products_delete');
 Route::get('/panel/products/confirm','Panel@products_confirm');
 Route::get('/panel/categories/rebuild','Panel@cat_rebuild');
@@ -51,7 +57,12 @@ Route::get('/oauth/callback/facebook', 'SocialAuthController@fb_callback');
 Route::get('/dashboard', 'Dashboard@index');
 Route::get('/dashboard/profile', 'Dashboard@profile');
 Route::post('/dashboard/profile', 'Dashboard@profile_update');
+Route::get('/dashboard/mailbox', 'Dashboard@mailbox');
 Route::get('/dashboard/wishlist', 'Dashboard@wishlist');
+Route::get('/dashboard/products', 'Dashboard@products');
+Route::get('/dashboard/products/add', 'Dashboard@products_add');
+Route::get('/dashboard/mailbox', 'Dashboard@mailbox');
+Route::post('/upload', 'Dashboard@single_upload');
 
 // Route::auth();
 

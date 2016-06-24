@@ -6,6 +6,7 @@ Use DB;
 Use Auth;
 
 use App\User;
+use App\Categories;
 
 class Functions
 {
@@ -13,8 +14,13 @@ class Functions
         return strtoupper($string);
     }
 
-    static function img_url($url, $width = 180, $height = 180){
-        $processor = 'http://images.luxify.com/'. $width .'x'. $height .'/https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
+    static function img_url($url, $width = '', $height = ''){
+        $processor = '';
+        $processor .= 'http://images.luxify.com/';
+        $processor .= !empty($width) ? $width : '';
+        $processor .= !empty($width) && !empty($height) ? 'x' : '';
+        $processor .= !empty($height) ? $height : '';
+        $processor .= '/https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
         $return = $processor . $url;
         return $return;
     }
@@ -29,16 +35,27 @@ class Functions
                     $children = $element['children'];
                     if(count($children) > 0 ){
                         Functions::build_menu($children);
-                    }
+                    } 
                 }
             }
             ?>
         </ul>
         <?php
     }
+    public static function build_categories($mode = 'all') {
+      if ($mode === 'root') {
+        return Categories::root()->orderBy('displayOrder')->get()->toArray();
+      } else if ($mode === 'leaf') {
+        return Categories::leaf()->orderBy('hierarchy')->get()->toArray();
+      } else {
+        return Categories::all()->toArray();
+      }
+    }
 
     public static function build_countries(){
-        $country_list = DB::table('countries')->get();
+        $country_list = DB::table('countries')
+        ->orderby('name', 'asc')
+        ->get();
         if(is_array($country_list)){
             $return = array();
             for ($x = 0; $x < count($country_list); $x++) {
@@ -68,6 +85,8 @@ class Functions
             for ($x = 0; $x < count($curr); $x++) {
                 $return[$x]['val'] = $curr[$x]->id;
                 $return[$x]['label'] = $curr[$x]->name;
+                $return[$x]['code'] = $curr[$x]->code;
+
             }
         }
         return $return;
@@ -129,5 +148,37 @@ class Functions
         }
         return $retval;
     }
+    /*
+    public static function leafNode() {
+      $allCats = Categories::all()->toArray();
+      for ( $i = 0; $i < count($allCats); $i++) {
+        $children = DB::table('categoryOrganisations')->where('categoryId', $allCats[$i]['id'])->count(); 
+        if($children === 0) {
+          DB::table('categories')->where('id', $allCats[$i]['id'])->update(['leaf' => 1]); 
+        } else {
+          DB::table('categories')->where('id', $allCats[$i]['id'])->update(['leaf' => 0]); 
+        }
+      }
+    }
+    public static function build_hierarchy() {
+      $allCats = Categories::all()->toArray();
+      for($i = 0; $i < count($allCats); $i++) {
+        $hier = '';
+        if ($allCats[$i]['hierarchy'] === NULL && $allCats[$i]['ParentId'] === NULL) {
+          DB::table('categories')->where('id', $allCats[$i]['id'])->update(['hierarchy' => $allCats[$i]['title']]);
+          $hier = $allCats[$i]['title'];
+        } else {
+          $hier = $allCats[$i]['hierarchy']; 
+        }
+        $children = DB::table('categoryOrganisations')->where('categoryId', $allCats[$i]['id'])->get();
+        for ($h = 0; $h < count($children); $h++) {
+          $subCat = DB::table('categories')->where('id', $children[$h]->SubCategoryId)->first();
+          DB::table('categories')->where('id', $children[$h]->SubCategoryId)->update(['hierarchy' => $hier .' / '. $subCat->title]);
+        }
+        
+      
+      }
+    }
+    */
 }
 ?>

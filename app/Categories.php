@@ -34,6 +34,16 @@ class Categories extends Model
     {
         return 'slug';
     }
+    
+    public function scopeRoot($query)
+    {
+        return $query->whereNull('parentId');
+    }
 
-    public $timestamps  = false;
+    public function scopeLeaf($query)
+    {
+        return $query->where('leaf', 1);
+    }
+
+    public $timestamps = false;
 }

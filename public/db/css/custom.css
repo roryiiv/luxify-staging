@@ -22,7 +22,10 @@
     margin-bottom: 10px;
 }
 .tabcontrol > .content {
-    
-    height: 20em;
-    
+    height: 35em;
+}
+
+.steps ul[role=tablist] li.disabled a {
+    color: #949494;
+    background-color: #f5f5f5;
 }
