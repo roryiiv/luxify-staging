@@ -92,11 +92,13 @@ $(document).ready(function () {
     }), $(".demo i").click(function () {
         $(this).parent().find("input").click()
     }), $("#startDate").daterangepicker({
-        format: "YYYY-MM-DD",
+        locale: {
+          format: "YYYY-MM-DD"
+        },
         singleDatePicker: !0
-        , startDate: moment().subtract(6, "days")
+        //, startDate: moment()
     }), $("#endDate").daterangepicker({
         singleDatePicker: !0
-        , startDate: moment()
+        //, startDate: moment()
     }), updateConfig()
 });

@@ -25,12 +25,13 @@ $(document).ready(function () {
       },
       onFinishing: function (event, currentIndex) {
         swal({
-          title: "Good job!", 
-          text: "You have updated the settings",
+          title: "New Listing Created!", 
+          text: "Admin will review your listing soon.",
           type: "success",
           confirmButtonClass: "btn-raised btn-success",
           confirmButtonText: "OK"
-        })
+        });
+        addProductForm.submit();
         return true;
       },
       labels: {
@@ -44,6 +45,45 @@ $(document).ready(function () {
         }
     }
 });
+  
+  
+  var editProductForm = $('#form-tabs_edit_product').show();
+    editProductForm.steps({
+      headerTag: "h3", 
+      bodyTag: "fieldset",
+      transitionEffect: "slideLeft",
+      enableFinishButton: true,
+      enablePagination: true,
+      enableAllSteps: true,
+      showFinishButtonAlways: true,
+      titleTemplate: "#title#",
+      cssClass: "tabcontrol",
+      saveState: true,
+      onStepChanging: function (event, curIdx, newIdx) {
+        return editProductForm.valid();
+      },
+      onFinishing: function (event, currentIndex) {
+        swal({
+          title: "Good job!", 
+          text: "You have updated the listing.",
+          type: "success",
+          confirmButtonClass: "btn-raised btn-success",
+          confirmButtonText: "OK"
+        });
+        editProductForm.submit();
+        return true;
+      },
+      labels: {
+        finish: "Save"
+      }
+    }).validate({
+      errorPlacement: function errorPlacement(error, element) { element.after(error); },
+      rules: {
+        confirm: {
+          equalTo: "#password-2"
+        }
+      }
+    });
 
     $("#form-tabs_addCustomer").validate({
         errorPlacement: function errorPlacement(error, element) { element.before(error); },

@@ -61,8 +61,13 @@ Route::get('/dashboard/mailbox', 'Dashboard@mailbox');
 Route::get('/dashboard/wishlist', 'Dashboard@wishlist');
 Route::get('/dashboard/products', 'Dashboard@products');
 Route::get('/dashboard/products/add', 'Dashboard@products_add');
+Route::get('/dashboard/product/edit/{itemId}', 'Dashboard@products_edit');
 Route::get('/dashboard/mailbox', 'Dashboard@mailbox');
+Route::post('/dashboard/products/{itemId}', 'Dashboard@product_edit');
+Route::post('/dashboard/products', 'Dashboard@product_add');
 Route::post('/upload', 'Dashboard@single_upload');
+Route::post('/upload_multiple', 'Dashboard@multiple_upload');
+Route::post('/removeImage', 'Dashboard@remove_image');
 
 // Route::auth();
 
