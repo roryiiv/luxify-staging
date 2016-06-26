@@ -234,7 +234,7 @@
                             <label for="expiryDate" class="col-sm-3 control-label">Expiry Date (Optional)</label>
                             <div class="col-sm-9">
                                 <?php $expired_at = date_create($item->expired_at); ?>
-                                <input id="startDate" name='expiryDate' type="text" class="form-control" value="{{ date_format($expired_at, "Y-m-d") }}">
+                                <input id="startDate" name='expiryDate' type="text" class="form-control" value="{{ $expired_at ? date_format($expired_at, "Y-m-d"):'' }}">
                             </div>
                         </div>
                         <div class="form-group details_specs">
