@@ -12,6 +12,10 @@
 */
 // Ajax endpoints
 Route::get('/api/category/{catId}/fields', 'Front@categories_optional_fields');
+Route::post('/api/listing/createSlug', 'Slug@createSlug');
+Route::get('/api/mailbox', 'Mailbox@index');
+Route::post('/api/mailbox', 'Mailbox@conversation');
+Route::post('/api/mailbox/send', 'Mailbox@sendMessage');
 
 //Front end Routes
 Route::get('/','Front@index');

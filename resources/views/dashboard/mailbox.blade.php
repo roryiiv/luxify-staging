@@ -25,110 +25,55 @@
 @endsection
 
 @section('content')
-    <div class="page-content container-fluid p-0">
+    <div class="page-container">
+            <div class="page-header clearfix">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4 class="mt-0 mb-5">Inquiries</h4>
+                        <ol class="breadcrumb mb-0">
+                            <li><a href="">Customer Messages</a></li>
+                        </ol>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn-group mt-5">
+                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
+                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                            <!--
+<ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
+    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
+    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
+    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
+    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
+    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
+</ul>
+-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-content container-fluid p-0">
+                {!! csrf_field() !!}
+
                 <div class="row row-0 mailbox">
                     <div class="col-md-5">
                         <ul class="media-list inbox">
-                            <li class="media">
-                                <div class="pull-left">
-                                    <div class="form-group has-feedback mb-0">
-                                        <input type="text" aria-describedby="inputSearchInbox" placeholder="Search inbox/db." class="form-control rounded"><span aria-hidden="true" class="ti-search form-control-feedback"></span><span id="inputSearchInbox" class="sr-only">(default)</span>
+                          <li data-brackets-id="207" class="media">
+                                <div data-brackets-id="208" class="pull-left">
+                                    <div data-brackets-id="209" class="form-group has-feedback mb-0">
+                                        <input data-brackets-id="210" type="text" aria-describedby="inputSearchInbox" placeholder="Search inbox..." class="form-control rounded"><span data-brackets-id="211" aria-hidden="true" class="ti-search form-control-feedback"></span><span data-brackets-id="212" id="inputSearchInbox" class="sr-only">(default)</span>
                                     </div>
                                 </div>
-                                <div class="pull-right">
-                                    <div role="toolbar" aria-label="Toolbar with button groups" class="btn-toolbar">
-                                        <div role="group" aria-label="First group" class="btn-group">
-                                            <button type="button" class="btn btn-outline btn-default"><i class="ti-archive"></i></button>
-                                            <button type="button" class="btn btn-outline btn-default"><i class="ti-trash"></i></button>
+                                <div data-brackets-id="213" class="pull-right">
+                                    <div data-brackets-id="214" role="toolbar" aria-label="Toolbar with button groups" class="btn-toolbar">
+                                        <div data-brackets-id="215" role="group" aria-label="First group" class="btn-group">
+                                            <button data-brackets-id="216" type="button" class="btn btn-outline btn-default"><i data-brackets-id="217" class="ti-archive"></i></button>
+                                            <button data-brackets-id="218" type="button" class="btn btn-outline btn-default"><i data-brackets-id="219" class="ti-trash"></i></button>
                                         </div>
                                     </div>
                                 </div>
                             </li>
-                            <li class="media">
-                                <div class="checkbox-custom pull-left">
-                                    <input id="mailboxCheckbox1" type="checkbox" value="value1">
-                                    <label for="mailboxCheckbox1"></label>
-                                </div>
-                                <a href="javascript:;">
-                                    <div class="media-left avatar"><img src="/db/images/users/02.jpg" alt="" class="media-object img-circle"> </div>
-                                    <div class="media-body">
-                                        <h6 class="media-heading">Mark Barnett</h6>
-                                        <h5 class="title">Posuere convallis sociis nisi euismod</h5>
-                                        <p class="summary">Arcu sed in tortor non convallis laoreet commodo ullamcorper ultrices/db.</p>
-                                    </div>
-                                    <div class="media-right text-nowrap">
-                                        <time datetime="2015-12-10T20:50:48+07:00" class="fs-11">9 mins</time>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media">
-                                <div class="checkbox-custom pull-left">
-                                    <input id="mailboxCheckbox2" type="checkbox" value="value2">
-                                    <label for="mailboxCheckbox2"></label>
-                                </div>
-                                <a href="javascript:;">
-                                    <div class="media-left avatar"><img src="/db/images/users/11.jpg" alt="" class="media-object img-circle"> </div>
-                                    <div class="media-body">
-                                        <h6 class="media-heading">Alexander Gilbert</h6>
-                                        <h5 class="title">Posuere convallis sociis nisi euismod</h5>
-                                        <p class="summary">Arcu sed in tortor non convallis laoreet commodo ullamcorper ultrices/db.</p>
-                                    </div>
-                                    <div class="media-right text-nowrap"><i class="ti-clip"></i>
-                                        <time datetime="2015-12-10T20:42:40+07:00" class="fs-11">15 mins</time>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media read">
-                                <div class="checkbox-custom pull-left">
-                                    <input id="mailboxCheckbox3" type="checkbox" value="value3">
-                                    <label for="mailboxCheckbox3"></label>
-                                </div>
-                                <a href="javascript:;">
-                                    <div class="media-left avatar"><img src="/db/images/users/12.jpg" alt="" class="media-object img-circle"> </div>
-                                    <div class="media-body">
-                                        <h6 class="media-heading">Amanda Collins</h6>
-                                        <h5 class="title">Posuere convallis sociis nisi euismod</h5>
-                                        <p class="summary">Arcu sed in tortor non convallis laoreet commodo ullamcorper ultrices/db.</p>
-                                    </div>
-                                    <div class="media-right text-nowrap">
-                                        <time datetime="2015-12-10T20:35:35+07:00" class="fs-11">22 mins</time>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media active">
-                                <div class="checkbox-custom pull-left">
-                                    <input id="mailboxCheckbox4" type="checkbox" value="value4">
-                                    <label for="mailboxCheckbox4"></label>
-                                </div>
-                                <a href="javascript:;">
-                                    <div class="media-left avatar"><img src="/db/images/users/13.jpg" alt="" class="media-object img-circle"> </div>
-                                    <div class="media-body">
-                                        <h6 class="media-heading">Christian Lane</h6>
-                                        <h5 class="title">Posuere convallis sociis nisi euismod</h5>
-                                        <p class="summary">Arcu sed in tortor non convallis laoreet commodo ullamcorper ultrices/db.</p>
-                                    </div>
-                                    <div class="media-right text-nowrap"><i class="ti-clip"></i>
-                                        <time datetime="2015-12-10T20:27:48+07:00" class="fs-11">30 mins</time>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media read">
-                                <div class="checkbox-custom pull-left">
-                                    <input id="mailboxCheckbox5" type="checkbox" value="value5">
-                                    <label for="mailboxCheckbox5"></label>
-                                </div>
-                                <a href="javascript:;">
-                                    <div class="media-left avatar"><img src="/db/images/users/01.jpg" alt="" class="media-object img-circle"> </div>
-                                    <div class="media-body">
-                                        <h6 class="media-heading">Edward Garcia</h6>
-                                        <h5 class="title">Posuere convallis sociis nisi euismod</h5>
-                                        <p class="summary">Arcu sed in tortor non convallis laoreet commodo ullamcorper ultrices/db.</p>
-                                    </div>
-                                    <div class="media-right text-nowrap">
-                                        <time datetime="2015-12-10T20:35:35+07:00" class="fs-11">Yesterday</time>
-                                    </div>
-                                </a>
-                            </li>
+                        </ul>
+                        <ul class="media-list inbox" id="inbox">
                         </ul>
                     </div>
                     <div class="col-md-7">
@@ -136,17 +81,17 @@
                             <div class="clearfix">
                               <h5 class='avatar' style="display: flex; align-items: center; justify-content: space-between; align-content: center;">
                                  <div style="flex-grow: 5; text-align: center;">
-                                    <img src="/db/images/users/13.jpg" alt="" class="media-object img-circle"  style="display:inline-block;">
-                                    <a href="mailto:christian.lane@gmail.com"  style="display:inline-block;">Christian Lane</a>
+                                    <img id="otherImg" src="" alt="" class="media-object img-circle"  style="display:inline-block;">
+                                    <a id="otherEmail" href="#"  style="display:inline-block;"></a>
                                  </div>
-
+                                
                                 <a href="#" style="flex-grow: 1; text-align:right;"><i class="ti-reload"></i></a>
                               </h5>
-
+                              
                               <!--
                                 <div class="media">
                                   <div class="media-left avatar">
-                                    <img src="/db/images/users/13.jpg" alt="" class="media-object img-circle"> </div>
+                                    <img src="../images/users/13.jpg" alt="" class="media-object img-circle"> </div>
                                     <div style="width:auto; text-align:center;" class="media-body">
                                       <h5 class="media-heading"><a href="mailto:christian.lane@gmail.com" >Christian Lane</a></h5>
                                     </div>
@@ -159,8 +104,8 @@
 -->
                                 <div class="pull-right">
                                     <div role="toolbar" aria-label="Toolbar with button groups" class="btn-toolbar">
-
-
+                                       
+                                        
                                            <!--
                                             <ul role="menu" class="dropdown-menu pull-right animated fadeInDown">
                                                 <li><a href="mailbox.html#">Reply</a></li>
@@ -175,7 +120,7 @@
                                             </ul>
                                         </div>
                                         -->
-                                        <!--
+                                        <!-- 
                                         <div role="group" aria-label="Second group" class="btn-group">
                                             <button type="button" class="btn btn-outline btn-default"><i class="ti-angle-left"></i></button>
                                             <button type="button" class="btn btn-outline btn-default"><i class="ti-angle-right"></i></button>
@@ -185,7 +130,7 @@
                             </div>
                             <div class="chat-box">
                               <ul class="chat-content mCustomScrollbar" id="chat-list">
-
+                                
                               </ul>
 
                             </div>
@@ -201,6 +146,50 @@
                 </div>
             </div>
         </div>
+        <script type="text/template" id="msgListTemplate">
+          <li class="media">
+              <div class="checkbox-custom pull-left">
+                  <input id="mailboxCheckbox{idx}" type="checkbox" value="value{idx}">
+                  <label for="mailboxCheckbox{idx}"></label>
+              </div>
+              <a href="javascript:loadMsg({senderId}, {listingId});">
+                  <div class="media-left avatar"><img src="{{func::img_url('{senderCompanyLogoUrl}', 34, 34)}}" alt="" class="media-object img-circle"></div>
+                  <div class="media-body">
+                      <h6 class="media-heading">{senderFirstName}</h6>
+                      <h5 class="title">Re: {title}</h5>
+                      <p class="summary">{body}</p>
+                  </div>
+                  <div class="media-right text-nowrap">{}</i>
+                      <time datetime="{sentAt}" class="fs-11">{sendAtHuman} ago</time>
+                  </div>
+                </a>
+            </li>
+        </script>
+        <script type="text/template" id="leftMsg">
+          <li class="media">
+            <div class="media-left avatar">
+              <img src="{{func::img_url('{user.companyLogoUrl}', 34, 34)}}" alt="" class="media-object img-circle mCS_img_loaded" data-pin-nopin="true">
+             </div>
+             <div class="media-body">
+               <p>{msg.body}</p>
+               <time datetime="{msg.sentAt}" class="fs-11 text-muted">{msg.sentAt}</time>
+             </div>
+          </li>
+        </script>
+
+        <script type="text/template" id="rightMsg">
+          <li class="media other">
+            <div class="media-body">
+              <p>{msg.body}</p>
+              <time datetime="{msg.sentAt}" class="fs-11 text-muted pull-right">{msg.sentAt}</time>
+            </div>
+            <div class="media-right avatar">
+              <img src="{{func::img_url('{user.companyLogoUrl}', 34, 34)}}" alt="" class="media-object img-circle mCS_img_loaded" data-pin-nopin="true">
+              <span class="status bg-success"></span>
+            </div>
+          </li>
+        </script>
+      
 @endsection
 
 @section('scripts')
@@ -223,68 +212,166 @@
     <script type="text/javascript" src="/db/js/demo.js"></script>
     <script type="text/javascript" src="/db/js/mustache.min.js"></script>
     <script type="text/javascript" src="/db/js/mailbox.js"></script>
+    <script type="text/javascript" src="/db/js/nano.js"></script>
+    <script type="text/javascript" src="/db/js/moment.min.js"></script>
+    <script type="text/javascript" src="/db/js/lodash.min.js"></script>
+
     <script>
 
-      var messages = [
-        { from: 'Tom', fromId: 1, to: 'Peter', toId: 2, content: 'Hello, Peter' },
-        { from: 'Peter', fromId: 2, to: 'Tom', toId: 1, content: 'Hello, Tom' },
-        { from: 'Tom', fromId: 1, to: 'Peter', toId: 2, content: 'What about the price' },
-        { from: 'Peter', fromId: 2, to: 'Tom', toId: 1, content: 'I would said $5000 ok? It is completed new' },
-        { from: 'Tom', fromId: 1, to: 'Peter', toId: 2, content: 'Nah, i would say $4000, how about it?' },
-        { from: 'Tom', fromId: 1, to: 'Peter', toId: 2, content: 'Is it a certified place?' },
-        { from: 'Peter', fromId: 2, to: 'Tom', toId: 1, content: 'Yes. It is certified.' },
-      ];
-      var conversations = {
-        other: {
-          userId: 1,
-          name: "Tom",
-          avatar: "file:///Users/martins/Downloads/dashboard_final/images/users/fm.jpg" ,
+      var chatroom = [];
+      var currentRoom = 0;
+      var currentListingId = 0;
+      var dealer = {};
+      var left = $('#leftMsg').html();
+      var right = $('#rightMsg').html();
+      
+      function genMessages(otherId, listingId, newMessage = false) {
+        var other = _.find(chatroom, {"id": otherId.toString(), "listingId": listingId.toString()});
+        $('#otherImg').attr('src', "{{func::img_url('',34 ,34)}}" + other.profile.companyLogoUrl);
+        $("#otherEmail").attr("href", 'mailto:'+other.profile.email).html(other.profile.firstName);
+        if (!newMessage) {
+          $('#chat-list').mCustomScrollbar("destroy");
+          $("#chat-list").html("");
+          
+          for( var i =0; i < other.messages.length; i++){
+            if (other.messages[i].fromUserId === other.profile.id){
+              $(nano(left, {user: other.profile, msg: other.messages[i]})).prependTo('#chat-list');
+            } else {
+              $(nano(right, {user: dealer, msg: other.messages[i]})).prependTo('#chat-list'); 
+            }
+          }
+          $('#chat-list').mCustomScrollbar({
+            theme: 'dark',
+            setHeight: 480,
+          }).mCustomScrollbar("scrollTo", "bottom");
+        } else {
+          $('#chat-list').mCustomScrollbar("disable");
+          
+          
+          if (other.messages[0].fromUserId === other.profile.id){
+            $(nano(left, {user: other.profile, msg: other.messages[0]})).appendTo('#chat-list .mCustomScrollBox .mCSB_container');
+          } else {
+            $(nano(right, {user: dealer, msg: other.messages[0]})).appendTo('#chat-list .mCustomScrollBox .mCSB_container'); 
+          }
+          $('#chat-list').mCustomScrollbar('update');
+          $('#chat-list').mCustomScrollbar("scrollTo", "bottom");
+          
+        }  
+        
+       }
+      
+      function loadMsg(otherId, listingId, newMessage=false, page=0, size=10) {
+        if(typeof listingId === 'number'){
+          listingId = listingId.toString();
+        }
+         if(typeof otherId === 'number'){
+          otherId = otherId.toString();
+        }
+        $.ajax({
+          url: '/api/mailbox',
+          method: 'POST',
+          dataType: "json",
+          data:{
+            page: page,
+            size: size,
+            otherId: otherId,
+            listingId: listingId
+          },
+          headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+          success: function(res) {
+            if (res.result === 1 ){
+              currentRoom = otherId;
+              currentListingId = listingId;
+              res.users.other.companyLogoUrl =  res.users.other.companyLogoUrl || 'placeholder.png';
 
-        },
-        owner: {
-          userId: 2,
-          name: "Peter",
-          avatar: "file:///Users/martins/Downloads/dashboard_final/images/users/13.jpg",
-        },
-        messages: messages
-      };
-
-      function genMessage(other, message) {
+              dealer = res.users.dealer;
+              if(!_.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile) {
+                _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile = res.users.other;
+              }
+              _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).messages = res.messages;
+              genMessages(otherId, listingId, newMessage);
+            } else {
+               $("#chat-list").html("<li>"+ result.message +"</li>");
+            }
+          }
+        });
+      }
+      function genChatList() {
+        $('ul#inbox').html('');
+        chatroom = _.sortBy(chatroom, function(room){
+          return -(moment(room.headline.sentAt).unix());
+        })
+        chatroom.forEach(function(room){
+          $(nano($('#msgListTemplate').html(), room.headline)).appendTo('ul#inbox');
+        });
         
       }
-
       function initChatroom() {
-        $(conversations.messages).each(function(idx,msg) {
-          var msgHTML = genMessage(conversations.other, msg);
-          $(msgHTML).appendTo('#chat-list');
+        $.ajax({
+          url: '/api/mailbox',
+          method: 'GET',
+          dataType: 'json',
+          headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+          success: function(res) {
+            if (res.result === 1) {
+              if(res.messages.length > 0){
+                $(res.messages).each(function(idx, msg){  
+                  msg.idx = idx;
+                  msg.senderCompanyLogoUrl = msg.senderCompanyLogoUrl || 'placeholder.png';
+                  msg.sendAtHuman = moment(msg.sentAt).toNow(true);
+                  var newRoom = {};
+                  newRoom.id = msg.senderId;
+                  newRoom.listingId = msg.listingId
+                  newRoom.active = false;
+                  newRoom.headline = msg;
+                  chatroom.push(newRoom);   
+                });
+                
+                genChatList();
+                
+                loadMsg(chatroom[0].headline.senderId, chatroom[0].headline.listingId);
+              }
+            }
+          }
         });
-
-        $('#chat-list').mCustomScrollbar({
-          setHeight: 480,
-        }).mCustomScrollbar("scrollTo", "bottom");
       }
 
       initChatroom();
 
-      function addMsg() {
-        var msg = {
-          fromId: 1,
-          toId: 2,
+      function sendMsg() {
+        var that = this;
+        this.msg = {
+          toUserId: currentRoom,
+          listingId: currentListingId,
           content: $('#msgTxt').val()
         };
-        conversations.messages.push(msg);
-        var msgHTML = genMessage(conversations.other, msg);
-        $(msgHTML).appendTo('#chat-list .mCSB_container');
-        $('#msgTxt').val('');
-        $('#chat-list').mCustomScrollbar('update');
-        $('#chat-list').mCustomScrollbar("scrollTo", "bottom");
+        $.ajax({
+          url: "/api/mailbox/send",
+          method: 'POST',
+          data: msg,
+          dataType: 'json',
+          headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+          success: function(res) {
+            $('#msgTxt').val('');
+            var room = _.find(chatroom, {
+              id: res.newMessage.toUserId.toString(), 
+              listingId: res.newMessage.listingId.toString() 
+            });
+            room.messages.push(res.newMessage);
+            
+            room.headline.body = res.newMessage.body;
+            genChatList();
+            loadMsg(res.newMessage.toUserId, res.newMessage.listingId, true);          
+          }    
+        });
       }
+
       $('#sendMsg').on('click', function() {
-        addMsg();
+        sendMsg();
       });
       $('#msgTxt').on('keyup', function(e) {
         if (e.which === 13) {
-         addMsg();
+         sendMsg();
         }
       })
     </script>

@@ -9,3 +9,4 @@ Homestead.json
 *.swp
 *.zip
 public/temp
+config.js

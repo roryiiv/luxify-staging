@@ -42,7 +42,7 @@ $num_notif = count($notifs);
                             <li class="media">
                                 <a href="/dashboard/mailbox?id={{ $notif->id }}">
                                     <div class="media-left avatar">
-                                        <img src="{{ !empty($profile->companyLogoUrl) ? func::img_url($profile->companyLogoUrl, 50,'') : func::img_url('placeholder.png', 50,''); }}" alt="" class="media-object img-circle">
+                                        <img src="{{ !empty($profile->companyLogoUrl) ? func::img_url($profile->companyLogoUrl, 50,'') : func::img_url('placeholder.png', 50,'') }}" alt="" class="media-object img-circle">
                                     </div>
                                     <div class="media-body">
                                         <h6 class="media-heading">{{ $profile->firstName . ' ' . $profile->lastName }}</h6>

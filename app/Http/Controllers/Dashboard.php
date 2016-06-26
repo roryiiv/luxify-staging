@@ -530,9 +530,9 @@ class Dashboard extends Controller
     public function mailbox() {
         $conv = DB::table('conversations')
         ->where('toUserId', $this->user_id)
-        ->where('parentId', NULL)
         ->where('readAt', NULL)
         ->orderby('sentAt', 'desc')
+        ->groupBy('fromUserId')
         ->paginate(10);
 
         return view('dashboard.mailbox', ['conv', $conv]);
