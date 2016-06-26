@@ -8,4 +8,4 @@ Homestead.json
 .env.example
 *.swp
 *.zip
-
+/public/temp
