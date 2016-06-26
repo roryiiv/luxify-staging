@@ -9,7 +9,7 @@ $num_notif = count($notifs);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Luxify Dashboard - {{ucfirst(Auth::user()->role)}}</title>
+    <title>Luxify Panel</title>
 
     @yield('head')
 
@@ -42,7 +42,7 @@ $num_notif = count($notifs);
                             <li class="media">
                                 <a href="/dashboard/mailbox?id={{ $notif->id }}">
                                     <div class="media-left avatar">
-                                        <img src="{{ !empty($profile->companyLogoUrl) ? func::img_url($profile->companyLogoUrl, 30) : func::img_url('placeholder.png', 30) }}" alt="" class="media-object img-circle">
+                                        <img src="{{ !empty($profile->companyLogoUrl) ? func::img_url($profile->companyLogoUrl, 50,'') : func::img_url('placeholder.png', 50,'') }}" alt="" class="media-object img-circle">
                                     </div>
                                     <div class="media-body">
                                         <h6 class="media-heading">{{ $profile->firstName . ' ' . $profile->lastName }}</h6>

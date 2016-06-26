@@ -1,33 +1,107 @@
 $(document).ready(function () {
-    $("#form-tabs_approduct").steps({
-        headerTag: "h3"
-        , bodyTag: "fieldset"
-        , transitionEffect: "slideLeft"
-        , enableFinishButton: true
-        , enablePagination: true
-        , enableAllSteps: true
-        , titleTemplate: "#title#"
-        , cssClass: "tabcontrol"
-        , onFinishing: function (event, currentIndex) {
-            swal({
-                title: "Good job!"
-                , text: "You have updated the settings"
-                , type: "success"
-                , confirmButtonClass: "btn-raised btn-success"
-                , confirmButtonText: "OK"
-            })
-
-            return true;
-
+  var addProductForm = $('#form-tabs_approduct').show();
+    addProductForm.steps({
+      headerTag: "h3", 
+      bodyTag: "fieldset",
+      transitionEffect: "slideLeft",
+      enableFinishButton: true,
+      enablePagination: true,
+      enableAllSteps: false,
+      titleTemplate: "#title#",
+      cssClass: "tabcontrol",
+      onStepChanging: function (event, curIdx, newIdx) {
+        if (curIdx > newIdx) {
+          return true;
         }
-        , labels: {
-
-            finish: "Submit"
-
+        // Needed in some cases if the user went back (clean up)
+        if (curIdx < newIdx)
+        {
+            // To remove error styles
+            addProductForm.find(".body:eq(" + newIdx + ") label.error").remove();
+            addProductForm.find(".body:eq(" + newIdx + ") .error").removeClass("error");
         }
+        addProductForm.validate().settings.ignore = ":disabled,:hidden";
+        return addProductForm.valid();
+      },
+      onFinishing: function (event, currentIndex) {
+        swal({
+          title: "New Listing Created!", 
+          text: "Admin will review your listing soon.",
+          type: "success",
+          confirmButtonClass: "btn-raised btn-success",
+          confirmButtonText: "OK"
+        });
+        addProductForm.submit();
+        return true;
+      },
+      labels: {
+        finish: "Submit"
+      }
+    }).validate({
+      errorPlacement: function errorPlacement(error, element) { element.after(error); },
+      rules: {
+        confirm: {
+          equalTo: "#password-2"
+        }
+    }
+});
+  
+  
+  var editProductForm = $('#form-tabs_edit_product').show();
+    editProductForm.steps({
+      headerTag: "h3", 
+      bodyTag: "fieldset",
+      transitionEffect: "slideLeft",
+      enableFinishButton: true,
+      enablePagination: true,
+      enableAllSteps: true,
+      showFinishButtonAlways: true,
+      titleTemplate: "#title#",
+      cssClass: "tabcontrol",
+      saveState: true,
+      onStepChanging: function (event, curIdx, newIdx) {
+        return editProductForm.valid();
+      },
+      onFinishing: function (event, currentIndex) {
+        swal({
+          title: "Good job!", 
+          text: "You have updated the listing.",
+          type: "success",
+          confirmButtonClass: "btn-raised btn-success",
+          confirmButtonText: "OK"
+        });
+        editProductForm.submit();
+        return true;
+      },
+      labels: {
+        finish: "Save"
+      }
+    }).validate({
+      errorPlacement: function errorPlacement(error, element) { element.after(error); },
+      rules: {
+        confirm: {
+          equalTo: "#password-2"
+        }
+      }
     });
 
-    $("#form-tabs_addcustomer").steps({
+    $("#form-tabs_addCustomer").validate({
+        errorPlacement: function errorPlacement(error, element) { element.before(error); },
+        rules: {
+            txtEmailAddress: {
+              required: true,
+              email: true
+            },
+            username: {
+              required: true,
+              minlength: 4
+            },
+            confirm: {
+                equalTo: "#password"
+            },
+        }
+    });
+    $("#form-tabs_addCustomer").steps({
         headerTag: "h3"
         , bodyTag: "fieldset"
         , transitionEffect: "slideLeft"
@@ -36,17 +110,49 @@ $(document).ready(function () {
         , enableAllSteps: true
         , titleTemplate: "#title#"
         , cssClass: "tabcontrol"
-        , onFinishing: function (event, currentIndex) {
-            swal({
-                title: "Good job!"
-                , text: "You have created an user."
-                , type: "success"
-                , confirmButtonClass: "btn-raised btn-success"
-                , confirmButtonText: "OK"
-            })
+        ,
+        onStepChanging: function (event, currentIndex, newIndex)
+        {
+            $("#form-tabs_addCustomer").validate().settings.ignore = ":disabled,:hidden";
+            return $("#form-tabs_addCustomer").valid();
+        },
+        onFinishing: function (event, currentIndex) {
+            var token = $('input[name=_token]').val();
 
-            return true;
-
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                dataType: "json",
+                headers: {'X-CSRF-TOKEN': token},
+                data: {
+                    email: $('input#txtEmailAddress').val(),
+                    action: 'get_email'
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if(data.result === 0) {
+                        var salt = encrypt.makeSalt();
+                        var hashed = encrypt.password($('#txtPassword').val(), salt);
+                        $('input#salt').val(salt);
+                        $('input#hashed').val(hashed);
+                        swal({
+                            title: "Add a Customer",
+                            text: "You are about to add a Customer, OK?",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#A1D9F2",
+                            confirmButtonText: "Yes!",
+                            cancelButtonText: "No!",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function(){
+                            $("#form-tabs_addCustomer").submit();
+                        });
+                    }
+                }
+            });
+            return true
         }
         , labels: {
 
@@ -55,6 +161,22 @@ $(document).ready(function () {
         }
     });
 
+    $("#form-tabs_addDealer").validate({
+        errorPlacement: function errorPlacement(error, element) { element.before(error); },
+        rules: {
+            txtEmailAddress: {
+              required: true,
+              email: true
+            },
+            username: {
+              required: true,
+              minlength: 4
+            },
+            confirm: {
+                equalTo: "#password"
+            },
+        }
+    });
     $("#form-tabs_addDealer").steps({
         headerTag: "h3"
         , bodyTag: "fieldset"
@@ -64,22 +186,50 @@ $(document).ready(function () {
         , enableAllSteps: true
         , titleTemplate: "#title#"
         , cssClass: "tabcontrol"
+        , onStepChanging: function (event, currentIndex, newIndex)
+        {
+            $("#form-tabs_addDealer").validate().settings.ignore = ":disabled,:hidden";
+            return $("#form-tabs_addDealer").valid();
+        }
         , onFinishing: function (event, currentIndex) {
-            swal({
-                title: "Good job!"
-                , text: "You have created a dealer."
-                , type: "success"
-                , confirmButtonClass: "btn-raised btn-success"
-                , confirmButtonText: "OK"
-            })
-
+            var token = $('input[name=_token]').val();
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                dataType: "json",
+                headers: {'X-CSRF-TOKEN': token},
+                data: {
+                    email: $('input#txtEmailAddress').val(),
+                    action: 'get_email'
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if(data.result === 0) {
+                        var salt = encrypt.makeSalt();
+                        var hashed = encrypt.password($('#txtPassword').val(), salt);
+                        $('input#salt').val(salt);
+                        $('input#hashed').val(hashed);
+                        swal({
+                            title: "Add a Dealer",
+                            text: "You are about to add a Dealer, OK?",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#A1D9F2",
+                            confirmButtonText: "Yes!",
+                            cancelButtonText: "No!",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function(){
+                            $("#form-tabs_addDealer").submit();
+                        });
+                    }
+                }
+            });
             return true;
-
         }
         , labels: {
-
             finish: "Create"
-
         }
     });
 

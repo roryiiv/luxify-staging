@@ -28,9 +28,9 @@ class LuxifyAuth extends Controller
                     ->first();
                     // validate the user can be found by email
                     if ($user) {
-                      echo json_encode((object) ['result'=> 1, 'salt' => $user->salt]);
+                        echo json_encode((object) ['result'=> 1, 'salt' => $user->salt]);
                     } else {
-                      echo json_encode((object) ['result' => 0, 'message'=> 'Email not exists.']);
+                        echo json_encode((object) ['result' => 0, 'message'=> 'Email not exists.']);
                     }
                     exit();
                 break;
@@ -68,8 +68,8 @@ class LuxifyAuth extends Controller
 
     }
     public function register() {
-      $email = $_POST['email'];      
-      $fullname = $_POST['fullname'];      
+      $email = $_POST['email'];
+      $fullname = $_POST['fullname'];
       $hashed = $_POST['hashed'];
       $salt= $_POST['salt'];
       $password = $_POST['password'];
@@ -80,6 +80,7 @@ class LuxifyAuth extends Controller
         $newUser->salt = $salt;
         $newUser->fullName = $fullname;
         $newUser->email = $email;
+        $newUser->role = 'user';
         $newUser->save();
         if ($newUser->id ) {
           return redirect()->intended('/dashboard/profile');
@@ -87,11 +88,11 @@ class LuxifyAuth extends Controller
           return redirect()->intended('/login');
         }
       } else {
-        //return redirect()->intended('/register'); 
+        //return redirect()->intended('/register');
         return view('auth.register');
       }
-      
-    
+
+
     }
 
     public function logout() {

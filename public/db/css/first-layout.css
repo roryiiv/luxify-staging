@@ -2641,7 +2641,8 @@ header .search-form .form-control:-ms-input-placeholder {
     padding-top: 24px;
     padding-left: 24px;
     padding-right: 24px;
-    min-height: 800px;
+    min-height: 600px;
+    max-height: 700px;
 }
 
 @media (min-width:1200px) {
@@ -2936,6 +2937,7 @@ header .search-form .form-control:-ms-input-placeholder {
 .widget {
     margin-bottom: 24px;
     border: 1px solid #e6e6e6;
+    min-height: 600px;
 }
 
 .widget.clear {

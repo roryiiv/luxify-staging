@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\listings;
+
 use App\Categories;
 
 use Illuminate\Http\Request;
@@ -10,9 +11,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\User;
+
 use Illuminate\Support\Facades\Auth;
 
 use DB;
+use func;
+
 use Illuminate\Routing\Controller;
 
 class Front extends Controller {
@@ -40,12 +44,36 @@ class Front extends Controller {
         $cat = DB::table('categories')
         ->where('slug',$id)
         ->first();
-        // var_dump($cat);
         $catID = $cat->id;
         $listings = DB::table('listings')
         ->where('categoryId', $catID)
         ->paginate(16);
         return view('category', ['cat' => $cat, 'listings' => $listings]);
+    }
+
+    public function categories_optional_fields($catId, $langId = 1) {
+      $form = DB::table('forms')->where('categoryId', $catId)->where('languageId', $langId)->first();
+      if ($form) {
+        $fields = DB::table('formGroups')
+                    ->where('formId', $form->id) 
+                    ->join('formfields', 'formGroups.formfieldId', '=', 'formfields.id')
+                    ->select('formfields.*')
+                    ->get();
+        $fieldsArray = array_map(function($item) {
+          return (array) $item; 
+        }, $fields);
+
+        if ($fieldsArray) {
+          for ( $i = 0; $i < count($fieldsArray); $i++) {
+            if ($fieldsArray[$i]['optionValues']) {
+              $fieldsArray[$i]['optionValues'] = json_decode($fieldsArray[$i]['optionValues']);
+            } else {
+              $fieldsArray[$i]['optionValues'] = array();
+            }
+          }
+          echo json_encode((object) ['result'=> 1, 'data'=>$fieldsArray]);
+        } 
+      }
     }
 
     public function product_brands($name) {
@@ -80,4 +108,9 @@ class Front extends Controller {
 
         return view('search', ['listings' => $listings, 'search' => $search]);
     }
+    /* // for build hierarchy field
+    public function build() {
+      return func::startBuild(); 
+    }
+     */
 }
