@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.panel')
 
 @section('head')
     <!-- PACE-->
@@ -31,6 +31,7 @@
 @endsection
 
 @section('content')
+    {!! csrf_field() !!}
     <div class="page-container">
             <div class="page-header clearfix">
                 <div class="row">
@@ -79,8 +80,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="startDate">Date</label>
-                                        <input id="startDate" name="startDate" type="text" class="form-control">
+                                        <label for="filter-startDate">Date</label>
+                                        <input id="filter-startDate" name="startDate" type="text" class="form-control" value="">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -88,6 +89,7 @@
                                         <label for="ddlStatus">Status</label>
                                         <select id="ddlStatus" name="status" class="form-control">
                                             <option value="">Choose</option>
+                                            <option value="PENDING">Pending</option> 
                                             <option value="ACTIVE">Active</option>
                                             <option value="SOLD">Sold</option>
                                             <option value="EXPIRED">Expired</option>
@@ -129,11 +131,9 @@
                                                 </th>
                                                 <th>Image</th>
                                                 <th>Product Name</th>
-                                                <th>Date</th>
                                                 <th class="text-right">Price</th>
-                                                {{-- <th class="text-right">Quantity</th> --}}
-                                                <th style="display: block;">Status</th>
-                                                <th class="text-center">Action</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -147,19 +147,35 @@
                                                     </td>
                                                     <td><img src="{{func::img_url($products[$i]->mainImageUrl, 50, 50)}}" width="50" alt="" class="img-thumbnail img-responsive"></td>
                                                     <td style="width: 25%;">{{$products[$i]->title}}</td>
-                                                    <td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>
+                                                    {{--<td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>--}}
                                                  @if($products[$i]->price) 
                                                     <td class="text-right">{{$products[$i]->code}} ${{number_format($products[$i]->price)}}</td>
                                                  @else
                                                     <td class="text-right">ON REQUEST - {{$products[$i]->code}}</td>
                                                  @endif
                                                     {{-- <td class="text-right">320</td> --}}
-                                                    <td><span class="label label-default">{{$products[$i]->status}}</span></td>
+                                                    <td class="text-center">
+                                                       @if ($products[$i]->status == 'APROVED') 
+                                                         <div role="group" aria-label="soldExpiredButton" class="btn-group btn-group-sm">
+                                                            <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'SOLD')" class="btn btn-outline btn-primary">SOLD</button>
+                                                            <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'EXPIRED')" class="btn btn-outline btn-warning">EXPIRE</button>
+                                                         </div>
+                                                       @elseif ($products[$i]->status == 'PENDING')
+<div class='statusCol'>
+                                                         <div role="group" aria-label="approveAndRejectButton" class="btn-group btn-group-sm">
+                                                            <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'APPROVED')" class="btn btn-outline btn-success">APPROVE</button>
+                                                            <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'REJECTED')" class="btn btn-outline btn-danger">REJECT</button>
+                                                         </div>
+</div>
+                                                       @else
+                                                         <span class="label label-default">{{$products[$i]->status}}</span> 
+                                                       @endif
+                                                    </td>
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
-                                                            <a href="/listings/{{ $products[$i]->id }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                            <a href="/dashboard/product/edit/{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
-                                                            <a href="/dashboard/product/delete/{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                            <a target='_blank' href="/listing/{{ $products[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
+                                                            <a href="/panel/product/edit/{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
+                                                            <a href="/panel/product/delete/{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -223,10 +239,49 @@
     <script type="text/javascript" src="/db/js/product-list.js"></script>
     <script type="text/javascript" src="/db/js/date-range-picker.js"></script>
     <script type="text/javascript">
-    $(document).ready(function(){
-        $('#view').change(function(){
-            $('form#sorter').submit();
-        });
-    });
+      function changeListingStatus(ele, listingId, status) {
+        if (listingId && status) {
+          $.ajax({
+            headers: {
+              'X-CSRF-Token': $('input[name=_token]').val()
+            },
+            url: '/api/product/setStatus',
+            dataType: 'json',
+            data: {
+              itemId: listingId,
+              status: status
+            },
+            method: 'POST',
+            success: function(res) {
+              if (res.result === 1) {
+                var parent = $(ele).parent().parent();
+                $(parent).fadeOut("fast", function(){
+                  $(ele).parent().parent().html('<span class="label label-default">'+ res.status +'</span>');
+                  $(parent).fadeIn("fast");
+                });
+              } 
+            }
+          }); 
+        }
+      }
+      $(document).ready(function(){
+          $('#view').change(function(){
+              $('form#sorter').submit();
+          });
+
+          //TODO: to check for the daterangepicker api to see whether can set the val empty
+          $("#filter-startDate").on('click', function() {
+            if ($(this).val() === '') {
+              $(this).daterangepicker({
+              locale: {
+                format: "YYYY-MM-DD"
+              },
+              singleDatePicker: !0,
+              endDate: moment()
+              }); 
+              
+            }
+          });
+      });
     </script>
 @endsection

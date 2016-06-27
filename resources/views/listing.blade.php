@@ -152,63 +152,19 @@
                                 @if(!empty($infos))
                                     <h5>Specifications of {{ $listing->title }}</h5>
 
-                                    <table class="table item-description" style="display: none;">
+                                    <table class="table item-description">
                                         <thead>
                                             <tr>
-                                                <th colspan="2">GENERAL</th>
+                                               <th colspan="2">{{$infos[0]->name}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                          @foreach($infos as $info)
                                             <tr>
-                                                <th scope="row">Closure</th>
-                                                <td>Zip</td>
+                                                <th scope="row">{{$info->label}}</th>
+                                                <td class='text-center'>{{$info->value}}</td>
                                             </tr>
-                                            <tr>
-                                                <th scope="row">Type</th>
-                                                <td>Hand-held Bag</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Material</th>
-                                                <td>PU</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Style Code</th>
-                                                <td>MKJ00036</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Ideal For</th>
-                                                <td>Women</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Occasion</th>
-                                                <td>Evening/Party, Casual, Formal, Festive</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Color Code</th>
-                                                <td>Pink003</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                    <table class="table item-description" style="display: none;">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="2">DIMENSIONS</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">Height</th>
-                                                <td>267 mm</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Width</th>
-                                                <td>412 mm</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Depth</th>
-                                                <td>104 mm</td>
-                                            </tr>
+                                          @endforeach
                                         </tbody>
                                     </table>
                                 @endif

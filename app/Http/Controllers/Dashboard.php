@@ -159,6 +159,18 @@ class Dashboard extends Controller
       return view('dashboard.products_add');
     }
 
+    public function products_delete($itemId) {
+      if ($itemId) {
+        $deleted = Listings::where('id', $itemId)
+          ->delete();
+        if ($deleted > 0) {
+          echo json_encode((object) ['result'=> 1, 'itemId'=> $itemId ]); 
+        } else {
+          echo json_encode((object) ['result'=> 0, 'message'=> 'Unable to delete item.']); 
+        }
+      }
+    }
+
     public function products_edit($itemId) {
       $item = Listings::where('id', $itemId)->first();
       if ($item) {
@@ -463,7 +475,7 @@ class Dashboard extends Controller
     }
 
     public function wishlistDelete($id) {
-        $userId = Auth::user()->id;
+        $userId = $this->user_id;
 
         $delete = DB::table('wishlists')
         ->where('userId', $userId)
@@ -551,7 +563,7 @@ class Dashboard extends Controller
     }
 
     public function remove_image() {
-      $onS3 = $_POST['onS3'];
+      $onS3 = (isset($_POST['onS3']) && !empty($_POST['onS3'])) ? $_POST['onS3'] : 'false';
       if ($onS3 === 'true') {
         $s3 = \Storage::disk('s3');
         if( $s3->has('/images/'. $_POST['filename'])) {

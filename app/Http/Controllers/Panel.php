@@ -326,23 +326,109 @@ class Panel extends Controller
     }
 
     public function products() {
-        return 'products management page';
+      if($this->user_role != 'admin') return redirect('/');
+      $filter = array();
+      //TODO: Searching is case incentive?
+      if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
+          $filter[] = ['listings.title', 'like', $_GET['txtProductName']];
+      }
+      if(isset($_GET['txtPrice']) && !empty($_GET['txtPrice'])){
+          $filter[] = ['listings.price', $_GET['txtPrice']];
+      }
+      if(isset($_GET['startDate']) && !empty($_GET['startDate'])){
+          $setDate = $_GET['startDate'];
+
+          $a = date('Y-m-d H:i:s', strtotime($setDate));
+          $b = date('Y-m-d H:i:s', strtotime($setDate . ' +1 day'));
+          $filter[] = ['listings.created_at', '>=', $a];
+          $filter[] = ['listings.created_at', '<=', $b];
+      }
+      if(isset($_GET['status']) && !empty($_GET['status'])){
+          $filter[] = ['listings.status', $_GET['status']];
+      }
+      $products = DB::table('listings')
+      ->where($filter)
+      ->join('currencies', 'listings.currencyId', '=', 'currencies.id')
+      ->orderby('listings.created_at', 'asc')
+      ->select('listings.*', 'currencies.code')
+      ->paginate(10);
+
+      // var_dump($wishes);
+      $products->setPath($_SERVER['REQUEST_URI']);
+      return view('panel.products', ['products' => $products]);
     }
 
-    public function products_add() {
-        return 'products add page';
+    public function product_change_status() {
+      $itemId = (isset($_POST['itemId']) && !empty($_POST['itemId'])) ? $_POST['itemId']: NULL;
+      $status = (isset($_POST['status']) && !empty($_POST['status'])) ? $_POST['status']: NULL;
+      if ($itemId && $status) {
+        DB::table('listings')
+          ->where('id', $itemId)
+          ->update(['status' => $status]);
+        $updated = DB::table('listings')
+          ->where('id', $itemId) 
+          ->select('status')
+          ->first();
+
+        if ($updated) {
+          if ($updated->status === $status) {
+            echo json_encode((object) ['result'=> 1, 'status'=> $updated->status]); 
+          } else {
+            echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']); 
+          }
+        } else {
+          echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']); 
+        }
+      }
     }
 
     public function products_confirm() {
         return 'products confirm method';
     }
 
-    public function products_edit() {
-        return 'products edit page';
+    public function products_edit($itemId) {
+      $item = Listings::where('id', $itemId)->first();
+      if ($item) {
+        $optionalFields = DB::table('formfields')
+          ->join('formGroups', 'formGroups.formfieldId', '=', 'formfields.id')
+          ->join('forms', 'formGroups.formId', '=', 'forms.id')
+          ->where('forms.categoryId', $item->categoryId)
+          ->where('forms.languageId', 1)
+          //->leftJoin('extrainfos', 'extrainfos.formgroupId', '=', 'formGroups.id')
+          //->where('extrainfos.listingId', $itemId)
+          ->select(['formfields.*', 'formGroups.id AS formgroupId'])
+          ->get();
+        for($i = 0; $i < count($optionalFields); $i++) {
+          $optionalFields[$i]->optionValues = json_decode($optionalFields[$i]->optionValues);
+          $extravalue = DB::table('extrainfos')
+            ->where('formgroupId', $optionalFields[$i]->formgroupId)
+            ->where('listingId', $itemId)
+            ->select(['id', 'value'])
+            ->first();
+          if ($extravalue) {
+            $optionalFields[$i]->value= $extravalue->value;
+            $optionalFields[$i]->valueId = $extravalue->id;
+          } else {
+            $optionalFields[$i]->value= NULL;
+            $optionalFields[$i]->valueId = NULL;
+          }
+        }
+        if ($optionalFields) {
+          $item['optionFields'] = $optionalFields;
+        }
+        return view('panel.product_edit', ['item' => $item] );
+      }
     }
 
     public function products_delete($id) {
-        return 'products delete methos';
+      $deteled = Listing::where('id', $id)
+        ->where('userId', $this->user_id)
+        ->delete();
+      if ($deleted > 0) {
+        echo json_encode((object) ['result'=> 1, 'itemId'=> $itemId ]); 
+      } else {
+        echo json_encode((object) ['result'=> 0, 'message'=> 'Unable to delete item.']); 
+      }
     }
 
     public function upload(Request $request) {

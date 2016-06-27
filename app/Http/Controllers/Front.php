@@ -34,34 +34,43 @@ class Front extends Controller {
         $listings = DB::table('listings')->orderBy('created_at', 'desc')->paginate(16);
         return view('listings', ['listings' => $listings]);
     }
-
-    public function product_details($id) {
+    
+    public function product_details($slug) {
+      
         $listing = DB::table('listings')
-        ->where('slug', $id)
+        ->where('slug', $slug)
         ->first();
 
-        // Table is buggy, comment this for now... Arung | 2016 06 26
-        // $infos = DB::table('formfields')
-        // ->join('formGroups', 'formGroups.formfieldId', '=', 'formfields.id')
-        // ->join('forms', 'formGroups.formId', '=', 'forms.id')
-        // ->where('forms.categoryId', $listing->categoryId)
-        // ->where('forms.languageId', 1)
-        // ->leftJoin('extrainfos', 'extrainfos.formgroupId', '=', 'formGroups.id')
-        // ->where('extrainfos.listingId', $listing->id)
-        // ->get();
 
-        $mores = DB::table('listings')
-        ->where('userId', $listing->userId)
-        ->get();
 
-        $relates = DB::table('listings')
-        // ->where('id', $listing->id)
-        ->where('categoryId', $listing->categoryId)
-        ->orWhere('title', 'like', '%'.$listing->title.'%')
-        ->orWhere('description', 'like', '%'.$listing->title.'%')
-        ->get();
+        if ($listing) {
+          $mores = DB::table('listings')
+            ->where('userId', $listing->userId)
+            ->paginate(10);
 
-        return view('listing', ['listing' => $listing, 'mores' => $mores, 'relates' => $relates]);
+          $infos = DB::table('formfields')
+            ->join('formGroups', 'formGroups.formfieldId', '=', 'formfields.id')
+            ->join('forms', 'formGroups.formId', '=', 'forms.id')
+            ->where('forms.categoryId', $listing->categoryId)
+            ->where('forms.languageId', 1)
+            ->leftJoin('extrainfos', 'formGroups.id', '=', 'extrainfos.formgroupId')
+            ->where('extrainfos.listingId', $listing->id)
+            ->select('forms.name', 'formfields.label', 'extrainfos.value')
+            ->get();
+
+
+          $relates = DB::table('listings')
+            ->where('categoryId', $listing->categoryId)
+            ->orWhere('title', 'like', '%'.$listing->title.'%')
+            ->orWhere('description', 'like', '%'.$listing->title.'%')
+            ->paginate(10);
+
+          return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates]);
+        }
+
+
+
+        
     }
 
     public function categories() {
