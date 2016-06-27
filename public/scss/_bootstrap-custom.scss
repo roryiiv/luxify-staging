@@ -1,0 +1,55 @@
+// custom variables and override bootstrap variables
+
+@import 'base/variables';
+
+// Colors
+
+$brown: #958867;
+
+$brand-primary: #958867;
+
+
+$text-color: #5e6977;
+// Scaffolding
+
+
+// Typography
+
+$font-family-sans-serif: $roboto;
+$font-size-base: 16px;
+$line-height-base: 1.25;
+$font-size-h1: floor(($font-size-base * 3));
+$font-size-h2: floor(($font-size-base * 1.75));
+$font-size-h3: floor(($font-size-base * 1));
+
+// Navbar
+
+$navbar-height: 1px;
+$navbar-margin-bottom: 0;
+$navbar-border-radius: 0;
+$navbar-default-color: #fff;
+$navbar-default-bg: transparent;
+$navbar-default-link-color: #fff;
+$navbar-default-link-hover-color: $brand-primary;
+$navbar-default-link-active-color: #fff;
+
+$grid-float-breakpoint: 992px;
+
+
+// Pagination
+
+$pagination-color: #000;
+$pagination-bg: transparent;
+$pagination-border: transparent;
+$pagination-hover-color: #fff;
+$pagination-hover-bg: $brand-primary;
+$pagination-active-bg: #777;
+
+$breadcrumb-separator: '>';
+
+
+// Container sizes
+
+$grid-gutter-width: 30px;
+
+$container-large-desktop: (1100px + $grid-gutter-width);

@@ -20,17 +20,15 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Panel extends Controller
 {
-   public function __construct() {
-     $this->middleware('auth');
-     
-     $this->user_id = 585; 
-     if (Auth::user()) {
-       $this->user_id = Auth::user()->id;   
-       $this->user_role = Auth::user()->role;
-     } else {
-       return redirect('/login');   
-     } 
-   }
+    public function __construct() {
+        $this->middleware('auth'); // make sure no guests
+
+        $this->user_id = 585;
+        if(Auth::user()){
+            $this->user_id = Auth::user()->id;
+            $this->user_role = Auth::user()->role;
+        }
+    }
 
     //Panel (super admin) Controller
     public function index() {
@@ -40,7 +38,7 @@ class Panel extends Controller
         }elseif($this->user_role == 'user'){
             return redirect('/dashboard/profile');
         }else{
-            return redirect('/panel/users');;
+            return redirect('/panel/users');
         }
     }
 
@@ -69,11 +67,32 @@ class Panel extends Controller
             $filter[] = ['isSuspended', $_GET['ddlStatus']];
             $filters['ddlStatus'] = $_GET['ddlStatus'];
         }
-        $users = DB::table('users')
-        ->where($filter)
-        ->orWhere($filter_or)
-        ->orderby('created_at', 'desc')
-        ->paginate(10);
+
+        $perpage = 10;
+
+        if(isset($_GET['view-perpage']) && !empty($_GET['view-perpage'])){
+            $perpage = $_GET['view-perpage'];
+            if($perpage == -1){
+                $users = DB::table('users')
+                ->where($filter)
+                ->orWhere($filter_or)
+                ->orderby('created_at', 'desc')
+                ->get();
+            }else{
+                $users = DB::table('users')
+                ->where($filter)
+                ->orWhere($filter_or)
+                ->orderby('created_at', 'desc')
+                ->paginate($perpage);
+            }
+        }else{
+            $users = DB::table('users')
+            ->where($filter)
+            ->orWhere($filter_or)
+            ->orderby('created_at', 'desc')
+            ->paginate($perpage);
+        }
+
         // var_dump($user);
         return view('panel.users', ['users' => $users, 'filters' => $filters]);
     }
@@ -311,9 +330,7 @@ class Panel extends Controller
     }
 
     public function products_add() {
-        //$user = User::where('id', $this->user_id)->first();
-        //return view('dashboard.products_add', ['user'=>$user]);
-        return 'product add';
+        return 'products add page';
     }
 
     public function products_confirm() {
@@ -364,24 +381,20 @@ class Panel extends Controller
     }
 
     public function listing_rebuild() {
-        $cats = Categories::where('parentId', '<>', NULL)->get();
-        // var_dump($cats);
-
-        foreach($cats as $cat){
-            $lists = Listings::where('categoryId', $cat->id)->get();
-            var_dump($lists);
-            echo '<br>------------<br>';
+        $lists = Listings::all();
+        foreach($lists as $list){
+            if(empty($list->slug)){
+                $slug = SlugService::createSlug(Listings::class, 'slug', $list->title);
+                $list->slug = $slug;
+                if($list->save()){
+                    echo $slug . '<br />';
+                }else{
+                    echo 'Booommmmm !!! <br />';
+                }
+                echo '<br>------------<br>';
+            }else{
+                echo 'Already has slug <br />';
+            }
         }
-
-//        foreach($cats as $cat){
-//            $slug = SlugService::createSlug(Categories::class, 'slug', $cat->title);
-//            $cat->slug = $slug;
-//            if($cat->save()){
-//                echo $slug;
-//            }else{
-//                echo 'Booommmmm !!!';
-//            }
-//        }
-        // return 'Categories rebuild';
     }
 }

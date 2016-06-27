@@ -29,35 +29,37 @@ $num_notif = count($notifs);
     <!-- Header start-->
     <header>
 
-        <a href="{{ url('/dashboard') }}" class="brand pull-left"><img src="/db/images/logo/logo-light.png" alt="" width="100"></a><a href="{{ url('/') }}" role="button" class="hamburger-menu pull-left"><span></span></a>
+        <a href="{{ url('/') }}" class="brand pull-left"><img src="/db/images/logo/logo-light.png" alt="" width="100"></a><a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
 
         <ul class="notification-bar list-inline pull-right">
             <li class="visible-xs"><a href="javascript:;" role="button" class="header-icon search-bar-toggle"><i class="ti-search"></i></a></li>
-            <li class="dropdown"><a id="dropdownMenu1" href="profile.html#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle bubble header-icon"><i class="ti-world"></i><span id="num_notif" class="badge bg-danger">{{ $num_notif == 0 ? '' : $num_notif }}</span></a>
-                <div aria-labelle/dby="dropdownMenu1" class="dropdown-menu dropdown-menu-right dm-medium fs-12 animated fadeInDown">
-                    <h5 class="dropdown-header">You have {{ $num_notif == 0 ? 'no' : $num_notif }} notifications</h5>
-                    <ul data-mcs-theme="minimal-dark" class="media-list mCustomScrollbar">
-                        @foreach($notifs as $notif)
-                            <?php $profile = func::get_profile($notif->fromUserId); ?>
-                            <li class="media">
-                                <a href="/dashboard/mailbox?id={{ $notif->id }}">
-                                    <div class="media-left avatar">
-                                        <img src="{{ !empty($profile->companyLogoUrl) ? func::img_url($profile->companyLogoUrl, 30) : func::img_url('placeholder.png', 30) }}" alt="" class="media-object img-circle">
-                                    </div>
-                                    <div class="media-body">
-                                        <h6 class="media-heading">{{ $profile->firstName . ' ' . $profile->lastName }}</h6>
-                                        <p class="text-muted mb-0">Send a message</p>
-                                    </div>
-                                    <div class="media-right text-nowrap">
-                                        <time datetime="{{ $notif->sentAt }}" class="fs-11">{{ func::time_ago($notif->sentAt) }}</time>
-                                    </div>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                    <div class="dropdown-footer text-center p-10"><a href="/dashboard/mailbox" class="fw-500 text-muted">See all inquiries</a></div>
-                </div>
-            </li>
+            @if(Auth::user()->role == 'seller' || Auth::user()->role == 'user')
+                <li class="dropdown"><a id="dropdownMenu1" href="profile.html#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle bubble header-icon"><i class="ti-world"></i><span id="num_notif" class="badge bg-danger">{{ $num_notif == 0 ? '0' : $num_notif }}</span></a>
+                    <div aria-labelle/dby="dropdownMenu1" class="dropdown-menu dropdown-menu-right dm-medium fs-12 animated fadeInDown">
+                        <h5 class="dropdown-header">You have {{ $num_notif == 0 ? 'no' : $num_notif }} notifications</h5>
+                        <ul data-mcs-theme="minimal-dark" class="media-list mCustomScrollbar">
+                            @foreach($notifs as $notif)
+                                <?php $profile = func::get_profile($notif->fromUserId); ?>
+                                <li class="media">
+                                    <a href="/dashboard/mailbox?id={{ $notif->id }}">
+                                        <div class="media-left avatar">
+                                            <img src="{{ !empty($profile->companyLogoUrl) ? func::img_url($profile->companyLogoUrl, 30) : func::img_url('placeholder.png', 30) }}" alt="" class="media-object img-circle">
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="media-heading">{{ $profile->firstName . ' ' . $profile->lastName }}</h6>
+                                            <p class="text-muted mb-0">Send a message</p>
+                                        </div>
+                                        <div class="media-right text-nowrap">
+                                            <time datetime="{{ $notif->sentAt }}" class="fs-11">{{ func::time_ago($notif->sentAt) }}</time>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="dropdown-footer text-center p-10"><a href="/dashboard/mailbox" class="fw-500 text-muted">See all inquiries</a></div>
+                    </div>
+                </li>
+            @endif
             <li class="dropdown visible-lg visible-md">
                 @if (Auth::user())
                     <a id="dropdownMenu2" href="profile.html#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle header-icon lh-1 pt-15 pb-15">

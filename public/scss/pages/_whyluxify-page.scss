@@ -1,0 +1,260 @@
+.work-image {
+  border-radius: 6px;
+  margin-bottom: 58px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    max-width: none;
+  }
+
+  @include media('<tablet') {
+    margin-bottom: 40px;
+  }
+}
+
+.work-column {
+  @extend %clearfix;
+  margin: 0 -15px 55px;
+  line-height: 1.5625;
+
+  .icon {
+    float: left;
+    width: 99px;
+  }
+
+  .text {
+    overflow: hidden;
+  }
+
+  h3 {
+    color: #43484d;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  @include media('<desktop') {
+    margin-bottom: 20px;
+
+    .icon {
+      width: 55px;
+      margin-right: 10px;
+    }
+
+    h3 {
+      font-size: 20px;
+    }
+  }
+
+  @include media('<tablet') {
+    margin-bottom: 0;
+
+    > div {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+
+
+.banner-text {
+  height: 100%;
+  position: relative;
+  z-index: 4;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1.4545;
+  font-weight: 300;
+  padding: 40px 0;
+  text-align: center;
+
+  h1 {
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+
+  @include media('<phone') {
+    padding-bottom: 0;
+  }
+}
+
+.banner-center {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  white-space: normal;
+  margin: 0 auto;
+}
+
+.banner-social {
+  @extend %listreset;
+  padding: 27px 0 63px;
+
+  li {
+    display: inline-block;
+    vertical-align: top;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 28px 10px;
+  }
+
+  a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 17px 10px;
+    min-width: 348px;
+    border-radius: 6px;
+    background: rgba(#3b5998, 0.8);
+    transition: background 0.3s;
+
+    &:hover {
+      background: #3b5998;
+    }
+  }
+
+  [class^="icon-"],
+  [class*=" icon-"] {
+    margin-right: 10px;
+  }
+
+  .banner-twitter {
+    background: rgba(#4099ff, 0.8);
+
+    &:hover {
+      background: #4099ff;
+    }
+  }
+
+  @include media('<phone') {
+    padding: 20px 0 40px;
+
+    a {
+      min-width: 240px;
+    }
+  }
+}
+
+.register {
+  display: block;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: normal;
+  color: rgba(#fff, 0.8);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 72px;
+
+  span {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+
+    &:before,
+    &:after {
+      content: '';
+      width: 9999px;
+      height: 1px;
+      left: 120%;
+      top: 7px;
+      position: absolute;
+      background: rgba(#fff, 0.8);
+    }
+
+    &:after {
+      left: auto;
+      right: 120%;
+    }
+  }
+
+  @include media('<phone') {
+    margin-bottom: 50px;
+  }
+}
+
+[type='text'].input,
+[type='tel'].input,
+[type='email'].input,
+[type='password'].input,
+textarea.input {
+  height: 60px;
+  background: transparent;
+  border: 2px solid rgba(#fff, 0.8);
+  border-radius: 6px;
+  font-size: 16px;
+  color: #fff;
+  outline: none;
+  width: 100%;
+  padding: 8px 18px;
+  transition: border 0.3s;
+  @include placeholder {
+    color: #fff;
+  }
+
+  &.has-icon {
+    padding-right: 50px;
+  }
+
+  &:focus {
+    border-color: #fff;
+  }
+}
+
+.register-form {
+  max-width: 750px;
+  margin: 0 auto;
+
+  [type="submit"].btn {
+    width: 100%;
+    margin-bottom: 40px;
+    text-transform: none;
+    font-size: 16px;
+  }
+
+  .form-info {
+    display: block;
+    font-size: 14px;
+    color: rgba(#fff, 0.8);
+  }
+}
+
+.input-row {
+  @extend %clearfix;
+  margin: 0 -15px 30px;
+
+  .input-col {
+    float: left;
+    width: 50%;
+    padding: 0 15px;
+    position: relative;
+
+    @include media('<phone') {
+      float: none;
+      width: 100%;
+      padding-bottom: 15px;
+    }
+  }
+
+}
+
+.pass-view {
+  position: absolute;
+  right: 34px;
+  top: 25px;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+  font-size: 12px;
+  line-height: 1;
+  color: #fff;
+  z-index: 2;
+
+  &:hover,
+  &:focus {
+    color: #fff;
+    opacity: 1;
+    text-decoration: none;
+    outline: none;
+  }
+}

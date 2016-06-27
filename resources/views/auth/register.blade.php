@@ -1,145 +1,145 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" id='register-form' role="form" method="POST" action="{{ url('/register') }}">
-                        {{ csrf_field() }}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Luxify - Register</title>
+    <!-- PACE-->
+    <link rel="stylesheet" type="text/css" href="./plugins/PACE/themes/blue/pace-theme-flash.css">
+    <script type="text/javascript" src="./plugins/PACE/pace.min.js"></script>
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" type="text/css" href="./plugins/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Fonts-->
+    <link rel="stylesheet" type="text/css" href="./plugins/themify-icons/themify-icons.css">
+    <!-- Primary Style-->
+    <link rel="stylesheet" type="text/css" href="./build/css/first-layout.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
 
-                        <input name='salt' id='salt' type='hidden' />
-                        <input name='hashed' id='hashed' type='hidden' />
+<body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
+    <div class="container page-container">
+        <div class="page-content">
+            <div class="v2">
+                <div class="logo"><img src="./build/images/logo/logo-dark.png" alt="" width="160"></div>
+                <form id='register-form' role="form" method="POST" action="{{ url('/register') }}" class="form-horizontal">
+                    {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="fullname" class="col-md-4 control-label">Full Name</label>
-
-                            <div class="col-md-6">
-                                <input id="fullname" required type="text" class="form-control" name="fullname" value="{{ old('fullname') }}">
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
+                    <input name='salt' id='salt' type='hidden' />
+                    <input name='hashed' id='hashed' type='hidden' />
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input id="fullname" required name="fullname" type="text" placeholder="Username" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input id="email" name="email" required type="text" placeholder="Email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input id="password" name="password" required type="password" placeholder="Password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input id="password_confirmation" name="password_confirmation" required type="password" placeholder="Confirm Password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <div style="margin-bottom: 7px" class="checkbox-inline checkbox-custom">
+                                <input id="exampleCheckboxAgree" type="checkbox" value="remember">
+                                <label for="exampleCheckboxAgree" class="checkbox-muted text-muted">Agree the terms and policy</label>
                             </div>
                         </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" required type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" required type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password_confirmation" required class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation">
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div>
-                          <p class="bg-danger" id='error-msg'></p>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button id='submit-btn' type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i> Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+                    <button id='submit-btn' type="submit" class="btn-lg btn btn-primary btn-rounded btn-block">Sign up</button>
+                </form>
+                <hr>
+                <p class="text-muted" style="display: none;">Sign up with Facebook or Twitter accounts</p>
+                <div class="clearfix" style="display: none;">
+                    <div class="pull-left">
+                        <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-primary"><i class="ti-facebook mr-5"></i> Facebook</button>
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="clearfix">
+                    <p class="text-muted mb-0 pull-left">Already have an account? </p><a href="/login" class="inline-block pull-right">Sign In</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
-@section('scripts')
-  <script type="text/javascript" src="/js/bundle.js"></script>
-  <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
-  <script>
-  $('#submit-btn').on('click', function(e) {
-    var token = $('input[name=_token]').val();
-    e.preventDefault();
-    $('#register-form').validate({
-      rules: {
-        email: {
-          required: true,
-          email: true 
-        },
-        name: {
-          required: true,
-          minlength: 4 
-        },
-        password: {
-          required: true,
-        },
-        password_confirmation: {
-          required: true, 
-        } 
-      } 
-    });
 
-    if ($('#register-form').valid()) {
-      $.ajax({
-        type: "POST",
-        url: "/login",
-        dataType: "json",
-        headers: {'X-CSRF-TOKEN': token},
-        data: {
-          email: $('input#email').val(),
-          action: 'get_email'
-        },
-        dataType: 'json',
-        success: function (data) {
-          if(data.result === 0) {
-            var salt = encrypt.makeSalt();
-            var hashed = encrypt.password($('#password').val(), salt);  
-            $('input#salt').val(salt);
-            $('input#hashed').val(hashed);
-            $('form#register-form').submit();
-          } 
+    <!-- Demo Settings end-->
+    <!-- jQuery-->
+    <script type="text/javascript" src="./plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript-->
+    <script type="text/javascript" src="./plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Custom JS-->
+    <script type="text/javascript" src="./build/js/first-layout/extra-demo.js"></script>
+    <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
+    <script>
+    $('#submit-btn').on('click', function(e) {
+        var token = $('input[name=_token]').val();
+        e.preventDefault();
+        $('#register-form').validate({
+          rules: {
+            email: {
+              required: true,
+              email: true
+            },
+            name: {
+              required: true,
+              minlength: 4
+            },
+            password: {
+              required: true,
+            },
+            password_confirmation: {
+              required: true,
+            }
+          }
+        });
+
+        if ($('#register-form').valid()) {
+          $.ajax({
+            type: "POST",
+            url: "/login",
+            dataType: "json",
+            headers: {'X-CSRF-TOKEN': token},
+            data: {
+              email: $('input#email').val(),
+              action: 'get_email',
+              type: 'register'
+            },
+            dataType: 'json',
+            success: function (data) {
+              if(data.result === 0) {
+                var salt = encrypt.makeSalt();
+                var hashed = encrypt.password($('#password').val(), salt);
+                $('input#salt').val(salt);
+                $('input#hashed').val(hashed);
+                $('form#register-form').submit();
+              }
+            }
+
+          });
+        } else {
         }
-       
-      });
-    } else {
-    }
-    
+    });
+    </script>
+</body>
 
-  });
-    
-  </script>
-
-@endsection
+</html>

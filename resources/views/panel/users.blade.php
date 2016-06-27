@@ -116,14 +116,16 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="dataTables_length" id="product-list_length">
-                                        <label>Show
-                                        <select id="view" name="view" aria-controls="product-list" class="form-control input-sm">
-                                            <option value="10"{{isset($_GET['viewperpage']) ? func::selected($_GET['viewperpage'],10) : ''}}>10</option>
-                                            <option value="20"{{isset($_GET['viewperpage']) ? func::selected($_GET['viewperpage'],20) : ''}}>20</option>
-                                            <option value="50"{{isset($_GET['viewperpage']) ? func::selected($_GET['viewperpage'],50) : ''}}>50</option>
-                                            <option value="-1"{{isset($_GET['viewperpage']) ? func::selected($_GET['viewperpage'],-1) : ''}}>All</option>
-                                        </select>
-                                        entries</label>
+                                        <form id="sorter" name="sorter" method="get" action="{{ $_SERVER['REQUEST_URI'] }}">
+                                            <label>Show
+                                            <select id="view" name="view-perpage" aria-controls="product-list" class="form-control input-sm">
+                                                <option value="10"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],10) : ''}}>10</option>
+                                                <option value="20"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],20) : ''}}>20</option>
+                                                <option value="50"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],50) : ''}}>50</option>
+                                                {{-- <option value="-1"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],-1) : ''}}>All</option> --}}
+                                            </select>
+                                            entries</label>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -235,9 +237,7 @@
     <script type="text/javascript">
     $(document).ready(function(){
         $('#view').change(function(){
-            var val = $(this).val();
-            // console.log(val);
-            window.location.replace('<?php echo $_SERVER['REQUEST_URI']; ?>?viewperpage='+val);
+            $('form#sorter').submit();
         });
     });
     </script>

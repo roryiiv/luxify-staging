@@ -6,22 +6,49 @@ Use DB;
 Use Auth;
 
 use App\User;
+
 use App\Categories;
+
+use DateTime;
+
+use Carbon\Carbon;
 
 class Functions
 {
-    static function shout($string){
-        return strtoupper($string);
-    }
-
     static function img_url($url, $width = '', $height = ''){
         $processor = '';
         $processor .= 'http://images.luxify.com/';
         $processor .= !empty($width) ? $width : '';
-        $processor .= !empty($width) && !empty($height) ? 'x' : '';
+        $processor .= !empty($width) ? 'x' : '';
         $processor .= !empty($height) ? $height : '';
         $processor .= '/https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
         $return = $processor . $url;
+        return $return;
+    }
+
+    public static function categories($level){
+        $categories = DB::table('categories')
+        ->where('parentId', '<>', NULL)
+        ->orderby('displayOrder', 'asc')
+        ->get();
+
+        return $categories;
+    }
+
+    public static function getParentCat($cat_id){
+        $return = DB::table('categories')
+        ->where('id', $cat_id)
+        ->first();
+
+        return $return;
+    }
+
+    public static function getFeatured($user_id) {
+        $return = DB::table('listings')
+        ->where('userId', $user_id)
+        ->orderby('created_at', 'desc')
+        ->first();
+
         return $return;
     }
 
@@ -35,21 +62,22 @@ class Functions
                     $children = $element['children'];
                     if(count($children) > 0 ){
                         Functions::build_menu($children);
-                    } 
+                    }
                 }
             }
             ?>
         </ul>
         <?php
     }
+
     public static function build_categories($mode = 'all') {
-      if ($mode === 'root') {
-        return Categories::root()->orderBy('displayOrder')->get()->toArray();
-      } else if ($mode === 'leaf') {
-        return Categories::leaf()->orderBy('hierarchy')->get()->toArray();
-      } else {
-        return Categories::all()->toArray();
-      }
+        if ($mode === 'root') {
+            return Categories::root()->orderBy('displayOrder')->get()->toArray();
+        } else if ($mode === 'leaf') {
+            return Categories::leaf()->orderBy('hierarchy')->get()->toArray();
+        } else {
+            return Categories::all()->toArray();
+        }
     }
 
     public static function build_countries(){
@@ -123,6 +151,15 @@ class Functions
         return $profile;
     }
 
+    public static function get_listing($id) {
+        //get a specific user profile
+        $profile = DB::table('listings')
+        ->where('id', $id)
+        ->first();
+
+        return $profile;
+    }
+
     public static function time_ago($date,$granularity=2) {
         $date = strtotime($date);
         $difference = time() - $date;
@@ -148,15 +185,58 @@ class Functions
         }
         return $retval;
     }
-    /*
+
+    public static function truncate($text, $length) {
+        $length = abs((int)$length);
+        if(strlen($text) > $length) {
+            $text = preg_replace("/^(.{1,$length})(\s.*|$)/s", '\\1...', $text);
+        }
+        return($text);
+    }
+
+    public static function count_listings(){
+        $where = array();
+        $where[] = ['expired_at', NULL];
+        $listings = DB::table('listings')->get();
+
+        $return = count($listings);
+        return $return;
+    }
+
+    public static function is_wishlist($user_id, $listing_id) {
+        $isw = DB::table('wishlists')
+        ->where('userId', $user_id)
+        ->where('listingId', $listing_id)
+        ->first();
+
+        if($isw){
+            return '1';
+        }else{
+            return '0';
+        }
+    }
+
+    public static function getTableByID($table, $id){
+        $return = DB::table($table)
+        ->where('id', $id)
+        ->first();
+
+        return $return;
+    }
+
+    public static function getTable($table){
+        $return = DB::table($table)->get();
+        return $return;
+    }
+	/*
     public static function leafNode() {
       $allCats = Categories::all()->toArray();
       for ( $i = 0; $i < count($allCats); $i++) {
-        $children = DB::table('categoryOrganisations')->where('categoryId', $allCats[$i]['id'])->count(); 
+        $children = DB::table('categoryOrganisations')->where('categoryId', $allCats[$i]['id'])->count();
         if($children === 0) {
-          DB::table('categories')->where('id', $allCats[$i]['id'])->update(['leaf' => 1]); 
+          DB::table('categories')->where('id', $allCats[$i]['id'])->update(['leaf' => 1]);
         } else {
-          DB::table('categories')->where('id', $allCats[$i]['id'])->update(['leaf' => 0]); 
+          DB::table('categories')->where('id', $allCats[$i]['id'])->update(['leaf' => 0]);
         }
       }
     }
@@ -168,15 +248,15 @@ class Functions
           DB::table('categories')->where('id', $allCats[$i]['id'])->update(['hierarchy' => $allCats[$i]['title']]);
           $hier = $allCats[$i]['title'];
         } else {
-          $hier = $allCats[$i]['hierarchy']; 
+          $hier = $allCats[$i]['hierarchy'];
         }
         $children = DB::table('categoryOrganisations')->where('categoryId', $allCats[$i]['id'])->get();
         for ($h = 0; $h < count($children); $h++) {
           $subCat = DB::table('categories')->where('id', $children[$h]->SubCategoryId)->first();
           DB::table('categories')->where('id', $children[$h]->SubCategoryId)->update(['hierarchy' => $hier .' / '. $subCat->title]);
         }
-        
-      
+
+
       }
     }
     */

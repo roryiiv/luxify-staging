@@ -18,22 +18,52 @@ Route::post('/api/mailbox', 'Mailbox@conversation');
 Route::post('/api/mailbox/send', 'Mailbox@sendMessage');
 
 //Front end Routes
-Route::get('/','Front@index');
+
 Route::get('/listings','Front@products');
 Route::get('/listing/{id}','Front@product_details');
 Route::get('/categories','Front@categories');
 Route::get('/category/{id}','Front@product_categories');
-Route::get('/products/brands/{name}','Front@product_brands');
-// Route::get('/blog','Front@blog');
-// Route::get('/blog/post/{id}','Front@blog_post');
-Route::get('/contact-us','Front@contact_us');
+Route::post('/category/{id}','Front@product_categories');
+Route::get('/dealer/{id}','Front@dealer');
+Route::get('/dealer/contact/{id}/{item}','Front@dealerContact');
+Route::post('/contact/dealer','Front@sendMessage');
 Route::get('/register','Front@register');
 Route::post('/register','LuxifyAuth@register');
 Route::get('/login','Front@login');
 Route::post('/login','LuxifyAuth@authenticate');
 Route::get('/logout','LuxifyAuth@logout');
 Route::get('/search','Front@search');
+Route::post('/search','Front@search');
+Route::post('/searchAjax','Front@searchAjax');
+Route::post('/wishlist/add','Front@wishlistAdd');
+Route::post('/dealer-application','Front@dealerApplication');
 //Route::get('/build', 'Front@build');
+
+//static front pages
+Route::get('/', function(){
+    return View::make('index');
+});
+Route::get('/about', function(){
+    return view('about');
+});
+Route::get('/contact', function(){
+    return view('contact');
+});
+Route::get('/estate', function(){
+    return view('estate');
+});
+Route::get('/terms', function(){
+    return view('terms');
+});
+Route::get('/privacy', function(){
+    return view('privacy');
+});
+Route::get('/dealer-application', function(){
+    return view('dealer-application');
+});
+Route::get('/why-luxify', function(){
+    return view('why-luxify');
+});
 
 //Panel (super admin) Routes
 Route::get('/panel','Panel@index');
@@ -62,7 +92,9 @@ Route::get('/dashboard', 'Dashboard@index');
 Route::get('/dashboard/profile', 'Dashboard@profile');
 Route::post('/dashboard/profile', 'Dashboard@profile_update');
 Route::get('/dashboard/mailbox', 'Dashboard@mailbox');
+Route::post('/dashboard/mailbox', 'Dashboard@mailbox_ajax');
 Route::get('/dashboard/wishlist', 'Dashboard@wishlist');
+Route::get('/dashboard/wishlist/delete/{id}', 'Dashboard@wishlistDelete');
 Route::get('/dashboard/products', 'Dashboard@products');
 Route::get('/dashboard/products/add', 'Dashboard@products_add');
 Route::get('/dashboard/product/edit/{itemId}', 'Dashboard@products_edit');

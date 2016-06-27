@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
+
 use DB;
 
 use App\User;
@@ -22,17 +24,25 @@ class LuxifyAuth extends Controller
             $action = $_POST['action'];
             switch($action){
                 case 'get_email':
-                    $email = $_POST['email'];
-                    $user= User::select('salt')
-                    ->where('email', $email)
-                    ->first();
-                    // validate the user can be found by email
-                    if ($user) {
-                        echo json_encode((object) ['result'=> 1, 'salt' => $user->salt]);
-                    } else {
-                        echo json_encode((object) ['result' => 0, 'message'=> 'Email not exists.']);
+                    if(isset($_POST['type']) && $_POST['type'] == 'register'){
+                        $user_exist = DB::table('users')->where('email', $_POST['email'])->first();
+                        if($user_exist){
+                            echo json_encode((object) ['result' => 0, 'message'=> 'Email is used.']);
+                            exit();
+                        }
+                    }else{
+                        $email = $_POST['email'];
+                        $user= User::select('salt')
+                        ->where('email', $email)
+                        ->first();
+                        // validate the user can be found by email
+                        if ($user) {
+                            echo json_encode((object) ['result'=> 1, 'salt' => $user->salt]);
+                        } else {
+                            echo json_encode((object) ['result' => 0, 'message'=> 'Email not exists.']);
+                        }
+                        exit();
                     }
-                    exit();
                 break;
                 case 'login':
                     // var_dump($_POST); exit();
@@ -59,7 +69,7 @@ class LuxifyAuth extends Controller
                             break;
                         }
                     }else{
-                        return redirect()->intended('/login');
+                        return redirect()->intended('/login?err=wrong%20password');
                     }
                 break;
             }
@@ -78,12 +88,40 @@ class LuxifyAuth extends Controller
         $newUser = new User;
         $newUser->hashedPassword = $hashed;
         $newUser->salt = $salt;
-        $newUser->fullName = $fullname;
+        $newUser->username = $fullname;
         $newUser->email = $email;
         $newUser->role = 'user';
         $newUser->save();
         if ($newUser->id ) {
-          return redirect()->intended('/dashboard/profile');
+            $username_to = $fullname;
+            $details = array('to' => $email);
+            Mail::send('emails.luxify-welcome-en-us', ['username_to' => $username_to], function ($message) use ($details){
+
+                $message->from('technology@luxify.com', 'Luxify Admin');
+                $message->subject('Welcome to Luxify');
+                $message->replyTo('no_reply@luxify.com', $name = null);
+                $message->to($details['to']);
+
+            });
+            $auth = User::where('email', '=', $email)->where('hashedPassword', '=', $hashed)->where('salt', '=', $salt)->first();
+
+            if($auth) {
+                // Authentication passed...
+                Auth::login($auth);
+                $role = Auth::user()->role;
+                // var_dump(Auth::user()); var_dump(Auth::user()->role); exit();
+                switch($role){
+                    case 'admin':
+                    return redirect()->intended('/panel');
+                    break;
+                    case 'seller':
+                    return redirect()->intended('/dashboard');
+                    break;
+                    case 'user':
+                    return redirect()->intended('/dashboard/profile');
+                    break;
+                }
+            }
         } else {
           return redirect()->intended('/login');
         }

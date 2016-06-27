@@ -1,0 +1,609 @@
+.about-block {
+  font-size: 18px;
+  line-height: 1.4545;
+  padding: 100px 0 80px;
+  position: relative;
+  overflow: hidden;
+
+  @include media('<desktop') {
+    padding: 120px 0;
+  }
+
+  @include media('<tablet') {
+    padding: 40px 0;
+  }
+
+  .right-img {
+    position: absolute;
+    right: 0;
+    top: 55px;
+    max-width: 570px;
+
+    &:before {
+      @include size(727px, 729px);
+      content: '';
+      position: absolute;
+      left: -180px;
+      top: -97px;
+      background: url(../images/circles.png) no-repeat;
+      z-index: -1;
+    }
+
+    @include media('<widescreen') {
+      margin-right: -12%;
+    }
+
+    @include media('<desktop') {
+      margin-right: -30%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @include media('<tablet') {
+      display: none;
+    }
+  }
+
+  h1 {
+    margin-bottom: 37px;
+  }
+
+  p {
+    margin-bottom: 32px;
+  }
+
+  .btn {
+    margin-top: 10px;
+  }
+
+  @include media('<phone') {
+    font-size: 16px;
+
+    h1 {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.founder-block {
+  padding: 54px 0;
+
+  @include media('<tablet') {
+    padding: 40px 20px;
+  }
+
+  @include media('<phone') {
+    padding: 40px 0;
+  }
+}
+
+.founder-box {
+  background: #fff;
+  box-shadow: 0 0 15px rgba(#000, 0.2);
+  margin: 0 10px;
+  padding: 29px 34px;
+  font-size: 18px;
+  line-height: 1.6;
+
+  .figure {
+    margin-bottom: 33px;
+    text-align: center;
+  }
+
+  .founder {
+    display: block;
+    text-align: center;
+    padding-top: 30px;
+
+    span {
+      display: block;
+    }
+  }
+
+  .name {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000;
+  }
+
+  @include media('<desktop') {
+    margin: 0;
+  }
+
+  @include media('<tablet') {
+    margin-bottom: 20px;
+  }
+
+  @include media('<phone') {
+    font-size: 16px;
+    padding: 20px;
+
+    .founder {
+      padding-top: 20px;
+    }
+  }
+}
+
+.join-block {
+  padding: 50px 0;
+  text-align: center;
+  font-size: 18px;
+
+  .title {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+
+  .holder {
+    padding: 0 5%;
+  }
+
+  .button-wrap {
+    padding-top: 30px;
+  }
+
+  @include media('<desktop') {
+    .holder {
+      padding: 0;
+    }
+  }
+
+  @include media('<tablet') {
+    padding: 40px 0;
+  }
+
+  @include media('<phone') {
+    .holder {
+      font-size: 16px;
+      padding: 0 0 20px;
+    }
+
+    .title {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.create-account {
+  background: #4a4a4a;
+  color: rgba(#fff, 0.62);
+  padding: 60px 0 50px;
+
+  h1 {
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+
+  @include media('<desktop') {
+    padding: 80px 0 60px;
+
+    h1 {
+      font-size: 32px;
+    }
+  }
+
+  @include media('<tablet') {
+    padding: 50px 0;
+
+    .text-wrap {
+      padding-bottom: 40px;
+    }
+
+    h1 {
+      font-size: 26px;
+    }
+  }
+
+  @include media('<phone') {
+    h1 {
+      font-size: 24px;
+    }
+  }
+}
+
+.text-list {
+  @extend %listreset;
+  padding-left: 21px;
+  max-width: 450px;
+
+  li {
+    margin-bottom: 6px;
+    overflow: hidden;
+  }
+
+  .icon {
+    float: left;
+    width: 30px;
+    margin-right: 20px;
+  }
+
+  .text {
+    overflow: hidden;
+    padding-top: 3px;
+  }
+}
+
+.start-form {
+  .form-control {
+    height: 42px;
+    border-color: rgba(#e1e8e8, 0.2);
+    border-width: 2px;
+    border-style: solid;
+    background: transparent;
+    transition: border 0.3s;
+    box-shadow: none;
+
+    &:focus {
+      border-color: rgba(#e1e8e8, 0.3);
+    }
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .btn {
+    font-size: 16px;
+    min-width: 1px;
+    margin-top: 5px;
+    padding: 12px 26px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .main-heading {
+//   text-align: center;
+//   color: #596977;
+//   margin-bottom: 142px;
+//   font-size: 18px;
+
+//   .title {
+//     display: block;
+//     font-weight: normal;
+//     color: rgba(#fff, 0.6);
+//     margin-bottom: 12px;
+//   }
+
+//   h2 {
+//     font-size: 36px;
+//     font-weight: normal;
+//     margin-bottom: 15px;
+//     color: #43484d;
+//   }
+
+//   h3 {
+//     font-weight: normal;
+//     font-size: 32px;
+//   }
+
+//   @include media('<desktop') {
+//     margin-bottom: 80px;
+//   }
+
+//   @include media('<tablet') {
+//     margin-bottom: 40px;
+
+//     h2 {
+//       font-size: 24px;
+//     }
+//   }
+// }
+
+
+
+
+
+// .work-image {
+//   border-radius: 6px;
+//   margin-bottom: 58px;
+//   overflow: hidden;
+
+//   img {
+//     width: 100%;
+//     max-width: none;
+//   }
+
+//   @include media('<tablet') {
+//     margin-bottom: 40px;
+//   }
+// }
+
+// .work-column {
+//   @extend %clearfix;
+//   margin: 0 -15px 55px;
+//   line-height: 1.5625;
+
+//   .icon {
+//     float: left;
+//     width: 99px;
+//   }
+
+//   .text {
+//     overflow: hidden;
+//   }
+
+//   h3 {
+//     color: #43484d;
+//     font-size: 22px;
+//     font-weight: 700;
+//     margin: 0;
+//   }
+
+//   @include media('<desktop') {
+//     margin-bottom: 20px;
+
+//     .icon {
+//       width: 55px;
+//       margin-right: 10px;
+//     }
+
+//     h3 {
+//       font-size: 20px;
+//     }
+//   }
+
+//   @include media('<tablet') {
+//     margin-bottom: 0;
+
+//     > div {
+//       margin-bottom: 30px;
+//     }
+//   }
+// }
+
+
+
+// .banner-text {
+//   height: 100%;
+//   position: relative;
+//   z-index: 4;
+//   color: #fff;
+//   font-size: 22px;
+//   line-height: 1.4545;
+//   font-weight: 300;
+//   padding: 40px 0;
+//   text-align: center;
+
+//   h1 {
+//     margin-bottom: 20px;
+//     font-weight: normal;
+//   }
+
+//   @include media('<phone') {
+//     padding-bottom: 0;
+//   }
+// }
+
+// .banner-center {
+//   display: inline-block;
+//   vertical-align: top;
+//   width: 100%;
+//   white-space: normal;
+//   margin: 0 auto;
+// }
+
+// .banner-social {
+//   @extend %listreset;
+//   padding: 27px 0 63px;
+
+//   li {
+//     display: inline-block;
+//     vertical-align: top;
+//     font-weight: 500;
+//     font-size: 16px;
+//     text-align: center;
+//     margin: 0 28px 10px;
+//   }
+
+//   a {
+//     display: block;
+//     color: #fff;
+//     text-decoration: none;
+//     padding: 17px 10px;
+//     min-width: 348px;
+//     border-radius: 6px;
+//     background: rgba(#3b5998, 0.8);
+//     transition: background 0.3s;
+
+//     &:hover {
+//       background: #3b5998;
+//     }
+//   }
+
+//   [class^="icon-"],
+//   [class*=" icon-"] {
+//     margin-right: 10px;
+//   }
+
+//   .banner-twitter {
+//     background: rgba(#4099ff, 0.8);
+
+//     &:hover {
+//       background: #4099ff;
+//     }
+//   }
+
+//   @include media('<phone') {
+//     padding: 20px 0 40px;
+
+//     a {
+//       min-width: 240px;
+//     }
+//   }
+// }
+
+// .register {
+//   display: block;
+//   font-size: 14px;
+//   line-height: 1.2;
+//   font-weight: normal;
+//   color: rgba(#fff, 0.8);
+//   overflow: hidden;
+//   position: relative;
+//   margin-bottom: 72px;
+
+//   span {
+//     display: inline-block;
+//     vertical-align: top;
+//     position: relative;
+
+//     &:before,
+//     &:after {
+//       content: '';
+//       width: 9999px;
+//       height: 1px;
+//       left: 120%;
+//       top: 7px;
+//       position: absolute;
+//       background: rgba(#fff, 0.8);
+//     }
+
+//     &:after {
+//       left: auto;
+//       right: 120%;
+//     }
+//   }
+
+//   @include media('<phone') {
+//     margin-bottom: 50px;
+//   }
+// }
+
+// [type='text'].input,
+// [type='tel'].input,
+// [type='email'].input,
+// [type='password'].input,
+// textarea.input {
+//   height: 60px;
+//   background: transparent;
+//   border: 2px solid rgba(#fff, 0.8);
+//   border-radius: 6px;
+//   font-size: 16px;
+//   color: #fff;
+//   outline: none;
+//   width: 100%;
+//   padding: 8px 18px;
+//   transition: border 0.3s;
+//   @include placeholder {
+//     color: #fff;
+//   }
+
+//   &.has-icon {
+//     padding-right: 50px;
+//   }
+
+//   &:focus {
+//     border-color: #fff;
+//   }
+// }
+
+// .register-form {
+//   max-width: 750px;
+//   margin: 0 auto;
+
+//   [type="submit"].btn {
+//     width: 100%;
+//     margin-bottom: 40px;
+//     text-transform: none;
+//     font-size: 16px;
+//   }
+
+//   .form-info {
+//     display: block;
+//     font-size: 14px;
+//     color: rgba(#fff, 0.8);
+//   }
+// }
+
+// .input-row {
+//   @extend %clearfix;
+//   margin: 0 -15px 30px;
+
+//   .input-col {
+//     float: left;
+//     width: 50%;
+//     padding: 0 15px;
+//     position: relative;
+
+//     @include media('<phone') {
+//       float: none;
+//       width: 100%;
+//       padding-bottom: 15px;
+//     }
+//   }
+
+// }
+
+// .pass-view {
+//   position: absolute;
+//   right: 34px;
+//   top: 25px;
+//   opacity: 0.4;
+//   transition: opacity 0.3s;
+//   font-size: 12px;
+//   line-height: 1;
+//   color: #fff;
+//   z-index: 2;
+
+//   &:hover,
+//   &:focus {
+//     color: #fff;
+//     opacity: 1;
+//     text-decoration: none;
+//     outline: none;
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

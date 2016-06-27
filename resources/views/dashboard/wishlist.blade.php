@@ -103,14 +103,16 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="dataTables_length" id="product-list_length">
-                                        <label>Show
-                                        <select name="product-list_length" aria-controls="product-list" class="form-control input-sm">
-                                            <option value="10">10</option>
-                                            <option value="20">20</option>
-                                            <option value="50">50</option>
-                                            <option value="-1">All</option>
-                                        </select>
-                                        entries</label>
+                                        <form id="sorter" name="sorter" method="get" action="{{ $_SERVER['REQUEST_URI'] }}">
+                                            <label>Show
+                                            <select id="view" name="view-perpage" aria-controls="product-list" class="form-control input-sm">
+                                                <option value="10"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],10) : ''}}>10</option>
+                                                <option value="20"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],20) : ''}}>20</option>
+                                                <option value="50"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],50) : ''}}>50</option>
+                                                {{-- <option value="-1"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],-1) : ''}}>All</option> --}}
+                                            </select>
+                                            entries</label>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +153,7 @@
                                                     <td><span class="label label-default">{{$wishes[$i]->status}}</span></td>
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
-                                                            <a href="/listings/{{ $wishes[$i]->id }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
+                                                            <a href="/listing/{{ $wishes[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
                                                             <a href="/dashboard/wishlist/delete/{{ $wishes[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                         </div>
                                                     </td>

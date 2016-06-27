@@ -1,0 +1,66 @@
+.condition-list {
+  @extend %listreset;
+  text-indent: 35px;
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  @include media('<tablet') {
+    text-indent: 0;
+  }
+}
+
+.privacy-list {
+  @extend %listreset;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 300;
+
+  li {
+    display: inline-block;
+    vertical-align: top;
+
+    &:before {
+      content: '/';
+      display: inline-block;
+      vertical-align: middle;
+      margin: -3px 5px 0;
+    }
+
+    &:first-child {
+      &:before {
+        display: none;
+      }
+    }
+  }
+
+  a {
+    color: #fff;
+
+    &:hover {
+      color: $brown;
+      text-decoration: none;
+    }
+  }
+}
+
+.btm-space {
+  margin-bottom: 15px;
+}
+
+.privacy-section {
+  margin-bottom: 100px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @include media('<desktop') {
+    margin-bottom: 80px;
+  }
+
+  @include media('<tablet') {
+    margin-bottom: 40px;
+  }
+}

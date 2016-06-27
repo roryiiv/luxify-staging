@@ -1,0 +1,293 @@
+.content-wrap {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  position: relative;
+
+  &.add {
+    padding-top: 79px;
+    padding-bottom: 69px;
+
+    .main-heading {
+      margin-bottom: 85px;
+    }
+  }
+
+  @include media('<desktop') {
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+    &.add {
+      padding-top: 60px;
+      padding-bottom: 60px;
+
+      .main-heading {
+        margin-bottom: 60px;
+      }
+    }
+  }
+
+  @include media('<tablet') {
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    &.add {
+      padding-top: 40px;
+      padding-bottom: 20px;
+
+      .main-heading {
+        margin-bottom: 40px;
+      }
+    }
+  }
+}
+
+.mobile-image {
+  width: 400px;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  img {
+    position: relative;
+    z-index: 2;
+  }
+
+  .video-wrap {
+    position: absolute;
+    top: 58px;
+    left: 119px;
+    width: 216px;
+    height: 374px;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(#000, 0.4);
+      z-index: 3;
+    }
+  }
+
+  .play {
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    top: 34%;
+    border: none;
+    background: transparent;
+    color: #fff;
+    margin: 0 0 0 12px;
+    padding: 0;
+    font-size: 40px;
+    width: 30px;
+    line-height: 1;
+    outline: none !important;
+
+    &:hover {
+      opacity: 0.8;
+      text-decoration: none;
+    }
+  }
+
+  @include media('<desktop') {
+    display: none;
+  }
+}
+
+.service-wrap {
+  @extend %clearfix;
+  color: #86939E;
+
+  .column {
+    float: right;
+    width: 260px;
+    position: relative;
+    z-index: 2;
+
+    &:first-child {
+      float: left;
+      text-align: right;
+      direction: rtl;
+    }
+  }
+
+  .icon {
+    margin-bottom: 10px;
+  }
+
+  .title {
+    font-size: 18px;
+    display: block;
+    color: #43484d;
+    margin-bottom: 5px;
+    white-space: nowrap;
+  }
+
+  .row {
+    @extend %clearfix;
+    margin: 0 0 3px;
+    min-height: 200px;
+  }
+
+  @include media('<desktop') {
+    .column {
+      text-align: center !important;
+      float: none;
+      width: 100%;
+      direction: ltr !important;
+    }
+
+    .row {
+      min-height: 0;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.benefit-block {
+  position: relative;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  color: #fff;
+  text-align: center;
+
+  .bg-img {
+    background-attachment: fixed;
+  }
+
+  .main-heading {
+    color: #fff;
+  }
+
+  h2 {
+    color: #fff;
+  }
+
+  p {
+    color: rgba(#fff, 0.6);
+  }
+
+  .icon {
+    margin-bottom: 14px;
+    height: 58px;
+    white-space: nowrap;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+
+    img {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  h3 {
+    font-weight: normal;
+    font-size: 22px;
+    margin-bottom: 7px;
+  }
+
+  @include media('<desktop') {
+    padding: 150px 0;
+  }
+
+  @include media('<tablet') {
+    padding: 100px 0;
+  }
+}
+
+.image {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 30px;
+
+
+  a {
+    display: block;
+    overflow: hidden;
+
+    img {
+      transition: transform 0.3s;
+    }
+
+    &:hover {
+      >img {
+        transform: scale(1.02);
+      }
+    }
+  }
+
+  img {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.schedule-block {
+  background: #4a4a4a;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  color: #fff;
+  font-size: 18px;
+  position: relative;
+
+  .right-img {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    max-width: 500px;
+    transform: translateY(-50%);
+  }
+
+  @include media('<widescreen') {
+    .right-img {
+      right: -12%;
+    }
+  }
+
+  @include media('<desktop') {
+    .right-img {
+      right: -32%;
+    }
+  }
+
+  @include media('<tablet') {
+    padding: 50px 0;
+
+    .right-img {
+      display: none;
+    }
+  }
+}
+
+.schedule-form {
+
+  h2 {
+    font-size: 36px;
+    font-weight: normal;
+    margin-bottom: 19px;
+  }
+
+  p {
+    margin-bottom: 77px;
+  }
+
+  [type="submit"].btn {
+    margin-top: 17px;
+    font-size: 16px;
+    min-width: 168px;
+  }
+}

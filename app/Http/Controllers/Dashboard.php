@@ -156,7 +156,7 @@ class Dashboard extends Controller
     }
 
     public function products_add() {
-      return view('dashboard.products_add'); 
+      return view('dashboard.products_add');
     }
 
     public function products_edit($itemId) {
@@ -174,25 +174,25 @@ class Dashboard extends Controller
         for($i = 0; $i < count($optionalFields); $i++) {
           $optionalFields[$i]->optionValues = json_decode($optionalFields[$i]->optionValues);
           $extravalue = DB::table('extrainfos')
-            ->where('formgroupId', $optionalFields[$i]->formgroupId) 
+            ->where('formgroupId', $optionalFields[$i]->formgroupId)
             ->where('listingId', $itemId)
             ->select(['id', 'value'])
             ->first();
           if ($extravalue) {
             $optionalFields[$i]->value= $extravalue->value;
-            $optionalFields[$i]->valueId = $extravalue->id; 
+            $optionalFields[$i]->valueId = $extravalue->id;
           } else {
             $optionalFields[$i]->value= NULL;
-            $optionalFields[$i]->valueId = NULL;         
+            $optionalFields[$i]->valueId = NULL;
           }
         }
         if ($optionalFields) {
-          $item['optionFields'] = $optionalFields;    
+          $item['optionFields'] = $optionalFields;
         }
-        return view('dashboard.products_edit', ['item' => $item] ); 
+        return view('dashboard.products_edit', ['item' => $item] );
       }
     }
-          
+
     public function product_add() {
       $error_arr = array();
       $newItem = new Listings;
@@ -200,64 +200,64 @@ class Dashboard extends Controller
       $newItem->userId = Auth::user()->id;
 
       if ( isset($_POST['itemLocation']) && !empty($_POST['itemLocation']) ) {
-        $newItem->countryId = $_POST['itemLocation'];   
+        $newItem->countryId = $_POST['itemLocation'];
       } else {
-        $error_arr['itemLocation'] = 'Item Location is not specified.'; 
-      } 
+        $error_arr['itemLocation'] = 'Item Location is not specified.';
+      }
 
       if ( isset($_POST['itemAvailability']) && !empty($_POST['itemAvailability']) ) {
         $newItem->availableToId = $_POST['itemAvailability'] == 'worldwide' ? NULL: $_POST['itemLocation'];
       } else {
-        $error_arr['itemAvailability'] = 'Item Availability is not specified.'; 
+        $error_arr['itemAvailability'] = 'Item Availability is not specified.';
       }
 
       if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
-        $newItem->categoryId = $_POST['itemCategory'];  
+        $newItem->categoryId = $_POST['itemCategory'];
       } else {
-        $error_arr['itemCategory'] = 'Item Category is not specified.'; 
+        $error_arr['itemCategory'] = 'Item Category is not specified.';
       }
 
       if ( isset($_POST['title']) && !empty($_POST['title']) ) {
-        $newItem->title = $_POST['title'];  
+        $newItem->title = $_POST['title'];
         $newItem->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
       } else {
-        $error_arr['title'] = 'Item title is required.'; 
+        $error_arr['title'] = 'Item title is required.';
       }
 
       if ( isset($_POST['priceOnRequest']) && !empty($_POST['priceOnRequest']) && $_POST['priceOnRequest'] === 'on' ) {
-        $newItem->price = NULL; 
+        $newItem->price = NULL;
       } else {
         if (isset($_POST['price']) && !empty($_POST['price'])) {
           $newItem->price = $_POST['price'];
         } else {
-          $error_arr['price'] = 'Item price is required.'; 
+          $error_arr['price'] = 'Item price is required.';
         }
       }
 
       if ( isset($_POST['currency']) && !empty($_POST['currency']) ) {
-        $newItem->currencyId = $_POST['currency'];  
+        $newItem->currencyId = $_POST['currency'];
       } else {
-        $error_arr['currency'] = 'Item currency is required.'; 
+        $error_arr['currency'] = 'Item currency is required.';
       }
 
       if ( isset($_POST['description']) && !empty($_POST['description']) ) {
-        $newItem->description = $_POST['description'];  
+        $newItem->description = $_POST['description'];
       } else {
-        $error_arr['description'] = 'Item description is required.'; 
+        $error_arr['description'] = 'Item description is required.';
       }
 
       if (isset($_POST['condition']) && !empty($_POST['condition']) ) {
-        $newItem->condition= $_POST['condition'];  
+        $newItem->condition= $_POST['condition'];
       } else {
-        $error_arr['condition'] = 'Item condition is required.'; 
+        $error_arr['condition'] = 'Item condition is required.';
       }
 
       if (isset($_POST['expiryDate'])) {
-        $newItem->expired_at = Carbon::createFromFormat('Y-m-d', $_POST['expiryDate']);  
-      } 
-       
+        $newItem->expired_at = Carbon::createFromFormat('Y-m-d', $_POST['expiryDate']);
+      }
+
       if (isset($_POST['images']) && count($_POST['images']) > 0 ) {
-        $uploadedImage = array(); 
+        $uploadedImage = array();
         for($i =0 ;  $i < count($_POST['images']); $i++) {
           $image = base_path() . '/public/temp/' . $_POST['images'][$i];
           $s3 = \Storage::disk('s3');
@@ -277,23 +277,23 @@ class Dashboard extends Controller
             $newItem->mainImageUrl = $uploadedImage[0];
             array_splice($uploadedImage, 0, 1);
             $newItem->images = json_encode($uploadedImage);
-          }           
+          }
         } else {
-          $error_arr['images'] = 'Error in uploaded images.'; 
+          $error_arr['images'] = 'Error in uploaded images.';
         }
-      } 
+      }
 
       if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
-        $newItem->buyNowUrl = $_POST['buyNowURL'];  
-      } 
+        $newItem->buyNowUrl = $_POST['buyNowURL'];
+      }
 
       if (isset($_POST['aerialLookURL']) && !empty($_POST['aerialLookURL'])) {
-        $newItem->aerialLookUrl = $_POST['aerialLookURL'];  
-      } 
+        $newItem->aerialLookUrl = $_POST['aerialLookURL'];
+      }
 
       if (isset($_POST['aerial3DLookURL']) && !empty($_POST['aerial3DLookURL'])) {
-        $newItem->aerialLook3DUrl = $_POST['aerial3DLookURL'];  
-      } 
+        $newItem->aerialLook3DUrl = $_POST['aerial3DLookURL'];
+      }
 
       $newItem->status = 'PENDING';
 
@@ -308,11 +308,11 @@ class Dashboard extends Controller
           if ($form) {
             foreach ($_POST['optionfields'] as $key => $value) {
               $formGroup = DB::table('formGroups')
-               ->where('formId', $form->id) 
+               ->where('formId', $form->id)
                ->where('formfieldId', $key)
                ->first();
               if ($formGroup && !empty($value)) {
-                DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $newItem->id, $value)); 
+                DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $newItem->id, $value));
               }
             }
           }
@@ -320,7 +320,7 @@ class Dashboard extends Controller
         }
       }
 
-    }       
+    }
 
     public function product_edit($itemId) {
       $item = Listings::where('id', $itemId)->first();
@@ -329,72 +329,72 @@ class Dashboard extends Controller
       $item->userId = Auth::user()->id;
 
       if ( isset($_POST['itemLocation']) && !empty($_POST['itemLocation']) ) {
-        $item->countryId = $_POST['itemLocation'];   
+        $item->countryId = $_POST['itemLocation'];
       } else {
-        $error_arr['itemLocation'] = 'Item Location is not specified.'; 
-      } 
+        $error_arr['itemLocation'] = 'Item Location is not specified.';
+      }
 
       if ( isset($_POST['itemAvailability']) && !empty($_POST['itemAvailability']) ) {
         $item->availableToId = $_POST['itemAvailability'] == 'worldwide' ? NULL: $_POST['itemLocation'];
       } else {
-        $error_arr['itemAvailability'] = 'Item Availability is not specified.'; 
+        $error_arr['itemAvailability'] = 'Item Availability is not specified.';
       }
 
       if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
-        $item->categoryId = $_POST['itemCategory'];  
+        $item->categoryId = $_POST['itemCategory'];
       } else {
-        $error_arr['itemCategory'] = 'Item Category is not specified.'; 
+        $error_arr['itemCategory'] = 'Item Category is not specified.';
       }
 
       if ( isset($_POST['title']) && !empty($_POST['title']) ) {
-        $item->title = $_POST['title'];  
+        $item->title = $_POST['title'];
         $item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
       } else {
-        $error_arr['title'] = 'Item title is required.'; 
+        $error_arr['title'] = 'Item title is required.';
       }
 
       if ( isset($_POST['priceOnRequest']) && !empty($_POST['priceOnRequest']) && $_POST['priceOnRequest'] === 'on' ) {
-        $item->price = NULL; 
+        $item->price = NULL;
       } else {
         if (isset($_POST['price']) && !empty($_POST['price'])) {
           $item->price = intval($_POST['price']);
         } else {
-          $error_arr['price'] = 'Item price is required.'; 
+          $error_arr['price'] = 'Item price is required.';
         }
       }
 
       if ( isset($_POST['currency']) && !empty($_POST['currency']) ) {
-        $item->currencyId = $_POST['currency'];  
+        $item->currencyId = $_POST['currency'];
       } else {
-        $error_arr['currency'] = 'Item currency is required.'; 
+        $error_arr['currency'] = 'Item currency is required.';
       }
 
       if ( isset($_POST['status']) && !empty($_POST['status']) ) {
-        $item->status = $_POST['status'];  
+        $item->status = $_POST['status'];
       } else {
-        $error_arr['status'] = 'Item status is required.'; 
+        $error_arr['status'] = 'Item status is required.';
       }
 
       if ( isset($_POST['description']) && !empty($_POST['description']) ) {
-        $item->description = $_POST['description'];  
+        $item->description = $_POST['description'];
       } else {
-        $error_arr['description'] = 'Item description is required.'; 
+        $error_arr['description'] = 'Item description is required.';
       }
 
       if (isset($_POST['condition']) && !empty($_POST['condition']) ) {
-        $item->condition= $_POST['condition'];  
+        $item->condition= $_POST['condition'];
       } else {
-        $error_arr['condition'] = 'Item condition is required.'; 
+        $error_arr['condition'] = 'Item condition is required.';
       }
 
       if (isset($_POST['expiryDate'])) {
-        $item->expired_at = Carbon::createFromFormat('Y-m-d', $_POST['expiryDate']);  
-      } 
-       
+        $item->expired_at = Carbon::createFromFormat('Y-m-d', $_POST['expiryDate']);
+      }
+
       // TODO: handle for images already in S3
       if (isset($_POST['images']) && count($_POST['images']) > 0 ) {
         $s3 = \Storage::disk('s3');
-        $uploadedImage = array(); 
+        $uploadedImage = array();
         for($i =0 ;  $i < count($_POST['images']); $i++) {
           if (!$s3->has('/images/'. $_POST['images'][$i])) {
             $image = base_path() . '/public/temp/' . $_POST['images'][$i];
@@ -405,7 +405,7 @@ class Dashboard extends Controller
             }
           } else {
             $uploadedImage[] = $_POST['images'][$i];
-          } 
+          }
         }
 
         if (count($uploadedImage) === count($_POST['images'])) {
@@ -417,23 +417,23 @@ class Dashboard extends Controller
             $item->mainImageUrl = $uploadedImage[0];
             array_splice($uploadedImage, 0, 1);
             $item->images = json_encode($uploadedImage);
-          }           
+          }
         } else {
-          $error_arr['images'] = 'Error in uploaded images.'; 
+          $error_arr['images'] = 'Error in uploaded images.';
         }
-      } 
+      }
 
       if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
-        $item->buyNowUrl = $_POST['buyNowURL'];  
-      } 
+        $item->buyNowUrl = $_POST['buyNowURL'];
+      }
 
       if (isset($_POST['aerialLookURL']) && !empty($_POST['aerialLookURL'])) {
-        $item->aerialLookUrl = $_POST['aerialLookURL'];  
-      } 
+        $item->aerialLookUrl = $_POST['aerialLookURL'];
+      }
 
       if (isset($_POST['aerial3DLookURL']) && !empty($_POST['aerial3DLookURL'])) {
-        $item->aerialLook3DUrl = $_POST['aerial3DLookURL'];  
-      } 
+        $item->aerialLook3DUrl = $_POST['aerial3DLookURL'];
+      }
 
       // delete the existing optional fields first
       DB::table('extrainfos')->where('listingId', $item->id )->delete();
@@ -444,11 +444,11 @@ class Dashboard extends Controller
       if ($form) {
         foreach ($_POST['optionfields'] as $key => $value) {
           $formGroup = DB::table('formGroups')
-           ->where('formId', $form->id) 
+           ->where('formId', $form->id)
            ->where('formfieldId', $key)
            ->first();
           if ($formGroup && !empty($value)) {
-            DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value)); 
+            DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
           }
         }
       }
@@ -462,6 +462,18 @@ class Dashboard extends Controller
       }
     }
 
+    public function wishlistDelete($id) {
+        $userId = Auth::user()->id;
+
+        $delete = DB::table('wishlists')
+        ->where('userId', $userId)
+        ->where('listingId', $id)
+        ->update(['deleted' => 0]);
+
+        // var_dump($delete); exit;
+
+        return redirect('/dashboard/wishlist');
+    }
 
     public function wishlist() {
         $filter = array();
@@ -486,7 +498,7 @@ class Dashboard extends Controller
         }
         $wishes = DB::table('wishlists')
         ->join('listings', 'wishlists.listingId','=', 'listings.id')
-        ->select('listings.id', 'listings.title', 'wishlists.createdAt', 'listings.mainImageUrl', 'listings.price', 'listings.status')
+        ->select('listings.id', 'listings.title', 'listings.slug', 'wishlists.createdAt', 'listings.mainImageUrl', 'listings.price', 'listings.status')
         ->where($filter)
         ->orderby('wishlists.createdAt', 'asc')
         ->paginate(10);
@@ -546,19 +558,19 @@ class Dashboard extends Controller
           if ($s3->delete('/images/'. $_POST['filename'])) {
 
             // instanely update the image array of the listing
-            $item = Listings::where('id', $_POST['itemId'])->first(); 
+            $item = Listings::where('id', $_POST['itemId'])->first();
             $oldImages = [];
             $mainImageRemoved = false;
             $otherImages = json_decode($item->images);
             for($i = 0; $i < count($otherImages); $i++) {
-              $oldImages[] = array('mainImage' => false, 'filename'=> $otherImages[$i]); 
+              $oldImages[] = array('mainImage' => false, 'filename'=> $otherImages[$i]);
             }
             $oldImages[] = array('mainImage' => true, 'filename'=> $item->mainImageUrl);
             for ( $i = 0; $i < count($oldImages); $i++ ) {
               if($oldImages[$i]['filename'] === $_POST['filename']) {
                 if ($oldImages[$i]['mainImage']) {
-                  $mainImageRemoved = true;  
-                } 
+                  $mainImageRemoved = true;
+                }
                 array_splice($oldImages, $i, 1);
               }
             }
@@ -567,7 +579,7 @@ class Dashboard extends Controller
               if (count($oldImages) ===  0 ) {
                 $item->mainImageUrl = NULL;
               } else {
-                $item->mainImageUrl = $oldImages[0]['filename'];  
+                $item->mainImageUrl = $oldImages[0]['filename'];
                 array_splice($oldImages, 0, 1);
               }
             } else {
@@ -580,16 +592,16 @@ class Dashboard extends Controller
             }
             $newOtherImages = [];
             for ($i = 0; $i < count($oldImages); $i++) {
-              $newOtherImages[] = $oldImages[$i]['filename']; 
+              $newOtherImages[] = $oldImages[$i]['filename'];
             }
             $item->images = json_encode($newOtherImages);
             $item->save();
-            echo json_encode((object) ['result' => 1, 'message' => 'Image is removed on S3.']); 
+            echo json_encode((object) ['result' => 1, 'message' => 'Image is removed on S3.']);
           } else {
-             echo json_encode((object) ['result' => 0, 'message' => 'Unable to deleted image in S3.']); 
+             echo json_encode((object) ['result' => 0, 'message' => 'Unable to deleted image in S3.']);
           }
         } else {
-          echo json_encode((object) ['result' => 0, 'message' => 'Image is not existed on S3.']); 
+          echo json_encode((object) ['result' => 0, 'message' => 'Image is not existed on S3.']);
         }
       } else {
         $image = base_path() . '/public/temp/' . $_POST['filename'];
@@ -599,7 +611,7 @@ class Dashboard extends Controller
         } else {
           echo json_encode((object) ['result' => 0, 'message' => 'Image does not exist.']);
         }
-      }  
+      }
     }
     public function multiple_upload(Request $request) {
 
