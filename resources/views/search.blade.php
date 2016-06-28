@@ -101,33 +101,63 @@
 	</main>
 @endsection
 @section('scripts')
-    {{ csrf_field() }}
     <script>
     $(document).ready(function(){
-        $('a.favourite').each(function(){
-            $(this).click(function(event){
-                // return false; // remove this later after database fixes.
-                // event.preventDefault();
-                var url = '/wishlist/add', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
-                console.log(token);
-                var data = {uid: itemID, lid: itemID};
+        $("#category").change(function () {
+            var val = $(this).val();
+            if (val == "real-estate") {
+                $("#sub_category").html("<option value='estate'>Estate</option><option value='apartment'>Apartment</option><option value='house'>House</option><option value='land'>Land</option><option value='others'>Others</option>");
+            } else if (val == "jewellery-watches") {
+                $("#sub_category").html("<option value='antique_jewelry'>Antique Jewelry</option><option value='jewelry'>Jewelry</option><option value='watch'>Watch</option>");
+            } else if (val == "motors") {
+                $("#sub_category").html("<option value='cars'>Cars</option><option value='classics'>Classics</option><option value='motorbikes'>Motorbike</option>");
+            } else if (val == "handbags-accessories") {
+                $("#sub_category").html("<option value='accessories_men'>Men Accessories</option><option value='accessories_women'>Women Accessories</option><option value='bags'>Bags</option>");
+            } else if (val == "experiences") {
+                $("#sub_category").html("<option value='experiences'>Experiences</option>");
+            } else if (val == "collectibles-furnitures") {
+                $("#sub_category").html("<option value='collectibles'>Collectibles</option><option value='furnitures'>Furnitures</option>");
+            } else if (val == "yachts") {
+                $("#sub_category").html("<option value='motor'>Motor</option><option value='sail'>Sail</option>");
+            } else if (val == "aircrafts") {
+                $("#sub_category").html("<option value='jet'>Jet</option><option value='helicopter'>Helicopter</option>");
+            } else if (val == "art-antiuques") {
+                $("#sub_category").html("<option value='art'>Art</option><option value='antiques'>Antiques</option>");
+            } else if (val == "fine-wines-spirits") {
+                $("#sub_category").html("<option value='fine_wines'>Fine Wines</option><option value='spirits'>Spirits</option><option value='champagne'>Champagne</option>");
+            }
+        });
+    })
+    </script>
+    @if(Auth::user())
+        {{ csrf_field() }}
+        <script>
+        $(document).ready(function(){
+            $('a.favourite').each(function(){
+                $(this).click(function(event){
+                    // return false; // remove this later after database fixes.
+                    // event.preventDefault();
+                    var url = '/wishlist/add', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
+                    console.log(token);
+                    var data = {uid: itemID, lid: itemID};
 
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    headers: {'X-CSRF-TOKEN': token},
-                    data: data,
-                    // dataType: "html",
-                    success: function(data){
-                        alert('Added to wishlist');
-                        $('a#'+itemID).addClass('added');
-                    },
-                    error: function(errMsg){
-                        console.log(errMsg.responseText);
-                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        headers: {'X-CSRF-TOKEN': token},
+                        data: data,
+                        // dataType: "html",
+                        success: function(data){
+                            alert('Added to wishlist');
+                            $('a#'+itemID).addClass('added');
+                        },
+                        error: function(errMsg){
+                            console.log(errMsg.responseText);
+                        }
+                    });
                 });
             });
         });
-    });
-    </script>
+        </script>
+    @endif
 @endsection

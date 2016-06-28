@@ -29,7 +29,7 @@ $num_notif = count($notifs);
     <!-- Header start-->
     <header>
 
-        <a href="{{ url('/dashboard') }}" class="brand pull-left"><img src="/db/images/logo/logo-light.png" alt="" width="100"></a><a href="{{ url('/') }}" role="button" class="hamburger-menu pull-left"><span></span></a>
+        <a href="{{ url('/') }}" class="brand pull-left"><img src="/db/images/logo/logo-light.png" alt="" width="100"></a><a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
 
         <ul class="notification-bar list-inline pull-right">
             <li class="visible-xs"><a href="javascript:;" role="button" class="header-icon search-bar-toggle"><i class="ti-search"></i></a></li>

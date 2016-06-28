@@ -48,11 +48,11 @@
                             $price_format = $raw_price;
                             ?>
                             <ul class="detail">
-                                <li><span class="icon icon-tag"></span><span class="text">{{ $curr->symbol . number_format($listing->price, 0) . ' ' . $curr->code }}</span></li>
+                                <li><span class="icon icon-tag"></span><span class="text">{{ $price_format }}</span></li>
                                 <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
                             </ul>
-                            <ul class="social-links" style="display: none;">
-                                {{-- <li><a href="#"><span class="icon icon-bookmarn"></span></a></li> --}}
+                            <ul class="social-links">
+                                <li><a class="bookmark" title="{{ $listing->title }}" href="{{ $url . '/listing/' . $listing->slug}}"><span class="icon icon-bookmarn"></span></a></li>
                                 <li>
                                     <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ $url . '/listing/' . $listing->slug}}">
                                         <span class="icon icon-facebook"></span>
@@ -68,37 +68,9 @@
                                         <span class="icon icon-pinterest"></span>
                                     </a>
                                 </li>
-                                {{-- <li><a href="#"><span class="icon icon-wechat"></span></a></li> --}}
-                                {{-- <li><a href="#"><span class="icon icon-social"></span></a></li> --}}
-                            </ul>
-                            <ul class="social-links">
-                                {{-- <li><a href="#"><span class="icon icon-bookmarn"></span></a></li> --}}
-                                @if(!empty($dealer->socialFacebook))
-                                    <li>
-                                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ $url . '/listing/' . $listing->slug}}">
-                                            <span class="icon icon-facebook"></span>
-                                        </a>
-                                    </li>
-                                @endif
-
-                                @if(!empty($dealer->socialTwitter))
-                                    <li>
-                                        <a target="_blank" href="https://twitter.com/home?status={{ urlencode($listing->title . ' ' . $url . '/listing/' . $listing->slug) }}">
-                                            <span class="icon icon-twitter"></span>
-                                        </a>
-                                    </li>
-                                @endif
-
-                                @if(!empty($dealer->socialPinterest))
-                                    <li>
-                                        <a target="_blank" href="https://pinterest.com/pin/create/button/?url={{ $url }}/listing/{{ $listing->slug }}&media={{ func::img_url($listing->mainImageUrl, 300) }}&description={{ urlencode($listing->description) }}">
-                                            <span class="icon icon-pinterest"></span>
-                                        </a>
-                                    </li>
-                                @endif
                                 {{--Hide this for now as no back end information made for this (faulty by design)  --}}
-                                {{-- <li><a href="#"><span class="icon icon-wechat"></span></a></li> --}}
-                                {{-- <li><a href="#"><span class="icon icon-social"></span></a></li> --}}
+                                {{-- <li><a href="#"><span class="icon icon-wechat"></span></a></li>
+                                <li><a href="#"><span class="icon icon-social"></span></a></li> --}}
                             </ul>
                             <div class="link-btn">
                                 <div class="logo-aside">
@@ -152,19 +124,63 @@
                                 @if(!empty($infos))
                                     <h5>Specifications of {{ $listing->title }}</h5>
 
-                                    <table class="table item-description">
+                                    <table class="table item-description" style="display: none;">
                                         <thead>
                                             <tr>
-                                               <th colspan="2">{{$infos[0]->name}}</th>
+                                                <th colspan="2">GENERAL</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          @foreach($infos as $info)
                                             <tr>
-                                                <th scope="row">{{$info->label}}</th>
-                                                <td class='text-center'>{{$info->value}}</td>
+                                                <th scope="row">Closure</th>
+                                                <td>Zip</td>
                                             </tr>
-                                          @endforeach
+                                            <tr>
+                                                <th scope="row">Type</th>
+                                                <td>Hand-held Bag</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Material</th>
+                                                <td>PU</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Style Code</th>
+                                                <td>MKJ00036</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Ideal For</th>
+                                                <td>Women</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Occasion</th>
+                                                <td>Evening/Party, Casual, Formal, Festive</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Color Code</th>
+                                                <td>Pink003</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="table item-description" style="display: none;">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">DIMENSIONS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Height</th>
+                                                <td>267 mm</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Width</th>
+                                                <td>412 mm</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Depth</th>
+                                                <td>104 mm</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 @endif
@@ -273,6 +289,30 @@
     </main>
 @endsection
 @section('scripts')
+    <script language="javascript" type="text/javascript">
+    $(document).ready(function(){
+      $("a.bookmark").click(function(e){
+        e.preventDefault(); // this will prevent the anchor tag from going the user off to the link
+        var bookmarkUrl = this.href;
+        var bookmarkTitle = this.title;
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+
+        if (window.sidebar) { // For Mozilla Firefox Bookmark
+            window.sidebar.addPanel(bookmarkTitle, bookmarkUrl,"");
+        } else if( msie > 0 ) { // For IE Favorite
+            window.external.AddFavorite( bookmarkUrl, bookmarkTitle);
+        } else if(window.opera) { // For Opera Browsers
+            $("a.jQueryBookmark").attr("href",bookmarkUrl);
+            $("a.jQueryBookmark").attr("title",bookmarkTitle);
+            $("a.jQueryBookmark").attr("rel","sidebar");
+        } else { // for other browsers which does not support
+             alert('Your browser does not support this bookmark action');
+             return false;
+        }
+      });
+    });
+    </script>
     {{ csrf_field() }}
     <script>
     $(document).ready(function(){

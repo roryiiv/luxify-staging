@@ -62,7 +62,7 @@
                         </p>
                     @endif
                 </form>
-                <hr>
+                {{-- <hr> --}}
                 <p class="text-muted" style="display: none;">Sign in with your Facebook or Twitter accounts</p>
                 <div class="clearfix" style="display: none;">
                     <div class="pull-left">
@@ -72,7 +72,7 @@
                         <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
                     </div>
                 </div>
-                <hr>
+                {{-- <hr> --}}
                 <div class="clearfix">
                     <p class="text-muted mb-0 pull-left">Want new account?</p><a href="/register" class="inline-block pull-right">Sign Up</a>
                 </div>

@@ -148,11 +148,7 @@
                                                     <td><img src="{{func::img_url($products[$i]->mainImageUrl, 50, 50)}}" width="50" alt="" class="img-thumbnail img-responsive"></td>
                                                     <td style="width: 25%;">{{$products[$i]->title}}</td>
                                                     <td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>
-                                                 @if($products[$i]->price) 
-                                                    <td class="text-right">{{$products[$i]->code}} ${{number_format($products[$i]->price)}}</td>
-                                                 @else
-                                                    <td class="text-right">ON REQUEST - {{$products[$i]->code}}</td>
-                                                 @endif
+                                                    <td class="text-right">${{number_format($products[$i]->price, 2)}}</td>
                                                     {{-- <td class="text-right">320</td> --}}
                                                     <td><span class="label label-default">{{$products[$i]->status}}</span></td>
                                                     <td class="text-center">

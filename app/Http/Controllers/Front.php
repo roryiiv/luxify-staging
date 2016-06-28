@@ -109,7 +109,7 @@ class Front extends Controller {
         switch($id){
             case 'real-estate':
             $cat_ids = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
-            $banner = 'banner-estate.jpg';
+            $banner = 'realestate.jpg';
             break;
             case 'jewellery-watches':
             $cat_ids = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch']);
@@ -129,15 +129,15 @@ class Front extends Controller {
             break;
             case 'collectibles-furnitures':
             $cat_ids = array_merge($childs['collectibles'],$childs['furnitures']);
-            $banner = 'Collectibles_banner.jpg';
+            $banner = 'collectibles_furnitures.jpg';
             break;
             case 'yachts':
             $cat_ids = array_merge($childs['motor'],$childs['sail']);
-            $banner = 'banner-whyluxify.jpg';
+            $banner = 'new_yacht.jpg';
             break;
             case 'aircrafts':
             $cat_ids = array_merge($childs['jet'],$childs['helicopter']);
-            $banner = 'about-banner.jpg';
+            $banner = 'aircraft.jpg';
             break;
             case 'art-antiuques':
             $cat_ids = array_merge($childs['art'],$childs['antiques']);
@@ -293,6 +293,7 @@ class Front extends Controller {
                         $banner = 'wine_banner.jpg';
                         break;
                     }
+                    var_dump($cat_ids); exit;
                 }
             }
             if(!empty($post['sort-radio'])){

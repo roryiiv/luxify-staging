@@ -2937,7 +2937,7 @@ header .search-form .form-control:-ms-input-placeholder {
 .widget {
     margin-bottom: 24px;
     border: 1px solid #e6e6e6;
-    min-height: 600px;
+    /*min-height: 600px;*/
 }
 
 .widget.clear {

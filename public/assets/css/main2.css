@@ -1463,7 +1463,7 @@ div.lightbox {
   vertical-align: top;
   padding: 0 0 0 72px;
   margin: 0 0 57px;
-  width: 55%;
+  min-width: 55%;
 }
 .sidebar .detail [class^="icon-"],
 .sidebar .detail [class*="icon-"] {

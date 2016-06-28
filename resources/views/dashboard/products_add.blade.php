@@ -221,7 +221,7 @@
                         <div class="form-group">
                             <label for="expiryDate" class="col-sm-3 control-label">Expiry Date (Optional)</label>
                             <div class="col-sm-9">
-                                <input id="startDate" name='expiryDate' type="text" class="form-control">
+                                <input id="startDate" name='expiryDate' type="text" class="form-control" value='{{ date_format(date_create('now'), 'Y-m-d')}}'>
                             </div>
                         </div>
                         <div class="form-group details_specs">

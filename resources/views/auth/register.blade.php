@@ -62,6 +62,10 @@
                         </div>
                     </div>
                     <button id='submit-btn' type="submit" class="btn-lg btn btn-primary btn-rounded btn-block">Sign up</button>
+                    <p id="login_error" style="margin: 15px 0; display: none;">
+                        <span class="alert danger" style="color: red;">Username or Email already used.<br />
+                            Chose a new one, please.</span>
+                    </p>
                 </form>
                 <hr>
                 <p class="text-muted" style="display: none;">Sign up with Facebook or Twitter accounts</p>
@@ -126,13 +130,16 @@
             },
             dataType: 'json',
             success: function (data) {
-              if(data.result === 0) {
-                var salt = encrypt.makeSalt();
-                var hashed = encrypt.password($('#password').val(), salt);
-                $('input#salt').val(salt);
-                $('input#hashed').val(hashed);
-                $('form#register-form').submit();
-              }
+                console.log(data);
+                if(data.result === 0) {
+                    var salt = encrypt.makeSalt();
+                    var hashed = encrypt.password($('#password').val(), salt);
+                    $('input#salt').val(salt);
+                    $('input#hashed').val(hashed);
+                    $('form#register-form').submit();
+                }else{
+                    $('p#login_error').slideDown(1200);
+                }
             }
 
           });

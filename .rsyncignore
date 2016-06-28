@@ -1,0 +1,10 @@
+vendor
+slq_dump
+storage
+ssh
+*.bak
+.DS_Store
+.git/
+public/temp
+.gitignore
+.env

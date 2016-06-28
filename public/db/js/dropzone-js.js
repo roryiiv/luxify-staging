@@ -15,9 +15,8 @@ $(document).ready(function() {
     }), $("#multiple-dz").dropzone({
         url: "/upload",
         paramName: "file",
-        maxFilesize: 5,
-        maxThumbnailFilesize: 1,
-        uploadMultiple: true,
+        maxFilesize: 2,
+        maxThumbnailFilesize: .5,
         dictDefaultMessage: "<i class='icon-dz fa fa-files-o'></i>Drop files here to upload"
     }), $("#type-dz").dropzone({
         url: "/upload",

@@ -30,13 +30,16 @@
                         <!-- banner navigation -->
                         <nav class="banner-nav">
                             <ul>
-                                <li><a href="/category/bags">Bags</a></li>
-                                <li><a href="/category/jewellery-watches">Jewllery &amp; Watches</a></li>
-                                <li><a href="/category/collectibles-art">Collectibles &amp; Arts</a></li>
-                                <li><a href="/category/wines-spirits">Wines &amp; Spirits</a></li>
-                                <li><a href="/category/homes-living">Homes &amp; Living</a></li>
-                                <li><a href="/category/motors-yachts">Motors &amp; Yachts</a></li>
-                                <li><a href="/category/experience">Experience</a></li>
+                                <li><a href="/category/real-estate">Real Estate</a></li>
+                                <li><a href="/category/jewellery-watches">Watches & Jewelry</a></li>
+                                <li><a href="/category/motors">Motors</a></li>
+                                <li><a href="/category/handbags-accessories">Handbags & Accessories</a></li>
+                                <li><a href="/category/experiences">Experiences</a></li>
+                                <li><a href="/category/collectibles-furnitures">Collectibles & Furnitures</a></li>
+                                <li><a href="/category/yachts">Yachts</a></li>
+                                <li><a href="/category/aircrafts">Aircrafts</a></li>
+                                <li><a href="/category/art-antiuques">Art & Antiques</a></li>
+                                <li><a href="/category/fine-wines-spirits">Fine Wines & Spirits</a></li>
                             </ul>
                         </nav>
                         <!-- end of banner navigation -->

@@ -25,11 +25,15 @@ class LuxifyAuth extends Controller
             switch($action){
                 case 'get_email':
                     if(isset($_POST['type']) && $_POST['type'] == 'register'){
-                        $user_exist = DB::table('users')->where('email', $_POST['email'])->first();
-                        if($user_exist){
-                            echo json_encode((object) ['result' => 0, 'message'=> 'Email is used.']);
-                            exit();
+                        // var_dump($_POST); exit;
+                        $reg_email = $_POST['email'];
+                        $user_exist = DB::table('users')->where('email', $reg_email)->get();
+                        if(count($user_exist) > 0){
+                            echo json_encode((object) ['result' => 2, 'message'=> 'Email is used.']);
+                        }else{
+                            echo json_encode((object) ['result' => 0, 'message'=> 'Email is good to use.']);
                         }
+                        exit();
                     }else{
                         $email = $_POST['email'];
                         $user= User::select('salt')
