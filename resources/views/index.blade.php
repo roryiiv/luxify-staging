@@ -83,7 +83,6 @@
                             <ul class="count-list">
                                 <li>
                                     <span class="count counter">10.7</span>
-                                    <span class="b">B</span>
                                     <span class="info">Total Market in USD</span>
                                 </li>
                                 <li>

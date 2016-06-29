@@ -73,7 +73,7 @@
                                             <ul>
                                                 <li><a href="mailto:concierge@luxify.com">concierge@luxify.com</a></li>
                                                 <li>
-                                                    <address>9/F, Core C, Cyberport 3 100 Cyberport Rd, Aberdeen</address>
+                                                    <address>9/F, Core C, Cyberport 3 100 Cyberport Rd, Hong Kong</address>
                                                 </li>
                                                 <li><a href="tel:=85236185858">+852 3618 5858</a></li>
                                             </ul>
@@ -94,7 +94,7 @@
 											  <div class="modal-dialog modal-sm">
 												<div class="modal-content we-chat-wrapper">
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												  <img src="/assets/images/barcode.jpg" width="129" height="129" alt="We Chat">
+												  <img src="/assets/images/barcode.jpg" width="150" height="150" alt="We Chat">
 												</div>
 											  </div>
 											</div>
