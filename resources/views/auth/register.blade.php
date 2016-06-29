@@ -56,15 +56,18 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <div style="margin-bottom: 7px" class="checkbox-inline checkbox-custom">
-                                <input id="exampleCheckboxAgree" type="checkbox" value="remember">
-                                <label for="exampleCheckboxAgree" class="checkbox-muted text-muted">Agree the terms and policy</label>
+                                <input type="checkbox" id="agreeTerms" name='agreeTerms' />
+                                <label for="agreeTerms" class="checkbox-muted text-muted">Agree the <a href="/terms" target="_blank">terms and policies</a></label>
                             </div>
                         </div>
                     </div>
                     <button id='submit-btn' type="submit" class="btn-lg btn btn-primary btn-rounded btn-block">Sign up</button>
                     <p id="login_error" style="margin: 15px 0; display: none;">
-                        <span class="alert danger" style="color: red;">Username or Email already used.<br />
+                        <span class="alert danger">Username or Email already used.<br />
                             Chose a new one, please.</span>
+                    </p>
+                    <p id="terms_error" style="margin: 15px 0; display: none;">
+                        <span class="alert danger">You have to agree with our terms and policies to continue.</span>
                     </p>
                 </form>
                 <hr>
@@ -77,7 +80,6 @@
                         <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
                     </div>
                 </div>
-                <hr>
                 <div class="clearfix">
                     <p class="text-muted mb-0 pull-left">Already have an account? </p><a href="/login" class="inline-block pull-right">Sign In</a>
                 </div>
@@ -95,42 +97,50 @@
     <script type="text/javascript" src="/js/bundle.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
     <script>
-    $('#submit-btn').on('click', function(e) {
-        var token = $('input[name=_token]').val();
-        e.preventDefault();
-        $('#register-form').validate({
-          rules: {
-            email: {
-              required: true,
-              email: true
+      $('#register-form').validate({
+        rules: {
+          email: {
+            required: true,
+              email: true,
+          },
+          name: {
+            required: true,
+            minlength: 4
+          },
+          password: {
+            minlength: 8,
+            required: true,
+            equalTo: '#password_confirmation',
+          },
+          password_confirmation: {
+            minlength: 8,
+            required: true,
+            equalTo: '#password',
+          },
+          agreeTerms: {
+            required: function(ele) {
+              return $(ele).prop('checked');
             },
-            name: {
-              required: true,
-              minlength: 4
-            },
-            password: {
-              required: true,
-            },
-            password_confirmation: {
-              required: true,
-            }
           }
-        });
-
-        if ($('#register-form').valid()) {
-          $.ajax({
-            type: "POST",
-            url: "/login",
-            dataType: "json",
-            headers: {'X-CSRF-TOKEN': token},
-            data: {
-              email: $('input#email').val(),
-              action: 'get_email',
-              type: 'register'
-            },
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
+        }
+      });
+      $('#submit-btn').on('click', function(e) {
+        e.preventDefault();
+        var token = $('input[name=_token]').val();
+        if ($('#register-form').valid()){ 
+          if($('#agreeTerms').prop('checked')) {
+            $.ajax({
+              type: "POST",
+              url: "/login",
+              dataType: "json",
+              headers: {'X-CSRF-TOKEN': token},
+              data: {
+                email: $('input#email').val(),
+                action: 'get_email',
+                type: 'register'
+              },
+              dataType: 'json',
+              success: function (data) {
                 if(data.result === 0) {
                     var salt = encrypt.makeSalt();
                     var hashed = encrypt.password($('#password').val(), salt);
@@ -138,14 +148,16 @@
                     $('input#hashed').val(hashed);
                     $('form#register-form').submit();
                 }else{
-                    $('p#login_error').slideDown(1200);
+                  $('p#login_error').slideDown(500);
                 }
-            }
+              }
 
-          });
-        } else {
+            });
+          } else {
+            $('p#terms_error').slideDown(500);
+          } 
         }
-    });
+      });
     </script>
 </body>
 
