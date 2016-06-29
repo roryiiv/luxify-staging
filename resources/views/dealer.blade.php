@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <?php $banner = !empty($dealer->coverImageUrl) ? $dealer->coverImageUrl : 'about-banner.jpg'; ?>
-    <section class="inner-banner parallax" style="background-image:url({{ func::img_url($banner, 1920) }});">
+    <section class="inner-banner parallax" style="background-image:url({{ func::img_url($banner, 1960) }});">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-center">

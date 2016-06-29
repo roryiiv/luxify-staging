@@ -34,9 +34,9 @@ class Front extends Controller {
         $listings = DB::table('listings')->orderBy('created_at', 'desc')->paginate(16);
         return view('listings', ['listings' => $listings]);
     }
-    
+
     public function product_details($slug) {
-      
+
         $listing = DB::table('listings')
         ->where('slug', $slug)
         ->first();
@@ -70,7 +70,7 @@ class Front extends Controller {
 
 
 
-        
+
     }
 
     public function categories() {
@@ -773,16 +773,24 @@ class Front extends Controller {
                 $search = $_POST['search'];
 
                 $search_arr = array();
-                $search_arr[] = ['title','like','%'.$search.'%'];
                 $search_arr[] = ['description','like','%'.$search.'%'];
                 // $search_arr[] = ['status', 'APPROVED'];
 
+                $cats = DB::table('categories')->where('title', 'like', '%'.$search.'%')->get();
+                if(!empty($cats) && is_array($cats)){
+                    foreach($cats as $cat){
+                        $search_arr[] = ['categoryId', $cat->id];
+                    }
+                }
+
                 $listings = DB::table('listings')
-                ->where($search_arr)
+                ->where('title','like','%'.$search.'%')
+                ->orWhere($search_arr)
                 ->orderBy('created_at', 'desc')
-                // ->groupBy('categoryId')
+                ->groupBy('categoryId')
+                ->having('id', '>', 0)
                 // ->skip(0)
-                ->take(10)
+                // ->take(10)
                 ->get();
 
                 $total = DB::table('listings')
@@ -795,10 +803,12 @@ class Front extends Controller {
                 $cats = array();
                 $dealers = array();
 
+                // var_dump($listings); exit;
+
                 if(is_array($listings) && !empty($listings)){
                     ob_start();
                     $return = '<div class="col-sm-7">';
-                    $return .= '<div class="row-header"><a href="/search?_token='.$_POST['token'].'&action='.$_POST['action'].'&search='. $search .'" class="pull-right" title="View More">More</a><div class="category-label"><span>Showing '.count($listings).' of '.count($total).'result(s)</span></div></div>';
+                    $return .= '<div class="row-header"><a href="/search?_token='.$_POST['_token'].'&action='.$_POST['action'].'&search='. $search .'" class="pull-right" title="View More">More</a><div class="category-label"><span>Showing '.count($listings).' of '.count($total).'result(s)</span></div></div>';
                     $return .= '<ul class="results-found">';
                     foreach($listings as $list){
                         $cats[] = $list->categoryId;
