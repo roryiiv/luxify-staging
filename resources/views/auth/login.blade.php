@@ -25,9 +25,10 @@
 
 <body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
     <div class="container page-container">
+        @include('inc.loginheader')
         <div class="page-content">
             <div class="v2">
-                <div class="logo"><img src="./build/images/logo/logo-dark.png" alt="" width="160"></div>
+                <div class="logo"><a target="_self" href='/'><img src="./build/images/logo/logo-dark.png" alt="" width="160"></a></div>
                 <form name="form_login" method="post" action="/login" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -46,10 +47,10 @@
                                 <input id="exampleCheckboxRemember" type="checkbox" value="remember">
                                 <label for="exampleCheckboxRemember" class="checkbox-muted text-muted">Remember me</label>
                             </div>
-                            <div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">Forgot a Passowrd?</a></div>
+                            {{--<div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">Forgot a Passowrd?</a></div>--}}
                         </div>
                     </div>
-                    <button id="login_btn" type="submit" class="btn-lg btn btn-primary btn-rounded btn-block">Sign in</button>
+                    <button id="login_btn" type="submit" class="btn-lg btn btn-primary btn-block" style="border-radius: 0px;">Sign in</button>
                     <input type="hidden" id="action" name="action" value="" />
                     <input type="hidden" id="salt" name="salt" value="" />
                     <input type="hidden" id="hashed" name="hashed" value="" />
@@ -58,11 +59,11 @@
                     </p>
                     @if(isset($_GET['err']))
                         <p id="login_error" style="margin: 15px 0;">
-                            <span class="alert danger" style="color: red;">{{ ucfirst($_GET['err']) }}</span>
+                            <span class="alert danger">{{ ucfirst($_GET['err']) }}</span>
                         </p>
                     @endif
                 </form>
-                {{-- <hr> --}}
+                <hr>
                 <p class="text-muted" style="display: none;">Sign in with your Facebook or Twitter accounts</p>
                 <div class="clearfix" style="display: none;">
                     <div class="pull-left">
@@ -87,43 +88,70 @@
     <!-- Custom JS-->
     <script type="text/javascript" src="./build/js/first-layout/extra-demo.js"></script>
     <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
     <script>
     $(document).ready(function() {
+
+      $('form[name=form_login]').validate({
+        rules: {
+          email: {
+            required: true,
+            email: true 
+          },
+          password: {
+            required: true 
+          }
+        } 
+      });
         $('#login_btn').click(function(event){
             event.preventDefault();
-            console.log('stop the default action first');
 
             var email = $('input#email').val(), pass = $('input#password').val();
             var token = $('input[name=_token]').val();
             var dataA = {email: email, action: 'get_email'};
+            
 
             // prepping first AJAX call
-            $.ajax({
-                type: "POST",
-                url: "/login",
-                headers: {'X-CSRF-TOKEN': token},
-                data: dataA,
-                // contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(data){
-                    if (data.result === 1) {
-                        // console.log(data);
-                        var hashed = encrypt.password(pass, data.salt);
-                        $('input#action').val('login');
-                        $('input#salt').val(data.salt);
-                        $('input#hashed').val(hashed);
-                        $('form[name="form_login"]').submit();
-                    }else{
-                        $('p#login_error').slideDown('slow');
-                    }
-                },
-                failure: function(errMsg){
-                    alert(errMsg);
-                }
-            });
-            return false;
+            if ($('form[name=form_login]').valid()){
+              $.ajax({
+                  type: "POST",
+                  url: "/login",
+                  headers: {'X-CSRF-TOKEN': token},
+                  data: dataA,
+                  // contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function(data){
+                      if (data.result === 1) {
+                          // console.log(data);
+                          var hashed = encrypt.password(pass, data.salt);
+                          $('input#action').val('login');
+                          $('input#salt').val(data.salt);
+                          $('input#hashed').val(hashed);
+                          $('form[name="form_login"]').submit();
+                      }else{
+                          $('p#login_error').slideDown('slow');
+                      }
+                  },
+                  failure: function(errMsg){
+                      alert(errMsg);
+                  }
+              });
+              return false;
+
+            }
         });
     });
+    $('.dropdown-toggle').dropdown().hover(function() {
+      $(this).dropdown('toggle');
+    }, function(){
+    
+    });
+    $('.dropdown-menu').hover(function(){
+      }, 
+      function(e){
+        $(this).dropdown('toggle');
+        e.stopPropagation();
+      })
 
     </script>
 </body>
