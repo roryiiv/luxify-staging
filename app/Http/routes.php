@@ -45,7 +45,6 @@ Route::post('/api/mailbox/send', 'Mailbox@sendMessage');
 Route::post('/api/product/setStatus', 'Panel@product_change_status');
 
 //Front end Routes
-
 Route::get('/listings','Front@products');
 Route::get('/listing/{id}','Front@product_details');
 Route::get('/categories','Front@categories');
@@ -80,11 +79,13 @@ Route::get('/panel/user/edit/{id}','Panel@user_edit');
 Route::post('/panel/add/user/register','Panel@user_register'); //Create
 Route::post('/panel/user/update','Panel@user_update'); // Update
 Route::get('/panel/user/delete/{id}','Panel@user_delete'); //Delete
-Route::post('/panel/upload','Panel@upload'); 
+Route::post('/panel/upload','Panel@upload');
 Route::get('/panel/user/confirm','Panel@user_confirm');
 // Products related Views
 Route::get('/panel/products','Panel@products');
 Route::get('/panel/product/edit/{id}','Panel@products_edit');
+Route::post('/panel/product/update/{id}','Panel@productUpdate');
+Route::get('/panel/product/delete/{id}', 'Panel@product_delete');
 // Products CRUD methods
 // Route::post('/panel/products', 'Panel@product_add'); //Create
 Route::post('/panel/products/{itemId}', 'Panel@product_edit'); //Update
@@ -93,10 +94,11 @@ Route::post('/panel/products/delete/{id}','Panel@products_delete');
 //Other Database related operations
 Route::get('/panel/categories/rebuild','Panel@cat_rebuild');
 Route::get('/panel/listings/rebuild','Panel@listing_rebuild');
+Route::get('/panel/extrainfo/rebuild/{id}','Panel@extra_rebuild');
 Route::get('/panel/products/confirm','Panel@products_confirm');
 
 
-//routes for DASHBOARD (seller) 
+//routes for DASHBOARD (seller)
 Route::get('/dashboard', 'Dashboard@index');
 Route::get('/dashboard/profile', 'Dashboard@profile');
 Route::post('/dashboard/profile', 'Dashboard@profile_update');

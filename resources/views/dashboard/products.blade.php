@@ -88,7 +88,8 @@
                                         <label for="ddlStatus">Status</label>
                                         <select id="ddlStatus" name="status" class="form-control">
                                             <option value="">Choose</option>
-                                            <option value="ACTIVE">Active</option>
+                                            <option value="PENDING">Pending</option>
+                                            <option value="APPROVED">Approved</option>
                                             <option value="SOLD">Sold</option>
                                             <option value="EXPIRED">Expired</option>
                                         </select>

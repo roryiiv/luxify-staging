@@ -157,9 +157,15 @@
                     url: url,
                     headers: {'X-CSRF-TOKEN': token},
                     data: data,
-                    // dataType: "html",
+                    dataType: "html",
                     success: function(data){
-                        $(this).addClass('added');
+                        console.log(data);
+                        if(data == 0){
+                            alert('Duplicated item, please contact Admin.');
+                        }else{
+                            alert('Added to your Wishlist.');
+                            $('a#'+itemID).addClass('added');
+                        }
                     },
                     error: function(errMsg){
                         console.log(errMsg.responseText);

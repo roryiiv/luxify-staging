@@ -49,11 +49,11 @@ class Front extends Controller {
             ->paginate(10);
 
           $infos = DB::table('formfields')
-            ->join('formGroups', 'formGroups.formfieldId', '=', 'formfields.id')
-            ->join('forms', 'formGroups.formId', '=', 'forms.id')
+            ->join('formgroups', 'formgroups.formfieldId', '=', 'formfields.id')
+            ->join('forms', 'formgroups.formId', '=', 'forms.id')
             ->where('forms.categoryId', $listing->categoryId)
             ->where('forms.languageId', 1)
-            ->leftJoin('extrainfos', 'formGroups.id', '=', 'extrainfos.formgroupId')
+            ->leftJoin('extrainfos', 'formgroups.id', '=', 'extrainfos.formgroupId')
             ->where('extrainfos.listingId', $listing->id)
             ->select('forms.name', 'formfields.label', 'extrainfos.value')
             ->get();
@@ -315,6 +315,7 @@ class Front extends Controller {
         }
 
         $listings = DB::table('listings')
+        ->where('status', 'APPROVED')
         ->whereIn('categoryId', $cat_ids)
         ->where($search_arr)
         ->orderBy($orderby, $order)
@@ -324,28 +325,28 @@ class Front extends Controller {
     }
 
     public function categories_optional_fields($catId, $langId = 1) {
-      $form = DB::table('forms')->where('categoryId', $catId)->where('languageId', $langId)->first();
-      if ($form) {
-        $fields = DB::table('formGroups')
-                    ->where('formId', $form->id)
-                    ->join('formfields', 'formGroups.formfieldId', '=', 'formfields.id')
-                    ->select('formfields.*')
-                    ->get();
-        $fieldsArray = array_map(function($item) {
-          return (array) $item;
-        }, $fields);
+        $form = DB::table('forms')->where('categoryId', $catId)->where('languageId', $langId)->first();
+        if ($form) {
+            $fields = DB::table('formgroups')
+            ->where('formId', $form->id)
+            ->join('formfields', 'formgroups.formfieldId', '=', 'formfields.id')
+            ->select('formfields.*')
+            ->get();
+            $fieldsArray = array_map(function($item) {
+                return (array) $item;
+            }, $fields);
 
-        if ($fieldsArray) {
-          for ( $i = 0; $i < count($fieldsArray); $i++) {
-            if ($fieldsArray[$i]['optionValues']) {
-              $fieldsArray[$i]['optionValues'] = json_decode($fieldsArray[$i]['optionValues']);
-            } else {
-              $fieldsArray[$i]['optionValues'] = array();
+            if ($fieldsArray) {
+                for ( $i = 0; $i < count($fieldsArray); $i++) {
+                    if ($fieldsArray[$i]['optionValues']) {
+                        $fieldsArray[$i]['optionValues'] = json_decode($fieldsArray[$i]['optionValues']);
+                    } else {
+                        $fieldsArray[$i]['optionValues'] = array();
+                    }
+                }
+                echo json_encode((object) ['result'=> 1, 'data'=>$fieldsArray]);
             }
-          }
-          echo json_encode((object) ['result'=> 1, 'data'=>$fieldsArray]);
         }
-      }
     }
 
     public function product_brands($name) {
@@ -787,14 +788,15 @@ class Front extends Controller {
                 ->where('title','like','%'.$search.'%')
                 ->orWhere($search_arr)
                 ->orderBy('created_at', 'desc')
-                ->groupBy('categoryId')
-                ->having('id', '>', 0)
+                // ->groupBy('categoryId')
+                // ->having('id', '>', 0)
                 // ->skip(0)
-                // ->take(10)
+                ->take(10)
                 ->get();
 
                 $total = DB::table('listings')
-                ->where($search_arr)
+                ->where('title','like','%'.$search.'%')
+                ->orWhere($search_arr)
                 ->orderBy('created_at', 'desc')
                 ->get();
 
@@ -808,7 +810,7 @@ class Front extends Controller {
                 if(is_array($listings) && !empty($listings)){
                     ob_start();
                     $return = '<div class="col-sm-7">';
-                    $return .= '<div class="row-header"><a href="/search?_token='.$_POST['_token'].'&action='.$_POST['action'].'&search='. $search .'" class="pull-right" title="View More">More</a><div class="category-label"><span>Showing '.count($listings).' of '.count($total).'result(s)</span></div></div>';
+                    $return .= '<div class="row-header"><a href="/search?_token='.$_POST['_token'].'&action='.$_POST['action'].'&search='. $search .'" class="pull-right" title="View More">More</a><div class="category-label"><span>Showing '.count($listings).' of '.count($total).' result(s)</span></div></div>';
                     $return .= '<ul class="results-found">';
                     foreach($listings as $list){
                         $cats[] = $list->categoryId;
@@ -879,11 +881,21 @@ class Front extends Controller {
             $user = Auth::user()->id;
             $item = $_POST['lid'];
 
-             DB::table('wishlists')->insert(
-                ['createdAt' => $created, 'UserId' => $user, 'listingId' => $item]
-            );
+            $check = DB::table('wishlists')
+            ->where('userId', $user)
+            ->where('listingId', $item)
+            ->first();
 
-            echo 1;
+            $exists = count($check) > 0 ? true : false;
+
+            if($exists){
+                echo 0;
+            }else{
+                DB::table('wishlists')->insert(
+                   ['createdAt' => $created, 'UserId' => $user, 'listingId' => $item]
+                );
+                echo 1;
+            }
         }
     }
 
