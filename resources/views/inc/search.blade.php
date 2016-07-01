@@ -1,5 +1,5 @@
 <div class="search-wrapper">
-    <form method="get" role="search" action="/search" class="category-search">
+    <form method="get" role="search" action="/searchAjax" class="category-search">
         {{ csrf_field() }}
         <input type="hidden" name="action" value="search" />
         <div class="input-group">

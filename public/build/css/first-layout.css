@@ -4320,7 +4320,7 @@ span.status {
     display: none;
 }
 
-label.error {
+label.error, .danger {
     padding-top: 5px;
-    color: red;
+    color: #b33a3a;
 }

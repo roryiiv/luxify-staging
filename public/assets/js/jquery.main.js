@@ -37,7 +37,7 @@ function suggestedSearchResults(){
 		var val = $('input#search_query').val();
 
 		var token = $('input[name=_token]').val();
-		var dataA = {search: val, action: 'search', token: token};
+		var dataA = {search: val, action: 'search', _token: token};
 		// console.log(dataA);
 		$('#search-left').html('');
 
