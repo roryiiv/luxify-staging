@@ -99,42 +99,49 @@
                     <h1 class="text-center">More From This Seller</h1>
                 </div>
                 <div class="row">
-                    @if(!empty($listings))
-                        @foreach($listings as $item)
-                            <div class="col-md-4 col-sm-6">
-                                <div class="thumbnail borderless">
-                                    <a href="/listing/{{ $item->slug }}">
-                                        <figure>
-                                            <img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 400) : func::img_url('default-logo.png', 400) }}" alt="{{ $item->title }}">
-                                            @if(Auth::user())
-                                                <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
-                                                <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
-                                            @endif
-                                        </figure>
-                                    </a>
-                                    <div class="caption">
-                                        <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
-                                        <?php
-                                        $curr = func::getTableByID('currencies', $item->currencyId);
-                                        $dealer = func::getTableByID('users', $item->userId);
-                                        $raw_price = $item->price == 0 ? 'Price on request' : $curr->symbol . number_format($item->price, 0) .' '. $curr->code;
-                                        $price_format = $raw_price;
-                                        ?>
-                                        <span class="price">{{ $price_format }}</span>
-                                        <div class="item-logo">
-                                            <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 300) : func::img_url('default-logo.png', 300) }}" alt="image description">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="col-md-12 col-sm-12">
-                            <p>
-                                No Items found
-                            </p>
-                        </div>
-                    @endif
+                 @if(!empty($listings))
+                   @for($i = 0 ; $i < count($listings); $i++)
+                     <?php $item = $listings[$i]; ?>
+                     <div class="col-md-4 col-sm-6">
+        				   	   <div class="thumbnail">
+                          <a href="/listing/{{ $item->slug }}">
+            		   	   		<figure>
+            		   	   			<img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 400) : func::img_url('default-logo.png', 400) }}" alt="{{ $item->title }}">
+                                @if(Auth::user())
+                                  <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
+                                  <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
+                                @endif
+            		   	   		</figure>
+                          </a>
+        				   	     <div class="caption">
+        				   	   	  <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
+                              <?php
+                                $curr = func::getTableByID('currencies', $item->currencyId);
+                                $dealer = func::getTableByID('users', $item->userId);
+                                $raw_price = $item->price == 0 ? 'Price on request' : $curr->symbol . number_format($item->price, 0) .' '. $curr->code;
+                                $price_format = $raw_price;
+                              ?>
+        				   	   	  <span class="price">{{ $price_format }}</span>
+        				   	   	  <div class="item-logo">
+        				   	   	   	<img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 300) : func::img_url('default-logo.png', 300) }}" alt="image description">
+        				   	   	  </div>
+        				   	     </div>
+        				   	   </div>
+        				     </div>
+                     @if(($i+1)%3 ===0)
+                       <div class="clearfix visible-md-block"></div>
+                     @endif
+                     @if(($i+1)%2 ===0)
+                       <div class="clearfix visible-sm-block"></div>
+                     @endif
+                   @endfor
+                 @else
+                   <div class="col-md-12 col-sm-12">
+                     <p>
+                       No Items found
+                     </p>
+                   </div>
+                 @endif
                 </div>
             </div>
         </div>

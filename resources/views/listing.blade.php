@@ -126,7 +126,7 @@
                             <div class="link-btn">
                                 <div class="logo-aside">
                                     <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
-                                    <a href="#">
+                                    <a href="/dealer/{{$dealer->id}}">
                                         <img src="{{ func::img_url($dealer_img, 235) }}" alt="image description" width="233" height="29">
                                     </a>
                                 </div>
