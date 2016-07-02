@@ -279,6 +279,7 @@
             },
             headers: {'X-CSRF-Token': $('input[name=_token]').val()},
             success: function(res) {
+                console.log(res);
                 if (res.result === 1 ){
                     currentRoom = otherId;
                     currentListingId = listingId;
@@ -291,7 +292,7 @@
                     _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).messages = res.messages;
                     genMessages(otherId, listingId, newMessage);
                 } else {
-                    $("#chat-list").html("<li>"+ result.message +"</li>");
+                    $("#chat-list").html("<li>"+ res.message +"</li>");
                 }
             }
         });
