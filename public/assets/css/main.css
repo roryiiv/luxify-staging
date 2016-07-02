@@ -4942,7 +4942,8 @@ a.btn-3DVRTour {
 	vertical-align:middle;
 	display:table-cell;
 	text-align:center;
-	background-color:#f4f4f4;
+	/* background-color:#f4f4f4; */
+  background-color: #fff;
 }
 .item-list .thumbnail figure img {
 	max-height:100%;
@@ -4957,7 +4958,8 @@ a.btn-3DVRTour {
 	vertical-align:middle;
 	display:table-cell;
 	text-align:center;
-	background-color:#f4f4f4;
+	/* background-color:#f4f4f4; */
+  background-color: #fff;
 }
 .item-list .thumbnail figure img {
 	max-height:100%;
@@ -4972,7 +4974,8 @@ a.btn-3DVRTour {
 	vertical-align:middle;
 	display:table-cell;
 	text-align:center;
-	background-color:#f4f4f4;
+	/* background-color:#f4f4f4; */
+  background-color: #fff;
 }
 .item-list .thumbnail figure img {
 	height:auto;
