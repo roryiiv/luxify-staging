@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
+
 use App\User;
 use App\Country;
 use App\Listings;
@@ -194,10 +196,9 @@ class Dashboard extends Controller
     }
 
     public function product_add() {
-      $error_arr = array();
-      $newItem = new Listings;
 
-      $newItem->userId = Auth::user()->id;
+        $error_arr = array();
+        $newItem = new Listings;
 
         $newItem->userId = Auth::user()->id;
 

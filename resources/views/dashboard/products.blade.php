@@ -154,7 +154,7 @@
                                                     <td><span class="label label-default">{{$products[$i]->status}}</span></td>
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
-                                                            <a href="/listings/{{ $products[$i]->id }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
+                                                            <a target="_blank" href="/listing/{{ $products[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
                                                             <a href="/dashboard/product/edit/{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
                                                             <a href="/dashboard/product/delete/{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                         </div>

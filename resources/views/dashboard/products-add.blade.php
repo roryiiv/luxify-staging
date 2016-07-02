@@ -455,10 +455,10 @@
             _token: token
         },
         // headers: {'X-CSRF-Token': $('input[name=_token]').val()},
-        maxFilesize: 5,
+        // maxFilesize: 5,
         maxFiles: 20,
         // parallelUploads: 10,
-        maxThumbnailFilesize: 5,
+        // maxThumbnailFilesize: 5,
         uploadMultiple: true,
         autoProcessQueue: true,
         previewsContainer: "#images-preview-zone",
