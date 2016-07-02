@@ -436,8 +436,14 @@ class Front extends Controller {
                 return redirect('/listing/' . $listing->slug . '?offer=sent');
             }else{
                 $created_at = date("Y-m-d H:i:s");
+                $listing = DB::table('listings')
+                ->where('userId', $id)
+                ->orderby('created_at', 'desc')
+                ->select('id')
+                ->first();
                 $message_id = DB::table('conversations')->insertGetId([
                     'body' => 'Hi, I would like to contact you.',
+                    'listingId' => $listing->id,
                     'sentAt' => $created_at,
                     'fromUserId' => Auth::user()->id,
                     'toUserId' => $id
