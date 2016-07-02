@@ -3,7 +3,7 @@
         {{ csrf_field() }}
         <input type="hidden" name="action" value="search" />
         <div class="input-group">
-            <input id="search_query" type="text" name="search" class="form-control search-tracker" placeholder="Search by category, item, location...">
+            <input id="search_query" type="text" name="search" class="form-control search-tracker" placeholder="{{ isset($search) && !empty($search) ? $search : 'Search by category, item, location...'}}">
             <div class="input-group-addon">
                 <input type="submit" class="btn btn-primary" value="Search">
             </div>

@@ -6,8 +6,9 @@ $subs = func::categories('all');
 <div class="filter-block">
     <a role="button" data-toggle="collapse" href=".filter-drop" aria-expanded="false" class="btn btn-primary">Filter</a>
     <div class="filter-drop collapse">
-        <form action="{{$_SERVER['REQUEST_URI']}}" method="post" class="filter-form">
+        <form action="{{$_SERVER['REQUEST_URI']}}" method="get" class="filter-form">
             {{ csrf_field() }}
+            <input type="hidden" id="filters" name="filters" value="on" />
             <div class="form-row">
                 <div class="row">
                     <div class="col-sm-3">
@@ -17,7 +18,7 @@ $subs = func::categories('all');
                                 <option>Location</option>
                                 @if(!empty($locs))
                                     @foreach($locs as $loc)
-                                        <option value="{{$loc['val']}}">{{$loc['label']}}</option>
+                                        <option value="{{$loc['val']}}"{{ isset($filters['location']) && !empty($filters['location']) ? func::selected($filters['location'], $loc['val']) : '' }}>{{$loc['label']}}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -49,7 +50,7 @@ $subs = func::categories('all');
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-sm-3">
                         <div class="select-hold">
                             <strong class="form-title">Condition</strong>
@@ -73,7 +74,7 @@ $subs = func::categories('all');
                         </label>
                     </div>
                     <div class="col-sm-8 ion-range">
-                        <input type="text" id="range" value="" name="range" />
+                        <input type="text" id="range" value="{{ isset($filters['range']) && !empty($filters['range']) ? $filters['range'] : '' }}" name="range" />
                     </div>
                 </div>
             </div>
@@ -82,19 +83,19 @@ $subs = func::categories('all');
                 <ul class="radio-list">
                     <li>
                         <label class="radio">
-                            <input type="radio" name="sort-radio" value="latest" />
+                            <input type="radio" name="sort-radio" value="latest"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'latest') ? ' checked="checked"' : '' }} />
                             <span class="text">Latest</span>
                         </label>
                     </li>
                     <li>
                         <label class="radio">
-                            <input type="radio" name="sort-radio" value="priceUp" />
+                            <input type="radio" name="sort-radio" value="priceUp"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceUp') ? ' checked="checked"' : '' }} />
                             <span class="text">Price Up</span>
                         </label>
                     </li>
                     <li>
                         <label class="radio">
-                            <input type="radio" name="sort-radio" value="priceDown" />
+                            <input type="radio" name="sort-radio" value="priceDown"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceDown') ? ' checked="checked"' : '' }} />
                             <span class="text">Price Down</span>
                         </label>
                     </li>

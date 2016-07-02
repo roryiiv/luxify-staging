@@ -365,7 +365,8 @@ div.lightbox {
     /* 1px solid #4a4a4a */
     border-radius: 0;
     padding: 0;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+    min-height: 480px;
 }
 .thumbnail .caption:after {
     clear: both;
