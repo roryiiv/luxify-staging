@@ -25,9 +25,10 @@
 
 <body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
     <div class="container page-container">
+        @include('inc.loginheader')
         <div class="page-content">
             <div class="v2">
-                <div class="logo"><img src="./build/images/logo/logo-dark.png" alt="" width="160"></div>
+                <div class="logo"><a target="_self" href='/'><img src="./build/images/logo/logo-dark.png" alt="" width="160"></a></div>
                 <form id='register-form' role="form" method="POST" action="{{ url('/register') }}" class="form-horizontal">
                     {{ csrf_field() }}
 
@@ -61,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <button id='submit-btn' type="submit" class="btn-lg btn btn-primary btn-rounded btn-block">Sign up</button>
+                    <button id='submit-btn' type="submit" style="border-radius: 0px!important;" class="btn-lg btn btn-primary btn-block">Sign up</button>
                     <p id="login_error" style="margin: 15px 0; display: none;">
                         <span class="alert danger">Username or Email already used.<br />
                             Chose a new one, please.</span>
@@ -158,6 +159,17 @@
           } 
         }
       });
+    $('.dropdown-toggle').dropdown().hover(function() {
+      $(this).dropdown('toggle');
+    }, function(){
+    
+    });
+    $('.dropdown-menu').hover(function(){
+      }, 
+      function(e){
+        $(this).dropdown('toggle');
+        e.stopPropagation();
+      })
     </script>
 </body>
 

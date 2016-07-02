@@ -7,15 +7,64 @@
     <link rel="stylesheet" href="/assets/css/main2.css">
 @endsection
 @section('content')
+    <style>
+     .Tour3DCTA {
+       color: white;
+       font-size: 46px;
+       text-align: center;
+       width: 214px;
+       position: relative;
+       top: 53px;
+       left: 188px;
+       text-transform: UPPERCASE;
+       font-family: 'Roboto';
+       font-weight: 100;
+     } 
+    </style>
     <!-- main banner of the page -->
     <div class="inner-banner">
         <!-- banner image -->
         <section class="images">
-            <?php $images = json_decode($listing->images); //var_dump($images); exit; ?>
+            <?php
+               $images = json_decode($listing->images); //var_dump($images); exit; 
+               if (!empty($listing->mainImageUrl)) {
+                 // prepend main image to the images array 
+                 array_unshift($images, $listing->mainImageUrl);
+               }
+            ?>
             <ul>
+                @if($listing->aerialLook3DUrl)
+                  <!--<li>
+                    <a rel="lightbox_3D" class="3DTour fancybox fancybox.iframe" href="{{$listing->aerialLook3DUrl}}">
+
+                      <div style="min-height: 397px; min-width: 600px; background-color: rgba(0,0,0,0.6); position: absolute;">
+                         <h2 class='Tour3DCTA'>3D Virtual Tour Available
+                         </h2>
+                      </div>
+                        <div style="min-height: 397px; min-width: 600px; background-image:url('/assets/images/3DTour_sample_2.gif'); background-repeat: no-repeat; background-size: cover;"></div>  
+                    </a>
+                  </li>-->
+                  <li>
+                    <a style="position: relative;" rel="lightbox_3D" class="3DTour fancybox fancybox.iframe" href="{{$listing->aerialLook3DUrl}}">
+                      <div style="width:624px; height: 33rem; position: absolute;" >
+                         <h2 class='Tour3DCTA' style="z-index: 2;">3D Virtual Tour
+                           <br />
+                           <span style="margin-top: 20px; z-index:2" class="glyphicon glyphicon-play-circle"></span>
+                         </h2>
+                         <div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.5);position: absolute; z-index: 1;top: 0;"></div>
+                      </div>
+                      <img style="z-index:1;"src="/assets/images/3DTour_sample_2.gif">
+                      
+                    </a>
+                  </li>
+                @endif
                 @if(is_array($images))
                     @foreach($images as $image)
-                        <li><img src="{{ func::img_url($image, 980) }}" /></li>
+                        <li>
+                          <a rel="lightbox" href="{{func::img_url($image, 1024)}}" class="fancybox">
+                            <img src="{{ func::img_url($image, 600) }}" />
+                          </a>
+                        </li>
                     @endforeach
                 @else
                     <li><img src="{{ func::img_url($listing->mainImageUrl, 980) }}" /></li>
@@ -41,8 +90,9 @@
                             <?php
                             $curr = func::getTableByID('currencies', $listing->currencyId);
                             $dealer = func::getTableByID('users', $listing->userId);
-                            if(!empty($dealer->countryId))
-                            $country = func::getTableByID('countries', $dealer->countryId);
+                            if($dealer && !empty($dealer->countryId)) {
+                              $country = func::getTableByID('countries', $dealer->countryId);
+                            }
                             $url = 'http://' . $_SERVER['HTTP_HOST'];
                             $raw_price = $listing->price == 0 ? 'Price on request' : $curr->symbol . number_format($listing->price, 0) .' '. $curr->code;
                             $price_format = $raw_price;
@@ -72,13 +122,15 @@
                                 {{-- <li><a href="#"><span class="icon icon-wechat"></span></a></li>
                                 <li><a href="#"><span class="icon icon-social"></span></a></li> --}}
                             </ul>
+                          @if ($dealer)
                             <div class="link-btn">
                                 <div class="logo-aside">
-                                    <?php $dealer_img = !empty ($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
-                                    <a href="#">
+                                    <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
+                                    <a href="/dealer/{{$dealer->id}}">
                                         <img src="{{ func::img_url($dealer_img, 235) }}" alt="image description" width="233" height="29">
                                     </a>
                                 </div>
+
                                 <span class="small-text">Luxify dealer since {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
                                     <a href="/dealer/{{ $dealer->id }}" class="btn btn-primary">Dealer page</a>
@@ -98,6 +150,7 @@
                                     @endif
                                 </div>
                             </div>
+                          @endif
                         </aside>
 
                         <article class="block-content">
@@ -214,6 +267,7 @@
                                                     @endif
                                                 </figure>
                                             </a>
+                                            @if ($dealer)
                                             <div class="caption">
                                                 <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
                                                 <?php
@@ -228,6 +282,7 @@
                                                     <img src="{{ func::img_url($msellerImg, 90) }}" alt="{{ $mseller->fullName }}">
                                                 </div>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                 @endforeach
@@ -340,15 +395,29 @@
             });
         });
         $(document).ready(function() {
+
+    		$(".3DTour").fancybox({
+        	fitToView	: true,
+        	width		: '90%',
+        	height		: '90%',
+        	autoSize	: true,
+        	closeClick	: false,
+        	openEffect	: 'none',
+        	closeEffect	: 'none',
+          arrows: false,
+          mouseWheel: false,
+        });
+
     		$(".lightbox").fancybox({
-        		fitToView	: false,
-        		width		: '70%',
-        		height		: '70%',
-        		autoSize	: false,
-        		closeClick	: false,
-        		openEffect	: 'none',
-        		closeEffect	: 'none'
-            });
+        	fitToView	: false,
+        	width		: '80%',
+        	height		: '80%',
+        	autoSize	: false,
+        	closeClick	: false,
+        	openEffect	: 'none',
+        	closeEffect	: 'none'
+        });
+
     	});
     });
     </script>
