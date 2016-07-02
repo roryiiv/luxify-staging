@@ -1,4 +1,4 @@
-@extends('layouts.dashboard') 
+@extends('layouts.dashboard')
 @section('head')
 <!-- PACE-->
 <link rel="stylesheet" type="text/css" href="/db/css/pace-theme-flash.css">
@@ -37,7 +37,7 @@
     position: absolute !important;
     z-index: 2 !important;
   }
-  
+
   .sweet-alert .sa-icon.sa-success .sa-placeholder {
     width: 80px;
     height: 80px;
@@ -49,7 +49,7 @@
     top: -4px;
     z-index: 2;
   }
-  
+
   .confirm {
     box-shadow: 0 3px 0 0 #117b66 !important;
     padding: 10px 20px !important;
@@ -61,13 +61,13 @@
     background-color: #17A88B !important;
     border-color: #17A88B !important;
   }
-  
+
   .confirm:hover {
     color: #FFF !important;
     background-color: #117b66 !important;
     border-color: #117b66 !important;
   }
-  
+
   h2 {
     color: #737373 !important;
     font-weight: 500 !important;
@@ -75,18 +75,18 @@
     margin-bottom: 10px !important;
     font-size: 30px !important;
   }
-  
+
   .sweet-alert p {
     font-size: 21px;
     color: #9a9a9a;
   }
-  
+
   .sweet-alert[data-has-cancel-button=false] button {
     box-shadow: 0 3px 0 0 #117b66 !important;
   }
 </style>
 
-@endsection 
+@endsection
 
 @section('content')
 <div class="page-container">
@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="page-content container-fluid">
-              <form id="form-tabs_edit_product" class="form-horizontal" action="/dashboard/products/{{$item->id}}" method="post">
+              <form id="form-tabs_edit_product" class="form-horizontal" action="/dashboard/products/{{$item->id}}" method="post" enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 <h3>Step 1: Category</h3>
                 <fieldset>
@@ -145,14 +145,14 @@
                             <label for="itemCategory" class="col-sm-3 control-label">Item Category</label>
                             <div class="col-sm-9">
                                 <select id="itemCategory" name="itemCategory" class="form-control" required>
-                                  
+
                                   <option value="">--Please Select--</option>
                                   <?php $categories = func::build_categories('leaf'); ?>
 
                                   @foreach($categories as $category)
                                     <option {{func::selected($item->categoryId, $category['id'])}}  value="{{ $category['id'] }}">{{ $category['hierarchy'] }}</option>
                                   @endforeach
-                                  
+
                                 </select>
                             </div>
                         </div>
@@ -176,10 +176,10 @@
                                 <option {{func::selected($item->status, 'PENDING')}} value=''>Pending</option>
                                 <option {{func::selected($item->status, 'SOLD')}}  value="SOLD">Sold</option>
                                 <option {{func::selected($item->status, 'EXPIRED')}}  value="EXPIRED">Expired</option>
-                              
-                       
+
+
                             </select>
-                            
+
                         </div>
                     </div>
                     <div class="form-group">
@@ -217,11 +217,11 @@
                                 @foreach($currencies as $currency)
                                   <option {{func::selected($item->currencyId, $currency['val'])}}  value="{{ $currency['val'] }}">{{ $currency['label'] ." (".$currency['code'].")" }}</option>
                                 @endforeach
-                              
+
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="form-group">
                             <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
@@ -267,8 +267,8 @@
                              <div class="header">Remove</div>
                           </div>
                         </div>
-                        
-                      
+
+
                         <table style="width: 100%" class="table table-bordered" id="images-preview-table">
                             <thead>
                                 <tr>
@@ -307,7 +307,7 @@
                     </div>
                 </fieldset>
               </form>
-                
+
             </div>
     <div class="dz-preview dz-file-preview" id="dz-preview-template" style="display:none;">
               <div class="row">
@@ -330,7 +330,7 @@
                 </div>
               </div>
             </div>
-            
+
    <script type='text/template' class="dz-preview dz-file-preview" id="dz-preview-template" style="display:none;">
               <div class="row">
               </div>
@@ -379,7 +379,7 @@
 <script>
 <?php
   $otherImages = json_decode($item->images);
-  
+
   $images = array();
   $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true);
 
@@ -389,8 +389,8 @@
 ?>
   var images_array = <?php echo json_encode($images, JSON_PRETTY_PRINT); ?>;
   var optionalFields = <?php echo json_encode($item->optionFields, JSON_PRETTY_PRINT) ?>;
-  
-    
+
+
   function deleteImg(ele, i, filename, onS3 = false) {
     $.ajax({
       url:'/removeImage',
@@ -407,7 +407,7 @@
       success: function(res, err) {
         if (res.result === 1) {
           images_array.splice(i, 1);
-          genImagesPreview();      
+          genImagesPreview();
         }
       }
     });
@@ -417,7 +417,7 @@
     var table = $("#images-preview-table tbody");
     table.html('');
     for (var i = 0; i < images_array.length; i++) {
-      $('<tr><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);    
+      $('<tr><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
     }
   }
   function genControls({id, type, name, label, optionValues, value, valueId}){
@@ -449,16 +449,16 @@
         }
       }
   $(document).ready(function () {
-    
+
     genImagesPreview();
-    
+
     for (var i = 0; i < optionalFields.length ; i++){
-      $(genControls(optionalFields[i])).appendTo('#optionFields');    
+      $(genControls(optionalFields[i])).appendTo('#optionFields');
     }
-    
+
     $('.actions ul li').click(function () {
       $(".sweet-alert p").html("Your item has been submitted for approval");
-    });  
+    });
     $('#itemCategory').on('change', function(){
       $.get({
         url: '/api/category/'+ $('#itemCategory').val() + '/fields',
@@ -467,40 +467,44 @@
           if (result.result === 1){
             $('#optionFields').html('');
             for (var i = 0; i < result.data.length ; i++){
-              $(genControls(result.data[i])).appendTo('#optionFields');    
-            } 
+              $(genControls(result.data[i])).appendTo('#optionFields');
+            }
           }
         }
-      }); 
+      });
     });
-    
+
     $('#priceOnRequest').on('click', function(){
       $('#price').prop('disabled', $('#priceOnRequest').prop('checked') );
     });
-      
+
+    var token = "{{ Session::getToken() }}";
     $("#item-images-dz").dropzone({
-      url: "/upload_multiple",
-      paramName: "file",
-      headers: {'X-CSRF-Token': $('input[name=_token]').val()},
-      maxFilesize: 5,
-      maxFiles: 20,
-      maxThumbnailFilesize: 1,
-      uploadMultiple: true,
-      autoProcessQueue: true,
-      previewsContainer: "#images-preview-zone",
-      previewTemplate: $('#dz-preview-template').html(),
-      dictDefaultMessage: "<i class='icon-dz fa fa-files-o'></i>Drop files here to upload",
-      init: function() {
-        this.on('complete', function(result) {
-          var files = JSON.parse(result.xhr.response);
-          for (var i = 0; i < files.length; i++) {
-            if (typeof _.find(images_array, {filename: files[i].filename}) === 'undefined') {
-              images_array.push(files[i]);
-            }
-          }
-          genImagesPreview();
-        });   
-      }
+        url: "/upload_multiple",
+        paramName: "files",
+        params: {
+            _token: token
+        },
+        // headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+        maxFilesize: 5,
+        maxFiles: 20,
+        maxThumbnailFilesize: 1,
+        uploadMultiple: true,
+        autoProcessQueue: true,
+        previewsContainer: "#images-preview-zone",
+        previewTemplate: $('#dz-preview-template').html(),
+        dictDefaultMessage: "<i class='icon-dz fa fa-files-o'></i>Drop files here to upload",
+        init: function() {
+            this.on('complete', function(result) {
+                var files = JSON.parse(result.xhr.response);
+                for (var i = 0; i < files.length; i++) {
+                    if (typeof _.find(images_array, {filename: files[i].filename}) === 'undefined') {
+                        images_array.push(files[i]);
+                    }
+                }
+                genImagesPreview();
+            });
+        }
     });
   });
 

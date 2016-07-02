@@ -1,55 +1,56 @@
 $(document).ready(function () {
-  var addProductForm = $('#form-tabs_approduct').show();
+    //add product form
+    var addProductForm = $('#form-tabs_approduct').show();
     addProductForm.steps({
-      headerTag: "h3", 
-      bodyTag: "fieldset",
-      transitionEffect: "slideLeft",
-      enableFinishButton: true,
-      enablePagination: true,
-      enableAllSteps: false,
-      titleTemplate: "#title#",
-      cssClass: "tabcontrol",
-      onStepChanging: function (event, curIdx, newIdx) {
-        if (curIdx > newIdx) {
-          return true;
+        headerTag: "h3",
+        bodyTag: "fieldset",
+        transitionEffect: "slideLeft",
+        enableFinishButton: true,
+        enablePagination: true,
+        enableAllSteps: true,
+        titleTemplate: "#title#",
+        cssClass: "tabcontrol",
+        onStepChanging: function (event, curIdx, newIdx) {
+            if (curIdx > newIdx) {
+                return true;
+            }
+            // Needed in some cases if the user went back (clean up)
+            if (curIdx < newIdx)
+            {
+                // To remove error styles
+                addProductForm.find(".body:eq(" + newIdx + ") label.error").remove();
+                addProductForm.find(".body:eq(" + newIdx + ") .error").removeClass("error");
+            }
+            addProductForm.validate().settings.ignore = ":disabled,:hidden";
+            return addProductForm.valid();
+        },
+        onFinishing: function (event, currentIndex) {
+            swal({
+                title: "New Listing Created!",
+                text: "Admin will review your listing soon.",
+                type: "success",
+                confirmButtonClass: "btn-raised btn-success",
+                confirmButtonText: "OK"
+            });
+            addProductForm.submit();
+            return true;
+        },
+        labels: {
+            finish: "Submit"
         }
-        // Needed in some cases if the user went back (clean up)
-        if (curIdx < newIdx)
-        {
-            // To remove error styles
-            addProductForm.find(".body:eq(" + newIdx + ") label.error").remove();
-            addProductForm.find(".body:eq(" + newIdx + ") .error").removeClass("error");
-        }
-        addProductForm.validate().settings.ignore = ":disabled,:hidden";
-        return addProductForm.valid();
-      },
-      onFinishing: function (event, currentIndex) {
-        swal({
-          title: "New Listing Created!", 
-          text: "Admin will review your listing soon.",
-          type: "success",
-          confirmButtonClass: "btn-raised btn-success",
-          confirmButtonText: "OK"
-        });
-        addProductForm.submit();
-        return true;
-      },
-      labels: {
-        finish: "Submit"
-      }
     }).validate({
-      errorPlacement: function errorPlacement(error, element) { element.after(error); },
-      rules: {
-        confirm: {
-          equalTo: "#password-2"
+        errorPlacement: function errorPlacement(error, element) { element.after(error); },
+        rules: {
+            confirm: {
+                equalTo: "#password-2"
+            }
         }
-    }
-});
-  
-  
+    });
+
+
   var editProductForm = $('#form-tabs_edit_product').show();
     editProductForm.steps({
-      headerTag: "h3", 
+      headerTag: "h3",
       bodyTag: "fieldset",
       transitionEffect: "slideLeft",
       enableFinishButton: true,
@@ -64,7 +65,7 @@ $(document).ready(function () {
       },
       onFinishing: function (event, currentIndex) {
         swal({
-          title: "Good job!", 
+          title: "Good job!",
           text: "You have updated the listing.",
           type: "success",
           confirmButtonClass: "btn-raised btn-success",

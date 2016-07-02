@@ -89,8 +89,8 @@
                                         <label for="ddlStatus">Status</label>
                                         <select id="ddlStatus" name="status" class="form-control">
                                             <option value="">Choose</option>
-                                            <option value="PENDING">Pending</option> 
-                                            <option value="ACTIVE">Active</option>
+                                            <option value="PENDING">Pending</option>
+                                            <option value="APPROVED">Approved</option>
                                             <option value="SOLD">Sold</option>
                                             <option value="EXPIRED">Expired</option>
                                         </select>
@@ -148,14 +148,14 @@
                                                     <td><img src="{{func::img_url($products[$i]->mainImageUrl, 50, 50)}}" width="50" alt="" class="img-thumbnail img-responsive"></td>
                                                     <td style="width: 25%;">{{$products[$i]->title}}</td>
                                                     {{--<td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>--}}
-                                                 @if($products[$i]->price) 
+                                                 @if($products[$i]->price)
                                                     <td class="text-right">{{$products[$i]->code}} ${{number_format($products[$i]->price)}}</td>
                                                  @else
                                                     <td class="text-right">ON REQUEST - {{$products[$i]->code}}</td>
                                                  @endif
                                                     {{-- <td class="text-right">320</td> --}}
                                                     <td class="text-center">
-                                                       @if ($products[$i]->status == 'APROVED') 
+                                                       @if ($products[$i]->status == 'APROVED')
                                                          <div role="group" aria-label="soldExpiredButton" class="btn-group btn-group-sm">
                                                             <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'SOLD')" class="btn btn-outline btn-primary">SOLD</button>
                                                             <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'EXPIRED')" class="btn btn-outline btn-warning">EXPIRE</button>
@@ -168,7 +168,7 @@
                                                          </div>
 </div>
                                                        @else
-                                                         <span class="label label-default">{{$products[$i]->status}}</span> 
+                                                         <span class="label label-default">{{$products[$i]->status}}</span>
                                                        @endif
                                                     </td>
                                                     <td class="text-center">
@@ -259,9 +259,9 @@
                   $(ele).parent().parent().html('<span class="label label-default">'+ res.status +'</span>');
                   $(parent).fadeIn("fast");
                 });
-              } 
+              }
             }
-          }); 
+          });
         }
       }
       $(document).ready(function(){
@@ -278,8 +278,8 @@
               },
               singleDatePicker: !0,
               endDate: moment()
-              }); 
-              
+              });
+
             }
           });
       });

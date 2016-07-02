@@ -422,7 +422,7 @@
                     $('.dz-error-mark').hide();
                 },
                 success: function (file, response) {
-                    var imgName = response;
+                    console.log(response);
                     $('#profile_img').val(imgName);
                 },
                 error: function (file, response) {

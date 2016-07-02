@@ -207,6 +207,7 @@ class Functions
         $isw = DB::table('wishlists')
         ->where('userId', $user_id)
         ->where('listingId', $listing_id)
+        ->where('deleted', 0)
         ->first();
 
         if($isw){

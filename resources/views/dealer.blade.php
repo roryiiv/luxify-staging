@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <?php $banner = !empty($dealer->coverImageUrl) ? $dealer->coverImageUrl : 'about-banner.jpg'; ?>
-    <section class="inner-banner parallax" style="background-image:url({{ func::img_url($banner, 1920) }});">
+    <section class="inner-banner parallax" style="background-image:url({{ func::img_url($banner, 1960) }});">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-center">
@@ -157,9 +157,15 @@
                     url: url,
                     headers: {'X-CSRF-TOKEN': token},
                     data: data,
-                    // dataType: "html",
+                    dataType: "html",
                     success: function(data){
-                        $(this).addClass('added');
+                        console.log(data);
+                        if(data == 0){
+                            alert('Duplicated item, please contact Admin.');
+                        }else{
+                            alert('Added to your Wishlist.');
+                            $('a#'+itemID).addClass('added');
+                        }
                     },
                     error: function(errMsg){
                         console.log(errMsg.responseText);
