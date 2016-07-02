@@ -25,7 +25,13 @@
     <div class="inner-banner">
         <!-- banner image -->
         <section class="images">
-            <?php $images = json_decode($listing->images); //var_dump($images); exit; ?>
+            <?php
+               $images = json_decode($listing->images); //var_dump($images); exit; 
+               if (!empty($listing->mainImageUrl)) {
+                 // prepend main image to the images array 
+                 array_unshift($images, $listing->mainImageUrl);
+               }
+            ?>
             <ul>
                 @if($listing->aerialLook3DUrl)
                   <!--<li>
@@ -84,8 +90,9 @@
                             <?php
                             $curr = func::getTableByID('currencies', $listing->currencyId);
                             $dealer = func::getTableByID('users', $listing->userId);
-                            if(!empty($dealer->countryId))
-                            $country = func::getTableByID('countries', $dealer->countryId);
+                            if($dealer && !empty($dealer->countryId)) {
+                              $country = func::getTableByID('countries', $dealer->countryId);
+                            }
                             $url = 'http://' . $_SERVER['HTTP_HOST'];
                             $raw_price = $listing->price == 0 ? 'Price on request' : $curr->symbol . number_format($listing->price, 0) .' '. $curr->code;
                             $price_format = $raw_price;
@@ -115,13 +122,15 @@
                                 {{-- <li><a href="#"><span class="icon icon-wechat"></span></a></li>
                                 <li><a href="#"><span class="icon icon-social"></span></a></li> --}}
                             </ul>
+                          @if ($dealer)
                             <div class="link-btn">
                                 <div class="logo-aside">
-                                    <?php $dealer_img = !empty ($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
+                                    <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                                     <a href="#">
                                         <img src="{{ func::img_url($dealer_img, 235) }}" alt="image description" width="233" height="29">
                                     </a>
                                 </div>
+
                                 <span class="small-text">Luxify dealer since {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
                                     <a href="/dealer/{{ $dealer->id }}" class="btn btn-primary">Dealer page</a>
@@ -141,6 +150,7 @@
                                     @endif
                                 </div>
                             </div>
+                          @endif
                         </aside>
 
                         <article class="block-content">
@@ -257,6 +267,7 @@
                                                     @endif
                                                 </figure>
                                             </a>
+                                            @if ($dealer)
                                             <div class="caption">
                                                 <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
                                                 <?php
@@ -271,6 +282,7 @@
                                                     <img src="{{ func::img_url($msellerImg, 90) }}" alt="{{ $mseller->fullName }}">
                                                 </div>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                 @endforeach
