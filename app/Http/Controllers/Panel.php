@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+Use Mail;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -497,7 +499,7 @@ class Panel extends Controller
       $products = DB::table('listings')
       ->where($filter)
       ->join('currencies', 'listings.currencyId', '=', 'currencies.id')
-      ->orderby('listings.created_at', 'asc')
+      ->orderby('listings.created_at', 'desc')
       ->select('listings.*', 'currencies.code')
       ->paginate(10);
 
@@ -507,27 +509,60 @@ class Panel extends Controller
     }
 
     public function product_change_status() {
-      $itemId = (isset($_POST['itemId']) && !empty($_POST['itemId'])) ? $_POST['itemId']: NULL;
-      $status = (isset($_POST['status']) && !empty($_POST['status'])) ? $_POST['status']: NULL;
-      if ($itemId && $status) {
-        DB::table('listings')
-          ->where('id', $itemId)
-          ->update(['status' => $status]);
-        $updated = DB::table('listings')
-          ->where('id', $itemId)
-          ->select('status')
-          ->first();
+        $itemId = (isset($_REQUEST['itemId']) && !empty($_REQUEST['itemId'])) ? $_REQUEST['itemId']: NULL;
+        $status = (isset($_REQUEST['status']) && !empty($_REQUEST['status'])) ? $_REQUEST['status']: NULL;
+        if ($itemId && $status) {
+            DB::table('listings')
+            ->where('id', $itemId)
+            ->update(['status' => $status]);
 
-        if ($updated) {
-          if ($updated->status === $status) {
-            echo json_encode((object) ['result'=> 1, 'status'=> $updated->status]);
-          } else {
-            echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']);
-          }
-        } else {
-          echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']);
+            $updated = DB::table('listings')
+            ->where('id', $itemId)
+            ->first();
+
+            if ($updated) {
+                // Send the email notification
+                // get the seller data first
+                $user = DB::table('users')
+                ->where('id', $updated->userId)
+                ->first();
+
+                $username_to = $user->username;
+                $listing_name = $updated->title;
+                $this_url = url('/');
+                $listing_url = $this_url . '/listing/' . $updated->slug;
+                $details = array('to' => $user->email);
+                if($status == 'APPROVED'){
+                    $listing_url = $this_url . '/listing/' . $updated->slug;
+                    Mail::send('emails.luxify-listing-approved-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'listing_url' => $listing_url], function ($message) use ($details){
+
+                        $message->from('technology@luxify.com', 'Luxify Admin');
+                        $message->subject('Listing Approved');
+                        $message->replyTo('no_reply@luxify.com', $name = null);
+                        $message->to($details['to']);
+
+                    });
+                }elseif($status =='REJECTED' ){
+                    $listing_url = $this_url . '/dashboard/products/add';
+                    Mail::send('emails.luxify-listing-rejected-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'listing_url' => $listing_url], function ($message) use ($details){
+
+                        $message->from('technology@luxify.com', 'Luxify Admin');
+                        $message->subject('Listing Rejected');
+                        $message->replyTo('no_reply@luxify.com', $name = null);
+                        $message->to($details['to']);
+
+                    });
+                }
+
+                if ($updated->status === $status) {
+                    echo json_encode((object) ['result'=> 1, 'status'=> $updated->status]);
+                } else {
+                    echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']);
+                }
+            } else {
+                echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']);
+            }
         }
-      }
     }
 
     public function products_confirm() {

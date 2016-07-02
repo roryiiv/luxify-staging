@@ -10,7 +10,7 @@ $num_notif = count($notifs);
         <li><a href="/dashboard" class="bubble"><i class="ti-home"></i><span class="sidebar-title">Dashboard</span></li>
         <li><a href="/dashboard/profile" class="bubble"><i class="ti-user"></i><span class="sidebar-title">My Profile</span></a></li>
         <li><a href="/dashboard/mailbox" class="bubble"><i class="ti-email"></i><span class="sidebar-title">Inquires</span><span class="badge bg-danger">{{$num_notif}}</span></a></li>
-        <li class="panel"><a role="button" data-toggle="collapse" data-parent=".navigation" href="index.html#collapse18" aria-expanded="false" aria-controls="collapse18" class="collapsed"><i class="ti-shopping-cart"></i><span class="sidebar-title">Products</span></a>
+        <li class="panel"><a role="button" data-toggle="collapse" data-parent=".navigation" href="#collapse18" aria-expanded="false" aria-controls="collapse18" class="collapsed"><i class="ti-shopping-cart"></i><span class="sidebar-title">Products</span></a>
             <ul id="collapse18" class="list-unstyled collapse">
                 <li><a href="/dashboard/products">Product list</a></li>
                 <li><a href="/dashboard/products/add">Add product</a></li>
