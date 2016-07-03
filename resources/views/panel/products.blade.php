@@ -31,7 +31,7 @@
 @endsection
 
 @section('content')
-    {!! csrf_field() !!}
+
     <div class="page-container">
             <div class="page-header clearfix">
                 <div class="row">
@@ -63,6 +63,7 @@
                     </div>
                     <div class="widget-body">
                         <form id="wishlist" name="wishlist" method="get" action="{{ $_SERVER['REQUEST_URI'] }}">
+                            {!! csrf_field() !!}
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="form-group">
@@ -239,31 +240,31 @@
     <script type="text/javascript" src="/db/js/product-list.js"></script>
     <script type="text/javascript" src="/db/js/date-range-picker.js"></script>
     <script type="text/javascript">
-      function changeListingStatus(ele, listingId, status) {
+    function changeListingStatus(ele, listingId, status) {
         if (listingId && status) {
-          $.ajax({
-            headers: {
-              'X-CSRF-Token': $('input[name=_token]').val()
-            },
-            url: '/api/product/setStatus',
-            dataType: 'json',
-            data: {
-              itemId: listingId,
-              status: status
-            },
-            method: 'POST',
-            success: function(res) {
-              if (res.result === 1) {
-                var parent = $(ele).parent().parent();
-                $(parent).fadeOut("fast", function(){
-                  $(ele).parent().parent().html('<span class="label label-default">'+ res.status +'</span>');
-                  $(parent).fadeIn("fast");
-                });
-              }
-            }
-          });
+            $.ajax({
+                headers: {
+                    'X-CSRF-Token': $('input[name=_token]').val()
+                },
+                url: '/api/product/setStatus',
+                dataType: 'json',
+                data: {
+                    itemId: listingId,
+                    status: status
+                },
+                method: 'POST',
+                success: function(res) {
+                    if (res.result === 1) {
+                        var parent = $(ele).parent().parent();
+                        $(parent).fadeOut("fast", function(){
+                            $(ele).parent().parent().html('<span class="label label-default">'+ res.status +'</span>');
+                            $(parent).fadeIn("fast");
+                        });
+                    }
+                }
+            });
         }
-      }
+    }
       $(document).ready(function(){
           $('#view').change(function(){
               $('form#sorter').submit();

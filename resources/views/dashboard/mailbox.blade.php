@@ -84,10 +84,10 @@
                                     <img id="otherImg" src="" alt="" class="media-object img-circle"  style="display:inline-block;">
                                     <a id="otherEmail" href="#"  style="display:inline-block;"></a>
                                  </div>
-                                
+
                                 <a href="#" style="flex-grow: 1; text-align:right;"><i class="ti-reload"></i></a>
                               </h5>
-                              
+
                               <!--
                                 <div class="media">
                                   <div class="media-left avatar">
@@ -104,8 +104,8 @@
 -->
                                 <div class="pull-right">
                                     <div role="toolbar" aria-label="Toolbar with button groups" class="btn-toolbar">
-                                       
-                                        
+
+
                                            <!--
                                             <ul role="menu" class="dropdown-menu pull-right animated fadeInDown">
                                                 <li><a href="mailbox.html#">Reply</a></li>
@@ -120,7 +120,7 @@
                                             </ul>
                                         </div>
                                         -->
-                                        <!-- 
+                                        <!--
                                         <div role="group" aria-label="Second group" class="btn-group">
                                             <button type="button" class="btn btn-outline btn-default"><i class="ti-angle-left"></i></button>
                                             <button type="button" class="btn btn-outline btn-default"><i class="ti-angle-right"></i></button>
@@ -130,7 +130,7 @@
                             </div>
                             <div class="chat-box">
                               <ul class="chat-content mCustomScrollbar" id="chat-list">
-                                
+
                               </ul>
 
                             </div>
@@ -189,7 +189,7 @@
             </div>
           </li>
         </script>
-      
+
 @endsection
 
 @section('scripts')
@@ -218,161 +218,166 @@
 
     <script>
 
-      var chatroom = [];
-      var currentRoom = 0;
-      var currentListingId = 0;
-      var dealer = {};
-      var left = $('#leftMsg').html();
-      var right = $('#rightMsg').html();
-      
-      function genMessages(otherId, listingId, newMessage = false) {
+    var chatroom = [];
+    var currentRoom = 0;
+    var currentListingId = 0;
+    var dealer = {};
+    var left = $('#leftMsg').html();
+    var right = $('#rightMsg').html();
+
+    function genMessages(otherId, listingId, newMessage = false) {
         var other = _.find(chatroom, {"id": otherId.toString(), "listingId": listingId.toString()});
         $('#otherImg').attr('src', "{{func::img_url('',34 ,34)}}" + other.profile.companyLogoUrl);
         $("#otherEmail").attr("href", 'mailto:'+other.profile.email).html(other.profile.firstName);
         if (!newMessage) {
-          $('#chat-list').mCustomScrollbar("destroy");
-          $("#chat-list").html("");
-          
-          for( var i =0; i < other.messages.length; i++){
-            if (other.messages[i].fromUserId === other.profile.id){
-              $(nano(left, {user: other.profile, msg: other.messages[i]})).prependTo('#chat-list');
-            } else {
-              $(nano(right, {user: dealer, msg: other.messages[i]})).prependTo('#chat-list'); 
+            $('#chat-list').mCustomScrollbar("destroy");
+            $("#chat-list").html("");
+
+            for( var i =0; i < other.messages.length; i++){
+                if (other.messages[i].fromUserId === other.profile.id){
+                    $(nano(left, {user: other.profile, msg: other.messages[i]})).prependTo('#chat-list');
+                } else {
+                    $(nano(right, {user: dealer, msg: other.messages[i]})).prependTo('#chat-list');
+                }
             }
-          }
-          $('#chat-list').mCustomScrollbar({
-            theme: 'dark',
-            setHeight: 480,
-          }).mCustomScrollbar("scrollTo", "bottom");
+            $('#chat-list').mCustomScrollbar({
+                theme: 'dark',
+                setHeight: 480,
+            }).mCustomScrollbar("scrollTo", "bottom");
         } else {
-          $('#chat-list').mCustomScrollbar("disable");
-          
-          
-          if (other.messages[0].fromUserId === other.profile.id){
-            $(nano(left, {user: other.profile, msg: other.messages[0]})).appendTo('#chat-list .mCustomScrollBox .mCSB_container');
-          } else {
-            $(nano(right, {user: dealer, msg: other.messages[0]})).appendTo('#chat-list .mCustomScrollBox .mCSB_container'); 
-          }
-          $('#chat-list').mCustomScrollbar('update');
-          $('#chat-list').mCustomScrollbar("scrollTo", "bottom");
-          
-        }  
-        
-       }
-      
-      function loadMsg(otherId, listingId, newMessage=false, page=0, size=10) {
-        if(typeof listingId === 'number'){
-          listingId = listingId.toString();
+            $('#chat-list').mCustomScrollbar("disable");
+
+
+            if (other.messages[0].fromUserId === other.profile.id){
+                $(nano(left, {user: other.profile, msg: other.messages[0]})).appendTo('#chat-list .mCustomScrollBox .mCSB_container');
+            } else {
+                $(nano(right, {user: dealer, msg: other.messages[0]})).appendTo('#chat-list .mCustomScrollBox .mCSB_container');
+            }
+            $('#chat-list').mCustomScrollbar('update');
+            $('#chat-list').mCustomScrollbar("scrollTo", "bottom");
+
         }
-         if(typeof otherId === 'number'){
-          otherId = otherId.toString();
+
+    }
+
+    function loadMsg(otherId, listingId, newMessage=false, page=0, size=10) {
+        if(typeof listingId === 'number'){
+            listingId = listingId.toString();
+        }
+        if(typeof otherId === 'number'){
+            otherId = otherId.toString();
         }
         $.ajax({
-          url: '/api/mailbox',
-          method: 'POST',
-          dataType: "json",
-          data:{
-            page: page,
-            size: size,
-            otherId: otherId,
-            listingId: listingId
-          },
-          headers: {'X-CSRF-Token': $('input[name=_token]').val()},
-          success: function(res) {
-            if (res.result === 1 ){
-              currentRoom = otherId;
-              currentListingId = listingId;
-              res.users.other.companyLogoUrl =  res.users.other.companyLogoUrl || 'placeholder.png';
+            url: '/api/mailbox',
+            method: 'POST',
+            dataType: "json",
+            data:{
+                page: page,
+                size: size,
+                otherId: otherId,
+                listingId: listingId
+            },
+            headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+            success: function(res) {
+                console.log(res);
+                if (res.result === 1 ){
+                    currentRoom = otherId;
+                    currentListingId = listingId;
+                    res.users.other.companyLogoUrl =  res.users.other.companyLogoUrl || 'placeholder.png';
 
-              dealer = res.users.dealer;
-              if(!_.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile) {
-                _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile = res.users.other;
-              }
-              _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).messages = res.messages;
-              genMessages(otherId, listingId, newMessage);
-            } else {
-               $("#chat-list").html("<li>"+ result.message +"</li>");
+                    dealer = res.users.dealer;
+                    if(!_.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile) {
+                        _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile = res.users.other;
+                    }
+                    _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).messages = res.messages;
+                    genMessages(otherId, listingId, newMessage);
+                } else {
+                    $("#chat-list").html("<li>"+ res.message +"</li>");
+                }
             }
-          }
         });
-      }
-      function genChatList() {
+    }
+    function genChatList() {
         $('ul#inbox').html('');
         chatroom = _.sortBy(chatroom, function(room){
-          return -(moment(room.headline.sentAt).unix());
+            return -(moment(room.headline.sentAt).unix());
         })
         chatroom.forEach(function(room){
-          $(nano($('#msgListTemplate').html(), room.headline)).appendTo('ul#inbox');
+            $(nano($('#msgListTemplate').html(), room.headline)).appendTo('ul#inbox');
         });
-        
-      }
-      function initChatroom() {
+
+    }
+    function initChatroom() {
         $.ajax({
-          url: '/api/mailbox',
-          method: 'GET',
-          dataType: 'json',
-          headers: {'X-CSRF-Token': $('input[name=_token]').val()},
-          success: function(res) {
-            if (res.result === 1) {
-              if(res.messages.length > 0){
-                $(res.messages).each(function(idx, msg){  
-                  msg.idx = idx;
-                  msg.senderCompanyLogoUrl = msg.senderCompanyLogoUrl || 'placeholder.png';
-                  msg.sendAtHuman = moment(msg.sentAt).toNow(true);
-                  var newRoom = {};
-                  newRoom.id = msg.senderId;
-                  newRoom.listingId = msg.listingId
-                  newRoom.active = false;
-                  newRoom.headline = msg;
-                  chatroom.push(newRoom);   
-                });
-                
-                genChatList();
-                
-                loadMsg(chatroom[0].headline.senderId, chatroom[0].headline.listingId);
-              }
+            url: '/api/mailbox',
+            method: 'GET',
+            dataType: 'json',
+            headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+            success: function(res) {
+                console.log(res);
+                if (res.result === 1) {
+                    if(res.messages.length > 0){
+                        $(res.messages).each(function(idx, msg){
+                            msg.idx = idx;
+                            msg.senderCompanyLogoUrl = msg.senderCompanyLogoUrl || 'placeholder.png';
+                            msg.sendAtHuman = moment(msg.sentAt).toNow(true);
+                            var newRoom = {};
+                            newRoom.id = msg.senderId;
+                            newRoom.listingId = msg.listingId
+                            newRoom.active = false;
+                            newRoom.headline = msg;
+                            chatroom.push(newRoom);
+                        });
+
+                        genChatList();
+
+                        loadMsg(chatroom[0].headline.senderId, chatroom[0].headline.listingId);
+                    }
+                }
+            },
+            error: function(errMsg){
+                console.log(errMsg.responseText);
             }
-          }
         });
-      }
+    }
 
-      initChatroom();
+    initChatroom();
 
-      function sendMsg() {
+    function sendMsg() {
         var that = this;
         this.msg = {
-          toUserId: currentRoom,
-          listingId: currentListingId,
-          content: $('#msgTxt').val()
+            toUserId: currentRoom,
+            listingId: currentListingId,
+            content: $('#msgTxt').val()
         };
         $.ajax({
-          url: "/api/mailbox/send",
-          method: 'POST',
-          data: msg,
-          dataType: 'json',
-          headers: {'X-CSRF-Token': $('input[name=_token]').val()},
-          success: function(res) {
-            $('#msgTxt').val('');
-            var room = _.find(chatroom, {
-              id: res.newMessage.toUserId.toString(), 
-              listingId: res.newMessage.listingId.toString() 
-            });
-            room.messages.push(res.newMessage);
-            
-            room.headline.body = res.newMessage.body;
-            genChatList();
-            loadMsg(res.newMessage.toUserId, res.newMessage.listingId, true);          
-          }    
-        });
-      }
+            url: "/api/mailbox/send",
+            method: 'POST',
+            data: msg,
+            dataType: 'json',
+            headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+            success: function(res) {
+                $('#msgTxt').val('');
+                var room = _.find(chatroom, {
+                    id: res.newMessage.toUserId.toString(),
+                    listingId: res.newMessage.listingId.toString()
+                });
+                room.messages.push(res.newMessage);
 
-      $('#sendMsg').on('click', function() {
+                room.headline.body = res.newMessage.body;
+                genChatList();
+                loadMsg(res.newMessage.toUserId, res.newMessage.listingId, true);
+            }
+        });
+    }
+
+    $('#sendMsg').on('click', function() {
         sendMsg();
-      });
-      $('#msgTxt').on('keyup', function(e) {
+    });
+    $('#msgTxt').on('keyup', function(e) {
         if (e.which === 13) {
-         sendMsg();
+            sendMsg();
         }
-      })
+    })
     </script>
 @endsection

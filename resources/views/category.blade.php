@@ -141,6 +141,24 @@
         {{ csrf_field() }}
         <script>
         $(document).ready(function(){
+            var ranges = $('input#range').val();
+            var splitted = ranges.split(';');
+            console.log(splitted);
+            $("#range").ionRangeSlider({
+                hide_min_max: true,
+                keyboard: true,
+                min: 1,
+                max: 1000000000,
+                from: splitted[0],
+                to: splitted[1],
+                type: 'double',
+                step: 1000,
+                prefix: "$",
+                grid: false,
+                prettify_enabled: true,
+                prettify_separator: ","
+            });
+
             $('a.favourite').each(function(){
                 $(this).click(function(event){
                     // return false; // remove this later after database fixes.

@@ -41,8 +41,6 @@ class Front extends Controller {
         ->where('slug', $slug)
         ->first();
 
-
-
         if ($listing) {
           $mores = DB::table('listings')
             ->where('userId', $listing->userId)
@@ -67,10 +65,6 @@ class Front extends Controller {
 
           return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates]);
         }
-
-
-
-
     }
 
     public function categories() {
@@ -156,18 +150,38 @@ class Front extends Controller {
         // $search_arr[] = ['status', 'APPROVED'];
 
         $orderby = 'created_at';
-        $order = 'asc';
+        $order = 'desc';
+        $filters = array();
 
-        if(isset($_POST['_token'])){
-            $post = $_POST;
-            // var_dump($post); exit;
-            if(!empty($post['location']) && $post['location'] != 'Location') $search_arr[] = ['countryId', $post['location']];
-            if(isset($post['category']) && !empty($post['category'])){
+        if(isset($_REQUEST['filters']) && $_REQUEST['filters'] == 'on'){
+            $_filter = $_REQUEST;
+            // var_dump($_filter); exit;
+
+            if(!empty($_filter['location']) && $_filter['location'] != 'Location'){
+                $search_arr[] = ['countryId', $_filter['location']];
+                $filters['location'] = $_filter['location'];
+            }
+            if(isset($_REQUEST['use_price']) && $_REQUEST['use_price'] == 'on'){
+                $use_price =  true;
+                $filters['use_price'] = 'off';
+            }else{
+                $use_price =  false;
+                $filters['use_price'] = 'off';
+            }
+
+            if($use_price && !empty($_REQUEST['range'])){
+                $price_range = explode(';', $_REQUEST['range']);
+                $search_arr[] = ['price', '>=', $price_range[0]];
+                $search_arr[] = ['price', '<=', $price_range[1]];
+                $filters['range'] = $_REQUEST['range'];
+            }
+            // var_dump($price_range); exit;
+            if(isset($_filter['category']) && $_filter['category'] != 'Category'){
                 unset($cat_ids);
                 $cat_ids = array();
-                if(isset($post['sub_category']) && !empty($post['sub_category'])){
+                if(isset($_filter['sub_category']) && !empty($_filter['sub_category'])){
                     // var_dump($childs['classics']);
-                    $sub_category = $post['sub_category'];
+                    $sub_category = $_filter['sub_category'];
                     // var_dump($sub_category);
                     switch($sub_category){
                         case 'estate':
@@ -251,7 +265,7 @@ class Front extends Controller {
                     }
                     // var_dump($cat_ids); exit;
                 }else{
-                    switch($post['category']){
+                    switch($_filter['category']){
                         case 'real-estate':
                         $cat_ids = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
                         $banner = 'banner-estate.jpg';
@@ -293,11 +307,12 @@ class Front extends Controller {
                         $banner = 'wine_banner.jpg';
                         break;
                     }
-                    var_dump($cat_ids); exit;
+                    // var_dump($cat_ids); exit;
                 }
+                $filters['category'] = $_filter['category'];
             }
-            if(!empty($post['sort-radio'])){
-                switch($post['sort-radio']){
+            if(!empty($_filter['sort-radio'])){
+                switch($_filter['sort-radio']){
                     case 'latest':
                     $orderby = 'created_at';
                     $order = 'desc';
@@ -311,9 +326,11 @@ class Front extends Controller {
                     $order = 'asc';
                     break;
                 }
+                $filters['sort'] = $_filter['sort-radio'];
             }
         }
 
+        // var_dump($cat_ids); exit;
         $listings = DB::table('listings')
         ->where('status', 'APPROVED')
         ->whereIn('categoryId', $cat_ids)
@@ -321,7 +338,9 @@ class Front extends Controller {
         ->orderBy($orderby, $order)
         ->paginate(12);
 
-        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner]);
+        $listings->setPath($_SERVER['REQUEST_URI']);
+
+        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
     }
 
     public function categories_optional_fields($catId, $langId = 1) {
@@ -417,8 +436,14 @@ class Front extends Controller {
                 return redirect('/listing/' . $listing->slug . '?offer=sent');
             }else{
                 $created_at = date("Y-m-d H:i:s");
+                $listing = DB::table('listings')
+                ->where('userId', $id)
+                ->orderby('created_at', 'desc')
+                ->select('id')
+                ->first();
                 $message_id = DB::table('conversations')->insertGetId([
                     'body' => 'Hi, I would like to contact you.',
+                    'listingId' => $listing->id,
                     'sentAt' => $created_at,
                     'fromUserId' => Auth::user()->id,
                     'toUserId' => $id
@@ -566,17 +591,38 @@ class Front extends Controller {
         // $search_arr[] = ['status', 'APPROVED'];
 
         $orderby = 'created_at';
-        $order = 'asc';
+        $order = 'desc';
+        $filters = array();
 
-        if(isset($_POST['_token'])){
-            $post = $_POST;
-            if(!empty($post['location']) && $post['location'] != 'Location') $search_arr[] = ['countryId', $post['location']];
-            if(isset($post['category']) && !empty($post['category'])){
+        if(isset($_REQUEST['filters']) && $_REQUEST['filters'] == 'on'){
+            $_filter = $_REQUEST;
+            // var_dump($_filter); exit;
+
+            if(!empty($_filter['location']) && $_filter['location'] != 'Location'){
+                $search_arr[] = ['countryId', $_filter['location']];
+                $filters['location'] = $_filter['location'];
+            }
+            if(isset($_REQUEST['use_price']) && $_REQUEST['use_price'] == 'on'){
+                $use_price =  true;
+                $filters['use_price'] = 'off';
+            }else{
+                $use_price =  false;
+                $filters['use_price'] = 'off';
+            }
+
+            if($use_price && !empty($_REQUEST['range'])){
+                $price_range = explode(';', $_REQUEST['range']);
+                $search_arr[] = ['price', '>=', $price_range[0]];
+                $search_arr[] = ['price', '<=', $price_range[1]];
+                $filters['range'] = $_REQUEST['range'];
+            }
+            // var_dump($price_range); exit;
+            if(isset($_filter['category']) && $_filter['category'] != 'Category'){
                 unset($cat_ids);
                 $cat_ids = array();
-                if(isset($post['sub_category']) && !empty($post['sub_category'])){
+                if(isset($_filter['sub_category']) && !empty($_filter['sub_category'])){
                     // var_dump($childs['classics']);
-                    $sub_category = $post['sub_category'];
+                    $sub_category = $_filter['sub_category'];
                     // var_dump($sub_category);
                     switch($sub_category){
                         case 'estate':
@@ -660,7 +706,7 @@ class Front extends Controller {
                     }
                     // var_dump($cat_ids); exit;
                 }else{
-                    switch($post['category']){
+                    switch($_filter['category']){
                         case 'real-estate':
                         $cat_ids = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
                         $banner = 'banner-estate.jpg';
@@ -702,10 +748,12 @@ class Front extends Controller {
                         $banner = 'wine_banner.jpg';
                         break;
                     }
+                    // var_dump($cat_ids); exit;
                 }
+                $filters['category'] = $_filter['category'];
             }
-            if(!empty($post['sort-radio'])){
-                switch($post['sort-radio']){
+            if(!empty($_filter['sort-radio'])){
+                switch($_filter['sort-radio']){
                     case 'latest':
                     $orderby = 'created_at';
                     $order = 'desc';
@@ -719,16 +767,28 @@ class Front extends Controller {
                     $order = 'asc';
                     break;
                 }
+                $filters['sort'] = $_filter['sort-radio'];
             }
         }
 
         // var_dump($search_arr);
-        $filters = array();
 
-        $listings = DB::table('listings')
-        ->where($search_arr)
-        ->orderBy($orderby, $order)
-        ->paginate(12);
+        if(isset($cat_ids)){
+            $listings = DB::table('listings')
+            ->where('status', 'APPROVED')
+            ->where($search_arr)
+            ->whereIn($cat_ids)
+            ->orderBy($orderby, $order)
+            ->paginate(12);
+        }else{
+            $listings = DB::table('listings')
+            ->where('status', 'APPROVED')
+            ->where($search_arr)
+            ->orderBy($orderby, $order)
+            ->paginate(12);
+        }
+
+        $listings->setPath($_SERVER['REQUEST_URI']);
 
         $locs = '';
         $cats = '';
@@ -752,7 +812,7 @@ class Front extends Controller {
 
         $listings->setPath($_SERVER['REQUEST_URI']);
 
-        return view('search', ['listings' => $listings, 'search' => $search]);
+        return view('search', ['listings' => $listings, 'search' => $search, 'filters' => $filters]);
     }
 
     private function get_column($column, $array) {
@@ -785,6 +845,7 @@ class Front extends Controller {
                 }
 
                 $listings = DB::table('listings')
+                ->where('status', 'APPROVED')
                 ->where('title','like','%'.$search.'%')
                 ->orWhere($search_arr)
                 ->orderBy('created_at', 'desc')
@@ -795,6 +856,7 @@ class Front extends Controller {
                 ->get();
 
                 $total = DB::table('listings')
+                ->where('status', 'APPROVED')
                 ->where('title','like','%'.$search.'%')
                 ->orWhere($search_arr)
                 ->orderBy('created_at', 'desc')

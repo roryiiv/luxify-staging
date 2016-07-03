@@ -235,18 +235,20 @@ function initSlick() {
 }
 
 function initIonRangeSlider() {
-  jQuery("#range").ionRangeSlider({
-      hide_min_max: true,
-      keyboard: true,
-      min: 1000,
-      max: 1000000000,
-      from: 0,
-      to: 1000000000,
-      type: 'double',
-      step: 1,
-      prefix: "$",
-      grid: false
-  });
+    // jQuery("#range").ionRangeSlider({
+    //     hide_min_max: true,
+    //     keyboard: true,
+    //     min: 1,
+    //     max: 1000000000,
+    //     from: 1,
+    //     to: 1000000000,
+    //     type: 'double',
+    //     step: 100000,
+    //     prefix: "$",
+    //     grid: false,
+    //     prettify_enabled: true,
+    //     prettify_separator: ","
+    // });
 }
 
 // fixed header

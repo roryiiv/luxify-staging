@@ -12,7 +12,7 @@
             </ul>
         </li>
 
-        <li class="panel"><a role="button" data-toggle="collapse" data-parent=".navigation" href="index.html#collapse19" aria-expanded="false" aria-controls="collapse18" class="collapsed"><i class="ti-shopping-cart"></i><span class="sidebar-title">Product Management</span></a>
+        <li class="panel"><a role="button" data-toggle="collapse" data-parent=".navigation" href="#collapse19" aria-expanded="false" aria-controls="collapse18" class="collapsed"><i class="ti-shopping-cart"></i><span class="sidebar-title">Product Management</span></a>
             <ul id="collapse19" class="list-unstyled collapse">
                 <li><a href="/panel/products">Product list</a></li>
                 <!--<li><a href="/panel/products/add">Add product</a></li>-->

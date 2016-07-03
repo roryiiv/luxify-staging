@@ -43,6 +43,8 @@ Route::get('/api/mailbox', 'Mailbox@index');
 Route::post('/api/mailbox', 'Mailbox@conversation');
 Route::post('/api/mailbox/send', 'Mailbox@sendMessage');
 Route::post('/api/product/setStatus', 'Panel@product_change_status');
+// Test the API URL
+// Route::get('/api/product/setStatus', 'Panel@product_change_status');
 
 //Front end Routes
 Route::get('/listings','Front@products');
@@ -69,7 +71,7 @@ Route::post('/dealer-application','Front@dealerApplication');
 Route::get('/oauth/redirect/facebook', 'SocialAuthController@fb_redirect');
 Route::get('/oauth/callback/facebook', 'SocialAuthController@fb_callback');
 
-// PANEL Routs (admin)
+// PANEL Routes (admin)
 Route::get('/panel','Panel@index');
 // Users views related
 Route::get('/panel/users','Panel@users');
