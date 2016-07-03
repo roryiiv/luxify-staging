@@ -26,7 +26,7 @@
         <!-- banner image -->
         <section class="images">
             <?php
-               $images = json_decode($listing->images); //var_dump($images); exit; 
+               $images = json_decode($listing->images);  
                if (!empty($listing->mainImageUrl)) {
                  // prepend main image to the images array 
                  array_unshift($images, $listing->mainImageUrl);
@@ -34,16 +34,6 @@
             ?>
             <ul>
                 @if($listing->aerialLook3DUrl)
-                  <!--<li>
-                    <a rel="lightbox_3D" class="3DTour fancybox fancybox.iframe" href="{{$listing->aerialLook3DUrl}}">
-
-                      <div style="min-height: 397px; min-width: 600px; background-color: rgba(0,0,0,0.6); position: absolute;">
-                         <h2 class='Tour3DCTA'>3D Virtual Tour Available
-                         </h2>
-                      </div>
-                        <div style="min-height: 397px; min-width: 600px; background-image:url('/assets/images/3DTour_sample_2.gif'); background-repeat: no-repeat; background-size: cover;"></div>  
-                    </a>
-                  </li>-->
                   <li>
                     <a style="position: relative;" rel="lightbox_3D" class="3DTour fancybox fancybox.iframe" href="{{$listing->aerialLook3DUrl}}">
                       <div style="width:624px; height: 33rem; position: absolute;" >
@@ -61,8 +51,8 @@
                 @if(is_array($images))
                     @foreach($images as $image)
                         <li>
-                          <a rel="lightbox" href="{{func::img_url($image, 1024)}}" class="fancybox">
-                            <img src="{{ func::img_url($image, 600) }}" />
+                          <a rel="fancybox-thumb" href="{{func::img_url($image, 800)}}" class="fancybox-thumb">
+                            <img src="{{ func::img_url($image, 800) }}" />
                           </a>
                         </li>
                     @endforeach
@@ -344,6 +334,8 @@
     </main>
 @endsection
 @section('scripts')
+<link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+<script type="text/javascript" src="/assets/js/jquery.fancybox-thumbs.js?v=1.0.7"></script>
     <script language="javascript" type="text/javascript">
     $(document).ready(function(){
       $("a.bookmark").click(function(e){
@@ -371,13 +363,16 @@
     {{ csrf_field() }}
     <script>
     $(document).ready(function(){
+       @if ($user_id)
         $('a.favourite').each(function(){
             $(this).click(function(event){
                 // return false; // remove this later after database fixes.
                 // event.preventDefault();
-                var url = '/wishlist/add', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
-                console.log(token);
-                var data = {uid: itemID, lid: itemID};
+              var url = '/wishlist/add'; 
+              var itemID = $(this).attr('data-id'); 
+              var userID = {{$user_id}};
+              var token = $('input[name=_token]').val();
+              var data = {uid: itemID, lid: itemID};
 
                 $.ajax({
                     type: 'POST',
@@ -394,6 +389,7 @@
                 });
             });
         });
+       @endif
         $(document).ready(function() {
 
     		$(".3DTour").fancybox({
@@ -408,14 +404,20 @@
           mouseWheel: false,
         });
 
-    		$(".lightbox").fancybox({
+    		$(".fancybox-thumb").fancybox({
         	fitToView	: false,
-        	width		: '80%',
-        	height		: '80%',
+        	width		: '70%',
+        	height		: '70%',
         	autoSize	: false,
         	closeClick	: false,
         	openEffect	: 'none',
-        	closeEffect	: 'none'
+          closeEffect	: 'none',
+          helpers : {
+            thumbs  : {
+              width : 50,
+              height  : 50
+            }
+          }
         });
 
     	});

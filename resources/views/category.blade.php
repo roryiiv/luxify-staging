@@ -55,7 +55,7 @@
                  @if(!empty($listings))
                    @for($i = 0 ; $i < count($listings); $i++)
                      <?php $item = $listings[$i]; ?>
-                     <div class="col-md-4 col-sm-6">
+                     <div class="col-sm-6 col-md-4">
         				   	   <div class="thumbnail">
                           <a href="/listing/{{ $item->slug }}">
             		   	   		<figure>
