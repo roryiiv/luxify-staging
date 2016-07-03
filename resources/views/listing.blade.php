@@ -8,6 +8,9 @@
 @endsection
 @section('content')
     <style>
+     .added span {
+       color: red;
+     }
      .Tour3DCTA {
        color: white;
        font-size: 46px;
@@ -92,7 +95,12 @@
                                 <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
                             </ul>
                             <ul class="social-links">
-                                <li><a class="bookmark" title="{{ $listing->title }}" href="{{ $url . '/listing/' . $listing->slug}}"><span class="icon icon-bookmarn"></span></a></li>
+                               <?php $added = func::is_wishlist($user_id, $listing->id) == 1 ? ' added' : ''; ?>
+                            @if($added !== '')
+                                <li><a class="favourite {{$added}}" data-id="{{$listing->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a></li>
+                            @else
+                                <li><a class="favourite" data-id="{{$listing->id}}" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
+                            @endif
                                 <li>
                                     <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ $url . '/listing/' . $listing->slug}}">
                                         <span class="icon icon-facebook"></span>
@@ -367,13 +375,14 @@
         $('a.favourite').each(function(){
             $(this).click(function(event){
                 // return false; // remove this later after database fixes.
-                // event.preventDefault();
+               event.preventDefault();
               var url = '/wishlist/add'; 
               var itemID = $(this).attr('data-id'); 
               var userID = {{$user_id}};
               var token = $('input[name=_token]').val();
-              var data = {uid: itemID, lid: itemID};
+              var data = {uid: userID, lid: itemID, delete: $(this).hasClass('added')};
 
+              var that = this;
                 $.ajax({
                     type: 'POST',
                     url: url,
@@ -381,7 +390,9 @@
                     data: data,
                     // dataType: "html",
                     success: function(data){
-                        $(this).addClass('added');
+                      if(data === '1') {
+                         $(that).toggleClass('added');
+                      }
                     },
                     error: function(errMsg){
                         console.log(errMsg.responseText);
@@ -419,6 +430,7 @@
             }
           }
         });
+        $('[data-toggle="tooltip"]').tooltip()
 
     	});
     });

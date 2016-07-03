@@ -15,6 +15,24 @@ use Carbon\Carbon;
 
 class Functions
 {
+    static function getVal($method = 'get', $key) {
+      if ($method === 'get') {
+        if (isset($_GET[$key]) && !empty($_GET[$key])) {
+          return $_GET[$key]; 
+        } else {
+          return NULL; 
+        } 
+      } else if ($method === 'post') {
+        if (isset($_POST[$key]) && !empty($_POST[$key])) {
+          return $_POST[$key]; 
+        } else {
+          return NULL; 
+        } 
+      } else {
+        return NULL; 
+      }
+    }
+
     static function img_url($url, $width = '', $height = ''){
         $processor = '';
         $processor .= 'http://images.luxify.com/';
@@ -211,9 +229,9 @@ class Functions
         ->first();
 
         if($isw){
-            return '1';
+            return 1;
         }else{
-            return '0';
+            return 0;
         }
     }
 

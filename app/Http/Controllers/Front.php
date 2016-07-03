@@ -932,33 +932,43 @@ class Front extends Controller {
         $currency = DB::table('currencies')
         ->where('id', $id)
         ->first();
-
         return $currency;
     }
 
-    public function wishlistAdd(){
+    public function wishlistAdd() {
         $created = date('Y-m-d H:i:s');
-
-        if(isset($_POST['uid'])){
-            $user = Auth::user()->id;
-            $item = $_POST['lid'];
-
-            $check = DB::table('wishlists')
-            ->where('userId', $user)
-            ->where('listingId', $item)
-            ->first();
-
-            $exists = count($check) > 0 ? true : false;
-
-            if($exists){
-                echo 0;
-            }else{
-                DB::table('wishlists')->insert(
-                   ['createdAt' => $created, 'UserId' => $user, 'listingId' => $item]
-                );
-                echo 1;
-            }
+        $delete = func::getVal('post', 'delete');
+        if ($delete !== NULL) {
+            $delete = $delete === 'true' ?  1 : 0;
         }
+        
+        if(func::getVal('post', 'uid') && func::getVal('post', 'lid')) {
+            if (intval(func::getVal('post', 'uid')) == Auth::user()->id) {
+               $user = Auth::user()->id;
+               $item = func::getVal('post', 'lid');
+               $check = DB::table('wishlists')
+                   ->where('userId', $user)
+                   ->where('listingId', $item)
+                   ->count();
+            if($check > 0) {
+                DB::table('wishlists')
+                   ->where('userId', $user)
+                   ->where('listingId', $item)
+                   ->update([
+                     'deleted' => $delete
+             ]);
+              echo 1;
+            } else {
+              DB::table('wishlists')
+                ->insert([
+                  'createdAt' => $created, 
+                  'userId' => $user, 
+                  'listingId' => $item]
+              );
+              echo 1;
+            }
+          }
+       }
     }
 
     /* // for build hierarchy field

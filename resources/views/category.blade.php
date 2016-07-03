@@ -7,6 +7,11 @@
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+      .added span {
+        color: red;
+      }
+    </style>
 @endsection
 @section('content')
     <section class="inner-banner auto-height parallax" style="background-image:url({{ func::img_url($banner, 1560) }});">
@@ -61,8 +66,9 @@
             		   	   		<figure>
             		   	   			<img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 400) : func::img_url('default-logo.png', 400) }}" alt="{{ $item->title }}">
                                 @if(Auth::user())
+                                  
                                   <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
-                                  <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
+                                  <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite {{ $added }}"><span class="icon-heart"></span></a>
                                 @endif
             		   	   		</figure>
                           </a>
