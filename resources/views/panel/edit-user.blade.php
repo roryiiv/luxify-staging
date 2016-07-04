@@ -393,12 +393,21 @@
                     // formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
                     $('.dz-success-mark').hide();
                     $('.dz-error-mark').hide();
+
+                    swal({
+                        title: "Uploading Images",
+                        text: "Currently Uploading Images.",
+                        //   timer: 2000,
+                        showConfirmButton: false
+                    });
                 },
                 success: function (file, response) {
                     console.log(response);
+                    swal.close();
                     $('#cover_img').val(response);
                 },
                 error: function (file, response) {
+                    swal.close();
                     file.previewElement.classList.add("dz-error");
                 },
                 // init: function() {
@@ -421,12 +430,21 @@
                     formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
                     $('.dz-success-mark').hide();
                     $('.dz-error-mark').hide();
+
+                    swal({
+                        title: "Uploading Images",
+                        text: "Currently Uploading Images.",
+                        //   timer: 2000,
+                        showConfirmButton: false
+                    });
                 },
                 success: function (file, response) {
                     console.log(response);
+                    swal.close();
                     $('#profile_img').val(response);
                 },
                 error: function (file, response) {
+                    swal.close();
                     file.previewElement.classList.add("dz-error");
                 },
                 // init: function() {

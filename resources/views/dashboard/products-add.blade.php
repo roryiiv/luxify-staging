@@ -185,7 +185,7 @@
                     <div class="form-group">
                         <label for="price" class="col-sm-3 control-label">Price</label>
                         <div class="col-sm-9">
-                            <input id="price" name='price' type="number" class="form-control" min=0 >
+                            <input id="price" name='price' type="number" class="form-control" min=0>
                             <h6>For price on request tick the box and select a preferred currency.
                                 </h6>
                         </div>
@@ -214,7 +214,7 @@
                         <div class="form-group">
                             <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
                             <div class="col-sm-9">
-                                <textarea id="description" name='description' class="form-control" cols="3" rows="5"></textarea>
+                                <textarea id="description" name='description' class="form-control" cols="3" rows="5" required></textarea>
                                 <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
                             </div>
                         </div>
@@ -365,123 +365,139 @@
 <script type="text/javascript" src="/db/js/lodash.core.min.js"></script>
 
 <script>
-   var images_array = [];
+    var images_array = [];
 
-  function deleteImg(ele, i, filename) {
-    $.ajax({
-      url:'/removeImage',
-      method: 'POST',
-      data: {
-        filename: filename
-      },
-      headers: {
-        'X-CSRF-Token': $('input[name=_token]').val()
-      },
-      dataType: "json",
-      success: function(res, err) {
-        if (res.result === 1) {
-          images_array.splice(i, 1);
-          genImagesPreview();
-        }
-      }
-    });
+    function deleteImg(ele, i, filename) {
+        $.ajax({
+            url:'/removeImage',
+            method: 'POST',
+            data: {
+                filename: filename,
+                onS3: false,
+            },
+            headers: {
+                'X-CSRF-Token': $('input[name=_token]').val()
+            },
+            dataType: "json",
+            success: function(res, err) {
+                if (res.result === 1) {
+                    images_array.splice(i, 1);
+                    genImagesPreview();
+                }
+            },
+            error: function(errMsg){
+                console.log(errMsg.responseText);
+            }
+        });
 
-  }
-
-  function genImagesPreview() {
-    var table = $("#images-preview-table tbody");
-    table.html('');
-    for (var i = 0; i < images_array.length; i++) {
-      $('<tr><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\')"><i class="ti-trash"></i></button></td></tr></tr>').appendTo(table);
     }
-  }
-  function genControls({id, type, name, label, optionValues}){
+
+    function genImagesPreview() {
+        var table = $("#images-preview-table tbody");
+        table.html('');
+        for (var i = 0; i < images_array.length; i++) {
+            $('<tr><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\')"><i class="ti-trash"></i></button></td></tr></tr>').appendTo(table);
+        }
+    }
+    function genControls({id, type, name, label, optionValues}){
         switch (type) {
-          case 'textfield':
-          case 'text':
+            case 'textfield':
+            case 'text':
             return '<div class="col-sm-4"><label for="'+ label +'" class="control-label">'+ label +'</label><input id="'+ label +'" name="optionfields['+ id +']" type="text" class="form-control"></div>';
-          break;
-          case 'number':
-             return '<div class="col-sm-4"><label for="'+ label +'" class="control-label">'+ label +'</label><input id="'+ label +'" name="optionfields['+ id +']" type="number" class="form-control"></div>';
-         break;
-        case 'textarea':
-             return '<div class="col-sm-4"><label for="'+ label +'" class="control-label">'+ label +'</label><textarea id="'+ label +'" name="optionfields['+ id +']" class="form-control"></textarea></div>';
-         break;
-          case 'year':
-          case 'yearpick':
+            break;
+            case 'number':
+            return '<div class="col-sm-4"><label for="'+ label +'" class="control-label">'+ label +'</label><input id="'+ label +'" name="optionfields['+ id +']" type="number" class="form-control"></div>';
+            break;
+            case 'textarea':
+            return '<div class="col-sm-4"><label for="'+ label +'" class="control-label">'+ label +'</label><textarea id="'+ label +'" name="optionfields['+ id +']" class="form-control"></textarea></div>';
+            break;
+            case 'year':
+            case 'yearpick':
             return '<div class="col-sm-4"><label for="'+ label +'" class="control-label">'+ label +'</label><input id="startDate" name="optionfields['+ id +']" type="date" class="form-control" /></div>';
             break;
-          case 'dropdown':
+            case 'dropdown':
             var html = '<div class="col-sm-4"><label for="'+ label +'" class="control-label">'+ label +'</label><select name="optionfields['+ id +']" class="form-control">';
             for(var i = 0; i < optionValues.length; i++){
-              html += '<option value="'+optionValues[i].value+'">'+ optionValues[i].text+'</option>';
+                html += '<option value="'+optionValues[i].value+'">'+ optionValues[i].text+'</option>';
             }
             html += '</select></div>';
             return html;
             break;
-          default:
+            default:
             return '';
         }
-      }
-  $(document).ready(function () {
+    }
+    $(document).ready(function () {
 
-    $('.actions ul li').click(function () {
-      $(".sweet-alert p").html("Your item has been submitted for approval");
-    });
-    $('#itemCategory').on('change', function(){
-      $.get({
-        url: '/api/category/'+ $('#itemCategory').val() + '/fields',
-        dataType: 'json',
-        success: function(result) {
-          if (result.result === 1){
-            $('#optionFields').html('');
-            for (var i = 0; i < result.data.length ; i++){
-              $(genControls(result.data[i])).appendTo('#optionFields');
-            }
-          }
-        }
-      });
-    });
-
-    $('#priceOnRequest').on('click', function(){
-      $('#price').prop('disabled', $('#priceOnRequest').prop('checked') );
-    });
-
-    var token = "{{ Session::getToken() }}";
-    $("#item-images-dz").dropzone({
-        url: "/upload_multiple",
-        paramName: "files",
-        params: {
-            _token: token
-        },
-        // headers: {'X-CSRF-Token': $('input[name=_token]').val()},
-        // maxFilesize: 5,
-        maxFiles: 20,
-        // parallelUploads: 10,
-        // maxThumbnailFilesize: 5,
-        uploadMultiple: true,
-        autoProcessQueue: true,
-        previewsContainer: "#images-preview-zone",
-        previewTemplate: $('#dz-preview-template').html(),
-        dictDefaultMessage: "<i class='icon-dz fa fa-files-o'></i>Drop files here to upload",
-        init: function() {
-            this.on('complete', function(result) {
-                console.log(result);
-                var files = JSON.parse(result.xhr.response);
-                for (var i = 0; i < files.length; i++) {
-                    if (typeof _.find(images_array, {filename: files[i].filename}) === 'undefined') {
-                        images_array.push(files[i]);
+        $('.actions ul li').click(function () {
+            $(".sweet-alert p").html("Your item has been submitted for approval");
+        });
+        $('#itemCategory').on('change', function(){
+            $.get({
+                url: '/api/category/'+ $('#itemCategory').val() + '/fields',
+                dataType: 'json',
+                success: function(result) {
+                    if (result.result === 1){
+                        $('#optionFields').html('');
+                        for (var i = 0; i < result.data.length ; i++){
+                            $(genControls(result.data[i])).appendTo('#optionFields');
+                        }
                     }
                 }
-                genImagesPreview();
             });
-        },
-        // success: function (file, response) {
-        //     console.log(response);
-        //     // $('#cover_img').val(response);
-        // },
+        });
+
+        $('#priceOnRequest').on('click', function(){
+            $('#price').prop('disabled', $('#priceOnRequest').prop('checked') );
+        });
+
+        var token = "{{ Session::getToken() }}";
+        $("#item-images-dz").dropzone({
+            url: "/upload_multiple",
+            paramName: "files",
+            params: {
+                _token: token
+            },
+            // headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+            // maxFilesize: 5,
+            maxFiles: 20,
+            // parallelUploads: 10,
+            // maxThumbnailFilesize: 5,
+            uploadMultiple: true,
+            autoProcessQueue: true,
+            previewsContainer: "#images-preview-zone",
+            previewTemplate: $('#dz-preview-template').html(),
+            dictDefaultMessage: "<i class='icon-dz fa fa-files-o'></i>Drop files here to upload",
+            sending: function(file, xhr, formData){
+                swal({
+                    title: "Uploading Images",
+                    text: "Currently Uploading Images.",
+                    //   timer: 2000,
+                    showConfirmButton: false
+                });
+            },
+            init: function() {
+                this.on('complete', function(result) {
+                    swal.close();
+                    console.log(result);
+                    var files = JSON.parse(result.xhr.response);
+                    for (var i = 0; i < files.length; i++) {
+                        if (typeof _.find(images_array, {filename: files[i].filename}) === 'undefined') {
+                            images_array.push(files[i]);
+                        }
+                    }
+                    genImagesPreview();
+                });
+            },
+            error: function(errMsg){
+                console.log(errMsg.responseText);
+            }
+            // success: function (file, response) {
+            //     console.log(response);
+            //     // $('#cover_img').val(response);
+            // },
+        });
     });
-  });
 
 </script>
 @endsection

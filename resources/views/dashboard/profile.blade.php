@@ -299,8 +299,8 @@
                                     </div>
                                 </div>
                                 <div class="pt-20">
-                                    <div class="well well-sm"><strong>Membership Since</strong> 2016-02-05 08:57</div>
-                                    <div class="well well-sm"><strong>Profile Updated At</strong> 2016-02-05 08:57</div>
+                                    <div class="well well-sm"><strong>Membership Since</strong> {{ $user->created_at }}</div>
+                                    <div class="well well-sm"><strong>Profile Updated At</strong> {{ $user->updated_at }}</div>
                                 </div>
                                 <div class="row p-10 text-right">
                                     <button id="sweet-3" type="button" class="btn btn-raised btn-success btn-lg">Update</button>
@@ -392,12 +392,21 @@
                     // formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
                     $('.dz-success-mark').hide();
                     $('.dz-error-mark').hide();
+
+                    swal({
+                        title: "Uploading Images",
+                        text: "Currently Uploading Images.",
+                        //   timer: 2000,
+                        showConfirmButton: false
+                    });
                 },
                 success: function (file, response) {
+                    swal.close();
                     console.log(response);
                     $('#cover_img').val(response);
                 },
                 error: function (file, response) {
+                    swal.close();
                     file.previewElement.classList.add("dz-error");
                 },
                 // init: function() {
@@ -420,12 +429,21 @@
                     formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
                     $('.dz-success-mark').hide();
                     $('.dz-error-mark').hide();
+
+                    swal({
+                        title: "Uploading Images",
+                        text: "Currently Uploading Images.",
+                        //   timer: 2000,
+                        showConfirmButton: false
+                    });
                 },
                 success: function (file, response) {
                     console.log(response);
+                    swal.close();
                     $('#profile_img').val(imgName);
                 },
                 error: function (file, response) {
+                    swal.close();
                     file.previewElement.classList.add("dz-error");
                 },
                 // init: function() {
