@@ -43,19 +43,70 @@
                         </div>
                     </li>
                 </ul>
+                <?php $currencies = func::build_curr(); ?>
                 @if(Auth::user())
                     <ul class="nav navbar-nav navbar-right">
+                        <li class="currency-selector-container">
+                           <select class="currency-selector">
+                             @foreach($currencies as $currency)
+                               <option value="{{$currency['code']}}">{{$currency['code']}} {{$currency['symbol']}}</option> 
+                             @endforeach
+                           </select>
+                        </li>
                         <li><a href="/dashboard">Welcome {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
                     </ul>
                 @else
                     <ul class="nav navbar-nav navbar-right">
+                        <li class="currency-selector-container">
+                           <select>
+                             @foreach($currencies as $currency)
+                               <option value="{{$currency['code']}}">{{$currency['code']}}</option> 
+                             @endforeach
+                           </select>
+                        </li>
                         <li><a href="/register">Sign up</a></li>
                         <li><a href="/login">Login</a></li>
                     </ul>
                 @endif
-
             </div>
             <!-- end of navbar collapse -->
         </nav>
     </div>
+<style>
+  .currency-selector-container {
+    margin-right: 2.4rem;
+  }
+  .navbar .navbar-right li:after {
+    display: none;
+  }
+
+  .currency-selector-container  .jcf-select {
+    background-color: transparent;
+    height: 36px;
+    border: 1px solid white;
+    border-radius: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: default;
+    display: block;
+    font-size: 14px;
+  }
+  .currency-selector-container  .jcf-select {
+    font-weight: 200;
+  }
+  .currency-selector-container  .jcf-select .jcf-select-opener{
+    color: white;
+  }
+  .currency-selector-container  .jcf-select .jcf-select-opener:before{
+    top: 46%;
+    right: 0.8rem;
+    color: white;
+  }
+  .currency-selector-container  .jcf-select .jcf-select-text {
+    color: white;
+    line-height: 35px;
+  }
+  
+</style>
 </header>

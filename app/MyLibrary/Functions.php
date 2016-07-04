@@ -132,6 +132,7 @@ class Functions
                 $return[$x]['val'] = $curr[$x]->id;
                 $return[$x]['label'] = $curr[$x]->name;
                 $return[$x]['code'] = $curr[$x]->code;
+                $return[$x]['symbol'] = $curr[$x]->symbol;
 
             }
         }
