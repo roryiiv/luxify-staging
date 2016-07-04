@@ -932,6 +932,7 @@ class Front extends Controller {
         $currency = DB::table('currencies')
         ->where('id', $id)
         ->first();
+
         return $currency;
     }
 
