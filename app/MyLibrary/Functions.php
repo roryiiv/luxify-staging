@@ -239,7 +239,6 @@ class Functions
         $return = DB::table($table)
         ->where('id', $id)
         ->first();
-
         return $return;
     }
 

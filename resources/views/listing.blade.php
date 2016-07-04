@@ -83,8 +83,9 @@
                             <?php
                             $curr = func::getTableByID('currencies', $listing->currencyId);
                             $dealer = func::getTableByID('users', $listing->userId);
-                            if($dealer && !empty($dealer->countryId)) {
-                              $country = func::getTableByID('countries', $dealer->countryId);
+                            
+                            if(!empty($listing->countryId)) {
+                              $country = func::getTableByID('countries', $listing->countryId);
                             }
                             $url = 'http://' . $_SERVER['HTTP_HOST'];
                             $raw_price = $listing->price == 0 ? 'Price on request' : $curr->symbol . number_format($listing->price, 0) .' '. $curr->code;
