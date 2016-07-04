@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="button-wrap">
-                    <a class="btn btn-default" href="javascript:;"><span class="glyphicon glyphicon-th-large"></span> View listings</a>
+                    <a class="btn btn-default" href="/search?search=&user_id={{$dealer->id}}"><span class="glyphicon glyphicon-th-large"></span> View listings</a>
                     @if (isset($_GET['message']))
                         <span class="alert alert-success">Message sent.</span>
                     @else
