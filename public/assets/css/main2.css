@@ -5,6 +5,10 @@
   font-weight: normal;
   font-style: normal;
 }
+body {
+  font-size: 62.5%!important;
+  overflow-x: hidden;
+}
 
 [class^="icon-"],
 [class*=" icon-"] {
@@ -395,6 +399,7 @@ div.lightbox {
   margin: 0;
   background-color: transparent;
   font-weight: 500;
+  font-size: 1rem;
 }
 .breadcrumb a:hover {
   text-decoration: none;
@@ -712,6 +717,7 @@ div.lightbox {
 }
 .navbar-nav > li > a {
   padding: 0;
+  font-size: 1rem;
 }
 .navbar-nav > li:hover > a,
 .navbar-nav > li.open > a {
@@ -802,9 +808,10 @@ div.lightbox {
   margin: 0 auto;
 }
 .inner-banner {
-  height: 475px;
+ /* height: 475px;*/
+  height: 38.8rem;
   position: relative;
-  padding: 69px 0 60px;
+  padding: 69px 0 0;
   font-size: 18px;
   line-height: 1.4545;
   font-weight: normal;
@@ -4141,7 +4148,7 @@ body {
   font-size: 12px;
 }
 h1 {
-  font-size: 3.6em
+  font-size: 5.6em
 }
 .holder h1 {
   font-size: 3em
@@ -4167,19 +4174,19 @@ nav.banner-nav,
   width: 112px;
 }
 #heading1 {
-  font-size: 1.2em;
+  font-size: 1.2rem;
 }
 .text-box {
-  font-size: 1.2em;
+  font-size: 1.2rem;
 }
 .btn {
-  font-size: 1em;
+  font-size: 1rem;
 }
 .info-block {
-  font-size: 1.2em;
+  font-size: 1.2rem;
 }
 .info-block .title {
-  font-size: 1em;
+  font-size: 1rem;
 }
 .info-wrap {
   font-size: 1.4em;
@@ -4210,10 +4217,10 @@ nav.banner-nav,
   max-width: 600px;
 }
 .thumbnail .price {
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 h3 {
-  font-size: 1.2em;
+  font-size: 2rem;
 }
 .banner-text {
   font-size: 1em;
@@ -4261,12 +4268,8 @@ h3 {
 .quote-wrap {
   font-size: 2em;
 }
-.inner-banner {
-  height: 468px;
-  font-size: 1.4em;
-}
 .sidebar .detail .text {
-  font-size: 1.5em;
+  font-size: 3.5em;
 }
 .block-header h2 {
   font-size: 2em;

@@ -17,8 +17,8 @@
        text-align: center;
        width: 214px;
        position: relative;
-       top: 53px;
-       left: 188px;
+       top: 6rem;
+       left: 14rem;
        text-transform: UPPERCASE;
        font-family: 'Roboto';
        font-weight: 100;
@@ -39,14 +39,14 @@
                 @if($listing->aerialLook3DUrl)
                   <li>
                     <a style="position: relative;" rel="lightbox_3D" class="3DTour fancybox fancybox.iframe" href="{{$listing->aerialLook3DUrl}}">
-                      <div style="width:624px; height: 33rem; position: absolute;" >
+                      <div style="width:48rem; height: 33rem; position: absolute;" >
                          <h2 class='Tour3DCTA' style="z-index: 2;">3D Virtual Tour
                            <br />
                            <span style="margin-top: 20px; z-index:2" class="glyphicon glyphicon-play-circle"></span>
                          </h2>
                          <div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.5);position: absolute; z-index: 1;top: 0;"></div>
                       </div>
-                      <img style="z-index:1;"src="/assets/images/3DTour_sample_2.gif">
+                      <img style="width: 48rem; height:33rem;z-index:1;"src="/assets/images/3DTour_sample_2.gif">
                       
                     </a>
                   </li>
