@@ -416,8 +416,24 @@ div.lightbox {
     color: #998967;
     text-decoration: none;
 }
-.thumbnail figure {
-    position: relative;
+.thumbnail .product-img-container {
+  position: relative;
+  height: 300px;
+  width: 300px;
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0 auto;
+}
+.thumbnail .product-img-container img.product-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  transform: translateY(-50%) translateX(-50%);
+  max-height: 300px;
+  max-width: 300px;
+  height: auto;
+  width: auto;
 }
 .thumbnail .price {
     color: #998967;

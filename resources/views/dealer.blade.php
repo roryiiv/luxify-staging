@@ -105,13 +105,13 @@
                      <div class="col-md-4 col-sm-6">
         				   	   <div class="thumbnail">
                           <a href="/listing/{{ $item->slug }}">
-            		   	   		<figure>
-            		   	   			<img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 400) : func::img_url('default-logo.png', 400) }}" alt="{{ $item->title }}">
+            		   	   		<div class='product-img-container'>
+            		   	   			<img class='product-img' src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 400) : func::img_url('default-logo.png', 400) }}" alt="{{ $item->title }}">
                                 @if(Auth::user())
                                   <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
                                   <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
                                 @endif
-            		   	   		</figure>
+            		   	   		</div>
                           </a>
         				   	     <div class="caption">
         				   	   	  <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>

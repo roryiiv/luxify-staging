@@ -257,14 +257,14 @@
                                     <div class="slide">
                                         <div class="thumbnail borderless">
                                             <a href="/listing/{{ $more->slug }}">
-                                                <figure>
+                                                <div class='product-img-container'>
                                                     <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
-                                                    <img src="{{ func::img_url($more_img, 305) }}" alt="image description">
+                                                    <img class='product-img' src="{{ func::img_url($more_img, 305) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $madded = func::is_wishlist($user_id, $more->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
                                                     @endif
-                                                </figure>
+                                                </div>
                                             </a>
                                             @if ($dealer)
                                             <div class="caption">
@@ -306,14 +306,14 @@
                                     <div class="slide">
                                         <div class="thumbnail borderless">
                                             <a href="/listing/{{ $rel->slug }}">
-                                                <figure>
+                                                <div class='product-img-container'>
                                                     <?php $rel_img = !empty($rel->mainImageUrl) ? $rel->mainImageUrl : 'default-logo.png'; ?>
-                                                    <img src="{{ func::img_url($rel_img, 305) }}" alt="image description">
+                                                    <img class='product-img' src="{{ func::img_url($rel_img, 305) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $rel_added = func::is_wishlist($user_id, $rel->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $rel->id }}" href="javascript:;" data-id="{{ $rel->id }}" class="favourite{{ $rel_added }}"><span class="icon-heart"></span></a>
                                                     @endif
-                                                </figure>
+                                                </div>
                                             </a>
                                             <div class="caption">
                                                 <h3><a href="/listing/{{ $rel->slug }}">{{ $rel->title }}</a></h3>
