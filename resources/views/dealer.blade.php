@@ -7,6 +7,116 @@
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+      #login-form .container {
+          background-color: white;
+          height: 400px;
+          margin: 15% auto;
+          padding: 36px 36px;
+          max-width: 600px;
+          width: 1000px;
+          border: 2px solid #998967;
+      }
+      #login-form .container > h2,h5 {
+         color: #56616F;
+      }
+      #login-form h2 {
+         color: #5E6977;
+         text-align: center;
+         font-weight: 400;
+         margin-bottom: 0px;
+         font-size: 36px;
+      }
+      #login-form h5 {
+         margin-top: 5px;
+         font-size: 14px;
+         font-weight: 300;
+         text-align: center;
+      }
+      #login-form .split-box { 
+          margin-top: 20px;
+          box-shadow: 1px 1px 5px rgba(0,0,0,0.5); 
+          height: 250px;
+          width: 100%; 
+      }
+      #login-form .split-box > .left,.right { 
+          width: 50%;
+          height: 100%;
+          display: block;
+          float: left;
+          padding: 20px;
+      }
+      #login-form .split-box > .left { 
+          background-color: #5E6977;
+      }
+
+      #login-form button {
+          display: block;
+          margin: 0 auto!important; 
+          float: none!important;
+      }
+
+      #login-form .split-box > .left h4 {
+          text-align: center;
+          font-weight: 200;
+          font-size: 16px;
+      }
+      #login-form .split-box > .left p {
+          font-weight: 100;
+          font-size: 10px;
+          color: #BDC6CF;
+          text-align: center;
+      }
+      #login-form .split-box > .right h4 {
+          text-align: center;
+          font-weight: 200;
+          font-size: 16px;
+          color: #43484D;
+           
+      }
+      #login-form .split-box > .right p {
+          font-weight: 100;
+          font-size: 10px;
+          color: #86939E;
+      }
+      #contact-dealer-form .container {
+          background-color: white;
+          height: 336px;
+          margin: 15% auto;
+          padding: 36px 85px;
+          max-width: 600px;
+          width: 600px;
+          border: 2px solid #998967;
+      }
+      #contact-dealer-form textarea {
+        width: 100%;
+        border: 2px solid #E1E8EE;
+        padding: 20px;
+        color: #86939E;
+        font-size: 14px; 
+        resize: none;
+      }
+      #contact-dealer-form h2 {
+         text-align: center;
+         font-weight: 400;
+         color: #56616F;
+      }
+      #contact-dealer-form button, #login-form button {
+         background-color: #998967;
+         text-transform: uppercase;
+         text-align: center;
+         font-weight: 200;
+         color: white;
+         width: 139px;
+         height: 26px;
+         float: right;
+         border: 0;
+         box-shadow: none;
+         margin-top: 5px;
+         font-size: 10px;
+      }
+    </style>
+
 @endsection
 @section('content')
     <?php $banner = !empty($dealer->coverImageUrl) ? $dealer->coverImageUrl : 'about-banner.jpg'; ?>
@@ -24,14 +134,48 @@
                 </div>
                 <div class="button-wrap">
                     <a class="btn btn-default" href="/search?search=&user_id={{$dealer->id}}"><span class="glyphicon glyphicon-th-large"></span> View listings</a>
-                    @if (isset($_GET['message']))
-                        <span class="alert alert-success">Message sent.</span>
-                    @else
-                        <a href="/dealer/contact/{{ $dealer->id }}/0" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
-                    @endif
+                    <!--<a href="/dealer/contact/{{ $dealer->id }}/0" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>-->
+                    <a href="#" data-toggle="modal" data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
                 </div>
             </div>
         </div>
+        @if(Auth::user()) 
+        <div class="modal fade" id="contact-dealer-form" tabindex="-1" role="dialog" aria-labelledby='contactDealerForm'>
+          <div class='container modal-dialog' role='document'>
+             <form>
+                <h2>Send a message</h2>
+                <textarea rows="8" name="content" placeholder="Let the dealer know why you are interested. A copy of the mesage will be included in your dashboard as well."></textarea>
+                <button>Send</button> 
+             </form>
+          </div>
+        </div>
+        @else
+        <div class="modal fade" id="login-form" tabindex="-1" role="dialog" aria-labelledby='contactDealerForm'>
+          <div class='container'>
+             <form>
+                <h2>Welcome to Luxify</h2>
+                <h5>Asia’s leading marketplace for Luxury</h5>
+                <div class='split-box'>
+                    <div class='left'>
+                       <h4>I'm New Here</h4>
+                       <p>Creating an account quick and easy. You can also have your own wishlist, contact our dealers,  edit your profile, and much more.</p>
+                       <button>Sign Up</button>
+                    </div>
+                    <div class='right'>
+                       <form>
+                         <h4>I'm Ready</h4>
+                         <p>PLease login to your account</p>
+                         <input name="email" type="text" placeholder="Email" />
+                         <input name="password" type="password"  placeholder="Password" />
+                         <button>Sign In</button>
+                       </form> 
+                    </div>
+                </div>
+             </form>
+          </div>
+        </div>
+        @endif
+
     </section>
     <!-- end of banner -->
     <!-- main informative part of the page -->
