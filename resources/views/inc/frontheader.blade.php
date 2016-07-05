@@ -62,7 +62,7 @@
                                   @else
                                     <li><a href="/dashboard">Dashboard</a></li>
                                   @endif
-                                  <li><a href="/Logout">Logout</a></li>
+                                  <li><a href="/logout">Logout</a></li>
                               </ul>
                           </div>
                         </li>
