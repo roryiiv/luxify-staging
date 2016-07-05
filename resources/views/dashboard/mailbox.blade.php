@@ -147,21 +147,21 @@
             </div>
         </div>
         <script type="text/template" id="msgListTemplate">
-          <li class="media">
-              <div class="checkbox-custom pull-left">
-                  <input id="mailboxCheckbox{idx}" type="checkbox" value="value{idx}">
-                  <label for="mailboxCheckbox{idx}"></label>
-              </div>
-              <a href="javascript:loadMsg({senderId}, {listingId});">
-                  <div class="media-left avatar"><img src="{{func::img_url('{senderCompanyLogoUrl}', 34, 34)}}" alt="" class="media-object img-circle"></div>
-                  <div class="media-body">
-                      <h6 class="media-heading">{senderFirstName}</h6>
-                      <h5 class="title">Re: {title}</h5>
-                      <p class="summary">{body}</p>
-                  </div>
-                  <div class="media-right text-nowrap">{}</i>
-                      <time datetime="{sentAt}" class="fs-11">{sendAtHuman} ago</time>
-                  </div>
+            <li class="media">
+                <div class="checkbox-custom pull-left">
+                    <input id="mailboxCheckbox{idx}" type="checkbox" value="value{idx}">
+                    <label for="mailboxCheckbox{idx}"></label>
+                </div>
+                <a class="loadMsg" href="javascript:loadMsg({senderId}, {listingId});">
+                    <div class="media-left avatar"><img src="{{func::img_url('{senderCompanyLogoUrl}', 34, 34)}}" alt="" class="media-object img-circle"></div>
+                    <div class="media-body">
+                        <h6 class="media-heading">{senderFirstName}</h6>
+                        <h5 class="title">Re: {title}</h5>
+                        <p class="summary">{body}</p>
+                    </div>
+                    <div class="media-right text-nowrap">{}</i>
+                        <time datetime="{sentAt}" class="fs-11">{sendAtHuman} ago</time>
+                    </div>
                 </a>
             </li>
         </script>
@@ -280,6 +280,8 @@
             headers: {'X-CSRF-Token': $('input[name=_token]').val()},
             success: function(res) {
                 console.log(res);
+                // element.getElementsByClassName('media').className = '';
+
                 if (res.result === 1 ){
                     currentRoom = otherId;
                     currentListingId = listingId;
@@ -379,5 +381,6 @@
             sendMsg();
         }
     })
+
     </script>
 @endsection
