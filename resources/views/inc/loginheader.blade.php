@@ -34,9 +34,11 @@
   .nav > li > a, .nav-toggle, .dropdown-menu ul li a {
     color: white;
     font-weight: 800;
-    text-transform: uppercase;
     font-size: 13px;
   }
+  .dropdown-menu > ul > li > a {
+    font-weight: 500;
+  } 
   .dropdown-menu {
     padding: 13px 15px;
     width: 236px;
