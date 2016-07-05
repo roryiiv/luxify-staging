@@ -240,32 +240,26 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Years In Business:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <select name="years_in_business" placeholder="Select one" class="select_form">
-                                            <option>Less than 1 year</option>
-                                            <option>1-4 years</option>
-                                            <option>5-9 years</option>
-                                            <option>10-20 years</option>
-                                            <option>More than 20 years</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
                                         <label for="name">Primary Business Focus :</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
                                         <select name="primary_business_focus" placeholder="Select one" class="select_form">
-                                            <option>Furniture</option>
-                                            <option>21st Century Furniture</option>
-                                            <option>Fashion</option>
-                                            <option>Fine Art</option>
-                                            <option>Jewelry</option>
-                                            <option>21st Century Jewelry</option>
+                                             <option value='Aircrafts'>Aircrafts</option>
+                                             <option value='Antiques'>Antiques</option>
+                                             <option value='Art'>Art</option>
+                                             <option value='Cars'>Cars</option>
+                                             <option value='Collectibles'>Collectibles</option>
+                                             <option value='Fashion_accessories'>Fashion accessories</option>
+                                             <option value='Fine_wines'>Fine Wines</option>
+                                             <option value='Furnitures'>Furnitures</option>
+                                             <option value='Handbags'>Handbags</option>
+                                             <option value='Jewelry'>Jewelry</option>
+                                             <option value='Luxury_experiences'>Luxury experiences</option>
+                                             <option value='Real_estate'>Real Estate</option>
+                                             <option value='Spirits'>Spirits</option>
+                                             <option value='Watches'>Watches</option>
+                                             <option value='Yachts'>Yachts</option>
+                                             <option value='Other'>Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -277,12 +271,22 @@
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
                                         <select name="secondary_business_focus" placeholder="Select one" class="select_form">
-                                            <option>Furniture</option>
-                                            <option>21st Century Furniture</option>
-                                            <option>Fashion</option>
-                                            <option>Fine Art</option>
-                                            <option>Jewelry</option>
-                                            <option>21st Century Jewelry</option>
+                                             <option value='Aircrafts'>Aircrafts</option>
+                                             <option value='Antiques'>Antiques</option>
+                                             <option value='Art'>Art</option>
+                                             <option value='Cars'>Cars</option>
+                                             <option value='Collectibles'>Collectibles</option>
+                                             <option value='Fashion_accessories'>Fashion accessories</option>
+                                             <option value='Fine_wines'>Fine Wines</option>
+                                             <option value='Furnitures'>Furnitures</option>
+                                             <option value='Handbags'>Handbags</option>
+                                             <option value='Jewelry'>Jewelry</option>
+                                             <option value='Luxury_experiences'>Luxury experiences</option>
+                                             <option value='Real_estate'>Real Estate</option>
+                                             <option value='Spirits'>Spirits</option>
+                                             <option value='Watches'>Watches</option>
+                                             <option value='Yachts'>Yachts</option>
+                                             <option value='Other'>Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -294,12 +298,12 @@
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
                                         <select name="estimated_inventory_size" placeholder="Select one" class="select_form">
-                                            <option>Less than 50 total pieces</option>
-                                            <option>50-100 total pieces</option>
-                                            <option>100-250 total pieces</option>
-                                            <option>250-500 total pieces</option>
-                                            <option>500-1000 total pieces</option>
-                                            <option>Over 1000 total pieces</option>
+                                            <option>Less than 50 </option>
+                                            <option>50-100 </option>
+                                            <option>100-250 </option>
+                                            <option>250-500 </option>
+                                            <option>500-1000 </option>
+                                            <option>Over 1000 </option>
                                         </select>
                                     </div>
                                 </div>
@@ -324,29 +328,6 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Professional Associations:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <select name="professional_association" placeholder="Select one" class="select_form">
-                                            <option>ADAA (Art Dealers Association of America)</option>
-                                            <option>AIPAD (Association of International Photography Art Dealers)</option>
-                                            <option>The Art and Antique Dealers league of America</option>
-                                            <option>British Antique Dealers Association</option>
-                                            <option>Canadian Antique Dealers Association</option>
-                                            <option>CINOA</option>
-                                            <option>IFPDA (The International Fine Print Dealers Association)</option>
-                                            <option>LAPADA (Association of Art & Antiques Dealers)</option>
-                                            <option>NADA (New Art Dealers Alliance)</option>
-                                            <option>PADA (Private Art Dealers Association)</option>
-                                            <option>SLAD (Society Of London Art Dealers)</option>
-                                            <option>Syndicat National des Antiquares</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
                                         <label for="name">Country:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
@@ -357,186 +338,10 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">State or Region:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="state" class="form-control width_more" placeholder="State or Region">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Postal Code:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="postal_code" class="form-control width_more" placeholder="Postal Code">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Type of Physical Location:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <select name="type_of_physical_location" placeholder="Select one" class="select_form">
-                                            <option>Gallery</option>
-                                            <option>Retail Store</option>
-                                            <option>Showroom</option>
-                                            <option>Warehouse</option>
-                                            <option>NYDC (New York Design Center)</option>
-                                            <option>Other</option>
-                                            <option>None</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
                                         <label for="name">Tell us more about your business:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <textarea name="business_description" class="form-control about_buisness" placeholder="Optional. To help us learn more about your business, please share how you started, more details about your inventory, and mention any fairs you exhibit at. "></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					<h3>Reference 1</h3>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2 col-sm-9 col-sm-offset-1">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">First Name</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="reference-first-name" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Last Name</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="reference-last-name" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Type of Reference:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <select name="type-of-reference" placeholder="Select one" class="select_form">
-                                            <option>Currently a dealer or gallery on 1stdibs (preferred if available)</option>
-                                            <option>A trade design professional (preferred if available)</option>
-                                            <option>General business reference</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Business Name:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="reference-business-name" class="form-control width_more">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Email Address:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="email" name="reference-email" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Phone Number:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="reference-phone" class="form-control width_more" placeholder="Phone Number">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					<h3>Reference 2</h3>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2 col-sm-9 col-sm-offset-1">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">First Name</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="reference-first-name-2" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Last Name</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="reference-last-name-2" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Type of Reference:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <select name="type-of-reference-2" placeholder="Select one" class="select_form">
-                                            <option>Currently a dealer or gallery on 1stdibs (preferred if available)</option>
-                                            <option>A trade design professional (preferred if available)</option>
-                                            <option>General business reference</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Business Name:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="reference-business-name-2" class="form-control width_more">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Email Address:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="email" name="reference-email-2" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Phone Number:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="reference-phone-2" class="form-control width_more" placeholder="Phone Number">
+                                        <textarea name="business_description" class="form-control about_buisness" placeholder="Optional. To help us more about your company, please share more details about the products you wish to list on Luxify."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -549,8 +354,8 @@
 									<div class="form-group">
 										<input type="submit" class="btn btn-primary btn-block" value="Submit Application">
 									</div>
-							<div class="form-info-txt">
-								<p>Luxify does not list items from private sellers. If you are a private seller or collector and have an individual piece to sell, you may leverage Luxify to find a local dealer selling similar products who may be interested in purchasing it from you</p>
+							<div class="form-info-txt" style="text-align: left;">
+								<p>Luxify does accept items from private sellers. If you are a private seller or collector and have a luxury item to sell, simply contact our team at <a href="mailto:concierge@luxify.com">concierge@luxify.com</a> and we will help you to leverage Luxify’s dealer network to assist you in selling your item.</p>
 							</div>
 								</div>
 							</div>
