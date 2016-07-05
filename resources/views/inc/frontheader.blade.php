@@ -53,7 +53,19 @@
                              @endforeach
                            </select>
                         </li>
-                        <li><a href="/dashboard">Welcome {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
+                        <li class="dropdown">
+                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Welcome {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a>
+                          <div class="dropdown-menu" id="user-menu">
+                              <ul>
+                                  @if(Auth::user()->role == 'admin')
+                                    <li><a href="/panel">Admin Panel</a></li>
+                                  @else
+                                    <li><a href="/dashboard">Dashboard</a></li>
+                                  @endif
+                                  <li><a href="/Logout">Logout</a></li>
+                              </ul>
+                          </div>
+                        </li>
                     </ul>
                 @else
                     <ul class="nav navbar-nav navbar-right">
@@ -82,7 +94,7 @@
 
   .currency-selector-container  .jcf-select {
     background-color: transparent;
-    height: 36px;
+    height: 30px;
     border: 1px solid white;
     border-radius: 0;
     text-overflow: ellipsis;
@@ -105,7 +117,24 @@
   }
   .currency-selector-container  .jcf-select .jcf-select-text {
     color: white;
-    line-height: 35px;
+    line-height: 30px;
+  }
+  #user-menu {
+    left: 27%;
+    width: 165px;
+  }
+  #user-menu ul li{
+    width: 100%; 
+  }
+  #user-menu ul li a{
+    font-family: "Roboto", "Arial", "Helvetica Neue", "Helvetica", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.428;
+    letter-spacing: 0px;
+  }
+  #user-menu:before {
+    left: 50%;
   }
   
 </style>

@@ -590,7 +590,8 @@ div.lightbox {
     right: 0;
     font-size: 7px;
     line-height: 1;
-    margin-top: -4px;
+    margin-top: -6px;
+    margin-right: -3px;
     color: #9b9b9b;
 }
 .navbar-nav> li .dropdown-menu {
