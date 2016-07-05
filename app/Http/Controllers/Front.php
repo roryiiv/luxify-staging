@@ -906,10 +906,10 @@ class Front extends Controller {
                         ->first();
 
                         $return .= '<li>';
-                        $return .= '<a href="/dealer/'.$dealer->id.'" title="'.$dealer->fullName.'">';
+                        $return .= '<a href="/dealer/'.$dealer->id.'" title="'.(!empty($dealer->companyName)? $dealer->companyName : $dealer->fullName).'">';
                         $dealer_img = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png';
                         $return .= '<img src="http://images.luxify.com/310/https://s3-ap-southeast-1.amazonaws.com/luxify/images/'. $dealer_img .'" width="304" height="304" alt="Image">';
-                        $return .= '<span style="display: block; margin-top: 10px;">' . $dealer->firstName . ' ' . $dealer->lastName . '</span>';
+                        $return .= '<span style="display: block; margin-top: 10px;">'. (!empty($dealer->companyName)? $dealer->companyName : $dealer->firstName . ' ' . $dealer->lastName). '</span>';
                         $return .= '</a>';
                         $return .= '</li>';
                     }
