@@ -635,7 +635,7 @@ div.lightbox {
     z-index: -1;
 }
 .banner h1 {
-    font-weight: 500;
+    font-weight: 100;
     margin: 0 0 20px;
     font-size: 3.6em;
     color: #fff;
@@ -657,7 +657,7 @@ div.lightbox {
     z-index: -1;
 }
 .banner .holder {
-    max-width: 800px;
+    max-width: 840px;
     margin: 0 auto;
 }
 .inner-banner {

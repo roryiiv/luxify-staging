@@ -62,7 +62,7 @@
                                                 @endif
 
                                                 <li><a href="/dealer-application">Dealer Application</a></li>
-                                                <li><a href="/estate">Luxify Estate</a></li>
+                                                <li><a href="/estate">Luxify Estates</a></li>
 												<li><a href="/contact">Contact Us</a></li>
                                             </ul>
                                         </nav>
@@ -73,7 +73,7 @@
                                             <ul>
                                                 <li><a href="mailto:concierge@luxify.com">concierge@luxify.com</a></li>
                                                 <li>
-                                                    <address>9/F, Core C, Cyberport 3 100 Cyberport Rd, Hong Kong</address>
+                                                    <address>9/F, Core C, Cyberport 3<br /> 100 Cyberport Road,<br /> Hong Kong</address>
                                                 </li>
                                                 <li><a href="tel:=85236185858">+852 3618 5858</a></li>
                                             </ul>

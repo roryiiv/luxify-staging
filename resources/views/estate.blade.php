@@ -22,11 +22,11 @@
 					   </div>
                       <div class="row">
                           <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>Our Goal is to change the way consumers search for and experience real estate through 3D, virtual reality and video property tour</p>
+							<p>Our goal is to change the way property buyers search for and experience luxury real estate through 3D, virtual reality and video property tour</p>
 					   </div>
 				   </div>
 				   <div class="button-wrap">
-						<a class="btn btn-default lightbox fancybox.iframe" href="http://player.vimeo.com/video/120660363?autoplay=true"><span class="icon-play"></span> Experience</a>
+						<a class="btn btn-default lightbox fancybox.iframe" href="https://my.matterport.com/show/?m=1VXKRhH7xcd"><span class="icon-play"></span> Experience</a>
 						<a href="#schedule" class="btn btn-primary smooth-scroll">Free Consultation</a>
 					</div>
                 </div>
@@ -71,7 +71,7 @@
                                 <img src="/assets/images/icon03.png" alt="image description">
                             </div>
                             <strong class="title">No software required</strong>
-                            <p>Automated and manual tour modes (Navigate the interior yourself or press play)</p>
+                            <p>Automated and manual tour modes</p>
                         </div>
                     </div>
                     <div class="column">

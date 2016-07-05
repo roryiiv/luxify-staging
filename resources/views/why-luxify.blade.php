@@ -23,7 +23,7 @@
 					   </div>
                       <div class="row">
                           <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>Here on Luxify you will discover on of the Internet’s largest collections of luxury products</p>
+							<p>On Luxify you will discover one of the Internet’s largest collections of luxury products and experiences</p>
 						   </div>
 					   </div>
                       <div class="row connect-socials" style="display: none;">
@@ -36,7 +36,6 @@
                      </div>
 					 <div class="row">
 					 	<div class="col-sm-6 col-sm-offset-3">
-							<span class="register">Or try it for free</span>
 							<a href="/register" class="btn btn-primary btn-block" title="Register for Free">Register Now</a>
 						</div>
 					 </div>
@@ -83,8 +82,8 @@
 									<p>When you have found a product you are interested in, we provide an easy way for you to communicate with the seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straightforward one to one basis.</p>
 								</li>
 								<li>
-									<h3>You Will Find Your Item</h3>
-									<p>Whether you are looking for the most expensive watch, a vintage designer piece or fine wines for your cellar, you will find exactly what you are looking for a Luxify</p>
+									<h3>You Will Find Your Luxury Item</h3>
+									<p>Whether you are looking for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly what you are looking for a Luxify</p>
 								</li>
 							</ol>
 						</div>
@@ -103,8 +102,8 @@
 						<header class="heading" id="heading1">
 							<h1 class="header2">How it works?</h1>
 							<div class="wrap">
-                                <h5>Luxify simply connects passionate buyers who need a reliable source for
-								<br class="hidden-xs">luxury goods around the world</h5>
+                                <h5>Luxify simply connects reputable luxury dealers with luxury buyers in Asia
+								<br class="hidden-xs"> who need a reliable source of luxury goods around the world</h5>
                             </div>
 						</header>
 						<div class="work-image">
@@ -136,7 +135,7 @@
 								</div>
 								<div class="text" id="text1">
 									<h3>Contact Seller Directly</h3>
-									<p>You can communicate directly with a seller</p>
+									<p>Communicate directly with the seller</p>
 								</div>
 							</div>
 						</div>

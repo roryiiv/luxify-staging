@@ -48,11 +48,11 @@
 					</div>
 					<div class="col-sm-4">
 						<h5>Singapore</h5>
-						<p>One Raffles Quay North Tower, <br>Level 25 Singapore 048583<br>Tel: +65 6622 5368<br>Email: <a href="mailto:concierge@luxify.com">concierge@luxify.com</a></p>
+            <p>22 Sing Ming Lane<br />06-76 Midview City <br />Singapore 573969<br>Email: <a href="mailto:concierge@luxify.com">concierge@luxify.com</a></p>
 					</div>
 					<div class="col-sm-4">
-						<h5>London</h5>
-						<p>2nd Floor, Berkeley Square House<br>Berkeley Square London, W1J 6BD<br>United Kingdom<br>Email: <a href="mailto:concierge@luxify.com">concierge@luxify.com</a></p>
+						<h5>United Kingdom</h5>
+            <p>3/F, 207 Regent Street,<br />London, W1B 3HH<br>Email: <a href="mailto:concierge@luxify.com">concierge@luxify.com</a></p>
 					</div>
 				</div>
             </div>

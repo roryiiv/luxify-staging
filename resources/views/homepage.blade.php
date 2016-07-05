@@ -17,8 +17,8 @@
             <div class="container">
                 <div class="holder" id="search_holder">
 
-                    <h1>Luxury Within Reach</h1>
-                    <h2>Asia’s Largest Marketplace To Buy And Sell Luxury </h2>
+                    <h1>Asia’s leading marketplace for Luxury</h1>
+                    <h2>We simply connect you with the world’s best brands, finest shops, galleries and dealers</h2>
 
                     <!-- category search form -->
                     @include('inc.search')
