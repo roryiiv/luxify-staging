@@ -193,7 +193,7 @@
                                         <label for="name">First Name:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="first-name" class="form-control">
+                                        <input type="text" name="first-name" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -203,17 +203,17 @@
                                         <label for="name">Last Name:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="last-name" class="form-control">
+                                        <input type="text" name="last-name" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Your e-mail:</label>
+                                        <label for="name">Your Email:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="email" name="email" class="form-control">
+                                        <input type="email" name="email" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +223,7 @@
                                         <label for="name">Your Phone:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="phone" class="form-control">
+                                        <input type="text" name="phone" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +233,7 @@
                                         <label for="name">Business Name:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="business-name" class="form-control">
+                                        <input type="text" name="business-name" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -243,7 +243,7 @@
                                         <label for="name">Primary Business Focus :</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <select name="primary_business_focus" placeholder="Select one" class="select_form">
+                                        <select name="primary_business_focus" placeholder="Select one" class="select_form" required>
                                              <option value='Aircrafts'>Aircrafts</option>
                                              <option value='Antiques'>Antiques</option>
                                              <option value='Art'>Art</option>
@@ -270,7 +270,7 @@
                                         <label for="name">Secondary Business Focus:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <select name="secondary_business_focus" placeholder="Select one" class="select_form">
+                                        <select name="secondary_business_focus" placeholder="Select one" class="select_form" required>
                                              <option value='Aircrafts'>Aircrafts</option>
                                              <option value='Antiques'>Antiques</option>
                                              <option value='Art'>Art</option>
@@ -297,7 +297,7 @@
                                         <label for="name">Estimated Inventory Size:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <select name="estimated_inventory_size" placeholder="Select one" class="select_form">
+                                        <select name="estimated_inventory_size" placeholder="Select one" class="select_form" required>
                                             <option>Less than 50 </option>
                                             <option>50-100 </option>
                                             <option>100-250 </option>
@@ -314,14 +314,14 @@
                                         <label for="name">Average Item Price:</label>
                                     </div>
                                     <div class="col-lg-4 col-sm-4">
-                                        <select name="currency_avg" placeholder="Select one" class="select_form">
+                                        <select name="currency_avg" placeholder="Select one" class="select_form" required>
                                             <option>USD $</option>
                                             <option>GBP £</option>
                                             <option>EUR €</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-5 col-sm-4">
-                                        <input type="text" name="average_item_price" class="form-control" placeholder="Price">
+                                        <input type="text" name="average_item_price" class="form-control" placeholder="Price" required>
                                     </div>
                                 </div>
                             </div>
@@ -331,7 +331,7 @@
                                         <label for="name">Country:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="country" class="form-control width_more" placeholder="Country">
+                                        <input type="text" name="country" class="form-control width_more" placeholder="Country" required>
                                     </div>
                                 </div>
                             </div>
