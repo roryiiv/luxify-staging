@@ -526,6 +526,14 @@ class Dashboard extends Controller
         return view('dashboard.wishlist', ['wishes' => $wishes]);
     }
 
+    public function product_delete($id){
+        DB::table('listings')
+            ->where('id', $id)
+            ->update(['status' => 'EXPIRED']);
+
+        return redirect('/dashboard/products');
+    }
+
     public function products() {
         if($this->user_role != 'seller') return redirect('/');
         $filter = array();
@@ -569,67 +577,67 @@ class Dashboard extends Controller
     }
 
     public function remove_image() {
-      $onS3 = $_POST['onS3'];
-      if ($onS3 === 'true') {
-        $s3 = \Storage::disk('s3');
-        if( $s3->has('/images/'. $_POST['filename'])) {
-          if ($s3->delete('/images/'. $_POST['filename'])) {
+        $onS3 = $_POST['onS3'];
+        if ($onS3 === 'true') {
+            $s3 = \Storage::disk('s3');
+            if( $s3->has('/images/'. $_POST['filename'])) {
+                if ($s3->delete('/images/'. $_POST['filename'])) {
 
-            // instanely update the image array of the listing
-            $item = Listings::where('id', $_POST['itemId'])->first();
-            $oldImages = [];
-            $mainImageRemoved = false;
-            $otherImages = json_decode($item->images);
-            for($i = 0; $i < count($otherImages); $i++) {
-              $oldImages[] = array('mainImage' => false, 'filename'=> $otherImages[$i]);
-            }
-            $oldImages[] = array('mainImage' => true, 'filename'=> $item->mainImageUrl);
-            for ( $i = 0; $i < count($oldImages); $i++ ) {
-              if($oldImages[$i]['filename'] === $_POST['filename']) {
-                if ($oldImages[$i]['mainImage']) {
-                  $mainImageRemoved = true;
+                    // instanely update the image array of the listing
+                    $item = Listings::where('id', $_POST['itemId'])->first();
+                    $oldImages = [];
+                    $mainImageRemoved = false;
+                    $otherImages = json_decode($item->images);
+                    for($i = 0; $i < count($otherImages); $i++) {
+                        $oldImages[] = array('mainImage' => false, 'filename'=> $otherImages[$i]);
+                    }
+                    $oldImages[] = array('mainImage' => true, 'filename'=> $item->mainImageUrl);
+                    for ( $i = 0; $i < count($oldImages); $i++ ) {
+                        if($oldImages[$i]['filename'] === $_POST['filename']) {
+                            if ($oldImages[$i]['mainImage']) {
+                                $mainImageRemoved = true;
+                            }
+                            array_splice($oldImages, $i, 1);
+                        }
+                    }
+                    // if main image is removed, replace with first image of otherImages
+                    if ($mainImageRemoved) {
+                        if (count($oldImages) ===  0 ) {
+                            $item->mainImageUrl = NULL;
+                        } else {
+                            $item->mainImageUrl = $oldImages[0]['filename'];
+                            array_splice($oldImages, 0, 1);
+                        }
+                    } else {
+                        // if main image is not remove, take out main image from oldImages
+                        for ($i = 0; $i < count($oldImages); $i++) {
+                            if ($oldImages[$i]['filename'] === $item->mainImageUrl) {
+                                array_splice($oldImages, $i, 1);
+                            }
+                        }
+                    }
+                    $newOtherImages = [];
+                    for ($i = 0; $i < count($oldImages); $i++) {
+                        $newOtherImages[] = $oldImages[$i]['filename'];
+                    }
+                    $item->images = json_encode($newOtherImages);
+                    $item->save();
+                    echo json_encode((object) ['result' => 1, 'message' => 'Image is removed on S3.']);
+                } else {
+                    echo json_encode((object) ['result' => 0, 'message' => 'Unable to deleted image in S3.']);
                 }
-                array_splice($oldImages, $i, 1);
-              }
-            }
-            // if main image is removed, replace with first image of otherImages
-            if ($mainImageRemoved) {
-              if (count($oldImages) ===  0 ) {
-                $item->mainImageUrl = NULL;
-              } else {
-                $item->mainImageUrl = $oldImages[0]['filename'];
-                array_splice($oldImages, 0, 1);
-              }
             } else {
-              // if main image is not remove, take out main image from oldImages
-              for ($i = 0; $i < count($oldImages); $i++) {
-                if ($oldImages[$i]['filename'] === $item->mainImageUrl) {
-                  array_splice($oldImages, $i, 1);
-                }
-              }
+                echo json_encode((object) ['result' => 0, 'message' => 'Image is not existed on S3.']);
             }
-            $newOtherImages = [];
-            for ($i = 0; $i < count($oldImages); $i++) {
-              $newOtherImages[] = $oldImages[$i]['filename'];
+        } else {
+            $image = base_path() . '/public/temp/' . $_POST['filename'];
+            if (file_exists($image)) {
+                unlink($image);
+                echo json_encode((object) ['result' => 1, 'message' => 'Image is removed.']);
+            } else {
+                echo json_encode((object) ['result' => 0, 'message' => 'Image does not exist.']);
             }
-            $item->images = json_encode($newOtherImages);
-            $item->save();
-            echo json_encode((object) ['result' => 1, 'message' => 'Image is removed on S3.']);
-          } else {
-             echo json_encode((object) ['result' => 0, 'message' => 'Unable to deleted image in S3.']);
-          }
-        } else {
-          echo json_encode((object) ['result' => 0, 'message' => 'Image is not existed on S3.']);
         }
-      } else {
-        $image = base_path() . '/public/temp/' . $_POST['filename'];
-        if (file_exists($image)) {
-          unlink($image);
-          echo json_encode((object) ['result' => 1, 'message' => 'Image is removed.']);
-        } else {
-          echo json_encode((object) ['result' => 0, 'message' => 'Image does not exist.']);
-        }
-      }
     }
     public function multiple_upload(Request $request) {
 

@@ -54,6 +54,7 @@ Route::get('/category/{id}','Front@product_categories');
 Route::post('/category/{id}','Front@product_categories');
 Route::get('/dealer/{id}','Front@dealer');
 Route::get('/dealer/contact/{id}/{item}','Front@dealerContact');
+Route::get('/dealer/listings/{id}', 'Front@dealerListing');
 Route::post('/contact/dealer','Front@sendMessage');
 Route::get('/register','Front@register');
 Route::post('/register','LuxifyAuth@register');
@@ -116,6 +117,7 @@ Route::get('/dashboard/product/edit/{itemId}', 'Dashboard@products_edit');
 Route::post('/dashboard/products', 'Dashboard@product_add'); //Create
 Route::post('/dashboard/products/{itemId}', 'Dashboard@product_edit'); //Update
 Route::post('/dashboard/product/delete/{itemId}', 'Dashboard@products_delete'); // Delete
+Route::get('/dashboard/product/delete/{id}', 'Dashboard@product_delete'); // Delete Item from list
 // Dashboard Images Upload methods
 Route::post('/upload', 'Dashboard@single_upload');
 Route::post('/upload_multiple', 'Dashboard@multiple_upload');

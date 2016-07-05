@@ -408,6 +408,9 @@
                     images_array.splice(i, 1);
                     genImagesPreview();
                 }
+            },
+            error: function(errMsg){
+                console.log(errMsg.responseText);
             }
         });
     }
@@ -496,8 +499,17 @@
             previewsContainer: "#images-preview-zone",
             previewTemplate: $('#dz-preview-template').html(),
             dictDefaultMessage: "<i class='icon-dz fa fa-files-o'></i>Drop files here to upload",
+            sending: function(file, xhr, formData){
+                swal({
+                    title: "Uploading Images",
+                    text: "Currently Uploading Images.",
+                    //   timer: 2000,
+                    showConfirmButton: false
+                });
+            },
             init: function() {
                 this.on('complete', function(result) {
+                    swal.close();
                     var files = JSON.parse(result.xhr.response);
                     for (var i = 0; i < files.length; i++) {
                         if (typeof _.find(images_array, {filename: files[i].filename}) === 'undefined') {
@@ -506,6 +518,9 @@
                     }
                     genImagesPreview();
                 });
+            },
+            error: function(errMsg){
+                console.log(errMsg.responseText);
             }
         });
     });
