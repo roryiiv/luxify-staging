@@ -487,7 +487,7 @@
         var token = "{{ Session::getToken() }}";
         $("#item-images-dz").dropzone({
             url: "/upload_multiple",
-            paramName: "file",
+            paramName: "files",
             params: {
                 _token: token
             },
@@ -510,6 +510,8 @@
             },
             init: function() {
                 this.on('complete', function(result) {
+                    swal.close();
+                    console.log(result);
                     var files = JSON.parse(result.xhr.response);
                     for (var i = 0; i < files.length; i++) {
                         if (typeof _.find(images_array, {filename: files[i].filename}) === 'undefined') {
