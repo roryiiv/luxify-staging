@@ -15,7 +15,7 @@
           padding: 36px 73px;
           max-width: 800px;
           width: 800px;
-          border: 5px solid #998967;
+          border: 2px solid #998967;
       }
       #login-form .container > h2,h5 {
          color: #56616F;
@@ -69,8 +69,9 @@
           font-size: 14px;
           color: #BDC6CF;
           text-align: center;
-          margin-bottom: 62px;
+          margin-bottom: 34px;
           padding: 0px 20px;
+          line-height: 28px;
       }
       #login-form .split-box > .right h4 {
           text-align: center;
@@ -85,6 +86,7 @@
           color: #86939E;
           text-align: center;
           margin-bottom: 20px;
+          line-height: 28px;
       }
       #login-form .split-box > .right input {
           border: 1px solid #d0c8b8;
@@ -94,7 +96,7 @@
           margin-bottom: 10px;
       }
       #login-form .split-box > .right button {
-          margin-top: 29px!important;
+          margin-top: 21px!important;
       }
       #contact-dealer-form .container {
           background-color: white;
@@ -103,7 +105,7 @@
           padding: 36px 85px;
           max-width: 600px;
           width: 600px;
-          border: 5px solid #998967;
+          border: 2px solid #998967;
       }
       #contact-dealer-form textarea {
         width: 100%;
@@ -122,7 +124,7 @@
          background-color: #998967;
          text-transform: uppercase;
          text-align: center;
-         font-weight: 200;
+         font-weight: 400;
          color: white;
          width: 139px;
          height: 26px;
@@ -180,12 +182,12 @@
                  <div class='right'>
                     <form id="login-form-ajax">
                       {!! csrf_field() !!}
-                      <h4>I'm Ready</h4>
+                      <h4>Existing User</h4>
                       <p>Please login to your account</p>
                       <input name="email" id="email" type="text" placeholder="Email" />
                       <input name="password" id="password" type="password"  placeholder="Password" />
                       <input name="_ref" type="hidden" value="/dealer/{{$dealer->id}}" />
-                      <button class="button" id="sign-in-btn">Sign In</button>
+                      <button class="button" id="sign-in-btn">Login</button>
                     </form> 
                  </div>
              </div>
