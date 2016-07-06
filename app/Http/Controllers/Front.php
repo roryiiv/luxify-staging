@@ -388,7 +388,7 @@ class Front extends Controller {
         $dealer = DB::table('users')->where('id', $id)->first();
         $listings = DB::table('listings')
         ->where('userId', $dealer->id)
-        ->take(6)
+        ->where('status', 'APPROVED')
         ->get();
         return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
     }
