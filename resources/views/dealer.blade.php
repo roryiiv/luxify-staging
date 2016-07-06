@@ -10,12 +10,12 @@
     <style>
       #login-form .container {
           background-color: white;
-          height: 400px;
-          margin: 15% auto;
-          padding: 36px 36px;
-          max-width: 600px;
-          width: 1000px;
-          border: 2px solid #998967;
+          height: 480px;
+          margin: 10% auto;
+          padding: 36px 73px;
+          max-width: 800px;
+          width: 800px;
+          border: 5px solid #998967;
       }
       #login-form .container > h2,h5 {
          color: #56616F;
@@ -34,9 +34,9 @@
          text-align: center;
       }
       #login-form .split-box { 
-          margin-top: 20px;
+          margin-top: 35px;
           box-shadow: 1px 1px 5px rgba(0,0,0,0.5); 
-          height: 250px;
+          height: 290px;
           width: 100%; 
       }
       #login-form .split-box > .left,.right { 
@@ -44,13 +44,16 @@
           height: 100%;
           display: block;
           float: left;
-          padding: 20px;
+          padding: 35px 40px;
       }
       #login-form .split-box > .left { 
           background-color: #5E6977;
       }
-
-      #login-form button {
+      #login-form .split-box > .left a.button { 
+          text-decoration: none;
+          padding-top: 5px;
+      }
+      #login-form .button {
           display: block;
           margin: 0 auto!important; 
           float: none!important;
@@ -58,35 +61,49 @@
 
       #login-form .split-box > .left h4 {
           text-align: center;
-          font-weight: 200;
-          font-size: 16px;
+          font-weight: 400;
+          font-size: 18px;
       }
       #login-form .split-box > .left p {
           font-weight: 100;
-          font-size: 10px;
+          font-size: 14px;
           color: #BDC6CF;
           text-align: center;
+          margin-bottom: 62px;
+          padding: 0px 20px;
       }
       #login-form .split-box > .right h4 {
           text-align: center;
-          font-weight: 200;
-          font-size: 16px;
+          font-weight: 400;
+          font-size: 18px;
           color: #43484D;
            
       }
       #login-form .split-box > .right p {
           font-weight: 100;
-          font-size: 10px;
+          font-size: 14px;
           color: #86939E;
+          text-align: center;
+          margin-bottom: 20px;
+      }
+      #login-form .split-box > .right input {
+          border: 1px solid #d0c8b8;
+          padding: 5px;
+          width: 100%;  
+          color: #998967;
+          margin-bottom: 10px;
+      }
+      #login-form .split-box > .right button {
+          margin-top: 29px!important;
       }
       #contact-dealer-form .container {
           background-color: white;
-          height: 336px;
+          height: 348px;
           margin: 15% auto;
           padding: 36px 85px;
           max-width: 600px;
           width: 600px;
-          border: 2px solid #998967;
+          border: 5px solid #998967;
       }
       #contact-dealer-form textarea {
         width: 100%;
@@ -101,7 +118,7 @@
          font-weight: 400;
          color: #56616F;
       }
-      #contact-dealer-form button, #login-form button {
+      #contact-dealer-form button, #login-form button, #login-form a {
          background-color: #998967;
          text-transform: uppercase;
          text-align: center;
@@ -152,30 +169,29 @@
         @else
         <div class="modal fade" id="login-form" tabindex="-1" role="dialog" aria-labelledby='contactDealerForm'>
           <div class='container'>
-             <form>
-                <h2>Welcome to Luxify</h2>
-                <h5>Asia’s leading marketplace for Luxury</h5>
-                <div class='split-box'>
-                    <div class='left'>
-                       <h4>I'm New Here</h4>
-                       <p>Creating an account quick and easy. You can also have your own wishlist, contact our dealers,  edit your profile, and much more.</p>
-                       <button>Sign Up</button>
-                    </div>
-                    <div class='right'>
-                       <form>
-                         <h4>I'm Ready</h4>
-                         <p>PLease login to your account</p>
-                         <input name="email" type="text" placeholder="Email" />
-                         <input name="password" type="password"  placeholder="Password" />
-                         <button>Sign In</button>
-                       </form> 
-                    </div>
-                </div>
-             </form>
+             <h2>Welcome to Luxify</h2>
+             <h5>Asia’s leading marketplace for Luxury</h5>
+             <div class='split-box'>
+                 <div class='left'>
+                    <h4>I'm New Here</h4>
+                    <p>Creating an account quick and easy. You can also have your own wishlist, contact our dealers,  edit your profile, and much more.</p>
+                    <a class="button" href="/register">Sign Up</a>
+                 </div>
+                 <div class='right'>
+                    <form id="login-form-ajax">
+                      {!! csrf_field() !!}
+                      <h4>I'm Ready</h4>
+                      <p>Please login to your account</p>
+                      <input name="email" id="email" type="text" placeholder="Email" />
+                      <input name="password" id="password" type="password"  placeholder="Password" />
+                      <input name="_ref" type="hidden" value="/dealer/{{$dealer->id}}" />
+                      <button class="button" id="sign-in-btn">Sign In</button>
+                    </form> 
+                 </div>
+             </div>
           </div>
         </div>
         @endif
-
     </section>
     <!-- end of banner -->
     <!-- main informative part of the page -->
@@ -310,7 +326,6 @@
                     data: data,
                     dataType: "html",
                     success: function(data){
-                        console.log(data);
                         if(data == 0){
                             alert('Duplicated item, please contact Admin.');
                         }else{
@@ -324,6 +339,50 @@
                 });
             });
         });
+
+        $('#login-form-ajax').validate({
+          rules: {
+            email: {
+              required: true,
+              email: true 
+            },
+            password: {
+              required: true 
+            }
+          } 
+        });
+        $('#sign-in-btn').click(function(e){
+          e.preventDefault(); 
+          var email = $('input#email').val(), pass = $('input#password').val();
+          var token = $('#login-form-ajax input[name=_token]').val();
+          var dataA = {email: email, action: 'get_email'};
+
+          if ($('#login-form-ajax').valid()){
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                headers: {'X-CSRF-TOKEN': token},
+                data: dataA,
+                dataType: "json",
+                success: function(data){
+                    if (data.result === 1) {
+                        var hashed = encrypt.password(pass, data.salt);
+                        var salt = data.salt;
+                        var _ref = $('input[name=_ref]').val();
+                    }else{
+                        $('p#login_error').slideDown('slow');
+                    }
+                },
+                failure: function(errMsg){
+                    alert(errMsg);
+                }
+            });
+            return false;
+
+          }
+        
+        });
+
     });
     </script>
 @endsection
