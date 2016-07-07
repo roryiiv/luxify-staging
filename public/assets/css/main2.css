@@ -1490,12 +1490,12 @@ div.lightbox {
   color: #988866;
   position: absolute;
 }
-.sidebar .detail [class^="icon-"]:nth-child(2),
-.sidebar .detail [class*="icon-"]:nth-child(1) {
+.sidebar .detail li:nth-child(1) [class^="icon-"],
+.sidebar .detail li:nth-child(1) [class*="icon-"]{
   left: 74px;
 }
-.sidebar .detail [class^="icon-"]:nth-child(2),
-.sidebar .detail [class*="icon-"]:nth-child(2) {
+.sidebar .detail li:nth-child(2) [class^="icon-"],
+.sidebar .detail li:nth-child(2) [class*="icon-"]{
   left: 77px;
 }
 .sidebar .detail .text {
