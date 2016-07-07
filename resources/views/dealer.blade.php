@@ -8,9 +8,12 @@
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
     <style>
+      #login-form-ajax .error {
+        color: #b33a3a;  
+      }
       #login-form .container {
           background-color: white;
-          height: 480px;
+          height: 510px;
           margin: 10% auto;
           padding: 36px 73px;
           max-width: 800px;
@@ -36,7 +39,7 @@
       #login-form .split-box { 
           margin-top: 35px;
           box-shadow: 1px 1px 5px rgba(0,0,0,0.5); 
-          height: 290px;
+          height: 320px;
           width: 100%; 
       }
       #login-form .split-box > .left,.right { 
@@ -230,7 +233,7 @@
                     </div>
                     <?php $logo = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                     <div class="col-md-5 col-sm-offset-1">
-                        <img src="{{ func::img_url($logo, 360) }}" alt="image_link">
+                        <img src="{{ func::img_url($logo, 360, '', true) }}" alt="image_link">
                     </div>
                 </div>
             </div>
@@ -238,7 +241,7 @@
         <?php $feat = func::getFeatured($dealer->id); ?>
         @if(!empty($feat))
             <?php $mainImageUrl = !empty($feat->mainImageUrl) ? $feat->mainImageUrl : 'about-banner.jpg'; ?>
-            <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920) }});">
+            <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }});">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6">
@@ -268,7 +271,7 @@
         				   	   <div class="thumbnail">
                           <a href="/listing/{{ $item->slug }}">
             		   	   		<div class='product-img-container'>
-            		   	   			<img class='product-img' src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 400) : func::img_url('default-logo.png', 400) }}" alt="{{ $item->title }}">
+            		   	   			<img class='product-img' src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}" alt="{{ $item->title }}">
                                 @if(Auth::user())
                                   <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
                                   <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
@@ -285,7 +288,7 @@
                               ?>
         				   	   	  <span class="price">{{ $price_format }}</span>
         				   	   	  <div class="item-logo">
-        				   	   	   	<img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 300) : func::img_url('default-logo.png', 300) }}" alt="image description">
+        				   	   	   	<img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}" alt="image description">
         				   	   	  </div>
         				   	     </div>
         				   	   </div>
@@ -310,15 +313,14 @@
     </main>
 @endsection
 @section('scripts')
-    {{ csrf_field() }}
+    <script src="/db/js/jquery.validate.min.js"></script>
     <script>
     $(document).ready(function(){
         $('a.favourite').each(function(){
             $(this).click(function(event){
                 // return false; // remove this later after database fixes.
                 // event.preventDefault();
-                var url = '/wishlist/add', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
-                console.log(token);
+                var url = '/wishlist/add', itemID = $(this).attr('data-id'), userID = '{{ $user_id }}', token = $('input[name=_token]').val();
                 var data = {uid: itemID, lid: itemID};
 
                 $.ajax({
