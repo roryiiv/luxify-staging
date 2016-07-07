@@ -76,6 +76,25 @@ class LuxifyAuth extends Controller
                         return redirect()->intended('/login?err=wrong%20password');
                     }
                 break;
+                case 'login_ajax':
+                    // var_dump($_POST); exit();
+                    $email = $_POST['email'];
+                    $salt = $_POST['salt'];
+                    $password = $_POST['hashed'];
+                    $_ref = $_POST['_ref'];
+
+                    $auth = User::where('email', '=', $email)->where('hashedPassword', '=', $password)->where('salt', '=', $salt)->first();
+
+                    if($auth) {
+                        // Authentication passed...
+                        Auth::login($auth);
+                        $role = Auth::user()->role;
+                        // var_dump(Auth::user()); var_dump(Auth::user()->role); exit();
+                        echo json_encode((object) ['result' => 1, 'message'=> 'Login successful.']);
+                    }else{
+                      echo json_encode((object) ['result' => 0, 'message'=> 'Incorrect Email or Password']);
+                    }
+                break;
             }
 
         }

@@ -9,8 +9,11 @@
     <link rel="stylesheet" href="/assets/css/main.css">
     <style>
       #login-form-ajax .error {
-        color: #b33a3a;  
+        color: #b33a3a!important;  
       }
+      #login-form-ajax button:disabled, #message-form button:disabled {
+        background-color: grey; 
+      } 
       #login-form .container {
           background-color: white;
           height: 510px;
@@ -118,7 +121,7 @@
         font-size: 14px; 
         resize: none;
       }
-      #contact-dealer-form h2 {
+      #contact-dealer-form h2, #message-sent-form h2{
          text-align: center;
          font-weight: 400;
          color: #56616F;
@@ -137,6 +140,47 @@
          margin-top: 5px;
          font-size: 10px;
       }
+      #message-sent-form .container {
+          background-image: url('/assets/images/compass.png');
+          background-position-x: 100%;
+          background-repeat: no-repeat;
+          background-color: white;
+          height: 220px;
+          margin: 15% auto;
+          padding: 36px 85px;
+          max-width: 600px;
+          width: 600px;
+          border: 2px solid #998967;
+      }
+      #message-sent-form h5 {
+          text-align: center;
+          color: #56616F;
+          font-size: 14px; 
+          font-weight: 400;
+      }
+      #message-sent-form .action-box {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around; 
+          padding-top: 20px;
+      }
+      #message-sent-form button, #message-sent-form a{
+         background-color: #998967;
+         text-transform: uppercase;
+         text-align: center;
+         font-weight: 400;
+         color: white;
+         width: 165px;
+         height: 33px;
+         border: 0;
+         box-shadow: none;
+      }
+      #message-sent-form a {
+         padding-top: 8px;
+         text-decoration: none;
+         cursor: pointer;
+      }
+      
     </style>
 
 @endsection
@@ -161,13 +205,18 @@
                 </div>
             </div>
         </div>
+        {!! csrf_field() !!}
         @if(Auth::user()) 
         <div class="modal fade" id="contact-dealer-form" tabindex="-1" role="dialog" aria-labelledby='contactDealerForm'>
           <div class='container modal-dialog' role='document'>
-             <form>
+             <form id="message-form">
                 <h2>Send a message</h2>
-                <textarea rows="8" name="content" placeholder="Let the dealer know why you are interested. A copy of the mesage will be included in your dashboard as well."></textarea>
-                <button>Send</button> 
+                <textarea id='content' required rows="8" name="content" placeholder="Let the dealer know why you are interested. A copy of the mesage will be included in your dashboard as well."></textarea>
+                <button id="message-send-btn">Send</button> 
+                <div class='ajax-loading' style="display:none; margin-top:10px; text-align: center; width:100%">
+                    <img src="/assets/images/ajax-loader_2.gif" />
+                </div>
+                <p style="display:none;" class="error login-error"></p>
              </form>
           </div>
         </div>
@@ -183,20 +232,34 @@
                     <a class="button" href="/register">Sign Up</a>
                  </div>
                  <div class='right'>
-                    <form id="login-form-ajax">
-                      {!! csrf_field() !!}
+                    <form id="login-form-ajax" action="login_ajax">
                       <h4>Existing User</h4>
                       <p>Please login to your account</p>
                       <input name="email" id="email" type="text" placeholder="Email" />
                       <input name="password" id="password" type="password"  placeholder="Password" />
                       <input name="_ref" type="hidden" value="/dealer/{{$dealer->id}}" />
                       <button class="button" id="sign-in-btn">Login</button>
+                      <div class='ajax-loading' style="display:none; margin-top:10px; text-align: center; width:100%">
+                          <img src="/assets/images/ajax-loader_2.gif" />
+                      </div>
+                      <p style="display:none;" class="error login-error"></p>
+
                     </form> 
                  </div>
              </div>
           </div>
         </div>
         @endif
+        <div class="modal fade" id="message-sent-form" tabindex="-1" role="dialog" aria-labelledby="messageSentForm">
+            <div class='container'>
+               <h2>Message Sent</h2>
+               <h5>Stay tuned! You will receive email notification when the seller reply.</h5>
+               <div class="action-box">
+                  <a href="/dashboard/mailbox" class='button'>View Inbox</a>
+                  <button data-dismiss="modal">Return To Item</button>
+               </div>
+            </div>
+        </div>
     </section>
     <!-- end of banner -->
     <!-- main informative part of the page -->
@@ -314,6 +377,7 @@
 @endsection
 @section('scripts')
     <script src="/db/js/jquery.validate.min.js"></script>
+    <script src="/js/bundle.js"></script>
     <script>
     $(document).ready(function(){
         $('a.favourite').each(function(){
@@ -343,6 +407,13 @@
                 });
             });
         });
+        $('#message-form').validate({
+          rules: {
+            content: {
+              required: true
+            }
+          } 
+        });
 
         $('#login-form-ajax').validate({
           rules: {
@@ -355,13 +426,16 @@
             }
           } 
         });
+
         $('#sign-in-btn').click(function(e){
           e.preventDefault(); 
           var email = $('input#email').val(), pass = $('input#password').val();
-          var token = $('#login-form-ajax input[name=_token]').val();
+          var token = $('input[name=_token]').val();
           var dataA = {email: email, action: 'get_email'};
 
-          if ($('#login-form-ajax').valid()){
+          if ($('#login-form-ajax').valid() && !$('#sign-in-btn').prop('disabled')){
+            $('#sign-in-btn').prop('disabled', true);
+            $('div.ajax-loading').show();
             $.ajax({
                 type: "POST",
                 url: "/login",
@@ -373,8 +447,40 @@
                         var hashed = encrypt.password(pass, data.salt);
                         var salt = data.salt;
                         var _ref = $('input[name=_ref]').val();
+                        $.ajax({
+                          type: "POST",
+                          url: "/login",
+                          headers: {'X-CSRF-TOKEN': token},
+                          data: {
+                            action: 'login_ajax',
+                            email: email,
+                            salt: salt,
+                            hashed: hashed,
+                            _ref: _ref     
+                          },
+                          dataType: 'json',
+                          success: function(res) {
+                            $('#sign-in-btn').prop('disabled', false);
+                            $('div.ajax-loading').hide();
+                            if (res.result === 0) {
+                              $("p.login-error").html(res.message).slideDown('fast');
+                              $('#login-form-ajax input[name=password]').select();
+                              setTimeout(function(){
+                                $("p.login-error").slideUp('fast'); 
+                              }, 5000);
+                            } else {
+                              window.location = _ref; 
+                            }
+                          }
+                        });
                     }else{
-                        $('p#login_error').slideDown('slow');
+                        $('#sign-in-btn').prop('disabled', false);
+                        $('div.ajax-loading').hide();
+                        $('p.login-error').html(data.message).show().slideDown('fast');
+                        $('#login-form-ajax input[name=email]').select();
+                        setTimeout(function() {
+                          $("p.login-error").slideUp('fast'); 
+                        }, 5000);
                     }
                 },
                 failure: function(errMsg){
@@ -382,9 +488,43 @@
                 }
             });
             return false;
-
           }
-        
+        });
+
+        $('#message-send-btn').click(function(e){
+          e.preventDefault();
+          var token = $('input[name=_token]').val();
+          if($('#message-form').valid() && !$('#message-send-btn').prop('disabled')) {
+            $('#message-send-btn').prop('disabled', true);
+            $('#message-form textarea').prop('disabled', true);
+            $('div.ajax-loading').show();
+            $.ajax({
+              type: 'POST',
+              url: '/contact/dealer/{{$dealer->id}}',
+              headers: {'X-CSRF-TOKEN': token},
+              dataType: 'json',
+              data: {
+                message: $('textarea[name=content]').val()
+              },
+              success: function(res) {
+                if (res.result === 1) {
+                  $('#message-send-btn').prop('disabled', false);
+                  $('div.ajax-loading').hide();
+                  $('#message-form textarea').val('').prop('disabled', false);
+                  $('#contact-dealer-form').modal('toggle'); 
+                  $('#message-sent-form').modal('toggle');
+                } else {
+                  $('#message-send-btn').prop('disabled', false);
+                  $('div.ajax-loading').hide();
+                  $('p.login-error').html(res.message).show().slideDown('fast');
+                  $('textarea').select();
+                  setTimeout(function() {
+                    $("p.login-error").slideUp('fast'); 
+                  }, 5000);
+                }
+              }
+            }); 
+          }
         });
 
     });

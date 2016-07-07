@@ -55,7 +55,7 @@ Route::post('/category/{id}','Front@product_categories');
 Route::get('/dealer/{id}','Front@dealer');
 Route::get('/dealer/contact/{id}/{item}','Front@dealerContact');
 Route::get('/dealer/listings/{id}', 'Front@dealerListing');
-Route::post('/contact/dealer','Front@sendMessage');
+Route::post('/contact/dealer/{dealerId}','Front@sendMessage');
 Route::get('/register','Front@register');
 Route::post('/register','LuxifyAuth@register');
 Route::get('/login','Front@login');
