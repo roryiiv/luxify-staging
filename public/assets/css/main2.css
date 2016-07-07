@@ -1540,6 +1540,7 @@ div.lightbox {
   display: inline-block;
   vertical-align: top;
   margin: 0 0 30px;
+  font-size: 1.4rem;
 }
 .btn-holder {
   padding: 0 22px;
@@ -4214,10 +4215,10 @@ nav.banner-nav,
   font-size: 1.375em;
 }
 .footer-nav {
-  font-size: 1em;
+  font-size: 1.6em;
 }
 .footer-nav h4 {
-  font-size: 1.2em;
+  font-size: 1.6em;
 }
 .social-networks a {
   width: 26px;
