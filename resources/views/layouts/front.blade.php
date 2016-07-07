@@ -13,6 +13,59 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
     <!-- include bootstrap stylesheet -->
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <style>
+    .currency-selector-container {
+        margin-right: 2.4rem;
+    }
+    .navbar .navbar-right li:after {
+        display: none;
+    }
+
+    .currency-selector-container  .jcf-select {
+        background-color: transparent;
+        height: 30px;
+        border: 1px solid white;
+        border-radius: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        cursor: default;
+        display: block;
+        font-size: 14px;
+    }
+    .currency-selector-container  .jcf-select {
+        font-weight: 200;
+    }
+    .currency-selector-container  .jcf-select .jcf-select-opener{
+        color: white;
+    }
+    .currency-selector-container  .jcf-select .jcf-select-opener:before{
+        top: 46%;
+        right: 0.8rem;
+        color: white;
+    }
+    .currency-selector-container  .jcf-select .jcf-select-text {
+        color: white;
+        line-height: 30px;
+    }
+    #user-menu {
+        left: 27%;
+        width: 165px;
+    }
+    #user-menu ul li{
+        width: 100%;
+    }
+    #user-menu ul li a{
+        font-family: "Roboto", "Arial", "Helvetica Neue", "Helvetica", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.428;
+        letter-spacing: 0px;
+    }
+    #user-menu:before {
+        left: 50%;
+    }
+    </style>
     @yield('style')
     <!--[if lt IE 9]>
 		<link rel="stylesheet" href="css/ie.css" />
@@ -140,6 +193,15 @@
     <script src="/assets/js/parallax.js"></script>
     <script src="/assets/js/smooth-scroll.js"></script>
     <script src="/assets/js/jquery.main.js"></script>
+    <script>
+    $(document).ready(function(){
+        $('#currSelect').on('change', function(){
+            var code = $(this).val();
+            // alert(code);
+            window.location.href = '/api/currency/switch/' + code;
+        });
+    });
+    </script>
     {{-- Page specific scripts --}}
     @yield('scripts')
 

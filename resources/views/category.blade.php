@@ -57,50 +57,49 @@
 					<div class="item-list">
 						<!-- <div class="container"> second containar removal, /div stays; for resising-->
 							<div class="row">
-                 @if(!empty($listings))
-                   @for($i = 0 ; $i < count($listings); $i++)
-                     <?php $item = $listings[$i]; ?>
-                     <div class="col-sm-6 col-md-4">
-        				   	   <div class="thumbnail">
-                          <a href="/listing/{{ $item->slug }}">
-            		   	   		<figure>
-            		   	   			<img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
-                                @if(Auth::user())
+                                @if(!empty($listings))
+                                    @for($i = 0 ; $i < count($listings); $i++)
+                                        <?php $item = $listings[$i]; ?>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="thumbnail">
+                                                <a href="/listing/{{ $item->slug }}">
+                                                    <figure>
+                                                        <img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
+                                                        @if(Auth::user())
 
-                                  <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
-                                  <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite {{ $added }}"><span class="icon-heart"></span></a>
+                                                            <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
+                                                            <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite {{ $added }}"><span class="icon-heart"></span></a>
+                                                        @endif
+                                                    </figure>
+                                                </a>
+                                                <div class="caption">
+                                                    <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
+                                                    <?php
+                                                    $dealer = func::getTableByID('users', $item->userId);
+                                                    $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                    $price_format = func::formatPrice($item->currencyId, $sess_currency, $item->price);
+                                                    ?>
+                                                    <span class="price">{{ $price_format }}</span>
+                                                    <div class="item-logo">
+                                                        <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, '', 200, true) : func::img_url('default-logo.png', '', 200, true) }}" alt="image description">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if(($i+1)%3 ===0)
+                                            <div class="clearfix visible-md-block"></div>
+                                        @endif
+                                        @if(($i+1)%2 ===0)
+                                            <div class="clearfix visible-sm-block"></div>
+                                        @endif
+                                    @endfor
+                                @else
+                                    <div class="col-md-12 col-sm-12">
+                                        <p>
+                                            No Items found
+                                        </p>
+                                    </div>
                                 @endif
-            		   	   		</figure>
-                          </a>
-        				   	     <div class="caption">
-        				   	   	  <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
-                              <?php
-                                $curr = func::getTableByID('currencies', $item->currencyId);
-                                $dealer = func::getTableByID('users', $item->userId);
-                                $raw_price = $item->price == 0 ? 'Price on request' : $curr->symbol . number_format($item->price, 0) .' '. $curr->code;
-                                $price_format = $raw_price;
-                              ?>
-        				   	   	  <span class="price">{{ $price_format }}</span>
-        				   	   	  <div class="item-logo">
-        				   	   	   	<img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, '', 200, true) : func::img_url('default-logo.png', '', 200, true) }}" alt="image description">
-        				   	   	  </div>
-        				   	     </div>
-        				   	   </div>
-        				     </div>
-                     @if(($i+1)%3 ===0)
-                       <div class="clearfix visible-md-block"></div>
-                     @endif
-                     @if(($i+1)%2 ===0)
-                       <div class="clearfix visible-sm-block"></div>
-                     @endif
-                   @endfor
-                 @else
-                   <div class="col-md-12 col-sm-12">
-                     <p>
-                       No Items found
-                     </p>
-                   </div>
-                 @endif
 							</div>
 							<!-- pagination -->
 							<div class="pagination-wrap">

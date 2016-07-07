@@ -69,10 +69,9 @@
         			   	     <div class="caption">
         			   	   	  <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
                             <?php
-                              $curr = func::getTableByID('currencies', $item->currencyId);
                               $dealer = func::getTableByID('users', $item->userId);
-                              $raw_price = $item->price == 0 ? 'Price on request' : $curr->symbol . number_format($item->price, 0) .' '. $curr->code;
-                              $price_format = $raw_price;
+                              $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                              $price_format = func::formatPrice($item->currencyId, $sess_currency, $item->price);
                             ?>
         			   	   	  <span class="price">{{ $price_format }}</span>
         			   	   	  <div class="item-logo">
@@ -134,7 +133,7 @@
                 $("#sub_category").html("<option value='fine_wines'>Fine Wines</option><option value='spirits'>Spirits</option><option value='champagne'>Champagne</option>");
             }
         });
-        
+
         var ranges = $('input#range').val();
         var splitted = ranges.split(';');
         console.log(splitted);

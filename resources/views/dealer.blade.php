@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/assets/css/main.css">
     <style>
       #login-form-ajax .error {
-        color: #b33a3a;  
+        color: #b33a3a;
       }
       #login-form .container {
           background-color: white;
@@ -36,29 +36,29 @@
          font-weight: 300;
          text-align: center;
       }
-      #login-form .split-box { 
+      #login-form .split-box {
           margin-top: 35px;
-          box-shadow: 1px 1px 5px rgba(0,0,0,0.5); 
+          box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
           height: 320px;
-          width: 100%; 
+          width: 100%;
       }
-      #login-form .split-box > .left,.right { 
+      #login-form .split-box > .left,.right {
           width: 50%;
           height: 100%;
           display: block;
           float: left;
           padding: 35px 40px;
       }
-      #login-form .split-box > .left { 
+      #login-form .split-box > .left {
           background-color: #5E6977;
       }
-      #login-form .split-box > .left a.button { 
+      #login-form .split-box > .left a.button {
           text-decoration: none;
           padding-top: 5px;
       }
       #login-form .button {
           display: block;
-          margin: 0 auto!important; 
+          margin: 0 auto!important;
           float: none!important;
       }
 
@@ -81,7 +81,7 @@
           font-weight: 400;
           font-size: 18px;
           color: #43484D;
-           
+
       }
       #login-form .split-box > .right p {
           font-weight: 100;
@@ -94,7 +94,7 @@
       #login-form .split-box > .right input {
           border: 1px solid #d0c8b8;
           padding: 5px;
-          width: 100%;  
+          width: 100%;
           color: #998967;
           margin-bottom: 10px;
       }
@@ -115,7 +115,7 @@
         border: 2px solid #E1E8EE;
         padding: 20px;
         color: #86939E;
-        font-size: 14px; 
+        font-size: 14px;
         resize: none;
       }
       #contact-dealer-form h2 {
@@ -161,13 +161,13 @@
                 </div>
             </div>
         </div>
-        @if(Auth::user()) 
+        @if(Auth::user())
         <div class="modal fade" id="contact-dealer-form" tabindex="-1" role="dialog" aria-labelledby='contactDealerForm'>
           <div class='container modal-dialog' role='document'>
              <form>
                 <h2>Send a message</h2>
                 <textarea rows="8" name="content" placeholder="Let the dealer know why you are interested. A copy of the mesage will be included in your dashboard as well."></textarea>
-                <button>Send</button> 
+                <button>Send</button>
              </form>
           </div>
         </div>
@@ -191,7 +191,7 @@
                       <input name="password" id="password" type="password"  placeholder="Password" />
                       <input name="_ref" type="hidden" value="/dealer/{{$dealer->id}}" />
                       <button class="button" id="sign-in-btn">Login</button>
-                    </form> 
+                    </form>
                  </div>
              </div>
           </div>
@@ -281,10 +281,9 @@
         				   	     <div class="caption">
         				   	   	  <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
                               <?php
-                                $curr = func::getTableByID('currencies', $item->currencyId);
                                 $dealer = func::getTableByID('users', $item->userId);
-                                $raw_price = $item->price == 0 ? 'Price on request' : $curr->symbol . number_format($item->price, 0) .' '. $curr->code;
-                                $price_format = $raw_price;
+                                $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                $price_format = func::formatPrice($item->currencyId, $sess_currency, $item->price);
                               ?>
         				   	   	  <span class="price">{{ $price_format }}</span>
         				   	   	  <div class="item-logo">
@@ -348,15 +347,15 @@
           rules: {
             email: {
               required: true,
-              email: true 
+              email: true
             },
             password: {
-              required: true 
+              required: true
             }
-          } 
+          }
         });
         $('#sign-in-btn').click(function(e){
-          e.preventDefault(); 
+          e.preventDefault();
           var email = $('input#email').val(), pass = $('input#password').val();
           var token = $('#login-form-ajax input[name=_token]').val();
           var dataA = {email: email, action: 'get_email'};
@@ -384,7 +383,7 @@
             return false;
 
           }
-        
+
         });
 
     });
