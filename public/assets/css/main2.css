@@ -1478,9 +1478,9 @@ div.lightbox {
 }
 .sidebar .detail li {
   position: relative;
-  display: inline-block;
+  display: block;
   vertical-align: top;
-  padding: 0 0 0 72px;
+  padding: 0 0 0 76px;
   margin: 0 0 57px;
   min-width: 55%;
 }
@@ -1489,8 +1489,14 @@ div.lightbox {
   font-size: 33px;
   color: #988866;
   position: absolute;
-  left: -11px;
-  top: -2px;
+}
+.sidebar .detail [class^="icon-"]:nth-child(2),
+.sidebar .detail [class*="icon-"]:nth-child(1) {
+  left: 74px;
+}
+.sidebar .detail [class^="icon-"]:nth-child(2),
+.sidebar .detail [class*="icon-"]:nth-child(2) {
+  left: 77px;
 }
 .sidebar .detail .text {
   font-size: 21px;
