@@ -480,7 +480,7 @@ class Panel extends Controller
       $filter = array();
       //TODO: Searching is case incentive?
       if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
-          $filter[] = ['listings.title', 'like', $_GET['txtProductName']];
+          $filter[] = ['listings.title', 'like', '%'.$_GET['txtProductName'].'%'];
       }
       if(isset($_GET['txtPrice']) && !empty($_GET['txtPrice'])){
           $filter[] = ['listings.price', $_GET['txtPrice']];

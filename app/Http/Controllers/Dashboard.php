@@ -539,7 +539,7 @@ class Dashboard extends Controller
         $filter = array();
         $filter[] = ['listings.userId', $this->user_id];
         if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
-            $filter[] = ['listings.title', 'like', $_GET['txtProductName']];
+            $filter[] = ['listings.title', 'like', '%'.$_GET['txtProductName'].'%'];
         }
         if(isset($_GET['txtPrice']) && !empty($_GET['txtPrice'])){
             $filter[] = ['listings.price', $_GET['txtPrice']];
@@ -549,8 +549,8 @@ class Dashboard extends Controller
 
             $a = date('Y-m-d H:i:s', strtotime($setDate));
             $b = date('Y-m-d H:i:s', strtotime($setDate . ' +1 day'));
-            $filter[] = ['listings.created_at', '>=', $a];
-            $filter[] = ['listings.created_at', '<=', $b];
+            // $filter[] = ['listings.created_at', '>=', $a];
+            // $filter[] = ['listings.created_at', '<=', $b];
         }
         if(isset($_GET['status']) && !empty($_GET['status'])){
             $filter[] = ['listings.status', $_GET['status']];
