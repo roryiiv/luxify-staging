@@ -54,13 +54,13 @@
                 @if(is_array($images))
                     @foreach($images as $image)
                         <li>
-                          <a rel="fancybox-thumb" href="{{func::img_url($image, 800)}}" class="fancybox-thumb">
-                            <img src="{{ func::img_url($image, 800) }}" />
+                          <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
+                            <img src="{{ func::img_url($image,'' ,396) }}" />
                           </a>
                         </li>
                     @endforeach
                 @else
-                    <li><img src="{{ func::img_url($listing->mainImageUrl, 980) }}" /></li>
+                    <li><img src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
                 @endif
             </ul>
 
@@ -113,7 +113,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" href="https://pinterest.com/pin/create/button/?url={{ $url }}/listing/{{ $listing->slug }}&media={{ func::img_url($listing->mainImageUrl, 300) }}&description={{ urlencode($listing->description) }}">
+                                    <a target="_blank" href="https://pinterest.com/pin/create/button/?url={{ $url }}/listing/{{ $listing->slug }}&media={{ func::img_url($listing->mainImageUrl, 300, '', true) }}&description={{ urlencode($listing->description) }}">
                                         <span class="icon icon-pinterest"></span>
                                     </a>
                                 </li>
@@ -259,7 +259,7 @@
                                             <a href="/listing/{{ $more->slug }}">
                                                 <div class='product-img-container'>
                                                     <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
-                                                    <img class='product-img' src="{{ func::img_url($more_img, 305) }}" alt="image description">
+                                                    <img class='product-img' src="{{ func::img_url($more_img, 200, '', true) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $madded = func::is_wishlist($user_id, $more->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
@@ -278,7 +278,7 @@
                                                 ?>
                                                 <span class="price">{{ $mprice_format }}</span>
                                                 <div class="item-logo">
-                                                    <img src="{{ func::img_url($msellerImg, 90) }}" alt="{{ $mseller->fullName }}">
+                                                    <img src="{{ func::img_url($msellerImg, 90, '', true) }}" alt="{{ $mseller->fullName }}">
                                                 </div>
                                             </div>
                                             @endif
@@ -308,7 +308,7 @@
                                             <a href="/listing/{{ $rel->slug }}">
                                                 <div class='product-img-container'>
                                                     <?php $rel_img = !empty($rel->mainImageUrl) ? $rel->mainImageUrl : 'default-logo.png'; ?>
-                                                    <img class='product-img' src="{{ func::img_url($rel_img, 305) }}" alt="image description">
+                                                    <img class='product-img' src="{{ func::img_url($rel_img, 200, '', true) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $rel_added = func::is_wishlist($user_id, $rel->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $rel->id }}" href="javascript:;" data-id="{{ $rel->id }}" class="favourite{{ $rel_added }}"><span class="icon-heart"></span></a>
@@ -326,7 +326,7 @@
                                                 ?>
                                                 <span class="price">{{ $rel_price_format }}</span>
                                                 <div class="item-logo">
-                                                    <img src="{{ func::img_url($rel_sellerImg, 90) }}" alt="">
+                                                    <img src="{{ func::img_url($rel_sellerImg, 90, '', true) }}" alt="">
                                                 </div>
                                             </div>
                                         </div>

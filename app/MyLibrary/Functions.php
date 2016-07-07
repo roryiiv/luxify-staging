@@ -33,15 +33,19 @@ class Functions
       }
     }
 
-    static function img_url($url, $width = '', $height = ''){
+    static function img_url($url, $width = '', $height = '', $fit = false){
         $processor = '';
-        $processor .= 'http://images.luxify.com/';
-        $processor .= !empty($width) ? $width : '';
-        $processor .= !empty($width) ? 'x' : '';
-        $processor .= !empty($height) ? $height : '';
+        $processor .= 'http://images.luxify.com/q100,';
+        if ($fit && (!empty($width) || !empty($height))) {
+            $size = !empty($width) ? $width : $height; 
+            $processor .= $size . ',fit';
+        } else {
+            $processor .= !empty($width) ? $width : 'x';
+            $processor .= !empty($width) ? 'x' : '';
+            $processor .= !empty($height) ? $height : '';
+        }
         $processor .= '/https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
-        $return = $processor . $url;
-        return $return;
+        return $processor . $url;    
     }
 
     public static function categories($level){
