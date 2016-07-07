@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 Use Mail;
 
-use App\listings;
-
 use App\Categories;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+
+use App\Listings;
 
 use App\User;
 
@@ -163,20 +163,7 @@ class Front extends Controller {
                 $search_arr[] = ['countryId', $_filter['location']];
                 $filters['location'] = $_filter['location'];
             }
-            if(isset($_REQUEST['use_price']) && $_REQUEST['use_price'] == 'on'){
-                $use_price =  true;
-                $filters['use_price'] = 'off';
-            }else{
-                $use_price =  false;
-                $filters['use_price'] = 'off';
-            }
 
-            if($use_price && !empty($_REQUEST['range'])){
-                $price_range = explode(';', $_REQUEST['range']);
-                $search_arr[] = ['price', '>=', $price_range[0]];
-                $search_arr[] = ['price', '<=', $price_range[1]];
-                $filters['range'] = $_REQUEST['range'];
-            }
             // var_dump($price_range); exit;
             if(isset($_filter['category']) && $_filter['category'] != 'Category'){
                 unset($cat_ids);
@@ -330,15 +317,69 @@ class Front extends Controller {
                 }
                 $filters['sort'] = $_filter['sort-radio'];
             }
+
+            if(isset($_REQUEST['use_price']) && $_REQUEST['use_price'] == 'on'){ // need to be put last to filter out the price range based on currency set.
+                $use_price =  true;
+                $filters['use_price'] = 'on';
+
+                $price_lists = DB::table('listings')
+                ->where('status', 'APPROVED')
+                ->whereIn('categoryId', $cat_ids)
+                ->where($search_arr)
+                ->get();
+
+                if($use_price && !empty($_REQUEST['range'])){
+                    $price_range = explode(';', $_REQUEST['range']);
+                    $filtered_listing = array();
+                    foreach($price_lists as $key => $val){
+                        $price_set = $val->price;
+                        $currency = DB::table('currencies')->where('id', $val->currencyId)->first();
+                        $set_curr = $currency->code;
+                        $sess_curr = null !== session('currency') ? session('currency') : 'USD';
+                        $session_currency = DB::table('currencies')->where('code', $sess_curr)->first();
+                        if($set_curr != $sess_curr){
+                            $price_sql = $price_set / $currency->rate;
+                            $price = $price_sql * $session_currency->rate;
+                        }else{
+                            $price = $price_set;
+                        }
+
+                        if($price < $price_range[0] || $price > $price_range[1]){
+                            // echo $key . ', ';
+                            $filtered_listing[] = $val->id;
+                        }
+
+                    }
+                    // var_dump($filtered_listing); exit;
+                    // $search_arr[] = ['price', '>=', $price_range[0]];
+                    // $search_arr[] = ['price', '<=', $price_range[1]];
+                    $filters['range'] = $_REQUEST['range'];
+                }
+            }else{
+                $use_price =  false;
+                $filters['use_price'] = 'off';
+            }
         }
 
         // var_dump($cat_ids); exit;
-        $listings = DB::table('listings')
-        ->where('status', 'APPROVED')
-        ->whereIn('categoryId', $cat_ids)
-        ->where($search_arr)
-        ->orderBy($orderby, $order)
-        ->paginate(12);
+        if(isset($filtered_listing)){
+            // var_dump($filtered_listing); exit;
+            $listings = DB::table('listings')
+            ->where('status', 'APPROVED')
+            ->whereIn('categoryId', $cat_ids)
+            ->whereNotIn('id', $filtered_listing)
+            ->where($search_arr)
+            ->orderBy($orderby, $order)
+            ->paginate(12);
+        }else{
+            $listings = DB::table('listings')
+            ->where('status', 'APPROVED')
+            ->whereIn('categoryId', $cat_ids)
+            ->where($search_arr)
+            ->orderBy($orderby, $order)
+            ->paginate(12);
+        }
+
 
         $listings->setPath($_SERVER['REQUEST_URI']);
 
@@ -873,12 +914,6 @@ class Front extends Controller {
                 $filters['use_price'] = 'off';
             }
 
-            if($use_price && !empty($_REQUEST['range'])){
-                $price_range = explode(';', $_REQUEST['range']);
-                $search_arr[] = ['price', '>=', $price_range[0]];
-                $search_arr[] = ['price', '<=', $price_range[1]];
-                $filters['range'] = $_REQUEST['range'];
-            }
             // var_dump($price_range); exit;
             if(isset($_filter['category']) && $_filter['category'] != 'Category'){
                 unset($cat_ids);
@@ -1032,46 +1067,91 @@ class Front extends Controller {
                 }
                 $filters['sort'] = $_filter['sort-radio'];
             }
+
+            if(isset($_REQUEST['use_price']) && $_REQUEST['use_price'] == 'on'){ // need to be put last to filter out the price range based on currency set.
+                $use_price =  true;
+                $filters['use_price'] = 'on';
+
+                $price_lists = DB::table('listings')
+                ->where('status', 'APPROVED')
+                // ->whereIn('categoryId', $cat_ids)
+                ->where($search_arr)
+                ->get();
+
+                // var_dump($price_lists); exit;
+
+                if($use_price && !empty($_REQUEST['range'])){
+                    $price_range = explode(';', $_REQUEST['range']);
+                    $filtered_listing = array();
+                    foreach($price_lists as $key => $val){
+                        $price_set = $val->price;
+                        $currency = DB::table('currencies')->where('id', $val->currencyId)->first();
+                        $set_curr = $currency->code;
+                        $sess_curr = null !== session('currency') ? session('currency') : 'USD';
+                        $session_currency = DB::table('currencies')->where('code', $sess_curr)->first();
+                        if($set_curr != $sess_curr){
+                            $price_sql = $price_set / $currency->rate;
+                            $price = $price_sql * $session_currency->rate;
+                        }else{
+                            $price = $price_set;
+                        }
+
+                        if($price < $price_range[0] || $price > $price_range[1]){
+                            // echo $key . ', ';
+                            $filtered_listing[] = $val->id;
+                        }
+
+                    }
+
+                    // $search_arr[] = ['price', '>=', $price_range[0]];
+                    // $search_arr[] = ['price', '<=', $price_range[1]];
+                    $filters['range'] = $_REQUEST['range'];
+                }
+            }else{
+                $use_price =  false;
+                $filters['use_price'] = 'off';
+            }
         }
 
         // var_dump($search_arr);
 
         if(isset($cat_ids)){
-            $listings = DB::table('listings')
-            ->where('status', 'APPROVED')
-            ->where($search_arr)
-            ->whereIn($cat_ids)
-            ->orderBy($orderby, $order)
-            ->paginate(12);
+            if(isset($filtered_listing)){
+                // var_dump($filtered_listing); exit;
+                $listings = DB::table('listings')
+                ->where('status', 'APPROVED')
+                ->whereIn('categoryId', $cat_ids)
+                ->whereNotIn('id', $filtered_listing)
+                ->where($search_arr)
+                ->orderBy($orderby, $order)
+                ->paginate(12);
+            }else{
+                $listings = DB::table('listings')
+                ->where('status', 'APPROVED')
+                ->whereIn('categoryId', $cat_ids)
+                ->where($search_arr)
+                ->orderBy($orderby, $order)
+                ->paginate(12);
+            }
         }else{
-            $listings = DB::table('listings')
-            ->where('status', 'APPROVED')
-            ->where($search_arr)
-            ->orderBy($orderby, $order)
-            ->paginate(12);
+            if(isset($filtered_listing)){
+                // var_dump($filtered_listing); exit;
+                $listings = DB::table('listings')
+                ->where('status', 'APPROVED')
+                ->whereNotIn('id', $filtered_listing)
+                ->where($search_arr)
+                ->orderBy($orderby, $order)
+                ->paginate(12);
+            }else{
+                $listings = DB::table('listings')
+                ->where('status', 'APPROVED')
+                ->where($search_arr)
+                ->orderBy($orderby, $order)
+                ->paginate(12);
+            }
         }
 
         $listings->setPath($_SERVER['REQUEST_URI']);
-
-        $locs = '';
-        $cats = '';
-
-        if(is_array($listings) && !empty($listings)){
-            foreach($listings as $list){
-                $loc_arr[] = $list->countryId;
-                $cat_arr[] = $list->categoryId;
-                $cond_arr[] = $list->condition;
-            }
-
-            $locs = $this->get_column('countries', $loc_arr);
-            $locs = array_values(array_sort($locs, function ($value) {
-                return $value['name'];
-            }));
-            $cats = $this->get_column('categories', $cat_arr);
-            $cats = array_values(array_sort($cats, function ($value) {
-                return $value['title'];
-            }));
-        }
 
         $listings->setPath($_SERVER['REQUEST_URI']);
 

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+
 use Mail;
 
 use DB;
@@ -137,7 +141,8 @@ class LuxifyAuth extends Controller
 
     }
 
-    public function logout() {
+    public function logout(Request $request) {
+        $request->session()->flush();
         Auth::logout();
         return redirect()->intended('/login');
     }
