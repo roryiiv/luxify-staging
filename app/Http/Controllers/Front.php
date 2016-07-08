@@ -437,40 +437,41 @@ class Front extends Controller {
         return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
     }
     public function sendMessage($dealerId) {
-      if (Auth::user() && !empty($dealerId)) {
-          $message = func::getVal('post', 'message');
-          $listingId = func::getVal('post', 'listingId');
-          $message_id = DB::table('conversations')->insertGetId([
-            'body' => $message, 
-            'sentAt' => date('Y-m-d H:i:s'),
-            'listingId' => null,
-            'toUserId' => $dealerId,
-            'fromUserId' => Auth::user()->id
-          ]);
-          $dealer = DB::table('users')->where('id', $dealerId)->first();
-          $listing = $listingId ? DB::table('listings')->where('id', $listingId)->first() : NULL;
-          if ($dealer && $dealer !== Auth::user()->id) {
-              $from_email = Auth::user()->email;
-              $username_from = Auth::user()->username;
-              $username_to = $dealer->username;
-              $details = array(
-                 'to' => $dealer->email,
-                 'listing' => $listingId ? $listing->title : ''
-              );
-              $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/' . $message_id;
-              Mail::send('emails.new-offer-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
-                  $message->from('technology@luxify.com', 'Luxify Admin');
-                  $message->subject('Someone Is Interested In Your Dealer Page');
-                  $message->replyTo('no_reply@luxify.com', $name = null);
-                  $message->to($details['to']);
-              });
-              echo json_encode((object) ['result'=> 1, 'message'=> 'Message is successfully sent.']);
-          } else {
-              echo json_encode((object) ['result'=> 0, 'message'=> 'Invalid Dealer ID supplied.']); 
-          }
-      } else {
-          echo json_encode((object) ['result'=> 0, 'message'=> 'Insufficent parameters are supplied.']); 
-      } 
+        if (Auth::user() && !empty($dealerId)) {
+            $message = func::getVal('post', 'message');
+            $listingId = func::getVal('post', 'listingId');
+            // return response()->json($listingId);
+            $message_id = DB::table('conversations')->insertGetId([
+                'body' => $message,
+                'sentAt' => date('Y-m-d H:i:s'),
+                'listingId' => $listingId,
+                'toUserId' => $dealerId,
+                'fromUserId' => Auth::user()->id
+            ]);
+            $dealer = DB::table('users')->where('id', $dealerId)->first();
+            $listing = $listingId ? DB::table('listings')->where('id', $listingId)->first() : NULL;
+            if ($dealer && $dealer !== Auth::user()->id) {
+                $from_email = Auth::user()->email;
+                $username_from = Auth::user()->username;
+                $username_to = $dealer->username;
+                $details = array(
+                    'to' => $dealer->email,
+                    'listing' => $listingId ? $listing->title : ''
+                );
+                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/' . $message_id;
+                Mail::send('emails.new-offer-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
+                    $message->from('technology@luxify.com', 'Luxify Admin');
+                    $message->subject('Someone Is Interested In Your Dealer Page');
+                    $message->replyTo('no_reply@luxify.com', $name = null);
+                    $message->to($details['to']);
+                });
+                echo json_encode((object) ['result'=> 1, 'message'=> 'Message is successfully sent.']);
+            } else {
+                echo json_encode((object) ['result'=> 0, 'message'=> 'Invalid Dealer ID supplied.']);
+            }
+        } else {
+            echo json_encode((object) ['result'=> 0, 'message'=> 'Insufficent parameters are supplied.']);
+        }
     }
 
     public function dealerContact($id, $item){

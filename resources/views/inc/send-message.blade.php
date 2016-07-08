@@ -189,7 +189,8 @@
      <form id="message-form">
         <h2>Send a message</h2>
         <textarea id='content' required rows="8" name="content" placeholder="Let the dealer know why you are interested. A copy of the mesage will be included in your dashboard as well."></textarea>
-        <button id="message-send-btn">Send</button> 
+        <input type="hidden" id="listing-id" value="{{ isset($listing->id) ? $listing->id : 0 }}" />
+        <button id="message-send-btn">Send</button>
         <div class='ajax-loading' style="display:none; margin-top:10px; text-align: center; width:100%">
             <img src="/assets/images/ajax-loader_2.gif" />
         </div>
@@ -221,7 +222,7 @@
               </div>
               <p style="display:none;" class="error login-error"></p>
 
-            </form> 
+            </form>
          </div>
      </div>
   </div>

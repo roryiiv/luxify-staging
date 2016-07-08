@@ -7,23 +7,23 @@ $(document).ready(function(){
         content: {
           required: true
         }
-      } 
+      }
     });
 
     $('#login-form-ajax').validate({
       rules: {
         email: {
           required: true,
-          email: true 
+          email: true
         },
         password: {
-          required: true 
+          required: true
         }
-      } 
+      }
     });
 
     $('#sign-in-btn').click(function(e){
-      e.preventDefault(); 
+      e.preventDefault();
       var email = $('input#email').val(), pass = $('input#password').val();
       var token = $('input[name=_token]').val();
       var dataA = {email: email, action: 'get_email'};
@@ -51,7 +51,7 @@ $(document).ready(function(){
                         email: email,
                         salt: salt,
                         hashed: hashed,
-                        _ref: _ref     
+                        _ref: _ref
                       },
                       dataType: 'json',
                       success: function(res) {
@@ -61,10 +61,10 @@ $(document).ready(function(){
                           $("p.login-error").html(res.message).slideDown('fast');
                           $('#login-form-ajax input[name=password]').select();
                           setTimeout(function(){
-                            $("p.login-error").slideUp('fast'); 
+                            $("p.login-error").slideUp('fast');
                           }, 5000);
                         } else {
-                          window.location = _ref; 
+                          window.location = _ref;
                         }
                       }
                     });
@@ -74,7 +74,7 @@ $(document).ready(function(){
                     $('p.login-error').html(data.message).show().slideDown('fast');
                     $('#login-form-ajax input[name=email]').select();
                     setTimeout(function() {
-                      $("p.login-error").slideUp('fast'); 
+                      $("p.login-error").slideUp('fast');
                     }, 5000);
                 }
             },
@@ -88,7 +88,8 @@ $(document).ready(function(){
 
     $('#message-send-btn').click(function(e){
       e.preventDefault();
-      var listingId = $('[data-listing]').attr('data-listing');
+      var listingId = $('input#listing-id').val();
+      console.log(listingId);
       var token = $('input[name=_token]').val();
       if($('#message-form').valid() && !$('#message-send-btn').prop('disabled')) {
         $('#message-send-btn').prop('disabled', true);
@@ -104,11 +105,12 @@ $(document).ready(function(){
             listingId: listingId
           },
           success: function(res) {
+              console.log(res);
             if (res.result === 1) {
               $('#message-send-btn').prop('disabled', false);
               $('div.ajax-loading').hide();
               $('#message-form textarea').val('').prop('disabled', false);
-              $('#contact-dealer-form').modal('toggle'); 
+              $('#contact-dealer-form').modal('toggle');
               $('#message-sent-form').modal('toggle');
             } else {
               $('#message-send-btn').prop('disabled', false);
@@ -116,11 +118,11 @@ $(document).ready(function(){
               $('p.login-error').html(res.message).show().slideDown('fast');
               $('textarea').select();
               setTimeout(function() {
-                $("p.login-error").slideUp('fast'); 
+                $("p.login-error").slideUp('fast');
               }, 5000);
             }
           }
-        }); 
+        });
       }
     });
 
