@@ -3718,9 +3718,9 @@ body, .input-group-addon {
     .left_image {
         position: absolute;
         left: 0px;
-        top: 0px;
+        top: -12px;
         max-width: 55%;
-        height: 100%;
+        height: 108%;
     }
     .left_image img {
         max-height: 100%;

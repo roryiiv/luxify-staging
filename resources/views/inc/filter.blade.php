@@ -59,8 +59,8 @@ $subs = func::categories('all');
                             <strong class="form-title">Condition</strong>
                             <select id="condition" >
                                 <option>Condition</option>
-                                <option value="NEW">NEW</option>
-                                <option value="PRE-OWNED">PRE-OWNED</option>
+                                <option value="NEW">New</option>
+                                <option value="PRE-OWNED">Pre-Owned</option>
                             </select>
                         </div>
                     </div>
