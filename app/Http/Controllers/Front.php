@@ -439,6 +439,7 @@ class Front extends Controller {
     public function sendMessage($dealerId) {
       if (Auth::user() && !empty($dealerId)) {
           $message = func::getVal('post', 'message');
+          $listingId = func::getVal('post', 'listingId');
           $message_id = DB::table('conversations')->insertGetId([
             'body' => $message, 
             'sentAt' => date('Y-m-d H:i:s'),
@@ -447,12 +448,14 @@ class Front extends Controller {
             'fromUserId' => Auth::user()->id
           ]);
           $dealer = DB::table('users')->where('id', $dealerId)->first();
+          $listing = $listingId ? DB::table('listings')->where('id', $listingId)->first() : NULL;
           if ($dealer && $dealer !== Auth::user()->id) {
               $from_email = Auth::user()->email;
               $username_from = Auth::user()->username;
               $username_to = $dealer->username;
               $details = array(
                  'to' => $dealer->email,
+                 'listing' => $listingId ? $listing->title : ''
               );
               $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/' . $message_id;
               Mail::send('emails.new-offer-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
