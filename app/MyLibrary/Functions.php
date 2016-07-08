@@ -18,18 +18,18 @@ class Functions
     static function getVal($method = 'get', $key) {
       if ($method === 'get') {
         if (isset($_GET[$key]) && !empty($_GET[$key])) {
-          return $_GET[$key]; 
+          return $_GET[$key];
         } else {
-          return NULL; 
-        } 
+          return NULL;
+        }
       } else if ($method === 'post') {
         if (isset($_POST[$key]) && !empty($_POST[$key])) {
-          return $_POST[$key]; 
+          return $_POST[$key];
         } else {
-          return NULL; 
-        } 
+          return NULL;
+        }
       } else {
-        return NULL; 
+        return NULL;
       }
     }
 
@@ -37,7 +37,7 @@ class Functions
         $processor = '';
         $processor .= 'http://images.luxify.com/q100,';
         if ($fit && (!empty($width) || !empty($height))) {
-            $size = !empty($width) ? $width : $height; 
+            $size = !empty($width) ? $width : $height;
             $processor .= $size . ',fit';
         } else {
             $processor .= !empty($width) ? $width : 'x';
@@ -45,7 +45,7 @@ class Functions
             $processor .= !empty($height) ? $height : '';
         }
         $processor .= '/https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
-        return $processor . $url;    
+        return $processor . $url;
     }
 
     public static function categories($level){
@@ -249,6 +249,35 @@ class Functions
 
     public static function getTable($table){
         $return = DB::table($table)->get();
+        return $return;
+    }
+
+    public static function formatPrice($currencyID, $sessionCurrency, $price){
+        if($price != 0 || $price != null){
+            $listing = DB::table('currencies')
+            ->where('id', $currencyID)
+            ->first();
+            $item_currency = $listing->code;
+
+            if($item_currency !== $sessionCurrency){
+                $item_rate = $listing->rate;
+                $priceUSD = $price / $item_rate;
+
+                $sessCurrency = DB::table('currencies')
+                ->where('code', $sessionCurrency)
+                ->first();
+                $sessionRate = $sessCurrency->rate;
+                $price_raw = $priceUSD * $sessionRate;
+                $return_price = $sessCurrency->symbol . number_format($price_raw, 0) . ' ' . $sessCurrency->code;
+            }else{
+                $return_price = $listing->symbol . number_format($price, 0) . ' ' . $item_currency;
+            }
+            $return = $return_price;
+        }else{
+            $return = 'Price on request';
+        }
+
+
         return $return;
     }
 	/*

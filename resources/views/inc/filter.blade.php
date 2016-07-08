@@ -9,6 +9,9 @@ $subs = func::categories('all');
         <form action="{{$_SERVER['REQUEST_URI']}}" method="get" class="filter-form">
             {{ csrf_field() }}
             <input type="hidden" id="filters" name="filters" value="on" />
+            @if(isset($_GET['search']))
+                <input type="hidden" id="search" name="search" value="{{ $_GET['search'] }}" />
+            @endif
             <div class="form-row">
                 <div class="row">
                     <div class="col-sm-3">

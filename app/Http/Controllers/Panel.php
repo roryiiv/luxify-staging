@@ -480,7 +480,7 @@ class Panel extends Controller
       $filter = array();
       //TODO: Searching is case incentive?
       if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
-          $filter[] = ['listings.title', 'like', $_GET['txtProductName']];
+          $filter[] = ['listings.title', 'like', '%'.$_GET['txtProductName'].'%'];
       }
       if(isset($_GET['txtPrice']) && !empty($_GET['txtPrice'])){
           $filter[] = ['listings.price', $_GET['txtPrice']];
@@ -692,5 +692,32 @@ class Panel extends Controller
                 echo 'Already has slug <br />';
             }
         }
+    }
+
+    public function currencyExec(){
+        $listed = DB::table('currencies')
+        ->get();
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, 'https://openexchangerates.org/api/latest.json?app_id=9dfc90f4fd60462d9088aa0039ccb30d&base=USD');
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $obj = json_decode($result);
+        // echo $result->access_token;
+
+        $rates = $obj->rates;
+
+        foreach($listed as $curr){
+            $_curr = $curr->code;
+            $rate = $rates->$_curr;
+            DB::table('currencies')
+            ->where('id', $curr->id)
+            ->update(['rate' => $rate]);
+        }
+
+        // var_dump($rate);
     }
 }

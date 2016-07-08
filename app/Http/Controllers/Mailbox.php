@@ -44,9 +44,9 @@ class Mailbox extends Controller
         // ->get();
 
         $mailbox = DB::table('conversations')
-        ->where('readAt', NULL)
+        // ->where('readAt', NULL)
         ->where('toUserId', $this->user_id)
-        ->orWhere('fromUserId', $this->user_id)
+        // ->orWhere('fromUserId', $this->user_id)
         ->select('id')
         ->get();
 
@@ -77,21 +77,21 @@ class Mailbox extends Controller
         }
     }
 
-    function conversation() {
-      $page = isset($_POST['page']) && !empty($_POST['page']) ? intval($_POST['page']) : 0;
-      $size= isset($_POST['size']) && !empty($_POST['size']) ? intval($_POST['size']) : 10;
-      $otherId= isset($_POST['otherId']) && !empty($_POST['otherId']) ? intval($_POST['otherId']) : NULL;
-      $listingId= isset($_POST['listingId']) && !empty($_POST['listingId']) ? intval($_POST['listingId']) : NULL;
+    public function conversation() {
+        $page = isset($_POST['page']) && !empty($_POST['page']) ? intval($_POST['page']) : 0;
+        $size= isset($_POST['size']) && !empty($_POST['size']) ? intval($_POST['size']) : 10;
+        $otherId = isset($_POST['otherId']) && !empty($_POST['otherId']) ? intval($_POST['otherId']) : NULL;
+        $listingId = isset($_POST['listingId']) && !empty($_POST['listingId']) ? intval($_POST['listingId']) : NULL;
 
-      $messages = DB::table('conversations')
+        $messages = DB::table('conversations')
         ->where(function ($query) use ($otherId) {
-          $query->orWhere('toUserId', '=', $this->user_id)
-           ->orWhere('toUserId', '=', $otherId);
+            $query->orWhere('toUserId', '=', $this->user_id)
+            ->orWhere('toUserId', '=', $otherId);
         })
         ->where(function ($query) use ($otherId) {
-          $query
-           ->orWhere('fromUserId', '=', $this->user_id)
-           ->orWhere('fromUserId', '=', $otherId);
+            $query
+            ->orWhere('fromUserId', '=', $this->user_id)
+            ->orWhere('fromUserId', '=', $otherId);
         })
         ->where('listingId', $listingId)
         ->orderby('sentAt', 'desc')
@@ -100,20 +100,29 @@ class Mailbox extends Controller
         ->get();
 
         if($messages) {
-          $otherUser = DB::table('users')
+            $otherUser = DB::table('users')
             ->where('id', $otherId)
             ->select('id', 'email', 'companyLogoUrl', 'firstName')
             ->first();
-          $dealer= DB::table('users')
+
+            $dealer = DB::table('users')
             ->where('id', $this->user_id)
             ->select('id', 'email', 'companyLogoUrl', 'firstName')
             ->first();
 
-          echo json_encode((object) ['result' => 1, 'users' => ['other'=>$otherUser, 'dealer' =>$dealer], 'messages' => $messages]);
+            $readDate = date("Y-m-d H:i:s");
+            DB::table('conversations')
+            ->where('fromUserId', $otherId)
+            ->where('toUserId', Auth::user()->id)
+            ->where('listingId', $listingId)
+            ->update(['readAt' => $readDate]);
+
+            echo json_encode((object) ['result' => 1, 'users' => ['other'=>$otherUser, 'dealer' =>$dealer], 'messages' => $messages]);
         } else {
-          echo json_encode((object) ['result' => 0, 'message' => 'You don\'t have any message yet.']);
+            echo json_encode((object) ['result' => 0, 'message' => 'You don\'t have any message yet.']);
         }
     }
+
     function sendMessage() {
       $toUserId = isset($_POST['toUserId']) && !empty($_POST['toUserId']) ? intval($_POST['toUserId']) : NULL;
       $listingId = isset($_POST['listingId']) && !empty($_POST['listingId']) ? intval($_POST['listingId']) : NULL;

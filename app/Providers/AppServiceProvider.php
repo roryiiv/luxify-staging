@@ -19,16 +19,18 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Request $request)
     {
         //build categories array
-        $categories = DB::table('categories')
-        ->orderBy('displayOrder', 'asc')
-        ->get();
-        $categories = json_decode( json_encode($categories), true );
-        $nav_array = $this->build_navigations($categories);
+        $views = array();
+        if(null !== session('currency')){
+            $sess_currency = session('currency');
+        }else{
+            $sess_currency = 'USD';
+        }
+        $views['currency'] = $sess_currency;
 
-        view()->share('nav_array', $nav_array);
+        view()->share('views', $views);
 
         // $notifs = func::get_notif();
         // view()->share('notifs', $notifs);

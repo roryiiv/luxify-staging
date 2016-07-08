@@ -381,8 +381,8 @@
                 params: {
                     _token: token
                 },
-                maxFilesize: 2,
-                maxThumbnailFilesize: .5,
+                // maxFilesize: 2,
+                // maxThumbnailFilesize: .5,
                 maxFiles: 1,
                 uploadMultiple: false,
                 addRemoveLinks: true,
@@ -409,48 +409,48 @@
                     swal.close();
                     file.previewElement.classList.add("dz-error");
                 },
-                // init: function() {
-                //     this.on("addedfile", function(e) {
-                //         this.fileTracker && this.removeFile(this.fileTracker), this.fileTracker = e
-                //     })
-                // }
+                init: function() {
+                    this.on("addedfile", function(e) {
+                        this.fileTracker && this.removeFile(this.fileTracker), this.fileTracker = e
+                    })
+                }
             });
             $("#api-profile-image").dropzone({
                 url: "/upload",
                 paramName: "image",
-                maxFilesize: 2,
-                maxThumbnailFilesize: .5,
+                // maxFilesize: 2,
+                // maxThumbnailFilesize: .5,
                 maxFiles: 1,
                 uploadMultiple: false,
                 addRemoveLinks: true,
                 dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
                 sending: function(file, xhr, formData) {
-                    // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
-                    formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
-                    $('.dz-success-mark').hide();
-                    $('.dz-error-mark').hide();
-
                     swal({
                         title: "Uploading Images",
                         text: "Currently Uploading Images.",
                         //   timer: 2000,
                         showConfirmButton: false
                     });
+
+                    // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
+                    formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
+                    $('.dz-success-mark').hide();
+                    $('.dz-error-mark').hide();
                 },
                 success: function (file, response) {
                     console.log(response);
                     swal.close();
-                    $('#profile_img').val(imgName);
+                    $('#profile_img').val(response);
                 },
                 error: function (file, response) {
                     swal.close();
                     file.previewElement.classList.add("dz-error");
                 },
-                // init: function() {
-                //     this.on("addedfile", function(e) {
-                //         this.fileTracker && this.removeFile(this.fileTracker), this.fileTracker = e
-                //     })
-                // }
+                init: function() {
+                    this.on("addedfile", function(e) {
+                        this.fileTracker && this.removeFile(this.fileTracker), this.fileTracker = e
+                    })
+                }
             });
         })
     </script>

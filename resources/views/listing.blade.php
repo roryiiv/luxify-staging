@@ -22,16 +22,16 @@
        text-transform: UPPERCASE;
        font-family: 'Roboto';
        font-weight: 100;
-     } 
+     }
     </style>
     <!-- main banner of the page -->
     <div class="inner-banner">
         <!-- banner image -->
         <section class="images">
             <?php
-               $images = json_decode($listing->images);  
+               $images = json_decode($listing->images);
                if (!empty($listing->mainImageUrl)) {
-                 // prepend main image to the images array 
+                 // prepend main image to the images array
                  array_unshift($images, $listing->mainImageUrl);
                }
             ?>
@@ -47,7 +47,7 @@
                          <div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.5);position: absolute; z-index: 1;top: 0;"></div>
                       </div>
                       <img style="width: 48rem; height:33rem;z-index:1;"src="/assets/images/3DTour_sample_2.gif">
-                      
+
                     </a>
                   </li>
                 @endif
@@ -83,13 +83,13 @@
                             <?php
                             $curr = func::getTableByID('currencies', $listing->currencyId);
                             $dealer = func::getTableByID('users', $listing->userId);
-                            
+
                             if(!empty($listing->countryId)) {
                               $country = func::getTableByID('countries', $listing->countryId);
                             }
                             $url = 'http://' . $_SERVER['HTTP_HOST'];
-                            $raw_price = $listing->price == 0 ? 'Price on request' : $curr->symbol . number_format($listing->price, 0) .' '. $curr->code;
-                            $price_format = $raw_price;
+                            $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                            $price_format = func::formatPrice($listing->currencyId, $sess_currency, $listing->price);
                             ?>
                             <ul class="detail">
                                 <li><span class="icon icon-tag"></span><span class="text">{{ $price_format }}</span></li>
@@ -257,11 +257,10 @@
                                             <div class="caption">
                                                 <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
                                                 <?php
-                                                $mcurr = func::getTableByID('currencies', $more->currencyId);
                                                 $mseller = func::getTableByID('users', $more->userId);
                                                 $msellerImg = !empty($mseller->companyLogoUrl) ? $mseller->companyLogoUrl : 'default-logo.png';
-                                                $mraw_price = $more->price == 0 ? 'Price on request' : $mcurr->symbol . number_format($more->price, 0) .' '. $mcurr->code;
-                                                $mprice_format = $mraw_price;
+                                                $msess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                $mprice_format = func::formatPrice($more->currencyId, $msess_currency, $more->price);
                                                 ?>
                                                 <span class="price">{{ $mprice_format }}</span>
                                                 <div class="item-logo">
@@ -305,11 +304,10 @@
                                             <div class="caption">
                                                 <h3><a href="/listing/{{ $rel->slug }}">{{ $rel->title }}</a></h3>
                                                 <?php
-                                                $rel_curr = func::getTableByID('currencies', $rel->currencyId);
                                                 $rel_seller = func::getTableByID('users', $rel->userId);
                                                 $rel_sellerImg = !empty($rel_seller->companyLogoUrl) ? $rel_seller->companyLogoUrl : 'default-logo.png';
-                                                $rel_raw_price = $rel->price == 0 ? 'Price on request' : $rel_curr->symbol . number_format($rel->price, 0) .' '. $rel_curr->code;
-                                                $rel_price_format = $rel_raw_price;
+                                                $rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                $rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
                                                 ?>
                                                 <span class="price">{{ $rel_price_format }}</span>
                                                 <div class="item-logo">
@@ -365,8 +363,8 @@
             $(this).click(function(event){
                 // return false; // remove this later after database fixes.
                event.preventDefault();
-              var url = '/wishlist/add'; 
-              var itemID = $(this).attr('data-id'); 
+              var url = '/wishlist/add';
+              var itemID = $(this).attr('data-id');
               var userID = {{$user_id}};
               var token = $('input[name=_token]').val();
               var data = {uid: userID, lid: itemID, delete: $(this).hasClass('added')};

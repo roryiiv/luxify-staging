@@ -44,14 +44,15 @@
                     </li>
                 </ul>
                 <?php $currencies = func::build_curr(); ?>
+                <?php $sess_currency = null !==  session('currency') ? session('currency') : 'USD'; ?>
                 @if(Auth::user())
                     <ul class="nav navbar-nav navbar-right">
                         <li class="currency-selector-container">
-                           <select class="currency-selector">
-                             @foreach($currencies as $currency)
-                               <option value="{{$currency['code']}}">{{$currency['code']}} {{$currency['symbol']}}</option> 
-                             @endforeach
-                           </select>
+                            <select id="currSelect" class="currency-selector">
+                                @foreach($currencies as $currency)
+                                    <option value="{{$currency['code']}}"{{func::selected($currency['code'], $sess_currency)}}>{{$currency['code']}} {{$currency['symbol']}}</option>
+                                @endforeach
+                            </select>
                         </li>
                         <li class="dropdown">
                           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Welcome {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a>
@@ -70,9 +71,9 @@
                 @else
                     <ul class="nav navbar-nav navbar-right">
                         <li class="currency-selector-container">
-                           <select>
+                           <select id="currSelect" class="currency-selector">
                              @foreach($currencies as $currency)
-                               <option value="{{$currency['code']}}">{{$currency['code']}}</option> 
+                               <option value="{{$currency['code']}}"{{func::selected($currency['code'], $sess_currency)}}>{{$currency['code']}} {{$currency['symbol']}}</option>
                              @endforeach
                            </select>
                         </li>
@@ -84,58 +85,4 @@
             <!-- end of navbar collapse -->
         </nav>
     </div>
-<style>
-  .currency-selector-container {
-    margin-right: 2.4rem;
-  }
-  .navbar .navbar-right li:after {
-    display: none;
-  }
-
-  .currency-selector-container  .jcf-select {
-    background-color: transparent;
-    height: 30px;
-    border: 1px solid white;
-    border-radius: 0;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    cursor: default;
-    display: block;
-    font-size: 14px;
-  }
-  .currency-selector-container  .jcf-select {
-    font-weight: 200;
-  }
-  .currency-selector-container  .jcf-select .jcf-select-opener{
-    color: white;
-  }
-  .currency-selector-container  .jcf-select .jcf-select-opener:before{
-    top: 46%;
-    right: 0.8rem;
-    color: white;
-  }
-  .currency-selector-container  .jcf-select .jcf-select-text {
-    color: white;
-    line-height: 30px;
-  }
-  #user-menu {
-    left: 27%;
-    width: 165px;
-  }
-  #user-menu ul li{
-    width: 100%; 
-  }
-  #user-menu ul li a{
-    font-family: "Roboto", "Arial", "Helvetica Neue", "Helvetica", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.428;
-    letter-spacing: 0px;
-  }
-  #user-menu:before {
-    left: 50%;
-  }
-  
-</style>
 </header>

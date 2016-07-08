@@ -43,6 +43,7 @@ Route::get('/api/mailbox', 'Mailbox@index');
 Route::post('/api/mailbox', 'Mailbox@conversation');
 Route::post('/api/mailbox/send', 'Mailbox@sendMessage');
 Route::post('/api/product/setStatus', 'Panel@product_change_status');
+Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 
@@ -99,6 +100,7 @@ Route::get('/panel/categories/rebuild','Panel@cat_rebuild');
 Route::get('/panel/listings/rebuild','Panel@listing_rebuild');
 Route::get('/panel/extrainfo/rebuild/{id}','Panel@extra_rebuild');
 Route::get('/panel/products/confirm','Panel@products_confirm');
+Route::get('/panel/currency/exec', 'Panel@currencyExec');
 
 
 //routes for DASHBOARD (seller)
