@@ -135,6 +135,9 @@
                                     <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
                                     <a href="/dealer/{{ $dealer->id }}" class="btn btn-primary">Dealer page</a>
                                     <a href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
+                                    @if($listing->buyNowUrl)
+                                    <a href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</a>
+                                    @endif
                                 </div>
                             </div>
                           @endif
