@@ -47,7 +47,7 @@ class Mailbox extends Controller
         // ->where('readAt', NULL)
         ->where('toUserId', $this->user_id)
         // ->orWhere('fromUserId', $this->user_id)
-        ->select('id')
+        ->select('id', 'listingId')
         ->get();
 
         // return response()->json($mailbox);
@@ -55,7 +55,12 @@ class Mailbox extends Controller
         if(count($mailbox) > 0) {
             $message_id = array();
             foreach($mailbox as $mail){
-                $message_id[] = $mail->id;
+                if($mail->listingId != 0){
+                    $message_id[] = $mail->id;
+                }else{
+                    $contact_id[] = $mail->id;
+                }
+
             }
             // return response()->json($mailbox);
             $messages = DB::table('conversations')
@@ -71,6 +76,20 @@ class Mailbox extends Controller
             ->select('conversations.*', 'listings.id', 'listings.title', 'sender.companyLogoUrl As senderCompanyLogoUrl','sender.id AS senderId', 'sender.firstName AS senderFirstName', 'sender.email AS senderEmail', 'receiver.id AS receiverId', 'receiver.firstName AS receiverFirstName', 'receiver.email AS receiverEmail', 'receiver.companyLogoUrl As receiverCompanyLogoUrl')
             ->get();
 
+            //message from dealer page
+            // $contacts = DB::table('conversations')
+            // ->join('users AS sender', 'conversations.fromUserId', '=', 'sender.id' )
+            // ->Join('users AS receiver', 'conversations.toUserId', '=', 'receiver.id')
+            // ->orderby('sentAt', 'desc')
+            // ->groupBy('fromUserId')
+            // ->whereIn('conversations.id', $contact_id)
+            // ->skip($page*$size)
+            // ->take($size)
+            // ->select('conversations.*', 'sender.companyLogoUrl As senderCompanyLogoUrl','sender.id AS senderId', 'sender.firstName AS senderFirstName', 'sender.email AS senderEmail', 'receiver.id AS receiverId', 'receiver.firstName AS receiverFirstName', 'receiver.email AS receiverEmail', 'receiver.companyLogoUrl As receiverCompanyLogoUrl')
+            // ->get();
+            //
+            // $messages = array_merge($contacts, $messages);
+
             echo json_encode((object) ['result' => 1, 'messages' => $messages]);
         } else {
             echo json_encode((object) ['result' => 0, 'message' => 'You don\'t have any message yet.']);
@@ -82,6 +101,8 @@ class Mailbox extends Controller
         $size= isset($_POST['size']) && !empty($_POST['size']) ? intval($_POST['size']) : 10;
         $otherId = isset($_POST['otherId']) && !empty($_POST['otherId']) ? intval($_POST['otherId']) : NULL;
         $listingId = isset($_POST['listingId']) && !empty($_POST['listingId']) ? intval($_POST['listingId']) : NULL;
+
+        // return response()->json($listingId);
 
         $messages = DB::table('conversations')
         ->where(function ($query) use ($otherId) {
