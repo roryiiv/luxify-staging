@@ -145,7 +145,7 @@
                             $parent_cat = func::getTableByID('categories', $category->ParentId);
                             ?>
                             <ol class="breadcrumb">
-                                <li><a href="#">Home</a></li>
+                                <li><a href="/">Home</a></li>
                                 <li><a href="/category/{{ $parent_cat->slug }}">{{ $parent_cat->title }}</a></li>
                                 <li class="active">{{ $category->title }}</li>
                             </ol>
