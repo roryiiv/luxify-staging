@@ -695,4 +695,33 @@ class Dashboard extends Controller
             }
         }
     }
+
+    public function supportSend(Request $request){
+        $input = $request->all();
+        if(isset($input['_token'])){
+            $details = array();
+            if(isset($input['supportSubject']) && !empty($input['supportSubject'])){
+                $support_subject = $input['supportSubject'];
+            }else{
+                $support_subject = 'No Subject';
+            }
+            if(isset($input['supportMessage']) && !empty($input['supportMessage'])){
+                $support_msg = $input['supportMessage'];
+            }else{
+                $support_msg = 'Empty';
+            }
+            $details = array('replyTo' => Auth::user()->email);
+            $username_from = Auth::user()->username;
+            Mail::send('emails.support-en-us', ['username_from' => $username_from, 'support_subject' => $support_subject, 'support_msg' => $support_msg], function ($message) use ($details){
+
+                $message->from('technology@luxify.com', 'Luxify Admin');
+                $message->subject('We are reviewing your listing.');
+                $message->replyTo($details['replyTo'], $name = null);
+                $message->to('concierge@luxify.com', 'Luxify Support');
+
+            });
+        }
+        // var_dump($input); exit;
+        return back();
+    }
 }

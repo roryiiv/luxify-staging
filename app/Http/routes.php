@@ -124,7 +124,8 @@ Route::get('/dashboard/product/delete/{id}', 'Dashboard@product_delete'); // Del
 Route::post('/upload', 'Dashboard@single_upload');
 Route::post('/upload_multiple', 'Dashboard@multiple_upload');
 Route::post('/removeImage', 'Dashboard@remove_image');
+//Dashboard support
+Route::post('/dashboard/support', 'Dashboard@supportSend');
 
 // Route::auth();
-
 Route::get('/home', 'HomeController@index');
