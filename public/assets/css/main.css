@@ -2986,7 +2986,7 @@ body> .jcf-select-drop.jcf-drop-flipped {
     }
     .navbar-nav> li .dropdown-menu {
         left: 50%;
-        width: 220px;
+        width: 230px;
         -webkit-transform: translateX(-37%);
         -ms-transform: translateX(-37%);
         transform: translateX(-37%);
