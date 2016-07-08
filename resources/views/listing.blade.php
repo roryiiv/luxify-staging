@@ -165,7 +165,7 @@
                                     {{ strip_tags($listing->description) }}
                                 </p>
                                 @if(!empty($infos))
-                                    <h5>Specifications</h5>
+                                    <h5 style="margin-top:45px;">Specifications</h5>
                                     <table class="table item-description">
                                         <thead>
                                         </thead>
