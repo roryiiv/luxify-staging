@@ -183,7 +183,7 @@
                 </div>
             </div>
             <!-- information block with image -->
-            <div class="imageinfo-block parallax" style="background-image:url(assets/images/banner-img2.jpg)">
+            <div class="imageinfo-block parallax" style="background-image:url({{func::img_url('realestate.jpg')}})">
                 <div class="container">
                     <div class="info-wrap heading">
                         <h2 class="h1">3D Virtual Property Tour</h2>
