@@ -622,7 +622,7 @@ div.lightbox {
   top: 0;
   min-width: 320px;
   z-index: 55;
-  padding: 20px 0;
+  padding: 25px 0;
   background: transparent;
   -webkit-transition: background .3s, padding .3s;
   transition: background .3s, padding .3s;
@@ -723,13 +723,14 @@ div.lightbox {
 }
 .navbar-nav > li {
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 400;
   position: relative;
-  margin: 0 40px 0 0;
+  margin: 0 19px 0 0;
 }
 .navbar-nav > li > a {
   padding: 0;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
 }
 .navbar-nav > li:hover > a,
 .navbar-nav > li.open > a {
@@ -3137,6 +3138,7 @@ body > .jcf-select-drop.jcf-drop-flipped {
 .bottom-nav li {
   float: left;
   margin-right: 35px;
+  font-size: 1.3rem;
 }
 .bottom-nav a {
   color: #86939e;
@@ -3150,6 +3152,7 @@ body > .jcf-select-drop.jcf-drop-flipped {
 .copyright {
   font-weight: normal;
   display: block;
+  font-size: 1.3rem;
 }
 .social-networks li {
   display: inline-block;
@@ -3298,10 +3301,10 @@ only screen and (min-device-pixel-ratio: 1.5) {
     transform: translateX(-50%);
     padding-top: 24px;
     background: none;
+    border-radius: 0px!important;
   }
 
   .navbar-nav > li .dropdown-menu ul {
-    border-radius: 8px;
     padding: 12px 0;
     background: #fff;
   }
@@ -4214,7 +4217,7 @@ nav.banner-nav,
   font-size: 1.375em;
 }
 .footer-nav {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 .footer-nav h4 {
   font-size: 1.9rem;
@@ -4298,6 +4301,7 @@ h3 {
 }
 .navbar-nav {
   padding-top: 3px;
+  margin-left: 30px;
 }
 .client-list li {
   padding: 16px 12px;

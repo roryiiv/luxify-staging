@@ -588,7 +588,8 @@ div.lightbox {
     position: absolute;
     top: 50%;
     right: 0;
-    font-size: 7px;
+    font-size: 10px;
+    font-weight: 500;
     line-height: 1;
     margin-top: -6px;
     margin-right: -3px;

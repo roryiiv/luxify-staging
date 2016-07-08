@@ -1,6 +1,7 @@
 <style>
   #login-form-ajax .error {
     color: #b33a3a!important;  
+    font-size: 12.rem;
   }
   #login-form-ajax button:disabled, #message-form button:disabled {
     background-color: grey; 
