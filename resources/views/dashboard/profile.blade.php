@@ -316,9 +316,10 @@
                                                     <div class="form-group ml-0 mr-0">
                                                         <label for="txtWebsiteLink" class="control-label pb-10"><i class="fa fa-globe"></i> Website</label>
                                                         <div class="bootstrap-filestyle input-group">
-                                                            <input type="text" class="form-control" value="{{ url('/dealer') . '/' . Auth::user()->id }}" placeholder="" disabled="">
+                                                            <?php $slug = Auth::user()->slug != '' ? Auth::user()->slug : strtolower(Auth::user()->firstName).'-'.strtolower(Auth::user()->lastName); ?>
+                                                            <input type="text" class="form-control" value="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" placeholder="" disabled="">
                                                             <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                                                <a href="{{ url('/dealer') . '/' . Auth::user()->id }}" target="_blank">
+                                                                <a href="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" target="_blank">
                                                                     <label for="fulImage" class="btn btn-outline btn-primary">
                                                                         <span class="icon-span-filestyle ti-image"></span>
                                                                         <span class="buttonText">Preview</span>

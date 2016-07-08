@@ -16,6 +16,8 @@ use App\Categories;
 
 use App\Listings;
 
+use App\Users;
+
 use DB;
 
 use Aws\S3\S3Client;
@@ -683,6 +685,24 @@ class Panel extends Controller
                 $slug = SlugService::createSlug(Listings::class, 'slug', $list->title);
                 $list->slug = $slug;
                 if($list->save()){
+                    echo $slug . '<br />';
+                }else{
+                    echo 'Booommmmm !!! <br />';
+                }
+                echo '<br>------------<br>';
+            }else{
+                echo 'Already has slug <br />';
+            }
+        }
+    }
+
+    public function user_rebuild() {
+        $users = Users::where('companyName', '<>', NULL)->get();
+        foreach($users as $user){
+            if(empty($list->slug)){
+                $slug = SlugService::createSlug(Users::class, 'slug', $user->title);
+                $user->slug = $slug;
+                if($user->save()){
                     echo $slug . '<br />';
                 }else{
                     echo 'Booommmmm !!! <br />';

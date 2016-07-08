@@ -133,7 +133,8 @@
                                 <span class="small-text">Luxify dealer since {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
                                     <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                    <a href="/dealer/{{ $dealer->id }}" class="btn btn-primary">Dealer page</a>
+                                    <?php $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName); ?>
+                                    <a href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">Dealer page</a>
                                     <a href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
                                     @if($listing->buyNowUrl)
                                     <a target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</a>
@@ -382,5 +383,5 @@
     	});
     });
     </script>
-    @include('inc.send-message-script') 
+    @include('inc.send-message-script')
 @endsection

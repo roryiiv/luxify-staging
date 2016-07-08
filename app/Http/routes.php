@@ -53,7 +53,7 @@ Route::get('/listing/{id}','Front@product_details');
 Route::get('/categories','Front@categories');
 Route::get('/category/{id}','Front@product_categories');
 Route::post('/category/{id}','Front@product_categories');
-Route::get('/dealer/{id}','Front@dealer');
+Route::get('/dealer/{id}/{slug}','Front@dealer');
 Route::get('/dealer/contact/{id}/{item}','Front@dealerContact');
 Route::get('/dealer/listings/{id}', 'Front@dealerListing');
 Route::post('/contact/dealer/{dealerId}','Front@sendMessage');
@@ -98,6 +98,7 @@ Route::post('/panel/products/delete/{id}','Panel@products_delete');
 //Other Database related operations
 Route::get('/panel/categories/rebuild','Panel@cat_rebuild');
 Route::get('/panel/listings/rebuild','Panel@listing_rebuild');
+Route::get('/panel/users/rebuild','Panel@user_rebuild');
 Route::get('/panel/extrainfo/rebuild/{id}','Panel@extra_rebuild');
 Route::get('/panel/products/confirm','Panel@products_confirm');
 Route::get('/panel/currency/exec', 'Panel@currencyExec');
