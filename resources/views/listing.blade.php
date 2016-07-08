@@ -133,20 +133,7 @@
                                 <span class="small-text">Luxify dealer since {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
                                     <a href="/dealer/{{ $dealer->id }}" class="btn btn-primary">Dealer page</a>
-                                    @if(isset($_GET['offer']))
-                                        @if($_GET['offer'] == 'sent')
-                                            <p class="alert alert-success">
-                                                Your offer has been sent to the dealer. <br />
-                                                Thank you.
-                                            </p>
-                                        @else
-                                            <p class="alert alert-warning">
-                                                The item is not available or the dealer has removed the listing.
-                                            </p>
-                                        @endif
-                                    @else
-                                        <a href="/dealer/contact/{{ $dealer->id }}/{{ $listing->id }}" class="btn btn-primary trans">Contact Dealer </a>
-                                    @endif
+                                    <a href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
                                 </div>
                             </div>
                           @endif
@@ -341,6 +328,7 @@
         </div>
         <!-- end of carousel block -->
     </main>
+    @include('inc.send-message')
 @endsection
 @section('scripts')
 <link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
@@ -436,4 +424,5 @@
     	});
     });
     </script>
+    @include('inc.send-message-script') 
 @endsection
