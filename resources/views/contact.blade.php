@@ -81,4 +81,9 @@
     <!-- end of main part -->
 @endsection
 @section('scripts')
+    <script>
+jQuery(document).ready(function() {
+  jQuery('#jarallax-container-0 > div').css('top', '-43px');
+});
+    </script>
 @endsection

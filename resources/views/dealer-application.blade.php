@@ -150,11 +150,11 @@
                     <div class="slide">
                         <blockquote class="quote-wrap">
                             <div class="img">
-                                <img src="assets/images/quote-image.jpg" alt="image description">
+                                <img src="http://images.luxify.com/q100,100,fit/https://s3-ap-southeast-1.amazonaws.com/luxify/images/183cca72-9c68-479e-a2c9-182cb4284789.jpg" alt="image description">
                             </div>
                             <div class="text">
-                                <q>“Luxify is a great platform. We use it to bring us qualified buyers from Asia”</q>
-                                <cite>Hem Udani <span class="post">Director, Exotic Cars London</span></cite>
+                                <q>“Thanks to Luxify, we managed to get serious prospects and sales. Luxify provides us with more business opportunities.”</q>
+                                <cite>Frankie Ko<span class="post">Director, Owner Celebrity Style.</span></cite>
                             </div>
                         </blockquote>
                     </div>
@@ -368,4 +368,8 @@
     <!-- end of main part -->
 @endsection
 @section('scripts')
+    <script>
+jQuery(document).ready(function() {
+  jQuery('#jarallax-container-0 > div').css('top', '-93px');
+});
 @endsection
