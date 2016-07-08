@@ -1,6 +1,6 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Why Luxify?')
+@section('title', 'Luxify - Privacy')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
