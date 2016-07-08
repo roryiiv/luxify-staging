@@ -4170,10 +4170,10 @@ body {
   font-size: 12px;
 }
 h1 {
-  font-size: 5.6em
+  font-size: 4.5rem
 }
 .holder h1 {
-  font-size: 3em
+  font-size: 3em;
 }
 .banner h2 {
   font-size: 1.5em
@@ -4294,7 +4294,7 @@ h3 {
   font-size: 2em;
 }
 .sidebar .detail .text {
-  font-size: 3.5em;
+  font-size: 2.2rem;
 }
 .block-header h2 {
   font-size: 2em;
@@ -4425,4 +4425,7 @@ a.btn-3DVRTour {
 }
 .item-description tbody tr th {
   width: 30%
+}
+.item-description {
+  font-size: 1.3rem; 
 }
