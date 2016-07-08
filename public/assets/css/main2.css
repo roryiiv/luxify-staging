@@ -3112,7 +3112,7 @@ body > .jcf-select-drop.jcf-drop-flipped {
   line-height: 2.1875;
 }
 .footer-nav h4 {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: normal;
   color: #43484d;
 }
@@ -3953,8 +3953,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
   }
 
   .footer-nav h4 {
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: 19px;
   }
 
   .footer-bottom {
@@ -4215,10 +4214,13 @@ nav.banner-nav,
   font-size: 1.375em;
 }
 .footer-nav {
-  font-size: 1.6em;
+  font-size: 1.2rem;
 }
 .footer-nav h4 {
-  font-size: 1.6em;
+  font-size: 1.9em;
+  margin-bottom: 15px 0 20px;
+  border-bottom: 1px solid #ececec;
+  padding-bottom: 12px;
 }
 .social-networks a {
   width: 26px;
