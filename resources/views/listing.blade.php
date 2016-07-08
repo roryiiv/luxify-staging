@@ -165,67 +165,20 @@
                                     {{ strip_tags($listing->description) }}
                                 </p>
                                 @if(!empty($infos))
-                                    <h5>Specifications of {{ $listing->title }}</h5>
-
-                                    <table class="table item-description" style="display: none;">
+                                    <h5>Specifications</h5>
+                                    <table class="table item-description">
                                         <thead>
-                                            <tr>
-                                                <th colspan="2">GENERAL</th>
-                                            </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th scope="row">Closure</th>
-                                                <td>Zip</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Type</th>
-                                                <td>Hand-held Bag</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Material</th>
-                                                <td>PU</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Style Code</th>
-                                                <td>MKJ00036</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Ideal For</th>
-                                                <td>Women</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Occasion</th>
-                                                <td>Evening/Party, Casual, Formal, Festive</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Color Code</th>
-                                                <td>Pink003</td>
-                                            </tr>
+                                        @foreach($infos as $info)
+                                          <tr>
+                                            <th scope="row" style="padding: 8px 0px;">{{$info->label}}</th>
+                                            <td class='text-center'>{{$info->value}}</td>
+                                          </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
 
-                                    <table class="table item-description" style="display: none;">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="2">DIMENSIONS</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">Height</th>
-                                                <td>267 mm</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Width</th>
-                                                <td>412 mm</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Depth</th>
-                                                <td>104 mm</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 @endif
                             </div>
                         </article>
