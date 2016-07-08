@@ -110,7 +110,8 @@ Route::get('/dashboard/profile', 'Dashboard@profile');
 Route::post('/dashboard/profile', 'Dashboard@profile_update');
 Route::get('/dashboard/mailbox', 'Dashboard@mailbox');
 Route::get('/dashboard/wishlist', 'Dashboard@wishlist');
-Route::get('/dashboard/wishlist/delete/{id}', 'Dashboard@wishlistDelete');
+Route::post('/dashboard/wishlist/add', 'Dashboard@wishlistAdd');
+Route::post('/dashboard/wishlist/delete', 'Dashboard@wishlistDelete');
 
 // Dashboard products related views
 Route::get('/dashboard/products', 'Dashboard@products');

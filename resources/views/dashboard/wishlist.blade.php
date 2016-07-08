@@ -138,7 +138,7 @@
                                         </thead>
                                         <tbody>
                                             @for($i=0; $i < count($wishes); $i++)
-                                                <tr>
+                                                <tr id="{{ $wishes[$i]->id }}">
                                                     <td class="text-center">
                                                         <div class="checkbox-custom">
                                                             <input id="product-{{$i}}" type="checkbox" value="{{$i}}">
@@ -154,7 +154,7 @@
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
                                                             <a target="_blank" href="/listing/{{ $wishes[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                            <a href="/dashboard/wishlist/delete/{{ $wishes[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                            <a href="javascript:;" data-id="{{ $wishes[$i]->id }}" class="btn btn-outline btn-danger remove-wishlist"><i class="ti-trash"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -217,4 +217,49 @@
     <script type="text/javascript" src="/db/js/demo.js"></script>
     <script type="text/javascript" src="/db/js/product-list.js"></script>
     <script type="text/javascript" src="/db/js/date-range-picker.js"></script>
+    {{ csrf_field() }}
+    <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">
+    <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $('a.remove-wishlist').each(function(){
+            $(this).click(function(event){
+                // return false; // remove this later after database fixes.
+                // event.preventDefault();
+                var url = '/dashboard/wishlist/delete', itemID = $(this).attr('data-id'), userID = {{ Auth::user()->id }}, token = $('input[name=_token]').val();
+                // console.log(token);
+                var data = {uid: userID, lid: itemID};
+                swal({
+                    title: "Delete item",
+                    text: "Are you sure you want to delete item from Wishlist?",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                },
+                function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        headers: {'X-CSRF-TOKEN': token},
+                        data: data,
+                        dataType: "html",
+                        success: function(data){
+                            // console.log(data); return false;
+                            if(data == 3){
+                                swal("Item is deleted!");
+                                $('tr#'+itemID).remove();
+                            }else{
+                                swal("Error!");
+                            }
+                        },
+                        error: function(errMsg){
+                            console.log(errMsg.responseText);
+                        }
+                    });
+                });
+            });
+        });
+    });
+    </script>
 @endsection

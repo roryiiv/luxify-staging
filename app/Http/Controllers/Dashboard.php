@@ -480,17 +480,46 @@ class Dashboard extends Controller
         }
     }
 
-    public function wishlistDelete($id) {
-        $userId = Auth::user()->id;
+    public function wishlistAdd(Request $request) {
+        $input = $request->all();
+        $userId = $input['uid'];
+        $listingId = $input['lid'];
+        $is_listed = DB::table('wishlists')
+        ->where('userId',$userId )
+        ->where('listingId', $listingId)
+        ->count();
 
-        DB::table('wishlists')
-        ->where('userId', $userId)
-        ->where('listingId', $id)
-        ->update(['updatedAt' => date("Y-m-d H:i:s"), 'deleted' => 1]);
+        if($is_listed == 0){ //Item is not listed in wishlist yet.
+            $createdAt = date("Y-m-d H:i:s");
+            DB::table('wishlists')->insert(['createdAt' => $createdAt, 'listingId' => $listingId, 'userId' => $userId]);
+            echo 1;
+        }else{ //Item is already listed but deleted (soft delete).
+            $updatedAt = date("Y-m-d H:i:s");
+            DB::table('wishlists')
+            ->where('userId',$userId )
+            ->where('listingId', $listingId)
+            ->update(['deleted' => 0, 'updatedAt' => $updatedAt]);
+            echo 2;
+        }
+    }
 
-        // var_dump($delete); exit;
+    public function wishlistDelete(Request $request) {
+        $input = $request->all();
+        $userId = $input['uid'];
+        $listingId = $input['lid'];
+        $is_listed = DB::table('wishlists')
+        ->where('userId',$userId )
+        ->where('listingId', $listingId)
+        ->count();
 
-        return redirect('/dashboard/wishlist');
+        if($is_listed > 0){ //item is ready for sof delete
+            $updatedAt = date("Y-m-d H:i:s");
+            DB::table('wishlists')
+            ->where('userId',$userId )
+            ->where('listingId', $listingId)
+            ->update(['deleted' => 1, 'updatedAt' => $updatedAt]);
+            echo 3;
+        }
     }
 
     public function wishlist() {

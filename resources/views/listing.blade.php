@@ -316,71 +316,119 @@
       });
     });
     </script>
-    {{ csrf_field() }}
-    <script>
-    $(document).ready(function(){
-       @if ($user_id)
-        $('a.favourite').each(function(){
-            $(this).click(function(event){
-                // return false; // remove this later after database fixes.
-               event.preventDefault();
-              var url = '/wishlist/add';
-              var itemID = $(this).attr('data-id');
-              var userID = {{$user_id}};
-              var token = $('input[name=_token]').val();
-              var data = {uid: userID, lid: itemID, delete: $(this).hasClass('added')};
-
-              var that = this;
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    headers: {'X-CSRF-TOKEN': token},
-                    data: data,
-                    // dataType: "html",
-                    success: function(data){
-                      if(data === '1') {
-                         $(that).toggleClass('added');
-                      }
-                    },
-                    error: function(errMsg){
-                        console.log(errMsg.responseText);
+    @if($user_id)
+        {{ csrf_field() }}
+        <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">
+        <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
+        <script>
+        $(document).ready(function(){
+            $('a.favourite').each(function(){
+                $(this).click(function(event){
+                    // return false; // remove this later after database fixes.
+                    // event.preventDefault();
+                    if($(this).hasClass('added')){
+                        var url = '/dashboard/wishlist/delete', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
+                        // console.log(token);
+                        var data = {uid: userID, lid: itemID};
+                        swal({
+                            title: "Delete item",
+                            text: "Are you sure you want to delete item from Wishlist?",
+                            type: "info",
+                            showCancelButton: true,
+                            closeOnConfirm: false,
+                            showLoaderOnConfirm: true,
+                        },
+                        function(){
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                                headers: {'X-CSRF-TOKEN': token},
+                                data: data,
+                                dataType: "html",
+                                success: function(data){
+                                    // console.log(data); return false;
+                                    if(data == 3){
+                                        swal("Item is deleted!");
+                                        $('a#'+itemID).removeClass('added');
+                                    }else{
+                                        swal("Error!");
+                                    }
+                                },
+                                error: function(errMsg){
+                                    console.log(errMsg.responseText);
+                                }
+                            });
+                        });
+                    }else{
+                        var url = '/dashboard/wishlist/add', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
+                        // console.log(token);
+                        var data = {uid: userID, lid: itemID};
+                        swal({
+                            title: "Add to Wishlist",
+                            text: "Are you sure you want to add item to your Wishlist?",
+                            type: "info",
+                            showCancelButton: true,
+                            closeOnConfirm: false,
+                            showLoaderOnConfirm: true,
+                        },
+                        function(){
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                                headers: {'X-CSRF-TOKEN': token},
+                                data: data,
+                                dataType: "html",
+                                success: function(data){
+                                    if(data == 1){
+                                        swal("Item is added!");
+                                        $('a#'+itemID).addClass('added');
+                                    }else{
+                                        swal("Item has been readded!");
+                                        $('a#'+itemID).addClass('added');
+                                    }
+                                },
+                                error: function(errMsg){
+                                    console.log(errMsg.responseText);
+                                }
+                            });
+                        });
                     }
                 });
             });
         });
-       @endif
-        $(document).ready(function() {
-
-    		$(".3DTour").fancybox({
-        	fitToView	: true,
-        	width		: '90%',
-        	height		: '90%',
-        	autoSize	: true,
-        	closeClick	: false,
-        	openEffect	: 'none',
-        	closeEffect	: 'none',
-          arrows: false,
-          mouseWheel: false,
+        </script>
+    @endif
+    {{ csrf_field() }}
+    <script>
+    $(document).ready(function(){
+        $(".3DTour").fancybox({
+            fitToView	: true,
+            width		: '90%',
+            height		: '90%',
+            autoSize	: true,
+            closeClick	: false,
+            openEffect	: 'none',
+            closeEffect	: 'none',
+            arrows: false,
+            mouseWheel: false,
         });
 
-    		$(".fancybox-thumb").fancybox({
-        	fitToView	: false,
-        	width		: '70%',
-        	height		: '70%',
-        	autoSize	: false,
-        	closeClick	: false,
-        	openEffect	: 'none',
-          closeEffect	: 'none',
-          helpers : {
-            thumbs  : {
-              width : 50,
-              height  : 50
+        $(".fancybox-thumb").fancybox({
+            fitToView	: false,
+            width		: '70%',
+            height		: '70%',
+            autoSize	: false,
+            closeClick	: false,
+            openEffect	: 'none',
+            closeEffect	: 'none',
+            helpers : {
+                thumbs  : {
+                    width : 50,
+                    height  : 50
+                }
             }
-          }
         });
         $('[data-toggle="tooltip"]').tooltip()
-
-    	});
     });
     </script>
     @include('inc.send-message-script')
