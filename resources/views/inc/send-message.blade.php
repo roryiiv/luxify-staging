@@ -64,10 +64,11 @@
       text-align: center;
       font-weight: 400;
       font-size: 18px;
+      color: white;
   }
   #login-form .split-box > .left p {
-      font-weight: 100;
-      font-size: 14px;
+      font-weight: 300;
+      font-size: 1.4rem;
       color: #BDC6CF;
       text-align: center;
       margin-bottom: 34px;
@@ -82,8 +83,8 @@
        
   }
   #login-form .split-box > .right p {
-      font-weight: 100;
-      font-size: 14px;
+      font-weight: 300;
+      font-size: 1.4rem;
       color: #86939E;
       text-align: center;
       margin-bottom: 20px;
@@ -95,6 +96,8 @@
       width: 100%;  
       color: #998967;
       margin-bottom: 10px;
+      height: 30px;
+      font-size: 1.2rem
   }
   #login-form .split-box > .right button {
       margin-top: 21px!important;
