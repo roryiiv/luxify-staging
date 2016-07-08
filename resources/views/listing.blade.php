@@ -136,7 +136,7 @@
                                     <a href="/dealer/{{ $dealer->id }}" class="btn btn-primary">Dealer page</a>
                                     <a href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
                                     @if($listing->buyNowUrl)
-                                    <a href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</a>
+                                    <a target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</a>
                                     @endif
                                 </div>
                             </div>
@@ -157,6 +157,9 @@
                                 <h1 class="item-title">{{ $listing->title }}</h1>
                                 @if(!empty($listing->aerialLook3DUrl))
                                     <a href="{{ $listing->aerialLook3DUrl }}" rel="lightbox" data-fancybox-type="iframe" class="btn btn-primary lightbox">3D Virtual Tour &nbsp;<span class="glyphicon glyphicon-play"></span></a>
+                                @endif
+                                @if(!empty($listing->aerialLookUrl))
+                                    <a href="{{ $listing->aerialLookUrl }}" rel="lightbox" data-fancybox-type="iframe" class="btn btn-primary lightbox" style="margin-left:10px;">Promotion Video &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
                             </header>
                             <div class="description">
