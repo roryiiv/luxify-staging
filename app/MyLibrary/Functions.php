@@ -33,7 +33,7 @@ class Functions
       }
     }
 
-    public function hashedId($x, $y){
+    static function hashedId($x, $y){
         $x = intval($x);
         $y = intval($y);
         if ($x > $y) {
