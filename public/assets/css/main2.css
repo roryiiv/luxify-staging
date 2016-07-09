@@ -723,7 +723,7 @@ div.lightbox {
 }
 .navbar-nav > li {
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 500;
   position: relative;
   margin: 0 19px 0 0;
 }
@@ -738,7 +738,7 @@ div.lightbox {
 }
 .navbar-nav > li .dropdown-toggle {
   position: relative;
-  padding-right: 20px;
+  padding-right: 17px;
 }
 .navbar-nav > li .dropdown-toggle:before {
   font-family: "icomoon";
