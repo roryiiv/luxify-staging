@@ -22,6 +22,26 @@
     <link rel="stylesheet" type="text/css" href="/db/css/summernote.css">
     <!-- Primary Style-->
     <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
+    <style>
+      html, body, .main-container, .page-container, .page-content, .mailbox, .mailbox > .col-md-5,
+      .mailbox > .col-md-5 > #inbox,  .mailbox > .col-md-7, .mailbox > .col-md-7 > .single-mail{
+        height: 100%;
+      }
+      .page-content {
+        max-height: none;
+        min-height: 0;
+      }
+      .main-container {
+        overflow-y: hidden;
+      }
+      .single-mail {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding; 15px 20px 75px 20px;
+      }
+
+    </style>
 @endsection
 
 @section('content')
