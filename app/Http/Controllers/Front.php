@@ -452,6 +452,7 @@ class Front extends Controller {
         if (Auth::user() && !empty($dealerId)) {
             $message = func::getVal('post', 'message');
             $listingId = func::getVal('post', 'listingId');
+            $listingId = $listingId || 0;
             // return response()->json($listingId);
             $message_id = DB::table('conversations')->insertGetId([
                 'body' => $message,
@@ -459,7 +460,7 @@ class Front extends Controller {
                 'listingId' => $listingId,
                 'toUserId' => $dealerId,
                 'fromUserId' => Auth::user()->id,
-                'hashedId' => func::hashedId($dealerId, Auth::user()->id)
+                'hashedId' => func::hashedId(func::hashedId($dealerId, Auth::user()->id), $listingId)
             ]);
             $dealer = DB::table('users')->where('id', $dealerId)->first();
             $listing = $listingId ? DB::table('listings')->where('id', $listingId)->first() : NULL;
