@@ -174,6 +174,7 @@
      height: 33px;
      border: 0;
      box-shadow: none;
+     font-size: 1.2rem
   }
   #message-sent-form a {
      padding-top: 8px;
