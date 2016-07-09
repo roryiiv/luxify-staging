@@ -438,17 +438,17 @@ class Front extends Controller {
     }
 
     public function updateHashed() {
-       $msgs = DB::table('conversations')->get();  
+       $msgs = DB::table('conversations')->get();
        foreach ($msgs as $msg) {
          echo func::hashedId(func::hashedId($msg->fromUserId, $msg->toUserId), $msg->listingId);
          DB::table('conversations')
-             ->where('id', $msg->id) 
+             ->where('id', $msg->id)
              ->update(array(
                 'hashedId' => func::hashedId(func::hashedId($msg->fromUserId, $msg->toUserId), $msg->listingId)
              ));
        }
     }
-    
+
     public function sendMessage($dealerId) {
         if (Auth::user() && !empty($dealerId)) {
             $message = func::getVal('post', 'message');
@@ -473,7 +473,7 @@ class Front extends Controller {
                     'to' => $dealer->email,
                     'listing' => $listingId ? $listing->title : ''
                 );
-                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/' . $message_id;
+                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/';
                 Mail::send('emails.new-offer-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
                     $message->from('technology@luxify.com', 'Luxify Admin');
                     $message->subject('Someone Is Interested In Your Dealer Page');
@@ -520,7 +520,7 @@ class Front extends Controller {
                 );
                 // var_dump($to_email);
 
-                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/' . $message_id;
+                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/';
                 Mail::send('emails.new-offer-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
 
                     $message->from('technology@luxify.com', 'Luxify Admin');
@@ -559,7 +559,7 @@ class Front extends Controller {
                 );
                 // var_dump($to_email);
 
-                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/' . $message_id;
+                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/';
                 Mail::send('emails.new-message-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
 
                     $message->from('technology@luxify.com', 'Luxify Admin');
