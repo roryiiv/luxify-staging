@@ -27,7 +27,7 @@
 				   </div>
 				   <div class="button-wrap">
 						<a class="btn btn-default lightbox fancybox.iframe" href="https://my.matterport.com/show/?m=1VXKRhH7xcd"><span class="icon-play"></span> Experience</a>
-						<a href="#schedule" class="btn btn-primary smooth-scroll">Free Consultation</a>
+						<a href="/contact" class="btn btn-primary smooth-scroll">Free Consultation</a>
 					</div>
                 </div>
             </div>
