@@ -87,43 +87,46 @@ $(document).ready(function(){
     });
 
     $('#message-send-btn').click(function(e){
-      e.preventDefault();
-      var listingId = $('input#listing-id').val();
-      console.log(listingId);
-      var token = $('input[name=_token]').val();
-      if($('#message-form').valid() && !$('#message-send-btn').prop('disabled')) {
-        $('#message-send-btn').prop('disabled', true);
-        $('#message-form textarea').prop('disabled', true);
-        $('div.ajax-loading').show();
-        $.ajax({
-          type: 'POST',
-          url: '/contact/dealer/{{$dealer->id}}',
-          headers: {'X-CSRF-TOKEN': token},
-          dataType: 'json',
-          data: {
-            message: $('textarea[name=content]').val(),
-            listingId: listingId
-          },
-          success: function(res) {
-              console.log(res);
-            if (res.result === 1) {
-              $('#message-send-btn').prop('disabled', false);
-              $('div.ajax-loading').hide();
-              $('#message-form textarea').val('').prop('disabled', false);
-              $('#contact-dealer-form').modal('toggle');
-              $('#message-sent-form').modal('toggle');
-            } else {
-              $('#message-send-btn').prop('disabled', false);
-              $('div.ajax-loading').hide();
-              $('p.login-error').html(res.message).show().slideDown('fast');
-              $('textarea').select();
-              setTimeout(function() {
-                $("p.login-error").slideUp('fast');
-              }, 5000);
-            }
-          }
-        });
-      }
+        e.preventDefault();
+        var listingId = $('input#listing-id').val();
+        console.log(listingId);
+        var token = $('input[name=_token]').val();
+        if($('#message-form').valid() && !$('#message-send-btn').prop('disabled')) {
+            $('#message-send-btn').prop('disabled', true);
+            $('#message-form textarea').prop('disabled', true);
+            $('div.ajax-loading').show();
+            $.ajax({
+                type: 'POST',
+                url: '/contact/dealer/{{$dealer->id}}',
+                headers: {'X-CSRF-TOKEN': token},
+                dataType: 'json',
+                data: {
+                    message: $('textarea[name=content]').val(),
+                    listingId: listingId
+                },
+                success: function(res) {
+                    // console.log(res);
+                    if (res.result === 1) {
+                        $('#message-send-btn').prop('disabled', false);
+                        $('div.ajax-loading').hide();
+                        $('#message-form textarea').val('').prop('disabled', false);
+                        $('#contact-dealer-form').modal('toggle');
+                        $('#message-sent-form').modal('toggle');
+                    } else {
+                        $('#message-send-btn').prop('disabled', false);
+                        $('div.ajax-loading').hide();
+                        $('p.login-error').html(res.message).show().slideDown('fast');
+                        $('textarea').select();
+                        setTimeout(function() {
+                            $("p.login-error").slideUp('fast');
+                        }, 5000);
+                    }
+                },
+                error: function(errMsg){
+                    console.log(errMsg.responseText);
+                }
+            });
+        }
     });
 
     // insert title to the message box

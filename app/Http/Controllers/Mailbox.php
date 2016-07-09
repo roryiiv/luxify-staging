@@ -31,7 +31,8 @@ class Mailbox extends Controller
 
          $messages = DB::table('conversations')
          // ->where('readAt', NULL)
-         ->where('conversations.deleted', false)
+         ->where('conversations.deleted', null)
+        //  ->orWhere('conversations.deleted', null)
          ->where('toUserId', $this->user_id)
          ->join('users AS sender', 'conversations.fromUserId', '=', 'sender.id')
          ->Join('users AS receiver', 'conversations.toUserId', '=', 'receiver.id')
@@ -72,7 +73,7 @@ class Mailbox extends Controller
 
         //first calculate two users id then combine with listingId, this order matters!
         ->where('hashedId', func::hashedId(func::hashedId($this->user_id, $otherId), $listingId))
-        ->where('deleted', false)
+        ->where('deleted', null)
         ->orderby('sentAt', 'desc')
         ->skip($page*$size)
         ->take($size)
@@ -123,13 +124,13 @@ class Mailbox extends Controller
         echo json_encode((object) ['result'=> 0, 'message'=> 'You haven\'t supplied enough parameters.']);
       }
     }
-    
+
     function deleteMessage() {
         $msgsToDelete = isset($_POST['msgsToDelete']) && !empty($_POST['msgsToDelete']) ? $_POST['msgsToDelete'] : NULL;
         if ($msgsToDelete) {
             $query = DB::table('conversations');
             foreach($msgsToDelete as $msg) {
-                $query->orWhere('hashedId', $msg); 
+                $query->orWhere('hashedId', $msg);
             }
             $result = $query->update(['deleted' => 1 ]);
             if ($result > 0 ) {
@@ -142,6 +143,6 @@ class Mailbox extends Controller
         }
     }
     function searchMessage() {
-    
+
     }
 }
