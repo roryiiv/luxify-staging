@@ -436,7 +436,7 @@ class Front extends Controller {
         ->get();
         return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
     }
-    
+
     public function updateHashed() {
        $msgs = DB::table('conversations')->get();  
        foreach ($msgs as $msg) {
@@ -1278,8 +1278,9 @@ class Front extends Controller {
                         $item_img = !empty($list->mainImageUrl) ? $list->mainImageUrl : 'default-logo.png';
                         $return .= '<img src="http://images.luxify.com/35/https://s3-ap-southeast-1.amazonaws.com/luxify/images/'. $item_img .'" width="35" height="35" alt="Image">';
                         $return .= $list->title;
-                        $curr = $this->get_currency($list->currencyId);
-                        $price_format = $list->price == 0 ? 'Price on request' : $curr->symbol . number_format($list->price, 0) .' '. $curr->code;
+                        //fixes for currency
+                        $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                        $price_format = func::formatPrice($list->currencyId, $sess_currency, $list->price);
                         $return .= '<span class="price" style="margin-left: 15px;">'. $price_format .'</span>';
                         $return .= '</a>';
                         $return .= '</li>';

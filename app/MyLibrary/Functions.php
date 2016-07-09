@@ -37,7 +37,7 @@ class Functions
         $x = intval($x);
         $y = intval($y);
         if ($x > $y) {
-          $tmp = $x; 
+          $tmp = $x;
           $x = $y;
           $y = $tmp;
         } 
@@ -164,12 +164,15 @@ class Functions
         if(Auth::check()){
             $user_id = Auth::user()->id;
             $notifs = DB::table('conversations')
-            ->where([
-                ['toUserId', $user_id],
-                ['readAt', NULL],
-                ['deleted', NULL]
-            ])
+            // ->where('readAt', NULL)
+            ->where('conversations.deleted', false)
+            ->where('readAt', NULL)
+            ->where('toUserId', $user_id)
+            ->join('users AS sender', 'conversations.fromUserId', '=', 'sender.id')
+            ->Join('users AS receiver', 'conversations.toUserId', '=', 'receiver.id')
+            ->leftJoin('listings', 'listings.id', '=', 'conversations.listingId')
             ->orderby('sentAt', 'desc')
+            ->groupby('hashedId')
             ->get();
 
             return $notifs;
