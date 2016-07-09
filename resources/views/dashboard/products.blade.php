@@ -149,7 +149,11 @@
                                                     <td><img src="{{func::img_url($products[$i]->mainImageUrl, 50, 50)}}" width="50" alt="" class="img-thumbnail img-responsive"></td>
                                                     <td style="width: 25%;">{{$products[$i]->title}}</td>
                                                     <td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>
-                                                    <td class="text-right">${{number_format($products[$i]->price, 2)}}</td>
+                                                    <?php
+                                                    $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                    $price_format = func::formatPrice($products[$i]->currencyId, $sess_currency, $products[$i]->price);
+                                                    ?>
+                                                    <td class="text-right">{{$price_format}}</td>
                                                     {{-- <td class="text-right">320</td> --}}
                                                     <td><span class="label label-default">{{$products[$i]->status}}</span></td>
                                                     <td class="text-center">

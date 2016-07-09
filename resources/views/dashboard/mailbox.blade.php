@@ -259,7 +259,7 @@
 
     function genMessages(otherId, listingId, newMessage) {
         if (typeof newMessage === 'undefined') {
-           newMessage = false; 
+           newMessage = false;
         }
         var other = _.find(chatroom, {"id": otherId.toString(), "listingId": listingId.toString()});
         $('#otherImg').attr('src', "{{func::img_url('',34 ,34)}}" + other.profile.companyLogoUrl);
@@ -294,13 +294,13 @@
 
     function loadMsg(otherId, listingId, newMessage, page, size) {
         if (typeof newMessage === 'undefined') {
-           newMessage = false; 
+           newMessage = false;
         }
         if (typeof page === 'undefined') {
-           page = 0; 
+           page = 0;
         }
         if (typeof size === 'undefined') {
-           size = 10; 
+           size = 10;
         }
 
         if(typeof listingId === 'number') {
@@ -329,9 +329,9 @@
                     res.users.other.companyLogoUrl =  res.users.other.companyLogoUrl || 'placeholder.png';
 
                     dealer = res.users.dealer;
-                    
+
                     if(!_.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile) {
-                        
+
                         _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile = res.users.other;
                     }
                     _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).messages = res.messages;
@@ -445,7 +445,7 @@
           url: "/api/mailbox/delete",
           type: "POST",
           data: {
-            "msgsToDelete[]": delMsgs.toArray()  
+            "msgsToDelete[]": delMsgs.toArray()
           },
           dataType: 'json',
           headers: {'X-CSRF-Token': $('input[name=_token]').val()},

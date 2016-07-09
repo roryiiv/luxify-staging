@@ -58,7 +58,7 @@ class LuxifyAuth extends Controller
                     $salt = $_POST['salt'];
                     $password = $_POST['hashed'];
 
-                    $auth = User::where('email', '=', $email)->where('hashedPassword', '=', $password)->where('salt', '=', $salt)->first();
+                    $auth = User::where('email', '=', $email)->where('hashedPassword', '=', $password)->where('salt', '=', $salt)->where('isSuspended', '=', 0)->first();
 
                     if($auth) {
                         // Authentication passed...

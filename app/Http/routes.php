@@ -86,6 +86,7 @@ Route::get('/panel/user/edit/{id}','Panel@user_edit');
 Route::post('/panel/add/user/register','Panel@user_register'); //Create
 Route::post('/panel/user/update','Panel@user_update'); // Update
 Route::get('/panel/user/delete/{id}','Panel@user_delete'); //Delete
+Route::get('/panel/user/revoke/{id}','Panel@user_revoke'); //Delete
 Route::post('/panel/upload','Panel@upload');
 Route::get('/panel/user/confirm','Panel@user_confirm');
 // Products related Views

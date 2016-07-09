@@ -7,9 +7,48 @@
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+        .blocked-seller{
+            background: rgba(0,0,0,.8);
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+        }
+        .text-holder{
+            position: absolute;
+            top: 50%;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 50%;
+            margin: auto;
+            text-align: center;
+        }
+        .text-holder h3{
+            color: #fff;
+            font-size: 3em;
+        }
+        .text-holder p{
+            font-size: 2em;
+        }
+    </style>
 @endsection
 @section('content')
     <?php $banner = !empty($dealer->coverImageUrl) ? $dealer->coverImageUrl : 'about-banner.jpg'; ?>
+    @if($dealer->isSuspended == 1)
+        <div class="blocked-seller">
+            <div class="text-holder">
+                <h3>This Account is suspended</h3>
+                <p>
+                    <a href="/">click here to browse again.</a>
+                </p>
+            </div>
+        </div>
+    @endif
     <section class="inner-banner parallax" style="background-image:url({{ func::img_url($banner, 1960) }});">
         <div class="container">
             <div class="banner-text">

@@ -67,7 +67,7 @@ class Panel extends Controller
             $filter[] = ['role', $_GET['ddlCustomerGroup']];
             $filters['ddlCustomerGroup'] = $_GET['ddlCustomerGroup'];
         }
-        if(isset($_GET['ddlApproved']) && !empty($_GET['ddlApproved'])){
+        if(isset($_GET['ddlApproved'])){
             $filter[] = ['isSuspended', $_GET['ddlApproved']];
             $filters['ddlApproved'] = $_GET['ddlApproved'];
         }
@@ -75,12 +75,13 @@ class Panel extends Controller
             $filter[] = ['email', $_GET['txtEmail']];
             $filters['txtEmail'] = $_GET['txtEmail'];
         }
-        if(isset($_GET['ddlStatus']) && !empty($_GET['ddlStatus'])){
+        if(isset($_GET['ddlStatus'])){
             $filter[] = ['isSuspended', $_GET['ddlStatus']];
             $filters['ddlStatus'] = $_GET['ddlStatus'];
         }
 
         $perpage = 10;
+        // var_dump($filter); exit;
 
         if(isset($_GET['view-perpage']) && !empty($_GET['view-perpage'])){
             $perpage = $_GET['view-perpage'];
@@ -98,11 +99,19 @@ class Panel extends Controller
                 ->paginate($perpage);
             }
         }else{
-            $users = DB::table('users')
-            ->where($filter)
-            ->orWhere($filter_or)
-            ->orderby('created_at', 'desc')
-            ->paginate($perpage);
+            if(isset($filter_or)){
+                $users = DB::table('users')
+                ->where($filter)
+                ->orWhere($filter_or)
+                ->orderby('created_at', 'desc')
+                ->paginate($perpage);
+            }else{
+                $users = DB::table('users')
+                ->where($filter)
+                ->orderby('created_at', 'desc')
+                ->paginate($perpage);
+            }
+
         }
 
         // var_dump($user);
@@ -472,8 +481,41 @@ class Panel extends Controller
 
     public function user_delete($user_id) {
         $user = User::where('id', $user_id)->first();
-        $user->isSuspended = 1;
-        $user->save();
+        $role = $user->role;
+
+        if($role == 'seller'){
+            //we remove the items listed under this user id
+            $ended_at = date("Y-m-d H:i:s");
+            DB::table('listings')
+            ->where('userId', $user->id)
+            ->update(['status' => 'EXPIRED', 'ended_at' => $ended_at]);
+        }
+
+        //suspend the account
+        DB::table('users')
+        ->where('id', $user->id)
+        ->update(['isSuspended' => 1]);
+
+        return redirect('/panel/users');
+    }
+
+    public function user_revoke($user_id) {
+        $user = User::where('id', $user_id)->first();
+        $role = $user->role;
+
+        if($role == 'seller'){
+            //we revoke the items listed under this user id to 'PENDING'
+            $updated_at = date("Y-m-d H:i:s");
+            DB::table('listings')
+            ->where('userId', $user->id)
+            ->update(['status' => 'PENDING', 'updated_at' => $updated_at]);
+        }
+
+        //suspend the account
+        DB::table('users')
+        ->where('id', $user->id)
+        ->update(['isSuspended' => 0]);
+
         return redirect('/panel/users');
     }
 

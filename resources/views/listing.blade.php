@@ -121,11 +121,12 @@
                                 {{-- <li><a href="#"><span class="icon icon-wechat"></span></a></li>
                                 <li><a href="#"><span class="icon icon-social"></span></a></li> --}}
                             </ul>
-                          @if ($dealer)
+                            @if ($dealer)
+                            <?php $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName); ?>
                             <div class="link-btn">
                                 <div class="logo-aside">
                                     <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
-                                    <a href="/dealer/{{$dealer->id}}">
+                                    <a href="/dealer/{{$dealer->id}}/{{$slug}}">
                                         <img src="{{ func::img_url($dealer_img, 235) }}" alt="image description" width="233" height="29">
                                     </a>
                                 </div>
@@ -133,7 +134,6 @@
                                 <span class="small-text">Luxify dealer since {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
                                     <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                    <?php $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName); ?>
                                     <a href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">Dealer page</a>
                                     <a href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
                                     @if($listing->buyNowUrl)
@@ -141,7 +141,7 @@
                                     @endif
                                 </div>
                             </div>
-                          @endif
+                        @endif
                         </aside>
 
                         <article class="block-content">
