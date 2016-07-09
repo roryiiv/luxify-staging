@@ -29,10 +29,14 @@ class Mailbox extends Controller
         $page = isset($_GET['page']) && !empty($_GET['page']) ? intval($_GET['page']) : 0;
         $size= isset($_GET['size']) && !empty($_GET['size']) ? intval($_GET['size']) : 10;
 
+        $selfId = $this->user_id;
          $messages = DB::table('conversations')
          // ->where('readAt', NULL)
          ->where('conversations.deleted', false)
-         ->where('conversations.toUserId', $this->user_id)
+         ->where(function ($query) use ($selfId) {
+            $query->orWhere('toUserId', '=', $selfId) 
+              ->orWhere('fromUserId', '=', $selfId);
+         })
          ->join('users AS sender', 'conversations.fromUserId', '=', 'sender.id')
          ->join('users AS receiver', 'conversations.toUserId', '=', 'receiver.id')
          //->leftJoin('conversations AS c2', function($join) {
