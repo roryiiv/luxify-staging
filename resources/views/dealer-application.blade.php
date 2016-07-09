@@ -7,6 +7,7 @@
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 @endsection
 @section('content')
     <!-- main banner of the page -->
@@ -49,7 +50,7 @@
                         </p>
                     @endif
                 @endif
-                <a href="#" target="_blank" class="btn btn-info">View PDF</a>
+                <a data-fancybox-type="iframe" href="https://s3-ap-southeast-1.amazonaws.com/luxify/static/Luxify_Presentation.pdf" class="fancybox btn btn-info">View PDF</a>
                 <span class="txt">Learn more about the power and reach of Luxify</span>
             </div>
         </div>
@@ -368,8 +369,19 @@
     <!-- end of main part -->
 @endsection
 @section('scripts')
+    <script src="/assets/js/jquery.fancybox.js"></script>
     <script>
-jQuery(document).ready(function() {
-  jQuery('#jarallax-container-0 > div').css('top', '-93px');
-});
+    jQuery(document).ready(function() {
+    jQuery('#jarallax-container-0 > div').css('top', '-93px');
+      $(".fancybox").fancybox({
+         fitToView : false,
+         width   : '90%',
+         height    : '90%',
+         autoSize  : true,
+         closeClick  : false,
+         openEffect  : 'none',
+         closeEffect : 'none',
+      });
+    });
+    </script>
 @endsection
