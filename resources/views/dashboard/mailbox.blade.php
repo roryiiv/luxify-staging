@@ -45,7 +45,7 @@
       }
       .single-mail > .chat-box {
         flex-basis: auto;
-        height: 77%;
+        height: 73%;
       }
       .single-mail > .input-box {
         flex-basis: 50px;
@@ -183,7 +183,7 @@
                 <div class="checkbox-custom pull-left">
                     <input id="mailboxCheckbox{idx}" name="msgsToDelete[]" type="checkbox" value="{hashedId}">
                     <label for="mailboxCheckbox{idx}"></label>
-                </div> <a class="loadMsg" href="javascript:loadMsg({senderId}, {listingId}, false, null, null);">
+                </div> <a class="loadMsg" href="javascript:loadMsg({otherId}, {listingId}, false, null, null);">
                     <div class="media-left avatar"><img src="{{func::img_url('{senderCompanyLogoUrl}', 34, 34)}}" alt="" class="media-object img-circle"></div>
                     <div class="media-body">
                         <h6 class="media-heading">{senderFirstName}</h6>
@@ -249,6 +249,7 @@
 
     <script>
 
+    var selfId = {{Auth::user()->id}};
     var chatroom = [];
     var currentRoom = 0;
     var currentListingId = 0;
@@ -368,13 +369,14 @@
             success: function(res) {
                 if (res.result === 1) {
                     if(res.messages.length > 0){
-                        $(res.messages).each(function(idx, msg){
+                        $(res.messages).each(function(idx, msg) {
                             msg.idx = idx;
                             msg.senderCompanyLogoUrl = msg.senderCompanyLogoUrl || 'placeholder.png';
                             msg.sendAtHuman = moment(msg.sentAt).toNow(true);
                             msg.listingTitle = msg.listingTitle || 'Dealer page enquiry';
                             var newRoom = {};
-                            newRoom.id = msg.senderId;
+                            newRoom.id = msg.senderId !== selfId.toString() ?msg.senderId : msg.receiverId;
+                            msg.otherId = newRoom.id;
                             newRoom.listingId = msg.listingId
                             newRoom.active = false;
 
@@ -382,9 +384,10 @@
                             chatroom.push(newRoom);
                         });
 
+                        console.log(chatroom);
                         genChatList();
 
-                        loadMsg(chatroom[0].headline.senderId, chatroom[0].headline.listingId);
+                        loadMsg(chatroom[0].id, chatroom[0].headline.listingId);
                     }
                 }
             },
@@ -418,7 +421,7 @@
                 room.messages.push(res.newMessage);
                 room.headline.body = res.newMessage.body;
                 genChatList();
-                loadMsg(res.newMessage.toUserId, res.newMessage.listingId, true);
+                loadMsg(res.newMessage.toUserId !== selfId.toString() ? res.newMessage.toUserId : res.newMessage.fromUserId , res.newMessage.listingId, true);
             }
         });
     }

@@ -39,10 +39,6 @@ class Mailbox extends Controller
          })
          ->join('users AS sender', 'conversations.fromUserId', '=', 'sender.id')
          ->join('users AS receiver', 'conversations.toUserId', '=', 'receiver.id')
-         //->leftJoin('conversations AS c2', function($join) {
-         //  $join->on('conversations.hashedId', '=', 'c2.hashedId');
-         //  $join->on('conversations.id', '<', 'c2.id');
-         //})
          ->leftJoin('listings', 'listings.id', '=', 'conversations.listingId')
          ->groupBy('conversations.hashedId')
          ->orderBy('conversations.sentAt', 'desc')
