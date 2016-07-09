@@ -37,10 +37,20 @@
       .single-mail {
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: flex-start;
         padding; 15px 20px 75px 20px;
       }
-
+      .single-mail > div:nth-child(1) {
+        flex-basis: 60px;
+      }
+      .single-mail > .chat-box {
+        flex-basis: auto;
+        height: 77%;
+      }
+      .single-mail > .input-box {
+        flex-basis: 50px;
+        height: 50px;
+      }
     </style>
 @endsection
 
@@ -244,7 +254,10 @@
     var left = $('#leftMsg').html();
     var right = $('#rightMsg').html();
 
-    function genMessages(otherId, listingId, newMessage = false) {
+    function genMessages(otherId, listingId, newMessage) {
+        if (typeof newMessage === 'undefined') {
+           newMessage = false; 
+        }
         var other = _.find(chatroom, {"id": otherId.toString(), "listingId": listingId.toString()});
         $('#otherImg').attr('src', "{{func::img_url('',34 ,34)}}" + other.profile.companyLogoUrl);
         $("#otherEmail").attr("href", 'mailto:'+other.profile.email).html(other.profile.firstName);
@@ -259,9 +272,10 @@
                     $(nano(right, {user: dealer, msg: other.messages[i]})).prependTo('#chat-list');
                 }
             }
+            var mHeight = parseInt($('.single-mail').css('height').replace('px', ''));
             $('#chat-list').mCustomScrollbar({
                 theme: 'dark',
-                setHeight: 480,
+                setHeight: mHeight - 280,
             }).mCustomScrollbar("scrollTo", "bottom");
         } else {
             $('#chat-list').mCustomScrollbar("disable");
@@ -275,7 +289,17 @@
         }
     }
 
-    function loadMsg(otherId, listingId, newMessage=false, page=0, size=10) {
+    function loadMsg(otherId, listingId, newMessage, page, size) {
+        if (typeof newMessage === 'undefined') {
+           newMessage = false; 
+        }
+        if (typeof page === 'undefined') {
+           page = 0; 
+        }
+        if (typeof size === 'undefined') {
+           size = 10; 
+        }
+
         if(typeof listingId === 'number') {
             listingId = listingId.toString();
         }
@@ -294,7 +318,6 @@
             },
             headers: {'X-CSRF-Token': $('input[name=_token]').val()},
             success: function(res) {
-                console.log(res);
 
                 if (res.result === 1 ){
                     currentRoom = otherId;
@@ -349,7 +372,6 @@
                         });
 
                         genChatList();
-                        console.log(chatroom);
 
                         loadMsg(chatroom[0].headline.senderId, chatroom[0].headline.listingId);
                     }
