@@ -41,7 +41,6 @@ class Mailbox extends Controller
          //})
          ->leftJoin('listings', 'listings.id', '=', 'conversations.listingId')
          ->groupBy('conversations.hashedId')
-         ->whereNull('c2.id')
          ->orderBy('conversations.sentAt', 'desc')
          ->skip($page*$size)
          ->take($size)
