@@ -170,9 +170,15 @@
                                                     <td>{{date("m/d/Y", strtotime($user->created_at))}}</td>
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
-                                                            <a href="{{ $user->role != 'seller' ? 'javascript:;' : url('/dealer') . '/' . $user->id }}" target="_blank" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
+                                                            <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
+                                                            <a href="{{ $user->role != 'seller' ? 'javascript:;' : url('/dealer') . '/' . $user->id . '/' . $slug }}" target="_blank" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
                                                             <a href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
-                                                            <a href="/panel/user/delete/{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                            @if($user->isSuspended == 0)
+                                                                <a href="/panel/user/delete/{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                            @else
+                                                                <a href="/panel/user/revoke/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-power-off"></i></a>
+                                                            @endif
+
                                                         </div>
                                                     </td>
                                                 </tr>
