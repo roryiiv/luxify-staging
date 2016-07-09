@@ -599,7 +599,6 @@ class Dashboard extends Controller
         ->where('toUserId', $this->user_id)
         ->where('readAt', NULL)
         ->orderby('sentAt', 'desc')
-        ->groupBy('fromUserId')
         ->paginate(10);
 
         return view('dashboard.mailbox', ['conv', $conv]);

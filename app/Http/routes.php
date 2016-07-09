@@ -10,6 +10,8 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
+Route::get('/buildHashedId', 'Front@updateHashed');
 //static front pages
 Route::get('/', function(){
     return View::make('index');
@@ -42,6 +44,7 @@ Route::post('/api/listing/createSlug', 'Slug@createSlug');
 Route::get('/api/mailbox', 'Mailbox@index');
 Route::post('/api/mailbox', 'Mailbox@conversation');
 Route::post('/api/mailbox/send', 'Mailbox@sendMessage');
+Route::post('/api/mailbox/delete', 'Mailbox@deleteMessage');
 Route::post('/api/product/setStatus', 'Panel@product_change_status');
 Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
 // Test the API URL

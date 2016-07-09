@@ -436,6 +436,18 @@ class Front extends Controller {
         ->get();
         return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
     }
+    
+    public function updateHashed() {
+       $msgs = DB::table('conversations')->get();  
+       foreach ($msgs as $msg) {
+         DB::table('conversations')
+             ->where('id', $msg->id) 
+             ->update(array(
+                'hashedId' => func::hashedId(func::hashedId($msg->fromUserId, $msg->toUserId), $msg->listingId)
+             ));
+       }
+    }
+    
     public function sendMessage($dealerId) {
         if (Auth::user() && !empty($dealerId)) {
             $message = func::getVal('post', 'message');
@@ -446,7 +458,8 @@ class Front extends Controller {
                 'sentAt' => date('Y-m-d H:i:s'),
                 'listingId' => $listingId,
                 'toUserId' => $dealerId,
-                'fromUserId' => Auth::user()->id
+                'fromUserId' => Auth::user()->id,
+                'hashedId' => func::hashedId($dealerId, Auth::user()->id)
             ]);
             $dealer = DB::table('users')->where('id', $dealerId)->first();
             $listing = $listingId ? DB::table('listings')->where('id', $listingId)->first() : NULL;
