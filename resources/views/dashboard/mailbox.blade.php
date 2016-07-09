@@ -51,6 +51,9 @@
         flex-basis: 50px;
         height: 50px;
       }
+      .mailbox .inbox:nth-child(1) {
+        margin-bottom: 0;
+      }
     </style>
 @endsection
 
@@ -176,12 +179,11 @@
             </div>
         </div>
         <script type="text/template" id="msgListTemplate">
-            <li class="media">
+            <li class="media" data-conv-id="{hashedId}">
                 <div class="checkbox-custom pull-left">
                     <input id="mailboxCheckbox{idx}" name="msgsToDelete[]" type="checkbox" value="{hashedId}">
                     <label for="mailboxCheckbox{idx}"></label>
-                </div>
-                <a class="loadMsg" href="javascript:loadMsg({senderId}, {listingId});">
+                </div> <a class="loadMsg" href="javascript:loadMsg({senderId}, {listingId}, false, null, null);">
                     <div class="media-left avatar"><img src="{{func::img_url('{senderCompanyLogoUrl}', 34, 34)}}" alt="" class="media-object img-circle"></div>
                     <div class="media-body">
                         <h6 class="media-heading">{senderFirstName}</h6>
@@ -344,10 +346,19 @@
         chatroom = _.sortBy(chatroom, function(room){
             return -(moment(room.headline.sentAt).unix());
         });
+
         chatroom.forEach(function(room){
-            $(nano($('#msgListTemplate').html(), room.headline)).appendTo('ul#inbox');
-        })
+           var newConv = $(nano($('#msgListTemplate').html(), room.headline));
+           newConv.appendTo('ul#inbox');
+           newConv.find('a').on('click', function() {
+             var that  = this;
+             $('li.active').toggleClass('active');
+             $(that).closest('li').toggleClass('active');
+           });
+        });
+        $('#inbox li:first-child').toggleClass('active');
     }
+
     function initChatroom() {
         $.ajax({
             url: '/api/mailbox',
@@ -419,6 +430,7 @@
             sendMsg();
         }
     });
+
 
     $('#msg-del-btn').on('click', function(e) {
       e.preventDefault();
