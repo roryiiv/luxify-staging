@@ -33,6 +33,17 @@ class Functions
       }
     }
 
+    public function hashedId($x, $y){
+        $x = intval($x);
+        $y = intval($y);
+        if ($x > $y) {
+          $tmp = $x; 
+          $x = $y;
+          $y = $tmp;
+        } 
+        return (($x + $y) * ($x + $y + 1)) / 2 + $y; 
+    }
+
     static function img_url($url, $width = '', $height = '', $fit = false){
         $processor = '';
         $processor .= 'http://images.luxify.com/q100,';

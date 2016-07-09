@@ -53,7 +53,6 @@
             </div>
             <div class="page-content container-fluid p-0">
                 {!! csrf_field() !!}
-
                 <div class="row row-0 mailbox">
                     <div class="col-md-5">
                         <ul class="media-list inbox">
@@ -67,7 +66,7 @@
                                     <div data-brackets-id="214" role="toolbar" aria-label="Toolbar with button groups" class="btn-toolbar">
                                         <div data-brackets-id="215" role="group" aria-label="First group" class="btn-group">
                                             <button data-brackets-id="216" type="button" class="btn btn-outline btn-default"><i data-brackets-id="217" class="ti-archive"></i></button>
-                                            <button data-brackets-id="218" type="button" class="btn btn-outline btn-default"><i data-brackets-id="219" class="ti-trash"></i></button>
+                                            <button data-brackets-id="218" id="msg-del-btn" type="button" class="btn btn-outline btn-default"><i data-brackets-id="219" class="ti-trash"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -149,14 +148,14 @@
         <script type="text/template" id="msgListTemplate">
             <li class="media">
                 <div class="checkbox-custom pull-left">
-                    <input id="mailboxCheckbox{idx}" type="checkbox" value="value{idx}">
+                    <input id="mailboxCheckbox{idx}" name="msgsToDelete[]" type="checkbox" value="{hashedId}">
                     <label for="mailboxCheckbox{idx}"></label>
                 </div>
                 <a class="loadMsg" href="javascript:loadMsg({senderId}, {listingId});">
                     <div class="media-left avatar"><img src="{{func::img_url('{senderCompanyLogoUrl}', 34, 34)}}" alt="" class="media-object img-circle"></div>
                     <div class="media-body">
                         <h6 class="media-heading">{senderFirstName}</h6>
-                        <h5 class="title">Re: {title}</h5>
+                        <h5 class="title">Re: {listingTitle}</h5>
                         <p class="summary">{body}</p>
                     </div>
                     <div class="media-right text-nowrap">{}</i>
@@ -246,8 +245,6 @@
             }).mCustomScrollbar("scrollTo", "bottom");
         } else {
             $('#chat-list').mCustomScrollbar("disable");
-
-
             if (other.messages[0].fromUserId === other.profile.id){
                 $(nano(left, {user: other.profile, msg: other.messages[0]})).appendTo('#chat-list .mCustomScrollBox .mCSB_container');
             } else {
@@ -255,13 +252,11 @@
             }
             $('#chat-list').mCustomScrollbar('update');
             $('#chat-list').mCustomScrollbar("scrollTo", "bottom");
-
         }
-
     }
 
     function loadMsg(otherId, listingId, newMessage=false, page=0, size=10) {
-        if(typeof listingId === 'number'){
+        if(typeof listingId === 'number') {
             listingId = listingId.toString();
         }
         if(typeof otherId === 'number'){
@@ -271,7 +266,7 @@
             url: '/api/mailbox',
             method: 'POST',
             dataType: "json",
-            data:{
+            data: {
                 page: page,
                 size: size,
                 otherId: otherId,
@@ -280,15 +275,17 @@
             headers: {'X-CSRF-Token': $('input[name=_token]').val()},
             success: function(res) {
                 console.log(res);
-                // element.getElementsByClassName('media').className = '';
 
                 if (res.result === 1 ){
                     currentRoom = otherId;
                     currentListingId = listingId;
+                    res.users.dealer.companyLogoUrl = res.users.dealer.companyLogoUrl || 'placeholder.png';
                     res.users.other.companyLogoUrl =  res.users.other.companyLogoUrl || 'placeholder.png';
 
                     dealer = res.users.dealer;
+                    
                     if(!_.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile) {
+                        
                         _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile = res.users.other;
                     }
                     _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).messages = res.messages;
@@ -303,11 +300,10 @@
         $('ul#inbox').html('');
         chatroom = _.sortBy(chatroom, function(room){
             return -(moment(room.headline.sentAt).unix());
-        })
+        });
         chatroom.forEach(function(room){
             $(nano($('#msgListTemplate').html(), room.headline)).appendTo('ul#inbox');
-        });
-
+        })
     }
     function initChatroom() {
         $.ajax({
@@ -316,22 +312,24 @@
             dataType: 'json',
             headers: {'X-CSRF-Token': $('input[name=_token]').val()},
             success: function(res) {
-                console.log(res);
                 if (res.result === 1) {
                     if(res.messages.length > 0){
                         $(res.messages).each(function(idx, msg){
                             msg.idx = idx;
                             msg.senderCompanyLogoUrl = msg.senderCompanyLogoUrl || 'placeholder.png';
                             msg.sendAtHuman = moment(msg.sentAt).toNow(true);
+                            msg.listingTitle = msg.listingTitle || 'Dealer page enquiry';
                             var newRoom = {};
                             newRoom.id = msg.senderId;
                             newRoom.listingId = msg.listingId
                             newRoom.active = false;
+
                             newRoom.headline = msg;
                             chatroom.push(newRoom);
                         });
 
                         genChatList();
+                        console.log(chatroom);
 
                         loadMsg(chatroom[0].headline.senderId, chatroom[0].headline.listingId);
                     }
@@ -365,14 +363,12 @@
                     listingId: res.newMessage.listingId.toString()
                 });
                 room.messages.push(res.newMessage);
-
                 room.headline.body = res.newMessage.body;
                 genChatList();
                 loadMsg(res.newMessage.toUserId, res.newMessage.listingId, true);
             }
         });
     }
-
     $('#sendMsg').on('click', function() {
         sendMsg();
     });
@@ -380,7 +376,33 @@
         if (e.which === 13) {
             sendMsg();
         }
-    })
+    });
 
+    $('#msg-del-btn').on('click', function(e) {
+      e.preventDefault();
+      var delMsgs = $('[name*=msgsToDelete]:checked').map(function(idx,ele) {
+         return $(ele).val();
+      });
+      if (delMsgs.length > 0) {
+        $.ajax({
+          url: "/api/mailbox/delete",
+          type: "POST",
+          data: {
+            "msgsToDelete[]": delMsgs.toArray()  
+          },
+          dataType: 'json',
+          headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+          success: function(res) {
+            if (res.result == 1) {
+               chatroom = [];
+               currentRoom = 0;
+               currentListingId = 0;
+               dealer = {};
+               initChatroom();
+            }
+          }
+        });
+      }
+    });
     </script>
 @endsection
