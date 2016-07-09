@@ -7,9 +7,10 @@
             </div>
             <div class="modal-body">
                 <form name="" action="/dashboard/support" method="post">
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <label for="supportSubject">Subject</label>
-                        <input type="text" id="supportSubject" class="form-control">
+                        <input type="text" id="supportSubject" name="supportSubject" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="supportMessage">Message</label>

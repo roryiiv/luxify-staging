@@ -427,8 +427,8 @@ class Front extends Controller {
       return view('auth.register');
     }
 
-    public function dealer($id) {
-        $dealer = DB::table('users')->where('id', $id)->first();
+    public function dealer($id, $slug) {
+        $dealer = DB::table('users')->where('slug', $slug)->orWhere('id', $id)->first();
         $listings = DB::table('listings')
         ->where('userId', $dealer->id)
         ->where('status', 'APPROVED')

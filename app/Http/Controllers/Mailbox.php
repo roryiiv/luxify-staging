@@ -56,6 +56,8 @@ class Mailbox extends Controller
         $otherId = isset($_POST['otherId']) && !empty($_POST['otherId']) ? intval($_POST['otherId']) : NULL;
         $listingId = isset($_POST['listingId']) && !empty($_POST['listingId']) ? intval($_POST['listingId']) : 0;
 
+        // return response()->json($listingId);
+
         $messages = DB::table('conversations')
         /*
         ->where(function ($query) use ($otherId) {

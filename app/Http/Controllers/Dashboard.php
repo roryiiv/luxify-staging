@@ -480,17 +480,46 @@ class Dashboard extends Controller
         }
     }
 
-    public function wishlistDelete($id) {
-        $userId = Auth::user()->id;
+    public function wishlistAdd(Request $request) {
+        $input = $request->all();
+        $userId = $input['uid'];
+        $listingId = $input['lid'];
+        $is_listed = DB::table('wishlists')
+        ->where('userId',$userId )
+        ->where('listingId', $listingId)
+        ->count();
 
-        DB::table('wishlists')
-        ->where('userId', $userId)
-        ->where('listingId', $id)
-        ->update(['updatedAt' => date("Y-m-d H:i:s"), 'deleted' => 1]);
+        if($is_listed == 0){ //Item is not listed in wishlist yet.
+            $createdAt = date("Y-m-d H:i:s");
+            DB::table('wishlists')->insert(['createdAt' => $createdAt, 'listingId' => $listingId, 'userId' => $userId]);
+            echo 1;
+        }else{ //Item is already listed but deleted (soft delete).
+            $updatedAt = date("Y-m-d H:i:s");
+            DB::table('wishlists')
+            ->where('userId',$userId )
+            ->where('listingId', $listingId)
+            ->update(['deleted' => 0, 'updatedAt' => $updatedAt]);
+            echo 2;
+        }
+    }
 
-        // var_dump($delete); exit;
+    public function wishlistDelete(Request $request) {
+        $input = $request->all();
+        $userId = $input['uid'];
+        $listingId = $input['lid'];
+        $is_listed = DB::table('wishlists')
+        ->where('userId',$userId )
+        ->where('listingId', $listingId)
+        ->count();
 
-        return redirect('/dashboard/wishlist');
+        if($is_listed > 0){ //item is ready for sof delete
+            $updatedAt = date("Y-m-d H:i:s");
+            DB::table('wishlists')
+            ->where('userId',$userId )
+            ->where('listingId', $listingId)
+            ->update(['deleted' => 1, 'updatedAt' => $updatedAt]);
+            echo 3;
+        }
     }
 
     public function wishlist() {
@@ -693,5 +722,34 @@ class Dashboard extends Controller
                 return response()->json($filename);
             }
         }
+    }
+
+    public function supportSend(Request $request){
+        $input = $request->all();
+        if(isset($input['_token'])){
+            $details = array();
+            if(isset($input['supportSubject']) && !empty($input['supportSubject'])){
+                $support_subject = $input['supportSubject'];
+            }else{
+                $support_subject = 'No Subject';
+            }
+            if(isset($input['supportMessage']) && !empty($input['supportMessage'])){
+                $support_msg = $input['supportMessage'];
+            }else{
+                $support_msg = 'Empty';
+            }
+            $details = array('replyTo' => Auth::user()->email);
+            $username_from = Auth::user()->username;
+            Mail::send('emails.support-en-us', ['username_from' => $username_from, 'support_subject' => $support_subject, 'support_msg' => $support_msg], function ($message) use ($details){
+
+                $message->from('technology@luxify.com', 'Luxify Admin');
+                $message->subject('We are reviewing your listing.');
+                $message->replyTo($details['replyTo'], $name = null);
+                $message->to('concierge@luxify.com', 'Luxify Support');
+
+            });
+        }
+        // var_dump($input); exit;
+        return back();
     }
 }

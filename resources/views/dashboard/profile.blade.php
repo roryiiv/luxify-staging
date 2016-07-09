@@ -201,6 +201,16 @@
                                             <div class="widget-heading pt-0">
                                                 <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
                                             </div>
+                                            <div class="widget-body">
+                                                <h6>Current Company Cover Image</h6>
+                                                <div id="current-cover-image" class="text-center">
+                                                    @if(!empty($user->coverImageUrl))
+                                                        <img src="{{func::img_url($user->coverImageUrl, 900, '')}}" alt="{{$user->coverImageUrl}}" />
+                                                    @else
+                                                        <p>You have not uploaded any Cover Image yet, please upload one.</p>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-6 pull-right mb-20">
@@ -214,6 +224,16 @@
                                                     </div>
                                                     <div class="widget-heading pt-0">
                                                         <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
+                                                    </div>
+                                                    <div class="widget-body">
+                                                        <h6>Current Company Logo Image</h6>
+                                                        <div id="current-cover-image" class="text-center">
+                                                            @if(!empty($user->companyLogoUrl))
+                                                                <img src="{{func::img_url($user->companyLogoUrl, 425, '')}}" alt="{{$user->companyLogoUrl}}" />
+                                                            @else
+                                                                <p>You have not uploaded any Company Logo Image yet, please upload one.</p>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -316,9 +336,10 @@
                                                     <div class="form-group ml-0 mr-0">
                                                         <label for="txtWebsiteLink" class="control-label pb-10"><i class="fa fa-globe"></i> Website</label>
                                                         <div class="bootstrap-filestyle input-group">
-                                                            <input type="text" class="form-control" value="{{ url('/dealer') . '/' . Auth::user()->id }}" placeholder="" disabled="">
+                                                            <?php $slug = Auth::user()->slug != '' ? Auth::user()->slug : strtolower(Auth::user()->firstName).'-'.strtolower(Auth::user()->lastName); ?>
+                                                            <input type="text" class="form-control" value="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" placeholder="" disabled="">
                                                             <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                                                <a href="{{ url('/dealer') . '/' . Auth::user()->id }}" target="_blank">
+                                                                <a href="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" target="_blank">
                                                                     <label for="fulImage" class="btn btn-outline btn-primary">
                                                                         <span class="icon-span-filestyle ti-image"></span>
                                                                         <span class="buttonText">Preview</span>

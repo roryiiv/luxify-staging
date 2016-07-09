@@ -56,7 +56,7 @@ Route::get('/listing/{id}','Front@product_details');
 Route::get('/categories','Front@categories');
 Route::get('/category/{id}','Front@product_categories');
 Route::post('/category/{id}','Front@product_categories');
-Route::get('/dealer/{id}','Front@dealer');
+Route::get('/dealer/{id}/{slug}','Front@dealer');
 Route::get('/dealer/contact/{id}/{item}','Front@dealerContact');
 Route::get('/dealer/listings/{id}', 'Front@dealerListing');
 Route::post('/contact/dealer/{dealerId}','Front@sendMessage');
@@ -101,6 +101,7 @@ Route::post('/panel/products/delete/{id}','Panel@products_delete');
 //Other Database related operations
 Route::get('/panel/categories/rebuild','Panel@cat_rebuild');
 Route::get('/panel/listings/rebuild','Panel@listing_rebuild');
+Route::get('/panel/users/rebuild','Panel@user_rebuild');
 Route::get('/panel/extrainfo/rebuild/{id}','Panel@extra_rebuild');
 Route::get('/panel/products/confirm','Panel@products_confirm');
 Route::get('/panel/currency/exec', 'Panel@currencyExec');
@@ -112,7 +113,8 @@ Route::get('/dashboard/profile', 'Dashboard@profile');
 Route::post('/dashboard/profile', 'Dashboard@profile_update');
 Route::get('/dashboard/mailbox', 'Dashboard@mailbox');
 Route::get('/dashboard/wishlist', 'Dashboard@wishlist');
-Route::get('/dashboard/wishlist/delete/{id}', 'Dashboard@wishlistDelete');
+Route::post('/dashboard/wishlist/add', 'Dashboard@wishlistAdd');
+Route::post('/dashboard/wishlist/delete', 'Dashboard@wishlistDelete');
 
 // Dashboard products related views
 Route::get('/dashboard/products', 'Dashboard@products');
@@ -127,7 +129,8 @@ Route::get('/dashboard/product/delete/{id}', 'Dashboard@product_delete'); // Del
 Route::post('/upload', 'Dashboard@single_upload');
 Route::post('/upload_multiple', 'Dashboard@multiple_upload');
 Route::post('/removeImage', 'Dashboard@remove_image');
+//Dashboard support
+Route::post('/dashboard/support', 'Dashboard@supportSend');
 
 // Route::auth();
-
 Route::get('/home', 'HomeController@index');
