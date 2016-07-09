@@ -32,12 +32,17 @@ class Mailbox extends Controller
          $messages = DB::table('conversations')
          // ->where('readAt', NULL)
          ->where('conversations.deleted', false)
-         ->where('toUserId', $this->user_id)
+         ->where('conversations.toUserId', $this->user_id)
          ->join('users AS sender', 'conversations.fromUserId', '=', 'sender.id')
-         ->Join('users AS receiver', 'conversations.toUserId', '=', 'receiver.id')
+         ->join('users AS receiver', 'conversations.toUserId', '=', 'receiver.id')
+         //->leftJoin('conversations AS c2', function($join) {
+         //  $join->on('conversations.hashedId', '=', 'c2.hashedId');
+         //  $join->on('conversations.id', '<', 'c2.id');
+         //})
          ->leftJoin('listings', 'listings.id', '=', 'conversations.listingId')
-         ->orderby('sentAt', 'desc')
-         ->groupby('hashedId')
+         ->groupBy('conversations.hashedId')
+         ->whereNull('c2.id')
+         ->orderBy('conversations.sentAt', 'desc')
          ->skip($page*$size)
          ->take($size)
          ->select('conversations.*', 'listings.id as listingTableId', 'listings.title as listingTitle', 'sender.companyLogoUrl As senderCompanyLogoUrl','sender.id AS senderId', 'sender.firstName AS senderFirstName', 'sender.email AS senderEmail', 'receiver.id AS receiverId', 'receiver.firstName AS receiverFirstName', 'receiver.email AS receiverEmail', 'receiver.companyLogoUrl As receiverCompanyLogoUrl')
