@@ -99,7 +99,7 @@
                                             <ul>
                                                 <li><a href="/about">About us / Careers</a></li>
                                                 <li><a href="/why-luxify">How it works</a></li>
-                                                <li><a href="#">Press</a></li>
+                                                <li><a target="_blank" href="http://press.luxify.com">Press</a></li>
 												<li><a href="http://blog.luxify.com/">Blog</a></li>
                                             </ul>
                                         </nav>
