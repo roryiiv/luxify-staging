@@ -452,7 +452,7 @@ class Front extends Controller {
         if (Auth::user() && !empty($dealerId)) {
             $message = func::getVal('post', 'message');
             $listingId = func::getVal('post', 'listingId');
-            $listingId = $listingId || 0;
+            $listingId = $listingId !== NULL ? $listingId :0;
             // return response()->json($listingId);
             $message_id = DB::table('conversations')->insertGetId([
                 'body' => $message,
