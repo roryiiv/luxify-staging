@@ -440,6 +440,7 @@ class Front extends Controller {
     public function updateHashed() {
        $msgs = DB::table('conversations')->get();  
        foreach ($msgs as $msg) {
+         echo func::hashedId(func::hashedId($msg->fromUserId, $msg->toUserId), $msg->listingId);
          DB::table('conversations')
              ->where('id', $msg->id) 
              ->update(array(
