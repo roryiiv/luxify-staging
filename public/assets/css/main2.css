@@ -4429,3 +4429,16 @@ a.btn-3DVRTour {
 .item-description {
   font-size: 1.3rem; 
 }
+.we-chat-wrapper {
+  width: 300px;
+  height: 300px;
+  text-align: center;
+  border-radius: 0px;
+}
+.we-chat-wrapper > img {
+  width: 150px;
+  height: 150px;
+  margin: 75px auto;
+  display: block;
+}
+            
