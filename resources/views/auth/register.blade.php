@@ -123,6 +123,11 @@
               return $(ele).prop('checked');
             },
           }
+        },
+        messages: {
+          password: {
+            equalTo: "Please re-enter the paasword below." 
+          } 
         }
       });
       $('#submit-btn').on('click', function(e) {
