@@ -1,4 +1,7 @@
 <style>
+  body {
+    font-family: "Roboto", "Arial", "Helvetica Neue", "Helvetica", sans-serif;
+  }
   .navbar {
     border-radius:0px; 
     position: absolute; 
@@ -33,6 +36,7 @@
   }
   .nav > li > a, .nav-toggle, .dropdown-menu ul li a {
     color: white;
+    text-transform: uppercase;
     font-weight: 800;
     font-size: 13px;
   }
@@ -91,8 +95,6 @@
     opacity: 1;
   }
 }
- {
-}
 
 </style>
 <nav class="navbar">
@@ -106,7 +108,7 @@
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
+        <!--<ul class="nav navbar-nav">
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shop</a>
                 <div class="dropdown-menu">
@@ -137,7 +139,7 @@
                     </ul>
                 </div>
             </li>
-        </ul>
+        </ul>-->
         @if(Auth::user())
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/dashboard">Welcome {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
