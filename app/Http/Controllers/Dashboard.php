@@ -390,8 +390,6 @@ class Dashboard extends Controller
 
         if ( isset($_POST['status']) && !empty($_POST['status']) ) {
             $item->status = $_POST['status'];
-        } else {
-            $error_arr['status'] = 'Item status is required.';
         }
 
         if ( isset($_POST['description']) && !empty($_POST['description']) ) {
@@ -525,10 +523,12 @@ class Dashboard extends Controller
 
     public function wishlist() {
         $filter = array();
+        $filter_or = array();
         $filter[] = ['wishlists.userId', $this->user_id];
-        $filter[] = ['deleted', 0];
+        // $filter[] = ['deleted', 0];
         if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
-            $filter[] = ['listings.title', 'like', $_GET['txtProductName']];
+            $filter[] = ['listings.title', 'like', '%'.$_GET['txtProductName'].'%'];
+            $filter_or[] = ['listings.description', 'like', '%'.$_GET['txtProductName'].'%'];
         }
         if(isset($_GET['txtPrice']) && !empty($_GET['txtPrice'])){
             $filter[] = ['listings.price', $_GET['txtPrice']];
@@ -544,10 +544,12 @@ class Dashboard extends Controller
         if(isset($_GET['status']) && !empty($_GET['status'])){
             $filter[] = ['listings.status', $_GET['status']];
         }
+        // var_dump($filter); exit;
         $wishes = DB::table('wishlists')
         ->join('listings', 'wishlists.listingId','=', 'listings.id')
         ->select('listings.id', 'listings.title', 'listings.slug', 'wishlists.createdAt', 'listings.mainImageUrl', 'listings.price', 'listings.status')
         ->where($filter)
+        ->orWhere($filter_or)
         ->orderby('wishlists.createdAt', 'asc')
         ->paginate(10);
 

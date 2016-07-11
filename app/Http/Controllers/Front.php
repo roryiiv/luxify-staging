@@ -641,61 +641,36 @@ class Front extends Controller {
         }
     }
 
-    public function dealerApplication(){
+    public function dealerApplication(Request $request){
         if(Auth::user()){
             $username = Auth::user()->username;
         }else{
             $username = 'guest';
         }
 
+        $input = $request->all();
         $business_details = array(
-            'business-name' => $_POST['business-name'],
-            'years_in_business' => $_POST['years_in_business'],
-            'primary_business_focus' => $_POST['primary_business_focus'],
-            'secondary_business_focus' => $_POST['secondary_business_focus'],
-            'estimated_inventory_size' => $_POST['estimated_inventory_size'],
-            'average_item_price' => $_POST['currency_avg'] . $_POST['average_item_price'],
-            'type_of_physical_location' => $_POST['type_of_physical_location'],
-            'business_description' => $_POST['business_description'],
+            'business-name' => $input['business-name'],
+            'primary_business_focus' => $input['primary_business_focus'],
+            'secondary_business_focus' => $input['secondary_business_focus'],
+            'estimated_inventory_size' => $input['estimated_inventory_size'],
+            'average_item_price' => $input['currency_avg'] . $_POST['average_item_price'],
+            'business_description' => $input['business_description'],
         );
         $business_details_json = json_encode($business_details, JSON_NUMERIC_CHECK);
 
-        $reference_1 = array(
-            'reference-first-name' => $_POST['reference-first-name'],
-            'reference-last-name' => $_POST['reference-last-name'],
-            'type-of-reference' => $_POST['type-of-reference'],
-            'reference-business-name' => $_POST['reference-business-name'],
-            'reference-email' => $_POST['reference-email'],
-            'reference-phone' => $_POST['reference-phone'],
-        );
-        $reference_1_json = json_encode($reference_1, JSON_NUMERIC_CHECK);
-
-        $reference_2 = array(
-            'reference-first-name-2' => $_POST['reference-first-name-2'],
-            'reference-last-name-2' => $_POST['reference-last-name-2'],
-            'type-of-reference-2' => $_POST['type-of-reference-2'],
-            'reference-business-name-2' => $_POST['reference-business-name-2'],
-            'reference-email-2' => $_POST['reference-email-2'],
-            'reference-phone-2' => $_POST['reference-phone-2'],
-        );
-        $reference_2_json = json_encode($reference_2, JSON_NUMERIC_CHECK);
-
         $id = DB::table('applications')->insertGetId([
             'username' => $username,
-            'first_name' => $_POST['first-name'],
-            'last_name' => $_POST['last-name'],
-            'email' => $_POST['email'],
-            'phone' => $_POST['phone'],
+            'first_name' => $input['first-name'],
+            'last_name' => $input['last-name'],
+            'email' => $input['email'],
+            'phone' => $input['phone'],
             'business_details' => $business_details_json,
-            'reference_1' => $reference_1_json,
-            'reference_2' => $reference_2_json,
-            'country' => $_POST['country'],
-            'state' => $_POST['state'],
-            'postal_code' => $_POST['postal_code'],
+            'country' => $input['country'],
         ]);
 
         if($id){
-            $details = array('to' => $_POST['email']);
+            $details = array('to' => $input['email']);
             $this_url = url('/');
             $username_to = $username;
             Mail::send('emails.luxify-proseller-request-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){

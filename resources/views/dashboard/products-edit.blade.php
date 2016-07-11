@@ -171,7 +171,7 @@
                     <div class="form-group">
                         <label for="status" class="col-sm-3 control-label">Status</label>
                         <div class="col-sm-9">
-                            <select id="status" name="status" class="form-control" required>
+                            <select id="status" name="status" class="form-control">
                                 <option value="">--Please Select--</option>
                                 <option {{func::selected($item->status, 'PENDING')}} value=''>Pending</option>
                                 <option {{func::selected($item->status, 'SOLD')}}  value="SOLD">Sold</option>

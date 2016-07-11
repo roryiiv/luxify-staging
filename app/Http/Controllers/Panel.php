@@ -283,9 +283,7 @@ class Panel extends Controller
 
         if ( isset($_POST['status']) && !empty($_POST['status']) ) {
             $item->status = $_POST['status'];
-        } else {
-            $error_arr['status'] = 'Item status is required.';
-        }
+        } else
 
         if ( isset($_POST['description']) && !empty($_POST['description']) ) {
             $item->description = $_POST['description'];

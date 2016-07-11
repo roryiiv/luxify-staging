@@ -66,13 +66,13 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="txtProductName">Product Name</label>
-                                        <input id="txtProductName" name="txtProductName" type="text" class="form-control">
+                                        <input id="txtProductName" name="txtProductName" type="text" class="form-control" value="{{isset($_GET['txtProductName']) ? $_GET['txtProductName'] : ''}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="txtPrice">Price</label>
-                                        <input id="txtPrice" name="txtPrice" type="text" class="form-control">
+                                        <input id="txtPrice" name="txtPrice" type="text" class="form-control" value="{{isset($_GET['txtPrice']) ? $_GET['txtPrice'] : ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="startDate">Date</label>
-                                        <input id="startDate" name="startDate" type="text" class="form-control">
+                                        <input id="startDate" name="startDate" type="text" class="form-control" value="{{isset($_GET['startDate']) ? $_GET['startDate'] : ''}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -223,6 +223,7 @@
     <script>
     $(document).ready(function(){
         $('a.remove-wishlist').each(function(){
+            $('#startDate').val('');
             $(this).click(function(event){
                 // return false; // remove this later after database fixes.
                 // event.preventDefault();
