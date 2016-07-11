@@ -47,7 +47,7 @@
                                 <input id="exampleCheckboxRemember" type="checkbox" value="remember">
                                 <label for="exampleCheckboxRemember" class="checkbox-muted text-muted">Remember me</label>
                             </div>
-                            {{--<div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">Forgot a Passowrd?</a></div>--}}
+                            {{--<div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">Forgot Passowrd?</a></div>--}}
                         </div>
                     </div>
                     <button id="login_btn" type="submit" class="btn-lg btn btn-primary btn-block" style="border-radius: 0px;">Sign in</button>
@@ -75,7 +75,7 @@
                 </div>
                 {{-- <hr> --}}
                 <div class="clearfix">
-                    <p class="text-muted mb-0 pull-left">Want new account?</p><a href="/register" class="inline-block pull-right">Sign Up</a>
+                    <p class="text-muted mb-0 pull-left">Create a new account</p><a href="/register" class="inline-block pull-right">Sign Up</a>
                 </div>
             </div>
         </div>
