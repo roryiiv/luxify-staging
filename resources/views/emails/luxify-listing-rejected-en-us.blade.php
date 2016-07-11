@@ -177,7 +177,7 @@
 
                         <tr>
                           <td align="left" style="font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 400; color: #8f96a1; line-height: 24px;">
-                            Luxify is your local online marketplace for buying and selling new, vintage, and pre-owned luxury items. We connect buyers to dealers, collectors, and sellers in your country.
+                            Asia’s leading marketplace for luxury
                           </td>
                         </tr>
 
@@ -219,7 +219,7 @@
                           <td align="right" style="font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 400; color: #8f96a1; line-height: 24px;">
                             9/F, Core C, Cyberport 3<br>
                             100 Cyberport Road<br>
-                            Aberdeen, Hong Kong<br><br>
+                            Hong Kong<br><br>
                           </td>
                         </tr>
 

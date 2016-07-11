@@ -149,7 +149,7 @@
                             <ol class="breadcrumb">
                                 <li><a href="/">Home</a></li>
                                 @if($category != '')
-                                    <li><a href="/category/{{ $category }}">{{ ucfirst(str_replace('-', ' ', $category)) }}</a></li>
+                                    <li><a href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
                                 @endif
                                 <li class="active">{{ $cat->title }}</li>
                             </ol>

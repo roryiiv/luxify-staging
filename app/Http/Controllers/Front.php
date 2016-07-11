@@ -67,16 +67,16 @@ class Front extends Controller {
         );
 
         $cat_ids = array();
-        $cat_ids['real-estate'] = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
-        $cat_ids['jewellery-watches'] = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch']);
-        $cat_ids['motors'] = array_merge($childs['cars'],$childs['classics'],$childs['motorbike']);
-        $cat_ids['handbags-accessories'] = array_merge($childs['accessories_men'],$childs['accessories_women'],$childs['bags']);
-        $cat_ids['experiences'] = array_merge($childs['experiences']);
-        $cat_ids['collectibles-furnitures'] = array_merge($childs['collectibles'],$childs['furnitures']);
-        $cat_ids['yachts'] = array_merge($childs['motor'],$childs['sail']);
-        $cat_ids['aircrafts'] = array_merge($childs['jet'],$childs['helicopter']);
-        $cat_ids['art-antiuques'] = array_merge($childs['art'],$childs['antiques']);
-        $cat_ids['fine-wines-spirits'] = array_merge($childs['fine_wines'],$childs['spirits'],$childs['champagne']);
+        $cat_ids['real-estate'] = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others'], array('cat_title' => 'Real Estate'));
+        $cat_ids['jewellery-watches'] = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch'], array('cat_title' => 'Watches &amp; Jewelry'));
+        $cat_ids['motors'] = array_merge($childs['cars'],$childs['classics'],$childs['motorbike'], array('cat_title' => 'Motors'));
+        $cat_ids['handbags-accessories'] = array_merge($childs['accessories_men'],$childs['accessories_women'],$childs['bags'], array('cat_title' => 'Handbags &amp; Accessories'));
+        $cat_ids['experiences'] = array_merge($childs['experiences'], array('cat_title' => 'Experiences'));
+        $cat_ids['collectibles-furnitures'] = array_merge($childs['collectibles'],$childs['furnitures'], array('cat_title' => 'Collectibles &amp; Furnitures'));
+        $cat_ids['yachts'] = array_merge($childs['motor'],$childs['sail'], array('cat_title' => 'Yachts'));
+        $cat_ids['aircrafts'] = array_merge($childs['jet'],$childs['helicopter'], array('cat_title' => 'Aircrafts'));
+        $cat_ids['art-antiuques'] = array_merge($childs['art'],$childs['antiques'], array('cat_title' => 'Art &amp; Antiques'));
+        $cat_ids['fine-wines-spirits'] = array_merge($childs['fine_wines'],$childs['spirits'],$childs['champagne'], array('cat_title' => 'Fine Wines &amp; Spirits'));
 
         // var_dump($cat_ids); exit;
 
@@ -85,10 +85,12 @@ class Front extends Controller {
         ->first();
 
         if ($listing) {
-            $category = '';
+            $category = array();
             foreach($cat_ids as $key => $val){
                 if(in_array($listing->categoryId, $val)){
-                    $category = $key;
+                    $category['slug'] = $key;
+                    // var_dump($val); exit;
+                    $category['title'] = $val['cat_title'];
                 }
             }
             // var_dump($category); exit;
@@ -156,46 +158,56 @@ class Front extends Controller {
             case 'real-estate':
             $cat_ids = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
             $banner = 'realestate.jpg';
+            $title_cat = 'Real Estate';
             break;
             case 'jewellery-watches':
             $cat_ids = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch']);
             $banner = 'watches_banner.jpg';
+            $title_cat = 'Watches &amp; Jewelry';
             break;
             case 'motors':
             $cat_ids = array_merge($childs['cars'],$childs['classics'],$childs['motorbike']);
             $banner = 'motors_banner.jpg';
+            $title_cat = 'Motors';
             break;
             case 'handbags-accessories':
             $cat_ids = array_merge($childs['accessories_men'],$childs['accessories_women'],$childs['bags']);
             $banner = 'bags_banner_bk.jpg';
+            $title_cat = 'Handbags &amp; Accessories';
             break;
             case 'experiences':
             $cat_ids = array_merge($childs['experiences']);
             $banner = 'experience_banner.jpg';
+            $title_cat = 'Experiences';
             break;
             case 'collectibles-furnitures':
             $cat_ids = array_merge($childs['collectibles'],$childs['furnitures']);
             $banner = 'collectibles_furnitures.jpg';
+            $title_cat = 'Collectibles &amp; Furnitures';
             break;
             case 'yachts':
             $cat_ids = array_merge($childs['motor'],$childs['sail']);
             $banner = 'new_yacht.jpg';
+            $title_cat = 'Yachts';
             break;
             case 'aircrafts':
             $cat_ids = array_merge($childs['jet'],$childs['helicopter']);
             $banner = 'aircraft.jpg';
+            $title_cat = 'Aircrafts';
             break;
             case 'art-antiuques':
             $cat_ids = array_merge($childs['art'],$childs['antiques']);
             $banner = 'arts_banner.jpg';
+            $title_cat = 'Art &amp; Antiques';
             break;
             case 'fine-wines-spirits':
             $cat_ids = array_merge($childs['fine_wines'],$childs['spirits'],$childs['champagne']);
             $banner = 'wine_banner.jpg';
+            $title_cat = 'Fine Wines &amp; Spirits';
             break;
         }
 
-        $title_cat = ucwords(str_replace('-', ' ', $id));
+        // $title_cat = ucwords(str_replace('-', ' ', $id));
 
         $search_arr = array();
         // $search_arr[] = ['categoryId', $_cat->id];
@@ -523,8 +535,9 @@ class Front extends Controller {
                     'to' => $dealer->email,
                     'listing' => $listingId ? $listing->title : ''
                 );
-                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/';
-                Mail::send('emails.new-offer-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
+                $this_url = url('/');
+                $mailbox_url = $this_url . '/dashboard/mailbox/';
+                Mail::send('emails.new-offer-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'this_url' => $this_url, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
                     $message->from('technology@luxify.com', 'Luxify Admin');
                     $message->subject('Someone Is Interested In Your Dealer Page');
                     $message->replyTo('no_reply@luxify.com', $name = null);
@@ -569,9 +582,9 @@ class Front extends Controller {
                     'listing' => $listing->title
                 );
                 // var_dump($to_email);
-
-                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/';
-                Mail::send('emails.new-offer-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
+                $this_url = url('/');
+                $mailbox_url = $this_url . '/dashboard/mailbox/';
+                Mail::send('emails.new-offer-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'this_url' => $this_url, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
 
                     $message->from('technology@luxify.com', 'Luxify Admin');
                     $message->subject('New offer sent for ' . $details['listing']);
@@ -608,9 +621,9 @@ class Front extends Controller {
                     'to' => $dealer->email,
                 );
                 // var_dump($to_email);
-
-                $mailbox_url = 'http://' . $_SERVER['HTTP_HOST'] . '/dashboard/mailbox/';
-                Mail::send('emails.new-message-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
+                $this_url = url('/');
+                $mailbox_url = $this_url . '/dashboard/mailbox/';
+                Mail::send('emails.new-message-en-us', ['username_to' => $username_to, 'username_from' => $username_from, 'this_url' => $this_url, 'mailbox_url' => $mailbox_url], function ($message) use ($details){
 
                     $message->from('technology@luxify.com', 'Luxify Admin');
                     $message->subject('New message sent');
@@ -683,8 +696,9 @@ class Front extends Controller {
 
         if($id){
             $details = array('to' => $_POST['email']);
+            $this_url = url('/');
             $username_to = $username;
-            Mail::send('emails.luxify-proseller-request-en-us', ['username_to' => $username_to], function ($message) use ($details){
+            Mail::send('emails.luxify-proseller-request-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){
 
                 $message->from('technology@luxify.com', 'Luxify Admin');
                 $message->subject('Your Pro Seller Application has been sent');

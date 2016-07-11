@@ -154,7 +154,7 @@ class Dashboard extends Controller
             $error = json_encode($error_arr);
             echo $error;
         }else{
-            if($user->save()) return redirect('/dashboard/profile');
+            if($user->save()) return redirect('/dashboard/profile?update=success');
         }
     }
 
@@ -324,8 +324,9 @@ class Dashboard extends Controller
                 // debug
                 $username_to = Auth::user()->username;
                 $listing_title = $_POST['title'];
+                $this_url = url('/');
                 $details = array('to' => Auth::user()->email);
-                Mail::send('emails.luxify-listing-review-en-us', ['username_to' => $username_to, 'listing_title' => $listing_title], function ($message) use ($details){
+                Mail::send('emails.luxify-listing-review-en-us', ['username_to' => $username_to, 'listing_title' => $listing_title, 'this_url' => $this_url], function ($message) use ($details){
 
                     $message->from('technology@luxify.com', 'Luxify Admin');
                     $message->subject('We are reviewing your listing.');
@@ -739,8 +740,9 @@ class Dashboard extends Controller
                 $support_msg = 'Empty';
             }
             $details = array('replyTo' => Auth::user()->email);
+            $this_url = url('/');
             $username_from = Auth::user()->username;
-            Mail::send('emails.support-en-us', ['username_from' => $username_from, 'support_subject' => $support_subject, 'support_msg' => $support_msg], function ($message) use ($details){
+            Mail::send('emails.support-en-us', ['username_from' => $username_from, 'support_subject' => $support_subject, 'support_msg' => $support_msg, 'this_url' => $this_url], function ($message) use ($details){
 
                 $message->from('technology@luxify.com', 'Luxify Admin');
                 $message->subject('We are reviewing your listing.');

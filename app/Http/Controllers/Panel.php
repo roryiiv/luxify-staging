@@ -578,7 +578,7 @@ class Panel extends Controller
                 $details = array('to' => $user->email);
                 if($status == 'APPROVED'){
                     $listing_url = $this_url . '/listing/' . $updated->slug;
-                    Mail::send('emails.luxify-listing-approved-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'listing_url' => $listing_url], function ($message) use ($details){
+                    Mail::send('emails.luxify-listing-approved-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'this_url' => $this_url, 'listing_url' => $listing_url], function ($message) use ($details){
 
                         $message->from('technology@luxify.com', 'Luxify Admin');
                         $message->subject('Listing Approved');
@@ -588,7 +588,7 @@ class Panel extends Controller
                     });
                 }elseif($status =='REJECTED' ){
                     $listing_url = $this_url . '/dashboard/products/add';
-                    Mail::send('emails.luxify-listing-rejected-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'listing_url' => $listing_url], function ($message) use ($details){
+                    Mail::send('emails.luxify-listing-rejected-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'this_url' => $this_url, 'listing_url' => $listing_url], function ($message) use ($details){
 
                         $message->from('technology@luxify.com', 'Luxify Admin');
                         $message->subject('Listing Rejected');

@@ -14,7 +14,7 @@ $(document).ready(function () {
                 , confirmButtonText: "OK"
             })
         }),
-        $("#sweet-3, .sweet-3").each(function () {
+        /*$("#sweet-3, .sweet-3").each(function () {
             $(this).on("click", function () {
                 console.log('hi');
                 swal({
@@ -32,7 +32,7 @@ $(document).ready(function () {
                     $("form[name='profile']").submit();
                 });
             });
-        }),
+        }),*/
         $("#sweet-user, .sweet-user").each(function () {
             $(this).on("click", function () {
                 console.log('hi');

@@ -380,7 +380,7 @@
     <!-- DropzoneJS-->
     <script type="text/javascript" src="/db/js/dropzone.min.js"></script>
     <!-- Sweet Alert-->
-    <script type="text/javascript" src="/db/js/sweet-alert.min.js"></script>
+    <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
     <!-- Custom JS-->
     <script type="text/javascript" src="/db/js/app.js"></script>
     <script type="text/javascript" src="/db/js/demo.js"></script>
@@ -396,6 +396,30 @@
         $(document).ready(function () {
             $("form.form-horizontal").validate();
             var token = "{{ Session::getToken() }}";
+            $("#sweet-3, .sweet-3").each(function () {
+                $(this).on("click", function () {
+                    console.log('hi');
+                    swal({
+                        title: "Update Profile",
+                        text: "Are you sure you want to update this user profile?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#A1D9F2",
+                        confirmButtonText: "Yes!",
+                        cancelButtonText: "No!",
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            $("form[name='profile']").submit();
+                        }else{
+                            swal("Cancelled", "User profile is not updated.", "error");
+                        }
+                        // $("form[name='profile']").submit();
+                    });
+                });
+            }),
             Dropzone.options.myAwesomeDropzone = !1, Dropzone.autoDiscover = !1,
             $("#api-cover-image").dropzone({
                 url: "/panel/upload",
@@ -403,8 +427,8 @@
                 params: {
                     _token: token
                 },
-                maxFilesize: 2,
-                maxThumbnailFilesize: .5,
+                // maxFilesize: 2,
+                // maxThumbnailFilesize: .5,
                 maxFiles: 1,
                 uploadMultiple: false,
                 addRemoveLinks: true,
@@ -423,41 +447,41 @@
                     });
                 },
                 success: function (file, response) {
-                    console.log(response);
                     swal.close();
+                    console.log(response);
                     $('#cover_img').val(response);
                 },
                 error: function (file, response) {
                     swal.close();
                     file.previewElement.classList.add("dz-error");
                 },
-                // init: function() {
-                //     this.on("addedfile", function(e) {
-                //         this.fileTracker && this.removeFile(this.fileTracker), this.fileTracker = e
-                //     })
-                // }
+                init: function() {
+                    this.on("addedfile", function(e) {
+                        this.fileTracker && this.removeFile(this.fileTracker), this.fileTracker = e
+                    })
+                }
             });
             $("#api-profile-image").dropzone({
                 url: "/panel/upload",
                 paramName: "image",
-                maxFilesize: 2,
-                maxThumbnailFilesize: .5,
+                // maxFilesize: 2,
+                // maxThumbnailFilesize: .5,
                 maxFiles: 1,
                 uploadMultiple: false,
                 addRemoveLinks: true,
                 dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
                 sending: function(file, xhr, formData) {
-                    // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
-                    formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
-                    $('.dz-success-mark').hide();
-                    $('.dz-error-mark').hide();
-
                     swal({
                         title: "Uploading Images",
                         text: "Currently Uploading Images.",
                         //   timer: 2000,
                         showConfirmButton: false
                     });
+
+                    // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
+                    formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
+                    $('.dz-success-mark').hide();
+                    $('.dz-error-mark').hide();
                 },
                 success: function (file, response) {
                     console.log(response);
@@ -468,12 +492,19 @@
                     swal.close();
                     file.previewElement.classList.add("dz-error");
                 },
-                // init: function() {
-                //     this.on("addedfile", function(e) {
-                //         this.fileTracker && this.removeFile(this.fileTracker), this.fileTracker = e
-                //     })
-                // }
+                init: function() {
+                    this.on("addedfile", function(e) {
+                        this.fileTracker && this.removeFile(this.fileTracker), this.fileTracker = e
+                    })
+                }
             });
         })
     </script>
+    @if(isset($_GET['update']) && $_GET['update'] == 'success')
+        <script>
+        $(document).ready(function(){
+            swal("Updated!", "User profile has been updated.", "success");
+        });
+        </script>
+    @endif
 @endsection
