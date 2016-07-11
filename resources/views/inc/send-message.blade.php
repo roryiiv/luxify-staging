@@ -121,7 +121,7 @@
     font-size: 14px; 
     resize: none;
   }
-  #contact-dealer-form h2, #message-sent-form h2{
+  #contact-dealer-form h2, #message-sent-form h2, #added-to-wishlist h2{
      text-align: center;
      font-weight: 400;
      color: #56616F;
@@ -141,6 +141,19 @@
      font-size: 10px;
      padding-top: 4px;
   }
+  #added-to-wishlist .container {
+      background-image: url('/assets/images/favorite_64x64.png');
+      background-position-x: 100%;
+      background-position-y: 50%;
+      background-repeat: no-repeat;
+      background-color: white;
+      height: 220px;
+      margin: 15% auto;
+      padding: 36px 85px;
+      max-width: 600px;
+      width: 600px;
+      border: 2px solid #998967;
+  } 
   #message-sent-form .container {
       background-image: url('/assets/images/compass.png');
       background-position-x: 100%;
@@ -154,18 +167,21 @@
       width: 600px;
       border: 2px solid #998967;
   }
+  #added-to-wishlist h5,
   #message-sent-form h5 {
       text-align: center;
       color: #56616F;
       font-size: 15px; 
       font-weight: 400;
   }
+  #added-to-wishlist .action-box,
   #message-sent-form .action-box {
       display: flex;
       flex-direction: row;
       justify-content: space-around; 
       padding-top: 20px;
   }
+  #added-to-wishlist button, #added-to-wishlist a,
   #message-sent-form button, #message-sent-form a{
      background-color: #998967;
      text-transform: uppercase;
@@ -178,6 +194,7 @@
      box-shadow: none;
      font-size: 1.2rem
   }
+  #added-to-wishlist a,
   #message-sent-form a {
      padding-top: 8px;
      text-decoration: none;
@@ -237,6 +254,17 @@
        <h5>Stay tuned! You will receive email notification when the seller replies.</h5>
        <div class="action-box">
           <a href="/dashboard/mailbox" class='button'>View Inbox</a>
+          <button data-dismiss="modal">Return To Item</button>
+       </div>
+    </div>
+</div>
+
+<div class="modal fade" id="added-to-wishlist" tabindex="-1" role="dialog" aria-labelledby="addToWishlist">
+    <div class='container'>
+       <h2>Item has been added to wishlist</h2>
+       <h5>You can check your wishlist in the dashboard</h5>
+       <div class="action-box">
+          <a href="/dashboard/wishlist" class='button'>View Wishlist</a>
           <button data-dismiss="modal">Return To Item</button>
        </div>
     </div>

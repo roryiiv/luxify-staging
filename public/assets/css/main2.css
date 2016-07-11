@@ -585,8 +585,8 @@ div.lightbox {
 }
 .thumbnail .product-img-container {
   position: relative;
-  height: 200px;
-  width: 200px;
+  height: 300px;
+  width: 300px;
   box-sizing: border-box;
   text-align: center;
   margin: 0 auto;

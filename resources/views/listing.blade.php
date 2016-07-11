@@ -330,68 +330,68 @@
                         var url = '/dashboard/wishlist/delete', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
                         // console.log(token);
                         var data = {uid: userID, lid: itemID};
-                        swal({
-                            title: "Delete item",
-                            text: "Are you sure you want to delete item from Wishlist?",
-                            type: "info",
-                            showCancelButton: true,
-                            closeOnConfirm: false,
-                            showLoaderOnConfirm: true,
-                        },
-                        function(){
-                            $.ajax({
-                                type: 'POST',
-                                url: url,
-                                headers: {'X-CSRF-TOKEN': token},
-                                data: data,
-                                dataType: "html",
-                                success: function(data){
-                                    // console.log(data); return false;
-                                    if(data == 3){
-                                        swal("Item is deleted!");
-                                        $('a#'+itemID).removeClass('added');
-                                    }else{
-                                        swal("Error!");
-                                    }
-                                },
-                                error: function(errMsg){
-                                    console.log(errMsg.responseText);
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            headers: {'X-CSRF-TOKEN': token},
+                            data: data,
+                            dataType: "html",
+                            success: function(data){
+                                // console.log(data); return false;
+                                if(data == 3){
+                                    $('a#'+itemID).removeClass('added');
+                                }else{
+                                    swal("Error!");
                                 }
-                            });
+                            },
+                            error: function(errMsg){
+                                console.log(errMsg.responseText);
+                            }
                         });
-                    }else{
+                       // swal({
+                       //     title: "Delete item",
+                       //     text: "Are you sure you want to delete item from Wishlist?",
+                       //     type: "info",
+                       //     showCancelButton: true,
+                       //     closeOnConfirm: false,
+                       //     showLoaderOnConfirm: true,
+                       // },
+                       // function(){
+                       // });
+                    } else {
                         var url = '/dashboard/wishlist/add', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
                         // console.log(token);
                         var data = {uid: userID, lid: itemID};
-                        swal({
-                            title: "Add to Wishlist",
-                            text: "Are you sure you want to add item to your Wishlist?",
-                            type: "info",
-                            showCancelButton: true,
-                            closeOnConfirm: false,
-                            showLoaderOnConfirm: true,
-                        },
-                        function(){
-                            $.ajax({
-                                type: 'POST',
-                                url: url,
-                                headers: {'X-CSRF-TOKEN': token},
-                                data: data,
-                                dataType: "html",
-                                success: function(data){
-                                    if(data == 1){
-                                        swal("Item is added!");
-                                        $('a#'+itemID).addClass('added');
-                                    }else{
-                                        swal("Item has been readded!");
-                                        $('a#'+itemID).addClass('added');
-                                    }
-                                },
-                                error: function(errMsg){
-                                    console.log(errMsg.responseText);
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            headers: {'X-CSRF-TOKEN': token},
+                            data: data,
+                            dataType: "html",
+                            success: function(data){
+                                if(data == 1){
+                                    //swal("Item is added!");
+                                    $('#added-to-wishlist').modal('toggle'); 
+                                    $('a#'+itemID).addClass('added');
+                                }else{
+                                    //swal("Item has been readded!");
+                                    $('a#'+itemID).addClass('added');
                                 }
-                            });
+                            },
+                            error: function(errMsg){
+                                console.log(errMsg.responseText);
+                            }
                         });
+                        //swal({
+                        //    title: "Add to Wishlist",
+                        //    text: "Are you sure you want to add item to your Wishlist?",
+                        //    type: "info",
+                        //    showCancelButton: true,
+                        //    closeOnConfirm: false,
+                        //    showLoaderOnConfirm: true,
+                        //},
+                        //function(){
+                        //});
                     }
                 });
             });
