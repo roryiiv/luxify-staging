@@ -5,9 +5,10 @@
     "dev": "gulp watch"
   },
   "devDependencies": {
+    "bootstrap-sass": "^3.0.0",
     "gulp": "^3.9.1",
     "laravel-elixir": "^5.0.0",
-    "bootstrap-sass": "^3.0.0"
+    "polyify": "0.0.4"
   },
   "dependencies": {
     "buffer": "^4.6.0",

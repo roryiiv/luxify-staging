@@ -4987,11 +4987,10 @@ var password = function (password, salt) {
 }
 
 module.exports = {
-  password,
-  makeSalt,
+  password: password,
+  makeSalt: makeSalt,
 };
 window.encrypt = module.exports;
-
 
 },{"buffer/":30,"crypto-browserify":34}],30:[function(require,module,exports){
 arguments[4][2][0].apply(exports,arguments)
