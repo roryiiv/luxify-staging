@@ -8,7 +8,7 @@
   } 
   #message-form h5 {
     font-weight: 300;
-    font-size: 14px;
+    font-size: 15px;
   }
   #login-form .container {
       background-color: white;
@@ -31,7 +31,7 @@
   }
   #login-form h5 {
      margin-top: 5px;
-     font-size: 14px;
+     font-size: 15px;
      font-weight: 300;
      text-align: center;
   }
@@ -133,16 +133,18 @@
      font-weight: 400;
      color: white;
      width: 139px;
-     height: 26px;
+     height: 30px;
      float: right;
      border: 0;
      box-shadow: none;
      margin-top: 5px;
      font-size: 10px;
+     padding-top: 4px;
   }
   #message-sent-form .container {
       background-image: url('/assets/images/compass.png');
       background-position-x: 100%;
+      background-position-y: 50%;
       background-repeat: no-repeat;
       background-color: white;
       height: 220px;
@@ -155,7 +157,7 @@
   #message-sent-form h5 {
       text-align: center;
       color: #56616F;
-      font-size: 14px; 
+      font-size: 15px; 
       font-weight: 400;
   }
   #message-sent-form .action-box {
