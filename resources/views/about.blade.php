@@ -40,7 +40,7 @@
     <!-- main informative part of the page -->
     <main id="main">
         <!-- about block -->
-        <div class="about-block parallax" style="background-image:url(/assets/images/what-is-luxify.jpg);">
+        <div class="about-block parallax" style="background-image:url(/assets/images/what-is-luxify.png);">
             <div class="container">
 				<div class="row">
 					<div class="col-lg-4 col-sm-offset-1 col-sm-5 col-xs-10 col-xs-offset-1">
