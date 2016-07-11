@@ -2470,7 +2470,9 @@ header .search-form .form-control:-ms-input-placeholder {
 }
 
 .user .avatar {
-    width: 100px;
+    max-width: 100px;
+    overflow: hidden;
+    z-index: 0;
 }
 
 .user .status {

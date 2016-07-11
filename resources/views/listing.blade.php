@@ -103,17 +103,17 @@
                                 <li><a class="favourite" data-id="{{$listing->id}}" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
                             @endif
                                 <li>
-                                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ $url . '/listing/' . $listing->slug}}">
+                                    <a target="_blank" href="https://www.facebook.com/dialog/feed?app_id=1100408396697613&amp;display=popup&amp;caption={{urlencode($listing->description)}} &amp;link={{ $url . '/listing/' . $listing->slug}}&amp;redirect_uri={{ $url . '/listing/' . $listing->slug}}">
                                         <span class="icon icon-facebook"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" href="https://twitter.com/home?status={{ urlencode($listing->title . ' ' . $url . '/listing/' . $listing->slug) }}">
+                                    <a target="_blank" href="https://twitter.com/share?url={{ urlencode($url . '/listing/' . $listing->slug) }}&text={{urlencode($listing->description)}}">
                                         <span class="icon icon-twitter"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" href="https://pinterest.com/pin/create/button/?url={{ $url }}/listing/{{ $listing->slug }}&media={{ func::img_url($listing->mainImageUrl, 300, '', true) }}&description={{ urlencode($listing->description) }}">
+                                    <a target="_blank" href="https://pinterest.com/pin/create/button/?url={{ $url }}/listing/{{ $listing->slug }}&media=https://s3-ap-southeast-1.amazonaws.com/luxify/images/{{$listing->mainImageUrl}}&description={{ urlencode($listing->description) }}">
                                         <span class="icon icon-pinterest"></span>
                                     </a>
                                 </li>
@@ -145,14 +145,13 @@
                         </aside>
 
                         <article class="block-content">
-                            <?php
-                            $category = func::getTableByID('categories', $listing->categoryId);
-                            $parent_cat = func::getTableByID('categories', $category->ParentId);
-                            ?>
+                            <?php $cat = func::getTableByID('categories', $listing->categoryId); ?>
                             <ol class="breadcrumb">
                                 <li><a href="/">Home</a></li>
-                                <li><a href="/category/{{ $parent_cat->slug }}">{{ $parent_cat->title }}</a></li>
-                                <li class="active">{{ $category->title }}</li>
+                                @if($category != '')
+                                    <li><a href="/category/{{ $category }}">{{ ucfirst(str_replace('-', ' ', $category)) }}</a></li>
+                                @endif
+                                <li class="active">{{ $cat->title }}</li>
                             </ol>
                             <header class="block-header">
                                 <h1 class="item-title">{{ $listing->title }}</h1>
@@ -290,8 +289,32 @@
     @include('inc.send-message')
 @endsection
 @section('scripts')
-<link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
-<script type="text/javascript" src="/assets/js/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+    <script>
+
+        var popupSize = {
+            width: 780,
+            height: 450
+        };
+
+        $(document).on('click', '.social-links > li > a', function(e){
+            var
+                verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
+                horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
+
+            var popup = window.open($(this).prop('href'), 'social',
+                'width='+popupSize.width+',height='+popupSize.height+
+                ',left='+verticalPos+',top='+horisontalPos+
+                ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1');
+
+            if (popup) {
+                popup.focus();
+                e.preventDefault();
+            }
+
+        });
+    </script>
+    <link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="/assets/js/jquery.fancybox-thumbs.js?v=1.0.7"></script>
     <script language="javascript" type="text/javascript">
     $(document).ready(function(){
       $("a.bookmark").click(function(e){

@@ -37,17 +37,67 @@ class Front extends Controller {
 
     public function product_details($slug) {
 
+        $childs = array(
+            'estate' => array(50,69,16,52,72),
+            'apartment' => array(126,51,49),
+            'house' => array(48),
+            'land' => array(53,54),
+            'others' => array(47,138,57,56,127,15),
+            'antique_jewelry' => array(149),
+            'jewelry' => array(10,110,109,108,39,107,38,37),
+            'watch' => array(36,106,105,89,34,33,31),
+            'cars' => array(2,11,20,19,60,55,18),
+            'classics' => array(66),
+            'motorbike' => array(17),
+            'accessories_men' => array(92.88),
+            'accessories_women' => array(124, 160, 150, 120,119,118,117,161,159,116),
+            'bags' => array(9,43,114,113,42,41,112,111,91,137),
+            'experiences' => array(3,162,169,165,99,97,167,164,166,98,95,96,163,94),
+            'collectibles' => array(1,46,68,67,168,136,64, 70, 61,131,130,90),
+            'furnitures' => array(146, 79, 144, 63, 133, 62, 71, 93),
+            'motor' => array(40,25,24,23,85,76),
+            'sail' => array(22,24),
+            'jet' => array(45),
+            'helicopter' => array(125, 13),
+            'art' => array(12,59,58,129,128),
+            'antiques' => array(139,74,140,81,147,80,73,145,143,142,148,78,77,75,141,),
+            'fine_wines' => array(35,26,30,28,87,29),
+            'spirits' => array(100,101,170,171,102,103,172,173,104),
+            'champagne' => array(27)
+        );
+
+        $cat_ids = array();
+        $cat_ids['real-estate'] = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
+        $cat_ids['jewellery-watches'] = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch']);
+        $cat_ids['motors'] = array_merge($childs['cars'],$childs['classics'],$childs['motorbike']);
+        $cat_ids['handbags-accessories'] = array_merge($childs['accessories_men'],$childs['accessories_women'],$childs['bags']);
+        $cat_ids['experiences'] = array_merge($childs['experiences']);
+        $cat_ids['collectibles-furnitures'] = array_merge($childs['collectibles'],$childs['furnitures']);
+        $cat_ids['yachts'] = array_merge($childs['motor'],$childs['sail']);
+        $cat_ids['aircrafts'] = array_merge($childs['jet'],$childs['helicopter']);
+        $cat_ids['art-antiuques'] = array_merge($childs['art'],$childs['antiques']);
+        $cat_ids['fine-wines-spirits'] = array_merge($childs['fine_wines'],$childs['spirits'],$childs['champagne']);
+
+        // var_dump($cat_ids); exit;
+
         $listing = DB::table('listings')
         ->where('slug', $slug)
         ->first();
 
         if ($listing) {
-          $mores = DB::table('listings')
+            $category = '';
+            foreach($cat_ids as $key => $val){
+                if(in_array($listing->categoryId, $val)){
+                    $category = $key;
+                }
+            }
+            // var_dump($category); exit;
+            $mores = DB::table('listings')
             ->where('userId', $listing->userId)
             ->where('status', 'APPROVED')
             ->paginate(10);
 
-          $infos = DB::table('formfields')
+            $infos = DB::table('formfields')
             ->join('formgroups', 'formgroups.formfieldId', '=', 'formfields.id')
             ->join('forms', 'formgroups.formId', '=', 'forms.id')
             ->where('forms.categoryId', $listing->categoryId)
@@ -58,14 +108,14 @@ class Front extends Controller {
             ->get();
 
 
-          $relates = DB::table('listings')
+            $relates = DB::table('listings')
             ->where('categoryId', $listing->categoryId)
             ->where('status', 'APPROVED')
             ->orWhere('title', 'like', '%'.$listing->title.'%')
             ->orWhere('description', 'like', '%'.$listing->title.'%')
             ->paginate(10);
 
-          return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates]);
+          return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category]);
         }
     }
 
