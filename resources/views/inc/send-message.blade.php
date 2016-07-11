@@ -234,7 +234,7 @@
 <div class="modal fade" id="message-sent-form" tabindex="-1" role="dialog" aria-labelledby="messageSentForm">
     <div class='container'>
        <h2>Message Sent</h2>
-       <h5>Stay tuned! You will receive email notification when the seller reply.</h5>
+       <h5>Stay tuned! You will receive email notification when the seller replies.</h5>
        <div class="action-box">
           <a href="/dashboard/mailbox" class='button'>View Inbox</a>
           <button data-dismiss="modal">Return To Item</button>

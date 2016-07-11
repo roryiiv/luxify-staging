@@ -119,7 +119,7 @@
                         <li><a href="/category/collectibles-furnitures">Collectibles & Furnitures</a></li>
                         <li><a href="/category/yachts">Yachts</a></li>
                         <li><a href="/category/aircrafts">Aircrafts</a></li>
-                        <li><a href="/category/art-antiuques">Art & Antiques</a></li>
+                        <li><a href="/category/art-antiques">Art & Antiques</a></li>
                         <li><a href="/category/fine-wines-spirits">Fine Wines & Spirits</a></li>
                     </ul>
                 </div>
