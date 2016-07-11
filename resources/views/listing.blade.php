@@ -207,7 +207,7 @@
                                             <a href="/listing/{{ $more->slug }}">
                                                 <div class='product-img-container'>
                                                     <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
-                                                    <img class='product-img' src="{{ func::img_url($more_img, 200, '', true) }}" alt="image description">
+                                                    <img class='product-img' src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $madded = func::is_wishlist($user_id, $more->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
@@ -255,7 +255,7 @@
                                             <a href="/listing/{{ $rel->slug }}">
                                                 <div class='product-img-container'>
                                                     <?php $rel_img = !empty($rel->mainImageUrl) ? $rel->mainImageUrl : 'default-logo.png'; ?>
-                                                    <img class='product-img' src="{{ func::img_url($rel_img, 200, '', true) }}" alt="image description">
+                                                    <img class='product-img' src="{{ func::img_url($rel_img, 300, '', true) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $rel_added = func::is_wishlist($user_id, $rel->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $rel->id }}" href="javascript:;" data-id="{{ $rel->id }}" class="favourite{{ $rel_added }}"><span class="icon-heart"></span></a>
