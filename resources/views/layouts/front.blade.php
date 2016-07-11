@@ -191,7 +191,7 @@
     <script src="/assets/js/carousel.js"></script>
     <script src="/assets/js/ajaxchimp.js"></script>
     <script src="/assets/js/parallax.js"></script>
-    <script src="/assets/js/smooth-scroll.js"></script>
+<!--    <script src="/assets/js/smooth-scroll.js"></script>-->
     <script src="/assets/js/jquery.main.js"></script>
     <script>
     $(document).ready(function(){
