@@ -22,7 +22,7 @@
 					   </div>
                       <div class="row">
                           <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>Luxify is the leading online marketplace for luxury</p>
+							<p>Asia’s leading marketplace for luxury</p>
 						   </div>
 					   </div>
                       <div class="row">
@@ -105,7 +105,7 @@
                 <header class="heading" id="heading1">
                     <h1>Join us</h1>
                     <div class="wrap add">
-                        <p>Luxify is always looking for smart, passionate individuals to join our team in Hong Kong, Singapore and London. If you have an interested or experience in the luxury industry, click the button to apply</p>
+                        <p>Luxify is always looking for smart and passionate individuals to join our team in Hong Kong, Singapore or London. If you have an interest or experience in the luxury industry, email us at <a href="mailto:careers@luxify.com" target="_blank">careers@luxify.com</a>.</p>
                     </div>
                 </header>
                 <div class="row">
@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <div class="button-wrap">
-                    <a href="/contact" class="btn btn-primary">Apply now</a>
+                    <a href="mailto:careers@luxify.com" href="_blank" class="btn btn-primary">Apply now</a>
                 </div>
                 </div>
             </div> <!-- end of new grid -->

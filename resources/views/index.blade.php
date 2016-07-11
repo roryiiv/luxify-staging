@@ -153,7 +153,7 @@
                                 <div class="col-sm-6">
                                     <div class="text-box">
                                         <h1>Search &amp; Compare</h1>
-                                        <p>Search and compare through through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods.</p>
+                                        <p>Search and compare through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods.</p>
                                         <a href="/category/bags" class="btn btn-primary">View more</a>
                                     </div>
                                 </div>
