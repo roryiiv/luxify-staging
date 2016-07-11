@@ -28,7 +28,7 @@
                       <div class="row">
                           <div class="col-sm-10 col-sm-offset-1">
 							<ul class="banner-social">
-								<li><a class="btn btn-primary lightbox fancybox.iframe" href="http://player.vimeo.com/video/120660363?autoplay=true"><span class="icon-play"></span> Watch video</a></li>
+                <li><a class="btn btn-primary lightbox fancybox.iframe" href="https://www.youtube.com/embed/52cRWj9Rmxw"><span class="icon-play"></span> Watch video</a></li>
 							</ul>
 						</div>
                      </div> <!-- end of new grid -->
