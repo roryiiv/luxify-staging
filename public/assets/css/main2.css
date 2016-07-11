@@ -566,8 +566,7 @@ div.lightbox {
   color: #d0021b;
 }
 .thumbnail .caption {
-  padding: 11px 30px 8px;
-  text-align: center;
+  padding: 11px 0px 8px;
   border-top: 2px solid #998967;
 }
 .thumbnail h3 {
@@ -586,8 +585,8 @@ div.lightbox {
 }
 .thumbnail .product-img-container {
   position: relative;
-  height: 200px;
-  width: 200px;
+  height: 300px;
+  width: 300px;
   box-sizing: border-box;
   text-align: center;
   margin: 0 auto;
@@ -598,8 +597,8 @@ div.lightbox {
   left: 50%;
   -webkit-transform: translateY(-50%) translateX(-50%);
   transform: translateY(-50%) translateX(-50%);
-  max-height: 200px;
-  max-width: 200px;
+  max-height: 300px;
+  max-width: 300px;
   height: auto;
   width: auto;
 }
@@ -612,7 +611,9 @@ div.lightbox {
   display: block;
 }
 .thumbnail .item-logo {
-  height: 30px;
+  float: right;
+  height: 60px;
+  width: 60px;
 }
 #header {
   background: #4a4a4a!important;
@@ -4243,6 +4244,7 @@ nav.banner-nav,
 }
 .thumbnail .price {
   font-size: 1.5rem;
+  float: left;
 }
 h3 {
   font-size: 2rem;
@@ -4429,3 +4431,25 @@ a.btn-3DVRTour {
 .item-description {
   font-size: 1.3rem; 
 }
+.we-chat-wrapper {
+  width: 300px;
+  height: 300px;
+  text-align: center;
+  border-radius: 0px;
+}
+.we-chat-wrapper > img {
+  width: 150px;
+  height: 150px;
+  margin: 75px auto;
+  display: block;
+}
+.we-chat-wrapper > button {
+  margin: 10px 10px;
+}
+/* fix for the wider screen */
+@media (min-width: 1200px) {
+  .container {
+    width: 1300px;
+  }
+}
+            

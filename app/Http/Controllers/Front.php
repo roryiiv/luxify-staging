@@ -195,7 +195,7 @@ class Front extends Controller {
             $banner = 'aircraft.jpg';
             $title_cat = 'Aircrafts';
             break;
-            case 'art-antiuques':
+            case 'art-antiques':
             $cat_ids = array_merge($childs['art'],$childs['antiques']);
             $banner = 'arts_banner.jpg';
             $title_cat = 'Art &amp; Antiques';
@@ -349,7 +349,7 @@ class Front extends Controller {
                         $cat_ids = array_merge($childs['jet'],$childs['helicopter']);
                         $banner = 'about-banner.jpg';
                         break;
-                        case 'art-antiuques':
+                        case 'art-antiques':
                         $cat_ids = array_merge($childs['art'],$childs['antiques']);
                         $banner = 'arts_banner.jpg';
                         break;
@@ -895,7 +895,7 @@ class Front extends Controller {
                         $cat_ids = array_merge($childs['jet'],$childs['helicopter']);
                         $banner = 'about-banner.jpg';
                         break;
-                        case 'art-antiuques':
+                        case 'art-antiques':
                         $cat_ids = array_merge($childs['art'],$childs['antiques']);
                         $banner = 'arts_banner.jpg';
                         break;
@@ -1153,7 +1153,7 @@ class Front extends Controller {
                         $cat_ids = array_merge($childs['jet'],$childs['helicopter']);
                         $banner = 'about-banner.jpg';
                         break;
-                        case 'art-antiuques':
+                        case 'art-antiques':
                         $cat_ids = array_merge($childs['art'],$childs['antiques']);
                         $banner = 'arts_banner.jpg';
                         break;
