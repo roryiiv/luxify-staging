@@ -177,7 +177,7 @@
                                         <div class="row">
                                             <div class="col-sm-9 col-md-10 col-md-offset-2 col-sm-offset-3">
                                                 <label for="notificationCheck">
-                                                    <input type="checkbox" id="notificationCheck"> Email Notifications on New Listing</label>
+                                                    <input type="checkbox" id="notificationCheck"> I wish to be notified by email</label>
                                             </div>
                                         </div>
                                     @endif
