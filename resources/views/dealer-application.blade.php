@@ -23,7 +23,7 @@
 					   </div>
                       <div class="row">
                           <div class="col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>We are Asia's leading online marketplace for luxury The go-to destination for luxury shoppers in Asia</p>
+							<p>We are Asia’s leading online marketplace for luxury. The go-to destination for luxury shoppers in Asia.</p>
 					   </div>
 				   </div>
 				   <div class="button-wrap">
@@ -102,8 +102,8 @@
                 <div class="row custom-col">
                     <div class="col-xs-12 col-sm-6">
                         <div class="text-wrap">
-                            <strong class="title">Asian audience of qualified customers</strong>
-                            <p>Reach millions of discerning shoppers and sophisticated consumers in Asia</p>
+                            <strong class="title">Qualified luxury audience</strong>
+                            <p>Reach affluent, luxury enthusiasts and influential buyers in Asia.</p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">

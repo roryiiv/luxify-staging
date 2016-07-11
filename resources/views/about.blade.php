@@ -22,7 +22,7 @@
 					   </div>
                       <div class="row">
                           <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>Asia’s leading marketplace for luxury</p>
+							<p>Asia’s Leading Online Marketplace for Luxury</p>
 						   </div>
 					   </div>
                       <div class="row">
@@ -62,7 +62,6 @@
                 <header class="heading" id="heading1">
                     <h1>Luxify Co-Founders</h1>
 					<div class="wrap">
-                                <h5>People driven to change an industry for the better</h5>
                             </div>
                 </header>
                 <div class="row">
