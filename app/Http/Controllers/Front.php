@@ -670,7 +670,7 @@ class Front extends Controller {
         ]);
 
         if($id){
-            $details = array('to' => $input['email']);
+            $details = array('to' => $input['email'], 'forward' => 'florian.martigny@luxify.com');
             $this_url = url('/');
             $username_to = $username;
             Mail::send('emails.luxify-proseller-request-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){
@@ -678,7 +678,17 @@ class Front extends Controller {
                 $message->from('technology@luxify.com', 'Luxify Admin');
                 $message->subject('Your Pro Seller Application has been sent');
                 $message->replyTo('no_reply@luxify.com', $name = null);
-                $message->to($details['to'])->cc('florian.martigny@luxify.com');
+                $message->to($details['to']);
+
+            });
+
+            //second email should go to florian
+            Mail::send('emails.luxify-proseller-request-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){
+
+                $message->from('technology@luxify.com', 'Luxify Admin');
+                $message->subject('A Pro Seller Application has been sent');
+                $message->replyTo('no_reply@luxify.com', $name = null);
+                $message->to($details['forward']);
 
             });
             return redirect('/dealer-application?message=sent');
