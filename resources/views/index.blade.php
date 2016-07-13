@@ -87,11 +87,13 @@
                                     <span class="info">Total Market in USD</span>
                                 </li>
                                 <li>
-                                    <span class="count counter">17,244</span>
+                                    <?php $num_listings = number_format(func::countListings(), 0); ?>
+                                    <span class="count counter">{{$num_listings}}</span>
                                     <span class="info">Total Listings</span>
                                 </li>
                                 <li>
-                                    <span class="count counter">1,319</span>
+                                    <?php $num_recents = number_format(func::countRecent(), 0); ?>
+                                    <span class="count counter">{{$num_recents}}</span>
                                     <span class="info">New Listings In The Past 30 Days</span>
                                 </li>
                             </ul>
