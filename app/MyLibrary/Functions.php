@@ -231,12 +231,22 @@ class Functions
         return($text);
     }
 
-    public static function count_listings(){
-        $where = array();
-        $where[] = ['expired_at', NULL];
-        $listings = DB::table('listings')->get();
+    public static function countListings(){
+        $listings = DB::table('listings')->count();
 
-        $return = count($listings);
+        $return = $listings;
+        return $return;
+    }
+
+    public static function countRecent(){
+        $today = Carbon::today();
+        $last_30 = $today->subDays(30);
+        $listings = DB::table('listings')
+        ->where('created_at', '<=', $today)
+        ->where('updated_at', '>=', $last_30)
+        ->count();
+
+        $return = $listings;
         return $return;
     }
 
