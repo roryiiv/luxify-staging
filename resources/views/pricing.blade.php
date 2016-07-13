@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <!-- main banner of the page -->
-	<section class="inner-banner parallax" style="background-image:url(/assets/images/banner-pricing.png);">
+	<section class="inner-banner parallax" style="background-image:url(/assets/images/banner-pricing.jpg);">
 		<div class="container">
             <div class="banner-text">
                 <div class="banner-center">
@@ -65,7 +65,7 @@
       </div>
         <!-- main of main content -->
         <!-- benefit block -->
-        <div class="benefit-block parallax" style="background-image:url(assets/images/banner-technology.png);">
+        <div class="benefit-block parallax" style="background-image:url(assets/images/banner-technology.jpg);">
             <div class="container">
                 <!-- new grid -->
                       <div class="row">
