@@ -59,7 +59,6 @@ $(document).ready(function () {
       showFinishButtonAlways: true,
       titleTemplate: "#title#",
       cssClass: "tabcontrol",
-      saveState: true,
       onStepChanging: function (event, curIdx, newIdx) {
         return editProductForm.valid();
       },
