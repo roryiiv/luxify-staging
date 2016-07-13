@@ -10,5 +10,4 @@ Homestead.json
 *.zip
 public/temp
 config.js
-*.jpg
 *.sql
