@@ -486,7 +486,7 @@
         var token = "{{ Session::getToken() }}";
         $("#item-images-dz").dropzone({
             url: "/upload_multiple",
-            paramName: "file",
+            paramName: "files",
             params: {
                 _token: token
             },
