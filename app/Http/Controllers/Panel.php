@@ -260,7 +260,9 @@ class Panel extends Controller
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             $item->title = $_POST['title'];
-            $item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
+            if($item->slug == '' || $item->slug == null){ //we'll build a new slug on each update.
+                $item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
+            }
         } else {
             $error_arr['title'] = 'Item title is required.';
         }

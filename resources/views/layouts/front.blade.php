@@ -2,7 +2,14 @@
 <html>
 
 <head>
-    <!-- set the encoding of your site -->
+    <meta name="description" content="Luxify is Asia's leading online marketplace for luxury. Our website is the go-to destination for luxury enthusiasts and collectors in Asia, providing easy, safe and reliable market access to the luxury market.">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
+
+    <title>Luxify - Asia's leading marketplace for luxury</title>
+
+
+<!-- set the encoding of your site -->
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- set the viewport width and initial-scale on mobile devices -->
@@ -91,6 +98,7 @@
 </head>
 
 <body>
+    @include('inc.gaScript')
     <!--[if lt IE 9]>
 		<div class="browserupgrade">
 			<p>You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
@@ -203,7 +211,7 @@
         <!-- end of footer -->
     </div>
     <script src="/assets/js/jquery-1.11.2.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
     <script src="/assets/js/jquery.counterup.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/carousel.js"></script>
@@ -222,7 +230,6 @@
     </script>
     {{-- Page specific scripts --}}
     @yield('scripts')
-
 </body>
 
 </html>

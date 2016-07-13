@@ -21,19 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Request $request)
     {
-        //build categories array
-        $views = array();
-        if(null !== session('currency')){
-            $sess_currency = session('currency');
-        }else{
-            $sess_currency = 'USD';
-        }
-        $views['currency'] = $sess_currency;
-
-        view()->share('views', $views);
-
-        // $notifs = func::get_notif();
-        // view()->share('notifs', $notifs);
+        \URL::forceSchema("https");
 
     }
 

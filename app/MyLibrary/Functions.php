@@ -40,8 +40,8 @@ class Functions
           $tmp = $x;
           $x = $y;
           $y = $tmp;
-        } 
-        return (($x + $y) * ($x + $y + 1)) / 2 + $y; 
+        }
+        return (($x + $y) * ($x + $y + 1)) / 2 + $y;
     }
 
     static function img_url($url, $width = '', $height = '', $fit = false){
