@@ -60,6 +60,7 @@
 						<div class="col-lg-12">
 							<div class="owl-carousel">
 								<div><img src="assets/images/logo-bbc-news.png" alt="BBC news"></div>
+								<div><img src="assets/images/logo-cbc.png" alt="CBNC"></div>
 								<div><img src="assets/images/logo-techinasia.png" alt="Techinasia"></div>
 								<div><img src="assets/images/logo-wealthx.png" alt="WealthX"></div>
 								<div><img src="assets/images/logo-japanese-times.png" alt="Japanese Times"></div>
