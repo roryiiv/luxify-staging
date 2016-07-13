@@ -140,6 +140,7 @@
                                                     <li><a href="/login">Member Login</a></li>
                                                 @endif
 
+                                                <li><a href="/pricing">Pricing</a></li>
                                                 <li><a href="/dealer-application">Dealer Application</a></li>
                                                 <li><a href="/estate">Luxify Estates</a></li>
 												<li><a href="/contact">Contact Us</a></li>

@@ -37,6 +37,9 @@ Route::get('/dealer-application', function(){
 Route::get('/why-luxify', function(){
     return view('why-luxify');
 });
+Route::get('/pricing', function(){
+    return view('pricing');
+});
 
 // Ajax endpoints
 Route::get('/api/category/{catId}/fields', 'Front@categories_optional_fields');

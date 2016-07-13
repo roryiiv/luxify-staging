@@ -1067,6 +1067,34 @@ div.lightbox {
     margin: 0 auto;
     padding-top: 147px;
 }
+.info-block .text-top {
+    max-width: 400px;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+.info-block .text-top h1 {
+    font-weight: 300; 
+}
+.info-block .text-top ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 10px;
+}
+.info-block .text-top ul li{
+    margin-bottom: 10px;
+}
+.info-block .text-top ul li:before {
+    content: '';
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background-image: url('/assets/images/circle-check.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    top: 10px;
+    right: 11px;
+}
 .info-block .title, .text-box .title {
     display: block;
     margin-bottom: 5px;
