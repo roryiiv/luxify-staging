@@ -19,7 +19,7 @@
                 <div class="holder" id="search_holder">
 
                     <h1>Luxury Within Reach</h1>
-                    <h2>Asia’s leading marketplace for Luxury</h2>
+                    <h2>Asia’s leading marketplace for luxury</h2>
 
                     <!-- category search form -->
                     @include('inc.search')
