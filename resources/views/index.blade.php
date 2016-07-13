@@ -92,7 +92,7 @@
                                 </li>
                                 <li>
                                     <span class="count counter">1,319</span>
-                                    <span class="info">New Listings in 30 Days</span>
+                                    <span class="info">New Listings In The Past 30 Days</span>
                                 </li>
                             </ul>
                         </div> :
