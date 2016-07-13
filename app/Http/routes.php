@@ -22,8 +22,8 @@ Route::get('/about', function(){
 Route::get('/contact', function(){
     return view('contact');
 });
-Route::get('/estate', function(){
-    return view('estate');
+Route::get('/estates', function(){
+    return view('estates');
 });
 Route::get('/terms', function(){
     return view('terms');
