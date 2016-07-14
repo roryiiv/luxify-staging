@@ -37,8 +37,8 @@
                             <ul>
                                 <li><a href="/about">About Luxify</a></li>
                                 <li><a href="/pricing">Pricing</a></li>
-                                <li><a href="/estates">Luxify Estates</a></li>
                                 <li><a href="/dealer-application">Dealer Application</a></li>
+                                <li><a href="/estates">Luxify Estates</a></li>
                                 <li><a href="/contact">Contact Us</a></li>
                             </ul>
                         </div>

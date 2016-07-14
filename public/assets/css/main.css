@@ -1082,6 +1082,7 @@ div.lightbox {
 }
 .info-block .text-top ul li{
     margin-bottom: 10px;
+    text-indent: -29px;
 }
 .info-block .text-top ul li:before {
     content: '';
