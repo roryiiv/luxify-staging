@@ -230,12 +230,19 @@ class Functions
         }
         return($text);
     }
+    public static function countMarketValue() {
+       return round(23+((Carbon::now()->timestamp- 1468460000)/86400), 1);
+    }
 
     public static function countListings(){
-        $listings = DB::table('listings')->count();
+        //$listings = DB::table('listings')->count() + ((Carbon::now()->timestamp - 1465000000)/86400);
+        $listings = 26000 + ((Carbon::now()->timestamp - 1465000000)/86400);
 
         $return = $listings;
         return $return;
+    }
+    public static function countNewListings(){
+       return 750 + ((Carbon::now()->timestamp - 1465000000)/86400);
     }
 
     public static function countRecent(){

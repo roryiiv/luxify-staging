@@ -83,7 +83,7 @@
                         <div class="col-sm-10 col-sm-offset-1">
                             <ul class="count-list">
                                 <li>
-                                    <span class="count counter">10.7</span>
+                                    <span class="count counter">{{ func::countMarketValue() }}</span>
                                     <span class="info">Total Market in USD</span>
                                 </li>
                                 <li>
@@ -92,12 +92,12 @@
                                     <span class="info">Total Listings</span>
                                 </li>
                                 <li>
-                                    <?php $num_recents = number_format(func::countRecent(), 0); ?>
+                                    <?php $num_recents = number_format(func::countNewListings(), 0); ?>
                                     <span class="count counter">{{$num_recents}}</span>
                                     <span class="info">New Listings In The Past 30 Days</span>
                                 </li>
                             </ul>
-                        </div> :
+                        </div>
                      </div> <!-- end of new grid -->
                 </div>
             </section>
