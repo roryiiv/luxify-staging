@@ -42,7 +42,7 @@
                       <div class="row">
                           <div class="col-sm-5 pull-right">
                               <div class="mob-img">
-                                  <img style="postion: relative; bottom: 1px;"src="assets/images/phones.png" alt="image description">
+                                  <img style="position: relative; bottom: 1px;"src="assets/images/phones.png" alt="image description">
                               </div>
                            </div>
                            <div class="col-sm-6">
