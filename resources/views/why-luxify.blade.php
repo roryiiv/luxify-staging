@@ -74,7 +74,7 @@
                                 <div class="col-sm-5 col-sm-offset-1">
 							<ol class="service-list">
 								<li>
-									<h3>We are not an eCommerce Platform</h3>
+									<h3>We Are A Lead Generation Platform</h3>
 									<p>We will never ask you for your payment details. Instead we match buyers with reputable sellers who have each been carefully handpicked and vetted by us. This ensures you are matched with genuine sellers and can enjoy complete peace of mind when browsing with us</p>
 								</li>
 								<li>
