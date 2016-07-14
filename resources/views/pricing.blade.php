@@ -52,9 +52,9 @@
                                    <ul class="checklist">
                                       <li>Connect with luxury enthusiasts in Asia</li> 
                                       <li>Tailored marketing campaigns to reach Asian buyers</li> 
-                                      <li>No obligaton - no extended notice periods or fine-print lock in</li> 
+                                      <li>No obligation and lock-in period</li> 
                                       <li>Personalized customer support</li> 
-                                      <li>No commission on transactions</li> 
+                                      <li>Full control of your listings including prices and communication with potential buyers</li> 
                                    </ul>
                                 </div>
                            </div>
@@ -76,8 +76,7 @@
                 <!-- benefit articles -->
                 <div class="row">
                     <article class="col-sm-12">
-                        <p style="font-size: 16px;">Our technology is world class with powerful search and top-of-the-line search engine optimization. Our technology allows us to integrate with most platforms making the uploading of your inventory effortless with the possibility of automatically updating your listings. As a Luxify dealer we can provide you detailed analytical reports on the performances of your listings including monthly traffic reports with geographic data. Our dedicated dealer support team will help you get the most of your Luxify membership.
-</p>
+                        <p style="font-size: 16px;">Our technology allows us to integrate with most platforms making the uploading of your inventory effortless with the possibility of automatically updating your listings. As a Luxify dealer we can provide you detailed analytical reports on the performances of your listings including monthly traffic reports. Our dealer support team will help you get the most of your Luxify membership.</p>
                     </article>
                 </div>
                 </div>
@@ -93,7 +92,7 @@
                 <header class="heading" id="heading1">
                     <h2>Luxify offers tailored packages to suit your particular company needs.</h2>
 					<div class="wrap">
-						<h5>Learn more about our dealer package</h5>
+						<h5>Learn more about our dealer packages</h5>
 					</div>
                 </header>
 				   <div class="button-wrap" style="text-align: center;">
