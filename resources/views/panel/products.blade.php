@@ -119,7 +119,7 @@
                                     </div>
                                 </div>
                             </div>
-                          <form id="bulkActionForm" action="/api/bulkActions" method="POST">
+                          <!--<form id="bulkActionForm" action="/api/bulkActions" method="POST">-->
                             <div class="row">
                                 <div class="col-sm-12">
                                 <input type="hidden" name="table" value="listings">
@@ -208,7 +208,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        <!--</form>-->
                         </div>
                     </div>
                 </div>
