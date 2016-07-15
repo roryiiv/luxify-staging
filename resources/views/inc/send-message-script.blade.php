@@ -86,6 +86,10 @@ $(document).ready(function(){
       }
     });
 
+<?php if(!isset($dealer) || empty($dealer)) {
+  $dealer = (object) ['id' => 0];
+} 
+?>
     $('#message-send-btn').click(function(e){
         e.preventDefault();
         var listingId = $('input#listing-id').val();
