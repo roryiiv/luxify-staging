@@ -148,7 +148,7 @@
                             <?php $cat = func::getTableByID('categories', $listing->categoryId); ?>
                             <ol class="breadcrumb">
                                 <li><a href="/">Home</a></li>
-                                @if($category != '')
+                                @if($category && $category != '')
                                     <li><a href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
                                 @endif
                                 <li class="active">{{ $cat->title }}</li>
