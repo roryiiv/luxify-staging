@@ -119,8 +119,11 @@
                                     </div>
                                 </div>
                             </div>
+                          <form id="bulkActionForm" action="/api/bulkActions" method="POST">
                             <div class="row">
                                 <div class="col-sm-12">
+                                <input type="hidden" name="table" value="listings">
+                                {!! csrf_field() !!}
                                     <table id="wish-list" style="width: 100%" class="table table-hover dt-responsive nowrap">
                                         <thead>
                                             <tr>
@@ -142,8 +145,8 @@
                                                 <tr>
                                                     <td class="text-center">
                                                         <div class="checkbox-custom">
-                                                            <input id="product-{{$i}}" type="checkbox" value="{{$i}}">
-                                                            <label for="product-{{$i}}" class="pl-0">&nbsp;</label>
+                                                            <input id="listings-{{$i}}" type="checkbox" name='selectedListings[]' value="{{$products[$i]->id}}">
+                                                            <label for="listings-{{$i}}" class="pl-0">&nbsp;</label>
                                                         </div>
                                                     </td>
                                                     <td><img src="{{func::img_url($products[$i]->mainImageUrl, 50, 50)}}" width="50" alt="" class="img-thumbnail img-responsive"></td>
@@ -186,17 +189,26 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-sm-2">
+                                   <select class="form-control" id="bulkAction" name="bulkAction">
+                                      <option value=''>--Bulk Action--</option>
+                                      <option value='delete'>Delete</option>
+                                      <option value='approve'>Approve</option>
+                                   </select> 
+                                   <button class="form-control">Apply</button>
+                                </div>
                                 <div class="col-sm-5">
-                                    <div class="dataTables_info" id="product-list_info" role="status" aria-live="polite">
+                                    <div class="dataTables_info text-center" id="product-list_info" role="status" aria-live="polite">
                                         Showing {{ $products->firstItem() }} to {{ $products->count() }} of {{ $products->total() }} entries
                                     </div>
                                 </div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-5">
                                     <div class="dataTables_paginate paging_simple_numbers" id="product-list_paginate">
                                         {{ $products->links() }}
                                     </div>
                                 </div>
                             </div>
+                        </form>
                         </div>
                     </div>
                 </div>

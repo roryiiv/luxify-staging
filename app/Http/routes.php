@@ -51,6 +51,7 @@ Route::post('/api/mailbox/send', 'Mailbox@sendMessage');
 Route::post('/api/mailbox/delete', 'Mailbox@deleteMessage');
 Route::post('/api/product/setStatus', 'Panel@product_change_status');
 Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
+Route::post('/api/bulkActions', 'Panel@bulkActions');
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 

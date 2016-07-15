@@ -545,6 +545,7 @@ class Panel extends Controller
       ->join('currencies', 'listings.currencyId', '=', 'currencies.id')
       ->orderby('listings.created_at', 'desc')
       ->select('listings.*', 'currencies.code')
+      ->where('status', '<>', 'EXPIRED')
       ->paginate(10);
 
       // var_dump($wishes);
@@ -781,5 +782,29 @@ class Panel extends Controller
         }
 
         // var_dump($rate);
+    }
+
+    public function bulkActions() {
+      $table = func::getVal('post', 'table');
+      $ids = func::getVal('post', 'selectedIds');
+      $action = func::getVal('post', 'bulkAction');
+      
+      if ($table && $ids && $action ) {
+        if (count($listingIds) > 0 ) {
+         // switch ($action) {
+         //   case 'delete':
+         //     DB::table($table)
+         //       ->whereIn('id', $listingIds)
+         //       ->delete();
+         //   break;
+         //   case 'approve':
+         //     DB::table($table)
+         //       ->whereIn('id', $listingIda)
+
+         //   break;
+          
+         // }
+        }
+      }
     }
 }
