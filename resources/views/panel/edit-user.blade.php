@@ -306,7 +306,7 @@
                                         <div class="form-group ml-0 mr-0">
                                             <label for="txtPinterestLink" class="control-label pb-10"><i class="fa fa-pinterest-square"></i> Pinterest</label>
                                             <div class="">
-                                                <input id="txtPinterestLink" name="txtPinterestLink" type="text" class="form-control" placeholder="{{$user->socialTwitter}}">
+                                                <input id="txtPinterestLink" name="txtPinterestLink" type="text" class="form-control" placeholder="{{$user->socialPinterest}}">
                                             </div>
                                         </div>
                                     </div>
@@ -314,7 +314,7 @@
                                         <div class="form-group ml-0 mr-0">
                                             <label for="txtTwitterLink" class="control-label pb-10"><i class="fa fa-twitter-square"></i> Twitter</label>
                                             <div class="">
-                                                <input id="txtTwitterLink" name="txtTwitterLink" type="text" class="form-control" placeholder="{{$user->socialPinterest}}">
+                                                <input id="txtTwitterLink" name="txtTwitterLink" type="text" class="form-control" placeholder="{{$user->socialTwitter}}">
                                             </div>
                                         </div>
                                     </div>
@@ -337,10 +337,10 @@
                                                     <div class="form-group ml-0 mr-0">
                                                         <label for="txtWebsiteLink" class="control-label pb-10"><i class="fa fa-globe"></i> Website</label>
                                                         <div class="bootstrap-filestyle input-group">
-                                                            <?php $slug = Auth::user()->slug != '' ? Auth::user()->slug : strtolower(Auth::user()->firstName).'-'.strtolower(Auth::user()->lastName); ?>
+                                                            <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
                                                             <input type="text" class="form-control" value="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" placeholder="" disabled="">
                                                             <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                                                <a href="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" target="_blank">
+                                                                <a href="{{ url('/dealer') . '/' . $user->id . '/' . $slug }}" target="_blank">
                                                                     <label for="fulImage" class="btn btn-outline btn-primary">
                                                                         <span class="icon-span-filestyle ti-image"></span>
                                                                         <span class="buttonText">Preview</span>

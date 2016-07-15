@@ -68,13 +68,13 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="txtProductName">Product Name</label>
-                                        <input id="txtProductName" name="txtProductName" type="text" class="form-control">
+                                        <input id="txtProductName" name="txtProductName" type="text" class="form-control" value="{{ isset($_GET['txtProductName']) ? $_GET['txtProductName'] : '' }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="txtPrice">Price</label>
-                                        <input id="txtPrice" name="txtPrice" type="text" class="form-control">
+                                        <input id="txtPrice" name="txtPrice" type="text" class="form-control" value="{{ isset($_GET['txtPrice']) ? $_GET['txtPrice'] : '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="filter-startDate">Date</label>
-                                        <input id="filter-startDate" name="startDate" type="text" class="form-control" value="">
+                                        <input id="filter-startDate" name="startDate" type="text" class="form-control" value="{{ isset($_GET['startDate']) ? $_GET['startDate'] : '' }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -194,7 +194,7 @@
                                       <option value=''>--Bulk Action--</option>
                                       <option value='delete'>Delete</option>
                                       <option value='approve'>Approve</option>
-                                   </select> 
+                                   </select>
                                    <button class="form-control">Apply</button>
                                 </div>
                                 <div class="col-sm-5">

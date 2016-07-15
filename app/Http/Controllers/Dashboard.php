@@ -61,6 +61,23 @@ class Dashboard extends Controller
     public function profile_update() {
         $user = User::where('id', $this->user_id)->first(); // always have it declared for first or else empty value sent
 
+        //we'll rebuild the slug here and save it
+        if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
+            if($user->company != ''){ //just in case.
+                $company = $user->company
+            }elseif($_POST['companyName'] != ''){ //the seller update company name, so...
+                $company = $_POST['companyName'];
+            }else{
+                $company = '';
+            }
+            if($company != ''){
+                $slug = SlugService::createSlug(Users::class, 'slug', $company);
+            }else{
+                $slug = '';
+            }
+            $user->slug = $slug;
+        }
+
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
             $image = base_path() . '/public/temp/' . $_POST['cover_img'];

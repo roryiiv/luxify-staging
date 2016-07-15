@@ -125,6 +125,17 @@ class Panel extends Controller
     public function user_register() {
         $user = new User; // always have it declared for first or else empty value sent
 
+        //we'll build the slug here and save it
+        if($_POST['role'] == 'seller'){ //only seller should has slug (company name)
+            $company = $_POST['companyName'] != '' ? $_POST['companyName'] : '';
+            if($company != ''){
+                $slug = SlugService::createSlug(Users::class, 'slug', $company);
+            }else{
+                $slug = '';
+            }
+            $user->slug = $slug;
+        }
+
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
             $image = base_path() . '/public/temp/' . $_POST['cover_img'];
@@ -387,6 +398,23 @@ class Panel extends Controller
 
     public function user_update() {
         $user = User::where('id', $_POST['user_id'])->first(); // always have it declared for first or else empty value sent
+
+        //we'll rebuild the slug here and save it
+        if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
+            if($user->company != ''){ //just in case.
+                $company = $user->company
+            }elseif($_POST['companyName'] != ''){ //the admin update the user company, so...
+                $company = $_POST['companyName'];
+            }else{
+                $company = '';
+            }
+            if($company != ''){
+                $slug = SlugService::createSlug(Users::class, 'slug', $company);
+            }else{
+                $slug = '';
+            }
+            $user->slug = $slug;
+        }
 
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
@@ -683,7 +711,7 @@ class Panel extends Controller
             ->where('id', $id)
             ->update(['status' => 'EXPIRED']);
 
-        return redirect('/panel/products');
+        return back();
     }
 
     public function upload(Request $request) {
@@ -743,7 +771,7 @@ class Panel extends Controller
         $users = Users::where('companyName', '<>', NULL)->get();
         foreach($users as $user){
             if(empty($list->slug)){
-                $slug = SlugService::createSlug(Users::class, 'slug', $user->title);
+                $slug = SlugService::createSlug(Users::class, 'slug', $user->companyName);
                 $user->slug = $slug;
                 if($user->save()){
                     echo $slug . '<br />';
@@ -788,7 +816,7 @@ class Panel extends Controller
       $table = func::getVal('post', 'table');
       $ids = func::getVal('post', 'selectedIds');
       $action = func::getVal('post', 'bulkAction');
-      
+
       if ($table && $ids && $action ) {
         if (count($listingIds) > 0 ) {
          // switch ($action) {
@@ -802,7 +830,7 @@ class Panel extends Controller
          //       ->whereIn('id', $listingIda)
 
          //   break;
-          
+
          // }
         }
       }
