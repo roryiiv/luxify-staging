@@ -95,6 +95,13 @@
                                   </a>
                               </li>
                           @endif
+                          @if(!empty($dealer->socialPinterest))
+                              <li class="socials_item">
+                                  <a href="{{ $dealer->socialPinterest }}">
+                                      <span class="icon-pinterest"></span>
+                                  </a>
+                              </li>
+                          @endif
                           @if(!empty($dealer->socialInstagram))
                               <li class="socials_item">
                                   <a href="{{ $dealer->socialInstagram }}">
