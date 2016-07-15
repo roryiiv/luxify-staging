@@ -66,7 +66,7 @@
                             {!! csrf_field() !!}
                             <input name='salt' id='salt' type='hidden' />
                             <input name='hashed' id='hashed' type='hidden' />
-                            <h3>Personal Infomation</h3>
+                            <h3>Personal Information</h3>
                             <fieldset>
 
                                 <div class="row">

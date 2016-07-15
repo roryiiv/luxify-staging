@@ -60,7 +60,7 @@
                     <div class="widget-body">
                         <form id="form-tabs" name="profile" method="post" action="/dashboard/profile" class="form-horizontal" enctype="multipart/form-data">
                             {!! csrf_field() !!}
-                            <h3>Personal Infomation</h3>
+                            <h3>Personal Information</h3>
                             <fieldset>
                                 <div class="row">
                                     <div class="col-md-6">

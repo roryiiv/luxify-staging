@@ -61,7 +61,7 @@
                         <form id="form-tabs" name="profile" method="post" action="/panel/user/update" class="form-horizontal" enctype="multipart/form-data">
                             {!! csrf_field() !!}
                             <input name='user_id' id='user_id' type='hidden' value="{{$user->id}}" />
-                            <h3>Personal Infomation</h3>
+                            <h3>Personal Information</h3>
                             <fieldset>
                                 <div class="row">
                                     <div class="col-md-6">
