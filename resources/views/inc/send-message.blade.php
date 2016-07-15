@@ -364,6 +364,11 @@
                  <p>Please login to your account</p>
                  <input name="email" id="email" type="text" placeholder="Email" />
                  <input name="password" id="password" type="password"  placeholder="Password" />
+            
+<?php if(!isset($dealer) || empty($dealer)) {
+  $dealer = (object) ['id' => 0];
+} 
+?>
                  <input name="_ref" type="hidden" value="/dealer/{{$dealer->id}}" />
                  <button class="button" id="sign-in-btn">Login</button>
                  <div class='ajax-loading' style="display:none; margin-top:10px; text-align: center; width:100%">
