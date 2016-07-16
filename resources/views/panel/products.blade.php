@@ -119,11 +119,8 @@
                                     </div>
                                 </div>
                             </div>
-                          <!--<form id="bulkActionForm" action="/api/bulkActions" method="POST">-->
                             <div class="row">
                                 <div class="col-sm-12">
-                                <input type="hidden" name="table" value="listings">
-                                {!! csrf_field() !!}
                                     <table id="wish-list" style="width: 100%" class="table table-hover dt-responsive nowrap">
                                         <thead>
                                             <tr>
@@ -145,7 +142,7 @@
                                                 <tr>
                                                     <td class="text-center">
                                                         <div class="checkbox-custom">
-                                                            <input id="listings-{{$i}}" type="checkbox" name='selectedListings[]' value="{{$products[$i]->id}}">
+                                                            <input id="listings-{{$i}}" type="checkbox" name='selectedIds[]' value="{{$products[$i]->id}}">
                                                             <label for="listings-{{$i}}" class="pl-0">&nbsp;</label>
                                                         </div>
                                                     </td>
@@ -190,14 +187,19 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-2">
+                                <form id="bulkActionForm" action="/api/bulkActions" method="POST">
+                                   {!! csrf_field() !!}
+                                   <input type="hidden" name="table" value="listings">
                                    <select class="form-control" id="bulkAction" name="bulkAction">
                                       <option value=''>--Bulk Action--</option>
                                       <option value='delete'>Delete</option>
-                                      <option value='approve'>Approve</option>
+                                      <!-- <option value='approve'>Approve</option>-->
+                                      <!--<option value='reject'>Reject</option>-->
                                    </select> 
-                                   <button class="form-control">Apply</button>
+                                   <button class="form-control" id="btnBulkAction">Apply</button>
+                                </form>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
                                     <div class="dataTables_info text-center" id="product-list_info" role="status" aria-live="polite">
                                         Showing {{ $products->firstItem() }} to {{ $products->count() }} of {{ $products->total() }} entries
                                     </div>
@@ -208,7 +210,6 @@
                                     </div>
                                 </div>
                             </div>
-                        <!--</form>-->
                         </div>
                     </div>
                 </div>
@@ -278,23 +279,36 @@
         }
     }
       $(document).ready(function(){
-          $('#view').change(function(){
-              $('form#sorter').submit();
+          
+        $('#btnBulkAction').click(function(e) {
+          e.preventDefault(); 
+          var form = $('#bulkActionForm');
+          $('[name="selectedIds[]"]:checked').map(function() {
+            var id = $(this).val();
+            form.append('<input type="hidden" name="selectedIds[]" value="'+id+'">');
           });
+          form.append('<input type="hidden" name="ref" value="'+window.location.href+'">');
+          form.submit();
+        });
 
-          //TODO: to check for the daterangepicker api to see whether can set the val empty
-          $("#filter-startDate").on('click', function() {
-            if ($(this).val() === '') {
-              $(this).daterangepicker({
-              locale: {
-                format: "YYYY-MM-DD"
-              },
-              singleDatePicker: !0,
-              endDate: moment()
-              });
+        // Handler for item-per-page change
+        $('#view').change(function(){
+          $('form#sorter').submit();
+        });
 
-            }
-          });
+        //TODO: to check for the daterangepicker api to see whether can set the val empty
+        $("#filter-startDate").on('click', function() {
+          if ($(this).val() === '') {
+            $(this).daterangepicker({
+            locale: {
+              format: "YYYY-MM-DD"
+            },
+            singleDatePicker: !0,
+            endDate: moment()
+            });
+
+          }
+        });
       });
     </script>
 @endsection
