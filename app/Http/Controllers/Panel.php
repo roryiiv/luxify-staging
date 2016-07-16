@@ -534,6 +534,13 @@ class Panel extends Controller
         if(isset($_POST['txtTwitterLink']) && !empty($_POST['txtTwitterLink'])){
             $user->socialTwitter = $_POST['txtTwitterLink'];
         }
+        // reset user password
+        if(isset($_POST['hashed']) && !empty($_POST['hashed'])){
+            $user->hashedPassword = $_POST['hashed'];
+        }
+        if(isset($_POST['salt']) && !empty($_POST['salt'])){
+            $user->salt = $_POST['salt'];
+        }
         if(!empty($error_arr)){
             $error = json_encode($error_arr);
             echo $error;

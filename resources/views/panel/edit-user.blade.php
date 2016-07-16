@@ -91,12 +91,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row hide">
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="txtPassword" class="col-sm-3 col-md-4 control-label">Password</label>
                                             <div class="col-sm-9 col-md-8">
-                                                <input id="txtPassword" type="password" name="txtPassword" placeholder="Enter password" class="form-control" disabled>
+                                                <input id="txtPassword" type="password" name="txtPassword" placeholder="Enter password" class="form-control">
+                                                <input id="hashed" type="hidden" name="hashed">
+                                                <input id="salt" type="hidden" name="salt">
                                             </div>
                                         </div>
                                     </div>
@@ -104,7 +106,7 @@
                                         <div class="form-group">
                                             <label for="txtConfirmPassword" class="col-sm-3 col-md-4 control-label">Confirm password</label>
                                             <div class="col-sm-9 col-md-8">
-                                                <input id="txtConfirmPassword" type="password" name="txtConfirmPassword" placeholder="Enter confirm password" class="form-control" disabled>
+                                                <input id="txtConfirmPassword" type="password" name="txtConfirmPassword" placeholder="Enter confirm password" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -388,6 +390,7 @@
     <script type="text/javascript" src="/db/js/dropzone-js.js"></script>
     <script type="text/javascript" src="/db/js/sweet-alert.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/js/bundle.js"></script>
     <script type="text/javascript">
         function OpenInNewTab(url) {
             var win = window.open(url, '_blank');
@@ -398,7 +401,6 @@
             var token = "{{ Session::getToken() }}";
             $("#sweet-3, .sweet-3").each(function () {
                 $(this).on("click", function () {
-                    console.log('hi');
                     swal({
                         title: "Update Profile",
                         text: "Are you sure you want to update this user profile?",
@@ -412,6 +414,10 @@
                     },
                     function(isConfirm){
                         if (isConfirm) {
+                            var salt = encrypt.makeSalt();
+                            var hashed = encrypt.password($('#txtPassword').val(), salt);
+                            $('input#salt').val(salt);
+                            $('input#hashed').val(hashed);
                             $("form[name='profile']").submit();
                         }else{
                             swal("Cancelled", "User profile is not updated.", "error");
