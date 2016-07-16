@@ -482,11 +482,20 @@ class Front extends Controller {
     }
 
     public function login() {
-      return view('auth.login');
+        if(Auth::user()){
+            return redirect('/dashboard');
+        }else{
+            return view('auth.login');
+        }
+
     }
 
     public function register() {
-      return view('auth.register');
+        if(Auth::user()){
+            return redirect('/dashboard');
+        }else{
+            return view('auth.register');
+        }
     }
 
     public function dealer($id, $slug) {

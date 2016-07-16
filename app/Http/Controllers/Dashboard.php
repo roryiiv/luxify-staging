@@ -64,7 +64,7 @@ class Dashboard extends Controller
         //we'll rebuild the slug here and save it
         if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
             if($user->company != ''){ //just in case.
-                $company = $user->company
+                $company = $user->company;
             }elseif($_POST['companyName'] != ''){ //the seller update company name, so...
                 $company = $_POST['companyName'];
             }else{

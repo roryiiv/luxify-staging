@@ -157,7 +157,7 @@
                                     <div class="text-box">
                                         <h1>Search &amp; Compare</h1>
                                         <p>Search and compare through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods.</p>
-                                        <a href="/category/bags" class="btn btn-primary">View more</a>
+                                        <a href="/category/handbags-accessories" class="btn btn-primary">View more</a>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
 						<div class="wrap">
 							<h5>Enjoy a new luxury property viewing experience</h5>
 						</div>
-                        <a href="/estate" class="btn btn-primary">View more</a>
+                        <a href="/estates" class="btn btn-primary">View more</a>
                     </div>
                 </div>
             </div>
