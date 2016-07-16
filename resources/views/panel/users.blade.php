@@ -153,7 +153,7 @@
                                                 <tr>
                                                     <td class="text-center">
                                                         <div class="checkbox-custom">
-                                                            <input id="user-{{$user->id}}" type="checkbox" value="{{$user->id}}">
+                                                            <input id="user-{{$user->id}}" name="selectedIds[]" type="checkbox" value="{{$user->id}}">
                                                             <label for="user-{{$user->id}}" class="pl-0">&nbsp;</label>
                                                         </div>
                                                     </td>
@@ -188,7 +188,20 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-5">
+                                <div class="col-sm-2">
+                                <form id="bulkActionForm" action="/api/bulkActions" method="POST">
+                                   {!! csrf_field() !!}
+                                   <input type="hidden" name="table" value="users">
+                                   <select class="form-control" id="bulkAction" name="bulkAction">
+                                      <option value=''>--Bulk Action--</option>
+                                      <option value='delete'>Delete</option>
+                                      <!-- <option value='approve'>Approve</option>-->
+                                      <!--<option value='reject'>Reject</option>-->
+                                   </select> 
+                                   <button class="form-control" id="btnBulkAction">Apply</button>
+                                </form>
+                                </div>
+                                <div class="col-sm-3">
                                     <div class="dataTables_info" id="product-list_info" role="status" aria-live="polite">
                                         Showing {{ $users->firstItem() }} to {{ $users->count() }} of {{ $users->total() }} entries
                                     </div>
@@ -244,6 +257,17 @@
     $(document).ready(function(){
         $('#view').change(function(){
             $('form#sorter').submit();
+        });
+
+        $('#btnBulkAction').click(function(e) {
+          e.preventDefault(); 
+          var form = $('#bulkActionForm');
+          $('[name="selectedIds[]"]:checked').map(function() {
+            var id = $(this).val();
+            form.append('<input type="hidden" name="selectedIds[]" value="'+id+'">');
+          });
+          form.append('<input type="hidden" name="ref" value="'+window.location.href+'">');
+          form.submit();
         });
     });
     </script>

@@ -30,6 +30,8 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 use Carbon\Carbon;
 
+use func;
+
 class Panel extends Controller
 {
     public function __construct() {
@@ -39,6 +41,39 @@ class Panel extends Controller
         if(Auth::user()){
             $this->user_id = Auth::user()->id;
             $this->user_role = Auth::user()->role;
+        }
+    }
+
+    private function send_notification($listing, $status) {
+        $user = DB::table('users')
+        ->where('id', $listing->userId)
+        ->first();
+
+        $username_to = $user->username;
+        $listing_name = $listing->title;
+        $this_url = url('/');
+        $listing_url = $this_url . '/listing/' . $listing->slug;
+        $details = array('to' => $user->email);
+        if($status == 'APPROVED'){
+            $listing_url = $this_url . '/listing/' . $listing->slug;
+            Mail::send('emails.luxify-listing-approved-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'this_url' => $this_url, 'listing_url' => $listing_url], function ($message) use ($details){
+
+                $message->from('technology@luxify.com', 'Luxify Admin');
+                $message->subject('Listing Approved');
+                $message->replyTo('no_reply@luxify.com', $name = null);
+                $message->to($details['to']);
+
+            });
+        }elseif($status =='REJECTED' ){
+            $listing_url = $this_url . '/dashboard/products/add';
+            Mail::send('emails.luxify-listing-rejected-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'this_url' => $this_url, 'listing_url' => $listing_url], function ($message) use ($details){
+
+                $message->from('technology@luxify.com', 'Luxify Admin');
+                $message->subject('Listing Rejected');
+                $message->replyTo('no_reply@luxify.com', $name = null);
+                $message->to($details['to']);
+
+            });
         }
     }
 
@@ -124,17 +159,6 @@ class Panel extends Controller
 
     public function user_register() {
         $user = new User; // always have it declared for first or else empty value sent
-
-        //we'll build the slug here and save it
-        if($_POST['role'] == 'seller'){ //only seller should has slug (company name)
-            $company = $_POST['companyName'] != '' ? $_POST['companyName'] : '';
-            if($company != ''){
-                $slug = SlugService::createSlug(Users::class, 'slug', $company);
-            }else{
-                $slug = '';
-            }
-            $user->slug = $slug;
-        }
 
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
@@ -399,23 +423,6 @@ class Panel extends Controller
     public function user_update() {
         $user = User::where('id', $_POST['user_id'])->first(); // always have it declared for first or else empty value sent
 
-        //we'll rebuild the slug here and save it
-        if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
-            if($user->company != ''){ //just in case.
-                $company = $user->company
-            }elseif($_POST['companyName'] != ''){ //the admin update the user company, so...
-                $company = $_POST['companyName'];
-            }else{
-                $company = '';
-            }
-            if($company != ''){
-                $slug = SlugService::createSlug(Users::class, 'slug', $company);
-            }else{
-                $slug = '';
-            }
-            $user->slug = $slug;
-        }
-
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
             $image = base_path() . '/public/temp/' . $_POST['cover_img'];
@@ -596,36 +603,8 @@ class Panel extends Controller
             if ($updated) {
                 // Send the email notification
                 // get the seller data first
-                $user = DB::table('users')
-                ->where('id', $updated->userId)
-                ->first();
-
-                $username_to = $user->username;
-                $listing_name = $updated->title;
-                $this_url = url('/');
-                $listing_url = $this_url . '/listing/' . $updated->slug;
-                $details = array('to' => $user->email);
-                if($status == 'APPROVED'){
-                    $listing_url = $this_url . '/listing/' . $updated->slug;
-                    Mail::send('emails.luxify-listing-approved-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'this_url' => $this_url, 'listing_url' => $listing_url], function ($message) use ($details){
-
-                        $message->from('technology@luxify.com', 'Luxify Admin');
-                        $message->subject('Listing Approved');
-                        $message->replyTo('no_reply@luxify.com', $name = null);
-                        $message->to($details['to']);
-
-                    });
-                }elseif($status =='REJECTED' ){
-                    $listing_url = $this_url . '/dashboard/products/add';
-                    Mail::send('emails.luxify-listing-rejected-en-us', ['username_to' => $username_to, 'listing_name' => $listing_name, 'this_url' => $this_url, 'listing_url' => $listing_url], function ($message) use ($details){
-
-                        $message->from('technology@luxify.com', 'Luxify Admin');
-                        $message->subject('Listing Rejected');
-                        $message->replyTo('no_reply@luxify.com', $name = null);
-                        $message->to($details['to']);
-
-                    });
-                }
+                
+                send_notification($updated, $status);
 
                 if ($updated->status === $status) {
                     echo json_encode((object) ['result'=> 1, 'status'=> $updated->status]);
@@ -698,7 +677,8 @@ class Panel extends Controller
     public function products_delete($id) {
       $deteled = Listing::where('id', $id)
         ->where('userId', $this->user_id)
-        ->delete();
+        ->update(['status' => 'EXPIRED']);
+        //->delete();
       if ($deleted > 0) {
         echo json_encode((object) ['result'=> 1, 'itemId'=> $itemId ]);
       } else {
@@ -711,7 +691,7 @@ class Panel extends Controller
             ->where('id', $id)
             ->update(['status' => 'EXPIRED']);
 
-        return back();
+        return redirect('/panel/products');
     }
 
     public function upload(Request $request) {
@@ -771,7 +751,7 @@ class Panel extends Controller
         $users = Users::where('companyName', '<>', NULL)->get();
         foreach($users as $user){
             if(empty($list->slug)){
-                $slug = SlugService::createSlug(Users::class, 'slug', $user->companyName);
+                $slug = SlugService::createSlug(Users::class, 'slug', $user->title);
                 $user->slug = $slug;
                 if($user->save()){
                     echo $slug . '<br />';
@@ -779,7 +759,7 @@ class Panel extends Controller
                     echo 'Booommmmm !!! <br />';
                 }
                 echo '<br>------------<br>';
-            }else{
+            } else {
                 echo 'Already has slug <br />';
             }
         }
@@ -816,23 +796,47 @@ class Panel extends Controller
       $table = func::getVal('post', 'table');
       $ids = func::getVal('post', 'selectedIds');
       $action = func::getVal('post', 'bulkAction');
-
+      $ref = func::getVal('post', 'ref');
+      
       if ($table && $ids && $action ) {
-        if (count($listingIds) > 0 ) {
-         // switch ($action) {
-         //   case 'delete':
-         //     DB::table($table)
-         //       ->whereIn('id', $listingIds)
-         //       ->delete();
-         //   break;
-         //   case 'approve':
-         //     DB::table($table)
-         //       ->whereIn('id', $listingIda)
+        if (count($ids) > 0 ) {
+          if ($table === 'listings') {
+            switch ($action) {
+              case 'delete':
+                DB::table($table)
+                  ->whereIn('id', $ids)
+                  ->update(['status' => 'EXPIRED']);
+              break;
 
-         //   break;
-
-         // }
+              //TODO: As bulk approve/reject will send out massive confirm emails, 
+              //therefore, it will not be provided for now 
+               
+//              case 'approve':
+//                DB::table($table)
+//                  ->whereIn('id', $ids)
+//                  ->update(['status' => 'APPROVED']);
+//              break;
+//              case 'reject':
+//                DB::table($table)
+//                  ->whereIn('id', $ids)
+//                  ->update(['status' => 'REJECTED']);
+//              break;
+            }
+          } else if ($table === 'users') {
+            switch ($action) {
+              case 'delete':
+                DB::table($table)
+                  ->whereIn('id', $ids)
+                  ->update(['isSuspended' => 1]);
+              break;
+            }
+          }
         }
+      }
+      if ($ref) {
+        return redirect($ref);
+      } else {
+        return redirect( Auth::user()->role === 'admin'? '/panel': '/dashboard'); 
       }
     }
 }
