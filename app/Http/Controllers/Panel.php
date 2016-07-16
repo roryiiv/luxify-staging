@@ -437,7 +437,7 @@ class Panel extends Controller
         //we'll rebuild the slug here and save it
         if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
             if($user->company != ''){ //just in case.
-                $company = $user->company
+                $company = $user->company;
             }elseif($_POST['companyName'] != ''){ //the admin update the user company, so...
                 $company = $_POST['companyName'];
             }else{
@@ -638,7 +638,7 @@ class Panel extends Controller
             if ($updated) {
                 // Send the email notification
                 // get the seller data first
-                
+
                 send_notification($updated, $status);
 
                 if ($updated->status === $status) {
@@ -832,7 +832,7 @@ class Panel extends Controller
       $ids = func::getVal('post', 'selectedIds');
       $action = func::getVal('post', 'bulkAction');
       $ref = func::getVal('post', 'ref');
-      
+
       if ($table && $ids && $action ) {
         if (count($ids) > 0 ) {
           if ($table === 'listings') {
@@ -843,9 +843,9 @@ class Panel extends Controller
                   ->update(['status' => 'EXPIRED']);
               break;
 
-              //TODO: As bulk approve/reject will send out massive confirm emails, 
-              //therefore, it will not be provided for now 
-               
+              //TODO: As bulk approve/reject will send out massive confirm emails,
+              //therefore, it will not be provided for now
+
 //              case 'approve':
 //                DB::table($table)
 //                  ->whereIn('id', $ids)
@@ -871,7 +871,7 @@ class Panel extends Controller
       if ($ref) {
         return redirect($ref);
       } else {
-        return redirect( Auth::user()->role === 'admin'? '/panel': '/dashboard'); 
+        return redirect( Auth::user()->role === 'admin'? '/panel': '/dashboard');
       }
     }
 }
