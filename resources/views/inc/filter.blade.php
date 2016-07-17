@@ -32,7 +32,7 @@ $subs = func::categories('all');
                             <strong class="form-title">Category</strong>
                             <select id="category" name="category">
                                 <option>Category</option>
-                                <option value="real-estate">Real Estate</option>
+                                <option value="real-estates">Real Estates</option>
                                 <option value="jewellery-watches">Watches & Jewelry</option>
                                 <option value="motors">Motors</option>
                                 <option value="handbags-accessories">Handbags & Accessories</option>

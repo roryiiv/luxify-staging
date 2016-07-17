@@ -16,7 +16,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shop</a>
                         <div class="dropdown-menu">
                             <ul>
-                                <li><a href="/category/real-estate">Real Estate</a></li>
+                                <li><a href="/category/real-estates">Real Estates</a></li>
                                 <li><a href="/category/jewellery-watches">Watches & Jewelry</a></li>
                                 <li><a href="/category/motors">Motors</a></li>
                                 <li><a href="/category/handbags-accessories">Handbags & Accessories</a></li>

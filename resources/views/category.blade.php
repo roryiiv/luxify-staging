@@ -118,8 +118,8 @@
         $("#category").change(function () {
             var val = $(this).val();
             $('form.filter-form').attr('action', '/category/'+val);
-            if (val == "real-estate") {
-                $("#sub_category").html("<option value='estate'>Estate</option><option value='apartment'>Apartment</option><option value='house'>House</option><option value='land'>Land</option><option value='others'>Others</option>");
+            if (val == "real-estates") {
+                $("#sub_category").html("<option value='estates'>Estates</option><option value='apartment'>Apartment</option><option value='house'>House</option><option value='land'>Land</option><option value='others'>Others</option>");
             } else if (val == "jewellery-watches") {
                 $("#sub_category").html("<option value='antique_jewelry'>Antique Jewelry</option><option value='jewelry'>Jewelry</option><option value='watch'>Watch</option>");
             } else if (val == "motors") {

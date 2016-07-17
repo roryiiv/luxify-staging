@@ -38,7 +38,7 @@ class Front extends Controller {
     public function product_details($slug) {
 
         $childs = array(
-            'estate' => array(50,69,16,52,72),
+            'estates' => array(50,69,16,52,72),
             'apartment' => array(126,51,49),
             'house' => array(48),
             'land' => array(53,54),
@@ -67,7 +67,7 @@ class Front extends Controller {
         );
 
         $cat_ids = array();
-        $cat_ids['real-estate'] = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others'], array('cat_title' => 'Real Estate'));
+        $cat_ids['real-estates'] = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others'], array('cat_title' => 'Real Estate'));
         $cat_ids['jewellery-watches'] = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch'], array('cat_title' => 'Watches &amp; Jewelry'));
         $cat_ids['motors'] = array_merge($childs['cars'],$childs['classics'],$childs['motorbike'], array('cat_title' => 'Motors'));
         $cat_ids['handbags-accessories'] = array_merge($childs['accessories_men'],$childs['accessories_women'],$childs['bags'], array('cat_title' => 'Handbags &amp; Accessories'));
@@ -127,7 +127,7 @@ class Front extends Controller {
 
     public function product_categories($id) {
         $childs = array(
-            'estate' => array(50,69,16,52,72),
+            'estates' => array(50,69,16,52,72),
             'apartment' => array(126,51,49),
             'house' => array(48),
             'land' => array(53,54),
@@ -155,8 +155,8 @@ class Front extends Controller {
             'champagne' => array(27)
         );
         switch($id){
-            case 'real-estate':
-            $cat_ids = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
+            case 'real-estates':
+            $cat_ids = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
             $banner = 'realestate.jpg';
             $title_cat = 'Real Estate';
             break;
@@ -235,7 +235,7 @@ class Front extends Controller {
                     $sub_category = $_filter['sub_category'];
                     // var_dump($sub_category);
                     switch($sub_category){
-                        case 'estate':
+                        case 'estates':
                         $cat_ids = array(50,69,16,52,72);
                         break;
                         case 'apartment':
@@ -317,8 +317,8 @@ class Front extends Controller {
                     // var_dump($cat_ids); exit;
                 }else{
                     switch($_filter['category']){
-                        case 'real-estate':
-                        $cat_ids = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
+                        case 'real-estates':
+                        $cat_ids = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
                         $banner = 'banner-estate.jpg';
                         break;
                         case 'jewellery-watches':
@@ -708,7 +708,7 @@ class Front extends Controller {
 
     public function dealerListing($id){
         $childs = array(
-            'estate' => array(50,69,16,52,72),
+            'estates' => array(50,69,16,52,72),
             'apartment' => array(126,51,49),
             'house' => array(48),
             'land' => array(53,54),
@@ -775,7 +775,7 @@ class Front extends Controller {
                     $sub_category = $_filter['sub_category'];
                     // var_dump($sub_category);
                     switch($sub_category){
-                        case 'estate':
+                        case 'estates':
                         $cat_ids = array(50,69,16,52,72);
                         break;
                         case 'apartment':
@@ -857,8 +857,8 @@ class Front extends Controller {
                     // var_dump($cat_ids); exit;
                 }else{
                     switch($_filter['category']){
-                        case 'real-estate':
-                        $cat_ids = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
+                        case 'real-estates':
+                        $cat_ids = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
                         $banner = 'banner-estate.jpg';
                         break;
                         case 'jewellery-watches':
@@ -965,7 +965,7 @@ class Front extends Controller {
 
     public function search() {
         $childs = array(
-            'estate' => array(50,69,16,52,72),
+            'estates' => array(50,69,16,52,72),
             'apartment' => array(126,51,49),
             'house' => array(48),
             'land' => array(53,54),
@@ -1033,7 +1033,7 @@ class Front extends Controller {
                     $sub_category = $_filter['sub_category'];
                     // var_dump($sub_category);
                     switch($sub_category){
-                        case 'estate':
+                        case 'estates':
                         $cat_ids = array(50,69,16,52,72);
                         break;
                         case 'apartment':
@@ -1115,8 +1115,8 @@ class Front extends Controller {
                     // var_dump($cat_ids); exit;
                 }else{
                     switch($_filter['category']){
-                        case 'real-estate':
-                        $cat_ids = array_merge($childs['estate'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
+                        case 'real-estates':
+                        $cat_ids = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
                         $banner = 'banner-estate.jpg';
                         break;
                         case 'jewellery-watches':
