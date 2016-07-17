@@ -67,7 +67,7 @@ class Front extends Controller {
         );
 
         $cat_ids = array();
-        $cat_ids['real-estates'] = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others'], array('cat_title' => 'Real Estate'));
+        $cat_ids['real-estates'] = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others'], array('cat_title' => 'Real Estates'));
         $cat_ids['jewellery-watches'] = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch'], array('cat_title' => 'Watches &amp; Jewelry'));
         $cat_ids['motors'] = array_merge($childs['cars'],$childs['classics'],$childs['motorbike'], array('cat_title' => 'Motors'));
         $cat_ids['handbags-accessories'] = array_merge($childs['accessories_men'],$childs['accessories_women'],$childs['bags'], array('cat_title' => 'Handbags &amp; Accessories'));
@@ -158,7 +158,7 @@ class Front extends Controller {
             case 'real-estates':
             $cat_ids = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
             $banner = 'realestate.jpg';
-            $title_cat = 'Real Estate';
+            $title_cat = 'Real Estates';
             break;
             case 'jewellery-watches':
             $cat_ids = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch']);
