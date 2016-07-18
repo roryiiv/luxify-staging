@@ -563,6 +563,7 @@ div.lightbox {
   transition: color .3s;
   border-radius: 30px;
   padding-top: 2px;
+
 }
 .thumbnail .favourite:hover {
   text-decoration: none;
