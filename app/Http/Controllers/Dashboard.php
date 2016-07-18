@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Mail;
 
 use App\User;
+use App\Users;
 use App\Country;
 use App\Listings;
 
@@ -65,7 +66,7 @@ class Dashboard extends Controller
         if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
             if($user->company != ''){ //just in case.
                 $company = $user->company;
-            }elseif($_POST['companyName'] != ''){ //the seller update company name, so...
+            }elseif($_POST['companyName'] != ''){ //the admin update the user company, so...
                 $company = $_POST['companyName'];
             }else{
                 $company = '';

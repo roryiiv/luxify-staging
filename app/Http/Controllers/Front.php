@@ -498,8 +498,18 @@ class Front extends Controller {
         }
     }
 
-    public function dealer($id, $slug) {
+    public function viewDealer($id, $slug) {
         $dealer = DB::table('users')->where('slug', $slug)->orWhere('id', $id)->first();
+        $listings = DB::table('listings')
+        ->where('userId', $dealer->id)
+        ->where('status', 'APPROVED')
+        ->take(6)
+        ->get();
+        return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
+    }
+
+    public function viewDealerNoSlug($id) {
+        $dealer = DB::table('users')->where('id', $id)->first();
         $listings = DB::table('listings')
         ->where('userId', $dealer->id)
         ->where('status', 'APPROVED')
