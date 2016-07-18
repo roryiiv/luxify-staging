@@ -33,6 +33,7 @@
         </div>
     </section>
     <!-- end of banner -->
+    @include('inc.send-message')
 	<!-- main informative part of the page -->
 	<main id="main">
 		<div class="container">
@@ -68,7 +69,14 @@
                                                         @if(Auth::user())
 
                                                             <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
-                                                            <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite {{ $added }}"><span class="icon-heart"></span></a>
+                                                            @if($added !== '')
+                                                                <a class="favourite {{$added}}" data-id="{{$item->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a>
+                                                            @else
+                                                                <a class="favourite" data-id="{{$item->id}}" title="{{ $item->title }}" href="#"><span class="icon icon-heart"></span></a>
+                                                            @endif
+                                                            <!--<a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite {{ $added }}"><span class="icon-heart"></span></a>-->
+                                                        @else
+                                                            <a data-toggle="modal" data-listing="{{$item->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
                                                         @endif
                                                     </figure>
                                                 </a>
@@ -166,6 +174,7 @@
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
         <script>
         $(document).ready(function(){
+          /*
             $('a.favourite').each(function(){
                 $(this).click(function(event){
                     // return false; // remove this later after database fixes.
@@ -239,7 +248,9 @@
                     }
                 });
             });
+           */
         });
         </script>
     @endif
+    @include('inc.send-message-script')
 @endsection

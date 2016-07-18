@@ -391,6 +391,7 @@ div.lightbox {
     line-height: 43px;
     -webkit-transition: color .3s;
     transition: color .3s;
+    text-decoration: none;
 }
 .thumbnail .favourite:hover, .thumbnail .favourite.added {
     text-decoration: none;

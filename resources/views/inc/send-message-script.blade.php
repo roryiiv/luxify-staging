@@ -1,7 +1,63 @@
 <script src="/db/js/jquery.validate.min.js"></script>
 <script src="/js/bundle.js"></script>
 <script>
-$(document).ready(function(){
+$(document).ready(function() {
+  @if(Auth::user())
+    $('a.favourite').each(function() {
+      $(this).click(function(event){
+        event.preventDefault();
+        var that = this;
+        if($(that).hasClass('added')) {
+          var url = '/dashboard/wishlist/delete'; 
+          var itemID = $(that).attr('data-id');
+          var userID = "{{ $user_id }}";
+          var token = $('input[name=_token]').val();
+          var data = {uid: userID, lid: itemID};
+            $.ajax({
+              type: 'POST',
+              url: url,
+              headers: {'X-CSRF-TOKEN': token},
+              data: data,
+              dataType: "html",
+              success: function(data){
+                if(data == 3){
+                    $(that).removeClass('added');
+                }else{
+                    swal("Error!");
+                }
+              },
+              error: function(errMsg){
+                console.log(errMsg.responseText);
+              }
+            });
+        } else {
+          var url = '/dashboard/wishlist/add'; 
+          var itemID = $(that).attr('data-id'); 
+          var userID = "{{ $user_id }}";
+          var token = $('input[name=_token]').val();
+           var data = {uid: userID, lid: itemID};
+           $.ajax({
+             type: 'POST',
+             url: url,
+             headers: {'X-CSRF-TOKEN': token},
+             data: data,
+             dataType: "html",
+             success: function(data){
+               if(data == 2 || data == 1){
+                 $('#added-to-wishlist').modal('toggle'); 
+                 $(that).addClass('added');
+               }else{
+                 $(that).addClass('added');
+               }
+             },
+             error: function(errMsg){
+               console.log(errMsg.responseText);
+             }
+           });
+         }
+      });
+    });
+ @endif
     $('#message-form').validate({
       rules: {
         content: {
@@ -22,7 +78,7 @@ $(document).ready(function(){
       }
     });
 
-    $('#sign-in-btn').click(function(e){
+    $('#sign-in-btn').click(function(e) {
       e.preventDefault();
       var email = $('input#email').val(), pass = $('input#password').val();
       var token = $('input[name=_token]').val();
@@ -41,7 +97,7 @@ $(document).ready(function(){
                 if (data.result === 1) {
                     var hashed = encrypt.password(pass, data.salt);
                     var salt = data.salt;
-                    var _ref = $('input[name=_ref]').val();
+                    var _ref = window.location.href;
                     $.ajax({
                       type: "POST",
                       url: "/login",
@@ -130,7 +186,7 @@ $(document).ready(function(){
                     console.log(errMsg.responseText);
                 }
             });
-        }
+      }
     });
 
     // insert title to the message box

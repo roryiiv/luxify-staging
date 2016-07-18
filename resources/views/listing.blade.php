@@ -97,23 +97,27 @@
                             </ul>
                             <ul class="social-links">
                                <?php $added = func::is_wishlist($user_id, $listing->id) == 1 ? ' added' : ''; ?>
-                            @if($added !== '')
-                                <li><a class="favourite {{$added}}" data-id="{{$listing->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a></li>
+                            @if (Auth::user()) 
+                              @if($added !== '')
+                                  <li><a class="favourite {{$added}}" data-id="{{$listing->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a></li>
+                              @else
+                                  <li><a class="favourite" data-id="{{$listing->id}}" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
+                              @endif
                             @else
-                                <li><a class="favourite" data-id="{{$listing->id}}" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
+                              <li><a data-toggle="modal" data-listing="{{$listing->id}}" data-target="#login-form" class="" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
                             @endif
                                 <li>
-                                    <a target="_blank" href="https://www.facebook.com/dialog/feed?app_id=1100408396697613&amp;display=popup&amp;caption={{urlencode($listing->description)}} &amp;link={{ $url . '/listing/' . $listing->slug}}&amp;redirect_uri={{ $url . '/listing/' . $listing->slug}}">
+                                    <a class="social-link" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=1100408396697613&amp;display=popup&amp;caption={{urlencode($listing->description)}} &amp;link={{ $url . '/listing/' . $listing->slug}}&amp;redirect_uri={{ $url . '/listing/' . $listing->slug}}">
                                         <span class="icon icon-facebook"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" href="https://twitter.com/share?url={{ urlencode($url . '/listing/' . $listing->slug) }}&text={{urlencode($listing->description)}}">
+                                    <a class="social-link" target="_blank" href="https://twitter.com/share?url={{ urlencode($url . '/listing/' . $listing->slug) }}&text={{urlencode($listing->description)}}">
                                         <span class="icon icon-twitter"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" href="https://pinterest.com/pin/create/button/?url={{ $url }}/listing/{{ $listing->slug }}&media=https://s3-ap-southeast-1.amazonaws.com/luxify/images/{{$listing->mainImageUrl}}&description={{ urlencode($listing->description) }}">
+                                    <a class="social-link" target="_blank" href="https://pinterest.com/pin/create/button/?url={{ $url }}/listing/{{ $listing->slug }}&media=https://s3-ap-southeast-1.amazonaws.com/luxify/images/{{$listing->mainImageUrl}}&description={{ urlencode($listing->description) }}">
                                         <span class="icon icon-pinterest"></span>
                                     </a>
                                 </li>
@@ -210,6 +214,9 @@
                                                     @if(Auth::user())
                                                         <?php $madded = func::is_wishlist($user_id, $more->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
+                                                    @else
+                                                        <a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
+
                                                     @endif
                                                 </div>
                                             </a>
@@ -258,6 +265,8 @@
                                                     @if(Auth::user())
                                                         <?php $rel_added = func::is_wishlist($user_id, $rel->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $rel->id }}" href="javascript:;" data-id="{{ $rel->id }}" class="favourite{{ $rel_added }}"><span class="icon-heart"></span></a>
+                                                    @else
+                                                        <a data-toggle="modal" data-listing="{{$rel->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
                                                     @endif
                                                 </div>
                                             </a>
@@ -289,6 +298,8 @@
     @include('inc.send-message')
 @endsection
 @section('scripts')
+    <link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="/assets/js/jquery.fancybox-thumbs.js?v=1.0.7"></script>
     <script>
 
         var popupSize = {
@@ -296,7 +307,7 @@
             height: 450
         };
 
-        $(document).on('click', '.social-links > li > a', function(e){
+        $('.social-links > li > a.social-link').on('click', function(e){
             var
                 verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
                 horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
@@ -313,146 +324,43 @@
 
         });
     </script>
-    <link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
-    <script type="text/javascript" src="/assets/js/jquery.fancybox-thumbs.js?v=1.0.7"></script>
-    <script language="javascript" type="text/javascript">
-    $(document).ready(function(){
-      $("a.bookmark").click(function(e){
-        e.preventDefault(); // this will prevent the anchor tag from going the user off to the link
-        var bookmarkUrl = this.href;
-        var bookmarkTitle = this.title;
-        var ua = window.navigator.userAgent;
-        var msie = ua.indexOf("MSIE ");
-
-        if (window.sidebar) { // For Mozilla Firefox Bookmark
-            window.sidebar.addPanel(bookmarkTitle, bookmarkUrl,"");
-        } else if( msie > 0 ) { // For IE Favorite
-            window.external.AddFavorite( bookmarkUrl, bookmarkTitle);
-        } else if(window.opera) { // For Opera Browsers
-            $("a.jQueryBookmark").attr("href",bookmarkUrl);
-            $("a.jQueryBookmark").attr("title",bookmarkTitle);
-            $("a.jQueryBookmark").attr("rel","sidebar");
-        } else { // for other browsers which does not support
-             alert('Your browser does not support this bookmark action');
-             return false;
-        }
-      });
-    });
-    </script>
     @if($user_id)
         {{ csrf_field() }}
         <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
-        <script>
-        $(document).ready(function(){
-            $('a.favourite').each(function(){
-                $(this).click(function(event){
-                    // return false; // remove this later after database fixes.
-                    // event.preventDefault();
-                    if($(this).hasClass('added')){
-                        var url = '/dashboard/wishlist/delete', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
-                        // console.log(token);
-                        var data = {uid: userID, lid: itemID};
-                        $.ajax({
-                            type: 'POST',
-                            url: url,
-                            headers: {'X-CSRF-TOKEN': token},
-                            data: data,
-                            dataType: "html",
-                            success: function(data){
-                                // console.log(data); return false;
-                                if(data == 3){
-                                    $('a#'+itemID).removeClass('added');
-                                }else{
-                                    swal("Error!");
-                                }
-                            },
-                            error: function(errMsg){
-                                console.log(errMsg.responseText);
-                            }
-                        });
-                       // swal({
-                       //     title: "Delete item",
-                       //     text: "Are you sure you want to delete item from Wishlist?",
-                       //     type: "info",
-                       //     showCancelButton: true,
-                       //     closeOnConfirm: false,
-                       //     showLoaderOnConfirm: true,
-                       // },
-                       // function(){
-                       // });
-                    } else {
-                        var url = '/dashboard/wishlist/add', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
-                        // console.log(token);
-                        var data = {uid: userID, lid: itemID};
-                        $.ajax({
-                            type: 'POST',
-                            url: url,
-                            headers: {'X-CSRF-TOKEN': token},
-                            data: data,
-                            dataType: "html",
-                            success: function(data){
-                                if(data == 1){
-                                    //swal("Item is added!");
-                                    $('#added-to-wishlist').modal('toggle'); 
-                                    $('a#'+itemID).addClass('added');
-                                }else{
-                                    //swal("Item has been readded!");
-                                    $('a#'+itemID).addClass('added');
-                                }
-                            },
-                            error: function(errMsg){
-                                console.log(errMsg.responseText);
-                            }
-                        });
-                        //swal({
-                        //    title: "Add to Wishlist",
-                        //    text: "Are you sure you want to add item to your Wishlist?",
-                        //    type: "info",
-                        //    showCancelButton: true,
-                        //    closeOnConfirm: false,
-                        //    showLoaderOnConfirm: true,
-                        //},
-                        //function(){
-                        //});
-                    }
-                });
-            });
-        });
-        </script>
     @endif
     {{ csrf_field() }}
     <script>
-    $(document).ready(function(){
-        $(".3DTour").fancybox({
-            fitToView	: true,
-            width		: '90%',
-            height		: '90%',
-            autoSize	: true,
-            closeClick	: false,
-            openEffect	: 'none',
-            closeEffect	: 'none',
-            arrows: false,
-            mouseWheel: false,
-        });
+      $(document).ready(function(){
+          $(".3DTour").fancybox({
+              fitToView	: true,
+              width		: '90%',
+              height		: '90%',
+              autoSize	: true,
+              closeClick	: false,
+              openEffect	: 'none',
+              closeEffect	: 'none',
+              arrows: false,
+              mouseWheel: false,
+          });
 
-        $(".fancybox-thumb").fancybox({
-            fitToView	: false,
-            width		: '70%',
-            height		: '70%',
-            autoSize	: false,
-            closeClick	: false,
-            openEffect	: 'none',
-            closeEffect	: 'none',
-            helpers : {
-                thumbs  : {
-                    width : 50,
-                    height  : 50
-                }
-            }
-        });
-        $('[data-toggle="tooltip"]').tooltip()
-    });
+          $(".fancybox-thumb").fancybox({
+              fitToView	: false,
+              width		: '70%',
+              height		: '70%',
+              autoSize	: false,
+              closeClick	: false,
+              openEffect	: 'none',
+              closeEffect	: 'none',
+              helpers : {
+                  thumbs  : {
+                      width : 50,
+                      height  : 50
+                  }
+              }
+          });
+          $('[data-toggle="tooltip"]').tooltip();
+      });
     </script>
     @include('inc.send-message-script')
 @endsection

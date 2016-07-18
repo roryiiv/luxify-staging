@@ -78,13 +78,18 @@
       height: 50%;
       min-height: 383px
     }
-    #message-sent-form .modal-dialog ,
+
     #added-to-wishlist .modal-dialog {
+      width: 640px;
+      height: 29%;
+      min-height: 258px
+    }
+
+    #message-sent-form .modal-dialog {
       width: 640px;
       height: 37%;
       min-height: 258px
     }
-
     #login-form .modal-content {
         background-color: white;
         margin: 10% auto;
@@ -132,6 +137,7 @@
        font-weight: 400;
        margin-bottom: 0px;
        font-size: 36px;
+       text-transform: capitalize;
     }
     #login-form h5 {
        margin-top: 5px;
@@ -359,7 +365,7 @@
            </div>
            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
              <div class="right">
-               <form id="login-form-ajax" action="login_ajax">
+               <form id="login-form-ajax">
                  <h4>Existing User</h4>
                  <p>Please login to your account</p>
                  <input name="email" id="email" type="text" placeholder="Email" />
@@ -369,7 +375,6 @@
   $dealer = (object) ['id' => 0];
 } 
 ?>
-                 <input name="_ref" type="hidden" value="/dealer/{{$dealer->id}}" />
                  <button class="button" id="sign-in-btn">Login</button>
                  <div class='ajax-loading' style="display:none; margin-top:10px; text-align: center; width:100%">
                      <img src="/assets/images/ajax-loader_2.gif" />
