@@ -172,8 +172,8 @@
                     <div class="col-sm-9">
                         <select id="status" name="status" class="form-control">
                             <option value="">--Please Select--</option>
-                            <option {{func::selected($item->status, 'APPROVED')}} value=''>Approved</option>
-                            <option {{func::selected($item->status, 'PENDING')}} value=''>Pending</option>
+                            <option {{func::selected($item->status, 'APPROVED')}} value='APPROVED'>Approved</option>
+                            <option {{func::selected($item->status, 'PENDING')}} value='PENDING'>Pending</option>
                             <option {{func::selected($item->status, 'SOLD')}}  value="SOLD">Sold</option>
                             <option {{func::selected($item->status, 'REJECTED')}}  value="REJECTED">Rejected</option>
                             <option {{func::selected($item->status, 'EXPIRED')}}  value="EXPIRED">Expired</option>

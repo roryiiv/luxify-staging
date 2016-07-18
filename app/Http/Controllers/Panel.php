@@ -639,8 +639,7 @@ class Panel extends Controller
                 // Send the email notification
                 // get the seller data first
 
-                send_notification($updated, $status);
-
+                $this->send_notification($updated, $status);
                 if ($updated->status === $status) {
                     echo json_encode((object) ['result'=> 1, 'status'=> $updated->status]);
                 } else {
