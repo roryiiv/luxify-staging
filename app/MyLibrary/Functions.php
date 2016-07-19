@@ -46,7 +46,7 @@ class Functions
 
     static function img_url($url, $width = '', $height = '', $fit = false, $static = false){
         $processor = '';
-        $processor .= 'http://images.luxify.com/q100,';
+        $processor .= 'https://images.luxify.com/q100,';
         if ($fit && (!empty($width) || !empty($height))) {
             $size = !empty($width) ? $width : $height;
             $processor .= $size . ',fit';
