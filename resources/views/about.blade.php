@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <!-- main banner of the page -->
-	<section class="inner-banner parallax" style="background-image:url(/assets/images/about-banner.jpg);">
+	<section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/about-us-main.jpg', '', '', false, true)}});">
 		<div class="container">
             <div class="banner-text">
                 <div class="banner-center">
@@ -40,7 +40,7 @@
     <!-- main informative part of the page -->
     <main id="main">
         <!-- about block -->
-        <div class="about-block parallax" style="background-image:url(/assets/images/what-is-luxify.png);">
+        <div class="about-block parallax" style="background-image:url({{func::img_url('banners/about-us-ipad.png', '', '', false, true)}});">
             <div class="container">
 				<div class="row">
 					<div class="col-lg-4 col-sm-offset-1 col-sm-5 col-xs-10 col-xs-offset-1">
@@ -68,7 +68,7 @@
                     <div class="col-sm-6">
                         <div class="founder-box">
                             <figure class="figure">
-                                <img src="/assets/images/person01.png" alt="image description">
+                                <img src="{{func::img_url('banners/about-us-florian.png', '', '', false, true)}}" alt="image description">
                             </figure>
                             <p>Florian Martigny was born in Paris and started his career in New York with large European investment bank. After seven years in the banking industry, Martigny managed and sold his own cosmetic company in the US. Upon selling his company, he went on to enjoy a successful part two career in investment banking in Hong Kong where he has been based for the past nine years. Martigny is an avid kite surfer and yachting enthusiast.</p>
                             <span class="founder">
@@ -80,7 +80,7 @@
                     <div class="col-sm-6">
                         <div class="founder-box">
                             <figure class="figure">
-                                <img src="/assets/images/person02.png" alt="image description">
+                                <img src="{{func::img_url('banners/about-us-alexis.png', '', '', false, true)}}" alt="image description">
                             </figure>
                             <p>Alexis Zirah was born in Paris, educated in Australia. His career has taken him from Paris to Sydney, Seoul, Shanghai and Hong Kong where he is based since 2008. He is an ex-management consultant with a top international consulting company and has a successful background in developing internet companies in Asia. Alexis holds a private pilot license and often compete in ultramarathons around the world.</p>
                             <span class="founder">

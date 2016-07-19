@@ -12,15 +12,13 @@
         <section class="banner">
             <!-- banner slideshow -->
             <div class="bg-img overlay">
-                <img src="assets/images/home-banner.jpg" alt="image description">
+                <img src="{{func::img_url('banners/home-main.jpg', '', '', false, true)}}" alt="image description">
             </div>
             <!-- end of banner slideshow -->
             <div class="container">
                 <div class="holder" id="search_holder">
-
                     <h1>Luxury Within Reach</h1>
                     <h2>Asia’s leading marketplace for luxury</h2>
-
                     <!-- category search form -->
                     @include('inc.search')
                     <!-- end of category search form -->
@@ -44,7 +42,7 @@
                         </nav>
                         <!-- end of banner navigation -->
                         <div class="banner-image">
-                            <img src="assets/images/banner-ipad.png" alt="image description">
+                            <img src="{{func::img_url('banners/home-ipad.png', '', '', false, true)}}" alt="image description">
                         </div>
                     </div>
                  </div> <!-- end of new grid -->
@@ -59,16 +57,16 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="owl-carousel">
-								<div><img src="assets/images/logo-bbc-news.png" alt="BBC news"></div>
-								<div><img src="assets/images/logo-cbc.png" alt="CBNC"></div>
-								<div><img src="assets/images/logo-techinasia.png" alt="Techinasia"></div>
-								<div><img src="assets/images/logo-wealthx.png" alt="WealthX"></div>
-								<div><img src="assets/images/logo-japanese-times.png" alt="Japanese Times"></div>
-								<div><img src="assets/images/logo-yahoo-news.png" alt="Yahoo news"></div>
-								<div><img src="assets/images/logo-chinadaily.png" alt="China Daily"></div>
-								<div><img src="assets/images/logo-forbes.png" alt="Forbes"></div>
-								<div><img src="assets/images/logo-bloomberg.png" alt="Boomarang"></div>
-								<div><img src="assets/images/logo-daily-mail.png" alt="Daily Mail"></div>
+                <div><img src="{{func::img_url('banners/home-logo-bbc-news.png', '', '', false, true)}}" alt="BBC news"></div>
+								<div><img src="{{func::img_url('banners/home-logo-cbc.png', '', '', false, true)}}" alt="CBNC"></div>
+								<div><img src="{{func::img_url('banners/home-logo-techinasia.png', '', '', false, true)}}" alt="Techinasia"></div>
+								<div><img src="{{func::img_url('banners/home-logo-wealthx.png', '', '', false, true)}}" alt="WealthX"></div>
+								<div><img src="{{func::img_url('banners/home-logo-japanese-times.png', '', '', false, true)}}" alt="Japanese Times"></div>
+								<div><img src="{{func::img_url('banners/home-logo-yahoo-news.png', '', '', false, true)}}" alt="Yahoo news"></div>
+								<div><img src="{{func::img_url('banners/home-logo-chinadaily.png', '', '', false, true)}}" alt="China Daily"></div>
+								<div><img src="{{func::img_url('banners/home-logo-forbes.png', '', '', false, true)}}" alt="Forbes"></div>
+								<div><img src="{{func::img_url('banners/home-logo-bloomberg.png', '', '', false, true)}}" alt="Boomarang"></div>
+								<div><img src="{{func::img_url('banners/home-logo-daily-mail.png', '', '', false, true)}}" alt="Daily Mail"></div>
 							</div>
 						</div>
 					</div>
@@ -121,7 +119,7 @@
                 <div class="content-holder">
                     <div class="container">
 					  <div class="left_image">
-							<img src="assets/images/image.jpg" alt="image description">
+              <img src="{{func::img_url('banners/home-laptop.jpg', 789, '', false, true)}}" alt="image description">
 					   </div>
 						<div class="row">
 							<div class="col-sm-6"></div>
@@ -147,7 +145,7 @@
             </div>
             <!-- main text wrapper -->
             <!-- compare block -->
-            <div class="compare-block parallax" style="background-image:url(assets/images/bag.jpg)">
+            <div class="compare-block parallax" style="background-image:url({{func::img_url('banners/home-bag.jpg', '', '', false, true)}})">
                 <div class="container">
                     <!-- new grid -->
                         <div class="row">
@@ -181,7 +179,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mob-img">
-                                            <img src="assets/images/phones.png" alt="image description">
+                                            <img src="{{func::img_url('banners/home-phones.png', '', '', false, true)}}" alt="image description">
                                         </div>
                                     </div>
                                 </div>

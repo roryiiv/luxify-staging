@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 @endsection
 @section('content')
-    <!-- main banner of the page -->
-	<section class="inner-banner parallax" style="background-image:url(/assets/images/dealer-banner.jpg);">
+  <!-- main banner of the page -->
+	<section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/dealer-application-main.jpg', '', '', false, true)}});">
 		<div class="container">
             <div class="banner-text">
                 <div class="banner-center">
@@ -68,22 +68,22 @@
                     <!-- dealer list -->
                     <ul class="dealer-list">
                         <li>
-                            <img src="/assets/images/dealer-01.png" alt="Pleyel Paris 1807">
+                            <img src="{{func::img_url('banners/dealer-application-dealer-01.png', '', '', false, true)}}" alt="Pleyel Paris 1807">
                         </li>
                         <li>
-                            <img src="/assets/images/dealer-02.png" alt="Migflug">
+                            <img src="{{func::img_url('banners/dealer-application-dealer-02.png', '', '', false, true)}}" alt="Migflug">
                         </li>
                         <li>
-                            <img src="/assets/images/dealer-03.png" alt="Christies">
+                            <img src="{{func::img_url('banners/dealer-application-dealer-03.png', '', '', false, true)}}" alt="Christies">
                         </li>
                         <li>
-                            <img src="/assets/images/dealer-04.png" alt="Intervino">
+                            <img src="{{func::img_url('banners/dealer-application-dealer-04.png', '', '', false, true)}}" alt="Intervino">
                         </li>
                         <li>
-                            <img src="/assets/images/dealer-05.png" alt="Image description">
+                            <img src="{{func::img_url('banners/dealer-application-dealer-05.png', '', '', false, true)}}" alt="Image description">
                         </li>
                         <li>
-                            <img src="/assets/images/dealer-06.png" alt="Aviation">
+                            <img src="{{func::img_url('banners/dealer-application-dealer-06.png', '', '', false, true)}}" alt="Aviation">
                         </li>
                     </ul>
                 </div>
@@ -140,7 +140,7 @@
                     <div class="slide">
                         <blockquote class="quote-wrap">
                             <div class="img">
-                                <img src="assets/images/quote-image.jpg" alt="image description">
+                                <img src="{{func::img_url('banners/dealer-application-quote-exotic-cars.jpg', '', '', false, true)}}" alt="image description">
                             </div>
                             <div class="text">
                                 <q>“Luxify is a great platform. We use it to bring us qualified buyers from Asia”</q>
@@ -151,7 +151,7 @@
                     <div class="slide">
                         <blockquote class="quote-wrap">
                             <div class="img">
-                                <img src="http://images.luxify.com/q100,100,fit/https://s3-ap-southeast-1.amazonaws.com/luxify/images/183cca72-9c68-479e-a2c9-182cb4284789.jpg" alt="image description">
+                                <img src="{{func::img_url('banners/dealer-application-quote-watch-dealer.jpg', '', '', false, true)}}" alt="image description">
                             </div>
                             <div class="text">
                                 <q>“Thanks to Luxify, we managed to get serious prospects and sales. Luxify provides us with more business opportunities.”</q>

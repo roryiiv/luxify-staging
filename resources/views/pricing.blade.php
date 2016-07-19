@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <!-- main banner of the page -->
-	<section class="inner-banner parallax" style="background-image:url(/assets/images/banner-pricing.jpg);">
+	<section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/pricing-main.jpg', '', '', false, true)}});">
 		<div class="container">
             <div class="banner-text">
                 <div class="banner-center">
@@ -42,7 +42,7 @@
                       <div class="row">
                           <div class="col-sm-5 pull-right">
                               <div class="mob-img">
-                                  <img style="position: relative; bottom: 1px;"src="assets/images/phones.png" alt="image description">
+                                  <img style="position: relative; bottom: 1px;"src="{{func::img_url('banners/pricing-phones.png', 372, '', false, true)}}" alt="image description">
                               </div>
                            </div>
                            <div class="col-sm-6">

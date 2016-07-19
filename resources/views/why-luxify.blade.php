@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <!-- main banner of the page -->
-    <section class="inner-banner auto-height parallax" style="background-image:url(/assets/images/banner-whyluxify.jpg);">
+    <section class="inner-banner auto-height parallax" style="background-image:url({{func::img_url('banners/why-luxify-main.jpg', '' , '' , false, true)}});">
         <!-- end of banner image -->
         <div class="container">
             <div class="banner-text">
@@ -66,7 +66,7 @@
             <div class="content-holder">
                 <div class="container">
                       <div class="left_image">
-                            <img src="/assets/images/image.jpg" alt="image description">
+                            <img src="{{func::img_url('banners/why-luxify-laptop.jpg', 789, '',false, true)}}" alt="image description">
                        </div>
 
                             <div class="row">
@@ -107,7 +107,7 @@
                             </div>
 						</header>
 						<div class="work-image">
-							<img src="/assets/images/work-img.jpg" alt="image description">
+              <img src="{{func::img_url('banners/why-luxify-workspace.jpg', '', '' , false, true)}}" alt="image description">
 						</div>
 						<!-- three columns -->
 						<div class="row work-column">

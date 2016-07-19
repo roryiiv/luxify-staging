@@ -44,18 +44,22 @@ class Functions
         return (($x + $y) * ($x + $y + 1)) / 2 + $y;
     }
 
-    static function img_url($url, $width = '', $height = '', $fit = false){
+    static function img_url($url, $width = '', $height = '', $fit = false, $static = false){
         $processor = '';
         $processor .= 'http://images.luxify.com/q100,';
         if ($fit && (!empty($width) || !empty($height))) {
             $size = !empty($width) ? $width : $height;
             $processor .= $size . ',fit';
         } else {
-            $processor .= !empty($width) ? $width : 'x';
+            $processor .= !empty($width) ? $width : '';
             $processor .= !empty($width) ? 'x' : '';
             $processor .= !empty($height) ? $height : '';
         }
-        $processor .= '/https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
+        if (!$static) {
+          $processor .= '/https://luxify.s3-accelerate.amazonaws.com/images/';
+        } else {
+          $processor .= '/https://luxify.s3-accelerate.amazonaws.com/static/';
+        }
         return $processor . $url;
     }
 

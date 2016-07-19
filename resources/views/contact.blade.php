@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <!-- main banner of the page -->
-	<section class="inner-banner parallax" style="background-image:url(/assets/images/contact_banner.jpg);">
+	<section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/contact-us-main.jpg', '', '', false, true)}});">
 		<div class="container">
             <div class="banner-text">
                 <div class="banner-center">

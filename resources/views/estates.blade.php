@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <!-- main banner of the page -->
-	<section class="inner-banner parallax" style="background-image:url(/assets/images/banner-estate.jpg);">
+	<section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/estates-main.jpg', '', '', false, true)}});">
 		<div class="container">
             <div class="banner-text">
                 <div class="banner-center">
@@ -54,21 +54,21 @@
                     <div class="column">
                         <div class="row">
                             <div class="icon">
-                                <img src="/assets/images/icon01.png" alt="image description">
+                                <img src="{{func::img_url('banners/estates-3D-icon01.png', '', '', false, true)}}" alt="image description">
                             </div>
                             <strong class="title">Share and experience anywhere</strong>
                             <p>Virtual property walkthrough from your mobile device, desktop or virtual reality headset</p>
                         </div>
                         <div class="row">
                             <div class="icon">
-                                <img src="/assets/images/icon02.png" alt="image description">
+                                <img src="{{func::img_url('banners/estates-3D-icon02.png', '', '', false, true)}}" alt="image description">
                             </div>
                             <strong class="title">Full immersive experience </strong>
                             <p>Experience a luxury property as if you are on location</p>
                         </div>
                         <div class="row">
                             <div class="icon">
-                                <img src="/assets/images/icon03.png" alt="image description">
+                                <img src="{{func::img_url('banners/estates-3D-icon03.png', '', '', false, true)}}" alt="image description">
                             </div>
                             <strong class="title">No software required</strong>
                             <p>Automated and manual tour modes</p>
@@ -77,21 +77,21 @@
                     <div class="column">
                         <div class="row">
                             <div class="icon">
-                                <img src="/assets/images/icon04.png" alt="image description">
+                                <img src="{{func::img_url('banners/estates-3D-icon04.png', '', '', false, true)}}" alt="image description">
                             </div>
                             <strong class="title">Informative</strong>
                             <p>Contact information and property description</p>
                         </div>
                         <div class="row">
                             <div class="icon">
-                                <img src="/assets/images/icon05.png" alt="image description">
+                                <img src="{{func::img_url('banners/estates-3D-icon05.png', '', '', false, true)}}" alt="image description">
                             </div>
                             <strong class="title">Easy to share</strong>
                             <p>Branded &amp; unbranded tour link</p>
                         </div>
                         <div class="row">
                             <div class="icon">
-                                <img src="/assets/images/icon06.png" alt="image description">
+                                <img src="{{func::img_url('banners/estates-3D-icon06.png', '', '', false, true)}}" alt="image description">
                             </div>
                             <strong class="title">Powerful tools for business</strong>
                             <p>Captivate customers before they even visit</p>
@@ -100,10 +100,10 @@
                 </div>
                 <!-- video -->
                 <div class="mobile-image">
-                    <img src="/assets/images/phone.png" alt="image description">
+                    <img src="{{func::img_url('banners/estates-3D-phone.png', '', '', false, true)}}" alt="image description">
                     <div class="video-wrap">
                         <div class="bg-img">
-                            <img src="/media/poster.jpg" alt="image description">
+                            <img src="{{func::img_url('banners/estates-3D-poster.jpg', '', '', false, true)}}" alt="image description">
                         </div>
                     </div>
                     <a class="play lightbox fancybox.iframe" href="http://player.vimeo.com/video/120660363?autoplay=true"><span class="icon-play"></span></a>
@@ -114,7 +114,7 @@
         </div>
         <!-- main of main content -->
         <!-- benefit block -->
-        <div class="benefit-block parallax" style="background-image:url(assets/images/bg-benefit.jpg);">
+        <div class="benefit-block parallax" style="background-image:url({{func::img_url('banners/estates-benefits-main.jpg', '', '', false, true)}});">
             <div class="container">
                 <!-- new grid -->
                       <div class="row">
@@ -129,21 +129,21 @@
                 <div class="row">
                     <article class="col-sm-4">
                         <div class="icon">
-                            <img src="/assets/images/icon07.png" alt="image description">
+                            <img src="{{func::img_url('banners/estates-benefits-icon01.png', '', '', false, true)}}" alt="image description">
                         </div>
                         <h3>Reaching a larger audience</h3>
                         <p>Buyers from a wider geographic radius who typically would not be willing to travel for a viewing will physically visit or bid on a house they have toured on Luxify Estates</p>
                     </article>
                     <article class="col-sm-4">
                         <div class="icon">
-                            <img src="/assets/images/icon08.png" alt="image description">
+                            <img src="{{func::img_url('banners/estates-benefits-icon02.png', '', '', false, true)}}" alt="image description">
                         </div>
                         <h3>Set the correct expectations</h3>
                         <p>Poor quality photos make buyers hesitate because they know intuitively the photos are not realistic, making them less likely to visit or engage on a listing</p>
                     </article>
                     <article class="col-sm-4">
                         <div class="icon">
-                            <img src="/assets/images/icon09.png" alt="image description">
+                            <img src="{{func::img_url('banners/estates-benefits-icon03.png', '', '', false, true)}}" alt="image description">
                         </div>
                         <h3>Greater appeal of your property</h3>
                         <p>We generate higher levels of online appeal to more potential buyers because they easily find what’s important to them</p>
@@ -169,23 +169,17 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <figure class="image">
-                            <a href="/assets/images/img-02_big.jpg" rel="lightbox1">
-                                <img src="/assets/images/img-02.jpg" alt="image description">
-                            </a>
+                            <img src="{{func::img_url('banners/estates-get-started-01.jpg', '', '', false, true)}}" alt="image description">
                         </figure>
                     </div>
                     <div class="col-sm-6">
                         <figure class="image">
-                            <a href="/assets/images/img-03_big.jpg" rel="lightbox1">
-                                <img src="/assets/images/img-03.jpg" alt="image description">
-                            </a>
+                            <img src="{{func::img_url('banners/estates-get-started-02.jpg', '', '', false, true)}}" alt="image description">
                         </figure>
                     </div>
                     <div class="col-xs-12">
                         <figure class="image">
-                            <a href="/assets/images/img-04_big.jpg" rel="lightbox1">
-                                <img src="/assets/images/img-04.jpg" alt="image description">
-                            </a>
+                            <img src="{{func::img_url('banners/estates-get-started-03.jpg', '', '', false, true)}}" alt="image description">
                         </figure>
                     </div>
                 </div>

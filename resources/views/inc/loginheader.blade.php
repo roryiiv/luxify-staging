@@ -103,7 +103,7 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">Menu<span></span></button>
         <!-- logo of the page -->
         <a class="navbar-brand" href="/">
-            <img src="/assets/images/logo.png" alt="Luxify" class="normal">
+            <img src="{{func::img_url('luxify-logo.png', '', '', false, true)}}" alt="Luxify" class="normal">
         </a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
