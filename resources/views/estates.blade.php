@@ -106,7 +106,7 @@
                             <img src="{{func::img_url('banners/estates-3D-poster.jpg', '', '', false, true)}}" alt="image description">
                         </div>
                     </div>
-                    <a class="play lightbox fancybox.iframe" href="http://player.vimeo.com/video/120660363?autoplay=true"><span class="icon-play"></span></a>
+                    <a class="play lightbox fancybox.iframe" href="https://player.vimeo.com/video/120660363?autoplay=true"><span class="icon-play"></span></a>
                 </div>
                 </div>
                  </div> <!-- end of new grid -->
