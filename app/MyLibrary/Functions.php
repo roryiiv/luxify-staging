@@ -52,7 +52,7 @@ class Functions
             $processor .= $size . ',fit';
         } else {
             $processor .= !empty($width) ? $width : '';
-            $processor .= !empty($width) ? 'x' : '';
+            $processor .= !empty($width) ? (!empty($height)? "x": ''): (!empty($height)? 'x': '') ;
             $processor .= !empty($height) ? $height : '';
         }
         if (!$static) {
