@@ -117,7 +117,7 @@
                                     <a id="otherEmail" href="#"  style="display:inline-block;"></a>
                                  </div>
 
-                                <a href="#" style="flex-grow: 1; text-align:right;"><i class="ti-reload"></i></a>
+                                 <a href="#" style="flex-grow: 1; text-align:right;"><i class="ti-reload"></i></a>
                               </h5>
 
                               <!--
@@ -184,9 +184,9 @@
                     <input id="mailboxCheckbox{idx}" name="msgsToDelete[]" type="checkbox" value="{hashedId}">
                     <label for="mailboxCheckbox{idx}"></label>
                 </div> <a class="loadMsg" href="javascript:loadMsg({otherId}, {listingId}, false, null, null);">
-                    <div class="media-left avatar"><img src="{{func::img_url('{senderCompanyLogoUrl}', 34, 34)}}" alt="" class="media-object img-circle"></div>
+                    <div class="media-left avatar"><img src="{{func::img_url('{otherAvatar}', 34, 34)}}" alt="" class="media-object img-circle"></div>
                     <div class="media-body">
-                        <h6 class="media-heading">{senderFirstName}</h6>
+                        <h6 class="media-heading">{otherName}</h6>
                         <h5 class="title">Re: {listingTitle}</h5>
                         <p class="summary">{body}</p>
                     </div>
@@ -263,7 +263,7 @@
         }
         var other = _.find(chatroom, {"id": otherId.toString(), "listingId": listingId.toString()});
         $('#otherImg').attr('src', "{{func::img_url('',34 ,34)}}" + other.profile.companyLogoUrl);
-        $("#otherEmail").attr("href", 'mailto:'+other.profile.email).html(other.profile.firstName);
+        $("#otherEmail").attr("href", 'mailto:'+other.profile.email).html(other.headline.otherName);
         if (!newMessage) {
             $('#chat-list').mCustomScrollbar("destroy");
             $("#chat-list").html("");
@@ -289,6 +289,7 @@
             }
             $('#chat-list').mCustomScrollbar('update');
             $('#chat-list').mCustomScrollbar("scrollTo", "bottom");
+
         }
     }
 
@@ -312,7 +313,7 @@
         $.ajax({
             url: '/api/mailbox',
             method: 'POST',
-            dataType: "json",
+            dataType: "json" ,
             data: {
                 page: page,
                 size: size,
@@ -321,8 +322,8 @@
             },
             headers: {'X-CSRF-Token': $('input[name=_token]').val()},
             success: function(res) {
-
                 if (res.result === 1 ){
+
                     currentRoom = otherId;
                     currentListingId = listingId;
                     res.users.dealer.companyLogoUrl = res.users.dealer.companyLogoUrl || 'placeholder.png';
@@ -331,7 +332,6 @@
                     dealer = res.users.dealer;
 
                     if(!_.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile) {
-
                         _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).profile = res.users.other;
                     }
                     _.find(chatroom, {"id": res.users.other.id, "listingId": listingId}).messages = res.messages;
@@ -345,56 +345,59 @@
     function genChatList() {
         $('ul#inbox').html('');
         chatroom = _.sortBy(chatroom, function(room){
-            return -(moment(room.headline.sentAt).unix());
+          return -(moment(room.headline.sentAt).unix());
         });
 
-        chatroom.forEach(function(room){
-           var newConv = $(nano($('#msgListTemplate').html(), room.headline));
-           newConv.appendTo('ul#inbox');
-           newConv.find('a').on('click', function() {
-             var that  = this;
-             $('li.active').toggleClass('active');
-             $(that).closest('li').toggleClass('active');
-           });
+        chatroom.forEach(function(room) {
+          var newConv = $(nano($('#msgListTemplate').html(), room.headline));
+          newConv.appendTo('ul#inbox');
+          newConv.find('a').on('click', function() {
+            var that  = this;
+            $('li.active').toggleClass('active');
+            $(that).closest('li').toggleClass('active');
+          });
         });
         $('#inbox li:first-child').toggleClass('active');
     }
 
     function initChatroom() {
-        $.ajax({
-            url: '/api/mailbox',
-            method: 'GET',
-            dataType: 'json',
-            headers: {'X-CSRF-Token': $('input[name=_token]').val()},
-            success: function(res) {
-                if (res.result === 1) {
-                    if(res.messages.length > 0){
-                        $(res.messages).each(function(idx, msg) {
-                            msg.idx = idx;
-                            msg.senderCompanyLogoUrl = msg.senderCompanyLogoUrl || 'placeholder.png';
-                            msg.sendAtHuman = moment(msg.sentAt).toNow(true);
-                            msg.listingTitle = msg.listingTitle || 'Dealer page enquiry';
-                            var newRoom = {};
-                            newRoom.id = msg.senderId !== selfId.toString() ?msg.senderId : msg.receiverId;
-                            msg.otherId = newRoom.id;
-                            newRoom.listingId = msg.listingId
-                            newRoom.active = false;
+      $.ajax({
+        url: '/api/mailbox',
+        method: 'GET',
+        dataType: 'json',
+        headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+        success: function(res) {
+          if (res.result === 1) {
+            if(res.messages.length > 0){
+              $(res.messages).each(function(idx, msg) {
+                msg.idx = idx;
+                msg.senderCompanyLogoUrl = msg.senderCompanyLogoUrl || 'placeholder.png';
+                msg.receiverCompanyLogoUrl = msg.receiverCompanyLogoUrl || 'placeholder.png';
+                msg.sendAtHuman = moment(msg.sentAt).toNow(true);
+                msg.listingTitle = (msg.listingTitle === null || msg.listingId === "0") ?'Enquiry on your dealer page': msg.listingTitle;
+                var newRoom = {};
+                newRoom.id = (msg.senderId !== selfId.toString()) ? msg.senderId : msg.receiverId;
+                msg.otherName = (msg.senderId !== selfId.toString()) ? (msg.senderCompanyName || ((msg.sendFirstName && ( msg.senderFirstName + msg.senderLastName).trim() !== '') ? (msg.senderFirstName + " " + msg.senderLastName): ('User ' + msg.senderId))) : (msg.receiverCompanyName || (( msg.receiverFirstName && (msg.receiverFirstName + msg.receiverLastName).trim() !== '') ? (msg.receiverFirstName + " "+ msg.receiverLastName): ('User ' + msg.receiverId)));
+                msg.otherAvatar = (msg.senderId !== selfId.toString()) ? msg.senderCompanyLogoUrl : msg.receiverCompanyLogoUrl;
+                msg.otherId = newRoom.id;
+                newRoom.listingId = msg.listingId
+                newRoom.active = false;
 
-                            newRoom.headline = msg;
-                            chatroom.push(newRoom);
-                        });
+                newRoom.headline = msg;
+                chatroom.push(newRoom);
+              });
 
-                        console.log(chatroom);
-                        genChatList();
+              console.log(chatroom);
+              genChatList();
 
-                        loadMsg(chatroom[0].id, chatroom[0].headline.listingId);
-                    }
-                }
-            },
-            error: function(errMsg){
-                console.log(errMsg.responseText);
+              loadMsg(chatroom[0].id, chatroom[0].headline.listingId);
             }
-        });
+          }
+        },
+        error: function(errMsg){
+            console.log(errMsg.responseText);
+        }
+      });
     }
 
     initChatroom();
@@ -406,23 +409,27 @@
             listingId: currentListingId,
             content: $('#msgTxt').val()
         };
+
         $.ajax({
-            url: "/api/mailbox/send",
-            method: 'POST',
-            data: msg,
-            dataType: 'json',
-            headers: {'X-CSRF-Token': $('input[name=_token]').val()},
-            success: function(res) {
-                $('#msgTxt').val('');
-                var room = _.find(chatroom, {
-                    id: res.newMessage.toUserId.toString(),
-                    listingId: res.newMessage.listingId.toString()
-                });
-                room.messages.push(res.newMessage);
-                room.headline.body = res.newMessage.body;
-                genChatList();
-                loadMsg(res.newMessage.toUserId !== selfId.toString() ? res.newMessage.toUserId : res.newMessage.fromUserId , res.newMessage.listingId, true);
-            }
+          url: "/api/mailbox/send",
+          method: 'POST',
+          data: msg,
+          dataType: 'json',
+          headers: {'X-CSRF-Token': $('input[name=_token]').val()},
+          success: function(res) {
+            $('#msgTxt').val('');
+            var room = _.find(chatroom, {
+                id: res.newMessage.toUserId.toString(),
+                listingId: res.newMessage.listingId.toString()
+            });
+            room.messages.push(res.newMessage);
+            room.headline.body = res.newMessage.body;
+            room.headline.sentAt = res.newMessage.sentAt.date;
+            room.headline.sendAtHuman = 'a second';
+            genChatList();
+            console.log(chatroom);
+            loadMsg(res.newMessage.toUserId !== selfId.toString() ? res.newMessage.toUserId : res.newMessage.fromUserId , res.newMessage.listingId, true);
+          }
         });
     }
     $('#sendMsg').on('click', function() {

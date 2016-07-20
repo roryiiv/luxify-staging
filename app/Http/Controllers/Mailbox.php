@@ -30,22 +30,7 @@ class Mailbox extends Controller
         $size= isset($_GET['size']) && !empty($_GET['size']) ? intval($_GET['size']) : 10;
 
         $selfId = $this->user_id;
-         $messages = DB::table('conversations')
-         // ->where('readAt', NULL)
-         ->where('conversations.deleted', false)
-         ->where(function ($query) use ($selfId) {
-            $query->orWhere('toUserId', '=', $selfId) 
-              ->orWhere('fromUserId', '=', $selfId);
-         })
-         ->join('users AS sender', 'conversations.fromUserId', '=', 'sender.id')
-         ->join('users AS receiver', 'conversations.toUserId', '=', 'receiver.id')
-         ->leftJoin('listings', 'listings.id', '=', 'conversations.listingId')
-         ->groupBy('conversations.hashedId')
-         ->orderBy('conversations.sentAt', 'desc')
-         ->skip($page*$size)
-         ->take($size)
-         ->select('conversations.*', 'listings.id as listingTableId', 'listings.title as listingTitle', 'sender.companyLogoUrl As senderCompanyLogoUrl','sender.id AS senderId', 'sender.firstName AS senderFirstName', 'sender.email AS senderEmail', 'receiver.id AS receiverId', 'receiver.firstName AS receiverFirstName', 'receiver.email AS receiverEmail', 'receiver.companyLogoUrl As receiverCompanyLogoUrl')
-         ->get();
+        $messages = DB::select('select c1.*, l.id as listingTableId, l.title as listingTitle, sender.id as senderId, sender.companyLogoUrl as senderCompanyLogoUrl, sender.firstName as senderFirstName, sender.lastName as senderLastName, sender.email as senderEmail, sender.companyName as senderCompanyName, receiver.id as receiverId, receiver.username as receiverUsername, receiver.firstName as receiverFirstName, receiver.lastName as receiverLastName, receiver.email as receiverEmail, receiver.companyLogoUrl as receiverCompanyLogoUrl, receiver.companyName as receiverCompanyName from conversations as c1 LEFT join conversations as c2 on (c1.hashedId = c2.hashedId AND c1.id < c2.id) LEFT JOIN listings as l ON c1.listingId = l.id LEFT JOIN users as sender on c1.fromUserId = sender.id LEFT JOIN users as receiver on c1.toUserId = receiver.id where c2.id IS NULL AND (c1.toUserId = ? or c1.fromUserId = ?) and c1.deleted = 0 order by c1.sentAt desc limit ? offset ?;', [ $selfId, $selfId, $size, ($page*$size)]);
 
        if (count($messages)) {
             echo json_encode((object) ['result' => 1, 'messages' => $messages]);
@@ -63,19 +48,6 @@ class Mailbox extends Controller
         // return response()->json($listingId);
 
         $messages = DB::table('conversations')
-        /*
-        ->where(function ($query) use ($otherId) {
-            $query->orWhere('toUserId', '=', $this->user_id)
-            ->orWhere('toUserId', '=', $otherId);
-        })
-        ->where(function ($query) use ($otherId) {
-            $query
-            ->orWhere('fromUserId', '=', $this->user_id)
-            ->orWhere('fromUserId', '=', $otherId);
-        })
-        ->where('listingId', $listingId)
-        */
-
         //first calculate two users id then combine with listingId, this order matters!
         ->where('hashedId', func::hashedId(func::hashedId($this->user_id, $otherId), $listingId))
         ->where('deleted', false)
