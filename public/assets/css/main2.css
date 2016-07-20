@@ -829,7 +829,7 @@ div.lightbox {
  /* height: 475px;*/
   height: 40rem;
   position: relative;
-  padding: 69px 0 0;
+  padding: 85px 0 0 0;
   font-size: 18px;
   line-height: 1.4545;
   font-weight: normal;
@@ -1471,7 +1471,7 @@ div.lightbox {
 .sidebar {
   float: right;
   width: 360px;
-  margin: 0 20px 0 100px;
+  margin: 15px 20px 0 100px;
   text-align: center;
   padding: 10px 0 38px;
   border: solid #c5beb2;
