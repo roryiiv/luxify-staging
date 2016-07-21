@@ -82,6 +82,8 @@ class Front extends Controller {
 
         $listing = DB::table('listings')
         ->where('slug', $slug)
+        ->join('countries', 'countries.id', '=', 'listings.countryId')
+        ->select('listings.*', 'countries.name as country')
         ->first();
 
         if ($listing) {
@@ -97,6 +99,8 @@ class Front extends Controller {
             $mores = DB::table('listings')
             ->where('userId', $listing->userId)
             ->where('status', 'APPROVED')
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
             ->paginate(10);
 
             $infos = DB::table('formfields')
@@ -115,6 +119,8 @@ class Front extends Controller {
             ->where('status', 'APPROVED')
             ->orWhere('title', 'like', '%'.$listing->title.'%')
             ->orWhere('description', 'like', '%'.$listing->title.'%')
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
             ->paginate(10);
 
           return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category]);
@@ -388,6 +394,8 @@ class Front extends Controller {
                 ->where('status', 'APPROVED')
                 ->whereIn('categoryId', $cat_ids)
                 ->where($search_arr)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
                 ->get();
 
                 if($use_price && !empty($_REQUEST['range'])){
@@ -432,6 +440,8 @@ class Front extends Controller {
             ->whereNotIn('id', $filtered_listing)
             ->where($search_arr)
             ->orderBy($orderby, $order)
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
             ->paginate(12);
         }else{
             $listings = DB::table('listings')
@@ -439,6 +449,8 @@ class Front extends Controller {
             ->whereIn('categoryId', $cat_ids)
             ->where($search_arr)
             ->orderBy($orderby, $order)
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
             ->paginate(12);
         }
 
@@ -503,6 +515,8 @@ class Front extends Controller {
         $listings = DB::table('listings')
         ->where('userId', $dealer->id)
         ->where('status', 'APPROVED')
+        ->join('countries', 'countries.id', '=', 'listings.countryId')
+        ->select('listings.*', 'countries.name as country')
         ->take(6)
         ->get();
         return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
@@ -513,6 +527,8 @@ class Front extends Controller {
         $listings = DB::table('listings')
         ->where('userId', $dealer->id)
         ->where('status', 'APPROVED')
+        ->join('countries', 'countries.id', '=', 'listings.countryId')
+        ->select('listings.*', 'countries.name as country')
         ->take(6)
         ->get();
         return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
@@ -1196,6 +1212,8 @@ class Front extends Controller {
                 ->where('status', 'APPROVED')
                 // ->whereIn('categoryId', $cat_ids)
                 ->where($search_arr)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
                 ->get();
 
                 // var_dump($price_lists); exit;
@@ -1244,6 +1262,8 @@ class Front extends Controller {
                 ->whereNotIn('id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
                 ->paginate(12);
             }else{
                 $listings = DB::table('listings')
@@ -1251,6 +1271,8 @@ class Front extends Controller {
                 ->whereIn('categoryId', $cat_ids)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
                 ->paginate(12);
             }
         }else{
@@ -1261,12 +1283,16 @@ class Front extends Controller {
                 ->whereNotIn('id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
                 ->paginate(12);
             }else{
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
                 ->paginate(12);
             }
         }

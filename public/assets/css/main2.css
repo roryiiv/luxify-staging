@@ -614,6 +614,17 @@ div.lightbox {
   margin-bottom: 13px;
   display: block;
 }
+.thumbnail .country-container {
+  display: block;
+  position: relative;
+}
+.thumbnail .country {
+  position: absolute;
+  top: 27px;
+  left: 0px;
+  font-size: 1.6rem;
+  font-weight: 200;
+}
 .thumbnail .item-logo {
   float: right;
   height: 60px;

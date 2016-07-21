@@ -73,7 +73,12 @@
                               $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
                               $price_format = func::formatPrice($item->currencyId, $sess_currency, $item->price);
                             ?>
-        			   	   	  <span class="price">{{ $price_format }}</span>
+                            <div>
+                              <span class="price">{{ $price_format }}</span>
+                            </div>
+                            <div class="country-container">
+                              <span class="country">{{$item->country}}</span>
+                            </div>
         			   	   	  <div class="item-logo">
         			   	   	   	<img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}" alt="image description">
         			   	   	  </div>
