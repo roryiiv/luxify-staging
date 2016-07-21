@@ -109,11 +109,32 @@
                                   </a>
                               </li>
                           @endif
+                          @if(!empty($dealer->latitude) && !empty($dealer->longitude))
+                              <li class="socials_item">
+                              <a class="lightbox fancybox.iframe" href="https://maps.google.com/maps?q={{$dealer->latitude}},{{$dealer->longitude}}&hl=es;z=14&amp;output=embed">
+                                <span style="top:2px; left: -1px;" class="glyphicon glyphicon-map-marker"></span>
+                              </a>
+                              </li>
+                          @endif
                       </ul>
                   </div>
                   <?php $logo = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                   <div class="col-md-5 col-sm-offset-1">
-                      <img src="{{ func::img_url($logo, 360, '', true) }}" alt="image_link">
+                      <div class="col-md-12" style="margin-bottom: 35px;">
+                        <img style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}" alt="image_link">
+                      </div>
+                      <div class="col-md-12">
+                        @if(isset($dealer->country) && !empty($dealer->country))
+                           <h4 style="text-align: center; margin-bottom: 5px;">{{$dealer->country}}</h4>
+                        @endif
+                        @if(!empty($dealer->website))
+                        <?php 
+                            $webpage = str_replace('http://', '', $dealer->website);
+                            $webpage = str_replace('https://', '', $webpage);
+                        ?>
+                            <h5 style="text-align: center;"><a href="{{$dealer->website}}" target="_blank">{{$webpage}}</a></td></h5>
+                        @endif
+                      </div>
                   </div>
               </div>
           </div>
