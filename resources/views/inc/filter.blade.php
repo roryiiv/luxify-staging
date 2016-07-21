@@ -40,7 +40,7 @@ $subs = func::categories('all');
                                 <option value="collectibles-furnitures">Collectibles & Furnitures</option>
                                 <option value="yachts">Yachts</option>
                                 <option value="aircrafts">Aircrafts</option>
-                                <option value="art-antiuques">Art & Antiques</option>
+                                <option value="art-antiques">Art & Antiques</option>
                                 <option value="fine-wines-spirits">Fine Wines & Spirits</option>
                             </select>
                         </div>

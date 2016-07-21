@@ -147,7 +147,7 @@
                 $("#sub_category").html("<option value='motor'>Motor</option><option value='sail'>Sail</option>");
             } else if (val == "aircrafts") {
                 $("#sub_category").html("<option value='jet'>Jet</option><option value='helicopter'>Helicopter</option>");
-            } else if (val == "art-antiuques") {
+            } else if (val == "art-antiques") {
                 $("#sub_category").html("<option value='art'>Art</option><option value='antiques'>Antiques</option>");
             } else if (val == "fine-wines-spirits") {
                 $("#sub_category").html("<option value='fine_wines'>Fine Wines</option><option value='spirits'>Spirits</option><option value='champagne'>Champagne</option>");

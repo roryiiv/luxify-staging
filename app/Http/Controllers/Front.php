@@ -75,7 +75,7 @@ class Front extends Controller {
         $cat_ids['collectibles-furnitures'] = array_merge($childs['collectibles'],$childs['furnitures'], array('cat_title' => 'Collectibles &amp; Furnitures'));
         $cat_ids['yachts'] = array_merge($childs['motor'],$childs['sail'], array('cat_title' => 'Yachts'));
         $cat_ids['aircrafts'] = array_merge($childs['jet'],$childs['helicopter'], array('cat_title' => 'Aircrafts'));
-        $cat_ids['art-antiuques'] = array_merge($childs['art'],$childs['antiques'], array('cat_title' => 'Art &amp; Antiques'));
+        $cat_ids['art-antiques'] = array_merge($childs['art'],$childs['antiques'], array('cat_title' => 'Art &amp; Antiques'));
         $cat_ids['fine-wines-spirits'] = array_merge($childs['fine_wines'],$childs['spirits'],$childs['champagne'], array('cat_title' => 'Fine Wines &amp; Spirits'));
 
         // var_dump($cat_ids); exit;
