@@ -92,14 +92,14 @@ $subs = func::categories('all');
                     </li>
                     <li>
                         <label class="radio">
-                            <input type="radio" name="sort-radio" value="priceUp"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceUp') ? ' checked="checked"' : '' }} />
-                            <span class="text">Price Up</span>
+                            <input type="radio" name="sort-radio" value="priceDown"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceDown') ? ' checked="checked"' : '' }} />
+                            <span class="text">Ascending Price</span>
                         </label>
                     </li>
                     <li>
                         <label class="radio">
-                            <input type="radio" name="sort-radio" value="priceDown"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceDown') ? ' checked="checked"' : '' }} />
-                            <span class="text">Price Down</span>
+                            <input type="radio" name="sort-radio" value="priceUp"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceUp') ? ' checked="checked"' : '' }} />
+                            <span class="text">Descending Price</span>
                         </label>
                     </li>
                 </ul>

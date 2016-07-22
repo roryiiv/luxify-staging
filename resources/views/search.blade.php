@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/assets/css/main.css">
 @endsection
 @section('content')
-    <section class="inner-banner auto-height parallax" style="background-image:url(assets/images/about-banner.jpg);">
+    <section class="inner-banner auto-height parallax" style="background-image:url({{func::img_url('banners/about-us-main.jpg', 1920, '', false, true)}});">
 		<div class="container">
             <div class="banner-text">
                 <div class="banner-center">

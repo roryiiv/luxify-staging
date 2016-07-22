@@ -436,8 +436,8 @@ class Front extends Controller {
             // var_dump($filtered_listing); exit;
             $listings = DB::table('listings')
             ->where('status', 'APPROVED')
-            ->whereIn('categoryId', $cat_ids)
-            ->whereNotIn('id', $filtered_listing)
+            ->whereIn('listings.categoryId', $cat_ids)
+            ->whereNotIn('listings.id', $filtered_listing)
             ->where($search_arr)
             ->orderBy($orderby, $order)
             ->join('countries', 'countries.id', '=', 'listings.countryId')
@@ -1262,7 +1262,7 @@ class Front extends Controller {
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
                 ->whereIn('categoryId', $cat_ids)
-                ->whereNotIn('id', $filtered_listing)
+                ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
                 ->join('countries', 'countries.id', '=', 'listings.countryId')
@@ -1283,7 +1283,7 @@ class Front extends Controller {
                 // var_dump($filtered_listing); exit;
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
-                ->whereNotIn('id', $filtered_listing)
+                ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
                 ->join('countries', 'countries.id', '=', 'listings.countryId')
