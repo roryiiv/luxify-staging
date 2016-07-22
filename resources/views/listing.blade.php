@@ -169,7 +169,7 @@
                             <div class="description">
                                 <h5>Description</h5>
                                 <p>
-                                    {{ strip_tags($listing->description) }}
+                                    {!! nl2br(e($listing->description)) !!}
                                 </p>
                                 @if(!empty($infos))
                                     <h5 style="margin-top:45px;">Specifications</h5>
