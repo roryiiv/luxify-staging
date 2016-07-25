@@ -129,7 +129,7 @@
                       </div>
                       <div class="col-md-12">
                         @if(isset($dealer->country) && !empty($dealer->country))
-                           <h4 style="text-align: center; margin-bottom: 5px;">{{$dealer->country}}</h4>
+                             <h4 style="text-align: center; margin-bottom: 5px;">{{$dealer->country}}</h4>
                         @endif
                         @if(!empty($dealer->website))
                         <?php 
@@ -138,6 +138,35 @@
                         ?>
                             <h5 style="text-align: center;"><a href="{{$dealer->website}}" target="_blank">{{$webpage}}</a></td></h5>
                         @endif
+                        <table class="table" style="margin: 0 auto; max-width: 330px; text-align: center; margin-top: 20px;">
+                        @if(!empty(json_decode($dealer->companyAddress)))
+                        <?php 
+                            $address= join(" ", json_decode($dealer->companyAddress));
+                        ?>
+                        <tr>
+                           <td>
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                           </td>
+                           <td>
+                               <span> {{$address}}</span>
+                           </td>
+                        </tr>
+                        @endif
+                        @if(!empty(json_decode($dealer->phoneNumber)))
+                        <?php 
+                            $phones= join("<br>", json_decode($dealer->phoneNumber));
+                        ?>
+                        <tr>
+                           <td>
+                              <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                           </td>
+                           <td>
+                               <span> {{$phones}}</span>
+                           </td>
+                          </tr>
+                        </div>
+                        @endif
+                        </table>
                       </div>
                   </div>
               </div>
