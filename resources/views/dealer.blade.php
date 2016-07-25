@@ -79,7 +79,11 @@
               <div class="row">
                   <div class="col-md-6">
                       <h1>{{ $title }}</h1>
-                      <p>{{ !empty($dealer->companySummary) ? $dealer->companySummary : 'Coming soon.' }}</p>
+                      @if(!empty($dealer->companySummary)) 
+                          {!! nl2br(e($dealer->companySummary)) !!}
+                      @else 
+                         <span>Coming soon.</span>
+                      @endif
                       <ul class="social-networks">
                           @if(!empty($dealer->socialFacebook))
                               <li class="socials_item">

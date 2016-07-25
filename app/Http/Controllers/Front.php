@@ -616,11 +616,12 @@ class Front extends Controller {
 
     public function viewDealer($id, $slug) {
       $dealer = DB::table('users')->where('slug', $slug)->orWhere('users.id', $id)
-        ->join('countries', 'countries.id', '=', 'users.countryId')
+        ->leftJoin('countries', 'countries.id', '=', 'users.countryId')
         ->select('users.*', 'countries.name as country')
         ->first();
+
         $listings = DB::table('listings')
-        ->where('userId', $dealer->id)
+        ->where('userId', $id)
         ->where('status', 'APPROVED')
         ->join('countries', 'countries.id', '=', 'listings.countryId')
         ->select('listings.*', 'countries.name as country')

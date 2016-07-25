@@ -250,6 +250,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
+                                                    <label for="txtWebsite" class="control-label">Company Website</label>
+                                                    <div class="pt-15">
+                                                        <input id="companyWebsite" name="companyWebsite" type="text" class="form-control" placeholder="{{$user->website}}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group m-0">
                                                     <label for="txtCompanyRegNum" class="control-label">Company Registration No.:</label>
                                                     <div class="pt-15">
                                                         <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}">
@@ -267,12 +273,13 @@
                                                         <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}"></textarea>
                                                     </div>
                                                 </div>
-                                                <div class="form-group m-0">
+                                                
+                                               <!-- <div class="form-group m-0">
                                                     <label for="contactDetails" class="control-label">Company Details</label>
                                                     <div class="pt-15">
                                                         <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder="{{$user->contactDetails}}"></textarea>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
 
