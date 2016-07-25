@@ -130,6 +130,110 @@ class Front extends Controller {
     public function categories() {
         return 'product categories page';
     }
+    public function product_3d_estates() {
+        $orderby = 'created_at';
+        $order = 'desc';
+        $filters = array();
+        $search_arr = array();
+        if(isset($_REQUEST['filters']) && $_REQUEST['filters'] == 'on'){
+            $_filter = $_REQUEST;
+            // var_dump($_filter); exit;
+
+            if(!empty($_filter['location']) && $_filter['location'] != 'Location'){
+                $search_arr[] = ['countryId', $_filter['location']];
+                $filters['location'] = $_filter['location'];
+            }
+
+            // var_dump($price_range); exit;
+            if(!empty($_filter['sort-radio'])){
+                switch($_filter['sort-radio']){
+                    case 'latest':
+                    $orderby = 'created_at';
+                    $order = 'desc';
+                    break;
+                    case 'priceUp':
+                    $orderby = 'price';
+                    $order = 'desc';
+                    break;
+                    case 'priceDown':
+                    $orderby = 'price';
+                    $order = 'asc';
+                    break;
+                }
+                $filters['sort'] = $_filter['sort-radio'];
+            }
+
+            if(isset($_REQUEST['use_price']) && $_REQUEST['use_price'] == 'on'){ // need to be put last to filter out the price range based on currency set.
+                $use_price =  true;
+                $filters['use_price'] = 'on';
+
+                $price_lists = DB::table('listings')
+                ->where('status', 'APPROVED')
+                ->where($search_arr)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
+                ->get();
+
+                if($use_price && !empty($_REQUEST['range'])){
+                    $price_range = explode(';', $_REQUEST['range']);
+                    $filtered_listing = array();
+                    foreach($price_lists as $key => $val){
+                        $price_set = $val->price;
+                        $currency = DB::table('currencies')->where('id', $val->currencyId)->first();
+                        $set_curr = $currency->code;
+                        $sess_curr = null !== session('currency') ? session('currency') : 'USD';
+                        $session_currency = DB::table('currencies')->where('code', $sess_curr)->first();
+                        if($set_curr != $sess_curr){
+                            $price_sql = $price_set / $currency->rate;
+                            $price = $price_sql * $session_currency->rate;
+                        }else{
+                            $price = $price_set;
+                        }
+
+                        if($price < $price_range[0] || $price > $price_range[1]){
+                            // echo $key . ', ';
+                            $filtered_listing[] = $val->id;
+                        }
+
+                    }
+                    // var_dump($filtered_listing); exit;
+                    // $search_arr[] = ['price', '>=', $price_range[0]];
+                    // $search_arr[] = ['price', '<=', $price_range[1]];
+                    $filters['range'] = $_REQUEST['range'];
+                }
+            }else{
+                $use_price =  false;
+                $filters['use_price'] = 'off';
+            }
+        }
+
+        if(isset($filtered_listing)){
+            $listings = DB::table('listings')
+            ->whereNotNull('aerialLook3DUrl')
+            ->where('status', 'APPROVED')
+            ->whereNotIn('listings.id', $filtered_listing)
+            ->where($search_arr)
+            ->orderBy($orderby, $order)
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
+            ->paginate(30);
+        } else {
+            $listings = DB::table('listings')
+            ->whereNotNull('aerialLook3DUrl')
+            ->where('status', 'APPROVED')
+            ->where($search_arr)
+            ->orderBy($orderby, $order)
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
+            ->paginate(30);
+        }
+
+        $listings->setPath($_SERVER['REQUEST_URI']);
+        $title_cat = '3D Real Estates';
+        $banner = 'banner-estate.jpg';
+        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
+    
+    }
 
     public function product_categories($id) {
         $childs = array(

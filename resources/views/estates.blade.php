@@ -154,6 +154,25 @@
             </div>
         </div>
         <!-- end of benefit block -->
+        <!-- Exclusive estates block-->
+        <div class="create-account">
+            <div class="container">
+                <div class="row">
+                    <!-- new grid -->
+                    <div class="row">
+                        <div class="col-lg-10">
+                    <div class="col-sm-10" style="text-align: center;">
+                            <h1>Exclusive 3D Properties on Luxify Estates</h1>
+                    </div>
+                    <div class="col-sm-2" style="text-align: center;">
+                       <a href="/category/3d-estates" class="btn btn-primary">View All</a>
+                    </div>
+                </div>
+                </div>
+                 </div> <!-- end of new grid -->
+            </div>
+        </div>
+        <!-- end of exclusive estates block -->
         <div class="content-wrap add">
             <div class="container">
                 <!-- new grid -->

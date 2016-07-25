@@ -59,6 +59,7 @@ Route::post('/api/bulkActions', 'Panel@bulkActions');
 Route::get('/listings','Front@products');
 Route::get('/listing/{id}','Front@product_details');
 Route::get('/categories','Front@categories');
+Route::get('/category/3d-estates','Front@product_3d_estates');
 Route::get('/category/{id}','Front@product_categories');
 Route::post('/category/{id}','Front@product_categories');
 Route::get('/dealer/{id}/{slug}','Front@viewDealer');
