@@ -68,21 +68,17 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <label for="txtCompanyName">Company Name</label>
+                                        <input id="txtCompanyName" name="txtCompanyName" type="text" class="form-control" value="{{isset($filters['txtCompanyName']) ? ucfirst($filters['txtCompanyName']) : ''}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label for="ddlCustomerGroup">Customer Group</label>
                                         <select id="ddlCustomerGroup" name="ddlCustomerGroup" class="form-control">
                                             <option value="">Choose</option>
                                             <option value="user"{{isset($filters['ddlCustomerGroup']) ? func::selected($filters['ddlCustomerGroup'],'user') : ''}}>User</option>
                                             <option value="seller"{{isset($filters['ddlCustomerGroup']) ? func::selected($filters['ddlCustomerGroup'],'seller') : ''}}>Seller</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="ddlApproved">Approved</label>
-                                        <select id="ddlApproved" name="ddlApproved" class="form-control">
-                                            <option value="">Choose</option>
-                                            <option value="1"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],1) : ''}}>Yes</option>
-                                            <option value="0"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],0) : ''}}>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -105,7 +101,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-
+                                    <div class="form-group">
+                                        <label for="ddlApproved">Approved</label>
+                                        <select id="ddlApproved" name="ddlApproved" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="1"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],1) : ''}}>No</option>
+                                            <option value="0"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],0) : ''}}>Yes</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-15 p-10 text-right">

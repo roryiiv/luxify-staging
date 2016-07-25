@@ -94,9 +94,13 @@ class Panel extends Controller
         $filter_or = array();
         $filters = array();
         if(isset($_GET['txtCustomerName']) && !empty($_GET['txtCustomerName'])){
-            $filter[] = ['firstName', 'like', $_GET['txtCustomerName']];
-            $filter_or[] = ['lastName', 'like', $_GET['txtCustomerName']];
+            $filter[] = ['firstName', 'like', '%'.$_GET['txtCustomerName']. '%'];
+            $filter_or[] = ['lastName', 'like', '%'.$_GET['txtCustomerName']. '%'];
             $filters['txtCustomerName'] = $_GET['txtCustomerName'];
+        }
+        if(isset($_GET['txtCompanyName']) && !empty($_GET['txtCompanyName'])){
+            $filter[] = ['companyName', 'like', '%'.$_GET['txtCompanyName'].'%'];
+            $filters['txtCompanyName'] = $_GET['txtCompanyName'];
         }
         if(isset($_GET['ddlCustomerGroup']) && !empty($_GET['ddlCustomerGroup'])){
             $filter[] = ['role', $_GET['ddlCustomerGroup']];
@@ -107,7 +111,7 @@ class Panel extends Controller
             $filters['ddlApproved'] = $_GET['ddlApproved'];
         }
         if(isset($_GET['txtEmail']) && !empty($_GET['txtEmail'])){
-            $filter[] = ['email', $_GET['txtEmail']];
+            $filter[] = ['email', '%'. $_GET['txtEmail']. '%'];
             $filters['txtEmail'] = $_GET['txtEmail'];
         }
         if(isset($_GET['ddlStatus'])){
