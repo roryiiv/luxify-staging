@@ -288,27 +288,31 @@ class Panel extends Controller
         $item = Listings::where('id', $id)->first();
         $error_arr = array();
 
-        $item->userId = Auth::user()->id;
+        //$item->userId = Auth::user()->id;
 
         if ( isset($_POST['itemLocation']) && !empty($_POST['itemLocation']) ) {
             $item->countryId = $_POST['itemLocation'];
+            echo '1';
         } else {
             $error_arr['itemLocation'] = 'Item Location is not specified.';
         }
 
-        if ( isset($_POST['itemAvailability']) && !empty($_POST['itemAvailability']) ) {
+        if ( isset($_POST['itemAvailability']) && !empty($_POST['itemAvailability'])) {
             $item->availableToId = $_POST['itemAvailability'] == 'worldwide' ? NULL: $_POST['itemLocation'];
+            echo '1';
         } else {
             $error_arr['itemAvailability'] = 'Item Availability is not specified.';
         }
 
         if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
+            echo '1';
             $item->categoryId = $_POST['itemCategory'];
         } else {
             $error_arr['itemCategory'] = 'Item Category is not specified.';
         }
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
+            echo '1';
             $item->title = $_POST['title'];
             if($item->slug == '' || $item->slug == null){ //we'll build a new slug on each update.
                 $item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
@@ -321,23 +325,27 @@ class Panel extends Controller
             $item->price = NULL;
         } else {
             if (isset($_POST['price']) && !empty($_POST['price'])) {
+              echo '4a';
                 $item->price = intval($_POST['price']);
             } else {
+              echo '4b';
                 $error_arr['price'] = 'Item price is required.';
             }
         }
 
         if ( isset($_POST['currency']) && !empty($_POST['currency']) ) {
+            echo '5';
             $item->currencyId = $_POST['currency'];
         } else {
             $error_arr['currency'] = 'Item currency is required.';
         }
 
-        if ( isset($_POST['status']) && !empty($_POST['status']) ) {
+        if (isset($_POST['status']) && !empty($_POST['status']) ) {
             $item->status = $_POST['status'];
-        } else
-
-        if ( isset($_POST['description']) && !empty($_POST['description']) ) {
+        } else {
+            $error_arr['status'] = 'Item status is required.';
+        }
+        if ( isset($_POST['description']) && !empty($_POST['description'])) {
             $item->description = $_POST['description'];
         } else {
             $error_arr['description'] = 'Item description is required.';

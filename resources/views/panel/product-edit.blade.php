@@ -113,7 +113,7 @@
         </div>
     </div>
     <div class="page-content container-fluid">
-        <form id="form-tabs_edit_product" class="form-horizontal" action="/panel/product/update/{{$item->id}}" method="post">
+        <form id="form-tabs_edit_product" class="form-horizontal" action="/panel/product/update/{{$item->id}}" method="POST">
             {!! csrf_field() !!}
             <h3>Step 1: Category</h3>
             <fieldset>
