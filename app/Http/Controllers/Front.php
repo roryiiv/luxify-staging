@@ -127,9 +127,6 @@ class Front extends Controller {
         }
     }
 
-    public function categories() {
-        return 'product categories page';
-    }
     public function product_3d_estates() {
         $orderby = 'created_at';
         $order = 'desc';
@@ -227,8 +224,11 @@ class Front extends Controller {
             ->select('listings.*', 'countries.name as country')
             ->paginate(30);
         }
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
         $title_cat = '3D Real Estates';
         $banner = 'banner-estate.jpg';
         return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
@@ -559,7 +559,11 @@ class Front extends Controller {
         }
 
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
+
 
         return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
     }
@@ -1070,7 +1074,10 @@ class Front extends Controller {
             ->paginate(30);
         }
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
 
         $locs = '';
         $cats = '';
@@ -1092,7 +1099,11 @@ class Front extends Controller {
             }));
         }
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
+        
 
         return view('dealer-listings', ['listings' => $listings, 'filters' => $filters]);
     }
@@ -1405,9 +1416,11 @@ class Front extends Controller {
             }
         }
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
 
         return view('search', ['listings' => $listings, 'search' => $search, 'filters' => $filters]);
     }
