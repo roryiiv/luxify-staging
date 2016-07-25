@@ -161,7 +161,7 @@
                               <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
                            </td>
                            <td>
-                               <span> {{$phones}}</span>
+                               <span> {!! $phones !!}</span>
                            </td>
                           </tr>
                         </div>
