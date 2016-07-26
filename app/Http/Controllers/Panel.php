@@ -498,6 +498,9 @@ class Panel extends Controller
         if(isset($_POST['']) && !empty($_POST[''])){
             $user->lastName = $_POST['last_name'];
         }
+        if(isset($_POST['txtUserRole']) && !empty($_POST['txtUserRole'])){
+            $user->role = $_POST['txtUserRole'];
+        }
         if(isset($_POST['country']) && !empty($_POST['country'])){
             $user->countryId = $_POST['country'];
         }
@@ -506,6 +509,9 @@ class Panel extends Controller
         }
         if(isset($_POST['currency']) && !empty($_POST['currency'])){
             $user->currencyId = $_POST['currency'];
+        }
+        if(isset($_POST['phoneNumber']) && !empty($_POST['phoneNumber'])) {
+            $user->phoneNumber = json_encode($_POST['phoneNumber']); 
         }
         if(isset($_POST['contactDetails']) && !empty($_POST['contactDetails'])){
             $user->contactDetails = $_POST['contactDetails'];

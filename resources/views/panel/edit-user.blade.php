@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="/db/css/jquery.steps.css">
     <!-- Primary Style-->
     <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 @endsection
 
 @section('content')
@@ -76,7 +77,11 @@
                                         <div class="form-group">
                                             <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">User Role</label>
                                             <div class="col-sm-9 col-md-8">
-                                                <input id="txtUserRole" name="txtUserRole" type="text" class="form-control" value="{{ucfirst($user->role)}}" disabled="disabled">
+                                                <select id="txtUserRole" name="txtUserRole" class="form-control">
+                                                  <option value="user" {{ $user->role === 'user' ? 'selected' : ''}}>User</option>
+                                                  <option value="seller" {{ $user->role === 'seller' ? 'selected' : ''}}>Seller</option>
+            
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -250,6 +255,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
+                                                    <label for="txtCompanyPhones" data-role='taginput' class="control-label">Contact Phone Numbers</label>
+                                                    <?php $phones = json_decode($user->phoneNumber); ?>
+                                                    <div class="pt-15">
+                                                        <input id="phoneNumber" type="text" class="form-control" value="{{ !empty($phones) ? join(',', $phones): ''}}">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group m-0">
                                                     <label for="txtWebsite" class="control-label">Company Website</label>
                                                     <div class="pt-15">
                                                         <input id="companyWebsite" name="companyWebsite" type="text" class="form-control" placeholder="{{$user->website}}">
@@ -390,6 +403,7 @@
     <script type="text/javascript" src="/db/js/dropzone.min.js"></script>
     <!-- Sweet Alert-->
     <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <!-- Custom JS-->
     <script type="text/javascript" src="/db/js/app.js"></script>
     <script type="text/javascript" src="/db/js/demo.js"></script>
@@ -421,11 +435,20 @@
                     },
                     function(isConfirm){
                         if (isConfirm) {
+                          if ($('#txtPassword').val() !== '') {
                             var salt = encrypt.makeSalt();
                             var hashed = encrypt.password($('#txtPassword').val(), salt);
                             $('input#salt').val(salt);
                             $('input#hashed').val(hashed);
-                            $("form[name='profile']").submit();
+                          }
+                          if ($('#phoneNumber').val() !== '') {
+                            var phones = $('#phoneNumber').tagsinput('items');
+                              
+                              $(phones).each(function(idx, ele) {
+                           $('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
+                            })
+                          }
+                          $("form[name='profile']").submit();
                         }else{
                             swal("Cancelled", "User profile is not updated.", "error");
                         }
@@ -511,7 +534,10 @@
                     })
                 }
             });
-        })
+            $('#phoneNumber').tagsinput({
+               allowDuplicates: false 
+            });
+        });
     </script>
     @if(isset($_GET['update']) && $_GET['update'] == 'success')
         <script>
