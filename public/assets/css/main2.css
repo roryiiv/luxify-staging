@@ -1703,7 +1703,7 @@ div.lightbox {
   padding: 13px 9px;
   outline: none !important;
 }
-.filter-drop {
+#filter-drop {
   position: absolute;
   left: 0;
   margin-top: -20px;
@@ -1716,27 +1716,27 @@ div.lightbox {
   padding: 14px 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
 }
-.filter-drop .select-hold .form-title {
+#filter-drop .select-hold .form-title {
   padding-left: 6px;
 }
-.filter-drop .form-row {
+#filter-drop .form-row {
   border-bottom: 1px solid #ebe8e1;
   padding: 25px 0 18px;
 }
-.filter-drop .form-row:first-child {
+#filter-drop .form-row:first-child {
   padding-top: 0;
 }
-.filter-drop .form-row:last-child {
+#filter-drop .form-row:last-child {
   padding-bottom: 0;
   border-bottom: none;
 }
-.filter-drop .form-row.add {
+#filter-drop .form-row.add {
   padding-top: 50px;
 }
-.filter-drop .button-wrap {
+#filter-drop .button-wrap {
   text-align: right;
 }
-.filter-drop .ion-range {
+#filter-drop .ion-range {
   padding-top: 50px;
   padding-bottom: 30px;
 }
@@ -3833,15 +3833,15 @@ only screen and (min-device-pixel-ratio: 1.5) {
     min-width: 190px;
   }
 
-  .filter-drop .select-hold {
+  #filter-drop .select-hold {
     padding-bottom: 20px;
   }
 
-  .filter-drop .button-wrap {
+  #filter-drop .button-wrap {
     text-align: center;
   }
 
-  .filter-drop .btn {
+  #filter-drop .btn {
     margin-bottom: 10px;
   }
 
