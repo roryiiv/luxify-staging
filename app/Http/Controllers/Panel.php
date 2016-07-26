@@ -571,13 +571,13 @@ class Panel extends Controller
         $user = User::where('id', $user_id)->first();
         $role = $user->role;
 
-        if($role == 'seller'){
+        //if($role == 'seller') {
             //we remove the items listed under this user id
             $ended_at = date("Y-m-d H:i:s");
             DB::table('listings')
             ->where('userId', $user->id)
             ->update(['status' => 'EXPIRED', 'ended_at' => $ended_at]);
-        }
+        //}
 
         //suspend the account
         DB::table('users')
