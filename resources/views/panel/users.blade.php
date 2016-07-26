@@ -175,7 +175,7 @@
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
                                                             <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
                                                             <a href="{{ $user->role != 'seller' ? 'javascript:;' : url('/dealer') . '/' . $user->id . '/' . $slug }}" target="_blank" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                            <a href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
+                                                            <a target="_blank" href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
                                                             @if($user->isSuspended == 0)
                                                                 <a href="/panel/user/delete/{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                             @else
