@@ -111,7 +111,7 @@ class Panel extends Controller
             $filters['ddlApproved'] = $_GET['ddlApproved'];
         }
         if(isset($_GET['txtEmail']) && !empty($_GET['txtEmail'])){
-            $filter[] = ['email', '%'. $_GET['txtEmail']. '%'];
+            $filter[] = ['email', 'like', '%'. $_GET['txtEmail']. '%'];
             $filters['txtEmail'] = $_GET['txtEmail'];
         }
         if(isset($_GET['ddlStatus'])){
