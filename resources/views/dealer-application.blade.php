@@ -8,6 +8,30 @@
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <style>
+      .dz-message {
+        border: 2px dashed grey;
+        height: 80px;
+        padding-top: 31px;
+      }
+      .dz-image{
+        margin-top: 13px;
+      }
+      .bootstrap-tagsinput {
+        width: 100%;
+        border-radius: 0px;
+        border: 1px solid #c5c5c5;
+        height: 43px;
+        padding: 7px 6px;
+      }
+      .bootstrap-tagsinput .tag {
+        background-color: #958867!important;
+        background-color: #958867;
+        font-weight: 100;
+        font-size: 1.4rem;
+      }
+    </style>
 @endsection
 @section('content')
   <!-- main banner of the page -->
@@ -177,8 +201,8 @@
         </div>
         <!-- end of sell block -->
 		<div class="application-form" id="application-form">
-			<form action="/dealer-application" method="post" class="detail-form">
-                {{ csrf_field() }}
+			<form id='dealer-application-form' action="/dealer-application" method="POST" class="detail-form">
+                {!! csrf_field() !!}
                 <div class="container">
 					<header class="heading">
 						<h2 class="h1">Business Details</h2>
@@ -191,60 +215,100 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">First Name:</label>
+                                        <label for="emai">Login Email:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="first-name" class="form-control" required>
+                                        
+                                    @if(Auth::user())
+                                        <input disabled type="text" name="email" class="form-control" value="{{Auth::user()->email}}" required>
+                                    @else
+                                        <input type="text" name="email" class="form-control" required>
+                                    @endif
+                                    </div>
+                                </div>
+                            </div>
+                            @if(!Auth::user())
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-4">
+                                        <label for="password">Password:</label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <input id="password" type="password" name="password" class="form-control" required>
+                                        <input type="hidden" id="salt" name="salt" class="form-control" required>
+                                        <input type="hidden" id="hashed" name="hashed" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Last Name:</label>
+                                        <label for="confirmPassword">Confirm Password:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="last-name" class="form-control" required>
+                                        <input id="confirmPassword" type="password" name="confirmPassword" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-4">
+                                        <label for="firstName">First Name:</label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <input type="text" name="firstName" class="form-control" value="{{ Auth::user() ? Auth::user()->firstName : '' }}" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Your Email:</label>
+                                        <label for="lastName">Last Name:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="email" name="email" class="form-control" required>
+                                        <input type="text" name="lastName" class="form-control" value="{{ Auth::user() ? Auth::user()->lastName : '' }}" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Your Phone:</label>
+                                        <label for="secondaryEmail">Seconday Email:(Optional)</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="phone" class="form-control" required>
+                                        <input type="text" name="secondaryEmail" class="form-control">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Business Name:</label>
+                                        <label for="phoneNumber">Your Phone:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="business-name" class="form-control" required>
+                                        <input id="phoneNumber" type="text" name="phoneNumber" class="form-control">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Primary Business Focus :</label>
+                                        <label for="companyName">Company Name:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <select name="primary_business_focus" placeholder="Select one" class="select_form" required>
+                                        <input type="text" name="companyName" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-4">
+                                        <label for="businessFocus">Business Focus:</label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <select name="businessFocus" placeholder="Select one" class="select_form" required>
+                                             <option>Please select your business focus</option>
                                              <option value='Aircrafts'>Aircrafts</option>
                                              <option value='Antiques'>Antiques</option>
                                              <option value='Art'>Art</option>
@@ -268,26 +332,15 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Secondary Business Focus:</label>
+                                        <label for="countryId">Country:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <select name="secondary_business_focus" placeholder="Select one" class="select_form" required>
-                                             <option value='Aircrafts'>Aircrafts</option>
-                                             <option value='Antiques'>Antiques</option>
-                                             <option value='Art'>Art</option>
-                                             <option value='Cars'>Cars</option>
-                                             <option value='Collectibles'>Collectibles</option>
-                                             <option value='Fashion_accessories'>Fashion accessories</option>
-                                             <option value='Fine_wines'>Fine Wines</option>
-                                             <option value='Furnitures'>Furnitures</option>
-                                             <option value='Handbags'>Handbags</option>
-                                             <option value='Jewelry'>Jewelry</option>
-                                             <option value='Luxury_experiences'>Luxury experiences</option>
-                                             <option value='Real_estate'>Real Estate</option>
-                                             <option value='Spirits'>Spirits</option>
-                                             <option value='Watches'>Watches</option>
-                                             <option value='Yachts'>Yachts</option>
-                                             <option value='Other'>Other</option>
+                                        <select name="countryId" class="form-control width_more" required>
+                                             <option>Please select your country</option>
+                                          <?php $countries = func::build_countries(); ?>
+                                          @foreach($countries as $country)
+                                             <option value="{{$country['val']}}">{{$country['label']}}</option>
+                                          @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -295,16 +348,15 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Estimated Inventory Size:</label>
+                                        <label for="currencyId">Currency:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <select name="estimated_inventory_size" placeholder="Select one" class="select_form" required>
-                                            <option>Less than 50 </option>
-                                            <option>50-100 </option>
-                                            <option>100-250 </option>
-                                            <option>250-500 </option>
-                                            <option>500-1000 </option>
-                                            <option>Over 1000 </option>
+                                        <select name="currencyId" class="form-control width_more" required>
+                                          <?php $currencies= func::build_curr(); ?>
+                                             <option>Please select a default currency</option>
+                                          @foreach($currencies as $currency)
+                                             <option value="{{$currency['val']}}">{{$currency['code']}} {{$currency['symbol']}}</option>
+                                          @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -312,40 +364,61 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Average Item Price:</label>
+                                        <label for="companyAddress">Company Address:</label>
                                     </div>
-                                    <div class="col-lg-4 col-sm-4">
-                                        <select name="currency_avg" placeholder="Select one" class="select_form" required>
-                                            <option>USD $</option>
-                                            <option>GBP £</option>
-                                            <option>EUR €</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-5 col-sm-4">
-                                        <input type="text" name="average_item_price" class="form-control" placeholder="Price" required>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <textarea name="companyAddress" class="form-control about_buisness"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Country:</label>
+                                        <label for="companySummary">Company Description:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <input type="text" name="country" class="form-control width_more" placeholder="Country" required>
+                                        <textarea name="companySummary" class="form-control about_buisness" placeholder="Optional. To help us more about your company, please share more details about the products you wish to list on Luxify. This company summary will appear on your exclusive Luxify dealer page."></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-4">
-                                        <label for="name">Tell us more about your business:</label>
+                                        <label for="companyLogoURL">Company Logo:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <textarea name="business_description" class="form-control about_buisness" placeholder="Optional. To help us more about your company, please share more details about the products you wish to list on Luxify."></textarea>
+                                        <div class="widget">
+                                            <div class="widget-body">
+                                                <div id="api-company-logo" class="dropzone text-center"></div>
+                                                <input type="hidden" name="companyLogoUrl" id="companyLogoUrl" value="" />
+                                            </div>
+                                            <div class="widget-heading pt-0">
+                                                <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, with a maximum file size of 10MB.</h6>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-4">
+                                        <label for="coverImageUrl">Cover Image:</label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <div class="widget">
+                                            <div class="widget-body">
+                                                <div id="api-cover-image" class="dropzone text-center"></div>
+                                                <input type="hidden" required name="coverImageUrl" id="coverImageUrl" value="" />
+                                            </div>
+                                            <div class="widget-heading pt-0">
+                                                <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, with a maximum file size of 10MB.</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                     <div class="row">
@@ -353,7 +426,7 @@
 							<div class="row">
 								<div class="col-lg-9 col-lg-offset-3 col-sm-8 col-sm-offset-4">
 									<div class="form-group">
-										<input type="submit" class="btn btn-primary btn-block" value="Submit Application">
+										<input type="button" id="application-submit-btn" class="btn btn-primary btn-block" value="Submit Application">
 									</div>
 							<div class="form-info-txt" style="text-align: left;">
 								<p>Luxify does accept items from private sellers. If you are a private seller or collector and have a luxury item to sell, simply contact our team at <a href="mailto:concierge@luxify.com">concierge@luxify.com</a> and we will help you to leverage Luxify’s dealer network to assist you in selling your item.</p>
@@ -370,18 +443,158 @@
 @endsection
 @section('scripts')
     <script src="/assets/js/jquery.fancybox.js"></script>
+    <!-- DropzoneJS-->
+    <script type="text/javascript" src="/db/js/dropzone.min.js"></script>
+    <script type="text/javascript" src="/db/js/dropzone-js.js"></script>
+    <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
     <script>
     jQuery(document).ready(function() {
-    jQuery('#jarallax-container-0 > div').css('top', '-93px');
-      $(".fancybox").fancybox({
-         fitToView : false,
-         width   : '90%',
-         height    : '90%',
-         autoSize  : true,
-         closeClick  : false,
-         openEffect  : 'none',
-         closeEffect : 'none',
+      jQuery('#jarallax-container-0 > div').css('top', '-93px');
+        $(".fancybox").fancybox({
+           fitToView : false,
+           width   : '90%',
+           height    : '90%',
+           autoSize  : true,
+           closeClick  : false,
+           openEffect  : 'none',
+           closeEffect : 'none',
+        });
+      
+        var token = "{{ Session::getToken() }}";
+        $("#api-company-logo").dropzone({
+            @if(Auth::user())
+              url: "/panel/upload",
+            @else
+              url: "/public/images/upload",
+            @endif
+            paramName: "image",
+            params: {
+                _token: token
+            },
+            maxFilesize: 2,
+            maxThumbnailFilesize: .5,
+            maxFiles: 1,
+            uploadMultiple: false,
+            addRemoveLinks: true,
+            dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
+            sending: function(file, xhr, formData) {
+                $('.dz-success-mark').hide();
+                $('.dz-error-mark').hide();
+            },
+            success: function (file, response) {
+                $('#companyLogoUrl').val(response);
+            },
+            error: function (file, response) {
+                file.previewElement.classList.add("dz-error");
+            },
+        });
+
+        $("#api-cover-image").dropzone({
+            @if(Auth::user())
+              url: "/panel/upload",
+            @else
+              url: "/public/images/upload",
+            @endif
+            paramName: "image",
+            params: {
+                _token: token
+            },
+            maxFilesize: 2,
+            maxThumbnailFilesize: .5,
+            maxFiles: 1,
+            uploadMultiple: false,
+            addRemoveLinks: true,
+            thumbnailWidth: 400,
+            dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
+            sending: function(file, xhr, formData) {
+                $('.dz-success-mark').hide();
+                $('.dz-error-mark').hide();
+            },
+            success: function (file, response) {
+                $('#coverImageUrl').val(response);
+            },
+            error: function (file, response) {
+                file.previewElement.classList.add("dz-error");
+            },
+        });
+
+        $('form.detail-form').validate({
+          rules: {
+            email: {
+              required: true,
+              email: true,
+            },
+            secondaryEmail: {
+              email: true,
+            },
+            firstName: {
+              required: true,
+            },
+            lastName: {
+              required: true,
+            },
+            companyName: {
+              required: true,
+            },
+            companyAddress: {
+              required: true,
+            },
+            companyLogoUrl: {
+              required: true,
+            },
+            coverImageUrl: {
+              required: true,
+            },
+            countryId: {
+              required: true,
+            },
+            currencyId: {
+              required: true,
+            },
+            @if(!Auth::user())
+            password: {
+              minlength: 8,
+              required: true,
+              equalTo: '#confirmPassword',
+            },
+            confirmPassword: {
+              minlength: 8,
+              required: true,
+              equalTo: '#password',
+            },
+            @endif
+          },
+          messages: {
+            password: {
+              equalTo: "Please re-enter the paasword below." 
+            } 
+          }
+        });
+
+        $('#phoneNumber').tagsinput({
+           allowDuplicates: false 
+        });
+        $('#application-submit-btn').on('click', function(e) {
+          e.preventDefault(); 
+          var token = $('input[name=_token]').val();
+          if ($('form.detail-form').valid()){ 
+            if ($('#phoneNumber').val() !== '') {
+              var phones = $('#phoneNumber').tagsinput('items');
+                
+                $(phones).each(function(idx, ele) {
+             $('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
+              });
+            }
+            var salt = encrypt.makeSalt();
+            var hashed = encrypt.password($('#password').val(), salt);
+            $('input#salt').val(salt);
+            $('input#hashed').val(hashed);
+            $('form.detail-form').submit();
+          }
+
+        });
       });
-    });
     </script>
 @endsection

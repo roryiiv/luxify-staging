@@ -12,7 +12,7 @@ use App\Http\Requests;
 
 use App\Listings;
 
-use App\User;
+use App\Users;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -21,6 +21,8 @@ use DB;
 use func;
 
 use Illuminate\Routing\Controller;
+
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Front extends Controller {
     //Front end Controller
@@ -789,41 +791,97 @@ class Front extends Controller {
     }
 
     public function dealerApplication(Request $request){
-        if(Auth::user()){
-            $username = Auth::user()->username;
-        }else{
-            $username = 'guest';
+        $updateSuccess = false;
+        $input = $request->all();
+        // dealer application based on existing user account
+        if(Auth::user()) {
+          if(Auth::user()->email === $input['email'] && Auth::user()->role === 'user') {
+            $oldUser = Users::where('email', '=', $input['email'])->get();
+            if ($oldUser) {
+              if(isset($input['companyLogoUrl']) && !empty($input['companyLogoUrl'])){
+                  $image = base_path() . '/public/temp/' . $input['companyLogoUrl'];
+                  $s3 = \Storage::disk('s3');
+                  $filePath = '/images/' . $input['companyLogoUrl'];
+                  if($s3->put($filePath, file_get_contents($image), 'public')){
+                      $oldUser->companyLogoUrl= $input['companyLogoUrl'];
+                      unlink($image);
+                  }
+              }
+              if(isset($input['coverImageUrl']) && !empty($input['coverImageUrl'])){
+                  $image = base_path() . '/public/temp/' . $input['coverImageUrl'];
+                  $s3 = \Storage::disk('s3');
+                  $filePath = '/images/' . $input['coverImageUrl'];
+                  if($s3->put($filePath, file_get_contents($image), 'public')){
+                      $oldUser->coverImageUrl= $input['coverImageUrl'];
+                      unlink($image);
+                  }
+              }
+              $oldUser->role = 'seller';
+              $oldUser->companyName = $input['companyName'];
+              $oldUser->companyAddress = $input['companyAddress'];
+              $oldUser->companySummary= $input['companySummary'];
+              $oldUser->coverImageUrl = $input['coverImageUrl'];
+              $oldUser->firstName = $input['firstName'];
+              $oldUser->lastName = $input['lastName'];
+              $oldUser->phoneNumber = json_encode($input['phoneNumber']);  
+              $oldUser->countryId = $input['countryId'];
+              $oldUser->currencyId = $input['currencyId'];
+              $oldUser->contactDetails = $input['secondaryEmail'];
+              $oldUser->dealer_status = 'pending';
+              $oldUser->slug = SlugService::createSlug(Users::class, 'slug', $input['companyName']);
+              $updateSuccess = $oldUser->save() ? true : false;
+            } 
+          }
+        // a new dealer application
+        } else {
+          $newUser = new Users;
+          $newUser->username = $input['companyName'];
+          $newUser->role = 'seller';
+          $newUser->email = $input['email']; 
+          $newUser->salt = $input['salt'];
+          $newUser->hashedPassword= $input['hashed'];
+          $newUser->companyName = $input['companyName'];
+          $newUser->companyAddress = $input['companyAddress'];
+          $newUser->companySummary= $input['companySummary'];
+          if(isset($input['companyLogoUrl']) && !empty($input['companyLogoUrl'])){
+              $image = base_path() . '/public/temp/' . $input['companyLogoUrl'];
+              $s3 = \Storage::disk('s3');
+              $filePath = '/images/' . $input['companyLogoUrl'];
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $newUser->companyLogoUrl= $input['companyLogoUrl'];
+                  unlink($image);
+              }
+          }
+          if(isset($input['coverImageUrl']) && !empty($input['coverImageUrl'])){
+              $image = base_path() . '/public/temp/' . $input['coverImageUrl'];
+              $s3 = \Storage::disk('s3');
+              $filePath = '/images/' . $input['coverImageUrl'];
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $newUser->coverImageUrl= $input['coverImageUrl'];
+                  unlink($image);
+              }
+          }
+          $newUser->firstName = $input['firstName'];
+          $newUser->lastName = $input['lastName'];
+          $newUser->fullName = $input['firstName'] . ' ' . $input['lastName'];
+          $newUser->phoneNumber = json_encode($input['phoneNumber']);  
+          $newUser->countryId = $input['countryId'];
+          $newUser->currencyId = $input['currencyId'];
+          $newUser->contactDetails = $input['secondaryEmail'];
+          $newUser->dealer_status = 'pending';
+          $newUser->slug = SlugService::createSlug(Users::class, 'slug', $input['companyName']);
+          $updateSuccess = $newUser->save() ? true : false;
         }
 
-        $input = $request->all();
-        $business_details = array(
-            'business-name' => $input['business-name'],
-            'primary_business_focus' => $input['primary_business_focus'],
-            'secondary_business_focus' => $input['secondary_business_focus'],
-            'estimated_inventory_size' => $input['estimated_inventory_size'],
-            'average_item_price' => $input['currency_avg'] . $_POST['average_item_price'],
-            'business_description' => $input['business_description'],
-        );
-        $business_details_json = json_encode($business_details, JSON_NUMERIC_CHECK);
-
-        $id = DB::table('applications')->insertGetId([
-            'username' => $username,
-            'first_name' => $input['first-name'],
-            'last_name' => $input['last-name'],
-            'email' => $input['email'],
-            'phone' => $input['phone'],
-            'business_details' => $business_details_json,
-            'country' => $input['country'],
-        ]);
-
-        if($id){
+        if($updateSuccess) {
+          
             $details = array('to' => $input['email'], 'forward' => 'florian.martigny@luxify.com');
             $this_url = url('/');
-            $username_to = $username;
+            $username_to = $input['companyName'];
             Mail::send('emails.luxify-proseller-request-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){
 
                 $message->from('technology@luxify.com', 'Luxify Admin');
-                $message->subject('Your Pro Seller Application has been sent');
+                $message->subject('Your Luxify dealer application is under review');
                 $message->replyTo('no_reply@luxify.com', $name = null);
                 $message->to($details['to']);
 
@@ -833,7 +891,7 @@ class Front extends Controller {
             Mail::send('emails.luxify-proseller-request-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){
 
                 $message->from('technology@luxify.com', 'Luxify Admin');
-                $message->subject('A Pro Seller Application has been sent');
+                $message->subject('A New Dealer Application');
                 $message->replyTo('no_reply@luxify.com', $name = null);
                 $message->to($details['forward']);
 

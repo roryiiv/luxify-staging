@@ -164,10 +164,15 @@
                                                     <td>{{$user->email}}</td>
                                                     <td>{{ucfirst($user->role)}}</td>
                                                     <td>
-                                                        @if($user->isSuspended == 0)
-                                                            <span class="label label-success">Enabled</span>
+                                                        @if($user->dealer_status === 'approved')
+                                                            <span class="label label-success">Approved</span>
+                                                        @elseif($user->dealer_status === 'rejected')
+                                                            <span class="label label-danger">Rejected</span>
                                                         @else
-                                                            <span class="label label-danger">Disabled</span>
+                                                         <div role="group" aria-label="approveAndRejectButton" class="btn-group btn-group-sm">
+                                                            <button onclick="changeDealerStatus(this, {{$user->id}}, 'approved')" class="btn btn-outline btn-success">APPROVE</button>
+                                                            <button onclick="changeDealerStatus(this, {{$user->id}}, 'rejected')" class="btn btn-outline btn-danger">REJECT</button>
+                                                         </div>
                                                         @endif
                                                     </td>
                                                     <td>{{date("m/d/Y", strtotime($user->created_at))}}</td>
@@ -257,6 +262,31 @@
     <script type="text/javascript" src="/db/js/demo.js"></script>
     <script type="text/javascript" src="/db/js/customer-list.js"></script>
     <script type="text/javascript">
+    function changeDealerStatus(ele, userId, status) {
+        if (userId && status) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-Token': $('input[name=_token]').val()
+                },
+                url: '/api/dealer/setStatus',
+                dataType: 'json',
+                data: {
+                    userId: userId,
+                    status: status
+                },
+                method: 'POST',
+                success: function(res) {
+                    if (res.result === 1) {
+                        var parent = $(ele).parent().parent();
+                        $(parent).fadeOut("fast", function(){
+                            $(ele).parent().parent().html('<span style="text-transform:capitalize;" class="label label-'+ (res.status === 'approved' ? 'success': 'danger') +'">'+ res.status +'</span>');
+                            $(parent).fadeIn("fast");
+                        });
+                    }
+                }
+            });
+        }
+    }
     $(document).ready(function(){
         $('#view').change(function(){
             $('form#sorter').submit();

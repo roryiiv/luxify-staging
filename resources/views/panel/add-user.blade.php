@@ -231,6 +231,14 @@
                                                         <input id="companyName" name="companyName" type="text" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
+<!--
+                                                <div class="form-group m-0">
+                                                    <label for="txtCompanyPhones" data-role='taginput' class="control-label">Contact Phone Numbers</label>
+                                                    <div class="pt-15">
+                                                        <input id="phoneNumber" type="text" class="form-control" value="">
+                                                    </div>
+                                                </div>
+-->
                                                 <div class="form-group m-0">
                                                     <label for="txtCompanyRegNum" class="control-label">Company Registration No.:</label>
                                                     <div class="pt-15">

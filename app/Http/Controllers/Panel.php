@@ -641,6 +641,34 @@ class Panel extends Controller
       return view('panel.products', ['products' => $products]);
     }
 
+    public function dealer_change_status() {
+        $userId= (isset($_REQUEST['userId']) && !empty($_REQUEST['userId'])) ? $_REQUEST['userId']: NULL;
+        $status = (isset($_REQUEST['status']) && !empty($_REQUEST['status'])) ? $_REQUEST['status']: NULL;
+        if ($userId && $status) {
+            DB::table('users')
+            ->where('id', $userId)
+            ->update(['dealer_status' => $status]);
+
+            // TODO: send email to tell the dealer they got approved
+            $updated = DB::table('users')
+            ->where('id', $userId)
+            ->first();
+
+            if ($updated) {
+                // Send the email notification
+                // get the seller data first
+
+                if ($updated->dealer_status === $status) {
+                    echo json_encode((object) ['result'=> 1, 'status'=> $updated->dealer_status]);
+                } else {
+                    echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']);
+                }
+            } else {
+                echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']);
+            }
+        }
+    }
+
     public function product_change_status() {
         $itemId = (isset($_REQUEST['itemId']) && !empty($_REQUEST['itemId'])) ? $_REQUEST['itemId']: NULL;
         $status = (isset($_REQUEST['status']) && !empty($_REQUEST['status'])) ? $_REQUEST['status']: NULL;

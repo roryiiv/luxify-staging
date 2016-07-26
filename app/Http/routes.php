@@ -41,6 +41,10 @@ Route::get('/pricing', function(){
     return view('pricing');
 });
 
+// Open for public dealer application
+// TODO: add captcha to the application form form
+Route::post('/public/images/upload', 'OpenAPI@upload');
+
 // Ajax endpoints
 Route::get('/api/category/{catId}/fields', 'Front@categories_optional_fields');
 Route::post('/api/listing/createSlug', 'Slug@createSlug');
@@ -50,6 +54,7 @@ Route::post('/api/mailbox', 'Mailbox@conversation');
 Route::post('/api/mailbox/send', 'Mailbox@sendMessage');
 Route::post('/api/mailbox/delete', 'Mailbox@deleteMessage');
 Route::post('/api/product/setStatus', 'Panel@product_change_status');
+Route::post('/api/dealer/setStatus', 'Panel@dealer_change_status');
 Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
 Route::post('/api/bulkActions', 'Panel@bulkActions');
 // Test the API URL
