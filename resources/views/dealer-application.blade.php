@@ -308,7 +308,7 @@
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
                                         <select name="businessFocus" placeholder="Select one" class="select_form" required>
-                                             <option>Please select your business focus</option>
+                                             <option value="">Please select your business focus</option>
                                              <option value='Aircrafts'>Aircrafts</option>
                                              <option value='Antiques'>Antiques</option>
                                              <option value='Art'>Art</option>
@@ -336,7 +336,7 @@
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
                                         <select name="countryId" class="form-control width_more" required>
-                                             <option>Please select your country</option>
+                                             <option value="">Please select your country</option>
                                           <?php $countries = func::build_countries(); ?>
                                           @foreach($countries as $country)
                                              <option value="{{$country['val']}}">{{$country['label']}}</option>
@@ -353,7 +353,7 @@
                                     <div class="col-lg-9 col-sm-8">
                                         <select name="currencyId" class="form-control width_more" required>
                                           <?php $currencies= func::build_curr(); ?>
-                                             <option>Please select a default currency</option>
+                                             <option value="">Please select a default currency</option>
                                           @foreach($currencies as $currency)
                                              <option value="{{$currency['val']}}">{{$currency['code']}} {{$currency['symbol']}}</option>
                                           @endforeach
@@ -520,7 +520,12 @@
             },
         });
 
+        jQuery.validator.addMethod("selectBox", function(val, ele) {
+          return typeof val !== 'undefined' && val !== '';
+        },"Please select a default value");
+
         $('form.detail-form').validate({
+          ignore: ':hidden:not("#companyLogoUrl, #coverImageUrl")',
           rules: {
             email: {
               required: true,
@@ -541,17 +546,23 @@
             companyAddress: {
               required: true,
             },
+            companySummary: {
+              required: true,
+            },
             companyLogoUrl: {
               required: true,
             },
             coverImageUrl: {
               required: true,
             },
+            businessFocus: {
+              selectBox: true, 
+            },
             countryId: {
-              required: true,
+              selectBox: true,
             },
             currencyId: {
-              required: true,
+              selectBox: true,
             },
             @if(!Auth::user())
             password: {
@@ -571,7 +582,13 @@
               equalTo: "Please re-enter the paasword below." 
             } 
           }
-        });
+        })
+          /*
+          .addMethod('companyLogo', function(val, ele) {
+           console.log(val);
+           return false;
+        }, "Company logo is required");
+           */
 
         $('#phoneNumber').tagsinput({
            allowDuplicates: false 
