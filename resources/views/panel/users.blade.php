@@ -96,17 +96,18 @@
                                         <select id="ddlStatus" name="ddlStatus" class="form-control">
                                             <option value="">Choose</option>
                                             <option value="0"{{isset($filters['ddlStatus']) ? func::selected($filters['ddlStatus'],0) : ''}}>Enabled</option>
-                                            <option value="1"{{isset($filters['ddlStatus']) ? func::selected($filters['ddlStatus'],1) : ''}}>Disabled</option>
+                                            <option value="1"{{isset($filters['ddlStatus']) ? func::selected($filters['ddlStatus'],1) : ''}}>Suspended</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="ddlApproved">Approved</label>
+                                        <label for="ddlApproved">Dealer Status</label>
                                         <select id="ddlApproved" name="ddlApproved" class="form-control">
                                             <option value="">Choose</option>
-                                            <option value="1"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],1) : ''}}>No</option>
-                                            <option value="0"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],0) : ''}}>Yes</option>
+                                            <option value="approved"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'], 'approved') : ''}}>Approved</option>
+                                            <option value="pending"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],'pending') : ''}}>Pending</option>
+                                            <option value="rejected"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],'rejected') : ''}}>Rejected</option>
                                         </select>
                                     </div>
                                 </div>
@@ -146,7 +147,7 @@
                                                 <th>Customer Name</th>
                                                 <th>Email</th>
                                                 <th>Customer Group</th>
-                                                <th>Status</th>
+                                                <th>Account Status</th>
                                                 <th>Date Added</th>
                                                 <th class="text-center">Action</th>
                                             </tr>

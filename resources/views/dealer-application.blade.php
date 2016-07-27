@@ -377,7 +377,7 @@
                                         <label for="companySummary">Company Description:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <textarea name="companySummary" class="form-control about_buisness" placeholder="Optional. To help us more about your company, please share more details about the products you wish to list on Luxify. This company summary will appear on your exclusive Luxify dealer page."></textarea>
+                                        <textarea name="companySummary" class="form-control about_buisness" placeholder="To help us more about your company, please share more details about the products you wish to list on Luxify. This company summary will appear on your exclusive Luxify dealer page."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -429,7 +429,7 @@
 										<input type="button" id="application-submit-btn" class="btn btn-primary btn-block" value="Submit Application">
 									</div>
 							<div class="form-info-txt" style="text-align: left;">
-								<p>Luxify does accept items from private sellers. If you are a private seller or collector and have a luxury item to sell, simply contact our team at <a href="mailto:concierge@luxify.com">concierge@luxify.com</a> and we will help you to leverage Luxify’s dealer network to assist you in selling your item.</p>
+								<p>Should you be a private seller or a collector, simply contact our team at <a href="mailto:concierge@luxify.com">concierge@luxify.com</a> and we will help you to leverage Luxify’s dealer network to assist you in selling your items.</p>
 							</div>
 								</div>
 							</div>
