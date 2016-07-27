@@ -41,10 +41,10 @@ Route::get('/pricing', function(){
     return view('pricing');
 });
 // Datafeed endpoints
-Route::get('datafeed/product/{id}', 'Datafedd@product_get');
-Route::get('datafeed/dealers', 'Datafeed@dealers_list');
-Route::post('datafeed/product/add', 'Datafeed@product_add');
-Route::post('datafeed/product/update', 'Datafeed@product_update');
+Route::get('datafeed/product/{id}', 'DataFeed@product_get');
+Route::get('datafeed/dealers', 'DataFeed@dealers_list');
+Route::post('datafeed/product/add', 'DataFeed@product_add');
+Route::post('datafeed/product/update', 'DataFeed@product_update');
 
 // Ajax endpoints
 Route::get('/api/category/{catId}/fields', 'Front@categories_optional_fields');
