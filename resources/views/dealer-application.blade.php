@@ -200,6 +200,8 @@
             </div>
         </div>
         <!-- end of sell block -->
+    @if(Auth::user() && Auth::user()->role === 'seller')
+    @else
 		<div class="application-form" id="application-form">
 			<form id='dealer-application-form' action="/dealer-application" method="POST" class="detail-form">
                 {!! csrf_field() !!}
@@ -377,7 +379,7 @@
                                         <label for="companySummary">Company Description:</label>
                                     </div>
                                     <div class="col-lg-9 col-sm-8">
-                                        <textarea name="companySummary" class="form-control about_buisness" placeholder="To help us more about your company, please share more details about the products you wish to list on Luxify. This company summary will appear on your exclusive Luxify dealer page."></textarea>
+                                        <textarea name="companySummary" class="form-control about_buisness" placeholder="This company summary will appear on your exclusive Luxify dealer page."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -438,6 +440,7 @@
 				</div>
             </form>
 		</div>
+    @endif
     </main>
     <!-- end of main part -->
 @endsection
