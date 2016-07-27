@@ -106,7 +106,7 @@ class Panel extends Controller
             $filter[] = ['role', $_GET['ddlCustomerGroup']];
             $filters['ddlCustomerGroup'] = $_GET['ddlCustomerGroup'];
         }
-        if(isset($_GET['ddlApproved'])){
+        if(isset($_GET['ddlApproved']) && !empty($_GET['ddlApproved'])){
             $filter[] = ['dealer_status', $_GET['ddlApproved']];
             $filters['ddlApproved'] = $_GET['ddlApproved'];
         }
@@ -114,7 +114,7 @@ class Panel extends Controller
             $filter[] = ['email', 'like', '%'. $_GET['txtEmail']. '%'];
             $filters['txtEmail'] = $_GET['txtEmail'];
         }
-        if(isset($_GET['ddlStatus'])){
+        if(isset($_GET['ddlStatus']) && !empty($_GET['ddlStatus'])){
             $filter[] = ['isSuspended', $_GET['ddlStatus']];
             $filters['ddlStatus'] = $_GET['ddlStatus'];
         }
