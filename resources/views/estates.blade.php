@@ -25,7 +25,7 @@
                       <div class="row">
                           <div class="col-lg-12" style="margin-bottom: 3rem;">
 							<h1>Luxify Estates</h1>
-              <h2>Your trusted partners for investments in U.S.</h2>
+              <h2>Your trusted partner for investments in the U.S.</h2>
 						   </div>
 					   </div>
           <div class="row" style="margin-bottom: 4.5rem;">
@@ -218,25 +218,6 @@
             </div>
         </div>
         <!-- end of benefit block -->
-        <!-- Exclusive estates block-->
-        <div class="create-account">
-            <div class="container">
-                <div class="row">
-                    <!-- new grid -->
-                    <div class="row">
-                        <div class="col-lg-10">
-                    <div class="col-sm-10" style="text-align: center;">
-                            <h1>Exclusive 3D Properties on Luxify Estates</h1>
-                    </div>
-                    <div class="col-sm-2" style="text-align: center;">
-                       <a href="/luxify-estates/3d-estates" class="btn btn-primary">View All</a>
-                    </div>
-                </div>
-                </div>
-                 </div> <!-- end of new grid -->
-            </div>
-        </div>
-        <!-- end of exclusive estates block -->
         <div class="content-wrap add">
             <div class="container">
                 <!-- new grid -->
