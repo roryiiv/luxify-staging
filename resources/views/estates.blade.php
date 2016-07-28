@@ -101,7 +101,7 @@
     <!-- main informative part of the page -->
     <main id="main">
         <!-- main content wrapper -->
-        <div class="content-wrap">
+        <div class="content-wrap" style="padding-bottom: 1px;">
             <div class="container">
                 <!-- new grid -->
                       <div class="row">
