@@ -570,6 +570,10 @@ class Front extends Controller {
         return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
     }
 
+    public function product_luxify_estates() {
+      return $this->product_categories('real-estates'); 
+    }
+
     public function categories_optional_fields($catId, $langId = 1) {
         $form = DB::table('forms')->where('categoryId', $catId)->where('languageId', $langId)->first();
         if ($form) {

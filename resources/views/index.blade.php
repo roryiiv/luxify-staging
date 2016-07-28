@@ -195,7 +195,7 @@
 						<div class="wrap">
 							<h5>Enjoy a new luxury property viewing experience</h5>
 						</div>
-                        <a href="/estates" class="btn btn-primary">View more</a>
+                        <a href="/luxify-estates" class="btn btn-primary">View more</a>
                     </div>
                 </div>
             </div>
