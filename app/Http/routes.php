@@ -29,7 +29,7 @@ Route::get('/luxify-estates', function(){
      ->whereNotNull('aerialLook3DUrl')
      ->leftJoin('users', 'listings.userId', '=', 'users.id')
      ->join('countries', 'countries.id', '=', 'listings.countryId')
-     ->select('listings.mainImageUrl', 'listings.title', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'users.slug', 'users.fullName')
+     ->select('listings.slug', 'listings.mainImageUrl', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'users.fullName')
      ->orderby('listings.created_at', 'desc')
      ->limit(10)
      ->get();
