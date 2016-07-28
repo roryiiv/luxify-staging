@@ -12,7 +12,7 @@ use App\Http\Requests;
 
 use App\Listings;
 
-use App\User;
+use App\Users;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -21,6 +21,8 @@ use DB;
 use func;
 
 use Illuminate\Routing\Controller;
+
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Front extends Controller {
     //Front end Controller
@@ -75,13 +77,15 @@ class Front extends Controller {
         $cat_ids['collectibles-furnitures'] = array_merge($childs['collectibles'],$childs['furnitures'], array('cat_title' => 'Collectibles &amp; Furnitures'));
         $cat_ids['yachts'] = array_merge($childs['motor'],$childs['sail'], array('cat_title' => 'Yachts'));
         $cat_ids['aircrafts'] = array_merge($childs['jet'],$childs['helicopter'], array('cat_title' => 'Aircrafts'));
-        $cat_ids['art-antiuques'] = array_merge($childs['art'],$childs['antiques'], array('cat_title' => 'Art &amp; Antiques'));
+        $cat_ids['art-antiques'] = array_merge($childs['art'],$childs['antiques'], array('cat_title' => 'Art &amp; Antiques'));
         $cat_ids['fine-wines-spirits'] = array_merge($childs['fine_wines'],$childs['spirits'],$childs['champagne'], array('cat_title' => 'Fine Wines &amp; Spirits'));
 
         // var_dump($cat_ids); exit;
 
         $listing = DB::table('listings')
         ->where('slug', $slug)
+        ->join('countries', 'countries.id', '=', 'listings.countryId')
+        ->select('listings.*', 'countries.name as country')
         ->first();
 
         if ($listing) {
@@ -97,6 +101,8 @@ class Front extends Controller {
             $mores = DB::table('listings')
             ->where('userId', $listing->userId)
             ->where('status', 'APPROVED')
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
             ->paginate(10);
 
             $infos = DB::table('formfields')
@@ -115,14 +121,120 @@ class Front extends Controller {
             ->where('status', 'APPROVED')
             ->orWhere('title', 'like', '%'.$listing->title.'%')
             ->orWhere('description', 'like', '%'.$listing->title.'%')
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
             ->paginate(10);
 
           return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category]);
         }
     }
 
-    public function categories() {
-        return 'product categories page';
+    public function product_3d_estates() {
+        $orderby = 'created_at';
+        $order = 'desc';
+        $filters = array();
+        $search_arr = array();
+        if(isset($_REQUEST['filters']) && $_REQUEST['filters'] == 'on'){
+            $_filter = $_REQUEST;
+            // var_dump($_filter); exit;
+
+            if(!empty($_filter['location']) && $_filter['location'] != 'Location'){
+                $search_arr[] = ['countryId', $_filter['location']];
+                $filters['location'] = $_filter['location'];
+            }
+
+            // var_dump($price_range); exit;
+            if(!empty($_filter['sort-radio'])){
+                switch($_filter['sort-radio']){
+                    case 'latest':
+                    $orderby = 'created_at';
+                    $order = 'desc';
+                    break;
+                    case 'priceUp':
+                    $orderby = 'price';
+                    $order = 'desc';
+                    break;
+                    case 'priceDown':
+                    $orderby = 'price';
+                    $order = 'asc';
+                    break;
+                }
+                $filters['sort'] = $_filter['sort-radio'];
+            }
+
+            if(isset($_REQUEST['use_price']) && $_REQUEST['use_price'] == 'on'){ // need to be put last to filter out the price range based on currency set.
+                $use_price =  true;
+                $filters['use_price'] = 'on';
+
+                $price_lists = DB::table('listings')
+                ->where('status', 'APPROVED')
+                ->where($search_arr)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
+                ->get();
+
+                if($use_price && !empty($_REQUEST['range'])){
+                    $price_range = explode(';', $_REQUEST['range']);
+                    $filtered_listing = array();
+                    foreach($price_lists as $key => $val){
+                        $price_set = $val->price;
+                        $currency = DB::table('currencies')->where('id', $val->currencyId)->first();
+                        $set_curr = $currency->code;
+                        $sess_curr = null !== session('currency') ? session('currency') : 'USD';
+                        $session_currency = DB::table('currencies')->where('code', $sess_curr)->first();
+                        if($set_curr != $sess_curr){
+                            $price_sql = $price_set / $currency->rate;
+                            $price = $price_sql * $session_currency->rate;
+                        }else{
+                            $price = $price_set;
+                        }
+
+                        if($price < $price_range[0] || $price > $price_range[1]){
+                            // echo $key . ', ';
+                            $filtered_listing[] = $val->id;
+                        }
+
+                    }
+                    // var_dump($filtered_listing); exit;
+                    // $search_arr[] = ['price', '>=', $price_range[0]];
+                    // $search_arr[] = ['price', '<=', $price_range[1]];
+                    $filters['range'] = $_REQUEST['range'];
+                }
+            }else{
+                $use_price =  false;
+                $filters['use_price'] = 'off';
+            }
+        }
+
+        if(isset($filtered_listing)){
+            $listings = DB::table('listings')
+            ->whereNotNull('aerialLook3DUrl')
+            ->where('status', 'APPROVED')
+            ->whereNotIn('listings.id', $filtered_listing)
+            ->where($search_arr)
+            ->orderBy($orderby, $order)
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
+            ->paginate(30);
+        } else {
+            $listings = DB::table('listings')
+            ->whereNotNull('aerialLook3DUrl')
+            ->where('status', 'APPROVED')
+            ->where($search_arr)
+            ->orderBy($orderby, $order)
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
+            ->paginate(30);
+        }
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
+
+        $title_cat = '3D Real Estates';
+        $banner = 'banner-estate.jpg';
+        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
+    
     }
 
     public function product_categories($id) {
@@ -388,6 +500,8 @@ class Front extends Controller {
                 ->where('status', 'APPROVED')
                 ->whereIn('categoryId', $cat_ids)
                 ->where($search_arr)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
                 ->get();
 
                 if($use_price && !empty($_REQUEST['range'])){
@@ -428,24 +542,36 @@ class Front extends Controller {
             // var_dump($filtered_listing); exit;
             $listings = DB::table('listings')
             ->where('status', 'APPROVED')
-            ->whereIn('categoryId', $cat_ids)
-            ->whereNotIn('id', $filtered_listing)
+            ->whereIn('listings.categoryId', $cat_ids)
+            ->whereNotIn('listings.id', $filtered_listing)
             ->where($search_arr)
             ->orderBy($orderby, $order)
-            ->paginate(12);
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
+            ->paginate(30);
         }else{
             $listings = DB::table('listings')
             ->where('status', 'APPROVED')
             ->whereIn('categoryId', $cat_ids)
             ->where($search_arr)
             ->orderBy($orderby, $order)
-            ->paginate(12);
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.*', 'countries.name as country')
+            ->paginate(30);
         }
 
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
+
 
         return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
+    }
+
+    public function product_luxify_estates() {
+      return $this->product_categories('real-estates'); 
     }
 
     public function categories_optional_fields($catId, $langId = 1) {
@@ -499,10 +625,16 @@ class Front extends Controller {
     }
 
     public function viewDealer($id, $slug) {
-        $dealer = DB::table('users')->where('slug', $slug)->orWhere('id', $id)->first();
+      $dealer = DB::table('users')->where('slug', $slug)->orWhere('users.id', $id)
+        ->leftJoin('countries', 'countries.id', '=', 'users.countryId')
+        ->select('users.*', 'countries.name as country')
+        ->first();
+
         $listings = DB::table('listings')
-        ->where('userId', $dealer->id)
+        ->where('userId', $id)
         ->where('status', 'APPROVED')
+        ->join('countries', 'countries.id', '=', 'listings.countryId')
+        ->select('listings.*', 'countries.name as country')
         ->take(6)
         ->get();
         return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
@@ -513,6 +645,8 @@ class Front extends Controller {
         $listings = DB::table('listings')
         ->where('userId', $dealer->id)
         ->where('status', 'APPROVED')
+        ->join('countries', 'countries.id', '=', 'listings.countryId')
+        ->select('listings.*', 'countries.name as country')
         ->take(6)
         ->get();
         return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
@@ -661,41 +795,97 @@ class Front extends Controller {
     }
 
     public function dealerApplication(Request $request){
-        if(Auth::user()){
-            $username = Auth::user()->username;
-        }else{
-            $username = 'guest';
+        $updateSuccess = false;
+        $input = $request->all();
+        // dealer application based on existing user account
+        if(Auth::user()) {
+          if(Auth::user()->email === $input['email'] && Auth::user()->role === 'user') {
+            $oldUser = Users::where('email', '=', $input['email'])->get();
+            if ($oldUser) {
+              if(isset($input['companyLogoUrl']) && !empty($input['companyLogoUrl'])){
+                  $image = base_path() . '/public/temp/' . $input['companyLogoUrl'];
+                  $s3 = \Storage::disk('s3');
+                  $filePath = '/images/' . $input['companyLogoUrl'];
+                  if($s3->put($filePath, file_get_contents($image), 'public')){
+                      $oldUser->companyLogoUrl= $input['companyLogoUrl'];
+                      unlink($image);
+                  }
+              }
+              if(isset($input['coverImageUrl']) && !empty($input['coverImageUrl'])){
+                  $image = base_path() . '/public/temp/' . $input['coverImageUrl'];
+                  $s3 = \Storage::disk('s3');
+                  $filePath = '/images/' . $input['coverImageUrl'];
+                  if($s3->put($filePath, file_get_contents($image), 'public')){
+                      $oldUser->coverImageUrl= $input['coverImageUrl'];
+                      unlink($image);
+                  }
+              }
+              $oldUser->role = 'seller';
+              $oldUser->companyName = $input['companyName'];
+              $oldUser->companyAddress = $input['companyAddress'];
+              $oldUser->companySummary= $input['companySummary'];
+              $oldUser->coverImageUrl = $input['coverImageUrl'];
+              $oldUser->firstName = $input['firstName'];
+              $oldUser->lastName = $input['lastName'];
+              $oldUser->phoneNumber = json_encode($input['phoneNumber']);  
+              $oldUser->countryId = $input['countryId'];
+              $oldUser->currencyId = $input['currencyId'];
+              $oldUser->contactDetails = $input['secondaryEmail'];
+              $oldUser->dealer_status = 'pending';
+              $oldUser->slug = SlugService::createSlug(Users::class, 'slug', $input['companyName']);
+              $updateSuccess = $oldUser->save() ? true : false;
+            } 
+          }
+        // a new dealer application
+        } else {
+          $newUser = new Users;
+          $newUser->username = $input['companyName'];
+          $newUser->role = 'seller';
+          $newUser->email = $input['email']; 
+          $newUser->salt = $input['salt'];
+          $newUser->hashedPassword= $input['hashed'];
+          $newUser->companyName = $input['companyName'];
+          $newUser->companyAddress = $input['companyAddress'];
+          $newUser->companySummary= $input['companySummary'];
+          if(isset($input['companyLogoUrl']) && !empty($input['companyLogoUrl'])){
+              $image = base_path() . '/public/temp/' . $input['companyLogoUrl'];
+              $s3 = \Storage::disk('s3');
+              $filePath = '/images/' . $input['companyLogoUrl'];
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $newUser->companyLogoUrl= $input['companyLogoUrl'];
+                  unlink($image);
+              }
+          }
+          if(isset($input['coverImageUrl']) && !empty($input['coverImageUrl'])){
+              $image = base_path() . '/public/temp/' . $input['coverImageUrl'];
+              $s3 = \Storage::disk('s3');
+              $filePath = '/images/' . $input['coverImageUrl'];
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $newUser->coverImageUrl= $input['coverImageUrl'];
+                  unlink($image);
+              }
+          }
+          $newUser->firstName = $input['firstName'];
+          $newUser->lastName = $input['lastName'];
+          $newUser->fullName = $input['firstName'] . ' ' . $input['lastName'];
+          $newUser->phoneNumber = json_encode($input['phoneNumber']);  
+          $newUser->countryId = $input['countryId'];
+          $newUser->currencyId = $input['currencyId'];
+          $newUser->contactDetails = $input['secondaryEmail'];
+          $newUser->dealer_status = 'pending';
+          $newUser->slug = SlugService::createSlug(Users::class, 'slug', $input['companyName']);
+          $updateSuccess = $newUser->save() ? true : false;
         }
 
-        $input = $request->all();
-        $business_details = array(
-            'business-name' => $input['business-name'],
-            'primary_business_focus' => $input['primary_business_focus'],
-            'secondary_business_focus' => $input['secondary_business_focus'],
-            'estimated_inventory_size' => $input['estimated_inventory_size'],
-            'average_item_price' => $input['currency_avg'] . $_POST['average_item_price'],
-            'business_description' => $input['business_description'],
-        );
-        $business_details_json = json_encode($business_details, JSON_NUMERIC_CHECK);
-
-        $id = DB::table('applications')->insertGetId([
-            'username' => $username,
-            'first_name' => $input['first-name'],
-            'last_name' => $input['last-name'],
-            'email' => $input['email'],
-            'phone' => $input['phone'],
-            'business_details' => $business_details_json,
-            'country' => $input['country'],
-        ]);
-
-        if($id){
+        if($updateSuccess) {
+          
             $details = array('to' => $input['email'], 'forward' => 'florian.martigny@luxify.com');
             $this_url = url('/');
-            $username_to = $username;
+            $username_to = $input['companyName'];
             Mail::send('emails.luxify-proseller-request-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){
 
                 $message->from('technology@luxify.com', 'Luxify Admin');
-                $message->subject('Your Pro Seller Application has been sent');
+                $message->subject('Your Luxify dealer application is under review');
                 $message->replyTo('no_reply@luxify.com', $name = null);
                 $message->to($details['to']);
 
@@ -705,7 +895,7 @@ class Front extends Controller {
             Mail::send('emails.luxify-proseller-request-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){
 
                 $message->from('technology@luxify.com', 'Luxify Admin');
-                $message->subject('A Pro Seller Application has been sent');
+                $message->subject('A New Dealer Application');
                 $message->replyTo('no_reply@luxify.com', $name = null);
                 $message->to($details['forward']);
 
@@ -938,15 +1128,18 @@ class Front extends Controller {
             ->where($search_arr)
             ->whereIn($cat_ids)
             ->orderBy($orderby, $order)
-            ->paginate(12);
+            ->paginate(30);
         }else{
             $listings = DB::table('listings')
             ->where($search_arr)
             ->orderBy($orderby, $order)
-            ->paginate(12);
+            ->paginate(30);
         }
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
 
         $locs = '';
         $cats = '';
@@ -968,7 +1161,11 @@ class Front extends Controller {
             }));
         }
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
+        
 
         return view('dealer-listings', ['listings' => $listings, 'filters' => $filters]);
     }
@@ -1196,6 +1393,8 @@ class Front extends Controller {
                 ->where('status', 'APPROVED')
                 // ->whereIn('categoryId', $cat_ids)
                 ->where($search_arr)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
                 ->get();
 
                 // var_dump($price_lists); exit;
@@ -1241,39 +1440,49 @@ class Front extends Controller {
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
                 ->whereIn('categoryId', $cat_ids)
-                ->whereNotIn('id', $filtered_listing)
+                ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
-                ->paginate(12);
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
+                ->paginate(30);
             }else{
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
                 ->whereIn('categoryId', $cat_ids)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
-                ->paginate(12);
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
+                ->paginate(30);
             }
         }else{
             if(isset($filtered_listing)){
                 // var_dump($filtered_listing); exit;
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
-                ->whereNotIn('id', $filtered_listing)
+                ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
-                ->paginate(12);
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
+                ->paginate(30);
             }else{
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
-                ->paginate(12);
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
+                ->paginate(30);
             }
         }
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
+        $re = "/(\\?|\\&)page=\\d{0,4}/";
+        $ref = $_SERVER['REQUEST_URI'];
+        $ref = preg_replace($re, "", $ref);
+        $listings->setPath($ref);
 
-        $listings->setPath($_SERVER['REQUEST_URI']);
 
         return view('search', ['listings' => $listings, 'search' => $search, 'filters' => $filters]);
     }

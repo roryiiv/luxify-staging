@@ -398,7 +398,7 @@ div.lightbox {
     color: #d0021b;
 }
 .thumbnail .caption {
-    padding: 20px;
+    padding: 10px 20px 0px;
 }
 .thumbnail h3 {
     font-weight: 300;
@@ -416,6 +416,17 @@ div.lightbox {
 .thumbnail h3 a:hover {
     color: #998967;
     text-decoration: none;
+}
+.thumbnail .country-container {
+  display: block;
+  position: relative;
+}
+.thumbnail .country {
+  position: absolute;
+  top: 27px;
+  left: 0px;
+  font-size: 1.6rem;
+  font-weight: 200;
 }
 .thumbnail .product-img-container {
   position: relative;
@@ -1519,7 +1530,7 @@ div.lightbox {
 .filter-block {
     float: right;
 }
-.filter-drop {
+#filter-drop {
     position: absolute;
     left: 0;
     margin-top: -20px;
@@ -1531,24 +1542,24 @@ div.lightbox {
     padding: 20px;
     box-shadow: 0 2px 30px rgba(0, 0, 0, .3);
 }
-.filter-drop .select-hold .form-title {
+#filter-drop .select-hold .form-title {
     padding-left: 6px;
 }
-.filter-drop .form-row {
+#filter-drop .form-row {
     border-bottom: 1px solid #ebe8e1;
     padding: 25px 0 18px;
 }
-.filter-drop .form-row:first-child {
+#filter-drop .form-row:first-child {
     padding-top: 0;
 }
-.filter-drop .form-row:last-child {
+#filter-drop .form-row:last-child {
     padding-bottom: 0;
     border-bottom: none;
 }
-.filter-drop .button-wrap {
+#filter-drop .button-wrap {
     text-align: right;
 }
-.filter-drop .ion-range {
+#filter-drop .ion-range {
     padding-top: 50px;
     padding-bottom: 30px;
 }
@@ -2939,7 +2950,7 @@ body> .jcf-select-drop.jcf-drop-flipped {
         max-width: 66%;
     }
     .social-networks {
-        max-width: 212px;
+        max-width: 300px;
     }
     .banner h1, .inner-banner h1 {
         font-size: 4.5em;
@@ -3430,13 +3441,13 @@ body> .jcf-select-drop.jcf-drop-flipped {
     .filter-block .btn {
         min-width: 190px;
     }
-    .filter-drop .select-hold {
+    #filter-drop .select-hold {
         padding-bottom: 20px;
     }
-    .filter-drop .button-wrap {
+    #filter-drop .button-wrap {
         text-align: center;
     }
-    .filter-drop .btn {
+    #filter-drop .btn {
         margin-bottom: 10px;
     }
     .item-list {

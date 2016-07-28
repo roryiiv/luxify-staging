@@ -79,7 +79,11 @@
               <div class="row">
                   <div class="col-md-6">
                       <h1>{{ $title }}</h1>
-                      <p>{{ !empty($dealer->companySummary) ? $dealer->companySummary : 'Coming soon.' }}</p>
+                      @if(!empty($dealer->companySummary)) 
+                          {!! nl2br(e($dealer->companySummary)) !!}
+                      @else 
+                         <span>Coming soon.</span>
+                      @endif
                       <ul class="social-networks">
                           @if(!empty($dealer->socialFacebook))
                               <li class="socials_item">
@@ -109,11 +113,61 @@
                                   </a>
                               </li>
                           @endif
+                          @if(!empty($dealer->latitude) && !empty($dealer->longitude))
+                              <li class="socials_item">
+                              <a class="lightbox fancybox.iframe" href="https://maps.google.com/maps?q={{$dealer->latitude}},{{$dealer->longitude}}&hl=es;z=14&amp;output=embed">
+                                <span style="top:2px; left: -1px;" class="glyphicon glyphicon-map-marker"></span>
+                              </a>
+                              </li>
+                          @endif
                       </ul>
                   </div>
                   <?php $logo = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                   <div class="col-md-5 col-sm-offset-1">
-                      <img src="{{ func::img_url($logo, 360, '', true) }}" alt="image_link">
+                      <div class="col-md-12" style="margin-bottom: 35px;">
+                        <img style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}" alt="image_link">
+                      </div>
+                      <div class="col-md-12">
+                        @if(isset($dealer->country) && !empty($dealer->country))
+                             <h4 style="text-align: center; margin-bottom: 5px;">{{$dealer->country}}</h4>
+                        @endif
+                        @if(!empty($dealer->website))
+                        <?php 
+                            $webpage = str_replace('http://', '', $dealer->website);
+                            $webpage = str_replace('https://', '', $webpage);
+                        ?>
+                            <h5 style="text-align: center;"><a href="{{$dealer->website}}" target="_blank">{{$webpage}}</a></td></h5>
+                        @endif
+                        <table class="table" style="margin: 0 auto; max-width: 330px; text-align: center; margin-top: 20px;">
+                        @if(!empty(json_decode($dealer->companyAddress)))
+                        <?php 
+                            $address= join(" ", json_decode($dealer->companyAddress));
+                        ?>
+                        <tr>
+                           <td>
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                           </td>
+                           <td>
+                               <span> {{$address}}</span>
+                           </td>
+                        </tr>
+                        @endif
+                        @if(!empty(json_decode($dealer->phoneNumber)))
+                        <?php 
+                            $phones= join("<br>", json_decode($dealer->phoneNumber));
+                        ?>
+                        <tr>
+                           <td>
+                              <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                           </td>
+                           <td>
+                               <span> {!! $phones !!}</span>
+                           </td>
+                          </tr>
+                        </div>
+                        @endif
+                        </table>
+                      </div>
                   </div>
               </div>
           </div>
@@ -166,7 +220,12 @@
                               $raw_price = $item->price == 0 ? 'Price on request' : $curr->symbol . number_format($item->price, 0) .' '. $curr->code;
                               $price_format = $raw_price;
                             ?>
-                        <span class="price">{{ $price_format }}</span>
+                        <div>
+                          <span class="price">{{ $price_format }}</span>
+                        </div>
+                        <div class="country-container">
+                          <span class="country">{{$item->country}}</span>
+                        </div>
                         <div class="item-logo">
                           <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}" alt="image description">
                         </div>

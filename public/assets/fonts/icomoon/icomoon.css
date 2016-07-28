@@ -85,6 +85,14 @@
   content: "\e90f";
 }
 
+.icon-location:before {
+  content: "\e947";
+}
+
+.icon-location2:before {
+  content: "\e948";
+}
+
 .icon-arrow-down:before,
 .navbar-nav > li .dropdown-toggle:before {
   content: "\e900";

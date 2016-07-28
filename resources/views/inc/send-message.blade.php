@@ -1,5 +1,24 @@
 <style>
 /*   Where mobile css define */
+  a.editListing, a.deleteListing {
+    border-radius: 40px;
+    background-color: rgba(0,0,0,0.1);
+    padding: 7px;
+    position: absolute;
+  }
+  a.editListing {
+    top: 0;
+    right: 50px;
+  }
+  a.deleteListing {
+    top: 0;
+    right: 10px;
+  }
+  a.editListing > span, a.deleteListing > span {
+
+    width: 17px;
+  }
+
   .modal-content {
     border-radius: 0px;
   }

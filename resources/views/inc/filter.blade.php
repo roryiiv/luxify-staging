@@ -4,8 +4,8 @@ $cats = func::categories('all');
 $subs = func::categories('all');
 ?>
 <div class="filter-block">
-    <a role="button" data-toggle="collapse" href=".filter-drop" aria-expanded="false" class="btn btn-primary">Filter</a>
-    <div class="filter-drop collapse">
+    <a role="button" data-toggle="collapse" href="#filter-drop" aria-expanded="false" class="btn btn-primary">Filter</a>
+    <div id="filter-drop" class="collapse">
         <form action="{{$_SERVER['REQUEST_URI']}}" method="get" class="filter-form">
             {{ csrf_field() }}
             <input type="hidden" id="filters" name="filters" value="on" />
@@ -40,7 +40,7 @@ $subs = func::categories('all');
                                 <option value="collectibles-furnitures">Collectibles & Furnitures</option>
                                 <option value="yachts">Yachts</option>
                                 <option value="aircrafts">Aircrafts</option>
-                                <option value="art-antiuques">Art & Antiques</option>
+                                <option value="art-antiques">Art & Antiques</option>
                                 <option value="fine-wines-spirits">Fine Wines & Spirits</option>
                             </select>
                         </div>
@@ -92,14 +92,14 @@ $subs = func::categories('all');
                     </li>
                     <li>
                         <label class="radio">
-                            <input type="radio" name="sort-radio" value="priceUp"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceUp') ? ' checked="checked"' : '' }} />
-                            <span class="text">Price Up</span>
+                            <input type="radio" name="sort-radio" value="priceDown"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceDown') ? ' checked="checked"' : '' }} />
+                            <span class="text">Ascending Price</span>
                         </label>
                     </li>
                     <li>
                         <label class="radio">
-                            <input type="radio" name="sort-radio" value="priceDown"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceDown') ? ' checked="checked"' : '' }} />
-                            <span class="text">Price Down</span>
+                            <input type="radio" name="sort-radio" value="priceUp"{{ (isset($filters['sort']) && !empty($filters['sort'])) && ($filters['sort'] == 'priceUp') ? ' checked="checked"' : '' }} />
+                            <span class="text">Descending Price</span>
                         </label>
                     </li>
                 </ul>

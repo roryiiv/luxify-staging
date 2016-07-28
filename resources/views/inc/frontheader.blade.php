@@ -16,6 +16,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shop</a>
                         <div class="dropdown-menu">
                             <ul>
+                                <li><a href="/luxify-estates/3d-estates">Luxify Estates 3D</a></li>
                                 <li><a href="/category/real-estates">Real Estates</a></li>
                                 <li><a href="/category/jewellery-watches">Watches & Jewelry</a></li>
                                 <li><a href="/category/motors">Motors</a></li>
@@ -38,7 +39,7 @@
                                 <li><a href="/about">About Luxify</a></li>
                                 <li><a href="/pricing">Pricing</a></li>
                                 <li><a href="/dealer-application">Dealer Application</a></li>
-                                <li><a href="/estates">Luxify Estates</a></li>
+                                <li><a href="/luxify-estates">Luxify Estates</a></li>
                                 <li><a href="/contact">Contact Us</a></li>
                             </ul>
                         </div>

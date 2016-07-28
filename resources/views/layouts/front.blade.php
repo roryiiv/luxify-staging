@@ -141,7 +141,7 @@
 
                                                 <li><a href="/pricing">Pricing</a></li>
                                                 <li><a href="/dealer-application">Dealer Application</a></li>
-                                                <li><a href="/estates">Luxify Estates</a></li>
+                                                <li><a href="/luxify-estates">Luxify Estates</a></li>
 												<li><a href="/contact">Contact Us</a></li>
                                             </ul>
                                         </nav>
@@ -230,6 +230,16 @@
     </script>
     {{-- Page specific scripts --}}
     @yield('scripts')
+<!-- Start of Async HubSpot Analytics Code -->
+ <script type="text/javascript">
+   (function(d,s,i,r) {
+     if (d.getElementById(i)){return;}
+     var n=d.createElement(s),e=d.getElementsByTagName(s)[0];
+     n.id=i;n.src='//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/2446800.js';
+     e.parentNode.insertBefore(n, e);
+   })(document,"script","hs-analytics",300000);
+ </script>
+<!-- End of Async HubSpot Analytics Code -->
 </body>
 
 </html>

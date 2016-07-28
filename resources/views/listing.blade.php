@@ -155,21 +155,21 @@
                                 @if($category && $category != '')
                                     <li><a href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
                                 @endif
-                                <li class="active">{{ $cat->title }}</li>
+                                <li class="active">{{ $cat && !empty($cat) ? $cat->title : $listing->title }}</li>
                             </ol>
                             <header class="block-header">
                                 <h1 class="item-title">{{ $listing->title }}</h1>
                                 @if(!empty($listing->aerialLook3DUrl))
-                                    <a href="{{ $listing->aerialLook3DUrl }}" rel="lightbox" data-fancybox-type="iframe" class="btn btn-primary lightbox">3D Virtual Tour &nbsp;<span class="glyphicon glyphicon-play"></span></a>
+                                    <a href="{{ $listing->aerialLook3DUrl }}" rel="lightbox_3d_video" data-fancybox-type="iframe" class="btn btn-primary lightbox">3D Virtual Tour &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
                                 @if(!empty($listing->aerialLookUrl))
-                                    <a href="{{ $listing->aerialLookUrl }}" rel="lightbox" data-fancybox-type="iframe" class="btn btn-primary lightbox" style="margin-left:10px;">Promotion Video &nbsp;<span class="glyphicon glyphicon-play"></span></a>
+                                    <a href="{{ $listing->aerialLookUrl }}" rel="lightbox_video" data-fancybox-type="iframe" class="btn btn-primary lightbox" style="margin-left:10px;">Promotion Video &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
                             </header>
                             <div class="description">
                                 <h5>Description</h5>
                                 <p>
-                                    {{ strip_tags($listing->description) }}
+                                    {!! nl2br(e($listing->description)) !!}
                                 </p>
                                 @if(!empty($infos))
                                     <h5 style="margin-top:45px;">Specifications</h5>
@@ -229,7 +229,12 @@
                                                 $msess_currency = null !==  session('currency') ? session('currency') : 'USD';
                                                 $mprice_format = func::formatPrice($more->currencyId, $msess_currency, $more->price);
                                                 ?>
-                                                <span class="price">{{ $mprice_format }}</span>
+                                                <div>
+                                                  <span class="price">{{ $mprice_format }}</span>
+                                                </div>
+                                                <div class="country-container">
+                                                  <span class="country">{{$more->country}}</span>
+                                                </div>
                                                 <div class="item-logo">
                                                     <img src="{{ func::img_url($msellerImg, 90, '', true) }}" alt="{{ $mseller->fullName }}">
                                                 </div>
@@ -278,7 +283,11 @@
                                                 $rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
                                                 $rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
                                                 ?>
-                                                <span class="price">{{ $rel_price_format }}</span>
+                                                <div>
+                                                </div>
+                                                <div class="country-container">
+                                                  <span class="country">{{$rel->country}}</span>
+                                                </div>
                                                 <div class="item-logo">
                                                     <img src="{{ func::img_url($rel_sellerImg, 90, '', true) }}" alt="">
                                                 </div>

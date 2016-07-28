@@ -101,7 +101,7 @@ $num_notif = count($notifs);
     <div class="main-container">
         @if(Auth::user()->role == 'user')
             @include('inc.db-sidebar-user')
-        @elseif(Auth::user()->role == 'seller')
+        @elseif(Auth::user()->role == 'seller' && Auth::user()->dealer_status === 'approved')
             @include('inc.db-sidebar-seller')
         @elseif(Auth::user()->role == 'admin')
             @include('inc.db-sidebar-admin')

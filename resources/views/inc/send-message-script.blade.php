@@ -1,6 +1,27 @@
 <script src="/db/js/jquery.validate.min.js"></script>
 <script src="/js/bundle.js"></script>
 <script>
+  function changeListingStatus(ele, listingId) {
+      if (listingId) {
+          $.ajax({
+              headers: {
+                  'X-CSRF-Token': $('input[name=_token]').val()
+              },
+              url: '/api/product/setStatus',
+              dataType: 'json',
+              data: {
+                  itemId: listingId,
+                  status: 'EXPIRED' 
+              },
+              method: 'POST',
+              success: function(res) {
+                  if (res.result === 1) {
+                      $(ele).fadeOut("fast");
+                  }
+              }
+          });
+      }
+  }
 $(document).ready(function() {
   @if(Auth::user())
     $('a.favourite').each(function() {
@@ -195,5 +216,14 @@ $(document).ready(function() {
        $('#contact-dealer-form h2').after($('<h5>Re: '+title.attr('data-listing-title') +'</h5>'));
     }
 
+    $('a.deleteListing').click(function(e) {
+      e.preventDefault();
+      var listingId = $(this).attr('data-id');
+      var ele = $(this).closest('.thumbnail');
+      var confirmDelete = confirm('Are you sure you want to delete this item?');
+      if (confirmDelete) {
+        changeListingStatus(ele, listingId);
+      }
+    });  
 });
 </script>

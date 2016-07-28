@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/assets/css/main.css">
 @endsection
 @section('content')
-    <section class="inner-banner auto-height parallax" style="background-image:url(assets/images/about-banner.jpg);">
+    <section class="inner-banner auto-height parallax" style="background-image:url({{func::img_url('banners/about-us-main.jpg', 1920, '', false, true)}});">
 		<div class="container">
             <div class="banner-text">
                 <div class="banner-center">
@@ -27,6 +27,7 @@
             </div>
         </div>
     </section>
+    @include('inc.send-message')
     <!-- end of banner -->
 	<!-- main informative part of the page -->
 	<main id="main">
@@ -60,10 +61,23 @@
                         <a href="/listing/{{ $item->slug }}">
             	   	   		<figure>
             	   	   			<img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
-                              @if(Auth::user())
-                                <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
-                                <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
-                              @endif
+                             @if(Auth::user())
+
+                                 @if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
+                                   <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
+                                   @if($added !== '')
+                                     <a class="favourite {{$added}}" data-id="{{$item->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a>
+                                   @else
+                                     <a class="favourite" data-id="{{$item->id}}" title="{{ $item->title }}" href="#"><span class="icon icon-heart"></span></a>
+                                   @endif
+                                 @elseif(Auth::user()->role === 'admin')
+                             
+                                     <a class="editListing" data-id="{{$item->id}}" href="/panel/product/edit/{{$item->id}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
+                                     <a class="deleteListing" data-id="{{$item->id}}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                 @endif
+                             @else
+                                 <a data-toggle="modal" data-listing="{{$item->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
+                             @endif
             	   	   		</figure>
                         </a>
         			   	     <div class="caption">
@@ -73,7 +87,12 @@
                               $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
                               $price_format = func::formatPrice($item->currencyId, $sess_currency, $item->price);
                             ?>
-        			   	   	  <span class="price">{{ $price_format }}</span>
+                            <div>
+                              <span class="price">{{ $price_format }}</span>
+                            </div>
+                            <div class="country-container">
+                              <span class="country">{{$item->country}}</span>
+                            </div>
         			   	   	  <div class="item-logo">
         			   	   	   	<img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}" alt="image description">
         			   	   	  </div>
@@ -127,7 +146,7 @@
                 $("#sub_category").html("<option value='motor'>Motor</option><option value='sail'>Sail</option>");
             } else if (val == "aircrafts") {
                 $("#sub_category").html("<option value='jet'>Jet</option><option value='helicopter'>Helicopter</option>");
-            } else if (val == "art-antiuques") {
+            } else if (val == "art-antiques") {
                 $("#sub_category").html("<option value='art'>Art</option><option value='antiques'>Antiques</option>");
             } else if (val == "fine-wines-spirits") {
                 $("#sub_category").html("<option value='fine_wines'>Fine Wines</option><option value='spirits'>Spirits</option><option value='champagne'>Champagne</option>");
@@ -159,6 +178,7 @@
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
         <script>
         $(document).ready(function(){
+          /*
             $('a.favourite').each(function(){
                 $(this).click(function(event){
                     // return false; // remove this later after database fixes.
@@ -232,7 +252,9 @@
                     }
                 });
             });
+        */
         });
         </script>
     @endif
+    @include('inc.send-message-script')
 @endsection

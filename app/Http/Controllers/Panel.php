@@ -94,23 +94,27 @@ class Panel extends Controller
         $filter_or = array();
         $filters = array();
         if(isset($_GET['txtCustomerName']) && !empty($_GET['txtCustomerName'])){
-            $filter[] = ['firstName', 'like', $_GET['txtCustomerName']];
-            $filter_or[] = ['lastName', 'like', $_GET['txtCustomerName']];
+            $filter[] = ['firstName', 'like', '%'.$_GET['txtCustomerName']. '%'];
+            $filter_or[] = ['lastName', 'like', '%'.$_GET['txtCustomerName']. '%'];
             $filters['txtCustomerName'] = $_GET['txtCustomerName'];
+        }
+        if(isset($_GET['txtCompanyName']) && !empty($_GET['txtCompanyName'])){
+            $filter[] = ['companyName', 'like', '%'.$_GET['txtCompanyName'].'%'];
+            $filters['txtCompanyName'] = $_GET['txtCompanyName'];
         }
         if(isset($_GET['ddlCustomerGroup']) && !empty($_GET['ddlCustomerGroup'])){
             $filter[] = ['role', $_GET['ddlCustomerGroup']];
             $filters['ddlCustomerGroup'] = $_GET['ddlCustomerGroup'];
         }
-        if(isset($_GET['ddlApproved'])){
-            $filter[] = ['isSuspended', $_GET['ddlApproved']];
+        if(isset($_GET['ddlApproved']) && !empty($_GET['ddlApproved'])){
+            $filter[] = ['dealer_status', $_GET['ddlApproved']];
             $filters['ddlApproved'] = $_GET['ddlApproved'];
         }
         if(isset($_GET['txtEmail']) && !empty($_GET['txtEmail'])){
-            $filter[] = ['email', $_GET['txtEmail']];
+            $filter[] = ['email', 'like', '%'. $_GET['txtEmail']. '%'];
             $filters['txtEmail'] = $_GET['txtEmail'];
         }
-        if(isset($_GET['ddlStatus'])){
+        if(isset($_GET['ddlStatus']) && !empty($_GET['ddlStatus'])){
             $filter[] = ['isSuspended', $_GET['ddlStatus']];
             $filters['ddlStatus'] = $_GET['ddlStatus'];
         }
@@ -284,27 +288,31 @@ class Panel extends Controller
         $item = Listings::where('id', $id)->first();
         $error_arr = array();
 
-        $item->userId = Auth::user()->id;
+        //$item->userId = Auth::user()->id;
 
         if ( isset($_POST['itemLocation']) && !empty($_POST['itemLocation']) ) {
             $item->countryId = $_POST['itemLocation'];
+            echo '1';
         } else {
             $error_arr['itemLocation'] = 'Item Location is not specified.';
         }
 
-        if ( isset($_POST['itemAvailability']) && !empty($_POST['itemAvailability']) ) {
+        if ( isset($_POST['itemAvailability']) && !empty($_POST['itemAvailability'])) {
             $item->availableToId = $_POST['itemAvailability'] == 'worldwide' ? NULL: $_POST['itemLocation'];
+            echo '1';
         } else {
             $error_arr['itemAvailability'] = 'Item Availability is not specified.';
         }
 
         if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
+            echo '1';
             $item->categoryId = $_POST['itemCategory'];
         } else {
             $error_arr['itemCategory'] = 'Item Category is not specified.';
         }
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
+            echo '1';
             $item->title = $_POST['title'];
             if($item->slug == '' || $item->slug == null){ //we'll build a new slug on each update.
                 $item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
@@ -317,23 +325,27 @@ class Panel extends Controller
             $item->price = NULL;
         } else {
             if (isset($_POST['price']) && !empty($_POST['price'])) {
+              echo '4a';
                 $item->price = intval($_POST['price']);
             } else {
+              echo '4b';
                 $error_arr['price'] = 'Item price is required.';
             }
         }
 
         if ( isset($_POST['currency']) && !empty($_POST['currency']) ) {
+            echo '5';
             $item->currencyId = $_POST['currency'];
         } else {
             $error_arr['currency'] = 'Item currency is required.';
         }
 
-        if ( isset($_POST['status']) && !empty($_POST['status']) ) {
+        if (isset($_POST['status']) && !empty($_POST['status']) ) {
             $item->status = $_POST['status'];
-        } else
-
-        if ( isset($_POST['description']) && !empty($_POST['description']) ) {
+        } else {
+            $error_arr['status'] = 'Item status is required.';
+        }
+        if ( isset($_POST['description']) && !empty($_POST['description'])) {
             $item->description = $_POST['description'];
         } else {
             $error_arr['description'] = 'Item description is required.';
@@ -486,6 +498,9 @@ class Panel extends Controller
         if(isset($_POST['']) && !empty($_POST[''])){
             $user->lastName = $_POST['last_name'];
         }
+        if(isset($_POST['txtUserRole']) && !empty($_POST['txtUserRole'])){
+            $user->role = $_POST['txtUserRole'];
+        }
         if(isset($_POST['country']) && !empty($_POST['country'])){
             $user->countryId = $_POST['country'];
         }
@@ -494,6 +509,9 @@ class Panel extends Controller
         }
         if(isset($_POST['currency']) && !empty($_POST['currency'])){
             $user->currencyId = $_POST['currency'];
+        }
+        if(isset($_POST['phoneNumber']) && !empty($_POST['phoneNumber'])) {
+            $user->phoneNumber = json_encode($_POST['phoneNumber']); 
         }
         if(isset($_POST['contactDetails']) && !empty($_POST['contactDetails'])){
             $user->contactDetails = $_POST['contactDetails'];
@@ -553,13 +571,13 @@ class Panel extends Controller
         $user = User::where('id', $user_id)->first();
         $role = $user->role;
 
-        if($role == 'seller'){
+        //if($role == 'seller') {
             //we remove the items listed under this user id
             $ended_at = date("Y-m-d H:i:s");
             DB::table('listings')
             ->where('userId', $user->id)
             ->update(['status' => 'EXPIRED', 'ended_at' => $ended_at]);
-        }
+        //}
 
         //suspend the account
         DB::table('users')
@@ -621,6 +639,34 @@ class Panel extends Controller
       // var_dump($wishes);
       $products->setPath($_SERVER['REQUEST_URI']);
       return view('panel.products', ['products' => $products]);
+    }
+
+    public function dealer_change_status() {
+        $userId= (isset($_REQUEST['userId']) && !empty($_REQUEST['userId'])) ? $_REQUEST['userId']: NULL;
+        $status = (isset($_REQUEST['status']) && !empty($_REQUEST['status'])) ? $_REQUEST['status']: NULL;
+        if ($userId && $status) {
+            DB::table('users')
+            ->where('id', $userId)
+            ->update(['dealer_status' => $status]);
+
+            // TODO: send email to tell the dealer they got approved
+            $updated = DB::table('users')
+            ->where('id', $userId)
+            ->first();
+
+            if ($updated) {
+                // Send the email notification
+                // get the seller data first
+
+                if ($updated->dealer_status === $status) {
+                    echo json_encode((object) ['result'=> 1, 'status'=> $updated->dealer_status]);
+                } else {
+                    echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']);
+                }
+            } else {
+                echo json_encode((object) ['result'=> 0, 'message'=> 'Update failed.']);
+            }
+        }
     }
 
     public function product_change_status() {

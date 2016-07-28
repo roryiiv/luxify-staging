@@ -68,13 +68,18 @@
                                                         <img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
                                                         @if(Auth::user())
 
-                                                            <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
-                                                            @if($added !== '')
+                                                            @if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
+                                                              <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
+                                                              @if($added !== '')
                                                                 <a class="favourite {{$added}}" data-id="{{$item->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a>
-                                                            @else
+                                                              @else
                                                                 <a class="favourite" data-id="{{$item->id}}" title="{{ $item->title }}" href="#"><span class="icon icon-heart"></span></a>
+                                                              @endif
+                                                            @elseif(Auth::user()->role === 'admin')
+                                  
+                                                                <a class="editListing" data-id="{{$item->id}}" href="/panel/product/edit/{{$item->id}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                                <a class="deleteListing" data-id="{{$item->id}}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
                                                             @endif
-                                                            <!--<a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite {{ $added }}"><span class="icon-heart"></span></a>-->
                                                         @else
                                                             <a data-toggle="modal" data-listing="{{$item->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
                                                         @endif
@@ -87,7 +92,12 @@
                                                     $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
                                                     $price_format = func::formatPrice($item->currencyId, $sess_currency, $item->price);
                                                     ?>
-                                                    <span class="price">{{ $price_format }}</span>
+                                                    <div>
+                                                      <span class="price">{{ $price_format }}</span>
+                                                    </div>
+                                                    <div class="country-container">
+                                                      <span class="country">{{$item->country}}</span>
+                                                    </div>
                                                     <div class="item-logo">
                                                         <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, '', 200, true) : func::img_url('default-logo.png', '', 200, true) }}" alt="image description">
                                                     </div>
@@ -142,7 +152,7 @@
                 $("#sub_category").html("<option value='motor'>Motor</option><option value='sail'>Sail</option>");
             } else if (val == "aircrafts") {
                 $("#sub_category").html("<option value='jet'>Jet</option><option value='helicopter'>Helicopter</option>");
-            } else if (val == "art-antiuques") {
+            } else if (val == "art-antiques") {
                 $("#sub_category").html("<option value='art'>Art</option><option value='antiques'>Antiques</option>");
             } else if (val == "fine-wines-spirits") {
                 $("#sub_category").html("<option value='fine_wines'>Fine Wines</option><option value='spirits'>Spirits</option><option value='champagne'>Champagne</option>");
@@ -174,83 +184,13 @@
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
         <script>
         $(document).ready(function(){
-          /*
-            $('a.favourite').each(function(){
-                $(this).click(function(event){
-                    // return false; // remove this later after database fixes.
-                    // event.preventDefault();
-                    if($(this).hasClass('added')){
-                        var url = '/dashboard/wishlist/delete', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
-                        // console.log(token);
-                        var data = {uid: userID, lid: itemID};
-                        swal({
-                            title: "Delete item",
-                            text: "Are you sure you want to delete item from Wishlist?",
-                            type: "info",
-                            showCancelButton: true,
-                            closeOnConfirm: false,
-                            showLoaderOnConfirm: true,
-                        },
-                        function(){
-                            $.ajax({
-                                type: 'POST',
-                                url: url,
-                                headers: {'X-CSRF-TOKEN': token},
-                                data: data,
-                                dataType: "html",
-                                success: function(data){
-                                    // console.log(data); return false;
-                                    if(data == 3){
-                                        swal("Item is deleted!");
-                                        $('a#'+itemID).removeClass('added');
-                                    }else{
-                                        swal("Error!");
-                                    }
-                                },
-                                error: function(errMsg){
-                                    console.log(errMsg.responseText);
-                                }
-                            });
-                        });
-                    }else{
-                        var url = '/dashboard/wishlist/add', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
-                        // console.log(token);
-                        var data = {uid: userID, lid: itemID};
-                        swal({
-                            title: "Add to Wishlist",
-                            text: "Are you sure you want to add item to your Wishlist?",
-                            type: "info",
-                            showCancelButton: true,
-                            closeOnConfirm: false,
-                            showLoaderOnConfirm: true,
-                        },
-                        function(){
-                            $.ajax({
-                                type: 'POST',
-                                url: url,
-                                headers: {'X-CSRF-TOKEN': token},
-                                data: data,
-                                dataType: "html",
-                                success: function(data){
-                                    if(data == 1){
-                                        swal("Item is added!");
-                                        $('a#'+itemID).addClass('added');
-                                    }else{
-                                        swal("Item has been readded!");
-                                        $('a#'+itemID).addClass('added');
-                                    }
-                                },
-                                error: function(errMsg){
-                                    console.log(errMsg.responseText);
-                                }
-                            });
-                        });
-                    }
-                });
-            });
-           */
+
         });
         </script>
+    @endif
+    @if(Auth::user() && Auth::user()->role == 'admin')
+      {{ csrf_field() }}
+  
     @endif
     @include('inc.send-message-script')
 @endsection
