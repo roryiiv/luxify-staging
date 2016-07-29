@@ -15,7 +15,7 @@ use func;
 class DataFeed extends Controller
 {
   public function product_get($id) {
-    $listing = Listings::where('id', $id )->first();
+    $listing = Listings::where('id', $id )->with('extrainfo')->first();
     if ($listing) {
       echo json_encode(['result'=> 1, 'data' => $listing]);
     } else {
@@ -23,17 +23,25 @@ class DataFeed extends Controller
     }
   }
 
-  public function product_add(Request $request) {
-    $inputs = $request()->all();
-    $newListing = new Listing;
+  public function product_add (Request $request) {
+    $inputs = $request->all();
+    $newListing = new Listings;
     if ($newListing->validate($inputs)) {
-       $newListing->fill($inputs); 
-       $newId = $newListing->insertGetId();
-       if ($newId) {
-         echo json_encode(['result'=> 0, 'data' => $newListing]);
+       // modified before filling to the object
+      if($inputs['images'] && !empty($inputs['image'])) {
+        $inputs['images'] = json_encode($inputs['images']);
+      }
+      if($inputs['extraInfo'] && !empty($inputs['extraInfo'])) {
+        $inputs['extraInfo'] = json_encode($inputs['extraInfo']);
+      }
+
+      $newListing->fill($inputs); 
+      $newId = $newListing->save();
+      if ($newId) {
+         echo json_encode(['result'=> 1, 'data' => $newListing]);
        }
     } else {
-      echo json_encode(['result'=> 0, 'message' => $newLisitng->errors()]);
+      echo json_encode(['result'=> 0, 'message' => $newListing->errors()]);
     }
   }
 

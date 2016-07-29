@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class formGroup extends Model
+class Currencies extends Model
 {
-    //
+    protected $table = 'currencies';
 }
