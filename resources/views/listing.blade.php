@@ -155,7 +155,7 @@
                                 @if($category && $category != '')
                                     <li><a href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
                                 @endif
-                                <li class="active">{{ $cat->title }}</li>
+                                <li class="active">{{ $cat && !empty($cat) ? $cat->title : $listing->title }}</li>
                             </ol>
                             <header class="block-header">
                                 <h1 class="item-title">{{ $listing->title }}</h1>
