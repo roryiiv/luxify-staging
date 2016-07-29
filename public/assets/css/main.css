@@ -3451,7 +3451,7 @@ body> .jcf-select-drop.jcf-drop-flipped {
         margin-bottom: 10px;
     }
     .item-list {
-        text-align: center;
+        text-align: left;
     }
     .dealer-block {
         padding: 30px 0;
@@ -3543,7 +3543,7 @@ body> .jcf-select-drop.jcf-drop-flipped {
 }
 @media (max-width: 479px) {
     .thumbnail {
-        width: 240px;
+        width: 344px;
     }
     .category-search:before {
         display: none;
@@ -4280,5 +4280,21 @@ a.btn-3DVRTour {
     .item-list .thumbnail figure img {
         height: auto;
         width: 100%;
+    }
+    .thumbnail {
+        min-height: 310px;
+    }
+    .thumbnail > .caption {
+        padding: 10px 0px 0px; 
+    }
+    .thumbnail > .caption > .item-logo {
+        height: 40px;
+    }
+    .thumbnail > .caption > .item-logo > img {
+        height: 40px;
+    }
+    .thumbnail .favourite {
+       top: 6px;
+       right: 20px;
     }
 }
