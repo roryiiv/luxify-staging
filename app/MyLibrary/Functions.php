@@ -235,7 +235,7 @@ class Functions
         return($text);
     }
     public static function countMarketValue() {
-       return round(23+((Carbon::now()->timestamp- 1468460000)/86400), 1);
+       return round(23+((Carbon::now()->timestamp - 1468460000)/864000), 1);
     }
 
     public static function countListings(){

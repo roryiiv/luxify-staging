@@ -11,6 +11,8 @@
 |
 */
 
+use App\Listings;
+
 Route::get('/buildHashedId', 'Front@updateHashed');
 //static front pages
 Route::get('/', function(){
@@ -22,8 +24,16 @@ Route::get('/about', function(){
 Route::get('/contact', function(){
     return view('contact');
 });
-Route::get('/estates', function(){
-    return view('estates');
+Route::get('/luxify-estates', function(){
+   $listings = Listings::where('status', 'APPROVED') 
+     ->whereNotNull('aerialLook3DUrl')
+     ->leftJoin('users', 'listings.userId', '=', 'users.id')
+     ->join('countries', 'countries.id', '=', 'listings.countryId')
+     ->select('listings.slug', 'listings.mainImageUrl', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'users.fullName')
+     ->orderby('listings.created_at', 'desc')
+     ->limit(10)
+     ->get();
+    return view('estates', ['mores'=>$listings]);
 });
 Route::get('/terms', function(){
     return view('terms');
@@ -41,6 +51,10 @@ Route::get('/pricing', function(){
     return view('pricing');
 });
 
+// Open for public dealer application
+// TODO: add captcha to the application form form
+Route::post('/public/images/upload', 'OpenAPI@upload');
+
 // Ajax endpoints
 Route::get('/api/category/{catId}/fields', 'Front@categories_optional_fields');
 Route::post('/api/listing/createSlug', 'Slug@createSlug');
@@ -50,6 +64,7 @@ Route::post('/api/mailbox', 'Mailbox@conversation');
 Route::post('/api/mailbox/send', 'Mailbox@sendMessage');
 Route::post('/api/mailbox/delete', 'Mailbox@deleteMessage');
 Route::post('/api/product/setStatus', 'Panel@product_change_status');
+Route::post('/api/dealer/setStatus', 'Panel@dealer_change_status');
 Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
 Route::post('/api/bulkActions', 'Panel@bulkActions');
 // Test the API URL
@@ -59,7 +74,7 @@ Route::post('/api/bulkActions', 'Panel@bulkActions');
 Route::get('/listings','Front@products');
 Route::get('/listing/{id}','Front@product_details');
 Route::get('/categories','Front@categories');
-Route::get('/category/3d-estates','Front@product_3d_estates');
+Route::get('/luxify-estates/3d-estates','Front@product_3d_estates');
 Route::get('/category/{id}','Front@product_categories');
 Route::post('/category/{id}','Front@product_categories');
 Route::get('/dealer/{id}/{slug}','Front@viewDealer');

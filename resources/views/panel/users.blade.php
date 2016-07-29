@@ -96,17 +96,18 @@
                                         <select id="ddlStatus" name="ddlStatus" class="form-control">
                                             <option value="">Choose</option>
                                             <option value="0"{{isset($filters['ddlStatus']) ? func::selected($filters['ddlStatus'],0) : ''}}>Enabled</option>
-                                            <option value="1"{{isset($filters['ddlStatus']) ? func::selected($filters['ddlStatus'],1) : ''}}>Disabled</option>
+                                            <option value="1"{{isset($filters['ddlStatus']) ? func::selected($filters['ddlStatus'],1) : ''}}>Suspended</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="ddlApproved">Approved</label>
+                                        <label for="ddlApproved">Dealer Status</label>
                                         <select id="ddlApproved" name="ddlApproved" class="form-control">
                                             <option value="">Choose</option>
-                                            <option value="1"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],1) : ''}}>No</option>
-                                            <option value="0"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],0) : ''}}>Yes</option>
+                                            <option value="approved"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'], 'approved') : ''}}>Approved</option>
+                                            <option value="pending"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],'pending') : ''}}>Pending</option>
+                                            <option value="rejected"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'],'rejected') : ''}}>Rejected</option>
                                         </select>
                                     </div>
                                 </div>
@@ -146,7 +147,7 @@
                                                 <th>Customer Name</th>
                                                 <th>Email</th>
                                                 <th>Customer Group</th>
-                                                <th>Status</th>
+                                                <th>Account Status</th>
                                                 <th>Date Added</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
@@ -164,10 +165,15 @@
                                                     <td>{{$user->email}}</td>
                                                     <td>{{ucfirst($user->role)}}</td>
                                                     <td>
-                                                        @if($user->isSuspended == 0)
-                                                            <span class="label label-success">Enabled</span>
+                                                        @if($user->dealer_status === 'approved')
+                                                            <span class="label label-success">Approved</span>
+                                                        @elseif($user->dealer_status === 'rejected')
+                                                            <span class="label label-danger">Rejected</span>
                                                         @else
-                                                            <span class="label label-danger">Disabled</span>
+                                                         <div role="group" aria-label="approveAndRejectButton" class="btn-group btn-group-sm">
+                                                            <button onclick="changeDealerStatus(this, {{$user->id}}, 'approved')" class="btn btn-outline btn-success">APPROVE</button>
+                                                            <button onclick="changeDealerStatus(this, {{$user->id}}, 'rejected')" class="btn btn-outline btn-danger">REJECT</button>
+                                                         </div>
                                                         @endif
                                                     </td>
                                                     <td>{{date("m/d/Y", strtotime($user->created_at))}}</td>
@@ -175,7 +181,7 @@
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
                                                             <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
                                                             <a href="{{ $user->role != 'seller' ? 'javascript:;' : url('/dealer') . '/' . $user->id . '/' . $slug }}" target="_blank" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                            <a href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
+                                                            <a target="_blank" href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
                                                             @if($user->isSuspended == 0)
                                                                 <a href="/panel/user/delete/{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                             @else
@@ -257,6 +263,31 @@
     <script type="text/javascript" src="/db/js/demo.js"></script>
     <script type="text/javascript" src="/db/js/customer-list.js"></script>
     <script type="text/javascript">
+    function changeDealerStatus(ele, userId, status) {
+        if (userId && status) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-Token': $('input[name=_token]').val()
+                },
+                url: '/api/dealer/setStatus',
+                dataType: 'json',
+                data: {
+                    userId: userId,
+                    status: status
+                },
+                method: 'POST',
+                success: function(res) {
+                    if (res.result === 1) {
+                        var parent = $(ele).parent().parent();
+                        $(parent).fadeOut("fast", function(){
+                            $(ele).parent().parent().html('<span style="text-transform:capitalize;" class="label label-'+ (res.status === 'approved' ? 'success': 'danger') +'">'+ res.status +'</span>');
+                            $(parent).fadeIn("fast");
+                        });
+                    }
+                }
+            });
+        }
+    }
     $(document).ready(function(){
         $('#view').change(function(){
             $('form#sorter').submit();

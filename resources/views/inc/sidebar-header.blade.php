@@ -3,5 +3,5 @@
         <img src="{{ !empty(Auth::user()->companyLogoUrl) ? func::img_url(Auth::user()->companyLogoUrl, 100) : func::img_url('placeholder.png', 100) }}" alt="" class="avatar img-circle">
     </div>
     <h4 class="fs-16 text-muted mt-15 mb-5 fw-300" style="text-transform: capitalize;">{{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</h4>
-    <p class="mb-0 text-muted" style="text-transform: capitalize;">Luxify {{ Auth::user()->role }}</p>
+    <p class="mb-0 text-muted" style="text-transform: capitalize;">Luxify {{ Auth::user()->role }} {{ Auth::user()->dealer_status === 'pending'? '(Pending)':''}}</p>
 </div>

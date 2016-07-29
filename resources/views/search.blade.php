@@ -27,6 +27,7 @@
             </div>
         </div>
     </section>
+    @include('inc.send-message')
     <!-- end of banner -->
 	<!-- main informative part of the page -->
 	<main id="main">
@@ -60,10 +61,23 @@
                         <a href="/listing/{{ $item->slug }}">
             	   	   		<figure>
             	   	   			<img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
-                              @if(Auth::user())
-                                <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
-                                <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
-                              @endif
+                             @if(Auth::user())
+
+                                 @if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
+                                   <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
+                                   @if($added !== '')
+                                     <a class="favourite {{$added}}" data-id="{{$item->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a>
+                                   @else
+                                     <a class="favourite" data-id="{{$item->id}}" title="{{ $item->title }}" href="#"><span class="icon icon-heart"></span></a>
+                                   @endif
+                                 @elseif(Auth::user()->role === 'admin')
+                             
+                                     <a class="editListing" data-id="{{$item->id}}" href="/panel/product/edit/{{$item->id}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
+                                     <a class="deleteListing" data-id="{{$item->id}}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                 @endif
+                             @else
+                                 <a data-toggle="modal" data-listing="{{$item->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
+                             @endif
             	   	   		</figure>
                         </a>
         			   	     <div class="caption">
@@ -164,6 +178,7 @@
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
         <script>
         $(document).ready(function(){
+          /*
             $('a.favourite').each(function(){
                 $(this).click(function(event){
                     // return false; // remove this later after database fixes.
@@ -237,7 +252,9 @@
                     }
                 });
             });
+        */
         });
         </script>
     @endif
+    @include('inc.send-message-script')
 @endsection

@@ -81,7 +81,7 @@
 
                   <tr>
                     <td align="center" style="font-family: 'Lato', sans-serif; font-size: 40px; font-weight: 700; color: #ffffff; line-height: 44px; letter-spacing: 3px;">
-                      PRO SELLER REQUEST
+                      LUXIFY DEALER REQUEST
                     </td>
                   </tr>
 
@@ -105,7 +105,7 @@
 
                   <tr>
                     <td align="center" style="font-family: 'Lato', sans-serif; font-size: 16px; font-weight: 400; color: #ffffff; line-height: 24px; ">
-                      We have received your application to become a pro seller on Luxify. We are reviewing it and will get back to shortly. Thank you.
+                      We have received your application to become a dealer on Luxify. We are reviewing it and will get back to shortly. Thank you.
                     </td>
                   </tr>
 

@@ -160,10 +160,10 @@
                             <header class="block-header">
                                 <h1 class="item-title">{{ $listing->title }}</h1>
                                 @if(!empty($listing->aerialLook3DUrl))
-                                    <a href="{{ $listing->aerialLook3DUrl }}" rel="lightbox" data-fancybox-type="iframe" class="btn btn-primary lightbox">3D Virtual Tour &nbsp;<span class="glyphicon glyphicon-play"></span></a>
+                                    <a href="{{ $listing->aerialLook3DUrl }}" rel="lightbox_3d_video" data-fancybox-type="iframe" class="btn btn-primary lightbox">3D Virtual Tour &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
                                 @if(!empty($listing->aerialLookUrl))
-                                    <a href="{{ $listing->aerialLookUrl }}" rel="lightbox" data-fancybox-type="iframe" class="btn btn-primary lightbox" style="margin-left:10px;">Promotion Video &nbsp;<span class="glyphicon glyphicon-play"></span></a>
+                                    <a href="{{ $listing->aerialLookUrl }}" rel="lightbox_video" data-fancybox-type="iframe" class="btn btn-primary lightbox" style="margin-left:10px;">Promotion Video &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
                             </header>
                             <div class="description">
