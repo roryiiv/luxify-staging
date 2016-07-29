@@ -548,7 +548,7 @@ class Front extends Controller {
             ->orderBy($orderby, $order)
             ->join('countries', 'countries.id', '=', 'listings.countryId')
             ->select('listings.*', 'countries.name as country')
-            ->paginate(30);
+            ->paginate(51);
         }else{
             $listings = DB::table('listings')
             ->where('status', 'APPROVED')
@@ -557,7 +557,7 @@ class Front extends Controller {
             ->orderBy($orderby, $order)
             ->join('countries', 'countries.id', '=', 'listings.countryId')
             ->select('listings.*', 'countries.name as country')
-            ->paginate(30);
+            ->paginate(51);
         }
 
 
@@ -1128,12 +1128,12 @@ class Front extends Controller {
             ->where($search_arr)
             ->whereIn($cat_ids)
             ->orderBy($orderby, $order)
-            ->paginate(30);
+            ->paginate(51);
         }else{
             $listings = DB::table('listings')
             ->where($search_arr)
             ->orderBy($orderby, $order)
-            ->paginate(30);
+            ->paginate(51);
         }
 
         $re = "/(\\?|\\&)page=\\d{0,4}/";
@@ -1445,7 +1445,7 @@ class Front extends Controller {
                 ->orderBy($orderby, $order)
                 ->join('countries', 'countries.id', '=', 'listings.countryId')
                 ->select('listings.*', 'countries.name as country')
-                ->paginate(30);
+                ->paginate(51);
             }else{
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
@@ -1454,7 +1454,7 @@ class Front extends Controller {
                 ->orderBy($orderby, $order)
                 ->join('countries', 'countries.id', '=', 'listings.countryId')
                 ->select('listings.*', 'countries.name as country')
-                ->paginate(30);
+                ->paginate(51);
             }
         }else{
             if(isset($filtered_listing)){
@@ -1466,7 +1466,7 @@ class Front extends Controller {
                 ->orderBy($orderby, $order)
                 ->join('countries', 'countries.id', '=', 'listings.countryId')
                 ->select('listings.*', 'countries.name as country')
-                ->paginate(30);
+                ->paginate(51);
             }else{
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
@@ -1474,7 +1474,7 @@ class Front extends Controller {
                 ->orderBy($orderby, $order)
                 ->join('countries', 'countries.id', '=', 'listings.countryId')
                 ->select('listings.*', 'countries.name as country')
-                ->paginate(30);
+                ->paginate(51);
             }
         }
 
