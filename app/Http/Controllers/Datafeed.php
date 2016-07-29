@@ -25,7 +25,16 @@ class DataFeed extends Controller
 
   public function product_add(Request $request) {
     $inputs = $request()->all();
-     
+    $newListing = new Listing;
+    if ($newListing->validate($inputs)) {
+       $newListing->fill($inputs); 
+       $newId = $newListing->insertGetId();
+       if ($newId) {
+         echo json_encode(['result'=> 0, 'data' => $newListing]);
+       }
+    } else {
+      echo json_encode(['result'=> 0, 'message' => $newLisitng->errors()]);
+    }
   }
 
   public function dealers_list() {
