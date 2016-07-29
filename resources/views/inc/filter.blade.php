@@ -4,8 +4,8 @@ $cats = func::categories('all');
 $subs = func::categories('all');
 ?>
 <div class="filter-block">
-    <a role="button" data-toggle="collapse" href=".filter-drop" aria-expanded="false" class="btn btn-primary">Filter</a>
-    <div class="filter-drop collapse">
+    <a role="button" data-toggle="collapse" href="#filter-drop" aria-expanded="false" class="btn btn-primary">Filter</a>
+    <div id="filter-drop" class="collapse">
         <form action="{{$_SERVER['REQUEST_URI']}}" method="get" class="filter-form">
             {{ csrf_field() }}
             <input type="hidden" id="filters" name="filters" value="on" />
