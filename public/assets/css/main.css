@@ -4272,10 +4272,12 @@ a.btn-3DVRTour {
         width: 100% !important;
         height: auto !important;
         vertical-align: middle;
-        display: table-cell;
         text-align: center;
         /* background-color:#f4f4f4; */
         background-color: #fff;
+        display: block;
+        margin: 0 auto;
+
     }
     .item-list .thumbnail figure img {
         height: auto;
