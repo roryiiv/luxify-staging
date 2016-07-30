@@ -13,7 +13,8 @@
         "aws/aws-sdk-php": "~3.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "skovmand/mailchimp-laravel": "1.*",
-        "guzzlehttp/guzzle": "~5.3|~6.0"
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "alfredo-ramos/parsedown-extra-laravel": "~0.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
