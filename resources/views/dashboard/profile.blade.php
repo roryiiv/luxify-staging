@@ -243,31 +243,31 @@
                                                 <div class="form-group m-0">
                                                     <label for="txtFirstNameShippingTab" class="control-label">Company Name</label>
                                                     <div class="pt-15">
-                                                        <input id="companyName" name="companyName" type="text" class="form-control" placeholder="{{$user->companyName}}">
+                                                        <input id="companyName" name="companyName" type="text" class="form-control" placeholder="{{$user->companyName}}" value="{{$user->companyName}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="txtCompanyRegNum" class="control-label">Company Registration No.:</label>
                                                     <div class="pt-15">
-                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}">
+                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}" value="{{$user->companyName}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="companyAddress" class="control-label">Company Address</label>
                                                     <div class="pt-15">
-                                                        <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder="{{$user->companyAddress}}"></textarea>
+                                                        <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder="{{$user->companyAddress}}">{{$user->companyAddress}}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="companySummary" class="control-label">Company Summary</label>
                                                     <div class="pt-15">
-                                                        <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}"></textarea>
+                                                        <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}">{{$user->companySummary}}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="contactDetails" class="control-label">Company Details</label>
                                                     <div class="pt-15">
-                                                        <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder="{{$user->contactDetails}}"></textarea>
+                                                        <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder="{{$user->contactDetails}}">{{$user->contactDetails}}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
