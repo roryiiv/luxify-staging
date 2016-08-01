@@ -86,18 +86,22 @@ class Dashboard extends Controller
             $image = base_path() . '/public/temp/' . $_POST['cover_img'];
             $s3 = \Storage::disk('s3');
             $filePath = '/images/' . $_POST['cover_img'];
-            if($s3->put($filePath, file_get_contents($image), 'public')){
-                $user->coverImageUrl = $_POST['cover_img'];
-                unlink($image);
+            if (file_exists($image) ) {
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $user->coverImageUrl = $_POST['cover_img'];
+                  unlink($image);
+              }
             }
         }
         if(isset($_POST['profile_img']) && !empty($_POST['profile_img'])){
             $image = base_path() . '/public/temp/' . $_POST['profile_img'];
             $s3 = \Storage::disk('s3');
             $filePath = '/images/' . $_POST['profile_img'];
-            if($s3->put($filePath, file_get_contents($image), 'public')){
-                $user->companyLogoUrl = $_POST['profile_img'];
-                unlink($image);
+            if (file_exists($image) ) {
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $user->companyLogoUrl = $_POST['profile_img'];
+                  unlink($image);
+              }
             }
         }
 
@@ -226,13 +230,20 @@ class Dashboard extends Controller
         // Always push to S3 first before doing anything else.
         if (isset($_POST['images']) && count($_POST['images']) > 0 ) {
             $uploadedImage = array();
-            for($i =0 ;  $i < count($_POST['images']); $i++) {
-                $image = base_path() . '/public/temp/' . $_POST['images'][$i];
+            foreach($_POST['images'] as $i => $val) {
+              if ( !isset($val) || empty($val) || strtolower($val) === 'null') {
+                  unset($_POST['images'][$i]);
+              }
+            }
+            foreach( $_POST['images'] as $i => $val) {
+                $image = base_path() . '/public/temp/' . $val;
                 $s3 = \Storage::disk('s3');
-                $filePath = '/images/' . $_POST['images'][$i];
-                if($s3->put($filePath, file_get_contents($image), 'public')){
-                    $uploadedImage[] = $_POST['images'][$i];
-                    unlink($image);
+                $filePath = '/images/' . $val;
+                if ( file_exists($image)) {
+                  if($s3->put($filePath, file_get_contents($image), 'public')){
+                      $uploadedImage[] = $val;
+                      unlink($image);
+                  }
                 }
             }
 
@@ -436,9 +447,11 @@ class Dashboard extends Controller
                 if (!$s3->has('/images/'. $_POST['images'][$i])) {
                     $image = base_path() . '/public/temp/' . $_POST['images'][$i];
                     $filePath = '/images/' . $_POST['images'][$i];
-                    if($s3->put($filePath, file_get_contents($image), 'public')){
-                        $uploadedImage[] = $_POST['images'][$i];
-                        unlink($image);
+                    if ( file_exists($image)) {
+                      if($s3->put($filePath, file_get_contents($image), 'public')){
+                          $uploadedImage[] = $_POST['images'][$i];
+                          unlink($image);
+                      }
                     }
                 } else {
                     $uploadedImage[] = $_POST['images'][$i];
