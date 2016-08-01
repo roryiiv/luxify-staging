@@ -44,8 +44,8 @@ class Dashboard extends Controller
      */
     public function index() {
         if($this->user_role == 'seller'){
-            return view('dashboard.home');
-            // return redirect('/dashboard/products');
+            //return view('dashboard.home');
+            return redirect('/dashboard/products');
         }elseif($this->user_role == 'user'){
             return redirect('/dashboard/profile');
         }elseif($this->user_role == 'editor'){

@@ -80,7 +80,7 @@
                   <div class="col-md-6">
                       <h1>{{ $title }}</h1>
                       @if(!empty($dealer->companySummary)) 
-                          {!! nl2br(e($dealer->companySummary)) !!}
+                         <p> {!! nl2br(e($dealer->companySummary)) !!} </p>
                       @else 
                          <span>Coming soon.</span>
                       @endif
@@ -151,6 +151,18 @@
                                <span> {{$address}}</span>
                            </td>
                         </tr>
+                        @if(!empty($dealer->latitude) && !empty($dealer->longitude))
+                        <tr>
+                           <td>
+                               <span style="top:2px; left: -1px;" class="glyphicon glyphicon-map-marker"></span>
+                           </td>
+                           <td>
+                              <a class="lightbox fancybox.iframe" href="https://maps.google.com/maps?q={{$dealer->latitude}},{{$dealer->longitude}}&hl=es;z=14&amp;output=embed">
+                                View Map                             
+                               </a>
+                           </td>
+                        </tr>
+                        @endif
                         @endif
                         @if(!empty(json_decode($dealer->phoneNumber)))
                         <?php 

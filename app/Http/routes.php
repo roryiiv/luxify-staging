@@ -136,7 +136,8 @@ Route::get('/panel/currency/exec', 'Panel@currencyExec');
 
 
 //routes for DASHBOARD (seller)
-Route::get('/dashboard', 'Dashboard@index');
+//Route::get('/dashboard', 'Dashboard@index');
+Route::get('/dashboard', 'Dashboard@products');
 Route::get('/dashboard/profile', 'Dashboard@profile');
 Route::post('/dashboard/profile', 'Dashboard@profile_update');
 Route::get('/dashboard/mailbox', 'Dashboard@mailbox');
