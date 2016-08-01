@@ -10,6 +10,8 @@ use App\Listings;
 
 use App\Users;
 
+use App\FormGroups;
+
 use func;
 
 class DataFeed extends Controller
@@ -17,6 +19,12 @@ class DataFeed extends Controller
   public function product_get($id) {
     $listing = Listings::where('id', $id )->with('extrainfo')->first();
     if ($listing) {
+      foreach($listing->extrainfo as $info) {
+        $ff = FormGroups::find($info->formgroupId)->formfield;
+        if ($ff) {
+          $info->formfield = $ff->label;
+        }
+      }
       echo json_encode(['result'=> 1, 'data' => $listing]);
     } else {
       echo json_encode(['result'=> 0, 'message' => 'Could not found listing with `id` = '.$id ]);

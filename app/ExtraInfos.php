@@ -27,8 +27,7 @@ class ExtraInfos extends Model
   }
 
   // listingId -> categoryId + languageId => formgroupId
-  public function formfield() {
-    return $this->hasOne('formFields');
+  public function formgroup() {
+    return $this->belongsTo('App\FormGroups');
   }
 }
-

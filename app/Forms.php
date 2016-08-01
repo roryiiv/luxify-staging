@@ -33,6 +33,6 @@ class Forms extends Model
    }
 
    public function formfields() {
-     return $this->belongsToMany('App\FormFields');
+     return $this->belongsToMany('App\FormFields', 'formgroups', 'formId', 'formgroupId');
    }
 }
