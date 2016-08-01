@@ -12,6 +12,8 @@ use App\Http\Requests;
 
 use App\Listings;
 
+use App\User; 
+
 use App\Users;
 
 use Illuminate\Support\Facades\Auth;
