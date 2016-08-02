@@ -39,12 +39,18 @@ class DataFeed extends Controller
       if($inputs['images'] && !empty($inputs['image'])) {
         $inputs['images'] = json_encode($inputs['images']);
       }
-      if($inputs['extraInfo'] && !empty($inputs['extraInfo'])) {
-        $inputs['extraInfo'] = json_encode($inputs['extraInfo']);
-      }
       $newListing->fill($inputs); 
       $newId = $newListing->save();
       if ($newId) {
+         if($inputs['extraInfo'] && !empty($inputs['extraInfo'])) {
+           foreach($extraInfo as $key => $val) {
+             $anInfo = new ExtraInfos; 
+             $formgroupId = str_replace('formgroupId_', '');
+             $anInfo->formgroupId = $formgroupId;
+             $anInfo->listingId = $newId;
+             $anInfo->save();
+           }
+         }
          echo json_encode(['result'=> 1, 'data' => $newListing]);
        }
     } else {
