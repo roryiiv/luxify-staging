@@ -42,7 +42,6 @@ class DataFeed extends Controller
       if($inputs['extraInfo'] && !empty($inputs['extraInfo'])) {
         $inputs['extraInfo'] = json_encode($inputs['extraInfo']);
       }
-
       $newListing->fill($inputs); 
       $newId = $newListing->save();
       if ($newId) {
@@ -52,20 +51,17 @@ class DataFeed extends Controller
       echo json_encode(['result'=> 0, 'message' => $newListing->errors()]);
     }
   }
+  
   public function product_update($id, Request $request) {
     if ($id) {
-      $inputs = $request()->all();
-      $oldListing = Listing::find($id)->get();
+      $inputs = $request->all();
+      $oldListing = Listings::find($id);
       if ($oldListing) {
-        if ($newListing->validate($inputs)) {
-          $oldListing->fill($inputs); 
-          $newId = $oldListing->update();
-          if ($newId) {
-            echo json_encode(['result'=> 1, 'data' => $oldListing]);
-          }
-        } else {
-          echo json_encode(['result'=> 0, 'message' => $newLisitng->errors()]);
-        }   
+        $oldListing->fill($inputs); 
+        $newId = $oldListing->save();
+        if ($newId) {
+          echo json_encode(['result'=> 1, 'data' => $oldListing]);
+        }
       } else {
         echo json_encode(['result'=> 0, 'message' => 'Unable to find listing with provided id']);
       }
@@ -73,7 +69,6 @@ class DataFeed extends Controller
       echo json_encode(['result'=> 0, 'message' => 'Please provide a valid listing id']);
     }
   }
-
 
   public function dealers_list() {
     $query = func::getVal('get', 'query'); 
