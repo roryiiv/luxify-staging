@@ -77,13 +77,13 @@ class SocialAccountService{
 
                 $data['email'] = $providerUser->getEmail();
                 $data['status'] = false;
-                $data['error'] = 'this email has been used, please login using luxify account ';
+                $data['error'] = 101;
                 return $data;
             }else{
 
                 if($providerUser->getEmail()==null){
                 $data['status'] = false;
-                $data['error'] = 'we can not get your email address from your social account. please configure your account';
+                $data['error'] = 102;
                 return $data;
                 }else{
                     //data tidak di temukan, dan membuat data sendiri.
@@ -112,7 +112,7 @@ class SocialAccountService{
                         return $data;
                     }else{
                         $data['status'] = false;
-                        $data['error'] = 'error, we cannot configure youre account';
+                        $data['error'] = 103;
                         return $data;
                         
                     }

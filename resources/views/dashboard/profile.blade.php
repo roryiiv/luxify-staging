@@ -332,12 +332,12 @@
                                                         <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}">{{$user->companySummary}}</textarea>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="form-group m-0">
+                                                <div class="form-group m-0">
                                                     <label for="contactDetails" class="control-label">Company Details</label>
                                                     <div class="pt-15">
-                                                        <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder="{{$user->contactDetails}}">{{$user->contactDetails}}</textarea>
+                                                        <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder="{{$user->contactDetails}}"></textarea>
                                                     </div>
-                                                </div>-->
+                                                </div>
                                             </div>
                                         </div>
 

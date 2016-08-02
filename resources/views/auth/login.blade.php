@@ -1,3 +1,18 @@
+<?php
+if(isset($_GET['err']) && $_GET['err'] != ''){
+  switch($_GET['err']){
+    case '101':
+      $error_msg = "Your social account information has been registered. Please login using your luxify account.";
+    break;
+    case '102':
+      $error_msg = 'It seemed you set your social media in private mode. Please set your account.';
+    break;
+    case '103':
+      $error_msg = 'ERROR - No Authorization made.';
+    break;
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en" style="height: 100%">
 
@@ -57,9 +72,9 @@
                     <p id="login_error" style="margin: 15px 0; display: none;">
                         <span class="alert danger" style="color: red;">Username or Email is not registered.</span>
                     </p>
-                    @if(isset($_GET['err']))
+                    @if(isset($error_msg))
                         <p id="login_error" style="margin: 15px 0;">
-                            <span class="alert danger">{{ ucfirst($_GET['err']) }}</span>
+                            <span class="alert danger">{{ ucfirst($error_msg) }}</span>
                         </p>
                     @endif
                 </form>
