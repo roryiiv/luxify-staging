@@ -133,7 +133,9 @@
                                                 <th>Image</th>
                                                 <th>Product Name</th>
                                                 <th class="text-right">Price</th>
-                                                <th class="text-center">Status</th>
+                                                @if(Auth::user()->role == 'admin')
+                                                    <th class="text-center">Status</th>
+                                                @endif
                                                 <th class="text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -155,6 +157,7 @@
                                                     <td class="text-right">ON REQUEST - {{$products[$i]->code}}</td>
                                                  @endif
                                                     {{-- <td class="text-right">320</td> --}}
+                                                    @if(Auth::user()->role == 'admin')
                                                     <td class="text-center">
                                                        @if ($products[$i]->status == 'APROVED')
                                                          <div role="group" aria-label="soldExpiredButton" class="btn-group btn-group-sm">
@@ -172,11 +175,14 @@
                                                          <span class="label label-default">{{$products[$i]->status}}</span>
                                                        @endif
                                                     </td>
+                                                    @endif
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
                                                             <a target='_blank' href="/listing/{{ $products[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
                                                             <a href="/panel/product/edit/{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
-                                                            <a href="/panel/product/delete/{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                            @if(Auth::user()->role == 'admin')
+                                                                <a href="/panel/product/delete/{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                            @endif
                                                         </div>
                                                     </td>
                                                 </tr>

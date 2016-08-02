@@ -78,9 +78,9 @@
                                             <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">User Role</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <select id="txtUserRole" name="txtUserRole" class="form-control">
-                                                  <option value="user" {{ $user->role === 'user' ? 'selected' : ''}}>User</option>
-                                                  <option value="seller" {{ $user->role === 'seller' ? 'selected' : ''}}>Seller</option>
-            
+                                                    <option value="user" {{ $user->role === 'user' ? 'selected' : ''}}>User</option>
+                                                    <option value="seller" {{ $user->role === 'seller' ? 'selected' : ''}}>Seller</option>
+                                                    <option value="editor" {{ $user->role === 'editor' ? 'selected' : ''}}>Editor</option>
                                                 </select>
                                             </div>
                                         </div>

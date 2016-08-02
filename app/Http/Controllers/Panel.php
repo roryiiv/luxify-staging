@@ -41,6 +41,7 @@ class Panel extends Controller
         if(Auth::user()){
             $this->user_id = Auth::user()->id;
             $this->user_role = Auth::user()->role;
+            $this->accepted = array('admin', 'editor');
         }
     }
 
@@ -158,10 +159,18 @@ class Panel extends Controller
     }
 
     public function user_add($role) {
-        return view('panel.add-user', ['role' => $role]);
+        if($this->user_role == 'admin'){
+            return view('panel.add-user', ['role' => $role]);
+        }else{
+            return redirect('/panel/users');
+        }
+        
     }
 
     public function user_register() {
+        //redirect if user is editor.
+        if($this->user_role == 'editor') return redirect('/panel/users');
+
         $user = new User; // always have it declared for first or else empty value sent
 
         //we'll build the slug here and save it
@@ -608,7 +617,7 @@ class Panel extends Controller
     }
 
     public function products() {
-      if($this->user_role != 'admin') return redirect('/');
+      if(!in_array($this->user_role, $this->accepted)) return redirect('/');
       $filter = array();
       //TODO: Searching is case incentive?
       if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){

@@ -8,6 +8,8 @@ use App\User;
 use App\Users;
 use App\Country;
 use App\Listings;
+use App\PageCount;
+use App\Wishlists;
 
 Use Auth;
 
@@ -44,8 +46,19 @@ class Dashboard extends Controller
      */
     public function index() {
         if($this->user_role == 'seller'){
-            return view('dashboard.home');
-            // return redirect('/dashboard/products');
+
+//            penambahan untuk mendapatkan data;
+            
+            $data= PageCount::get_data();
+            $data['flotchart']= PageCount::get_json();
+            $data['get_tick']= PageCount::get_tick();
+            $data['get_vm']= PageCount::get_json_vm();
+            $data['get_ws']= PageCount::get_json_rn();
+
+
+
+             return view('dashboard.home',$data);
+            //return redirect('/dashboard/products');
         }elseif($this->user_role == 'user'){
             return redirect('/dashboard/profile');
         }elseif($this->user_role == 'editor'){
@@ -53,6 +66,15 @@ class Dashboard extends Controller
         }else{
             return redirect('/panel/users');
         }
+    }
+    public function test() {
+
+//            penambahan untuk mendapatkan data;
+        $data = [];
+        array_push($data,PageCount::get_json());
+        array_push($data,PageCount::get_data());
+        return dd($data);
+        
     }
 
     public function profile() {

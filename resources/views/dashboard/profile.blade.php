@@ -63,6 +63,32 @@
                             <h3>Personal Information</h3>
                             <fieldset>
                                 <div class="row">
+                                 @if(Auth::user()->role == 'user')
+                                    <div class="col-md-6 pull-right">
+                                        <div class="widget">
+                                            <div class="widget-heading">
+                                                <h5 class="m-0">Profile Picture</h5>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div id="api-profile-image" class="dropzone text-center"></div>
+                                                <input type="hidden" name="profile_img" id="profile_img" value="" />
+                                            </div>
+                                            <div class="widget-heading pt-0">
+                                                <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
+                                            </div>
+                                            <div class="widget-body">
+                                                <h6>Current Profile Image</h6>
+                                                <div id="current-cover-image" style="overflow:hidden;" class="text-center">
+                                                    @if(!empty($user->companyLogoUrl))
+                                                        <img src="{{func::img_url($user->companyLogoUrl, 425, '')}}" alt="{{$user->companyLogoUrl}}" />
+                                                    @else
+                                                        <p>You have not uploaded any Profile Image yet, please upload one.</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="txtFirstNameBillingTab" class="col-sm-3 col-md-4 control-label">Username</label>
@@ -70,64 +96,78 @@
                                                 <input id="txtFirstNameBillingTab" name="txtFirstNameBillingTab" type="text" class="form-control" value="{{$user->username}}" disabled="disabled">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">User Role</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtUserRole" name="txtUserRole" type="text" class="form-control" value="{{ucfirst($user->role)}}" disabled="disabled">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="txtEmailAddress" class="col-sm-3 col-md-4 control-label">Email</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtEmailAddress" name="txtEmailAddress" type="text" class="form-control" value="{{$user->email}}" disabled="disabled">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                         @endif
                                         <div class="form-group">
                                             <label for="txtPassword" class="col-sm-3 col-md-4 control-label">Password</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtPassword" type="password" name="txtPassword" placeholder="Enter password" class="form-control">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="txtConfirmPassword" class="col-sm-3 col-md-4 control-label">Confirm password</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtConfirmPassword" type="password" name="txtConfirmPassword" placeholder="Enter confirm password" class="form-control">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                         @endif
                                         <div class="form-group">
                                             <label for="first_name" class="col-sm-3 col-md-4 control-label">First Name</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="first_name" name="first_name" type="text" placeholder="{{ucfirst($user->firstName)}}" class="form-control">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="last_name" class="col-sm-3 col-md-4 control-label">Last Name</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ucfirst($user->lastName)}}">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="country" class="col-sm-3 col-md-4 control-label">Location</label>
                                             <div class="col-sm-9 col-md-8">
@@ -140,8 +180,10 @@
                                                 </select>
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="language" class="col-sm-3 col-md-4 control-label">Language</label>
                                             <div class="col-sm-9 col-md-8">
@@ -154,13 +196,22 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
+                                        @endif
                                         <div class="form-group">
+                                        @if(Auth::user()->role == 'seller')
                                             <label for="currency" class="col-sm-3 col-md-2 control-label">Price Display In</label>
                                             <div class="col-sm-9 col-md-10">
+                                        @endif
+                                        @if(Auth::user()->role == 'user')
+                                            <label for="currency" class="col-sm-3 col-md-4 control-label">Price Display In</label>
+                                            <div class="col-sm-9 col-md-8">
+                                        @endif
+
                                                 <?php $currs = func::build_curr(); ?>
                                                 <select id="currency" name="currency" class="form-control">
                                                     <option value="">--Please Select--</option>
@@ -170,14 +221,16 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
+                                        @endif
                                 @if(Auth::user())
                                     @if(Auth::user()->role == 'user')
-                                        <div class="row">
-                                            <div class="col-sm-9 col-md-10 col-md-offset-2 col-sm-offset-3">
-                                                <label for="notificationCheck">
-                                                    <input type="checkbox" id="notificationCheck"> I wish to be notified by email</label>
+                                                <div class="col-sm-9 col-md-8 col-md-offset-4 col-sm-offset-3">
+                                                    <label for="notificationCheck">
+                                                        <input type="checkbox" id="notificationCheck"> I wish to be notified by email</label>
+                                                </div>
                                             </div>
                                         </div>
                                     @endif

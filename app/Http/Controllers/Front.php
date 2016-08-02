@@ -24,6 +24,10 @@ use Illuminate\Routing\Controller;
 
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
+use App\PageCount;
+
+use App\Wishlists;
+
 class Front extends Controller {
     //Front end Controller
     public function index() {
@@ -89,6 +93,8 @@ class Front extends Controller {
         ->first();
 
         if ($listing) {
+        $users_id = $listing->userId;
+            PageCount::counting($listing->id,$users_id);
             $category = array();
             foreach($cat_ids as $key => $val){
                 if(in_array($listing->categoryId, $val)){

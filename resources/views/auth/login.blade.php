@@ -33,7 +33,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input id="email" name="email" type="email" placeholder="Email" class="form-control">
+                            <input id="email" name="email" type="email" placeholder="Email" class="form-control" <?= isset($_GET['email'])?'value="'.$_GET['email'].'"':''; ?>>
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,13 +64,14 @@
                     @endif
                 </form>
                 <hr>
-                <p class="text-muted" style="display: none;">Sign in with your Facebook or Twitter accounts</p>
-                <div class="clearfix" style="display: none;">
+                <p class="text-muted" >Sign in with your Facebook or Twitter accounts</p>
+                <div class="clearfix" >
                     <div class="pull-left">
-                        <a href="javascript:;" type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-primary"><i class="ti-facebook mr-5"></i> Facebook</a>
+                    <!--add class login_to_facebook-->
+                        <a href="#" type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-primary login_to_facebook"><i class="ti-facebook mr-5"></i> Facebook</a>
                     </div>
                     <div class="pull-right">
-                        <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
+                        <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info login_to_twitter"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
                     </div>
                 </div>
                 {{-- <hr> --}}
@@ -102,6 +103,15 @@
             required: true 
           }
         } 
+      });
+      //add function facebook link go_to new blank document
+      $('.login_to_facebook').click(function(){
+        //window.open("{{route('redirect_fb')}}");
+        window.location = "{{route('redirect_fb')}}";
+      });
+      $('.login_to_twitter').click(function(){
+        //window.open("{{route('redirect_fb')}}");
+        window.location = "{{route('redirect_tw')}}";
       });
         $('#login_btn').click(function(event){
             event.preventDefault();
