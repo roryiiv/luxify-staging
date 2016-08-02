@@ -100,9 +100,8 @@ Route::post('/dealer-application','Front@dealerApplication');
 //Route::get('/build', 'Front@build');
 
 //routes for social oauth login/signup
-Route::get('/oauth/redirect/facebook', 'SocialAuthController@fb_redirect')->name("redirect_fb");
-Route::get('/oauth/redirect/twitter', 'SocialAuthController@tw_redirect')->name("redirect_tw");
-Route::get('/oauth/callback/{provider}', 'SocialAuthController@provider_callback');
+Route::get('/oauth/redirect/facebook', 'SocialAuthController@fb_redirect');
+Route::get('/oauth/callback/facebook', 'SocialAuthController@fb_callback');
 
 // PANEL Routes (admin)
 Route::get('/panel','Panel@index');
@@ -137,9 +136,8 @@ Route::get('/panel/currency/exec', 'Panel@currencyExec');
 
 
 //routes for DASHBOARD (seller)
-Route::get('/dashboard/test', 'Dashboard@test');
-
-Route::get('/dashboard', 'Dashboard@index');
+//Route::get('/dashboard', 'Dashboard@index');
+Route::get('/dashboard', 'Dashboard@products');
 Route::get('/dashboard/profile', 'Dashboard@profile');
 Route::post('/dashboard/profile', 'Dashboard@profile_update');
 Route::get('/dashboard/mailbox', 'Dashboard@mailbox');

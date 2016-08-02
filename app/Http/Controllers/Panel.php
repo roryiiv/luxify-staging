@@ -381,6 +381,7 @@ class Panel extends Controller
                   unset($_POST['images'][$i]);
               }
             }
+            
             $s3 = \Storage::disk('s3');
             $uploadedImage = array();
             foreach( $_POST['images'] as $i => $val) {
@@ -398,8 +399,10 @@ class Panel extends Controller
                 }
             }
 
+            
             if (count($uploadedImage) === count($_POST['images'])) {
                 if (isset($_POST['mainImage']) && !empty($_POST['mainImage'])) {
+                     
                     $item->mainImageUrl = array_slice($uploadedImage, intval($_POST['mainImage']), 1)[0];
                     array_splice($uploadedImage, intval($_POST['mainImage']), 1);
                     $item->images = json_encode($uploadedImage);
