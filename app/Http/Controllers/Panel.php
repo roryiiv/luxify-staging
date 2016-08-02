@@ -886,8 +886,6 @@ class Panel extends Controller
             ->where('id', $curr->id)
             ->update(['rate' => $rate]);
         }
-
-        // var_dump($rate);
     }
 
     public function bulkActions() {

@@ -255,7 +255,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
-                                                    <label for="txtCompanyPhones" data-role='taginput' class="control-label">Contact Phone Numbers</label>
+                                                    <label for="phoneNumber" data-role='taginput' class="control-label">Contact Phone Numbers</label>
                                                     <?php $phones = json_decode($user->phoneNumber); ?>
                                                     <div class="pt-15">
                                                         <input id="phoneNumber" type="text" class="form-control" value="{{ !empty($phones) ? join(',', $phones): ''}}">
