@@ -131,7 +131,13 @@ class Dashboard extends Controller
         $error_arr = array();
         if((isset($_POST['txtPassword']) && !empty($_POST['txtPassword'])) && (isset($_POST['txtConfirmPassword']) && !empty($_POST['txtConfirmPassword']))){
             if($_POST['txtPassword'] == $_POST['txtConfirmPassword']) {
-                $error_arr['password'] = 'not yet implemented for updates.';
+                // reset user password
+                if(isset($_POST['hashed']) && !empty($_POST['hashed'])){
+                    $user->hashedPassword = $_POST['hashed'];
+                }
+                if(isset($_POST['salt']) && !empty($_POST['salt'])){
+                    $user->salt = $_POST['salt'];
+                }
             }else{
                 $error_arr['password'] = 'password not matching.';
             }
@@ -156,6 +162,9 @@ class Dashboard extends Controller
         }
         if(isset($_POST['currency']) && !empty($_POST['currency'])){
             $user->currencyId = $_POST['currency'];
+        }
+        if(isset($_POST['phoneNumber']) && !empty($_POST['phoneNumber'])) {
+            $user->phoneNumber = json_encode($_POST['phoneNumber']); 
         }
         if(isset($_POST['contactDetails']) && !empty($_POST['contactDetails'])){
             $user->contactDetails = $_POST['contactDetails'];
@@ -203,6 +212,7 @@ class Dashboard extends Controller
             if($user->save()) return redirect('/dashboard/profile?update=success');
         }
     }
+
 
     public function products_add() {
       return view('dashboard.products-add');
