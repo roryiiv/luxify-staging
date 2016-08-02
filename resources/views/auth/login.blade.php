@@ -72,7 +72,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                     <p id="login_error" style="margin: 15px 0; display: none;">
                         <span class="alert danger" style="color: red;">Username or Email is not registered.</span>
                     </p>
-                    @if(isset($error_msg))
+                    @if(isset($error_msg) || !empty($error_msg))
                         <p id="login_error" style="margin: 15px 0;">
                             <span class="alert danger">{{ ucfirst($error_msg) }}</span>
                         </p>
