@@ -604,7 +604,7 @@ class Dashboard extends Controller
     public function product_delete($id){
         DB::table('listings')
             ->where('id', $id)
-            ->update(['status' => 'EXPIRED']);
+            ->update(['status' => 'EXPIRED', 'expired_at' => Carbon::now()]);
 
         return redirect('/dashboard/products');
     }
@@ -629,6 +629,8 @@ class Dashboard extends Controller
         }
         if(isset($_GET['status']) && !empty($_GET['status'])){
             $filter[] = ['listings.status', $_GET['status']];
+        } else {
+            $filter[] = ['listings.status', '<>', 'EXPIRED']; 
         }
         $products = DB::table('listings')
         ->where($filter)
