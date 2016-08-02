@@ -54,7 +54,7 @@ Route::get('/pricing', function(){
 Route::get('datafeed/product/{id}', 'DataFeed@product_get');
 Route::get('datafeed/dealers', 'DataFeed@dealers_list');
 Route::post('datafeed/product/add', 'DataFeed@product_add');
-Route::post('datafeed/product/update', 'DataFeed@product_update');
+Route::post('datafeed/product/update/{id}', 'DataFeed@product_update');
 
 // Open for public dealer application
 // TODO: add captcha to the application form form
