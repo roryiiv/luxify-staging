@@ -6,7 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
+        "laravel/framework": "5.2.39",
         "cviebrock/eloquent-sluggable": "~4.0@dev",
         "laravel/socialite": "^2.0",
         "laravelcollective/html": "5.2.*",

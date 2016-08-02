@@ -640,12 +640,12 @@ class Panel extends Controller
       $products = DB::table('listings')
       ->where($filter)
       ->join('currencies', 'listings.currencyId', '=', 'currencies.id')
+      ->join('users', 'listings.userId', '=', 'users.id')
       ->orderby('listings.created_at', 'desc')
-      ->select('listings.*', 'currencies.code')
+      ->select('listings.*', 'currencies.code', 'users.*')
       ->where('status', '<>', 'EXPIRED')
       ->paginate(10);
 
-      // var_dump($wishes);
       $products->setPath($_SERVER['REQUEST_URI']);
       return view('panel.products', ['products' => $products]);
     }

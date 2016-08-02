@@ -161,7 +161,19 @@
                                                             <label for="user-{{$user->id}}" class="pl-0">&nbsp;</label>
                                                         </div>
                                                     </td>
-                                                    <td>{{ucfirst($user->firstName) . ' ' . ucfirst($user->lastName) }}</td>
+                                                    <?php
+                                                       $customerName = '';
+                                                       if (isset($user->companyName) && !empty($user->companyName)) {
+                                                         $customerName = $user->companyName; 
+                                                       } else if (isset($user->fullName) && !empty($user->fullName)) {
+                                                         $customerName = $user->fullName; 
+                                                       } else if (!empty($user->firstName) && !empty($user->lastName)) {
+                                                         $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName);
+                                                       } else {
+                                                         $customerName = $user->username;
+                                                       }
+                                                    ?>
+                                                    <td>{{ $customerName }}</td>
                                                     <td>{{$user->email}}</td>
                                                     <td>{{ucfirst($user->role)}}</td>
                                                     <td>
