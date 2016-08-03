@@ -231,17 +231,13 @@
                     <div class="form-group">
                         <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
                         <div class="col-sm-9">
-                            <textarea id="description editor-markdown" name='description'  class="form-control" cols="3" rows="5" data-provide="markdown">{{$item->description}}</textarea>
+                            <textarea id="description editor-markdown" name='description'  class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
                             <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
-                            <div class="">
+                            <div class="" style="display: none;">
                             <h5>history</h5>
-                            <?php
-                            foreach ($history->description as $key => $value) {?>
-                            <div class="">{{$value}}</div>
-                            <?php
-                                
-                            }
-                            ?>
+                                <?php foreach ($history->description as $key => $value) { ?>
+                                    <div class="">{{$value}}</div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
