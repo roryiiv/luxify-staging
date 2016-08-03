@@ -105,15 +105,13 @@
                 <div class="btn-group mt-5">
                     <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                    <!--
-                    <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
+                    {{-- <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
                         <li><a href="edit-product.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
                         <li><a href="edit-product.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
                         <li><a href="edit-product.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
                         <li><a href="edit-product.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
                         <li><a href="edit-product.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                    </ul>
--->
+                    </ul> --}}
                 </div>
             </div>
         </div>
