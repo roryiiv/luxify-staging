@@ -126,6 +126,7 @@
                                                 <li><a href="/about">About us / Careers</a></li>
                                                 <li><a href="/why-luxify">How it works</a></li>
                                                 <li><a target="_blank" href="http://press.luxify.com">Press</a> / <a href="http://blog.luxify.com/">Blog</a></li>
+                                                <li><a href="/dealer-directory">Dealer Directory</a></li>
                                             </ul>
                                         </nav>
                                     </div>
