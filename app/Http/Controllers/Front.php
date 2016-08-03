@@ -643,6 +643,17 @@ class Front extends Controller {
         }
     }
 
+    public function dealerDirectory() {
+      $dealers = Users::whereNotNull('companyName')
+        ->where('role', 'seller')
+        ->orderBy('companyName','asc')
+        ->get();
+
+      if ($dealers) {
+        return view('dealer-directory', ['dealers'=>$dealers]);  
+      } 
+    }
+
     public function viewDealer($id, $slug) {
       $dealer = DB::table('users')->where('slug', $slug)->orWhere('users.id', $id)
         ->leftJoin('countries', 'countries.id', '=', 'users.countryId')

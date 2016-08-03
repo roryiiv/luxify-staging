@@ -50,6 +50,7 @@ Route::get('/why-luxify', function(){
 Route::get('/pricing', function(){
     return view('pricing');
 });
+Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
 Route::get('datafeed/product/{id}', 'DataFeed@product_get');
 Route::get('datafeed/dealers', 'DataFeed@dealers_list');
