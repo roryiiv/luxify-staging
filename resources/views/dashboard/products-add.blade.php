@@ -28,6 +28,8 @@
 <!-- Primary Style-->
 <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
 <link rel="stylesheet" type="text/css" href="/db/css/custom.css">
+<!-- Boostraps_markdown Plugin Style -->
+<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
 <style>
   .sweet-alert .sa-icon.sa-success .sa-line {
     height: 5px !important;
@@ -214,7 +216,7 @@
                         <div class="form-group">
                             <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
                             <div class="col-sm-9">
-                                <textarea id="description" name='description' class="form-control" cols="3" rows="5" required></textarea>
+                                <textarea id="description" name='description' class="form-control" id="editor-markdown" data-provide="markdown" data-hidden-buttons="cmdImage cmdCode cmdQuote" cols="3" rows="5" required></textarea>
                                 <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
                             </div>
                         </div>
@@ -363,6 +365,10 @@
 <script type="text/javascript" src="/db/js/dropzone-js.js"></script>
 <script type="text/javascript" src="/db/js/date-range-picker.js"></script>
 <script type="text/javascript" src="/db/js/lodash.core.min.js"></script>
+<!-- Boostraps_markdown Plugin Script -->
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/markdown.js"></script>
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/to-markdown.js"></script>
 
 <script>
     var images_array = [];
@@ -428,6 +434,7 @@
         }
     }
     $(document).ready(function () {
+        $('#editor-markdown').markdown();
 
         $('.actions ul li').click(function () {
             $(".sweet-alert p").html("Your item has been submitted for approval");

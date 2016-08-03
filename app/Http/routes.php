@@ -135,6 +135,10 @@ Route::get('/panel/extrainfo/rebuild/{id}','Panel@extra_rebuild');
 Route::get('/panel/products/confirm','Panel@products_confirm');
 Route::get('/panel/currency/exec', 'Panel@currencyExec');
 
+//panel additional ajax slug #create_update_slug
+Route::get('/panel/cu_slug/', 'Panel@zonk')->name("get_slug");
+Route::get('/panel/cu_slug/{id}/{slug}', 'Panel@createupdateslug');
+
 
 //routes for DASHBOARD (seller)
 Route::get('/dashboard', 'Dashboard@index');

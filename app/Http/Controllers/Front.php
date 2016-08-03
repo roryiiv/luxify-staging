@@ -16,6 +16,8 @@ use App\User;
 
 use App\Users;
 
+use App\Meta;
+
 use Illuminate\Support\Facades\Auth;
 
 use DB;
@@ -96,6 +98,7 @@ class Front extends Controller {
 
         if ($listing) {
         $users_id = $listing->userId;
+            //counting user
             PageCount::counting($listing->id,$users_id);
             $category = array();
             foreach($cat_ids as $key => $val){
@@ -133,7 +136,15 @@ class Front extends Controller {
             ->select('listings.*', 'countries.name as country')
             ->paginate(10);
 
-          return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category]);
+            //additonal parameters
+            $meta = new Meta;
+            $meta->title = Meta::get_data_listing($listing->id,'title');
+            $meta->alt_text = Meta::get_data_listing($listing->id,'alt_text');
+            $meta->description = Meta::get_data_listing($listing->id,'description');
+            $meta->author = Meta::get_data_listing($listing->id,'author');
+            $meta->keyword = Meta::get_data_listing($listing->id,'keyword');
+
+          return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
         }
     }
 

@@ -74,4 +74,25 @@ class Listings extends Model
     public function errors() {
       return $this->errors;    
     }
+    public static function newslug($id,$slug){
+      $oldslug = Listings::where('id',$id)->value('slug');
+      $newslug = str_slug($slug, '-');
+      //if data not change
+      if($oldslug == $newslug){
+        $counts = Listings::where('slug',$newslug)->count();
+        //if data more than the object original
+        if($counts>1){
+          $newslug_copy = $newslug.'-'.$counts+1;
+            return $newslug_copy;
+          }else{
+            return $newslug;
+          }
+      }else{
+        $counts = Listings::where('slug',$newslug)->count();
+        if($counts>0){
+          $newslug = $newslug.'-1';
+        }
+        return $newslug;
+      }
+    }
 }

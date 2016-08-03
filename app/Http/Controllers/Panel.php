@@ -16,6 +16,8 @@ use App\Categories;
 
 use App\Listings;
 
+use App\History;
+
 use App\Users;
 
 use DB;
@@ -29,6 +31,8 @@ use League\Flysystem\Filesystem;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 use Carbon\Carbon;
+
+use App\Meta;
 
 use func;
 
@@ -360,6 +364,11 @@ class Panel extends Controller
         }
         if ( isset($_POST['description']) && !empty($_POST['description'])) {
             $item->description = $_POST['description'];
+            $oldDescription = DB::table('listings')->where('id',$id)->value('description');
+            if($oldDescription!=$_POST['description']){
+                $catat = History::catat('description',$id,$_POST['description']);         
+            }
+
         } else {
             $error_arr['description'] = 'Item description is required.';
         }
@@ -428,6 +437,34 @@ class Panel extends Controller
             $item->aerialLook3DUrl = $_POST['aerial3DLookURL'];
         }
 
+        //additional parameters
+        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
+            $newslug = Listings::newslug($id,$_POST['slug']);
+            $item->slug = $newslug;
+        }
+
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+
+
         // delete the existing optional fields first
         DB::table('extrainfos')->where('listingId', $item->id )->delete();
         $form = DB::table('forms')
@@ -449,6 +486,12 @@ class Panel extends Controller
         if(!empty($error_arr)){
             echo json_encode($error_arr);
         }else{
+            //save or update meta listing
+            //$id = id listing
+            //$meta = data array meta
+            //$object_type = listing/users;
+            $object_type = 'listings';
+            $savemeta = Meta::saveorupdate($id,$meta,$object_type);
             if ($item->save()) {
                 return redirect('/panel/product/edit/'.$item->id);
             }
@@ -759,7 +802,16 @@ class Panel extends Controller
             if ($optionalFields) {
                 $item['optionFields'] = $optionalFields;
             }
-            return view('panel.product-edit', ['item' => $item] );
+            //additonal parameters
+            $item->url_object = 'listing';
+            $item->meta_title = Meta::get_data_listing($itemId,'title');
+            $item->meta_alt_text = Meta::get_data_listing($itemId,'alt_text');
+            $item->meta_description = Meta::get_data_listing($itemId,'description');
+            $item->meta_author = Meta::get_data_listing($itemId,'author');
+            $item->meta_keyword = Meta::get_data_listing($itemId,'keyword');
+            $history = new History;
+            $history->description = History::where('object_id',$itemId)->get();
+            return view('panel.product-edit', ['item' => $item,'history' => $history] );
         }
     }
 
@@ -943,5 +995,12 @@ class Panel extends Controller
       } else {
         return redirect( Auth::user()->role === 'admin'? '/panel': '/dashboard');
       }
+    }
+    function createupdateslug($id,$slug){
+        $newslug = Listings::newslug($id,$slug);
+        $update = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($update){
+            return $newslug;
+        }
     }
 }

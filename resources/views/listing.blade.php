@@ -1,7 +1,17 @@
 @extends('layouts.front')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+@section('title')
+{{$meta->title}}
+@endsection
 
+@section('meta')
+
+<meta name="description" content="{{$meta->description}}">
+<meta name="keyword" content="{{$meta->keyword}}">
+<meta name="author" content="{{$meta->author}}">
+<meta name="author" content="{{$meta->author}}">
+@endsection
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main2.css">
@@ -168,9 +178,10 @@
                             </header>
                             <div class="description">
                                 <h5>Description</h5>
-                                <p>
+                                {!! Markdown::parse($listing->description) !!}
+                                {{-- <p>
                                     {!! nl2br(e($listing->description)) !!}
-                                </p>
+                                </p> --}}
                                 @if(!empty($infos))
                                     <h5 style="margin-top:45px;">Specifications</h5>
                                     <table class="table item-description">

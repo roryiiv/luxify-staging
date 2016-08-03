@@ -2,20 +2,23 @@
 <html>
 
 <head>
-    <meta name="description" content="Luxify is Asia's leading online marketplace for luxury. Our website is the go-to destination for luxury enthusiasts and collectors in Asia, providing easy, safe and reliable market access to the luxury market.">
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
 
-    <title>Luxify - Asia's leading marketplace for luxury</title>
+    <title>@yield('title')</title>
+    @yield('meta')
+    <meta name="description" content="Luxify is Asia's leading online marketplace for luxury. Our website is the go-to destination for luxury enthusiasts and collectors in Asia, providing easy, safe and reliable market access to the luxury market.">
+    <!-- <title>Luxify - Asia's leading marketplace for luxury</title> -->
+
 
 
 <!-- set the encoding of your site -->
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- set the viewport width and initial-scale on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- title of the page -->
-    <title>@yield('title')</title>
+    @yield('meta')
 
     <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png?v=2">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png?v=2">
