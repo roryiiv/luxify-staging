@@ -31,7 +31,7 @@
                         </div>
                     </li>
                     <li><a href="/why-luxify">Why luxify</a></li>
-                    <li><a target="_blank" href="http://blog.luxify.com">BLog</a></li>
+                    <li><a target="_blank" href="/blog">BLog</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
                         <div class="dropdown-menu sm">
