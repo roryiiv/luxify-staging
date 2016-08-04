@@ -426,15 +426,17 @@ class Panel extends Controller
         ->where('languageId', 1)
         ->first();
         if ($form) {
-            foreach ($_POST['optionfields'] as $key => $value) {
-                $formGroup = DB::table('formgroups')
-                ->where('formId', $form->id)
-                ->where('formfieldId', $key)
-                ->first();
-                if ($formGroup && !empty($value)) {
-                    DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
-                }
-            }
+          if(isset($_POST['optionfields']) && !empty($_POST['optionfields'])) {
+              foreach ($_POST['optionfields'] as $key => $value) {
+                  $formGroup = DB::table('formgroups')
+                  ->where('formId', $form->id)
+                  ->where('formfieldId', $key)
+                  ->first();
+                  if ($formGroup && !empty($value)) {
+                      DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
+                  }
+              }
+          }
         }
 
         if(!empty($error_arr)){

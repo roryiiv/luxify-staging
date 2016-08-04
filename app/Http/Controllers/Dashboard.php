@@ -352,6 +352,7 @@ class Dashboard extends Controller
                 ->where('languageId', 1)
                 ->first();
                 if ($form) {
+                  if (isset($_POST['optionfields']) && !empty($_POST['optionfields'])) {
                     foreach ($_POST['optionfields'] as $key => $value) {
                         $formGroup = DB::table('formgroups')
                         ->where('formId', $form->id)
@@ -361,6 +362,8 @@ class Dashboard extends Controller
                             DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $newItem->id, $value));
                         }
                     }
+                  
+                  }
                 }
                 // debug
                 $username_to = Auth::user()->username;
@@ -502,6 +505,7 @@ class Dashboard extends Controller
         ->where('languageId', 1)
         ->first();
         if ($form) {
+          if (isset($_POST['optionfields']) && !empty($_POST['optionfields'])) {
             foreach ($_POST['optionfields'] as $key => $value) {
                 $formGroup = DB::table('formgroups')
                 ->where('formId', $form->id)
@@ -511,6 +515,7 @@ class Dashboard extends Controller
                     DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
                 }
             }
+          }
         }
 
         if(!empty($error_arr)){
