@@ -1,8 +1,13 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Pricing')
+@section('title', 'Pricing')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+
+@section('meta-data')
+<meta name="keywords" content="marketing campaign,asian market,tailored">
+<meta name="description" content="We have one of the world’s finest luxury dealer networks and we offer tailored marketing campaign to reach the asian market.">
+@endsection
 
 @section('style')
     <!-- include the site stylesheet -->

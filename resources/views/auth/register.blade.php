@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Luxify - Register</title>
+    <title>Member Registration- Luxify- Asia's leading marketplace for luxury</title>
+    <meta name="keywords" content="luxify member registration,luxury goods">
+    <meta name="description" content="Register for an account for free to discover one of the Internet’s largest collections of luxury goods and experiences.">
     <!-- PACE-->
     <link rel="stylesheet" type="text/css" href="./plugins/PACE/themes/blue/pace-theme-flash.css">
     <script type="text/javascript" src="./plugins/PACE/pace.min.js"></script>

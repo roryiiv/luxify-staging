@@ -1,8 +1,12 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Dealer Application')
+@section('title', 'Dealer Application')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+@section('meta-data')
+<meta name="keywords" content="sell online,dealers,luxury goods">
+<meta name="description" content="Sell online today. Professional dealers use Luxify to transact successful sales of a wide selection luxury goods as well as luxury experiences.">
+@endsection
 
 @section('style')
     <!-- include the site stylesheet -->

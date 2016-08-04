@@ -1,8 +1,13 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Luxify Estates')
+@section('title', 'Virtual Reality Property Tour')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+
+@section('meta-data')
+<meta name="keywords" content="real estate investment,luxury real estate,virtual reality">
+<meta name="description" content="Partner with us for real estate investment in the US. Our goal is to change the way property buyers experience luxury real estate through 3D virtual reality tour.">
+@endsection
 
 @section('style')
     <!-- include the site stylesheet -->
