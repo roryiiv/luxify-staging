@@ -629,6 +629,8 @@ class Front extends Controller {
     public function dealerDirectory() {
       $dealers = Users::whereNotNull('companyName')
         ->where('role', 'seller')
+        ->where('dealer_status','approved')
+        ->where('isSuspended', false)
         ->orderBy('companyName','asc')
         ->get();
 
