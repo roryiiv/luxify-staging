@@ -7,6 +7,15 @@
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+      .added span {
+        color: red;
+      }
+      img.listing-img {
+        opacity: 1;
+        //transition: opacity .3s ease-in;
+      }
+    </style>
 @endsection
 @section('content')
     <section class="inner-banner auto-height parallax" style="background-image:url({{func::img_url('banners/about-us-main.jpg', 1920, '', false, true)}});">
@@ -60,7 +69,7 @@
         			   	   <div class="thumbnail">
                         <a href="/listing/{{ $item->slug }}">
             	   	   		<figure>
-            	   	   			<img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
+            	   	   			<img class="listing-img" src='/img/spin.gif' data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
                              @if(Auth::user())
 
                                  @if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
@@ -126,6 +135,7 @@
 	</main>
 @endsection
 @section('scripts')
+    <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
     <script>
     $(document).ready(function(){
         $("#category").change(function () {
@@ -170,7 +180,13 @@
             prettify_enabled: true,
             prettify_separator: ","
         });
-    })
+        $("img.listing-img").unveil(300, function() {
+          $(this).load(function() {
+             $(this).hide();
+             $(this).fadeIn('slow');
+          });
+        });
+    });
     </script>
     @if(Auth::user())
         {{ csrf_field() }}
@@ -178,81 +194,6 @@
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
         <script>
         $(document).ready(function(){
-          /*
-            $('a.favourite').each(function(){
-                $(this).click(function(event){
-                    // return false; // remove this later after database fixes.
-                    // event.preventDefault();
-                    if($(this).hasClass('added')){
-                        var url = '/dashboard/wishlist/delete', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
-                        // console.log(token);
-                        var data = {uid: userID, lid: itemID};
-                        swal({
-                            title: "Delete item",
-                            text: "Are you sure you want to delete item from Wishlist?",
-                            type: "info",
-                            showCancelButton: true,
-                            closeOnConfirm: false,
-                            showLoaderOnConfirm: true,
-                        },
-                        function(){
-                            $.ajax({
-                                type: 'POST',
-                                url: url,
-                                headers: {'X-CSRF-TOKEN': token},
-                                data: data,
-                                dataType: "html",
-                                success: function(data){
-                                    // console.log(data); return false;
-                                    if(data == 3){
-                                        swal("Item is deleted!");
-                                        $('a#'+itemID).removeClass('added');
-                                    }else{
-                                        swal("Error!");
-                                    }
-                                },
-                                error: function(errMsg){
-                                    console.log(errMsg.responseText);
-                                }
-                            });
-                        });
-                    }else{
-                        var url = '/dashboard/wishlist/add', itemID = $(this).attr('data-id'), userID = {{ $user_id }}, token = $('input[name=_token]').val();
-                        // console.log(token);
-                        var data = {uid: userID, lid: itemID};
-                        swal({
-                            title: "Add to Wishlist",
-                            text: "Are you sure you want to add item to your Wishlist?",
-                            type: "info",
-                            showCancelButton: true,
-                            closeOnConfirm: false,
-                            showLoaderOnConfirm: true,
-                        },
-                        function(){
-                            $.ajax({
-                                type: 'POST',
-                                url: url,
-                                headers: {'X-CSRF-TOKEN': token},
-                                data: data,
-                                dataType: "html",
-                                success: function(data){
-                                    if(data == 1){
-                                        swal("Item is added!");
-                                        $('a#'+itemID).addClass('added');
-                                    }else{
-                                        swal("Item has been readded!");
-                                        $('a#'+itemID).addClass('added');
-                                    }
-                                },
-                                error: function(errMsg){
-                                    console.log(errMsg.responseText);
-                                }
-                            });
-                        });
-                    }
-                });
-            });
-        */
         });
         </script>
     @endif

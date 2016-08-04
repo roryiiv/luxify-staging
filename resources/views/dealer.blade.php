@@ -217,7 +217,7 @@
                      <div class="thumbnail">
                         <a href="/listing/{{ $item->slug }}">
                         <div class='product-img-container'>
-                          <img class='product-img' src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}" alt="{{ $item->title }}">
+                          <img class='product-img' src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}" alt="{{ $item->title }}">
                               @if(Auth::user())
                                 <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
                                 <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
@@ -264,6 +264,17 @@
   </main>
 @endsection
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+                              
+          $("img.product-img").unveil(300, function() {
+            $(this).load(function() {
+               $(this).hide();
+               $(this).fadeIn('slow');
+            });
+          });
+        });
+    </script>
     @if(Auth::user())
         {{ csrf_field() }}
         <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">

@@ -1568,7 +1568,7 @@ class Front extends Controller {
                         $return .= '<li>';
                         $return .= '<a href="/listing/'. $list->slug.'" title="'. $list->title .'">';
                         $item_img = !empty($list->mainImageUrl) ? $list->mainImageUrl : 'default-logo.png';
-                        $return .= '<img src="https://images.luxify.com/35/https://luxify.s3-accelerate.amazonaws.com/images/'. $item_img .'" width="35" height="35" alt="Image">';
+                        $return .= '<img class="result-img" src="/img/ring.gif" data-src="https://images.luxify.com/35/https://luxify.s3-accelerate.amazonaws.com/images/'. $item_img .'" width="35" height="35" alt="Image">';
                         $return .= $list->title;
                         //fixes for currency
                         $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
@@ -1603,6 +1603,7 @@ class Front extends Controller {
                     }
                     $return .= '</ul>';
                     $return .= '</div>';
+//                    $return .= '<script>$("img.result-img").unveil(); $(window).trigger("unveil")</script>';
                     ob_end_flush();
                     $return = rtrim($return, $search);
 
