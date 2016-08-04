@@ -1,3 +1,4 @@
+@inject('s_meta', 'App\Meta')
 @extends('layouts.dashboard')
 @section('head')
 <!-- PACE-->
@@ -28,6 +29,11 @@
 <!-- Primary Style-->
 <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
 <link rel="stylesheet" type="text/css" href="/db/css/custom.css">
+<!-- Boostraps_markdown Plugin Style -->
+<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
+<!-- Boostraps_tagit Plugin Style -->
+<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
 <style>
   .sweet-alert .sa-icon.sa-success .sa-line {
     height: 5px !important;
@@ -226,8 +232,14 @@
                         <div class="form-group">
                             <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
                             <div class="col-sm-9">
-                                <textarea id="description" name='description' class="form-control" cols="3" rows="5">{{$item->description}}</textarea>
+                                <textarea id="description editor-markdown" name='description'  class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
                                 <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
+                                <div class="" style="display: none;">
+                                <h5>history</h5>
+                                    <?php foreach ($history->description as $key => $value) { ?>
+                                        <div class="">{{$value}}</div>
+                                    <?php } ?>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -375,16 +387,23 @@
 <script type="text/javascript" src="/db/js/date-range-picker.js"></script>
 <script type="text/javascript" src="/db/js/lodash.core.min.js"></script>
 <script type="text/javascript" src="/db/js/jquery.cookie.js"></script>
+<!-- Boostraps_markdown Plugin Script -->
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/markdown.js"></script>
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/to-markdown.js"></script>
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/jquery.hotkeys.js"></script>
+<!-- Booostraps_tagit input plugin -->
+<script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 
 <script>
     <?php
     $otherImages = json_decode($item->images);
 
     $images = array();
-    $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true);
+    $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl));
 
     for($i = 0; $i < count($otherImages); $i++) {
-        $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true);
+        $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl));
     }
     ?>
     var images_array = <?php echo json_encode($images, JSON_PRETTY_PRINT); ?>;
@@ -420,7 +439,7 @@
         var table = $("#images-preview-table tbody");
         table.html('');
         for (var i = 0; i < images_array.length; i++) {
-            $('<tr><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
+            $('<tr><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /><br/><input type="text" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
         }
     }
     function genControls({id, type, name, label, optionValues, value, valueId}){
@@ -453,6 +472,21 @@
     }
     $(document).ready(function () {
 
+        //markdown
+        $('#editor-markdown').markdown();
+        $('.createorupdateslug').click(function(){
+            var newslug = $('.get_slug').val();
+            var id = $('.get_slug').attr('data-id');
+                $.ajax({
+                    url: "{{route('get_slug')}}/"+id+"/"+newslug,
+                    async: false,
+                    cache: false,
+                    success:function( html ) {
+                        $( ".get_slug" ).val( html );
+                        alert('oke');
+                    }
+                });
+        });
         genImagesPreview();
 
         for (var i = 0; i < optionalFields.length ; i++){

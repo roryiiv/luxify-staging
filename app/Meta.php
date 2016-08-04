@@ -27,6 +27,22 @@ class Meta extends Model
 			}
 		}
 	}
+	public static function alt_text_image($id,$value){
+		$exist= Meta::where('object_id',$id)->where('meta_key','alt_text')->where('object_type','images')->first();
+		if($exist){
+			//update
+			$update = Meta::where('object_id',$id)->where('meta_key','alt_text')->where('object_type','images')->update([ 'meta_value'=> $value]);
+		}else{
+			//create
+			$create = new Meta;
+			$create->id = '';
+			$create->object_type = 'images';
+			$create->object_id = $id;
+			$create->meta_key = 'alt_text';
+			$create->meta_value = $value;
+			$create->save();
+		}
+	}
 	public static function get_data_listing($itemId,$key){
 		$data= Meta::where('object_type','listings')
 		->where('object_id',$itemId)

@@ -410,6 +410,13 @@ class Panel extends Controller
 
             
             if (count($uploadedImage) === count($_POST['images'])) {
+                                //additional add alt image here
+                for ($i=0; $i < count($uploadedImage); $i++) {
+                    //add meta with value
+                    $object_id = $uploadedImage[$i];
+                    $value = $_POST['alt_text'][$i];
+                    $save = Meta::alt_text_image($object_id,$value);
+                }
                 if (isset($_POST['mainImage']) && !empty($_POST['mainImage'])) {
                      
                     $item->mainImageUrl = array_slice($uploadedImage, intval($_POST['mainImage']), 1)[0];
@@ -439,7 +446,8 @@ class Panel extends Controller
 
         //additional parameters
         if (isset($_POST['slug']) && !empty($_POST['slug'])) {
-            $newslug = Listings::newslug($id,$_POST['slug']);
+            $newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
+            //$newslug = Listings::newslug($id,$_POST['slug']);
             $item->slug = $newslug;
         }
 

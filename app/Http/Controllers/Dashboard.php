@@ -9,6 +9,8 @@ use App\Users;
 use App\Country;
 use App\Listings;
 use App\PageCount;
+use App\Meta;
+use App\History;
 use App\Wishlists;
 
 Use Auth;
@@ -248,7 +250,17 @@ class Dashboard extends Controller
             if ($optionalFields) {
                 $item['optionFields'] = $optionalFields;
             }
-            return view('dashboard.products-edit', ['item' => $item] );
+            //additonal parameters
+            $item->url_object = 'listing';
+            $item->meta_title = Meta::get_data_listing($itemId,'title');
+            $item->meta_alt_text = Meta::get_data_listing($itemId,'alt_text');
+            $item->meta_description = Meta::get_data_listing($itemId,'description');
+            $item->meta_author = Meta::get_data_listing($itemId,'author');
+            $item->meta_keyword = Meta::get_data_listing($itemId,'keyword');
+            $history = new History;
+            $history->description = History::where('object_id',$itemId)->get();
+
+            return view('dashboard.products-edit', ['item' => $item,'history' => $history] );
         }
     }
 
@@ -494,6 +506,14 @@ class Dashboard extends Controller
             }
 
             if (count($uploadedImage) === count($_POST['images'])) {
+                //additional add alt image here
+                for ($i=0; $i < count($uploadedImage); $i++) {
+                    //add meta with value
+                    $object_id = $uploadedImage[$i];
+                    $value = $_POST['alt_text'][$i];
+                    $save = Meta::alt_text_image($object_id,$value);
+                }
+
                 if (isset($_POST['mainImage']) && !empty($_POST['mainImage'])) {
                     $item->mainImageUrl = array_slice($uploadedImage, intval($_POST['mainImage']), 1)[0];
                     array_splice($uploadedImage, intval($_POST['mainImage']), 1);
