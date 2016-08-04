@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="/assets/css/main.css">
 @endsection
 
+@section('meta-data')
+  <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
+  <meta name="description" content="We are Asia's leading online marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+@endsection
+
 @section('content')
         <!-- main banner of the page -->
         <section class="banner">

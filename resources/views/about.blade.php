@@ -1,8 +1,13 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - About Luxify')
+@section('title', 'About Luxify')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+
+@section('meta-data')
+<meta name="keywords" content="online marketplace,luxury goods,luxury">
+<meta name="description" content="Luxify is Asia’s leading online marketplace for luxury. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+@endsection
 
 @section('style')
     <!-- include the site stylesheet -->

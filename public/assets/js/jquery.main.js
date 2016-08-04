@@ -55,9 +55,25 @@ function suggestedSearchResults(){
       		  	// alert('it is a success');
       		  	if(data){
       		  		$('#search-left').html(data);
+                setTimeout(function() {
+                  $('img.result-img').unveil(300, function() {
+                $(this).load(function() {
+                   $(this).hide();
+                   $(this).fadeIn('slow');
+                });
+              });
+                }, 200);
       		  	}else{
       		  		$('#search-left').html('<p>No data found</p>');
       		  	}
+              /*
+              $("img.result-img").unveil(300, function() {
+                $(this).load(function() {
+                   $(this).hide();
+                   $(this).fadeIn('slow');
+                });
+              });
+              */
       		  },
       		  failure: function(errMsg){
       		  	alert(errMsg);

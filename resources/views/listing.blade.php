@@ -21,6 +21,13 @@
      .added span {
        color: red;
      }
+     img.listing-img {
+       width: 40px!important;
+       height: 40px!important;
+       margin: 140px!important;
+        //opacity: 0;
+        //transition: opacity .3s ease-in;
+      }
      .Tour3DCTA {
        color: white;
        font-size: 46px;
@@ -65,12 +72,12 @@
                     @foreach($images as $image)
                         <li>
                           <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                            <img src="{{ func::img_url($image,'' ,396) }}" />
+                            <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
                           </a>
                         </li>
                     @endforeach
                 @else
-                    <li><img src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
+                    <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
                 @endif
             </ul>
 
@@ -221,7 +228,7 @@
                                             <a href="/listing/{{ $more->slug }}">
                                                 <div class='product-img-container'>
                                                     <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
-                                                    <img class='product-img' src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
+                                                    <img class='product-img' src="/img/spin.gif" data-src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $madded = func::is_wishlist($user_id, $more->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
@@ -277,7 +284,7 @@
                                             <a href="/listing/{{ $rel->slug }}">
                                                 <div class='product-img-container'>
                                                     <?php $rel_img = !empty($rel->mainImageUrl) ? $rel->mainImageUrl : 'default-logo.png'; ?>
-                                                    <img class='product-img' src="{{ func::img_url($rel_img, 300, '', true) }}" alt="image description">
+                                                    <img class='product-img' src="/img/spin.gif" data-src="{{ func::img_url($rel_img, 300, '', true) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $rel_added = func::is_wishlist($user_id, $rel->id) == 1 ? ' added' : ''; ?>
                                                         <a id="{{ $rel->id }}" href="javascript:;" data-id="{{ $rel->id }}" class="favourite{{ $rel_added }}"><span class="icon-heart"></span></a>
@@ -300,7 +307,7 @@
                                                   <span class="country">{{$rel->country}}</span>
                                                 </div>
                                                 <div class="item-logo">
-                                                    <img src="{{ func::img_url($rel_sellerImg, 90, '', true) }}" alt="">
+                                                    <img data-src="{{ func::img_url($rel_sellerImg, 90, '', true) }}" alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -380,6 +387,14 @@
               }
           });
           $('[data-toggle="tooltip"]').tooltip();
+
+          $("img.listing-img, img.product-img").unveil(300, function() {
+            $(this).load(function() {
+               $(this).removeClass('listing-img');
+               $(this).hide();
+               $(this).fadeIn('slow');
+            });
+          });
       });
     </script>
     @include('inc.send-message-script')
