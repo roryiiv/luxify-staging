@@ -139,18 +139,32 @@
                             <h5 style="text-align: center;"><a href="{{$dealer->website}}" target="_blank">{{$webpage}}</a></td></h5>
                         @endif
                         <table class="table" style="margin: 0 auto; max-width: 330px; text-align: center; margin-top: 20px;">
-                        @if(!empty(json_decode($dealer->companyAddress)))
-                        <?php 
-                            $address= join(" ", json_decode($dealer->companyAddress));
-                        ?>
-                        <tr>
-                           <td>
-                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                           </td>
-                           <td>
-                               <span> {{$address}}</span>
-                           </td>
-                        </tr>
+                        @if(is_array(json_decode($dealer->companyAddress))) 
+                          @if(!empty(json_decode($dealer->companyAddress)))
+                          <?php 
+                              $address= join(" ", json_decode($dealer->companyAddress));
+                          ?>
+                          <tr>
+                             <td>
+                              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                             </td>
+                             <td>
+                                 <span> {{$address}}</span>
+                             </td>
+                          </tr>
+                          @else
+                             @if(!empty($dealer->companyAddress))
+                               <tr>
+                                  <td>
+                                   <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                  </td>
+                                  <td>
+                                      <span> {{$dealer->compnayAddress}}</span>
+                                  </td>
+                               </tr>
+                             @endif
+                          @endif
+                        @endif
                         @if(!empty($dealer->latitude) && !empty($dealer->longitude))
                         <tr>
                            <td>
@@ -162,7 +176,6 @@
                                </a>
                            </td>
                         </tr>
-                        @endif
                         @endif
                         @if(!empty(json_decode($dealer->phoneNumber)))
                         <?php 
