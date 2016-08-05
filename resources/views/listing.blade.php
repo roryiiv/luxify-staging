@@ -1,3 +1,4 @@
+@inject('s_meta', 'App\Meta')
 @extends('layouts.front')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
@@ -70,14 +71,22 @@
                 @endif
                 @if(is_array($images))
                     @foreach($images as $image)
+                    <?php
+                    $ori = $s_meta::get_slug_img($image);
+                    if($ori!=''){
+                        $alt = $s_meta::get_slug_img($image);
+                    }else{
+                        $alt = 'luxify';
+                    }
+                    ?>
                         <li>
                           <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                            <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                            <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" alt="{{$alt}}" />
                           </a>
                         </li>
                     @endforeach
                 @else
-                    <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
+                    <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" alt="{{$alt}}" /></li>
                 @endif
             </ul>
 

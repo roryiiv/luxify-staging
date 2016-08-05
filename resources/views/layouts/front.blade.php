@@ -12,6 +12,8 @@
     <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
 
     <title>@yield('title') - Luxify - Asia's Leading Marketplace for Luxury</title>
+	@yield('meta')
+	
 
 
     <!-- title of the page -->
