@@ -12,6 +12,8 @@ use App\Users;
 
 use App\FormGroups;
 
+use \Cviebrock\EloquentSluggable\Services\SlugService;
+
 use func;
 
 class DataFeed extends Controller
@@ -40,7 +42,8 @@ class DataFeed extends Controller
         $inputs['images'] = json_encode($inputs['images']);
       }
       $newListing->fill($inputs); 
-      $newId = $newListing->save();
+      $newListing->slug = SlugService::createSlug(Listings::class, 'slug', $inputs['title']);
+      $newId = $newListing->insertGetId();
       if ($newId) {
          if($inputs['extraInfo'] && !empty($inputs['extraInfo'])) {
            foreach($extraInfo as $key => $val) {
