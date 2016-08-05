@@ -404,7 +404,7 @@
                                                 <input type="hidden" name="companyLogoUrl" id="companyLogoUrl" value="" />
                                             </div>
                                             <div class="widget-heading pt-0">
-                                                <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, with a maximum file size of 10MB.</h6>
+                                                <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, with a maximum file size of 3MB.</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -423,7 +423,7 @@
                                                 <input type="hidden" required name="coverImageUrl" id="coverImageUrl" value="" />
                                             </div>
                                             <div class="widget-heading pt-0">
-                                                <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, with a maximum file size of 10MB.</h6>
+                                                <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, with a maximum file size of 4MB.</h6>
                                             </div>
                                         </div>
                                     </div>
