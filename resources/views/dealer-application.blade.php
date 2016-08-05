@@ -22,6 +22,11 @@
       .dz-image{
         margin-top: 13px;
       }
+      .dz-error-message {
+        color: #a94442;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
       .bootstrap-tagsinput {
         width: 100%;
         border-radius: 0px;
@@ -481,13 +486,16 @@
                 _token: token
             },
             maxFilesize: 3,
-            maxThumbnailFilesize: .5,
+            maxThumbnailFilesize: 3,
             maxFiles: 1,
             uploadMultiple: false,
             addRemoveLinks: true,
+            acceptedFiles: 'image/*',
             dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
+            accept: function(file, done) {
+              done();
+            },
             sending: function(file, xhr, formData) {
-                  
                 $('.dz-success-mark').hide();
                 $('.dz-error-mark').hide();
             },
@@ -495,7 +503,14 @@
                 $('#companyLogoUrl').val(response);
             },
             error: function (file, response) {
-                file.previewElement.classList.add("dz-error");
+              if (!file.accepted) {
+                $('.dz-success-mark').hide();
+                $('.dz-error-mark').hide();
+                $(file.previewElement).find('.dz-error-message').text(response); 
+              } else {
+                $(file.previewElement).find('.dz-error-message').text(""); 
+              }
+              file.previewElement.classList.add("dz-error");
             },
         });
 
@@ -509,13 +524,14 @@
             params: {
                 _token: token
             },
-            maxFilesize: 3,
-            maxThumbnailFilesize: .5,
+            maxFilesize: 4,
+            maxThumbnailFilesize: 4,
             maxFiles: 1,
             uploadMultiple: false,
             addRemoveLinks: true,
             thumbnailWidth: 400,
             dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
+            acceptedFiles: 'image/*',
             sending: function(file, xhr, formData) {
                 $('.dz-success-mark').hide();
                 $('.dz-error-mark').hide();
@@ -524,7 +540,14 @@
                 $('#coverImageUrl').val(response);
             },
             error: function (file, response) {
-                file.previewElement.classList.add("dz-error");
+              if (!file.accepted) {
+                $('.dz-success-mark').hide();
+                $('.dz-error-mark').hide();
+                $(file.previewElement).find('.dz-error-message').text(response); 
+              } else {
+                $(file.previewElement).find('.dz-error-message').text(""); 
+              }
+              file.previewElement.classList.add("dz-error");
             },
         });
 
