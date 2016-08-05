@@ -480,13 +480,14 @@
             params: {
                 _token: token
             },
-            maxFilesize: 2,
+            maxFilesize: 3,
             maxThumbnailFilesize: .5,
             maxFiles: 1,
             uploadMultiple: false,
             addRemoveLinks: true,
             dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
             sending: function(file, xhr, formData) {
+                  
                 $('.dz-success-mark').hide();
                 $('.dz-error-mark').hide();
             },
@@ -508,7 +509,7 @@
             params: {
                 _token: token
             },
-            maxFilesize: 2,
+            maxFilesize: 3,
             maxThumbnailFilesize: .5,
             maxFiles: 1,
             uploadMultiple: false,
