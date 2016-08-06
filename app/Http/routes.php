@@ -50,11 +50,13 @@ Route::get('/why-luxify', function(){
 Route::get('/pricing', function(){
     return view('pricing');
 });
+Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
-Route::get('/datafeed/product/{id}', 'DataFeed@product_get');
-Route::get('/datafeed/dealers', 'DataFeed@dealers_list');
-Route::post('/datafeed/product/add', 'DataFeed@product_add');
-Route::post('/datafeed/product/update/{id}', 'DataFeed@product_update');
+Route::post('datafeed/product/search', 'DataFed@product_search');
+Route::get('datafeed/product/{id}', 'DataFeed@product_get');
+Route::get('datafeed/dealers', 'DataFeed@dealers_list');
+Route::post('datafeed/product/add', 'DataFeed@product_add');
+Route::post('datafeed/product/update', 'DataFeed@product_update');
 
 // Open for public dealer application
 // TODO: add captcha to the application form form
@@ -136,7 +138,8 @@ Route::get('/panel/currency/exec', 'Panel@currencyExec');
 
 
 //routes for DASHBOARD (seller)
-Route::get('/dashboard', 'Dashboard@index');
+//Route::get('/dashboard', 'Dashboard@index');
+Route::get('/dashboard', 'Dashboard@products');
 Route::get('/dashboard/profile', 'Dashboard@profile');
 Route::post('/dashboard/profile', 'Dashboard@profile_update');
 Route::get('/dashboard/mailbox', 'Dashboard@mailbox');

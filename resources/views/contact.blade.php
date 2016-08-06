@@ -1,8 +1,12 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Contact Us')
+@section('title', 'Contact Us')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+@section('meta-data')
+<meta name="keywords" content="luxify concierge,luxify contact information">
+<meta name="description" content="We welcome any queries or feedback. Whether you're seeking a recommendation for an item to sell or additional product information, our concierge is here to help you.">
+@endsection
 
 @section('style')
     <!-- include the site stylesheet -->

@@ -1,8 +1,12 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Terms and Conditions')
+@section('title', 'Terms of Service')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+@section('meta-data')
+  <meta name="keywords" content="luxify terms and conditions">
+  <meta name="description" content="The terms and conditions relating to the use of the services accessed through www.luxify.com.">
+@endsection
 
 @section('style')
     <!-- include the site stylesheet -->

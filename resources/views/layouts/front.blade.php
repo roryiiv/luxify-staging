@@ -2,18 +2,18 @@
 <html>
 
 <head>
-    <meta name="description" content="Luxify is Asia's leading online marketplace for luxury. Our website is the go-to destination for luxury enthusiasts and collectors in Asia, providing easy, safe and reliable market access to the luxury market.">
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
-    <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
-
-    <title>Luxify - Asia's leading marketplace for luxury</title>
-
-
-<!-- set the encoding of your site -->
+    <!-- set the encoding of your site -->
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- set the viewport width and initial-scale on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @yield('meta-data')
+    <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
+
+    <title>@yield('title') - Luxify - Asia's Leading Marketplace for Luxury</title>
+
+
     <!-- title of the page -->
     <title>@yield('title')</title>
 
@@ -125,7 +125,8 @@
                                             <ul>
                                                 <li><a href="/about">About us / Careers</a></li>
                                                 <li><a href="/why-luxify">How it works</a></li>
-                                                <li><a target="_blank" href="http://press.luxify.com">Press</a> / <a href="http://blog.luxify.com/">Blog</a></li>
+                                                <li><a target="_blank" href="http://press.luxify.com">Press</a> / <a href="/blog">Blog</a></li>
+                                                <li><a href="/dealer-directory">Dealer Directory</a></li>
                                             </ul>
                                         </nav>
                                     </div>
@@ -219,6 +220,8 @@
     <script src="/assets/js/parallax.js"></script>
 <!--    <script src="/assets/js/smooth-scroll.js"></script>-->
     <script src="/assets/js/jquery.main.js"></script>
+    <script src="/assets/js/jquery.unveil.js"></script>
+    <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
     <script>
     $(document).ready(function(){
         $('#currSelect').on('change', function(){

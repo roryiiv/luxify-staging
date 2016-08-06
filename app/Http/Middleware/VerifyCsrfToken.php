@@ -15,11 +15,5 @@ class VerifyCsrfToken extends BaseVerifier
       '/api/user/createSlug',
       '/api/listing/createSlug',
       '/datafeed/*'
-      /*
-      '/datafeed/product/update/{id}',
-      '/datafeed/product/{id}',
-      '/datafeed/product/add',
-      '/datafeed/dealers/'
-       */
     ];
 }

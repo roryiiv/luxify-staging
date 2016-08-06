@@ -1,8 +1,13 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Privacy')
+@section('title', 'Privacy Policy')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+
+@section('meta-data')
+  <meta name="keywords" content="luxify privacy policy"> 
+  <meta name="description" content=" Privacy Policy and Personal Information Collection Statement related to the access to the LUXIFY website.">
+@endsection
 
 @section('style')
     <!-- include the site stylesheet -->

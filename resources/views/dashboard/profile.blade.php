@@ -24,7 +24,13 @@
     <link rel="stylesheet" type="text/css" href="/db/css/jquery.steps.css">
     <!-- Primary Style-->
     <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
-@endsection
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <style>    
+       .bootstrap-tagsinput {
+           width: 100%;
+       }
+    </style>
+@endsection    
 
 @section('content')
     <div class="page-container">
@@ -96,6 +102,8 @@
                                             <label for="txtPassword" class="col-sm-3 col-md-4 control-label">Password</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtPassword" type="password" name="txtPassword" placeholder="Enter password" class="form-control">
+                                                <input id="hashed" type="hidden" name="hashed">
+                                                <input id="salt" type="hidden" name="salt">
                                             </div>
                                         </div>
                                     </div>
@@ -243,33 +251,40 @@
                                                 <div class="form-group m-0">
                                                     <label for="txtFirstNameShippingTab" class="control-label">Company Name</label>
                                                     <div class="pt-15">
-                                                        <input id="companyName" name="companyName" type="text" class="form-control" placeholder="{{$user->companyName}}">
+                                                        <input id="companyName" name="companyName" type="text" class="form-control" placeholder="{{$user->companyName}}" value="{{$user->companyName}}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group m-0">
+                                                    <label for="phoneNumber" class="control-label">Contact Phone Numbers</label>
+                                                    <?php $phones = json_decode($user->phoneNumber); ?>
+                                                    <div class="pt-15">
+                                                        <input id="phoneNumber"  data-role='taginput' type="text" class="form-control" value="{{ !empty($phones) ? join(',', $phones): ''}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="txtCompanyRegNum" class="control-label">Company Registration No.:</label>
                                                     <div class="pt-15">
-                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}">
+                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}" value="{{$user->companyName}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="companyAddress" class="control-label">Company Address</label>
                                                     <div class="pt-15">
-                                                        <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder="{{$user->companyAddress}}"></textarea>
+                                                        <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder="{{$user->companyAddress}}">{{$user->companyAddress}}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="companySummary" class="control-label">Company Summary</label>
                                                     <div class="pt-15">
-                                                        <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}"></textarea>
+                                                        <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}">{{$user->companySummary}}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="form-group m-0">
+                                                <!-- <div class="form-group m-0">
                                                     <label for="contactDetails" class="control-label">Company Details</label>
                                                     <div class="pt-15">
-                                                        <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder="{{$user->contactDetails}}"></textarea>
+                                                        <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder="{{$user->contactDetails}}">{{$user->contactDetails}}</textarea>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
 
@@ -283,6 +298,14 @@
                             <h3>Social Connections</h3>
                             <fieldset>
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group ml-0 mr-0">
+                                            <label for="txtWebsite" class="control-label pb-10"><i class="fa fa-home "></i> Company Website</label>
+                                            <div class="">
+                                                <input id="website" name="website" type="text" class="form-control" placeholder="{{$user->website}}">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
                                             <label for="txtFacebookLink" class="control-label pb-10"><i class="fa fa-facebook-official"></i> Facebook</label>
@@ -380,6 +403,7 @@
     <script type="text/javascript" src="/db/js/dropzone.min.js"></script>
     <!-- Sweet Alert-->
     <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <!-- Custom JS-->
     <script type="text/javascript" src="/db/js/app.js"></script>
     <script type="text/javascript" src="/db/js/demo.js"></script>
@@ -387,6 +411,7 @@
     <script type="text/javascript" src="/db/js/dropzone-js.js"></script>
     <script type="text/javascript" src="/db/js/sweet-alert.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/js/bundle.js"></script>
     <script type="text/javascript">
         function OpenInNewTab(url) {
             var win = window.open(url, '_blank');
@@ -397,7 +422,6 @@
             var token = "{{ Session::getToken() }}";
             $("#sweet-3, .sweet-3").each(function () {
                 $(this).on("click", function () {
-                    console.log('hi');
                     swal({
                         title: "Update Profile",
                         text: "Are you sure you want to update your profile?",
@@ -411,7 +435,19 @@
                     },
                     function(isConfirm){
                         if (isConfirm) {
-                            $("form[name='profile']").submit();
+                          if ($('#txtPassword').val() !== '') {
+                            var salt = encrypt.makeSalt();
+                            var hashed = encrypt.password($('#txtPassword').val(), salt);
+                            $('input#salt').val(salt);
+                            $('input#hashed').val(hashed);
+                          }
+                          if ($('#phoneNumber').val() !== '') {
+                            var phones = $('#phoneNumber').tagsinput('items');
+                            $(phones).each(function(idx, ele) {
+                              $('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
+                            });
+                          }
+                          $("form[name='profile']").submit();
                         }else{
                             swal("Cancelled", "Your profile is not updated.", "error");
                         }
@@ -497,7 +533,10 @@
                     })
                 }
             });
-        })
+            $('#phoneNumber').tagsinput({
+               allowDuplicates: false 
+            });
+        });
     </script>
     @if(isset($_GET['update']) && $_GET['update'] == 'success')
         <script>

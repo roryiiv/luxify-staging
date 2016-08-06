@@ -1,8 +1,12 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Dealer Application')
+@section('title', 'Dealer Application')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+@section('meta-data')
+<meta name="keywords" content="sell online,dealers,luxury goods">
+<meta name="description" content="Sell online today. Professional dealers use Luxify to transact successful sales of a wide selection luxury goods as well as luxury experiences.">
+@endsection
 
 @section('style')
     <!-- include the site stylesheet -->
@@ -17,6 +21,11 @@
       }
       .dz-image{
         margin-top: 13px;
+      }
+      .dz-error-message {
+        color: #a94442;
+        font-size: 1.5rem;
+        font-weight: 500;
       }
       .bootstrap-tagsinput {
         width: 100%;
@@ -395,7 +404,7 @@
                                                 <input type="hidden" name="companyLogoUrl" id="companyLogoUrl" value="" />
                                             </div>
                                             <div class="widget-heading pt-0">
-                                                <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, with a maximum file size of 10MB.</h6>
+                                                <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, with a maximum file size of 3MB.</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -414,7 +423,7 @@
                                                 <input type="hidden" required name="coverImageUrl" id="coverImageUrl" value="" />
                                             </div>
                                             <div class="widget-heading pt-0">
-                                                <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, with a maximum file size of 10MB.</h6>
+                                                <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, with a maximum file size of 4MB.</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -476,12 +485,16 @@
             params: {
                 _token: token
             },
-            maxFilesize: 2,
-            maxThumbnailFilesize: .5,
+            maxFilesize: 3,
+            maxThumbnailFilesize: 3,
             maxFiles: 1,
             uploadMultiple: false,
             addRemoveLinks: true,
+            acceptedFiles: 'image/*',
             dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
+            accept: function(file, done) {
+              done();
+            },
             sending: function(file, xhr, formData) {
                 $('.dz-success-mark').hide();
                 $('.dz-error-mark').hide();
@@ -490,7 +503,14 @@
                 $('#companyLogoUrl').val(response);
             },
             error: function (file, response) {
-                file.previewElement.classList.add("dz-error");
+              if (!file.accepted) {
+                $('.dz-success-mark').hide();
+                $('.dz-error-mark').hide();
+                $(file.previewElement).find('.dz-error-message').text(response); 
+              } else {
+                $(file.previewElement).find('.dz-error-message').text(""); 
+              }
+              file.previewElement.classList.add("dz-error");
             },
         });
 
@@ -504,13 +524,14 @@
             params: {
                 _token: token
             },
-            maxFilesize: 2,
-            maxThumbnailFilesize: .5,
+            maxFilesize: 4,
+            maxThumbnailFilesize: 4,
             maxFiles: 1,
             uploadMultiple: false,
             addRemoveLinks: true,
             thumbnailWidth: 400,
             dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
+            acceptedFiles: 'image/*',
             sending: function(file, xhr, formData) {
                 $('.dz-success-mark').hide();
                 $('.dz-error-mark').hide();
@@ -519,7 +540,14 @@
                 $('#coverImageUrl').val(response);
             },
             error: function (file, response) {
-                file.previewElement.classList.add("dz-error");
+              if (!file.accepted) {
+                $('.dz-success-mark').hide();
+                $('.dz-error-mark').hide();
+                $(file.previewElement).find('.dz-error-message').text(response); 
+              } else {
+                $(file.previewElement).find('.dz-error-message').text(""); 
+              }
+              file.previewElement.classList.add("dz-error");
             },
         });
 

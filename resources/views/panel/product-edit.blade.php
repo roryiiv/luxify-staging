@@ -293,13 +293,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="aerialLookURL" class="col-sm-3 control-label">Aerial Look URL (Optional)</label>
+                        <label for="aerialLookURL" class="col-sm-3 control-label">Promotion Video URL (Optional)</label>
                         <div class="col-sm-9">
                             <input id="aerialLookURL" name="aerialLookURL" type="text" class="form-control" value="{{$item->aerialLookUrl}}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="aerial3DLookURL" class="col-sm-3 control-label">3D Aerial Look URL (Optional)</label>
+                        <label for="aerial3DLookURL" class="col-sm-3 control-label">Matterport 3D Tour URL (Optional)</label>
                         <div class="col-sm-9">
                             <input id="aerial3DLookURL" name='aerial3DLookURL' type="text" class="form-control" value={{$item->aerialLook3DUrl}}>
                         </div>

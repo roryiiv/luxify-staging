@@ -251,11 +251,11 @@
                                                 <div class="form-group m-0">
                                                     <label for="txtFirstNameShippingTab" class="control-label">Company Name</label>
                                                     <div class="pt-15">
-                                                        <input id="companyName" name="companyName" type="text" class="form-control" placeholder="{{$user->companyName}}">
+                                                        <input id="companyName" name="companyName" type="text" class="form-control" placeholder="{{$user->companyName}}" value="{{$user->companyName}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
-                                                    <label for="txtCompanyPhones" data-role='taginput' class="control-label">Contact Phone Numbers</label>
+                                                    <label for="phoneNumber" data-role='taginput' class="control-label">Contact Phone Numbers</label>
                                                     <?php $phones = json_decode($user->phoneNumber); ?>
                                                     <div class="pt-15">
                                                         <input id="phoneNumber" type="text" class="form-control" value="{{ !empty($phones) ? join(',', $phones): ''}}">
@@ -265,25 +265,25 @@
                                                 <div class="form-group m-0">
                                                     <label for="txtWebsite" class="control-label">Company Website</label>
                                                     <div class="pt-15">
-                                                        <input id="companyWebsite" name="companyWebsite" type="text" class="form-control" placeholder="{{$user->website}}">
+                                                        <input id="companyWebsite" name="companyWebsite" type="text" class="form-control" placeholder="{{$user->website}}" value="{{$user->website}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="txtCompanyRegNum" class="control-label">Company Registration No.:</label>
                                                     <div class="pt-15">
-                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}">
+                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}" value="{{$user->companyRegNumber}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="companyAddress" class="control-label">Company Address</label>
                                                     <div class="pt-15">
-                                                        <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder="{{$user->companyAddress}}"></textarea>
+                                                        <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder="{{$user->companyAddress}}">{{ $user->companyAddress }}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="companySummary" class="control-label">Company Summary</label>
                                                     <div class="pt-15">
-                                                        <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}"></textarea>
+                                                        <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}">{{ $user->companySummary}}</textarea>
                                                     </div>
                                                 </div>
                                                 

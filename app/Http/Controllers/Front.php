@@ -12,6 +12,8 @@ use App\Http\Requests;
 
 use App\Listings;
 
+use App\User; 
+
 use App\Users;
 
 use Illuminate\Support\Facades\Auth;
@@ -624,6 +626,19 @@ class Front extends Controller {
         }
     }
 
+    public function dealerDirectory() {
+      $dealers = Users::whereNotNull('companyName')
+        ->where('role', 'seller')
+        ->where('dealer_status','approved')
+        ->where('isSuspended', false)
+        ->orderBy('companyName','asc')
+        ->get();
+
+      if ($dealers) {
+        return view('dealer-directory', ['dealers'=>$dealers]);  
+      } 
+    }
+
     public function viewDealer($id, $slug) {
       $dealer = DB::table('users')->where('slug', $slug)->orWhere('users.id', $id)
         ->leftJoin('countries', 'countries.id', '=', 'users.countryId')
@@ -1202,10 +1217,15 @@ class Front extends Controller {
 
         $search = \Request::get('search');
         $search = urldecode($search);
-
+        
         $search_arr = array();
-        $search_arr[] = ['title','like','%'.$search.'%'];
-        $search_arr[] = ['description','like','%'.$search.'%'];
+        // break the searching string by 'space'
+        $search_keywords = explode(' ', $search);
+        foreach($search_keywords as $key) {
+          $search_arr[] = ['title','like','%'.$key.'%'];
+          //$search_arr[] = ['description','like','%'.$search.'%'];
+        }
+
         if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])){
             $search_arr[] = ['userId', $_REQUEST['user_id']];
         }
@@ -1483,7 +1503,6 @@ class Front extends Controller {
         $ref = preg_replace($re, "", $ref);
         $listings->setPath($ref);
 
-
         return view('search', ['listings' => $listings, 'search' => $search, 'filters' => $filters]);
     }
 
@@ -1504,9 +1523,10 @@ class Front extends Controller {
             $action = $_POST['action'];
             if($action == 'search'){
                 $search = $_POST['search'];
+                $search_keywords = explode(' ', $search);
 
                 $search_arr = array();
-                $search_arr[] = ['description','like','%'.$search.'%'];
+                //$search_arr[] = ['description','like','%'.$search.'%'];
                 // $search_arr[] = ['status', 'APPROVED'];
 
                 $cats = DB::table('categories')->where('title', 'like', '%'.$search.'%')->get();
@@ -1516,35 +1536,29 @@ class Front extends Controller {
                     }
                 }
 
-                $listings = DB::table('listings')
-                ->where('status', 'APPROVED')
-                ->where('title','like','%'.$search.'%')
-                ->orWhere($search_arr)
-                ->orderBy('created_at', 'desc')
-                // ->groupBy('categoryId')
-                // ->having('id', '>', 0)
-                // ->skip(0)
-                ->take(10)
-                ->get();
-
-                $total = DB::table('listings')
-                ->where('status', 'APPROVED')
-                ->where('title','like','%'.$search.'%')
-                ->orWhere($search_arr)
-                ->orderBy('created_at', 'desc')
-                ->get();
-
-                $totals = count($total);
+                $listings = Listings::where('status', 'APPROVED')
+//                ->where('title','like','%'.$search.'%')
+                  ->where(function($query) use ($search_keywords) {
+                    foreach($search_keywords as $key) {
+                      $query->where('title', 'like', '%'. $key .'%'); 
+                    }
+                  })
+                  ->orWhere($search_arr)
+                  ->orderBy('created_at', 'desc')
+                  // ->groupBy('categoryId')
+                  // ->having('id', '>', 0)
+                  // ->skip(0)
+                  ->paginate(10);
 
                 $cats = array();
                 $dealers = array();
 
-                // var_dump($listings); exit;
+//               var_dump(is_array($listings)); exit;
 
-                if(is_array($listings) && !empty($listings)){
+                if($listings && !empty($listings)){
                     ob_start();
                     $return = '<div class="col-sm-7">';
-                    $return .= '<div class="row-header"><a href="/search?_token='.$_POST['_token'].'&action='.$_POST['action'].'&search='. $search .'" class="pull-right" title="View More">More</a><div class="category-label"><span>Showing '.count($listings).' of '.count($total).' result(s)</span></div></div>';
+                    $return .= '<div class="row-header"><a href="/search?_token='.$_POST['_token'].'&action='.$_POST['action'].'&search='. $search .'" class="pull-right" title="View More">More</a><div class="category-label"><span>Showing '.$listings->count().' of '.$listings->total().' result(s)</span></div></div>';
                     $return .= '<ul class="results-found">';
                     foreach($listings as $list){
                         $cats[] = $list->categoryId;
@@ -1554,7 +1568,7 @@ class Front extends Controller {
                         $return .= '<li>';
                         $return .= '<a href="/listing/'. $list->slug.'" title="'. $list->title .'">';
                         $item_img = !empty($list->mainImageUrl) ? $list->mainImageUrl : 'default-logo.png';
-                        $return .= '<img src="https://images.luxify.com/35/https://s3-ap-southeast-1.amazonaws.com/luxify/images/'. $item_img .'" width="35" height="35" alt="Image">';
+                        $return .= '<img class="result-img" src="/img/ring.gif" data-src="https://images.luxify.com/35/https://luxify.s3-accelerate.amazonaws.com/images/'. $item_img .'" width="35" height="35" alt="Image">';
                         $return .= $list->title;
                         //fixes for currency
                         $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
@@ -1582,13 +1596,14 @@ class Front extends Controller {
                         $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName);
                         $return .= '<a href="/dealer/'.$dealer->id.'/'.$slug.'" title="'.(!empty($dealer->companyName)? $dealer->companyName : $dealer->fullName).'">';
                         $dealer_img = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png';
-                        $return .= '<img src="https://images.luxify.com/150/https://s3-ap-southeast-1.amazonaws.com/luxify/images/'. $dealer_img .'" width="35" height="35" alt="Image">';
+                        $return .= '<img src="https://images.luxify.com/150/https://luxify.s3-accelerate.amazonaws.com/images/'. $dealer_img .'" width="35" height="35" alt="Image">';
                         $return .= '<span style="display: block; margin-top: 10px;">'. (!empty($dealer->companyName)? $dealer->companyName : $dealer->firstName . ' ' . $dealer->lastName). '</span>';
                         $return .= '</a>';
                         $return .= '</li>';
                     }
                     $return .= '</ul>';
                     $return .= '</div>';
+//                    $return .= '<script>$("img.result-img").unveil(); $(window).trigger("unveil")</script>';
                     ob_end_flush();
                     $return = rtrim($return, $search);
 

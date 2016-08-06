@@ -33,61 +33,70 @@ function openApplicationForm(){
 }
 
 function suggestedSearchResults(){
+  var timer;
 	$( '#search_query' ).on('input', function() {
 		var val = $('input#search_query').val();
-
 		var token = $('input[name=_token]').val();
 		var dataA = {search: val, action: 'search', _token: token};
 		// console.log(dataA);
 		$('#search-left').html('');
-
-        // Set timeout for after user finish typing.
-        if(val.length >= 3){
-            setTimeout(function(){
-                $.ajax({
-        			type: "POST",
-        			url: "/searchAjax",
-        			headers: {'X-CSRF-TOKEN': token},
-        			data: dataA,
-        			dataType: "html",
-        			// contentType: "application/json; charset=utf-8",
-        			success: function(data){
-        				// alert('it is a success');
-        				if(data){
-                            console.log(data);
-        					$('#search-left').html(data);
-        				}else{
-        					$('#search-left').html('<p>No data found</p>');
-        				}
-
-        			},
-        			failure: function(errMsg){
-        				alert(errMsg);
-        			}
-        		});
-    			$( '.suggested-results' ).fadeIn( 800 );
-    			$( '.search-term > strong' ).text( $('.search-tracker').val() );
-    		}, 500);
-        }else{
-            // setTimeout(function(){
-            //     // $( '.suggested-results' ).fadeOut( 1200 );
-    		// 	// $( '.search-term > strong' ).text( '' );
-    		// }, 1000);
-        }
+      // Set timeout for after user finish typing.
+      if(val.length >= 3) {
+        window.clearTimeout(timer);
+        timer = setTimeout(function(){
+          $.ajax({
+      		  type: "POST",
+      		  url: "/searchAjax",
+      		  headers: {'X-CSRF-TOKEN': token},
+      		  data: dataA,
+      		  dataType: "html",
+      		  // contentType: "application/json; charset=utf-8",
+      		  success: function(data){
+      		  	// alert('it is a success');
+      		  	if(data){
+      		  		$('#search-left').html(data);
+                setTimeout(function() {
+                  $('img.result-img').unveil(300, function() {
+                $(this).load(function() {
+                   $(this).hide();
+                   $(this).fadeIn('slow');
+                });
+              });
+                }, 200);
+      		  	}else{
+      		  		$('#search-left').html('<p>No data found</p>');
+      		  	}
+              /*
+              $("img.result-img").unveil(300, function() {
+                $(this).load(function() {
+                   $(this).hide();
+                   $(this).fadeIn('slow');
+                });
+              });
+              */
+      		  },
+      		  failure: function(errMsg){
+      		  	alert(errMsg);
+      		  }
+      	  });
+    		$( '.suggested-results' ).fadeIn( 800 );
+    		$( '.search-term > strong' ).text( $('.search-tracker').val() );
+    	}, 700);
+    }
 	});
-	$( '#search_query' ).on('blur', function() {
+	$( '#search_query').on('blur', function() {
 		setTimeout(function(){
-            $( '.suggested-results' ).fadeOut( 1200 );
+      $( '.suggested-results' ).fadeOut( 1200 );
 			$( '.search-term > strong' ).text( '' );
 		}, 1000);
 	});
-    $('.suggested-results').mouseover(function(){
-        $('.suggested-results').show();
-    });
+  $('.suggested-results').mouseover(function(){
+      $('.suggested-results').show();
+  });
 
-    $('.suggested-results').mouseleave(function(){
-        // $('.suggested-results').fadeOut(1000);
-    });
+  $('.suggested-results').mouseleave(function(){
+      // $('.suggested-results').fadeOut(1000);
+  });
 }
 
 function luxifyParallax(){

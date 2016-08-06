@@ -151,6 +151,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Skovmand\Mailchimp\MailchimpServiceProvider::class,
+        AlfredoRamos\ParsedownExtra\ParsedownExtraServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -209,6 +210,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'func' => App\MyLibrary\Functions::class,
+        'Markdown'  => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
 
     ],
 

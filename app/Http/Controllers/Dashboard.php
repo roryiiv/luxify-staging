@@ -43,12 +43,14 @@ class Dashboard extends Controller
      */
     public function index() {
         if($this->user_role == 'seller'){
-            // return view('dashboard.home');
+            //return view('dashboard.home');
             return redirect('/dashboard/products');
         }elseif($this->user_role == 'user'){
             return redirect('/dashboard/profile');
+        }elseif($this->user_role == 'editor'){
+            return redirect('/panel/users');
         }else{
-            return redirect('/panel/users');;
+            return redirect('/panel/users');
         }
     }
 
@@ -83,18 +85,22 @@ class Dashboard extends Controller
             $image = base_path() . '/public/temp/' . $_POST['cover_img'];
             $s3 = \Storage::disk('s3');
             $filePath = '/images/' . $_POST['cover_img'];
-            if($s3->put($filePath, file_get_contents($image), 'public')){
-                $user->coverImageUrl = $_POST['cover_img'];
-                unlink($image);
+            if (file_exists($image) ) {
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $user->coverImageUrl = $_POST['cover_img'];
+                  unlink($image);
+              }
             }
         }
         if(isset($_POST['profile_img']) && !empty($_POST['profile_img'])){
             $image = base_path() . '/public/temp/' . $_POST['profile_img'];
             $s3 = \Storage::disk('s3');
             $filePath = '/images/' . $_POST['profile_img'];
-            if($s3->put($filePath, file_get_contents($image), 'public')){
-                $user->companyLogoUrl = $_POST['profile_img'];
-                unlink($image);
+            if (file_exists($image) ) {
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $user->companyLogoUrl = $_POST['profile_img'];
+                  unlink($image);
+              }
             }
         }
 
@@ -102,7 +108,13 @@ class Dashboard extends Controller
         $error_arr = array();
         if((isset($_POST['txtPassword']) && !empty($_POST['txtPassword'])) && (isset($_POST['txtConfirmPassword']) && !empty($_POST['txtConfirmPassword']))){
             if($_POST['txtPassword'] == $_POST['txtConfirmPassword']) {
-                $error_arr['password'] = 'not yet implemented for updates.';
+                // reset user password
+                if(isset($_POST['hashed']) && !empty($_POST['hashed'])){
+                    $user->hashedPassword = $_POST['hashed'];
+                }
+                if(isset($_POST['salt']) && !empty($_POST['salt'])){
+                    $user->salt = $_POST['salt'];
+                }
             }else{
                 $error_arr['password'] = 'password not matching.';
             }
@@ -127,6 +139,9 @@ class Dashboard extends Controller
         }
         if(isset($_POST['currency']) && !empty($_POST['currency'])){
             $user->currencyId = $_POST['currency'];
+        }
+        if(isset($_POST['phoneNumber']) && !empty($_POST['phoneNumber'])) {
+            $user->phoneNumber = json_encode($_POST['phoneNumber']); 
         }
         if(isset($_POST['contactDetails']) && !empty($_POST['contactDetails'])){
             $user->contactDetails = $_POST['contactDetails'];
@@ -174,6 +189,7 @@ class Dashboard extends Controller
             if($user->save()) return redirect('/dashboard/profile?update=success');
         }
     }
+
 
     public function products_add() {
       return view('dashboard.products-add');
@@ -223,13 +239,20 @@ class Dashboard extends Controller
         // Always push to S3 first before doing anything else.
         if (isset($_POST['images']) && count($_POST['images']) > 0 ) {
             $uploadedImage = array();
-            for($i =0 ;  $i < count($_POST['images']); $i++) {
-                $image = base_path() . '/public/temp/' . $_POST['images'][$i];
+            foreach($_POST['images'] as $i => $val) {
+              if ( !isset($val) || empty($val) || strtolower($val) === 'null') {
+                  unset($_POST['images'][$i]);
+              }
+            }
+            foreach( $_POST['images'] as $i => $val) {
+                $image = base_path() . '/public/temp/' . $val;
                 $s3 = \Storage::disk('s3');
-                $filePath = '/images/' . $_POST['images'][$i];
-                if($s3->put($filePath, file_get_contents($image), 'public')){
-                    $uploadedImage[] = $_POST['images'][$i];
-                    unlink($image);
+                $filePath = '/images/' . $val;
+                if ( file_exists($image)) {
+                  if($s3->put($filePath, file_get_contents($image), 'public')){
+                      $uploadedImage[] = $val;
+                      unlink($image);
+                  }
                 }
             }
 
@@ -328,6 +351,7 @@ class Dashboard extends Controller
                 ->where('languageId', 1)
                 ->first();
                 if ($form) {
+                  if (isset($_POST['optionfields']) && !empty($_POST['optionfields'])) {
                     foreach ($_POST['optionfields'] as $key => $value) {
                         $formGroup = DB::table('formgroups')
                         ->where('formId', $form->id)
@@ -337,6 +361,8 @@ class Dashboard extends Controller
                             DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $newItem->id, $value));
                         }
                     }
+                  
+                  }
                 }
                 // debug
                 $username_to = Auth::user()->username;
@@ -433,9 +459,11 @@ class Dashboard extends Controller
                 if (!$s3->has('/images/'. $_POST['images'][$i])) {
                     $image = base_path() . '/public/temp/' . $_POST['images'][$i];
                     $filePath = '/images/' . $_POST['images'][$i];
-                    if($s3->put($filePath, file_get_contents($image), 'public')){
-                        $uploadedImage[] = $_POST['images'][$i];
-                        unlink($image);
+                    if ( file_exists($image)) {
+                      if($s3->put($filePath, file_get_contents($image), 'public')){
+                          $uploadedImage[] = $_POST['images'][$i];
+                          unlink($image);
+                      }
                     }
                 } else {
                     $uploadedImage[] = $_POST['images'][$i];
@@ -476,6 +504,7 @@ class Dashboard extends Controller
         ->where('languageId', 1)
         ->first();
         if ($form) {
+          if (isset($_POST['optionfields']) && !empty($_POST['optionfields'])) {
             foreach ($_POST['optionfields'] as $key => $value) {
                 $formGroup = DB::table('formgroups')
                 ->where('formId', $form->id)
@@ -485,6 +514,7 @@ class Dashboard extends Controller
                     DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
                 }
             }
+          }
         }
 
         if(!empty($error_arr)){
@@ -578,7 +608,7 @@ class Dashboard extends Controller
     public function product_delete($id){
         DB::table('listings')
             ->where('id', $id)
-            ->update(['status' => 'EXPIRED']);
+            ->update(['status' => 'EXPIRED', 'expired_at' => Carbon::now()]);
 
         return redirect('/dashboard/products');
     }
@@ -603,6 +633,8 @@ class Dashboard extends Controller
         }
         if(isset($_GET['status']) && !empty($_GET['status'])){
             $filter[] = ['listings.status', $_GET['status']];
+        } else {
+            $filter[] = ['listings.status', '<>', 'EXPIRED']; 
         }
         $products = DB::table('listings')
         ->where($filter)

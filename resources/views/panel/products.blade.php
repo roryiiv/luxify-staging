@@ -132,6 +132,7 @@
                                                 </th>
                                                 <th>Image</th>
                                                 <th>Product Name</th>
+                                                <th>Dealer</th>
                                                 <th class="text-right">Price</th>
                                                 <th class="text-center">Status</th>
                                                 <th class="text-center">Actions</th>
@@ -148,6 +149,20 @@
                                                     </td>
                                                     <td><img src="{{func::img_url($products[$i]->mainImageUrl, 50, 50)}}" width="50" alt="" class="img-thumbnail img-responsive"></td>
                                                     <td style="width: 25%;">{{$products[$i]->title}}</td>
+                                                    
+                                                    <?php
+                                                       $customerName = '';
+                                                       if (isset($products[$i]->companyName) && !empty( $products[$i]->companyName)) {
+                                                         $customerName = $products[$i]->companyName; 
+                                                       } else if (isset($products[$i]->fullName) && !empty($products[$i]->fullName)) {
+                                                         $customerName = $products[$i]->fullName; 
+                                                       } else if (!empty($products[$i]->firstName) && !empty($products[$i]->lastName)) {
+                                                         $customerName = ucfirst($products[$i]->firstName) . ' ' . ucfirst($products[$i]->lastName);
+                                                       } else {
+                                                         $customerName = $products[$i]->username;
+                                                       }
+                                                    ?>
+                                                    <td>{{ $customerName }}</td>
                                                     {{--<td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>--}}
                                                  @if($products[$i]->price)
                                                     <td class="text-right">{{$products[$i]->code}} ${{number_format($products[$i]->price)}}</td>
@@ -204,7 +219,7 @@
                                         Showing {{ $products->firstItem() }} to {{ $products->count() }} of {{ $products->total() }} entries
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-5 pull-right">
                                     <div class="dataTables_paginate paging_simple_numbers" id="product-list_paginate">
                                         {{ $products->links() }}
                                     </div>

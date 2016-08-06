@@ -80,7 +80,7 @@
                   <div class="col-md-6">
                       <h1>{{ $title }}</h1>
                       @if(!empty($dealer->companySummary)) 
-                          {!! nl2br(e($dealer->companySummary)) !!}
+                         <p> {!! nl2br(e($dealer->companySummary)) !!} </p>
                       @else 
                          <span>Coming soon.</span>
                       @endif
@@ -139,16 +139,28 @@
                             <h5 style="text-align: center;"><a href="{{$dealer->website}}" target="_blank">{{$webpage}}</a></td></h5>
                         @endif
                         <table class="table" style="margin: 0 auto; max-width: 330px; text-align: center; margin-top: 20px;">
-                        @if(!empty(json_decode($dealer->companyAddress)))
                         <?php 
-                            $address= join(" ", json_decode($dealer->companyAddress));
+                            $address= is_array(json_decode($dealer->companyAddress))? join(" ", json_decode($dealer->companyAddress)) : $dealer->companyAddress;
                         ?>
+                        @if(!empty($address))
+                          <tr>
+                             <td>
+                              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                             </td>
+                             <td>
+                                 <span> {{$address}}</span>
+                             </td>
+                          </tr>
+                        @endif 
+                        @if(!empty($dealer->latitude) && !empty($dealer->longitude))
                         <tr>
                            <td>
-                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                               <span style="top:2px; left: -1px;" class="glyphicon glyphicon-map-marker"></span>
                            </td>
                            <td>
-                               <span> {{$address}}</span>
+                              <a class="lightbox fancybox.iframe" href="https://maps.google.com/maps?q={{$dealer->latitude}},{{$dealer->longitude}}&hl=es;z=14&amp;output=embed">
+                                View Map                             
+                               </a>
                            </td>
                         </tr>
                         @endif
@@ -205,7 +217,7 @@
                      <div class="thumbnail">
                         <a href="/listing/{{ $item->slug }}">
                         <div class='product-img-container'>
-                          <img class='product-img' src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}" alt="{{ $item->title }}">
+                          <img class='product-img' src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}" alt="{{ $item->title }}">
                               @if(Auth::user())
                                 <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
                                 <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
@@ -252,6 +264,17 @@
   </main>
 @endsection
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+                              
+          $("img.product-img").unveil(300, function() {
+            $(this).load(function() {
+               $(this).hide();
+               $(this).fadeIn('slow');
+            });
+          });
+        });
+    </script>
     @if(Auth::user())
         {{ csrf_field() }}
         <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">

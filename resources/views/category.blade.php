@@ -11,6 +11,10 @@
       .added span {
         color: red;
       }
+      img.listing-img {
+        opacity: 1;
+        //transition: opacity .3s ease-in;
+      }
     </style>
 @endsection
 @section('content')
@@ -65,7 +69,7 @@
                                             <div class="thumbnail">
                                                 <a href="/listing/{{ $item->slug }}">
                                                     <figure>
-                                                        <img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
+                                                        <img class="listing-img" src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
                                                         @if(Auth::user())
 
                                                             @if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
@@ -176,7 +180,14 @@
             prettify_enabled: true,
             prettify_separator: ","
         });
-    })
+
+        $("img.listing-img").unveil(300, function() {
+          $(this).load(function() {
+             $(this).hide();
+             $(this).fadeIn('slow');
+          });
+        });
+    });
     </script>
     @if(Auth::user())
         {{ csrf_field() }}
@@ -184,7 +195,6 @@
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
         <script>
         $(document).ready(function(){
-
         });
         </script>
     @endif

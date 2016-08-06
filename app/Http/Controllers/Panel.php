@@ -180,18 +180,22 @@ class Panel extends Controller
             $image = base_path() . '/public/temp/' . $_POST['cover_img'];
             $s3 = \Storage::disk('s3');
             $filePath = '/images/' . $_POST['cover_img'];
-            if($s3->put($filePath, file_get_contents($image), 'public')){
-                $user->coverImageUrl = $_POST['cover_img'];
-                unlink($image);
+            if (file_exists($image) ) {
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $user->coverImageUrl = $_POST['cover_img'];
+                  unlink($image);
+              }
             }
         }
         if(isset($_POST['profile_img']) && !empty($_POST['profile_img'])){
             $image = base_path() . '/public/temp/' . $_POST['profile_img'];
             $s3 = \Storage::disk('s3');
             $filePath = '/images/' . $_POST['profile_img'];
-            if($s3->put($filePath, file_get_contents($image), 'public')){
-                $user->companyLogoUrl = $_POST['profile_img'];
-                unlink($image);
+            if (file_exists($image)) {
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $user->companyLogoUrl = $_POST['profile_img'];
+                  unlink($image);
+              }
             }
         }
 
@@ -363,23 +367,33 @@ class Panel extends Controller
 
         // TODO: handle for images already in S3
         if (isset($_POST['images']) && count($_POST['images']) > 0 ) {
+            foreach($_POST['images'] as $i => $val) {
+              if ( !isset($val) || empty($val) || strtolower($val) === 'null') {
+                  unset($_POST['images'][$i]);
+              }
+            }
+            
             $s3 = \Storage::disk('s3');
             $uploadedImage = array();
-            for($i =0 ;  $i < count($_POST['images']); $i++) {
-                if (!$s3->has('/images/'. $_POST['images'][$i])) {
-                    $image = base_path() . '/public/temp/' . $_POST['images'][$i];
-                    $filePath = '/images/' . $_POST['images'][$i];
-                    if($s3->put($filePath, file_get_contents($image), 'public')){
-                        $uploadedImage[] = $_POST['images'][$i];
-                        unlink($image);
+            foreach( $_POST['images'] as $i => $val) {
+                if (!$s3->has('/images/'. $val)) {
+                    $image = base_path() . '/public/temp/' . $val;
+                    $filePath = '/images/' . $val;
+                    if ( file_exists($image)) {
+                      if($s3->put($filePath, file_get_contents($image), 'public')){
+                          $uploadedImage[] = $val;
+                          unlink($image);
+                      }
                     }
                 } else {
-                    $uploadedImage[] = $_POST['images'][$i];
+                    $uploadedImage[] = $val;
                 }
             }
 
+            
             if (count($uploadedImage) === count($_POST['images'])) {
                 if (isset($_POST['mainImage']) && !empty($_POST['mainImage'])) {
+                     
                     $item->mainImageUrl = array_slice($uploadedImage, intval($_POST['mainImage']), 1)[0];
                     array_splice($uploadedImage, intval($_POST['mainImage']), 1);
                     $item->images = json_encode($uploadedImage);
@@ -412,15 +426,17 @@ class Panel extends Controller
         ->where('languageId', 1)
         ->first();
         if ($form) {
-            foreach ($_POST['optionfields'] as $key => $value) {
-                $formGroup = DB::table('formgroups')
-                ->where('formId', $form->id)
-                ->where('formfieldId', $key)
-                ->first();
-                if ($formGroup && !empty($value)) {
-                    DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
-                }
-            }
+          if(isset($_POST['optionfields']) && !empty($_POST['optionfields'])) {
+              foreach ($_POST['optionfields'] as $key => $value) {
+                  $formGroup = DB::table('formgroups')
+                  ->where('formId', $form->id)
+                  ->where('formfieldId', $key)
+                  ->first();
+                  if ($formGroup && !empty($value)) {
+                      DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
+                  }
+              }
+          }
         }
 
         if(!empty($error_arr)){
@@ -468,19 +484,23 @@ class Panel extends Controller
             $image = base_path() . '/public/temp/' . $_POST['cover_img'];
             $s3 = \Storage::disk('s3');
             $filePath = '/images/' . $_POST['cover_img'];
-            if($s3->put($filePath, file_get_contents($image), 'public')){
-                $user->coverImageUrl = $_POST['cover_img'];
-                unlink($image);
+            if (file_exists($image)) {
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $user->coverImageUrl = $_POST['cover_img'];
+                  unlink($image);
+              }
             }
         }
         if(isset($_POST['profile_img']) && !empty($_POST['profile_img'])){
             $image = base_path() . '/public/temp/' . $_POST['profile_img'];
             $s3 = \Storage::disk('s3');
             $filePath = '/images/' . $_POST['profile_img'];
-            if($s3->put($filePath, file_get_contents($image), 'public')){
-                $user->companyLogoUrl = $_POST['profile_img'];
-                unlink($image);
-            }
+            if (file_exists($image)) {
+              if($s3->put($filePath, file_get_contents($image), 'public')){
+                  $user->companyLogoUrl = $_POST['profile_img'];
+                  unlink($image);
+              }
+            } 
         }
 
 
@@ -631,12 +651,12 @@ class Panel extends Controller
       $products = DB::table('listings')
       ->where($filter)
       ->join('currencies', 'listings.currencyId', '=', 'currencies.id')
+      ->join('users', 'listings.userId', '=', 'users.id')
       ->orderby('listings.created_at', 'desc')
-      ->select('listings.*', 'currencies.code')
+      ->select('listings.*', 'currencies.code', 'users.firstName', 'users.lastName', 'users.username', 'users.companyName', 'users.fullName')
       ->where('status', '<>', 'EXPIRED')
       ->paginate(10);
 
-      // var_dump($wishes);
       $products->setPath($_SERVER['REQUEST_URI']);
       return view('panel.products', ['products' => $products]);
     }
@@ -868,8 +888,6 @@ class Panel extends Controller
             ->where('id', $curr->id)
             ->update(['rate' => $rate]);
         }
-
-        // var_dump($rate);
     }
 
     public function bulkActions() {

@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 
+
 @section('head')
     <!-- PACE-->
     <link rel="stylesheet" type="text/css" href="/db/css/pace-theme-flash.css">
