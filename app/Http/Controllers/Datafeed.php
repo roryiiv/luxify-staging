@@ -10,10 +10,28 @@ use App\Listings;
 
 use App\Users;
 
+use DB;
+
 use func;
 
 class DataFeed extends Controller
 {
+  public function product_search() {
+    $where = func::getVal('post', 'where' );  
+    if($where) {
+      $count = DB::table('listings')->where(function($query) use ($where){
+        foreach ($where as $field => $w) {
+          if ((isset($w['op']) && !empty($w['op'])) && (isset($w['val']) && !empty($w['val']))) {
+            $query->where($field, $w['op'], $w['val'] );
+          }
+        }
+      })->count();
+      echo json_encode(['result'=> 1, 'count' => $count]);
+    } else {
+      echo json_encode(['result' => 0, 'message' => 'Please supply enough parameter or check the structure of your request']); 
+    }
+  }
+
   public function product_get($id) {
     $listing = Listings::where('id', $id )->first();
     if ($listing) {

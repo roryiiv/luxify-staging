@@ -52,6 +52,7 @@ Route::get('/pricing', function(){
 });
 Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
+Route::post('datafeed/product/search', 'DataFed@product_search');
 Route::get('datafeed/product/{id}', 'DataFeed@product_get');
 Route::get('datafeed/dealers', 'DataFeed@dealers_list');
 Route::post('datafeed/product/add', 'DataFeed@product_add');
