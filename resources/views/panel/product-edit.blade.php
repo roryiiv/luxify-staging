@@ -352,15 +352,22 @@
                         </div>
                         <div class="form-group">
                             <label for="meta_keyword" class="col-sm-3 control-label">Meta Keyword</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="meta_keyword" name='meta_keyword' class="form-control bootstrap-tagsinput" value="{{$item->meta_keyword}}" data-role="tagsinput">
+                            <div class="col-sm-9 "><div class="tagit-sugestion">
+                                
                                 <style>
-                                    .bootstrap-tagsinput{display:block;}
+                                    .bootstrap-tagsinput{
+                                        width: 100%;
+                                    }
                                 </style>
+                                <div>
+                                    
+                                <input type="text" id="meta_keyword" name='meta_keyword' class="form-control" value="{{$item->meta_keyword}}">
+                                </div>
+                            </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
+                             <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
                             <div class="col-sm-9">
                                 <input id="meta_author" name='meta_author' type="text" class="form-control" placeholder="{{$item->meta_author}}">
                             </div>
@@ -445,6 +452,8 @@
 <script type="text/javascript" src="/plugins/bootstrap-markdown/js/to-markdown.js"></script>
 <script type="text/javascript" src="/plugins/bootstrap-markdown/js/jquery.hotkeys.js"></script>
 <!-- Booostraps_tagit input plugin -->
+<script type="text/javascript" src="/db/js/angular.min.js"></script>
+<script type="text/javascript" src="/plugins/typeahead.js/dist/typeahead.bundle.min.js"></script>
 <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 
 <script>
@@ -492,7 +501,7 @@
         var table = $("#images-preview-table tbody");
         table.html('');
         for (var i = 0; i < images_array.length; i++) {
-            $('<tr style="background:#fff;"><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
+            $('<tr style="background:#fff;"><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'" class="reindex">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
         }
     }
     function genControls({id, type, name, label, optionValues, value, valueId}){
@@ -525,6 +534,32 @@
     }
 
     $(document).ready(function () {
+        //tagit-sugestion+get json all keyword
+        var keywords = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: {
+            url: '{{route('get_keyword_json')}}',
+            filter: function(list) {
+              return $.map(list, function(keyword) {
+                return { name: keyword }; });
+            }
+          }
+        });
+        keywords.initialize();
+        /**
+         * Typeahead
+         */
+        $('.tagit-sugestion > > input ').tagsinput({
+          typeaheadjs: {
+            name: 'keywords',
+            displayKey: 'name',
+            valueKey: 'name',
+            source: keywords.ttAdapter()
+          }
+        });
+        $(".twitter-typeahead").css('display', 'inline');
+
         //sortable edit
         var fixHelperModified = function(e, tr) {
             var $originals = tr.children();
@@ -533,11 +568,18 @@
                 $(this).width($originals.eq(index).width())
             });
             return $helper;
+        },
+        updateIndex = function(e, ui) {
+            $('.reindex', ui.item.parent()).each(function (i) {
+                $(this).val(i);
+            });
         };
 
         $(".sortir tbody").sortable({
-            helper: fixHelperModified
+            helper: fixHelperModified,
+            stop: updateIndex
         });
+
         //markdown
         $('#editor-markdown').markdown();
         $('.createorupdateslug').click(function(){

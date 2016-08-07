@@ -442,7 +442,7 @@
         var table = $("#images-preview-table tbody");
         table.html('');
         for (var i = 0; i < images_array.length; i++) {
-            $('<tr style="background:#fff;"><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /><br/><input type="text" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
+            $('<tr style="background:#fff;"><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'" class="reindex">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
         }
     }
     function genControls({id, type, name, label, optionValues, value, valueId}){
@@ -482,10 +482,16 @@
                 $(this).width($originals.eq(index).width())
             });
             return $helper;
+        },
+        updateIndex = function(e, ui) {
+            $('.reindex', ui.item.parent()).each(function (i) {
+                $(this).val(i);
+            });
         };
 
         $(".sortir tbody").sortable({
-            helper: fixHelperModified
+            helper: fixHelperModified,
+            stop: updateIndex
         });
 
         //markdown

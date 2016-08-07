@@ -140,6 +140,8 @@ Route::get('/panel/currency/exec', 'Panel@currencyExec');
 //panel additional ajax slug #create_update_slug
 Route::get('/panel/cu_slug/', 'Panel@zonk')->name("get_slug");
 Route::get('/panel/cu_slug/{id}/{slug}', 'Panel@createupdateslug');
+//get keywords json
+Route::get('/panel/get_keyword_json', 'Panel@get_keyword_json')->name('get_keyword_json');
 
 
 //routes for DASHBOARD (seller)
