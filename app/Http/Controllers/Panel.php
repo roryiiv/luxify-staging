@@ -1013,4 +1013,17 @@ class Panel extends Controller
             return $newslug;
         }
     }
+
+    function get_keyword_json(){
+        $db_keyword = Meta::where('object_type','listings')->where('meta_key','keyword')->get();
+        $keywords = array();
+        foreach ($db_keyword as $value) {
+            $explode = explode(',', $value['meta_value']);
+            foreach ($explode as $value) {
+                $keywords[] = $value;
+            }
+        }
+        $array_unique = array_unique($keywords);
+        return json_encode(array_values($array_unique));
+    }
 }
