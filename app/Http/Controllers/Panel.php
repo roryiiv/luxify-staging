@@ -37,10 +37,13 @@ class Panel extends Controller
     public function __construct() {
         $this->middleware('auth'); // make sure no guests
 
-        $this->user_id = 585;
         if(Auth::user()){
-            $this->user_id = Auth::user()->id;
-            $this->user_role = Auth::user()->role;
+            if(Auth::user()->role === 'admin') {
+                $this->user_id = Auth::user()->id;
+                $this->user_role = Auth::user()->role;
+            } else {
+                return redirect('/dashboard'); 
+            }
         }
     }
 
@@ -80,9 +83,9 @@ class Panel extends Controller
     //Panel (super admin) Controller
     public function index() {
         // return 'panel index page';
-        if($this->user_role == 'seller'){
-            return view('home');
-        }elseif($this->user_role == 'user'){
+        if(Auth::user()->role === 'seller'){
+            return redirect('/dashboard');
+        }elseif(Auth::user()->role === 'user'){
             return redirect('/dashboard/profile');
         }else{
             return redirect('/panel/users');
