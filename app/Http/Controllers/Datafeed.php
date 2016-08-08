@@ -126,4 +126,13 @@ class DataFeed extends Controller
        echo json_encode(['result' => 0, 'message'=> 'No dealers can be found.']); 
     }
   }
+  public function getTable($tableName) {
+    $data = DB::table($tableName)
+      ->get();
+    if ($data) {
+      echo json_encode(['result' => 1, 'data' => $data]); 
+    } else {
+      echo json_encode(['result' => 0, 'message' => 'No data exists in the database']); 
+    }
+  }
 }
