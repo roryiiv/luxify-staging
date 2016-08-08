@@ -16,8 +16,6 @@ use App\Categories;
 
 use App\Listings;
 
-use App\History;
-
 use App\Users;
 
 use DB;
@@ -32,8 +30,6 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 use Carbon\Carbon;
 
-use App\Meta;
-
 use func;
 
 class Panel extends Controller
@@ -41,11 +37,13 @@ class Panel extends Controller
     public function __construct() {
         $this->middleware('auth'); // make sure no guests
 
-        $this->user_id = 585;
         if(Auth::user()){
-            $this->user_id = Auth::user()->id;
-            $this->user_role = Auth::user()->role;
-            $this->accepted = array('admin', 'editor');
+            if(Auth::user()->role === 'admin') {
+                $this->user_id = Auth::user()->id;
+                $this->user_role = Auth::user()->role;
+            } else {
+                return redirect('/dashboard'); 
+            }
         }
     }
 
@@ -85,9 +83,9 @@ class Panel extends Controller
     //Panel (super admin) Controller
     public function index() {
         // return 'panel index page';
-        if($this->user_role == 'seller'){
-            return view('home');
-        }elseif($this->user_role == 'user'){
+        if(Auth::user()->role === 'seller'){
+            return redirect('/dashboard');
+        }elseif(Auth::user()->role === 'user'){
             return redirect('/dashboard/profile');
         }else{
             return redirect('/panel/users');
@@ -163,18 +161,10 @@ class Panel extends Controller
     }
 
     public function user_add($role) {
-        if($this->user_role == 'admin'){
-            return view('panel.add-user', ['role' => $role]);
-        }else{
-            return redirect('/panel/users');
-        }
-        
+        return view('panel.add-user', ['role' => $role]);
     }
 
     public function user_register() {
-        //redirect if user is editor.
-        if($this->user_role == 'editor') return redirect('/panel/users');
-
         $user = new User; // always have it declared for first or else empty value sent
 
         //we'll build the slug here and save it
@@ -364,11 +354,6 @@ class Panel extends Controller
         }
         if ( isset($_POST['description']) && !empty($_POST['description'])) {
             $item->description = $_POST['description'];
-            $oldDescription = DB::table('listings')->where('id',$id)->value('description');
-            if($oldDescription!=$_POST['description']){
-                $catat = History::catat('description',$id,$_POST['description']);         
-            }
-
         } else {
             $error_arr['description'] = 'Item description is required.';
         }
@@ -410,13 +395,6 @@ class Panel extends Controller
 
             
             if (count($uploadedImage) === count($_POST['images'])) {
-                                //additional add alt image here
-                for ($i=0; $i < count($uploadedImage); $i++) {
-                    //add meta with value
-                    $object_id = $uploadedImage[$i];
-                    $value = $_POST['alt_text'][$i];
-                    $save = Meta::alt_text_image($object_id,$value);
-                }
                 if (isset($_POST['mainImage']) && !empty($_POST['mainImage'])) {
                      
                     $item->mainImageUrl = array_slice($uploadedImage, intval($_POST['mainImage']), 1)[0];
@@ -444,35 +422,6 @@ class Panel extends Controller
             $item->aerialLook3DUrl = $_POST['aerial3DLookURL'];
         }
 
-        //additional parameters
-        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
-            $newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
-            //$newslug = Listings::newslug($id,$_POST['slug']);
-            $item->slug = $newslug;
-        }
-
-        $meta = array();
-        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
-            $meta['title'] = $_POST['meta_title'];
-        }
-
-        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
-            $meta['alt_text'] = $_POST['meta_alttext'];
-        }
-        
-        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
-            $meta['description'] = $_POST['meta_description'];
-        }
-
-        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
-            $meta['keyword'] = $_POST['meta_keyword'];
-        }
-
-        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
-            $meta['author'] = $_POST['meta_author'];
-        }
-
-
         // delete the existing optional fields first
         DB::table('extrainfos')->where('listingId', $item->id )->delete();
         $form = DB::table('forms')
@@ -496,12 +445,6 @@ class Panel extends Controller
         if(!empty($error_arr)){
             echo json_encode($error_arr);
         }else{
-            //save or update meta listing
-            //$id = id listing
-            //$meta = data array meta
-            //$object_type = listing/users;
-            $object_type = 'listings';
-            $savemeta = Meta::saveorupdate($id,$meta,$object_type);
             if ($item->save()) {
                 return redirect('/panel/product/edit/'.$item->id);
             }
@@ -688,7 +631,7 @@ class Panel extends Controller
     }
 
     public function products() {
-      if(!in_array($this->user_role, $this->accepted)) return redirect('/');
+      if($this->user_role != 'admin') return redirect('/');
       $filter = array();
       //TODO: Searching is case incentive?
       if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
@@ -812,16 +755,7 @@ class Panel extends Controller
             if ($optionalFields) {
                 $item['optionFields'] = $optionalFields;
             }
-            //additonal parameters
-            $item->url_object = 'listing';
-            $item->meta_title = Meta::get_data_listing($itemId,'title');
-            $item->meta_alt_text = Meta::get_data_listing($itemId,'alt_text');
-            $item->meta_description = Meta::get_data_listing($itemId,'description');
-            $item->meta_author = Meta::get_data_listing($itemId,'author');
-            $item->meta_keyword = Meta::get_data_listing($itemId,'keyword');
-            $history = new History;
-            $history->description = History::where('object_id',$itemId)->get();
-            return view('panel.product-edit', ['item' => $item,'history' => $history] );
+            return view('panel.product-edit', ['item' => $item] );
         }
     }
 
@@ -1005,25 +939,5 @@ class Panel extends Controller
       } else {
         return redirect( Auth::user()->role === 'admin'? '/panel': '/dashboard');
       }
-    }
-    function createupdateslug($id,$slug){
-        $newslug = Listings::newslug($id,$slug);
-        $update = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
-        if($update){
-            return $newslug;
-        }
-    }
-
-    function get_keyword_json(){
-        $db_keyword = Meta::where('object_type','listings')->where('meta_key','keyword')->get();
-        $keywords = array();
-        foreach ($db_keyword as $value) {
-            $explode = explode(',', $value['meta_value']);
-            foreach ($explode as $value) {
-                $keywords[] = $value;
-            }
-        }
-        $array_unique = array_unique($keywords);
-        return json_encode(array_values($array_unique));
     }
 }
