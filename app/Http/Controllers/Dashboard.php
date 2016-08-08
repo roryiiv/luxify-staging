@@ -12,6 +12,7 @@ use App\PageCount;
 use App\Meta;
 use App\History;
 use App\Wishlists;
+use Response;
 
 Use Auth;
 
@@ -29,6 +30,7 @@ use App\Http\Requests;
 
 Use Input;
 Use DB;
+
 
 class Dashboard extends Controller
 {
@@ -848,4 +850,16 @@ class Dashboard extends Controller
         // var_dump($input); exit;
         return back();
     }
+
+     public function IsEmailInUse(Request $request){
+        $email = $request->input('email');
+
+        $checkemail = DB::table('users')
+                   ->where('email', $email)
+                   ->first();
+
+        return Response::json(['response' => $checkemail != null]);
+
+    }
+
 }

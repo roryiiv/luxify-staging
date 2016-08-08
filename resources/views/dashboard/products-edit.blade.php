@@ -35,6 +35,31 @@
 <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
 <style>
+    .draganddropcustom{
+        background: #fff;
+    }
+    .draganddropcustom:focus{
+        background: #fffcec;
+    }
+    .dot-hidden{
+        width: 5px !important;
+        background:repeating-linear-gradient( -50deg,
+            #fafafa,
+            #fafafa 4px,
+            #eee 5px,
+            #eee 7px
+            );
+    }
+    .dragplaceholder{
+        background:#fafafa;
+    }
+    .overdrag{
+        opacity: 0.8;
+        background: #ddd;
+    }
+    .draganddropcustom:hover > .dot-hidden{
+        cursor: move;
+    }
   .sweet-alert .sa-icon.sa-success .sa-line {
     height: 5px !important;
     background-color: #5cb85c !important;
@@ -284,7 +309,7 @@
                         <table style="width: 100%" class="table table-bordered sortir" id="images-preview-table">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Image</th>
+                                    <th class="text-center" colspan="2">Image</th>
                                     <th>Image Url</th>
                                     <th style="width: 20%">Featured Image</th>
                                     <th class="text-center">Remove</th>
@@ -442,7 +467,7 @@
         var table = $("#images-preview-table tbody");
         table.html('');
         for (var i = 0; i < images_array.length; i++) {
-            $('<tr style="background:#fff;"><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'" class="reindex">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
+            $('<tr class="draganddropcustom"><td class="dot-hidden" style="border-right:medium none;"></td><td class="text-center" style="border-left: medium none;"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'" class="reindex">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
         }
     }
     function genControls({id, type, name, label, optionValues, value, valueId}){
@@ -475,7 +500,7 @@
     }
     $(document).ready(function () {
         //sortable edit
-        var fixHelperModified = function(e, tr) {
+var fixHelperModified = function(e, tr) {
             var $originals = tr.children();
             var $helper = tr.clone();
             $helper.children().each(function(index) {
@@ -487,11 +512,16 @@
             $('.reindex', ui.item.parent()).each(function (i) {
                 $(this).val(i);
             });
-        };
+        },
+        overIndex = function(e, ui) {
+            $(ui.helper[0]).addClass("overdrag");
+          }
 
         $(".sortir tbody").sortable({
             helper: fixHelperModified,
-            stop: updateIndex
+            stop: updateIndex,
+            placeholder: "dragplaceholder",
+            over: overIndex
         });
 
         //markdown

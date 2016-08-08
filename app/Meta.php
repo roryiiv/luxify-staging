@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +15,7 @@ class Meta extends Model
 			$exist= Meta::where('object_id',$id)->where('meta_key',$key)->first();
 			if($exist){
 				//update
-				$update = Meta::where('object_id',$id)->where('meta_key',$key)->where('object_type',$object_type)->update([ 'meta_value'=> $value]);
+				$update = Meta::where('object_id',$id)->where('meta_key',$key)->where('object_type',$object_type)->update([ 'meta_value'=> $value,'edited_at'=> Carbon::now()]);
 			}else{
 				//create
 				$create = new Meta;
@@ -23,6 +24,7 @@ class Meta extends Model
 				$create->object_id = $id;
 				$create->meta_key = $key;
 				$create->meta_value = $value;
+				$create->edited_at = Carbon::now() ;
 				$create->save();
 			}
 		}
@@ -31,7 +33,7 @@ class Meta extends Model
 		$exist= Meta::where('object_id',$id)->where('meta_key','alt_text')->where('object_type','images')->first();
 		if($exist){
 			//update
-			$update = Meta::where('object_id',$id)->where('meta_key','alt_text')->where('object_type','images')->update([ 'meta_value'=> $value]);
+			$update = Meta::where('object_id',$id)->where('meta_key','alt_text')->where('object_type','images')->update([ 'meta_value'=> $value,'edited_at'=> Carbon::now()]);
 		}else{
 			//create
 			$create = new Meta;
@@ -40,6 +42,7 @@ class Meta extends Model
 			$create->object_id = $id;
 			$create->meta_key = 'alt_text';
 			$create->meta_value = $value;
+			$create->edited_at = Carbon::now();
 			$create->save();
 		}
 	}

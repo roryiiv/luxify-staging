@@ -35,6 +35,31 @@
 <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
 <style>
+    .draganddropcustom{
+        background: #fff;
+    }
+    .draganddropcustom:focus{
+        background: #fffcec;
+    }
+    .dot-hidden{
+        width: 5px !important;
+        background:repeating-linear-gradient( -50deg,
+            #fafafa,
+            #fafafa 4px,
+            #eee 5px,
+            #eee 7px
+            );
+    }
+    .dragplaceholder{
+        background:#fafafa;
+    }
+    .overdrag{
+        opacity: 0.8;
+        background: #ddd;
+    }
+    .draganddropcustom:hover > .dot-hidden{
+        cursor: move;
+    }
   .sweet-alert .sa-icon.sa-success .sa-line {
     height: 5px !important;
     background-color: #5cb85c !important;
@@ -231,11 +256,35 @@
                         <div class="col-sm-9">
                             <textarea id="description editor-markdown" name='description'  class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
                             <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
-                            <div class="" style="display: none;">
-                            <h5>history</h5>
-                                <?php foreach ($history->description as $key => $value) { ?>
-                                    <div class="">{{$value}}</div>
-                                <?php } ?>
+                            <p><a id="toggleArchive" href="javascript:;" class="btn btn-outline btn-danger">Use Saved version</a></p>
+                            <div id="archive" class="history_holder" style="display: none">
+                                <h5>Saved Description:</h5>
+                                <table class="table table-hover wrap">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 25%;">Date</th>
+                                            <th style="width: 65%;">Content</th>
+                                            <th style="width: 10%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($history as $old)
+                                        <tr>
+                                            <td>
+                                                {{$old->created_at}}
+                                            </td>
+                                            <td>
+                                                <textarea id="content-{{$old->id}}" style="width: 100%;" rows="4">
+                                                    {{$old->object_field}}
+                                                </textarea>
+                                            </td>
+                                            <td>
+                                                <a href="content-{{$old->id}}" class="use_this btn btn-outline btn-success"><i class="ti-files"></i></a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -282,7 +331,7 @@
                     <table style="width: 100%" class="table table-bordered sortir" id="images-preview-table">
                         <thead>
                             <tr>
-                                <th class="text-center">Image</th>
+                                <th class="text-center" colspan="2">Image</th>
                                 <th>Image Url</th>
                                 <th style="width: 20%">Featured Image</th>
                                 <th class="text-center">Remove</th>
@@ -501,7 +550,7 @@
         var table = $("#images-preview-table tbody");
         table.html('');
         for (var i = 0; i < images_array.length; i++) {
-            $('<tr style="background:#fff;"><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'" class="reindex">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
+            $('<tr class="draganddropcustom"><td class="dot-hidden" style="border-right:medium none;"></td><td class="text-center" style="border-left: medium none;"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'" class="reindex">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
         }
     }
     function genControls({id, type, name, label, optionValues, value, valueId}){
@@ -561,6 +610,7 @@
         $(".twitter-typeahead").css('display', 'inline');
 
         //sortable edit
+
         var fixHelperModified = function(e, tr) {
             var $originals = tr.children();
             var $helper = tr.clone();
@@ -573,11 +623,16 @@
             $('.reindex', ui.item.parent()).each(function (i) {
                 $(this).val(i);
             });
-        };
+        },
+        overIndex = function(e, ui) {
+            $(ui.helper[0]).addClass("overdrag");
+          }
 
         $(".sortir tbody").sortable({
             helper: fixHelperModified,
-            stop: updateIndex
+            stop: updateIndex,
+            placeholder: "dragplaceholder",
+            over: overIndex
         });
 
         //markdown
@@ -665,6 +720,23 @@
             error: function(errMsg){
                 console.log(errMsg.responseText);
             }
+        });
+
+        //description history action
+        $('a#toggleArchive').click(function(event){
+            event.preventDefault();
+            $('div#archive').toggle('slow');
+        })
+        $('a.use_this').click(function(event){
+            event.preventDefault();
+            var $id = $(this).attr('href'), $text = $('#'+$id).html();
+            // console.log($text);
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($text).select();
+            document.execCommand("copy");
+            $temp.remove();
+            alert('Copied to clipboard');
         });
     });
 

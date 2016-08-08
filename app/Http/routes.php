@@ -74,6 +74,8 @@ Route::post('/api/product/setStatus', 'Panel@product_change_status');
 Route::post('/api/dealer/setStatus', 'Panel@dealer_change_status');
 Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
 Route::post('/api/bulkActions', 'Panel@bulkActions');
+Route::get('/api/ajax/checkemail/{email}', 'Dashboard@IsEmailInUse');
+Route::get('/api/ajax/checkemail/{email}', 'Panel@IsEmailInUse');
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 
