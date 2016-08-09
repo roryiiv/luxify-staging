@@ -254,7 +254,7 @@
                     <div class="form-group">
                         <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
                         <div class="col-sm-9">
-                            <textarea id="description editor-markdown" name='description'  class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
+                            <textarea id="description" name='description'  class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
                             <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
                             <p><a id="toggleArchive" href="javascript:;" class="btn btn-outline btn-danger">Use Saved version</a></p>
                             <div id="archive" class="history_holder" style="display: none">
@@ -274,7 +274,7 @@
                                                 {{$old->created_at}}
                                             </td>
                                             <td>
-                                                <textarea id="content-{{$old->id}}" style="width: 100%;" rows="4">
+                                                <textarea class="old_textarea" id="content-{{$old->id}}" style="width: 100%;" rows="4" disabled="disabled">
                                                     {{$old->object_field}}
                                                 </textarea>
                                             </td>
@@ -501,7 +501,6 @@
 <script type="text/javascript" src="/plugins/bootstrap-markdown/js/to-markdown.js"></script>
 <script type="text/javascript" src="/plugins/bootstrap-markdown/js/jquery.hotkeys.js"></script>
 <!-- Booostraps_tagit input plugin -->
-<script type="text/javascript" src="/db/js/angular.min.js"></script>
 <script type="text/javascript" src="/plugins/typeahead.js/dist/typeahead.bundle.min.js"></script>
 <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 
@@ -636,7 +635,7 @@
         });
 
         //markdown
-        $('#editor-markdown').markdown();
+        $('#description').markdown();
         $('.createorupdateslug').click(function(){
             var newslug = $('.get_slug').val();
             var id = $('.get_slug').attr('data-id');
@@ -726,17 +725,20 @@
         $('a#toggleArchive').click(function(event){
             event.preventDefault();
             $('div#archive').toggle('slow');
+            $('.old_textarea').markdown();
         })
         $('a.use_this').click(function(event){
             event.preventDefault();
-            var $id = $(this).attr('href'), $text = $('#'+$id).html();
+            var $id = $(this).attr('href'), $text = $('#'+$id).text();
+            console.log($id);
+            var $content = $('#'+$id).data('markdown').getContent();
+            console.log($content);
+            $content = $.trim($content);
+            $('#description').text($content);
+            $('#description').focus();
+            alert('Copied to the active editor');
             // console.log($text);
-            var $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val($text).select();
-            document.execCommand("copy");
-            $temp.remove();
-            alert('Copied to clipboard');
+            
         });
     });
 

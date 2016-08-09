@@ -133,7 +133,12 @@
                                                 <th>Image</th>
                                                 <th>Product Name</th>
                                                 <th>Dealer</th>
+                                                @if(Auth::user()->role == 'editor')
+                                                <th class="text-right">Last Edited By</th>
+                                                @endif
+                                                @if(Auth::user()->role != 'editor')
                                                 <th class="text-right">Price</th>
+                                                @endif
                                                 @if(Auth::user()->role == 'admin')
                                                     <th class="text-center">Status</th>
                                                 @endif
@@ -166,10 +171,15 @@
                                                     ?>
                                                     <td>{{ $customerName }}</td>
                                                     {{--<td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>--}}
-                                                 @if($products[$i]->price)
-                                                    <td class="text-right">{{$products[$i]->code}} ${{number_format($products[$i]->price)}}</td>
-                                                 @else
-                                                    <td class="text-right">ON REQUEST - {{$products[$i]->code}}</td>
+                                                @if(Auth::user()->role == 'editor' && $products[$i]->username)
+                                                <td class="text-right">{{$products[$i]->username}}</td>
+                                                @endif
+                                                 @if(Auth::user()->role != 'editor')
+                                                     @if($products[$i]->price)
+                                                        <td class="text-right">{{$products[$i]->code}} ${{number_format($products[$i]->price)}}</td>
+                                                     @else
+                                                        <td class="text-right">ON REQUEST - {{$products[$i]->code}}</td>
+                                                     @endif
                                                  @endif
                                                     {{-- <td class="text-right">320</td> --}}
                                                     @if(Auth::user()->role == 'admin')
