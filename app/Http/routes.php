@@ -52,12 +52,13 @@ Route::get('/pricing', function(){
 });
 Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
-Route::post('datafeed/product/search', 'DataFed@product_search');
+Route::post('datafeed/product/update/{id}', 'DataFeed@product_update');
+Route::post('datafeed/product/search', 'DataFeed@product_search');
 Route::get('datafeed/product/{id}', 'DataFeed@product_get');
 Route::get('datafeed/dealers', 'DataFeed@dealers_list');
 Route::post('datafeed/product/add', 'DataFeed@product_add');
-Route::post('datafeed/product/update', 'DataFeed@product_update');
 Route::get('datafeed/getTable/{tableName}', 'DataFeed@getTable');
+Route::post('datafeed/images/upload', 'DataFeed@downloadImageToS3');
 
 // Open for public dealer application
 // TODO: add captcha to the application form form
