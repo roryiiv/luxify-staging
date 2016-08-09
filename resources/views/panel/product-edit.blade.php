@@ -584,27 +584,28 @@
     $(document).ready(function () {
         //tagit-sugestion+get json all keyword
         var keywords = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          prefetch: {
-            url: '{{route('get_keyword_json')}}',
-            filter: function(list) {
-              return $.map(list, function(keyword) {
+          	datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+          	queryTokenizer: Bloodhound.tokenizers.whitespace,
+          	prefetch: {
+            	url: '{{route('get_keyword_json')}}',
+            	filter: function(list) {
+              	return $.map(list, function(keyword) {
                 return { name: keyword }; });
-            }
-          }
+            	}
+          	}
         });
         keywords.initialize();
         /**
          * Typeahead
          */
-        $('.tagit-sugestion > > input ').tagsinput({
-          typeaheadjs: {
-            name: 'keywords',
-            displayKey: 'name',
-            valueKey: 'name',
-            source: keywords.ttAdapter()
-          }
+        $('.tagit-sugestion > > input').tagsinput({
+          	typeaheadjs: {
+            	name: 'keywords',
+            	displayKey: 'name',
+            	valueKey: 'name',
+            	source: keywords,
+            	limit: 100,
+          	}
         });
         $(".twitter-typeahead").css('display', 'inline');
 
@@ -635,7 +636,7 @@
         });
 
         //markdown
-        $('#description').markdown();
+        $('#description').markdown({});
         $('.createorupdateslug').click(function(){
             var newslug = $('.get_slug').val();
             var id = $('.get_slug').attr('data-id');
@@ -736,6 +737,7 @@
             $content = $.trim($content);
             $('#description').text($content);
             $('#description').focus();
+            $('#description').selectRange(0, $content.length);
             alert('Copied to the active editor');
             // console.log($text);
             
