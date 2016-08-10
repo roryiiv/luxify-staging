@@ -162,18 +162,34 @@
                                                         </div>
                                                     </td>
                                                     <?php
+                                                        
                                                        $customerName = '';
-                                                       if (isset($user->companyName) && !empty($user->companyName)) {
-                                                         $customerName = $user->companyName; 
-                                                       } else if (isset($user->fullName) && !empty($user->fullName)) {
-                                                         $customerName = $user->fullName; 
-                                                       } else if (!empty($user->firstName) && !empty($user->lastName)) {
-                                                         $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName);
-                                                       } else {
-                                                         $customerName = $user->username;
-                                                       }
+                                                       
+
+                                                       if (!empty($user->companyName) && ($user->companyName) !=null) {
+                                                         $company = json_decode($user->companyName);
+                                                         if(is_array($company)){
+
+                                                         $customerName = $company[0]."</br>". $company[1];
+                                                         }else{
+                                                            $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName); 
+                                                         }
+
+                                                       } else{
+                                                            if (!empty($user->firstName) && !empty($user->lastName)) {
+                                                             $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName);
+
+                                                           } else if (isset($user->fullName) && !empty($user->fullName)) {
+                                                             $customerName = $user->fullName; 
+                                                           } else {
+                                                             $customerName = $user->username;
+                                                           }
+
+                                                        }
+                                                       
                                                     ?>
-                                                    <td>{{ $customerName }}</td>
+                                                    <td>{!! $customerName !!}</td>
+
                                                     <td>{{$user->email}}</td>
                                                     <td>{{ucfirst($user->role)}}</td>
                                                     <td>

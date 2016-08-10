@@ -1,5 +1,6 @@
 @inject('s_meta', 'App\Meta')
 @extends('layouts.panel')
+
 @section('head')
 <!-- PACE-->
 <link rel="stylesheet" type="text/css" href="/db/css/pace-theme-flash.css">
@@ -35,6 +36,12 @@
 <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
 <style>
+    .hideslug{
+        display: none;
+    }
+    .showslug{
+        display: block;
+    }
     .draganddropcustom{
         background: #fff;
     }
@@ -371,13 +378,28 @@
                         <div class="form-group">
                             <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
                             <div class="col-sm-9">
-                                <div class="input-group">
-                                  <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
-                                  <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
-                                  ">
-                                  <span class="createorupdateslug input-group-addon btn">
-                                      submit
-                                  </span>
+                                <div class="hideslug">
+                                    <div class="input-group">
+                                      <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
+                                      <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
+                                      ">
+                                      <span class="createorupdateslug input-group-addon btn">
+                                          submit
+                                      </span>
+                                    </div>    
+                                </div>
+                                
+                                <div class="showslug">
+                                <?php
+                                if(strlen($item->slug)<=40){
+                                    $newslug =  $item->slug;
+                                }else{
+                                    $count = strlen($item->slug);
+                                    $newslug = substr($item->slug,0,20).' ....... '.substr($item->slug,$count-20,$count);
+                                }
+                                ?>
+                                    <a class="updatelink" href="{{url('/'.$item->url_object).'/'.$item->slug}} " target="_blank" style="text-decoration: underline;" >{{url('/'.$item->url_object).'/'}}<strong>{{$newslug}}</strong></a>
+                                     &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">edit</span>
                                 </div>
                             </div>
                         </div>
@@ -410,7 +432,7 @@
                                 </style>
                                 <div>
                                     
-                                <input type="text" id="meta_keyword" name='meta_keyword' class="form-control" value="{{$item->meta_keyword}}">
+                                <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="{{$item->meta_keyword}}">
                                 </div>
                             </div>
                             </div>
@@ -508,15 +530,28 @@
     
     <?php
     $otherImages = json_decode($item->images);
-
+    //check if the mainImage is exist on images
+    $check_mainImage = array();
+    $check_mainImage[] = $item->mainImageUrl;
+    $checking = array_intersect($otherImages, $check_mainImage);
     $images = array();
-    $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
+    if(count($checking)===0){
+        //images is not contain mainImageurl
+        $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
 
-    for($i = 0; $i < count($otherImages); $i++) {
-        $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
+        for($i = 0; $i < count($otherImages); $i++) {
+            $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
+        }
+    }else{
+        //images is not contain mainImageurl
+            for($i = 0; $i < count($otherImages); $i++) {
+            $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
+        }
     }
+
     ?>
     var images_array = <?php echo json_encode($images, JSON_PRETTY_PRINT); ?>;
+    var radiomainimage = '{{$item->mainImageUrl}}';
     var optionalFields = <?php echo json_encode($item->optionFields, JSON_PRETTY_PRINT) ?>;
 
 
@@ -549,7 +584,7 @@
         var table = $("#images-preview-table tbody");
         table.html('');
         for (var i = 0; i < images_array.length; i++) {
-            $('<tr class="draganddropcustom"><td class="dot-hidden" style="border-right:medium none;"></td><td class="text-center" style="border-left: medium none;"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'" class="reindex">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
+            $('<tr class="draganddropcustom"><td class="dot-hidden" style="border-right:medium none;"></td><td class="text-center" style="border-left: medium none;"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(radiomainimage==images_array[i].filename?"checked":"")+' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + images_array[i].filename +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
         }
     }
     function genControls({id, type, name, label, optionValues, value, valueId}){
@@ -582,30 +617,46 @@
     }
 
     $(document).ready(function () {
-        //tagit-sugestion+get json all keyword
+        //new edit slug
+        $('.edit_slug').click(function(){
+            $('.showslug').hide();
+            $('.hideslug').show();
+        });
         var keywords = new Bloodhound({
-          	datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-          	queryTokenizer: Bloodhound.tokenizers.whitespace,
-          	prefetch: {
-            	url: '{{route('get_keyword_json')}}',
-            	filter: function(list) {
-              	return $.map(list, function(keyword) {
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: {
+            url: '{{route('get_keyword_json')}}',
+            filter: function(list) {
+              return $.map(list, function(keyword) {
                 return { name: keyword }; });
-            	}
-          	}
+            }
+          }
+        });
+        keywords.clearPrefetchCache();
+        var keywords = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: {
+            url: '{{route('get_keyword_json')}}',
+            filter: function(list) {
+              return $.map(list, function(keyword) {
+                return { name: keyword }; });
+            }
+          }
         });
         keywords.initialize();
         /**
          * Typeahead
          */
         $('.tagit-sugestion > > input').tagsinput({
-          	typeaheadjs: {
-            	name: 'keywords',
-            	displayKey: 'name',
-            	valueKey: 'name',
-            	source: keywords,
-            	limit: 100,
-          	}
+          typeaheadjs: {
+            name: 'keywords',
+            displayKey: 'name',
+            valueKey: 'name',
+            source: keywords,
+            limit: 100,
+          }
         });
         $(".twitter-typeahead").css('display', 'inline');
 
@@ -619,18 +670,18 @@
             });
             return $helper;
         },
-        updateIndex = function(e, ui) {
+/*        updateIndex = function(e, ui) {
             $('.reindex', ui.item.parent()).each(function (i) {
                 $(this).val(i);
             });
-        },
+        },*/
         overIndex = function(e, ui) {
             $(ui.helper[0]).addClass("overdrag");
           }
 
         $(".sortir tbody").sortable({
             helper: fixHelperModified,
-            stop: updateIndex,
+            //stop: updateIndex,
             placeholder: "dragplaceholder",
             over: overIndex
         });
@@ -646,7 +697,17 @@
                     cache: false,
                     success:function( html ) {
                         $( ".get_slug" ).val( html );
-                        alert('oke');
+                        var count = html.length;
+                        if(count<=40){
+                            newslug = html;
+                        }else{
+                            newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
+                        }
+                        $('.updatelink').html('{{url("/")}}/listing/'+newslug);
+                        $('.updatelink').attr('href','{{url("/")}}/listing/'+html);
+                        $('.hideslug').hide();
+                        $('.showslug').show();
+
                     }
                 });
         });
@@ -742,7 +803,37 @@
             // console.log($text);
             
         });
+
+        //Increment the idle time counter every minute.
+        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+        //Zero the idle timer on mouse movement.
+        $(this).mousemove(function (e) {
+            idleTime = 0;
+        });
+        $(this).keypress(function (e) {
+            idleTime = 0;
+        });
+
+    });
+    
+    // on leave remove edit warning sign.
+    $(window).bind('beforeunload', function(e){
+        exitPage();
+        return 'Are you sure?';
     });
 
+    function exitPage(){
+        $.get('/api/ajax/exit/{{$item->id}}', function(data) {
+            return data;
+        });
+    }
+
+    function timerIncrement() {
+        idleTime = idleTime + 1;
+        if (idleTime > 9) { // 10 minutes
+            window.location.href = '/logout/';
+        }
+    }
 </script>
 @endsection

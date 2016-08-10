@@ -75,6 +75,7 @@ class Listings extends Model
       return $this->errors;    
     }
     public static function newslug($id,$slug){
+
       $oldslug = Listings::where('id',$id)->value('slug');
       $newslug = str_slug($slug, '-');
       //if data not change
@@ -88,11 +89,15 @@ class Listings extends Model
             return $newslug;
           }
       }else{
-        $counts = Listings::where('slug',$newslug)->count();
-        if($counts>0){
-          $newslug = $newslug.'-1';
-        }
-        return $newslug;
-      }
+            //if old slug is diff with new slug
+            $othercount = Listings::where('slug',$newslug)->count();
+            //if newslug is there are same with others slug
+            if($othercount>0){
+              return $newslug = $newslug.'-'.$othercount+1;
+            }else{
+              return  $newslug ;
+            }
+            return $newslug;
+          }
     }
 }

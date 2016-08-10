@@ -38,6 +38,8 @@ use App\Meta;
 
 use func;
 
+use Cache;
+
 class Panel extends Controller
 {
     public function __construct() {
@@ -420,8 +422,14 @@ class Panel extends Controller
                     $uploadedImage[] = $val;
                 }
             }
+
             
             if (count($uploadedImage) === count($_POST['images'])) {
+                //add history for image versioning
+                //if oldversionarray json is same as new, return no history
+                //if there is different json oldversionarray and newarray, write the history
+                $history = History::versioning_image($uploadedImage,$id);
+
                                 //additional add alt image here
                 for ($i=0; $i < count($uploadedImage); $i++) {
                     //add meta with value
@@ -431,12 +439,10 @@ class Panel extends Controller
                 }
                 if (isset($_POST['mainImage']) && !empty($_POST['mainImage'])) {
                      
-                    $item->mainImageUrl = array_slice($uploadedImage, intval($_POST['mainImage']), 1)[0];
-                    array_splice($uploadedImage, intval($_POST['mainImage']), 1);
+                    $item->mainImageUrl = $_POST['mainImage'];
                     $item->images = json_encode($uploadedImage);
                 } else {
                     $item->mainImageUrl = $uploadedImage[0];
-                    array_splice($uploadedImage, 0, 1);
                     $item->images = json_encode($uploadedImage);
                 }
             } else {
@@ -458,8 +464,8 @@ class Panel extends Controller
 
         //additional parameters
         if (isset($_POST['slug']) && !empty($_POST['slug'])) {
-            $newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
-            //$newslug = Listings::newslug($id,$_POST['slug']);
+            //$newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
+            $newslug = Listings::newslug($id,$_POST['slug']);
             $item->slug = $newslug;
         }
 
@@ -502,7 +508,7 @@ class Panel extends Controller
                       DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
                   }
               }
-           }
+          }
         }
 
         if(!empty($error_arr)){
@@ -528,6 +534,11 @@ class Panel extends Controller
         $user = DB::table('users')
         ->where('id', $id)
         ->first();
+        $user->meta_title = Meta::get_data_user($id,'title');
+        $user->meta_alt_text = Meta::get_data_user($id,'alt_text');
+        $user->meta_description = Meta::get_data_user($id,'description');
+        $user->meta_author = Meta::get_data_user($id,'author');
+        $user->meta_keyword = Meta::get_data_user($id,'keyword');
         return view('panel.edit-user', ['user' => $user]);
     }
 
@@ -535,21 +546,6 @@ class Panel extends Controller
         $user = User::where('id', $_POST['user_id'])->first(); // always have it declared for first or else empty value sent
 
         //we'll rebuild the slug here and save it
-        if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
-            if($user->company != ''){ //just in case.
-                $company = $user->company;
-            }elseif($_POST['companyName'] != ''){ //the admin update the user company, so...
-                $company = $_POST['companyName'];
-            }else{
-                $company = '';
-            }
-            if($company != ''){
-                $slug = SlugService::createSlug(Users::class, 'slug', $company);
-            }else{
-                $slug = '';
-            }
-            $user->slug = $slug;
-        }
 
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
@@ -621,8 +617,12 @@ class Panel extends Controller
             $user->mapZoomLevel = $_POST['mapZoomLevel'];
         }
         if(isset($_POST['companyName']) && !empty($_POST['companyName'])){
-            $user->companyName = $_POST['companyName'];
+           $user->companyName = json_encode($_POST['companyName']);
+          
         }
+        // if(isset($_POST['companyName']) && !empty($_POST['companyName'])){
+        //     $user->companyName = $_POST['companyName'];
+        // }
         if(isset($_POST['companyRegNumber']) && !empty($_POST['companyRegNumber'])){
             $user->companyRegNumber = $_POST['companyRegNumber'];
         }
@@ -651,11 +651,63 @@ class Panel extends Controller
         if(isset($_POST['salt']) && !empty($_POST['salt'])){
             $user->salt = $_POST['salt'];
         }
+        if(isset($_POST['slug']) && !empty($_POST['slug'])){
+
+          $oldslug = User::where('id',$_POST['user_id'])->value('slug');
+          $newslug = str_slug($_POST['slug'], '-');
+          //if data not change
+          if($oldslug == $newslug){
+
+            $counts = User::where('slug',$newslug)->count();
+            //if data more than the object original
+            if($counts>1){
+              $newslug_copy = $newslug.'-'.$counts+1;
+                $newslug = $newslug_copy;
+              }else{
+                $newslug;
+              }
+          }else{
+            //if old slug is diff with new slug
+            $othercount = User::where('slug',$newslug)->count();
+            //if newslug is there are same with others slug
+            if($othercount>0){
+              $newslug = $newslug.'-'.$othercount+1;
+            }
+            $newslug = $newslug;
+          }
+            $user->slug = $newslug;
+        }
+        //additional meta on user page
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+
+
         if(!empty($error_arr)){
             $error = json_encode($error_arr);
             echo $error;
         }else{
-            if($user->save()) return redirect('/panel/users');
+            $object_type = 'users';
+            $savemeta = Meta::saveorupdate($_POST['user_id'],$meta,$object_type);
+            //if($user->save()) return redirect('/panel/user');
+            if($user->save()) return redirect('/panel/user/edit/'.$_POST['user_id']);
         }
     }
 
@@ -793,7 +845,7 @@ class Panel extends Controller
         return 'products confirm method';
     }
 
-    public function products_edit($itemId) {
+    public function products_edit(Request $request, $itemId) {
         $item = Listings::where('id', $itemId)->first();
         if ($item) {
             $optionalFields = DB::table('formfields')
@@ -838,9 +890,32 @@ class Panel extends Controller
             ->where('object_type', 'description')
             ->orderBy('created_at', 'desc')
             ->get();
+            $v_images = DB::table('history')
+            ->where('object_id', $itemId)
+            ->where('object_type', 'images')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-            return view('panel.product-edit', ['item' => $item,'history' => $history] );
+            // $request->session()->pull('edited', $item->id);
+            // $request->session()->forget('edited'); // use it to reset.
+            $curr_edited = Cache::get($item->id);
+            if($curr_edited == ''){
+                Cache::forever($item->id, 'edited'); // marked being edited.
+            }
+            // $request->session()->push('edited', $item->id); 
+
+            return view('panel.product-edit', ['item' => $item,'history' => $history,'v_images' => $v_images] );
         }
+    }
+
+    public function exitPage($item){
+        if (Cache::has($item)) {
+            Cache::forget($item);
+            $return = true;
+        }else{
+            $return = false;
+        }
+        return $return;
     }
 
     public function extra_rebuild($id){
@@ -1026,8 +1101,21 @@ class Panel extends Controller
     }
     function createupdateslug($id,$slug){
         $newslug = Listings::newslug($id,$slug);
-        $update = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
-        if($update){
+        //dd($newslug);
+        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }
+    }
+    function createupdatesluguser($id,$slug){
+        $newslug = User::newslug($id,$slug);
+        //dd($newslug);
+        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
             return $newslug;
         }
     }

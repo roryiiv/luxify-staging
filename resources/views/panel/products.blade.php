@@ -155,7 +155,13 @@
                                                         </div>
                                                     </td>
                                                     <td><img src="{{func::img_url($products[$i]->mainImageUrl, 50, 50)}}" width="50" alt="" class="img-thumbnail img-responsive"></td>
-                                                    <td style="width: 25%;">{{$products[$i]->title}}</td>
+                                                    <td style="width: 35%;">
+                                                        {{$products[$i]->title}}
+                                                        @if (Cache::get($products[$i]->id) == 'edited') 
+                                                            {{-- true expr --}}
+                                                            <br/><span class="text-warning pull-right"><i class="ti-alert"></i></span>
+                                                        @endif
+                                                    </td>
                                                     
                                                     <?php
                                                        $customerName = '';
@@ -171,9 +177,12 @@
                                                     ?>
                                                     <td>{{ $customerName }}</td>
                                                     {{--<td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>--}}
-                                                @if(Auth::user()->role == 'editor' && $products[$i]->username)
-                                                <td class="text-right">{{$products[$i]->username}}</td>
-                                                @endif
+                                                    @if(Auth::user()->role == 'editor' && $products[$i]->edited_by != 0)
+                                                        <?php $editor = func::getTableByID('users',$products[$i]->id)?>
+                                                        <td class="text-right">{{$editor->email}} - {{date("d-m-Y", $products[$i]->updated_at)}}</td>
+                                                    @else
+                                                        <td class="text-right">-</td>
+                                                    @endif
                                                  @if(Auth::user()->role != 'editor')
                                                      @if($products[$i]->price)
                                                         <td class="text-right">{{$products[$i]->code}} ${{number_format($products[$i]->price)}}</td>
@@ -190,12 +199,12 @@
                                                             <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'EXPIRED')" class="btn btn-outline btn-warning">EXPIRE</button>
                                                          </div>
                                                        @elseif ($products[$i]->status == 'PENDING')
-<div class='statusCol'>
+                                                        <div class='statusCol'>
                                                          <div role="group" aria-label="approveAndRejectButton" class="btn-group btn-group-sm">
                                                             <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'APPROVED')" class="btn btn-outline btn-success">APPROVE</button>
                                                             <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'REJECTED')" class="btn btn-outline btn-danger">REJECT</button>
                                                          </div>
-</div>
+                                                        </div>
                                                        @else
                                                          <span class="label label-default">{{$products[$i]->status}}</span>
                                                        @endif

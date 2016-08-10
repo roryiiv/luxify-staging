@@ -341,6 +341,19 @@
                                 <input id="aerial3DLookURL" name='aerial3DLookURL' type="text" class="form-control" value={{$item->aerialLook3DUrl}}>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                  <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
+                                  <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
+                                  ">
+                                  <span class="createorupdateslug input-group-addon btn">
+                                      submit
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </fieldset>
               </form>

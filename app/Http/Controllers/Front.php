@@ -669,7 +669,15 @@ class Front extends Controller {
         ->select('listings.*', 'countries.name as country')
         ->take(6)
         ->get();
-        return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
+        //add meta
+        $meta = new Meta;
+        $meta->title = Meta::get_data_user($id,'title');
+        $meta->alt_text = Meta::get_data_user($id,'alt_text');
+        $meta->description = Meta::get_data_user($id,'description');
+        $meta->author = Meta::get_data_user($id,'author');
+        $meta->keyword = Meta::get_data_user($id,'keyword');
+
+        return view('dealer', ['dealer' => $dealer, 'listings' => $listings, 'meta' => $meta]);
     }
 
     public function viewDealerNoSlug($id) {

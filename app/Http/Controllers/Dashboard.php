@@ -508,6 +508,10 @@ class Dashboard extends Controller
             }
 
             if (count($uploadedImage) === count($_POST['images'])) {
+                //add history for image versioning
+                //if oldversionarray json is same as new, return no history
+                //if there is different json oldversionarray and newarray, write the history
+                $history = History::versioning_image($uploadedImage,$itemId);
                 //additional add alt image here
                 for ($i=0; $i < count($uploadedImage); $i++) {
                     //add meta with value
@@ -540,6 +544,12 @@ class Dashboard extends Controller
 
         if (isset($_POST['aerial3DLookURL']) && !empty($_POST['aerial3DLookURL'])) {
             $item->aerialLook3DUrl = $_POST['aerial3DLookURL'];
+        }
+        //additional parameters
+        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
+            //$newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
+            $newslug = Listings::newslug($itemId,$_POST['slug']);
+            $item->slug = $newslug;
         }
 
         // delete the existing optional fields first

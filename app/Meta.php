@@ -53,6 +53,13 @@ class Meta extends Model
 		->value('meta_value');
 		return ($data)?$data:'';
 	}
+	public static function get_data_user($itemId,$key){
+		$data= Meta::where('object_type','users')
+		->where('object_id',$itemId)
+		->where('meta_key',$key)
+		->value('meta_value');
+		return ($data)?$data:'';
+	}
 	public static function get_slug_img($img){
 		$data= Meta::where('object_type','images')
 		->where('object_id',$img)

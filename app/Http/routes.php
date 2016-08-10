@@ -76,6 +76,7 @@ Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
 Route::post('/api/bulkActions', 'Panel@bulkActions');
 Route::get('/api/ajax/checkemail/{email}', 'Dashboard@IsEmailInUse');
 Route::get('/api/ajax/checkemail/{email}', 'Panel@IsEmailInUse');
+Route::get('/api/ajax/exit/{item}', 'Panel@exitPage');
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 
@@ -141,6 +142,8 @@ Route::get('/panel/currency/exec', 'Panel@currencyExec');
 
 //panel additional ajax slug #create_update_slug
 Route::get('/panel/cu_slug/', 'Panel@zonk')->name("get_slug");
+Route::get('/panel/cu_slug_user/', 'Panel@zonk')->name("get_slug_user");
+Route::get('/panel/cu_slug_user/{id}/{slug}', 'Panel@createupdatesluguser');
 Route::get('/panel/cu_slug/{id}/{slug}', 'Panel@createupdateslug');
 //get keywords json
 Route::get('/panel/get_keyword_json', 'Panel@get_keyword_json')->name('get_keyword_json');

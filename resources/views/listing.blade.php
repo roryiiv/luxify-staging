@@ -11,7 +11,6 @@
 <meta name="description" content="{{$meta->description}}">
 <meta name="keyword" content="{{$meta->keyword}}">
 <meta name="author" content="{{$meta->author}}">
-<meta name="author" content="{{$meta->author}}">
 @endsection
 @section('style')
     <!-- include the site stylesheet -->
@@ -47,11 +46,21 @@
         <!-- banner image -->
         <section class="images">
             <?php
-               $images = json_decode($listing->images);
-               if (!empty($listing->mainImageUrl)) {
-                 // prepend main image to the images array
-                 array_unshift($images, $listing->mainImageUrl);
-               }
+                $otherImages = json_decode($listing->images);
+                //check if the mainImage is exist on images
+                $check_mainImage = array();
+                $check_mainImage[] = $listing->mainImageUrl;
+                $checking = array_intersect($otherImages, $check_mainImage);
+                if(count($checking)===0){
+                   $images = json_decode($listing->images);
+                   if (!empty($listing->mainImageUrl)) {
+                     // prepend main image to the images array
+                     array_unshift($images, $listing->mainImageUrl);
+                   }                    
+                }else{
+                    $images = json_decode($listing->images);
+                }
+
             ?>
             <ul>
                 @if($listing->aerialLook3DUrl)
