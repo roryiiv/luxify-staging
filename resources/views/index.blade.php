@@ -6,19 +6,19 @@
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
     <style>
-/*
-#video_bg{
- position: relative;
-  background: transparent;
-  }
+      #video_bg{
+      
+       position: relative;
+       background: transparent;
+      }
 
-  .ytplayer-container{
-   position: absolute;
-    top: 0;
-     z-index: -1;
-     }
-*/
-   </style>
+      .ytplayer-container{
+
+       position: absolute;
+        top: 0;
+         z-index: -1;
+         }
+       </style>
 @endsection
 
 @section('meta-data')
@@ -279,7 +279,7 @@
     $(document).ready(function(){
       $('#video_bg').YTPlayer({
         videoId: '15VwTs0nFlM', 
-        fitToBackground: false,
+        fitToBackground: true,
       });
     });
     </script>
