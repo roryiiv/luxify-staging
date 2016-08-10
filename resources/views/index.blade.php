@@ -5,6 +5,20 @@
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+/*
+#video_bg{
+ position: relative;
+  background: transparent;
+  }
+
+  .ytplayer-container{
+   position: absolute;
+    top: 0;
+     z-index: -1;
+     }
+*/
+   </style>
 @endsection
 
 @section('meta-data')
@@ -17,7 +31,9 @@
         <section class="banner">
             <!-- banner slideshow -->
             <div class="bg-img overlay">
-                <img src="{{func::img_url('banners/home-main.jpg', '', '', false, true)}}" alt="image description">
+                <!--<img src="{{func::img_url('banners/home-main.jpg', '', '', false, true)}}" alt="image description">-->
+
+                <div id="video_bg"></div>
             </div>
             <!-- end of banner slideshow -->
             <div class="container">
@@ -261,7 +277,10 @@
 @section('scripts')
     <script>
     $(document).ready(function(){
-
-    })
+      $('#video_bg').YTPlayer({
+        videoId: '15VwTs0nFlM', 
+        fitToBackground: false,
+      });
+    });
     </script>
 @endsection

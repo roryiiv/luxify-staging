@@ -644,7 +644,7 @@ div.lightbox {
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(80, 80, 80, .92);
+    background: rgba(80, 80, 80, .6);
     z-index: -1;
 }
 .banner h1 {
