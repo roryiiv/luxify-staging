@@ -105,6 +105,26 @@
                 </div>
             </section>
             <!-- end of count block -->
+             <div class="featured-block parallax" style="background-image:url({{func::img_url('banners/featured_rees_rex_1.jpg', 1920, '', false, true)}})">
+            <!--<div class="featured-block parallax" style="background-image:url('img/featured_rees_rex.jpg')">-->
+                <div class="container">
+                    <!-- new grid -->
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="text-box">
+                                        <strong class="title">FEATURED</strong>
+                                        <h1 style="font-weight: 300;">“Rees Rex”</h1>
+                                        <p>One of the most complete and well-preserved skulls of any Tyrannosaurus rex ever discovered, is now available <br/>for sale.</p>
+                                        <a href="/listing/rees-rex-t-rex-skull" class="btn btn-primary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div> <!-- end of new grid -->
+                </div>
+            </div>
             <!-- main text wrapper -->
             <div class="content-wrapper">
                 <div class="container">
