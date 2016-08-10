@@ -420,7 +420,6 @@ class Panel extends Controller
                     $uploadedImage[] = $val;
                 }
             }
-
             
             if (count($uploadedImage) === count($_POST['images'])) {
                                 //additional add alt image here
@@ -503,7 +502,7 @@ class Panel extends Controller
                       DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
                   }
               }
-          }
+           }
         }
 
         if(!empty($error_arr)){

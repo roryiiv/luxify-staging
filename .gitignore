@@ -11,4 +11,4 @@ Homestead.json
 public/temp
 config.js
 *.sql
-*.bak
+/.idea
