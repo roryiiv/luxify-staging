@@ -802,7 +802,7 @@ div.lightbox {
     display: inline-block;
     vertical-align: top;
     font-weight: 400;
-    font-size: 13px;
+    font-size: 1.6rem;
     line-height: 1.25;
     padding: 0 9px 10px;
 }
@@ -3076,7 +3076,7 @@ body> .jcf-select-drop.jcf-drop-flipped {
         color: #988866;
     }
     .banner h1, .inner-banner h1 {
-        font-size: 5.8em;
+        font-size: 4.5em;
     }
     h1, .h1 {
         font-size: 3.6em;
