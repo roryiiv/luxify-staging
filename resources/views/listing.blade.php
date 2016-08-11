@@ -51,7 +51,7 @@
                            <br />
                            <span style="margin-top: 20px; z-index:2" class="glyphicon glyphicon-play-circle"></span>
                          </h2>
-                         <div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.5);position: absolute; z-index: 1;top: 0;"></div>
+                         <div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.3);position: absolute; z-index: 1;top: 0;"></div>
                       </div>
                       <img style="width: 48rem; height:33rem;z-index:1;"src="/assets/images/3DTour_sample_2.gif">
 
@@ -170,7 +170,7 @@
                                     <a href="{{ $listing->aerialLook3DUrl }}" rel="lightbox_3d_video" data-fancybox-type="iframe" class="btn btn-primary lightbox">3D Virtual Tour &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
                                 @if(!empty($listing->aerialLookUrl))
-                                    <a href="{{ $listing->aerialLookUrl }}" rel="lightbox_video" data-fancybox-type="iframe" class="btn btn-primary lightbox" style="margin-left:10px;">Promotion Video &nbsp;<span class="glyphicon glyphicon-play"></span></a>
+                                    <a href="{{ $listing->aerialLookUrl }}" rel="lightbox_video" data-fancybox-type="iframe" class="btn btn-primary lightbox btn-left" >Promotion Video &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
                             </header>
                             <div class="description">
