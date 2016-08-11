@@ -101,15 +101,11 @@ class DataFeed extends Controller
     $inputs = $request->all();
     $newListing = new Listings;
     if ($newListing->validate($inputs)) {
-       // modified before filling to the object
-      if($inputs['images'] && !empty($inputs['image'])) {
-        $inputs['images'] = json_encode($inputs['images']);
-      }
       $newListing->fill($inputs); 
       $newListing->slug = SlugService::createSlug(Listings::class, 'slug', $inputs['title']);
-      $newId = $newListing->insertGetId();
+      $newId = $newListing->save();
       if ($newId) {
-         if($inputs['extraInfo'] && !empty($inputs['extraInfo'])) {
+         if(isset($inputs['extraInfo']) && !empty($inputs['extraInfo'])) {
            foreach($extraInfo as $key => $val) {
              $anInfo = new ExtraInfos; 
              $formgroupId = str_replace('formgroupId_', '');
