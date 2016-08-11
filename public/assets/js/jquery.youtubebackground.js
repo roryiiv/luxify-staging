@@ -20,48 +20,48 @@ if (typeof Object.create !== "function") {
 
 (function($, window, document) {
   var
-    loadAPI = function loadAPI(callback) {
+      loadAPI = function loadAPI(callback) {
 
-      // Load Youtube API
-      var tag = document.createElement('script'),
-      head = document.getElementsByTagName('head')[0];
-      
-      if(window.location.origin == 'file://') {
-        tag.src = 'http://www.youtube.com/iframe_api';
-      } else {
-        tag.src = '//www.youtube.com/iframe_api';
-      }
-      
-      head.appendChild(tag);
+        // Load Youtube API
+        var tag = document.createElement('script'),
+            head = document.getElementsByTagName('head')[0];
 
-      // Clean up Tags.
-      head = null;
-      tag = null;
+        if(window.location.origin == 'file://') {
+          tag.src = 'http://www.youtube.com/iframe_api';
+        } else {
+          tag.src = '//www.youtube.com/iframe_api';
+        }
 
-      iframeIsReady(callback);
-    },
-    iframeIsReady = function iframeIsReady(callback) {
-      // Listen for Gobal YT player callback
-      if (typeof YT === 'undefined' && typeof window.loadingPlayer === 'undefined') {
-        // Prevents Ready Event from being called twice
-        window.loadingPlayer = true;
+        head.appendChild(tag);
 
-        
-        // Creates deferred so, other players know when to wait.
-        window.dfd = $.Deferred();
-        window.onYouTubeIframeAPIReady = function() {
-          window.onYouTubeIframeAPIReady = null;
-          window.dfd.resolve( "done" );
+        // Clean up Tags.
+        head = null;
+        tag = null;
+
+        iframeIsReady(callback);
+      },
+      iframeIsReady = function iframeIsReady(callback) {
+        // Listen for Gobal YT player callback
+        if (typeof YT === 'undefined' && typeof window.loadingPlayer === 'undefined') {
+          // Prevents Ready Event from being called twice
+          window.loadingPlayer = true;
+
+
+          // Creates deferred so, other players know when to wait.
+          window.dfd = $.Deferred();
+          window.onYouTubeIframeAPIReady = function() {
+            window.onYouTubeIframeAPIReady = null;
+            window.dfd.resolve( "done" );
+            callback();
+          };
+        } else if (typeof YT === 'object')  {
           callback();
-        };
-      } else if (typeof YT === 'object')  {
-        callback();
-      } else {
-        window.dfd.done(function( name ) {
-          callback();
-        });
-      }
-    };
+        } else {
+          window.dfd.done(function( name ) {
+            callback();
+          });
+        }
+      };
 
   // YTPlayer Object
   YTPlayer = {
@@ -105,8 +105,8 @@ if (typeof Object.create !== "function") {
       self.userOptions = userOptions;
 
       self.$body = $('body'),
-      self.$node = $(node),
-      self.$window = $(window);
+          self.$node = $(node),
+          self.$window = $(window);
 
       // Setup event defaults with the reference to this
       self.defaults.events = {
@@ -202,7 +202,7 @@ if (typeof Object.create !== "function") {
     createBackgroundVideo: function createBackgroundVideo() {
       /*jshint multistr: true */
       var self = this,
-        $YTPlayerString = $('<div id="ytplayer-container' + self.ID + '" class="ytplayer-container background">\
+          $YTPlayerString = $('<div id="ytplayer-container' + self.ID + '" class="ytplayer-container background">\
                                     <div id="' + self.holderID + '" class="ytplayer-player"></div>\
                                     </div>\
                                     <div id="ytplayer-shield" class="ytplayer-shield"></div>');
@@ -230,6 +230,8 @@ if (typeof Object.create !== "function") {
           pHeight, // player height, tbd
           $YTPlayerPlayer = $('#' + self.holderID);
 
+
+
       /* edit by Rory on 10 Aug 2016 */
       pHeight = $('#video_bg').height();
       pWidth = Math.ceil(pHeight * self.options.ratio);
@@ -241,24 +243,23 @@ if (typeof Object.create !== "function") {
         top: 0
       });// player height is greater, offset top; reset left
 
-      /*
-       // when screen aspect ratio differs from video, video must center and underlay one dimension
 
-       if (width / self.options.ratio < height) {
-       pWidth = Math.ceil(height * self.options.ratio); // get new player width
-       $YTPlayerPlayer.width(pWidth).height(height).css({
-       left: (width - pWidth) / 2,
-       top: 0
-       }); // player width is greater, offset left; reset top
-       } else { // new video width < window width (gap to right)
-       pHeight = Math.ceil(width / self.options.ratio); // get new player height
-       $YTPlayerPlayer.width(width).height(pHeight).css({
-       left: 0,
-       top: (height - pHeight) / 2
-       });
+      // when screen aspect ratio differs from video, video must center and underlay one dimension
+      if (width / self.options.ratio < height) {
+        pWidth = Math.ceil(height * self.options.ratio); // get new player width
+        $YTPlayerPlayer.width(pWidth).height(height).css({
+          left: (width - pWidth) / 2,
+          top: 0
+        }); // player width is greater, offset left; reset top
+      } else { // new video width < window width (gap to right)
+        pHeight = Math.ceil(width / self.options.ratio); // get new player height
+        $YTPlayerPlayer.width(width).height(pHeight).css({
+          left: 0,
+          top: (height - pHeight) / 2
+        });
 
-       }
-       */
+      }
+
       $YTPlayerPlayer = null;
       container = null;
     },
@@ -270,7 +271,7 @@ if (typeof Object.create !== "function") {
      */
     onYouTubeIframeAPIReady: function onYouTubeIframeAPIReady() {
       var self = this;
-      self.player = new window.YT.Player(self.holderID, self.options);  
+      self.player = new window.YT.Player(self.holderID, self.options);
     },
 
     /**
@@ -300,9 +301,9 @@ if (typeof Object.create !== "function") {
       var self = this;
 
       self.$node
-        .removeData('yt-init')
-        .removeData('ytPlayer')
-        .removeClass('loaded');
+          .removeData('yt-init')
+          .removeData('ytPlayer')
+          .removeClass('loaded');
 
       self.$YTPlayerString.remove();
 
