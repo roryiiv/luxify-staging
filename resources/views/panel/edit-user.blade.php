@@ -263,9 +263,9 @@
                                                 </div>
                                                 
                                                 <div class="form-group m-0">
-                                                    <label for="txtWebsite" class="control-label">Company Website</label>
+                                                    <label for="website" class="control-label">Company Website</label>
                                                     <div class="pt-15">
-                                                        <input id="companyWebsite" name="companyWebsite" type="text" class="form-control" placeholder="{{$user->website}}" value="{{$user->website}}">
+                                                        <input id="website" name="website" type="text" class="form-control" placeholder="{{$user->website}}" value="{{$user->website}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">

@@ -135,8 +135,15 @@
                         <?php 
                             $webpage = str_replace('http://', '', $dealer->website);
                             $webpage = str_replace('https://', '', $webpage);
+                            function addhttp($url) {
+                                if (!preg_match('~^(?:f|ht)tps?://~i', $url)) {
+                                    $url = "http://" . $url;
+                                }
+                                return $url;
+                            }
+
                         ?>
-                            <h5 style="text-align: center;"><a href="{{$dealer->website}}" target="_blank">{{$webpage}}</a></td></h5>
+                            <h5 style="text-align: center;"><a href="{{addhttp($dealer->website)}}" target="_blank">{{$webpage}}</a></td></h5>
                         @endif
                         <table class="table" style="margin: 0 auto; max-width: 330px; text-align: center; margin-top: 20px;">
                         <?php 

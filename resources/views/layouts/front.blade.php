@@ -11,11 +11,9 @@
     @yield('meta-data')
     <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
 
+    @yield('home-title')
     <title>@yield('title') - Luxify - Asia's Leading Marketplace for Luxury</title>
-
-
     <!-- title of the page -->
-    <title>@yield('title')</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png?v=2">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png?v=2">
@@ -222,6 +220,7 @@
     <script src="/assets/js/jquery.main.js"></script>
     <script src="/assets/js/jquery.unveil.js"></script>
     <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
+    <script src="/assets/js/jquery.youtubebackground.js"></script>
     <script>
     $(document).ready(function(){
         $('#currSelect').on('change', function(){
