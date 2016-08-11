@@ -152,6 +152,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Skovmand\Mailchimp\MailchimpServiceProvider::class,
         AlfredoRamos\ParsedownExtra\ParsedownExtraServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -211,6 +212,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'func' => App\MyLibrary\Functions::class,
         'Markdown'  => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 

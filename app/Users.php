@@ -34,4 +34,5 @@ class Users extends Model
     {
         return 'slug';
     }
+    protected $table = 'users';
 }
