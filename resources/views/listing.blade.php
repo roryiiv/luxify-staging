@@ -5,7 +5,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main3.css">
+    <link rel="stylesheet" href="/assets/css/main2.css">
 @endsection
 @section('content')
     <style>
