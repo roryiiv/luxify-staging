@@ -1,7 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Welcome to Luxify')
-
+@section('home-title')
+  <title>Luxify.com - Asia's Leading Marketplace for Luxury</title>
+@endsection
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -23,7 +24,7 @@
 
 @section('meta-data')
     <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-    <meta name="description" content="We are Asia's leading online marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+    <meta name="description" content="We are Asia's leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
 @endsection
 
 @section('content')
@@ -130,7 +131,7 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="row">
-                            <div class="col-sm-6 col-xs-7">
+                            <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
                                     <strong class="title">FEATURED</strong>
                                     <h1 style="font-weight: 300;">“Rees Rex”</h1>
@@ -194,7 +195,7 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="row">
-                            <div class="col-sm-6 col-xs-6">
+                            <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
                                     <h1>Search &amp; Compare</h1>
                                     <p>Search and compare through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods.</p>
@@ -278,19 +279,18 @@
 @endsection
 @section('scripts')
     <script>
+      $(document).ready(function(){
+        $(".banner-image img").load(function() {
+            let bg = $('.bg-img:nth-child(2)');
+            let w = bg.width(), h = bg.height();
 
-        $(document).ready(function(){
-
-
-            $(".banner-image img").load(function() {
-                $('#video_bg').YTPlayer({
-                    fitToBackground: true,
-                    videoId: '15VwTs0nFlM',
-                });
-
-
+            $('#video_bg').YTPlayer({
+                fitToBackground: true,
+                videoId: '15VwTs0nFlM',
+                width: w+500,
+                ratio: (w/ h),
             });
-
         });
+      });
     </script>
 @endsection

@@ -48,7 +48,7 @@ class DataFeed extends Controller
        $newListing->fill($inputs); 
        $newId = $newListing->insertGetId();
        if ($newId) {
-         echo json_encode(['result'=> 0, 'data' => $newListing]);
+         echo json_encode(['result'=> 1, 'data' => $newListing]);
        }
     } else {
       echo json_encode(['result'=> 0, 'message' => $newLisitng->errors()]);

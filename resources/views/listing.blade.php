@@ -1,6 +1,7 @@
 @extends('layouts.front')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+@section('title', $listing->title )
 
 @section('style')
     <!-- include the site stylesheet -->
