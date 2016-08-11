@@ -131,7 +131,7 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="row">
-                            <div class="col-sm-6 col-xs-7">
+                            <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
                                     <strong class="title">FEATURED</strong>
                                     <h1 style="font-weight: 300;">“Rees Rex”</h1>
@@ -195,7 +195,7 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="row">
-                            <div class="col-sm-6 col-xs-6">
+                            <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
                                     <h1>Search &amp; Compare</h1>
                                     <p>Search and compare through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods.</p>
