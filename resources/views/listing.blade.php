@@ -1,19 +1,13 @@
-@inject('s_meta', 'App\Meta')
 @extends('layouts.front')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
-@section('title', trim(preg_replace('/\s\s+/', ' ', $meta->title)))
+@section('title', $listing->title )
 
-@section('meta')
-
-<meta name="description" content="{{$meta->description}}">
-<meta name="keyword" content="{{$meta->keyword}}">
-<meta name="author" content="{{$meta->author}}">
-@endsection
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main2.css">
-
+    <link rel="stylesheet" href="/assets/css/main3.css">
+@endsection
+@section('content')
     <style>
      .added span {
        color: red;
@@ -38,28 +32,16 @@
        font-weight: 100;
      }
     </style>
-@endsection
-@section('content')
     <!-- main banner of the page -->
     <div class="inner-banner">
         <!-- banner image -->
         <section class="images">
             <?php
-                $otherImages = json_decode($listing->images);
-                //check if the mainImage is exist on images
-                $check_mainImage = array();
-                $check_mainImage[] = $listing->mainImageUrl;
-                $checking = array_intersect($otherImages, $check_mainImage);
-                if(count($checking)===0){
-                   $images = json_decode($listing->images);
-                   if (!empty($listing->mainImageUrl)) {
-                     // prepend main image to the images array
-                     array_unshift($images, $listing->mainImageUrl);
-                   }                    
-                }else{
-                    $images = json_decode($listing->images);
-                }
-
+               $images = json_decode($listing->images);
+               if (!empty($listing->mainImageUrl)) {
+                 // prepend main image to the images array
+                 array_unshift($images, $listing->mainImageUrl);
+               }
             ?>
             <ul>
                 @if($listing->aerialLook3DUrl)
@@ -70,7 +52,7 @@
                            <br />
                            <span style="margin-top: 20px; z-index:2" class="glyphicon glyphicon-play-circle"></span>
                          </h2>
-                         <div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.5);position: absolute; z-index: 1;top: 0;"></div>
+                         <div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.3);position: absolute; z-index: 1;top: 0;"></div>
                       </div>
                       <img style="width: 48rem; height:33rem;z-index:1;"src="/assets/images/3DTour_sample_2.gif">
 
@@ -79,22 +61,14 @@
                 @endif
                 @if(is_array($images))
                     @foreach($images as $image)
-                    <?php
-                    $ori = $s_meta::get_slug_img($image);
-                    if($ori!=''){
-                        $alt = $s_meta::get_slug_img($image);
-                    }else{
-                        $alt = 'luxify';
-                    }
-                    ?>
                         <li>
                           <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                            <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" alt="{{$alt}}" />
+                            <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
                           </a>
                         </li>
                     @endforeach
                 @else
-                    <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" alt="{{$alt}}" /></li>
+                    <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
                 @endif
             </ul>
 
@@ -197,15 +171,14 @@
                                     <a href="{{ $listing->aerialLook3DUrl }}" rel="lightbox_3d_video" data-fancybox-type="iframe" class="btn btn-primary lightbox">3D Virtual Tour &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
                                 @if(!empty($listing->aerialLookUrl))
-                                    <a href="{{ $listing->aerialLookUrl }}" rel="lightbox_video" data-fancybox-type="iframe" class="btn btn-primary lightbox" style="margin-left:10px;">Promotion Video &nbsp;<span class="glyphicon glyphicon-play"></span></a>
+                                    <a href="{{ $listing->aerialLookUrl }}" rel="lightbox_video" data-fancybox-type="iframe" class="btn btn-primary lightbox btn-left" >Promotion Video &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
                             </header>
                             <div class="description">
                                 <h5>Description</h5>
-                                {!! Markdown::parse($listing->description) !!}
-                                {{-- <p>
+                                <p>
                                     {!! nl2br(e($listing->description)) !!}
-                                </p> --}}
+                                </p>
                                 @if(!empty($infos))
                                     <h5 style="margin-top:45px;">Specifications</h5>
                                     <table class="table item-description">
