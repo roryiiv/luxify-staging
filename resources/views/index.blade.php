@@ -1,30 +1,36 @@
 @extends('layouts.front')
 
-@section('home-title')
-  <title>Luxify.com - Asia's Leading Marketplace for Luxury</title>
-@endsection
+@section('title', 'Welcome to Luxify')
+
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
     <style>
 
         #video_bg{
-            position:relative;;
-            overflow:hidden;
+            position:relative;
             width:100%;
             height:100%;
-            background: transparent;
-        }
-        .ytplayer-player{
-            position: absolute;
+            overflow:hidden;
         }
 
+
+        .ytplayer-container{
+            position: absolute;
+            top: 0;
+            text-align:center;
+            z-index: -1;
+            vertical-align : middle;
+        }
+        .ytplayer-container iframe{
+            position:absolute;
+        }
     </style>
 @endsection
 
 @section('meta-data')
     <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-    <meta name="description" content="We are Asia's leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+    <meta name="description" content="We are Asia's leading online marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
 @endsection
 
 @section('content')
