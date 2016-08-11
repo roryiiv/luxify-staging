@@ -12,6 +12,7 @@ use App\PageCount;
 use App\Meta;
 use App\History;
 use App\Wishlists;
+use App\Analytics;
 use Response;
 
 Use Auth;
@@ -30,7 +31,7 @@ use App\Http\Requests;
 
 Use Input;
 Use DB;
-
+use Cache;
 
 class Dashboard extends Controller
 {
@@ -84,6 +85,16 @@ class Dashboard extends Controller
     public function profile() {
         $user = User::where('id', $this->user_id)->first();
         // var_dump($user);
+        $user->meta_title = Meta::get_data_user($this->user_id,'title');
+        $user->meta_alt_text = Meta::get_data_user($this->user_id,'alt_text');
+        $user->meta_description = Meta::get_data_user($this->user_id,'description');
+        $user->meta_author = Meta::get_data_user($this->user_id,'author');
+        $user->meta_keyword = Meta::get_data_user($this->user_id,'keyword');
+
+        $curr_edited = Cache::get($this->user_id);
+        if($curr_edited == ''){
+            Cache::forever($this->user_id, 'edited'); // marked being edited.
+        }
         return view('dashboard.profile', ['user' => $user]);
     }
 
@@ -91,7 +102,7 @@ class Dashboard extends Controller
         $user = User::where('id', $this->user_id)->first(); // always have it declared for first or else empty value sent
 
         //we'll rebuild the slug here and save it
-        if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
+/*        if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
             if($user->company != ''){ //just in case.
                 $company = $user->company;
             }elseif($_POST['companyName'] != ''){ //the admin update the user company, so...
@@ -105,7 +116,7 @@ class Dashboard extends Controller
                 $slug = '';
             }
             $user->slug = $slug;
-        }
+        }*/
 
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
@@ -209,10 +220,34 @@ class Dashboard extends Controller
         if(isset($_POST['txtTwitterLink']) && !empty($_POST['txtTwitterLink'])){
             $user->socialTwitter = $_POST['txtTwitterLink'];
         }
+        //additional
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+
         if(!empty($error_arr)){
             $error = json_encode($error_arr);
             echo $error;
         }else{
+            $object_type = 'users';
+            $savemeta = Meta::saveorupdate($this->user_id,$meta,$object_type);
             if($user->save()) return redirect('/dashboard/profile?update=success');
         }
     }
@@ -447,7 +482,7 @@ class Dashboard extends Controller
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             $item->title = $_POST['title'];
-            $item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
+            /*$item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);*/
         } else {
             $error_arr['title'] = 'Item title is required.';
         }
@@ -545,12 +580,33 @@ class Dashboard extends Controller
         if (isset($_POST['aerial3DLookURL']) && !empty($_POST['aerial3DLookURL'])) {
             $item->aerialLook3DUrl = $_POST['aerial3DLookURL'];
         }
+
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
         //additional parameters
-        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
+/*        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
             //$newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
             $newslug = Listings::newslug($itemId,$_POST['slug']);
             $item->slug = $newslug;
-        }
+        }*/
 
         // delete the existing optional fields first
         DB::table('extrainfos')->where('listingId', $item->id )->delete();
@@ -575,6 +631,12 @@ class Dashboard extends Controller
         if(!empty($error_arr)){
             echo json_encode($error_arr);
         }else{
+            //save or update meta listing
+            //$id = id listing
+            //$meta = data array meta
+            //$object_type = listing/users;
+            $object_type = 'listings';
+            $savemeta = Meta::saveorupdate($itemId,$meta,$object_type);
             if ($item->save()) {
                 return redirect('/dashboard/product/edit/'.$item->id);
             }
@@ -870,6 +932,36 @@ class Dashboard extends Controller
 
         return Response::json(['response' => $checkemail != null]);
 
+    }
+    function createupdateslug($id,$slug){
+        $newslug = SlugService::createSlug(Listings::class, 'slug', $slug);
+        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }
+/*        $newslug = Listings::newslug($id,$slug);
+        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }*/
+    }
+    function createupdatesluguser($id,$slug){
+        $newslug = SlugService::createSlug(User::class, 'slug', $slug);
+        //dd($newslug);
+        $updates = DB::table('users')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }
+    }
+    function get_flot_chart($start,$end){
+        $user_id = Auth::user()->id;
+        $json_flot_chart = Analytics::get_flot_data($start,$end,$user_id);
     }
 
 }

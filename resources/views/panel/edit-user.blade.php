@@ -424,7 +424,7 @@
                                                                 <input class="get_slug form-control" data-id ="{{$user->id}}" type="text" value="{{$slug }}" name="slug">
                                                                 <span class="group-span-filestyle input-group-btn" tabindex="0">
                                                                         <label for="fulImage" class="btn btn-outline btn-primary">
-                                                                            <span class="buttonText editslugajax">save</span>
+                                                                            <span class="buttonText editslugajax">Save URL</span>
                                                                         </label>
                                                                 </span>
                                                             </div> 
@@ -439,8 +439,8 @@
                                                             $newslug = substr($user->slug,0,20).' ....... '.substr($user->slug,$count-20,$count);
                                                         }
                                                         ?>
-                                                            <a class="updatelink" href="{!! url('/dealer') . '/' . Auth::user()->id . '/'.$slug !!}" target="_blank" style="text-decoration: underline;" >{!! url('/dealer') . '/' . Auth::user()->id . '/<strong>'.$slug.'</strong>' !!}</a>
-                                                             &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">edit</span>
+                                                            <a class="updatelink" href="{!! url('/dealer') . '/' .  $user->id . '/'.$slug !!}" target="_blank" style="text-decoration: underline;" >{!! url('/dealer') . '/' . $user->id . '/<strong>'.$slug.'</strong>' !!}</a>
+                                                             &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -581,28 +581,28 @@
             $(".twitter-typeahead").css('display', 'inline');
 
             $('.editslugajax').click(function(){
-            var newslug = $('.get_slug').val();
-            var id = $('.get_slug').attr('data-id');
-                $.ajax({
-                    url: "{{route('get_slug_user')}}/"+id+"/"+newslug,
-                    async: false,
-                    cache: false,
-                    success:function( html ) {
-                        $( ".get_slug" ).val( html );
-                        var count = html.length;
-                        if(count<=40){
-                            newslug = html;
-                        }else{
-                            newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
-                        }
-                        $('.updatelink').html('{{url("/")}}/dealer/'+id+'/<strong>'+newslug+'</strong>');
-                        $('.updatelink').attr('href','{{url("/")}}/dealer/'+id+'/'+html);
-                        $('.hideslug').hide();
-                        $('.showslug').show();
+                var newslug = $('.get_slug').val();
+                var id = $('.get_slug').attr('data-id');
+                    $.ajax({
+                        url: "{{route('get_slug_user')}}/"+id+"/"+newslug,
+                        async: false,
+                        cache: false,
+                        success:function( html ) {
+                            $( ".get_slug" ).val( html );
+                            var count = html.length;
+                            if(count<=40){
+                                newslug = html;
+                            }else{
+                                newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
+                            }
+                            $('.updatelink').html('{{url("/")}}/dealer/'+id+'/<strong>'+newslug+'</strong>');
+                            $('.updatelink').attr('href','{{url("/")}}/dealer/'+id+'/'+html);
+                            $('.hideslug').hide();
+                            $('.showslug').show();
 
-                    }
-                });
-        });
+                        }
+                    });
+            });
             $("form.form-horizontal").validate();
             var token = "{{ Session::getToken() }}";
             $("#sweet-3, .sweet-3").each(function () {
@@ -722,6 +722,17 @@
             $('#phoneNumber').tagsinput({
                allowDuplicates: false 
             });
+            
+            //Increment the idle time counter every minute.
+            var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+            //Zero the idle timer on mouse movement.
+            $(this).mousemove(function (e) {
+                idleTime = 0;
+            });
+            $(this).keypress(function (e) {
+                idleTime = 0;
+            });
         });
     </script>
     @if(isset($_GET['update']) && $_GET['update'] == 'success')
@@ -772,6 +783,24 @@
             });
             
             return false;         
+        }
+        // on leave remove edit warning sign.
+        $(window).bind('beforeunload', function(e){
+            exitPage();
+            return 'Are you sure?';
+        });
+
+        function exitPage(){
+            $.get('/api/ajax/exit/{{$user->id}}', function(data) {
+                return data;
+            });
+        }
+
+        function timerIncrement() {
+            idleTime = idleTime + 1;
+            if (idleTime > 9) { // 10 minutes
+                window.location.href = '/logout/';
+            }
         }   
     </script>
 @endsection

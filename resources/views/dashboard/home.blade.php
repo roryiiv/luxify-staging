@@ -429,6 +429,12 @@
         applyClass: "btn-raised btn-black",
         cancelClass: "btn-raised btn-default"
     }, function(e, t, a) {
+        //additional check date
+        var d_start = e.format("YYYY-MM-d"),
+        var d_end = t.format("YYYY-MM-d"),
+
+
+
         $("#daterangepicker span").html(e.format("MMMM D, YYYY") + " - " + t.format("MMMM D, YYYY"))
     }), $("#daterangepicker span").html(moment().subtract(29, "days").format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY")), Morris.Donut({
         element: "morris-browser",

@@ -1,15 +1,15 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - ' . $dealer->fullName)
+@section('title', trim(preg_replace('/\s\s+/', ' ', $meta->title)))
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
 @section('meta')
-
-<meta name="description" content="{{$meta->description}}">
-<meta name="keyword" content="{{$meta->keyword}}">
-<meta name="author" content="{{$meta->author}}">
+  <meta name="description" content="{{$meta->description}}">
+  <meta name="keyword" content="{{$meta->keyword}}">
+  <meta name="author" content="{{$meta->author}}">
 @endsection
+
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -62,9 +62,26 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <?php 
-                            $company = json_decode($dealer->companyName);
-                            $title = "<strong>".$company[0]."</strong></br>".$company[1]; 
-                            $title1 = $company[0].' '.$company[1]; 
+                            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                              $company = json_decode($dealer->companyName);
+                                if(is_array($company)){
+                                $title = "<strong>".$company[0]."</strong></br>".$company[1]; 
+                                }else{
+                                 $title = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
+                                }
+                            }else{
+                              $title = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                            }
+                            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                              $company = json_decode($dealer->companyName);
+                                if(is_array($company)){
+                                  $title1 = $company[0]."</br>".$company[1]; 
+                                }else{
+                                  $title1 = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                                }
+                            }else{
+                              $title1 = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                            }
                             ?>
                             <h1>{!! $title !!}</h1>
                             <p style="visibility: hidden;">Official Ferrari importer in Singapore</p>
@@ -88,7 +105,7 @@
           <div class="content-wrapper">
               <div class="row">
                   <div class="col-md-6">
-                      <h1>{{ $title1 }}</h1>
+                      <h1>{!! $title1 !!}</h1>
                       @if(!empty($dealer->companySummary)) 
                          <p> {!! nl2br(e($dealer->companySummary)) !!} </p>
                       @else 

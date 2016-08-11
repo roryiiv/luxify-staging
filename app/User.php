@@ -36,26 +36,37 @@ class User extends Authenticatable
 
       $oldslug = User::where('id',$id)->value('slug');
       $newslug = str_slug($slug, '-');
-      //if data not change
-      if($oldslug == $newslug){
-        $counts = User::where('slug',$newslug)->count();
-        //if data more than the object original
-        if($counts>1){
-          $newslug_copy = $newslug.'-'.$counts+1;
-            return $newslug_copy;
-          }else{
-            return $newslug;
-          }
-      }else{
-            //if old slug is diff with new slug
-            $othercount = User::where('slug',$newslug)->count();
-            //if newslug is there are same with others slug
-            if($othercount>0){
-              return $newslug = $newslug.'-'.$othercount+1;
+      //if data not change old and new
+        if($oldslug == $newslug){
+            $counts = User::where('slug',$newslug)->count();
+            //if data more than the object original
+            if($counts>1){
+                $newslug_copy = str_slug($slug, '-').'-'.$counts+1;
+                return $newslug_copy;
             }else{
-              return  $newslug ;
+                return str_slug($slug, '-');
             }
-            return $newslug;
-          }
+        }
+      //if data change
+      else{
+            //count slug 
+            $newcount = User::where('slug',$newslug)->count();
+            //dd($newcount);
+            //if newslug is there are same with others slug
+            if($newcount>0){
+                //recheck if second slug are unique
+                $second_slug = str_slug($slug, '-').'-'.($newcount+1);
+                $second_oldslug = User::where('slug',$second_slug)->value('slug');
+                //if still same
+                if($second_slug == $second_oldslug){
+                    return str_slug($slug, '-').'-'.($newcount+2);
+                }else{
+                    return str_slug($slug, '-').'-'.($newcount+1);
+                }
+
+            }else{
+                return str_slug($slug, '-') ;
+            }
+        }
     }
 }

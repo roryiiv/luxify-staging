@@ -35,6 +35,12 @@
 <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
 <style>
+    .hideslug{
+        display: none;
+    }
+    .showslug{
+        display: block;
+    }
     .draganddropcustom{
         background: #fff;
     }
@@ -52,6 +58,8 @@
     }
     .dragplaceholder{
         background:#fafafa;
+        height: 150px;
+
     }
     .overdrag{
         opacity: 0.8;
@@ -341,19 +349,80 @@
                                 <input id="aerial3DLookURL" name='aerial3DLookURL' type="text" class="form-control" value={{$item->aerialLook3DUrl}}>
                             </div>
                         </div>
+                        <hr/>
+                                            <section>
+                    <div>
+                    <h4>SEO Section</h4>
+                    </div>
                         <div class="form-group">
                             <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
                             <div class="col-sm-9">
-                                <div class="input-group">
-                                  <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
-                                  <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
-                                  ">
-                                  <span class="createorupdateslug input-group-addon btn">
-                                      submit
-                                  </span>
+                                <div class="hideslug">
+                                    <div class="input-group">
+                                      <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
+                                      <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
+                                      ">
+                                      <span class="createorupdateslug input-group-addon btn">
+                                          submit
+                                      </span>
+                                    </div>    
+                                </div>
+                                
+                                <div class="showslug">
+                                <?php
+                                if(strlen($item->slug)<=40){
+                                    $newslug =  $item->slug;
+                                }else{
+                                    $count = strlen($item->slug);
+                                    $newslug = substr($item->slug,0,20).' ....... '.substr($item->slug,$count-20,$count);
+                                }
+                                ?>
+                                    <a class="updatelink" href="{{url('/'.$item->url_object).'/'.$item->slug}} " target="_blank" style="text-decoration: underline;" >{{url('/'.$item->url_object).'/'}}<strong>{{$newslug}}</strong></a>
+                                     &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">edit</span>
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="meta_title" class="col-sm-3 control-label">Title</label>
+                            <div class="col-sm-9">
+                                <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$item->meta_title}}">
+                            </div>
+                        </div>
+                        <div class="form-group" style="display:none;">
+                            <label for="meta_alttext" class="col-sm-3 control-label">Alt Text</label>
+                            <div class="col-sm-9">
+                                <input id="alttext" name='meta_alttext' type="text" class="form-control" placeholder="{{$item->meta_alt_text}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
+                            <div class="col-sm-9">
+                                <textarea id="meta_description" name='meta_description' class="form-control " ?>{{$item->meta_description}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_keyword" class="col-sm-3 control-label">Meta Keyword</label>
+                            <div class="col-sm-9 "><div class="tagit-sugestion">
+                                
+                                <style>
+                                    .bootstrap-tagsinput{
+                                        width: 100%;
+                                    }
+                                </style>
+                                <div>
+                                    
+                                <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="{{$item->meta_keyword}}">
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                             <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
+                            <div class="col-sm-9">
+                                <input id="meta_author" name='meta_author' type="text" class="form-control" placeholder="{{$item->meta_author}}">
+                            </div>
+                        </div>
+                    </section>
                     </div>
                 </fieldset>
               </form>
@@ -434,6 +503,7 @@
 <script type="text/javascript" src="/plugins/bootstrap-markdown/js/to-markdown.js"></script>
 <script type="text/javascript" src="/plugins/bootstrap-markdown/js/jquery.hotkeys.js"></script>
 <!-- Booostraps_tagit input plugin -->
+<script type="text/javascript" src="/plugins/typeahead.js/dist/typeahead.bundle.min.js"></script>
 <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 
 <script>
@@ -512,8 +582,53 @@
         }
     }
     $(document).ready(function () {
+                //new edit slug
+        $('.edit_slug').click(function(){
+            $('.showslug').hide();
+            $('.hideslug').show();
+        });
+        var keywords = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: {
+            url: '{{route('get_keyword_json')}}',
+            filter: function(list) {
+              return $.map(list, function(keyword) {
+                return { name: keyword }; });
+            }
+          }
+        });
+        keywords.clearPrefetchCache();
+        var keywords = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: {
+            url: '{{route('get_keyword_json')}}',
+            filter: function(list) {
+              return $.map(list, function(keyword) {
+                return { name: keyword }; });
+            }
+          }
+        });
+        keywords.initialize();
+        /**
+         * Typeahead
+         */
+        $('.tagit-sugestion > > input').tagsinput({
+          typeaheadjs: {
+            name: 'keywords',
+            displayKey: 'name',
+            valueKey: 'name',
+            source: keywords,
+            limit: 100,
+          }
+        });
+        $(".twitter-typeahead").css('display', 'inline');
+
+
         //sortable edit
-var fixHelperModified = function(e, tr) {
+
+        var fixHelperModified = function(e, tr) {
             var $originals = tr.children();
             var $helper = tr.clone();
             $helper.children().each(function(index) {
@@ -521,18 +636,18 @@ var fixHelperModified = function(e, tr) {
             });
             return $helper;
         },
-        updateIndex = function(e, ui) {
+/*        updateIndex = function(e, ui) {
             $('.reindex', ui.item.parent()).each(function (i) {
                 $(this).val(i);
             });
-        },
+        },*/
         overIndex = function(e, ui) {
             $(ui.helper[0]).addClass("overdrag");
           }
 
         $(".sortir tbody").sortable({
             helper: fixHelperModified,
-            stop: updateIndex,
+            //stop: updateIndex,
             placeholder: "dragplaceholder",
             over: overIndex
         });
@@ -548,7 +663,17 @@ var fixHelperModified = function(e, tr) {
                     cache: false,
                     success:function( html ) {
                         $( ".get_slug" ).val( html );
-                        alert('oke');
+                        var count = html.length;
+                        if(count<=40){
+                            newslug = html;
+                        }else{
+                            newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
+                        }
+                        $('.updatelink').html('{{url("/")}}/listing/'+newslug);
+                        $('.updatelink').attr('href','{{url("/")}}/listing/'+html);
+                        $('.hideslug').hide();
+                        $('.showslug').show();
+
                     }
                 });
         });

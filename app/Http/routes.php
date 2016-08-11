@@ -147,6 +147,9 @@ Route::get('/panel/cu_slug_user/{id}/{slug}', 'Panel@createupdatesluguser');
 Route::get('/panel/cu_slug/{id}/{slug}', 'Panel@createupdateslug');
 //get keywords json
 Route::get('/panel/get_keyword_json', 'Panel@get_keyword_json')->name('get_keyword_json');
+//get flotchart json
+Route::get('/dashboard/get_flot_chart/', 'Dashboard@zonk')->name('get_json_flot');
+Route::get('/dashboard/get_flot_chart/{start}/{end}', 'Dashboard@get_flot_chart');
 
 
 //routes for DASHBOARD (seller)

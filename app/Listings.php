@@ -74,30 +74,88 @@ class Listings extends Model
     public function errors() {
       return $this->errors;    
     }
-    public static function newslug($id,$slug){
+    public static function generateslug($slug){
+      $explode = explode('-', $slug);
+      if(is_array($explode)){
+        //eksekusi array
+        $count = count($explode);
+        $lastarray = intval($explode[$count-1]);
+        if(is_int($lastarray)){
+          $status = true;
+          $i = 1;
+          while($status){
+          $data = Generate::where('password',$key)->first();
+              if($data == 0) $status = false;
+              return $key;
+          }
+        }
+      }else{
 
+      }
+    }
+    public static function newslug($id,$slug){
       $oldslug = Listings::where('id',$id)->value('slug');
       $newslug = str_slug($slug, '-');
-      //if data not change
-      if($oldslug == $newslug){
-        $counts = Listings::where('slug',$newslug)->count();
-        //if data more than the object original
-        if($counts>1){
-          $newslug_copy = $newslug.'-'.$counts+1;
-            return $newslug_copy;
-          }else{
-            return $newslug;
-          }
-      }else{
-            //if old slug is diff with new slug
-            $othercount = Listings::where('slug',$newslug)->count();
-            //if newslug is there are same with others slug
-            if($othercount>0){
-              return $newslug = $newslug.'-'.$othercount+1;
+      //if data not change old and new
+        if($oldslug == $newslug){
+            $counts = Listings::where('slug',$newslug)->count();
+            //if data more than the object original
+            if($counts>1){
+                //recheck if second slug are unique
+                $status = true;
+                $ekor = 1;
+                while($status){
+                  $second_slug = str_slug($slug, '-').'-'.($newcount+$ekor);
+                  $check = Listings::where('slug',$second_slug)->first();
+
+                  if(count($check)>0){
+                    if($second_slug != $check->slug){
+                      $status=true;
+                    }else{
+                      $status=false;
+                      return $second_slug;                        
+                    }
+                  }else{
+                    $status=false;
+                    return $second_slug;
+                  }
+                  $ekor+=1;
+                }
             }else{
-              return  $newslug ;
+                return str_slug($slug, '-');
             }
-            return $newslug;
-          }
+        }
+      //if data change
+      else{
+            //count slug 
+            $newcount = Listings::where('slug',$newslug)->count();
+            //dd($newcount);
+            //if newslug is there are same with others slug
+            if($newcount>0){
+                //recheck if second slug are unique
+                $status = true;
+                $ekor = 1;
+                while($status){
+                  $second_slug = str_slug($slug, '-').'-'.($newcount+$ekor);
+                  $check = Listings::where('slug',$second_slug)->first();
+
+                  if(count($check)>0){
+                    if($second_slug != $check->slug){
+                      $status=true;
+                    }else{
+                      $status=false;
+                      return $second_slug;                        
+                    }
+                  }else{
+                    $status=false;
+                    return $second_slug;
+                  }
+                  $ekor+=1;
+                }
+            }else{
+                return str_slug($slug, '-') ;
+            }
+        }
+    
     }
 }

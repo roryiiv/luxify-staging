@@ -2,9 +2,7 @@
 @extends('layouts.front')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
-@section('title')
-{{$meta->title}}
-@endsection
+@section('title', trim(preg_replace('/\s\s+/', ' ', $meta->title)))
 
 @section('meta')
 
@@ -15,8 +13,7 @@
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main2.css">
-@endsection
-@section('content')
+
     <style>
      .added span {
        color: red;
@@ -41,6 +38,8 @@
        font-weight: 100;
      }
     </style>
+@endsection
+@section('content')
     <!-- main banner of the page -->
     <div class="inner-banner">
         <!-- banner image -->

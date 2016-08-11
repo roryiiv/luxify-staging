@@ -163,32 +163,32 @@
                                                     </td>
                                                     <?php
                                                         
-                                                       $customerName = '';
-                                                       
+                                                        $customerName = '';
+                                                        if (!empty($user->companyName) && ($user->companyName) !=null) {
+                                                            $company = json_decode($user->companyName);
+                                                            if(is_array($company)){
+                                                                $customerName = $company[0]."</br>". $company[1];
+                                                            }else{
+                                                                $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName); 
+                                                            }
 
-                                                       if (!empty($user->companyName) && ($user->companyName) !=null) {
-                                                         $company = json_decode($user->companyName);
-                                                         if(is_array($company)){
-
-                                                         $customerName = $company[0]."</br>". $company[1];
-                                                         }else{
-                                                            $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName); 
-                                                         }
-
-                                                       } else{
+                                                       }else{
                                                             if (!empty($user->firstName) && !empty($user->lastName)) {
-                                                             $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName);
-
-                                                           } else if (isset($user->fullName) && !empty($user->fullName)) {
-                                                             $customerName = $user->fullName; 
-                                                           } else {
-                                                             $customerName = $user->username;
-                                                           }
-
-                                                        }
-                                                       
+                                                                $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName);
+                                                            }elseif (isset($user->fullName) && !empty($user->fullName)) {
+                                                                $customerName = $user->fullName; 
+                                                            }else{
+                                                                $customerName = $user->username;
+                                                            }
+                                                        }                                                       
                                                     ?>
-                                                    <td>{!! $customerName !!}</td>
+                                                    <td>
+                                                        {!! $customerName !!}
+                                                        @if (Cache::get($user->id) == 'edited') 
+                                                            {{-- true expr --}}
+                                                            <br/><span class="text-warning pull-right"><i class="ti-alert"></i> Edited</span>
+                                                        @endif
+                                                    </td>
 
                                                     <td>{{$user->email}}</td>
                                                     <td>{{ucfirst($user->role)}}</td>

@@ -26,6 +26,17 @@
     <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
     <!-- Boostraps_markdown Plugin Style -->
     <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
+        <!-- Boostraps_tagit Plugin Style -->
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
+    <style type="text/css">
+    .hideslug{
+        display: none;
+    }
+    .showslug{
+        display: block;
+    }
+    </style>
 @endsection
 
 @section('content')
@@ -384,18 +395,19 @@
                             </fieldset>
                             @if(Auth::user())
                                 @if(Auth::user()->role == 'seller')
-                                    <h3>Dealer Page URL</h3>
+                                     <h3>SEO Section</h3>
                                     <fieldset>
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <div class="row">
                                                 <div class="col-xs-12">
                                                     <div class="form-group ml-0 mr-0">
                                                         <label for="txtWebsiteLink" class="control-label pb-10"><i class="fa fa-globe"></i> Website</label>
                                                         <div class="bootstrap-filestyle input-group">
-                                                            <?php $slug = Auth::user()->slug != '' ? Auth::user()->slug : strtolower(Auth::user()->firstName).'-'.strtolower(Auth::user()->lastName); ?>
-                                                            <input type="text" class="form-control" value="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" placeholder="" disabled="">
+                                                            <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
+                                                               <div type="text" class="input-group-addon" disabled  style="background:#eee;border-color:#ccc;">{{ url('/dealer') . '/' . $user->id . '/'}}</div>
+                                                               <input type="text" class="form-control" placeholder="{{$slug }}" name="slug">
                                                             <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                                                <a href="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" target="_blank">
+                                                                <a href="{{ url('/dealer') . '/' . $user->id . '/' . $slug }}" target="_blank">
                                                                     <label for="fulImage" class="btn btn-outline btn-primary">
                                                                         <span class="icon-span-filestyle ti-image"></span>
                                                                         <span class="buttonText">Preview</span>
@@ -406,8 +418,83 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div> -->
+                                        <section>
+                                                <div class="form-group">
+                                                    <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
+                                                    <div class="col-sm-9">
+                                                        <div class="hideslug">
+                                                            <div class="bootstrap-filestyle input-group">
+                                                                <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
+                                                                <div type="text" class="input-group-addon" disabled  style="background:#eee;border-color:#ccc;">{{ url('/dealer') . '/' . $user->id . '/'}}</div>
+                                                                <input class="get_slug form-control" data-id ="{{$user->id}}" type="text" value="{{$slug }}" name="slug">
+                                                                <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                                                        <label for="fulImage" class="btn btn-outline btn-primary">
+                                                                            <span class="buttonText editslugajax">save</span>
+                                                                        </label>
+                                                                </span>
+                                                            </div> 
+                                                        </div>
+                                                        
+                                                        <div class="showslug">
+                                                        <?php
+                                                        if(strlen($user->slug)<=40){
+                                                            $newslug =  $user->slug;
+                                                        }else{
+                                                            $count = strlen($user->slug);
+                                                            $newslug = substr($user->slug,0,20).' ....... '.substr($user->slug,$count-20,$count);
+                                                        }
+                                                        ?>
+                                                            <a class="updatelink" href="{!! url('/dealer') . '/' . Auth::user()->id . '/'.$slug !!}" target="_blank" style="text-decoration: underline;" >{!! url('/dealer') . '/' . Auth::user()->id . '/<strong>'.$slug.'</strong>' !!}</a>
+                                                             &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">edit</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="meta_title" class="col-sm-3 control-label">Title</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$user->meta_title}}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none;">
+                                                    <label for="meta_alttext" class="col-sm-3 control-label">Alt Text</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="alttext" name='meta_alttext' type="text" class="form-control" placeholder="{{$user->meta_alt_text}}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
+                                                    <div class="col-sm-9">
+                                                        <textarea id="meta_description" name='meta_description' class="form-control " ?>{{$user->meta_description}}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="meta_keyword" class="col-sm-3 control-label">Meta Keyword</label>
+                                                    <div class="col-sm-9 "><div class="tagit-sugestion">
+                                                        
+                                                        <style>
+                                                            .bootstrap-tagsinput{
+                                                                width: 100%;
+                                                            }
+                                                        </style>
+                                                        <div>
+                                                            
+                                                        <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="{{$user->meta_keyword}}">
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                     <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="meta_author" name='meta_author' type="text" class="form-control" placeholder="{{$user->meta_author}}">
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        <div class="row p-10 text-right">
+                                            <button id="sweet-3" type="button" class="btn btn-raised btn-success btn-lg">Update</button>
                                         </div>
-                                    </fieldset>
+                                    </fieldset> 
                                 @endif
                             @endif
                         </form>
@@ -448,12 +535,80 @@
     <script type="text/javascript" src="/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
     <script type="text/javascript" src="/plugins/bootstrap-markdown/js/to-markdown.js"></script>
     <script type="text/javascript" src="/plugins/bootstrap-markdown/js/jquery.hotkeys.js"></script>
+    <!-- Booostraps_tagit input plugin -->
+    <script type="text/javascript" src="/plugins/typeahead.js/dist/typeahead.bundle.min.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script type="text/javascript">
         function OpenInNewTab(url) {
             var win = window.open(url, '_blank');
             win.focus();
         }
         $(document).ready(function () {
+            $('.edit_slug').click(function(){
+                $('.showslug').hide();
+                $('.hideslug').show();
+            });
+            var keywords = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              prefetch: {
+                url: '{{route('get_keyword_json')}}',
+                filter: function(list) {
+                  return $.map(list, function(keyword) {
+                    return { name: keyword }; });
+                }
+              }
+            });
+            keywords.clearPrefetchCache();
+            var keywords = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              prefetch: {
+                url: '{{route('get_keyword_json')}}',
+                filter: function(list) {
+                  return $.map(list, function(keyword) {
+                    return { name: keyword }; });
+                }
+              }
+            });
+            keywords.initialize();
+            /**
+             * Typeahead
+             */
+            $('.tagit-sugestion > > input').tagsinput({
+              typeaheadjs: {
+                name: 'keywords',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: keywords,
+                limit: 100,
+              }
+            });
+            $(".twitter-typeahead").css('display', 'inline');
+
+            $('.editslugajax').click(function(){
+                var newslug = $('.get_slug').val();
+                var id = $('.get_slug').attr('data-id');
+                    $.ajax({
+                        url: "{{route('get_slug_user')}}/"+id+"/"+newslug,
+                        async: false,
+                        cache: false,
+                        success:function( html ) {
+                            $( ".get_slug" ).val( html );
+                            var count = html.length;
+                            if(count<=40){
+                                newslug = html;
+                            }else{
+                                newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
+                            }
+                            $('.updatelink').html('{{url("/")}}/dealer/'+id+'/<strong>'+newslug+'</strong>');
+                            $('.updatelink').attr('href','{{url("/")}}/dealer/'+id+'/'+html);
+                            $('.hideslug').hide();
+                            $('.showslug').show();
+
+                        }
+                    });
+            });
             $('#editor-markdown').markdown();
 
 

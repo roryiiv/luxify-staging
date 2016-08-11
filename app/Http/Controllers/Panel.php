@@ -346,9 +346,10 @@ class Panel extends Controller
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             echo '1';
             $item->title = $_POST['title'];
-            if($item->slug == '' || $item->slug == null){ //we'll build a new slug on each update.
+
+/*            if($item->slug == '' || $item->slug == null){ //we'll build a new slug on each update.
                 $item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
-            }
+            }*/
         } else {
             $error_arr['title'] = 'Item title is required.';
         }
@@ -463,11 +464,11 @@ class Panel extends Controller
         }
 
         //additional parameters
-        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
+/*        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
             //$newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
             $newslug = Listings::newslug($id,$_POST['slug']);
             $item->slug = $newslug;
-        }
+        }*/
 
         $meta = array();
         if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
@@ -487,6 +488,8 @@ class Panel extends Controller
         }
 
         if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
             $meta['author'] = $_POST['meta_author'];
         }
 
@@ -519,6 +522,7 @@ class Panel extends Controller
             //$meta = data array meta
             //$object_type = listing/users;
             $object_type = 'listings';
+            $item->edited_by = Auth::user()->id;
             $savemeta = Meta::saveorupdate($id,$meta,$object_type);
             if ($item->save()) {
                 return redirect('/panel/product/edit/'.$item->id);
@@ -539,6 +543,11 @@ class Panel extends Controller
         $user->meta_description = Meta::get_data_user($id,'description');
         $user->meta_author = Meta::get_data_user($id,'author');
         $user->meta_keyword = Meta::get_data_user($id,'keyword');
+
+        $curr_edited = Cache::get($id);
+        if($curr_edited == ''){
+            Cache::forever($id, 'edited'); // marked being edited.
+        }
         return view('panel.edit-user', ['user' => $user]);
     }
 
@@ -571,19 +580,13 @@ class Panel extends Controller
             } 
         }
 
-
+        
         $error_arr = array();
 
         if(isset($_POST['first_name']) && !empty($_POST['first_name'])){
             $user->firstName = $_POST['first_name'];
         }
         if(isset($_POST['last_name']) && !empty($_POST['last_name'])){
-            $user->lastName = $_POST['last_name'];
-        }
-        if(isset($_POST['']) && !empty($_POST[''])){
-            $user->lastName = $_POST['last_name'];
-        }
-        if(isset($_POST['']) && !empty($_POST[''])){
             $user->lastName = $_POST['last_name'];
         }
         if(isset($_POST['txtUserRole']) && !empty($_POST['txtUserRole'])){
@@ -616,9 +619,12 @@ class Panel extends Controller
         if(isset($_POST['mapZoomLevel']) && !empty($_POST['mapZoomLevel'])){
             $user->mapZoomLevel = $_POST['mapZoomLevel'];
         }
-        if(isset($_POST['companyName']) && !empty($_POST['companyName'])){
-           $user->companyName = json_encode($_POST['companyName']);
-          
+        if(isset($_POST['companyName']) && is_array($_POST['companyName'])){
+            $companyName = array_filter($_POST['companyName']);
+            if(!empty($companyName)){
+                $user->companyName = json_encode($_POST['companyName']);
+            }
+           
         }
         // if(isset($_POST['companyName']) && !empty($_POST['companyName'])){
         //     $user->companyName = $_POST['companyName'];
@@ -651,7 +657,7 @@ class Panel extends Controller
         if(isset($_POST['salt']) && !empty($_POST['salt'])){
             $user->salt = $_POST['salt'];
         }
-        if(isset($_POST['slug']) && !empty($_POST['slug'])){
+/*        if(isset($_POST['slug']) && !empty($_POST['slug'])){
 
           $oldslug = User::where('id',$_POST['user_id'])->value('slug');
           $newslug = str_slug($_POST['slug'], '-');
@@ -676,7 +682,7 @@ class Panel extends Controller
             $newslug = $newslug;
           }
             $user->slug = $newslug;
-        }
+        }*/
         //additional meta on user page
         $meta = array();
         if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
@@ -771,6 +777,9 @@ class Panel extends Controller
       }
       if(isset($_GET['status']) && !empty($_GET['status'])){
           $filter[] = ['listings.status', $_GET['status']];
+      }
+      if(isset($_GET['category']) && !empty($_GET['category'])){
+          $filter[] = ['listings.categoryId', $_GET['category']];
       }
       $products = DB::table('listings')
       ->where($filter)
@@ -1100,19 +1109,25 @@ class Panel extends Controller
       }
     }
     function createupdateslug($id,$slug){
-        $newslug = Listings::newslug($id,$slug);
-        //dd($newslug);
+        $newslug = SlugService::createSlug(Listings::class, 'slug', $slug);
         $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
         if($updates){
             return $newslug;
         }else{
             return $newslug;
         }
+/*        $newslug = Listings::newslug($id,$slug);
+        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }*/
     }
     function createupdatesluguser($id,$slug){
-        $newslug = User::newslug($id,$slug);
+        $newslug = SlugService::createSlug(Users::class, 'slug', $slug);
         //dd($newslug);
-        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        $updates = DB::table('users')->where('id',$id)->update(['slug'=> $newslug]);
         if($updates){
             return $newslug;
         }else{

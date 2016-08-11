@@ -59,6 +59,8 @@
     }
     .dragplaceholder{
         background:#fafafa;
+        height: 150px;
+
     }
     .overdrag{
         opacity: 0.8;
@@ -384,7 +386,7 @@
                                       <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
                                       ">
                                       <span class="createorupdateslug input-group-addon btn">
-                                          submit
+                                          Save URL
                                       </span>
                                     </div>    
                                 </div>
@@ -399,7 +401,7 @@
                                 }
                                 ?>
                                     <a class="updatelink" href="{{url('/'.$item->url_object).'/'.$item->slug}} " target="_blank" style="text-decoration: underline;" >{{url('/'.$item->url_object).'/'}}<strong>{{$newslug}}</strong></a>
-                                     &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">edit</span>
+                                     &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
                                 </div>
                             </div>
                         </div>
