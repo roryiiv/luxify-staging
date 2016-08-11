@@ -766,6 +766,18 @@
             });
             
             return false;         
+        }
+
+        // on leave remove edit warning sign.
+        $(window).bind('beforeunload', function(e){
+            exitPage();
+            return 'Are you sure?';
+        });
+
+        function exitPage(){
+            $.get('/api/ajax/exit/{{$user->id}}', function(data) {
+                return data;
+            });
         }   
     </script>
 @endsection

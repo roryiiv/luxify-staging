@@ -364,7 +364,7 @@
                                                         {{$products[$i]->title}}
                                                         @if (Cache::get($products[$i]->id) == 'edited') 
                                                             {{-- true expr --}}
-                                                            <br/><span class="text-warning pull-right"><i class="ti-alert"></i></span>
+                                                            <br/><span class="text-warning pull-right"><i class="ti-alert"></i> Edited</span>
                                                         @endif
                                                     </td>
                                                     

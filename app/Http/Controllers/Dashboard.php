@@ -296,6 +296,11 @@ class Dashboard extends Controller
             $history = new History;
             $history->description = History::where('object_id',$itemId)->get();
 
+            $curr_edited = Cache::get($itemId);
+            if($curr_edited == ''){
+                Cache::forever($itemId, 'edited'); // marked being edited.
+            }
+
             return view('dashboard.products-edit', ['item' => $item,'history' => $history] );
         }
     }

@@ -147,7 +147,13 @@
                                                         </div>
                                                     </td>
                                                     <td><img src="{{func::img_url($products[$i]->mainImageUrl, 50, 50)}}" width="50" alt="" class="img-thumbnail img-responsive"></td>
-                                                    <td style="width: 25%;">{{$products[$i]->title}}</td>
+                                                    <td style="width: 25%;">
+                                                        {{$products[$i]->title}}
+                                                        @if (Cache::get($products[$i]->id) == 'edited') 
+                                                            {{-- true expr --}}
+                                                            <br/><span class="text-warning pull-right"><i class="ti-alert"></i> Edited</span>
+                                                        @endif
+                                                    </td>
                                                     <td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>
                                                     <?php
                                                     $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
