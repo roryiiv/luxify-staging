@@ -22,6 +22,7 @@ use DB;
 
 use func;
 
+
 class DataFeed extends Controller
 {
   public function downloadImageToS3() {
