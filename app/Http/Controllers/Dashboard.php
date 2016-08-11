@@ -389,7 +389,7 @@ class Dashboard extends Controller
         $item = Listings::where('id', $itemId)->first();
         $error_arr = array();
 
-        $item->userId = Auth::user()->id;
+        //$item->userId = Auth::user()->id;
 
         if ( isset($_POST['itemLocation']) && !empty($_POST['itemLocation']) ) {
             $item->countryId = $_POST['itemLocation'];

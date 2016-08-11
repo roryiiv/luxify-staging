@@ -222,6 +222,7 @@
     <script src="/assets/js/jquery.main.js"></script>
     <script src="/assets/js/jquery.unveil.js"></script>
     <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
+    <script src="/assets/js/jquery.youtubebackground.js"></script>
     <script>
     $(document).ready(function(){
         $('#currSelect').on('change', function(){
