@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Validator;
 use Illuminate\Database\Eloquent\Model;
 
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -34,30 +34,54 @@ class Listings extends Model
     {
         return 'slug';
     }
+    protected $fillable = [
+      'source',
+      'source_id',
+      'title', 
+      'baseCurrencyPrice',
+      'images',
+      'status',
+      'price', 
+      'mainImageUrl', 
+      'condition',
+      'buyNowUrl',
+      'aerialLook3DUrl',
+      'aerialLookUrl',
+      'translations',
+      'created_at',
+      'updated_at',
+      'countryId',
+      'currencyId',
+      'categoryId',
+      'userId',
+      'description',
+      'additionalInfo'
+      ];
     
     protected $rules = array(
       'title' => 'required',
-      'baseCurrencyPrice' => 'required|numeric|min:0',
-      'images' => 'JSON',
-      'status' => 'String|in:APPROVED,PENDING,SOLD,EXPIRED,REJECTED',
-      'price' => 'numberic',
-      'mainImageUrl' => 'required|image',
-      'condition' => 'in:PRE-OWNED,NEW',
+      'baseCurrencyPrice' => 'min:0',
+      'images' => 'string',
+      'status' => 'required|String|in:APPROVED,PENDING,SOLD,EXPIRED,REJECTED',
+      'price' => 'min:0',
+      'mainImageUrl' => 'required',
+      'condition' => 'required|in:PRE-OWNED,NEW',
       'buyNowUrl' => 'URL',
       'aerialLook3DUrl' => 'URL',
       'aerialLookUrl' => 'URL',
-      'translations' => 'JSON',
+      'translations' => 'string',
       'expired_at' => 'date',
       'ended_at' => 'date',
       'created_at' => 'date',
       'updated_at' => 'date',
       'availableToId' => 'integer',
-      'countryId' => 'integer',
-      'currencyId' => 'integer',
-      'categoryId' => 'integer',
-      'userId' => 'integer',
-      'description' => 'string',
-      'slug' => 'alpha_dash'
+      'countryId' => 'required|integer',
+      'currencyId' => 'required|integer',
+      'categoryId' => 'required|integer',
+      'userId' => 'required|integer',
+      'description' => 'required|string',
+      'slug' => 'alpha_dash',
+      'additionalInfo' => 'string'
     );
 
     protected $errors;
@@ -65,10 +89,30 @@ class Listings extends Model
     public function validate($data) {
       $v = Validator::make($data, $this->rules); 
       if ($v->fails()) {
-        $this->errors = $v->errors;
+        $this->errors = $v->errors();
         return false;
       }
       return true;
+    }
+
+    public function country() {
+      return $this->belongsTo('App\Countries'); 
+    }
+
+    public function currency() {
+      return $this->belongsTo('App\Currencies'); 
+    }
+
+    public function category() {
+      return $this->belongsTo('App\Categories'); 
+    }
+
+    public function user() {
+      return $this->belongsTo('App\Users');   
+    }
+
+    public function extrainfo() {
+      return $this->hasMany('App\ExtraInfos', 'listingId', 'id');
     }
 
     public function errors() {

@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Country extends Model
+class Currencies extends Model
 {
-    //
-  public $table = 'countries';
+    protected $table = 'currencies';
 }

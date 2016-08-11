@@ -14,6 +14,6 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
       '/api/user/createSlug',
       '/api/listing/createSlug',
-      '/datafeed/*',
+      '/datafeed/*'
     ];
 }

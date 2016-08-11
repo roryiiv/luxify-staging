@@ -45,5 +45,10 @@ class Categories extends Model
         return $query->where('leaf', 1);
     }
 
+    public function forms() {
+        return $this->hasMany('App\Forms');
+    }
+
     public $timestamps = false;
+    protected $table = 'categories';
 }

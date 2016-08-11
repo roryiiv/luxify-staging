@@ -6,7 +6,6 @@ use Mail;
 
 use App\User;
 use App\Users;
-use App\Country;
 use App\Listings;
 use App\PageCount;
 use App\Meta;
