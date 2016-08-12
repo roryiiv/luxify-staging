@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="/assets/css/jQuery.YoutubeBackground.css">
     <style>
 
+        .bg-img {
+          z-index: -1010;
+        }
+        .content-wrapper, .info-block {
+          background-color: white;
+        }
         #video_bg{
           background-position: top center;
           background-repeat: no-repeat;
