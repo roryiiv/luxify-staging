@@ -362,6 +362,7 @@
           });
 
           $(".fancybox-thumb").fancybox({
+              padding: 2,
               fitToView	: false,
               width		: '70%',
               height		: '70%',
