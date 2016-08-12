@@ -79,6 +79,7 @@ Route::post('/api/bulkActions', 'Panel@bulkActions');
 Route::get('/api/ajax/checkemail/{email}', 'Dashboard@IsEmailInUse');
 Route::get('/api/ajax/checkemail/{email}', 'Panel@IsEmailInUse');
 Route::get('/api/ajax/exit/{item}', 'Panel@exitPage');
+Route::post('/update/{id}/{check_radio}', 'Dashboard@FeaturedItem');
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 

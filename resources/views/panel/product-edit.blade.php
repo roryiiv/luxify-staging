@@ -263,7 +263,7 @@
                     <div class="form-group">
                         <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
                         <div class="col-sm-9">
-                            <textarea id="description" name='description'  class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
+                            <textarea id="description" name='description'  class="form-control" cols="3" rows="10" data-hidden-buttons="cmdCode cmdQuote" data-provide="markdown">{{$item->description}}</textarea>
                             <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
                             <p><a id="toggleArchive" href="javascript:;" class="btn btn-outline btn-danger">Use Saved version</a></p>
                             <div id="archive" class="history_holder" style="display: none">
@@ -373,11 +373,12 @@
                         </div>
                     </div>
                     <hr></hr>
-                    <section>
-                    <div>
-                    <h4>SEO Section</h4>
-                    </div>
-                        <div class="form-group">
+                    
+                </div>
+            </fieldset>
+            <h3>Step 5: SEO Section</h3>
+            <fieldset>
+                <div class="form-group">
                             <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
                             <div class="col-sm-9">
                                 <div class="hideslug">
@@ -408,7 +409,7 @@
                         <div class="form-group">
                             <label for="meta_title" class="col-sm-3 control-label">Title</label>
                             <div class="col-sm-9">
-                                <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$item->meta_title}}">
+                                <input id="meta_title" name='meta_title' type="text" class="form-control" max="60" placeholder="{{$item->meta_title}}">
                             </div>
                         </div>
                         <div class="form-group" style="display:none;">
@@ -420,7 +421,7 @@
                         <div class="form-group">
                             <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
                             <div class="col-sm-9">
-                                <textarea id="meta_description" name='meta_description' class="form-control " ?>{{$item->meta_description}}</textarea>
+                                <textarea id="meta_description" name='meta_description' class="form-control " maxlength="160">{{$item->meta_description}}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -442,11 +443,9 @@
                         <div class="form-group">
                              <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
                             <div class="col-sm-9">
-                                <input id="meta_author" name='meta_author' type="text" class="form-control" placeholder="{{$item->meta_author}}">
+                                <input id="meta_author" name='meta_author' type="text" maxlength="60" class="form-control" placeholder="{{$item->meta_author}}">
                             </div>
                         </div>
-                    </section>
-                </div>
             </fieldset>
         </form>
     </div>

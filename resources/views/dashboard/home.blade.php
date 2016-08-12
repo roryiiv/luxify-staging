@@ -218,6 +218,123 @@
     <script type="text/javascript" src="/db/js/index.js"></script>-->
     <script>
         $(document).ready(function() {
+            //check is_json for flotchart
+            function checkjson(html) {
+                try {
+                    JSON.parse(html);
+                } catch (e) {
+                    return false;
+                }
+                return true;
+            }            
+            function redrawflotchart(html) {
+                var d = [{!!$flotchart!!}],
+                    c = [
+                        [0, 0],
+                        [1, 0],
+                        [2, 0],
+                        [3, 0],
+                        [4, 0],
+                        [5, 0],
+                        [6, 0],
+                        [7, 0],
+                        [8, 0],
+                        [9, 0],
+                        [10, 0],
+                        [11, 0]
+                    ],
+                h = [{
+                    label: "New/Old visitors",
+                    data: d,
+                    color: "#988866",
+                    lines: {
+                        show: !0,
+                        fill: .9,
+                        lineWidth: 0
+                    },
+                    curvedLines: {
+                        apply: !0,
+                        monotonicFit: !0
+                    }
+                }, {
+                    data: d,
+                    color: "#988866",
+                    lines: {
+                        show: !0,
+                        lineWidth: 0
+                    }
+                }, {
+                    label: "Returning visitors",
+                    data: c,
+                    color: "#988866",
+                    lines: {
+                        show: !0,
+                        fill: .9,
+                        lineWidth: 0
+                    },
+                    curvedLines: {
+                        apply: !1,
+                        monotonicFit: !0
+                    }
+                }, {
+                    data: c,
+                    color: "#988866",
+                    lines: {
+                        show: !0,
+                        lineWidth: 0
+                    }
+                }],
+                g = {
+                    series: {
+                        curvedLines: {
+                            active: !0
+                        },
+                        shadowSize: 0
+                    },
+                    grid: {
+                        borderWidth: 0,
+                        hoverable: !0,
+                        labelMargin: 15
+                    },
+                    // xaxis: {
+                    //     ticks: m,
+                    //     tickLength: 0,
+                    //     font: {
+                    //         color: "#9a9a9a",
+                    //         size: 11
+                    //     }
+                    // },
+                    yaxis: {
+                        tickLength: 0,
+                        // tickSize: 1e6,
+                        font: {
+                            color: "#9a9a9a",
+                            size: 11
+                        }
+                        /* ,
+                        tickFormatter: function(e, t) {
+                            return e > 0 ? (e / 1e6).toFixed(t.tickDecimals) + " M" : (e / 1e6).toFixed(t.tickDecimals)
+                        } */                
+                    },
+                    tooltip: {
+                        show: !1
+                    },
+                    legend: {
+                        show: !0,
+                        container: $("#flot-visitor-legend"),
+                        noColumns: 4,
+                        labelBoxBorderColor: "#FFF",
+                        margin: 0
+                    }
+                };
+                $.plot($("#flot-visitor"), h, g), $("#flot-visitor").bind("plothover", function(e, t, a) {
+                    a ? $(".flotTip").text(a.datapoint[1].toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " visitors").css({
+                        top: a.pageY + 15,
+                        left: a.pageX + 10
+                    }).show() : $(".flotTip").hide()
+                })
+
+            }
             var data_json = [{!!$flotchart!!}];
             var data_ticks = [{!!$get_tick!!}];
             function e() {
@@ -430,11 +547,32 @@
         cancelClass: "btn-raised btn-default"
     }, function(e, t, a) {
         //additional check date
-        var d_start = e.format("YYYY-MM-d"),
-        var d_end = t.format("YYYY-MM-d"),
-
-
-
+        d_start = e.format("YYYY-MM-D"),
+        d_end = t.format("YYYY-MM-D"),
+        alert(d_start + d_end),
+            $.ajax({
+                url:'{{route("get_json_flot")}}/'+d_start+'/'+d_end,
+                async : false,
+                cache : false,
+                success : function(html){
+                    if(checkjson(html)){
+                        console.log('re draw the flotchart')
+                        redrawflotchart(html)
+                    }else{
+                        console.log('error, this is not json')
+                        errorflotchart(html)
+                    }
+                },
+                error: function(xhr, status, html) {
+                    if(checkjson(html)){
+                        redrawflotchart(html)
+                        console.log('re draw the flotchart')
+                    }else{
+                        console.log('error, this is not json')
+                        errorflotchart(html)
+                    }
+                }
+            });
         $("#daterangepicker span").html(e.format("MMMM D, YYYY") + " - " + t.format("MMMM D, YYYY"))
     }), $("#daterangepicker span").html(moment().subtract(29, "days").format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY")), Morris.Donut({
         element: "morris-browser",

@@ -319,8 +319,10 @@
                                                 <option value="50"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],50) : ''}}>50</option>
                                                 {{-- <option value="-1"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],-1) : ''}}>All</option> --}}
                                             </select>
-                                            entries</label>
+                                            entries</label> 
                                         </form>
+                                        </br>
+                                        <td>Showing {{ $products->count() }} of {{ $products->total() }} entries</td>
                                     </div>
                                 </div>
                             </div>
@@ -395,7 +397,7 @@
                                                     {{--<td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>--}}
                                                     @if(Auth::user()->role == 'editor' && $products[$i]->edited_by != 0)
                                                         <?php $editor = func::getTableByID('users',$products[$i]->edited_by)?>
-                                                        <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y", strtotime($products[$i]->updated_at))}}</td>
+                                                        <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y H:m", strtotime($products[$i]->updated_at))}}</td>
                                                     @else
                                                         <td class="text-right">-</td>
                                                     @endif
@@ -457,7 +459,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="dataTables_info text-center" id="product-list_info" role="status" aria-live="polite">
-                                        Showing {{ $products->firstItem() }} to {{ $products->count() }} of {{ $products->total() }} entries
+                                        Showing {{ $products->count() }} of {{ $products->total() }} entries
                                     </div>
                                 </div>
                                 <div class="col-sm-5 pull-right">

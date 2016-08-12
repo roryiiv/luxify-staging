@@ -265,7 +265,7 @@
                         <div class="form-group">
                             <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
                             <div class="col-sm-9">
-                                <textarea id="description editor-markdown" name='description'  class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
+                                <textarea id="description editor-markdown" name='description' data-hidden-buttons="cmdCode cmdQuote" class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
                                 <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
                                 <div class="" style="display: none;">
                                 <h5>history</h5>
@@ -350,42 +350,46 @@
                             </div>
                         </div>
                         <hr/>
-                                            <section>
+                    <section>
                     <div>
-                    <h4>SEO Section</h4>
+                    </section>
                     </div>
-                        <div class="form-group">
-                            <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
-                            <div class="col-sm-9">
-                                <div class="hideslug">
-                                    <div class="input-group">
-                                      <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
-                                      <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
-                                      ">
-                                      <span class="createorupdateslug input-group-addon btn">
-                                          submit
-                                      </span>
-                                    </div>    
-                                </div>
-                                
-                                <div class="showslug">
-                                <?php
-                                if(strlen($item->slug)<=40){
-                                    $newslug =  $item->slug;
-                                }else{
-                                    $count = strlen($item->slug);
-                                    $newslug = substr($item->slug,0,20).' ....... '.substr($item->slug,$count-20,$count);
-                                }
-                                ?>
-                                    <a class="updatelink" href="{{url('/'.$item->url_object).'/'.$item->slug}} " target="_blank" style="text-decoration: underline;" >{{url('/'.$item->url_object).'/'}}<strong>{{$newslug}}</strong></a>
-                                     &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">edit</span>
+                </fieldset>
+                <h3>Step 5: SEO Section</h3>
+                <fieldset>
+                    <div class="form-group">
+                                <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
+                                <div class="col-sm-9">
+                                    <div class="hideslug">
+                                        <div class="input-group">
+                                          <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
+                                          <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
+                                          ">
+                                          <span class="createorupdateslug input-group-addon btn">
+                                              Save URL
+                                          </span>
+                                        </div>    
+                                    </div>
+                                    
+                                    <div class="showslug">
+                                    <?php
+                                    if(strlen($item->slug)<=40){
+                                        $newslug =  $item->slug;
+                                    }else{
+                                        $count = strlen($item->slug);
+                                        $newslug = substr($item->slug,0,20).' ....... '.substr($item->slug,$count-20,$count);
+                                    }
+                                    ?>
+                                        <a class="updatelink" href="{{url('/'.$item->url_object).'/'.$item->slug}} " target="_blank" style="text-decoration: underline;" >{{url('/'.$item->url_object).'/'}}<strong>{{$newslug}}</strong></a>
+                                         &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="meta_title" class="col-sm-3 control-label">Title</label>
                             <div class="col-sm-9">
-                                <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$item->meta_title}}">
+                                <input id="meta_title" max ="60" name='meta_title' type="text" class="form-control" placeholder="{{$item->meta_title}}">
                             </div>
                         </div>
                         <div class="form-group" style="display:none;">
@@ -397,7 +401,7 @@
                         <div class="form-group">
                             <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
                             <div class="col-sm-9">
-                                <textarea id="meta_description" name='meta_description' class="form-control " ?>{{$item->meta_description}}</textarea>
+                                <textarea id="meta_description" name='meta_description' class="form-control " maxlength="160">{{$item->meta_description}}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -419,7 +423,7 @@
                         <div class="form-group">
                              <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
                             <div class="col-sm-9">
-                                <input id="meta_author" name='meta_author' type="text" class="form-control" placeholder="{{$item->meta_author}}">
+                                <input id="meta_author" max ="60" name='meta_author' type="text" class="form-control" placeholder="{{$item->meta_author}}">
                             </div>
                         </div>
                     </section>

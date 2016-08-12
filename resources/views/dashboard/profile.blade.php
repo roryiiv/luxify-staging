@@ -309,8 +309,12 @@
 
                                                 <div class="form-group m-0">
                                                     <label for="txtFirstNameShippingTab" class="control-label">Company Name</label>
+                                                    <?php $company = json_decode($user->companyName);?>
                                                     <div class="pt-15">
-                                                        <input id="companyName" name="companyName" type="text" class="form-control" placeholder="{{$user->companyName}}">
+                                                        <input id="companyName" name="companyName[]" type="text" class="form-control" placeholder="{{ $company[0] }}" value="">
+                                                    </div>
+                                                    <div class="pt-15">
+                                                        <input id="companyName" name="companyName[]" type="text" class="form-control" placeholder="{{ $company[1] }}" value="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
@@ -334,7 +338,7 @@
                                                 <div class="form-group m-0">
                                                     <label for="contactDetails" class="control-label">Company Details</label>
                                                     <div class="pt-15">
-                                                        <textarea name="contactDetails" id="contactDetails editor-markdown" data-provide="markdown" data-hidden-buttons="cmdImage cmdCode cmdQuote cmdList cmdListO" cols="3" rows="15" class="form-control" placeholder="{{$user->contactDetails}}"></textarea>
+                                                        <textarea name="contactDetails" id="contactDetails " cols="3" rows="15" class="form-control" placeholder="{{$user->contactDetails}}"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -397,28 +401,6 @@
                                 @if(Auth::user()->role == 'seller')
                                      <h3>SEO Section</h3>
                                     <fieldset>
-                                        <!-- <div class="row">
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <div class="form-group ml-0 mr-0">
-                                                        <label for="txtWebsiteLink" class="control-label pb-10"><i class="fa fa-globe"></i> Website</label>
-                                                        <div class="bootstrap-filestyle input-group">
-                                                            <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
-                                                               <div type="text" class="input-group-addon" disabled  style="background:#eee;border-color:#ccc;">{{ url('/dealer') . '/' . $user->id . '/'}}</div>
-                                                               <input type="text" class="form-control" placeholder="{{$slug }}" name="slug">
-                                                            <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                                                <a href="{{ url('/dealer') . '/' . $user->id . '/' . $slug }}" target="_blank">
-                                                                    <label for="fulImage" class="btn btn-outline btn-primary">
-                                                                        <span class="icon-span-filestyle ti-image"></span>
-                                                                        <span class="buttonText">Preview</span>
-                                                                    </label>
-                                                                </a>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                         <section>
                                                 <div class="form-group">
                                                     <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
@@ -453,7 +435,7 @@
                                                 <div class="form-group">
                                                     <label for="meta_title" class="col-sm-3 control-label">Title</label>
                                                     <div class="col-sm-9">
-                                                        <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$user->meta_title}}">
+                                                        <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$user->meta_title}}" maxlength="60">
                                                     </div>
                                                 </div>
                                                 <div class="form-group" style="display:none;">
@@ -465,7 +447,7 @@
                                                 <div class="form-group">
                                                     <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
                                                     <div class="col-sm-9">
-                                                        <textarea id="meta_description" name='meta_description' class="form-control " ?>{{$user->meta_description}}</textarea>
+                                                        <textarea id="meta_description" name='meta_description' class="form-control " maxlength="160">{{$user->meta_description}}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -487,7 +469,7 @@
                                                 <div class="form-group">
                                                      <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
                                                     <div class="col-sm-9">
-                                                        <input id="meta_author" name='meta_author' type="text" class="form-control" placeholder="{{$user->meta_author}}">
+                                                        <input id="meta_author" name='meta_author' type="text" class="form-control" placeholder="{{$user->meta_author}}" maxlength="60">
                                                     </div>
                                                 </div>
                                             </section>

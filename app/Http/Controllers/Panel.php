@@ -524,7 +524,9 @@ class Panel extends Controller
             $object_type = 'listings';
             $item->edited_by = Auth::user()->id;
             $savemeta = Meta::saveorupdate($id,$meta,$object_type);
+            //
             if ($item->save()) {
+
                 return redirect('/panel/product/edit/'.$item->id);
             }
         }
@@ -709,7 +711,9 @@ class Panel extends Controller
         if(!empty($error_arr)){
             $error = json_encode($error_arr);
             echo $error;
+
         }else{
+            $user->edited_by = Auth::user()->id;
             $object_type = 'users';
             $savemeta = Meta::saveorupdate($_POST['user_id'],$meta,$object_type);
             //if($user->save()) return redirect('/panel/user');

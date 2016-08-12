@@ -100,23 +100,6 @@ class Dashboard extends Controller
     public function profile_update() {
         $user = User::where('id', $this->user_id)->first(); // always have it declared for first or else empty value sent
 
-        //we'll rebuild the slug here and save it
-/*        if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
-            if($user->company != ''){ //just in case.
-                $company = $user->company;
-            }elseif($_POST['companyName'] != ''){ //the admin update the user company, so...
-                $company = $_POST['companyName'];
-            }else{
-                $company = '';
-            }
-            if($company != ''){
-                $slug = SlugService::createSlug(Users::class, 'slug', $company);
-            }else{
-                $slug = '';
-            }
-            $user->slug = $slug;
-        }*/
-
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
             $image = base_path() . '/public/temp/' . $_POST['cover_img'];
@@ -195,8 +178,12 @@ class Dashboard extends Controller
         if(isset($_POST['mapZoomLevel']) && !empty($_POST['mapZoomLevel'])){
             $user->mapZoomLevel = $_POST['mapZoomLevel'];
         }
-        if(isset($_POST['companyName']) && !empty($_POST['companyName'])){
-            $user->companyName = $_POST['companyName'];
+        if(isset($_POST['companyName']) && is_array($_POST['companyName'])){
+            $companyName = array_filter($_POST['companyName']);
+            if(!empty($companyName)){
+                $user->companyName = json_encode($_POST['companyName']);
+            }
+           
         }
         if(isset($_POST['companyRegNumber']) && !empty($_POST['companyRegNumber'])){
             $user->companyRegNumber = $_POST['companyRegNumber'];
@@ -966,6 +953,7 @@ class Dashboard extends Controller
     function get_flot_chart($start,$end){
         $user_id = Auth::user()->id;
         $json_flot_chart = Analytics::get_flot_data($start,$end,$user_id);
+        return $json_flot_chart;
     }
 
 }

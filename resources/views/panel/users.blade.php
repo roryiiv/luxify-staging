@@ -128,8 +128,11 @@
                                                 <option value="50"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],50) : ''}}>50</option>
                                                 {{-- <option value="-1"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],-1) : ''}}>All</option> --}}
                                             </select>
-                                            entries</label>
+                                            entries
+                                            </label>
                                         </form>
+                                        </br>
+                                        <td>Showing {{ $users->count() }} of {{ $users->total() }} entries</td>
                                     </div>
                                 </div>
                             </div>
@@ -146,9 +149,16 @@
                                                 </th>
                                                 <th>Customer Name</th>
                                                 <th>Email</th>
+                                                @if(Auth::user()->role != 'editor')
                                                 <th>Customer Group</th>
+                                                @endif
                                                 <th>Account Status</th>
+                                                @if(Auth::user()->role == 'editor')
+                                                <th class="text-right">Last Edited By</th>
+                                                @endif
+                                                @if(Auth::user()->role != 'editor')
                                                 <th>Date Added</th>
+                                                @endif
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -191,7 +201,9 @@
                                                     </td>
 
                                                     <td>{{$user->email}}</td>
+                                                    @if(Auth::user()->role != 'editor')
                                                     <td>{{ucfirst($user->role)}}</td>
+                                                    @endif
                                                     <td>
                                                         @if($user->dealer_status === 'approved')
                                                             <span class="label label-success">Approved</span>
@@ -204,7 +216,15 @@
                                                          </div>
                                                         @endif
                                                     </td>
+                                                     @if(Auth::user()->role == 'editor' && $user->edited_by != 0)
+                                                        <?php $editor = func::getTableByID('users', $user->edited_by)?>
+                                                        <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y H:m", strtotime($user->updated_at))}}</td>
+                                                    @else
+                                                        <td class="text-right">-</td>
+                                                    @endif
+                                                    @if(Auth::user()->role != 'editor')
                                                     <td>{{date("m/d/Y", strtotime($user->created_at))}}</td>
+                                                    @endif
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
                                                             <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
@@ -241,7 +261,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="dataTables_info" id="product-list_info" role="status" aria-live="polite">
-                                        Showing {{ $users->firstItem() }} to {{ $users->count() }} of {{ $users->total() }} entries
+                                        Showing {{ $users->count() }} of {{ $users->total() }} entries
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
