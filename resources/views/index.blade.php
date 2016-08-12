@@ -1,36 +1,42 @@
 @extends('layouts.front')
 
-@section('title', 'Welcome to Luxify')
-
+@section('home-title')
+  <title>Luxify.com - Asia's Leading Marketplace for Luxury</title>
+@endsection
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/jQuery.YoutubeBackground.css">
     <style>
 
+        .bg-img {
+          z-index: -1010;
+        }
+        .content-wrapper, .info-block {
+          background-color: white;
+        }
         #video_bg{
-            position:relative;
-            width:100%;
-            height:100%;
-            overflow:hidden;
+          background-position: top center;
+          background-repeat: no-repeat;
+          bottom: 0;
+          left: 0;
+          overflow: hidden;
+          position: fixed;
+          right: 0;
+          top: 0;
+        }
+        .ytplayer-player {
+          position: absolute;
+          top: 0;
+          z-index: -1;
         }
 
-
-        .ytplayer-container{
-            position: absolute;
-            top: 0;
-            text-align:center;
-            z-index: -1;
-            vertical-align : middle;
-        }
-        .ytplayer-container iframe{
-            position:absolute;
-        }
     </style>
 @endsection
 
 @section('meta-data')
     <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-    <meta name="description" content="We are Asia's leading online marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+    <meta name="description" content="We are Asia's leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
 @endsection
 
 @section('content')
@@ -287,14 +293,14 @@
     <script>
       $(document).ready(function(){
         $(".banner-image img").load(function() {
-            let bg = $('.bg-img:nth-child(2)');
-            let w = bg.width(), h = bg.height();
+            var bg = $('.bg-img:nth-child(2)');
+            var w = bg.width(), h = bg.height();
 
             $('#video_bg').YTPlayer({
                 fitToBackground: true,
                 videoId: '15VwTs0nFlM',
-                width: w+500,
-                ratio: (w/ h),
+    //            width: (w + 500),
+   //             ratio: (w/h),
             });
         });
       });
