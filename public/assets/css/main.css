@@ -839,7 +839,10 @@ div.lightbox {
 }
 .client-area {
     background: #3c3c3f;
-    padding: 20px 0;
+    padding: 10px 0;
+}
+.client-area .row{
+    margin:0px;
 }
 .client-list {
     overflow: hidden;
@@ -4300,5 +4303,12 @@ a.btn-3DVRTour {
     .thumbnail .favourite {
        top: 6px;
        right: 20px;
+    }
+}
+
+
+@media (max-width: 479px) {
+    .thumbnail {
+        width: 290px;
     }
 }

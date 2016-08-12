@@ -11,7 +11,7 @@ body {
 
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: icomon !important;
+  font-family: icomoon !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -619,7 +619,7 @@ div.lightbox {
       position: relative;
       padding-right: 17px; }
       .navbar-nav > li .dropdown-toggle:before {
-        font-family: icomon;
+        font-family: icomoon;
         position: absolute;
         top: 50%;
         right: 0;
@@ -732,7 +732,7 @@ div.lightbox {
   border-radius: 50px;
   position: relative; }
   .category-search:before {
-    font-family: icomon;
+    font-family: icomoon;
     position: absolute;
     top: 50%;
     left: 24px;
@@ -1248,7 +1248,8 @@ div.lightbox {
     .sidebar .detail li:nth-child(2) [class^="icon-"], .sidebar .detail li:nth-child(2) [class*="icon-"] {
       left: 77px; }
     .sidebar .detail .text {
-      font-size: 21px; }
+      font-size: 1.9rem;
+      line-height: 32px; }
 
 .social-links {
   display: inline-block;
@@ -1357,14 +1358,14 @@ div.lightbox {
     right: 0; }
     .slider .slick-next:before {
       content: "";
-      font-family: icomon;
+      font-family: icomoon;
       line-height: 1;
       display: block; }
   .slider .slick-prev {
     left: 0; }
     .slider .slick-prev:before {
       content: "";
-      font-family: icomon;
+      font-family: icomoon;
       line-height: 1;
       display: block; }
   .slider .thumbnail {
@@ -1569,14 +1570,14 @@ div.lightbox {
   right: -60px; }
   .slide-holder .slick-next:before {
     content: "";
-    font-family: icomon;
+    font-family: icomoon;
     line-height: 1;
     display: block; }
 .slide-holder .slick-prev {
   left: -60px; }
   .slide-holder .slick-prev:before {
     content: "";
-    font-family: icomon;
+    font-family: icomoon;
     line-height: 1;
     display: block; }
 
@@ -2092,7 +2093,7 @@ div.lightbox {
 
 .fancybox-skin {
   position: relative;
-  background: #f9f9f9;
+  background: #ffffff;
   color: #444;
   text-shadow: none;
   border-radius: 4px; }
@@ -2317,7 +2318,7 @@ div.lightbox {
     top: 0; }
     .jcf-select .jcf-select-opener:before {
       content: "";
-      font-family: icomon !important;
+      font-family: icomoon !important;
       position: absolute;
       right: 11px;
       top: 50%;
@@ -2405,6 +2406,10 @@ body > .jcf-select-drop {
 .jcf-list .jcf-optgroup .jcf-option {
   padding-left: 30px; }
 
+/* Ion.RangeSlider */
+/* css version 2.0.3 */
+/* ¬© 2013-2014 Denis Ineshin | IonDen.com */
+/* RangeSlider */
 .irs {
   position: relative;
   display: block;
@@ -2561,6 +2566,10 @@ body > .jcf-select-drop {
   border-style: solid !important;
   border-color: transparent !important; }
 
+/* Ion.RangeSlider */
+/* css version 2.0.3 */
+/* ¬© 2013-2014 Denis Ineshin | IonDen.com */
+/* RangeSlider */
 .irs-line-mid, .irs-line-left, .irs-line-right, .irs-bar, .irs-bar-edge, .irs-slider {
   background: #988866; }
 
@@ -3222,8 +3231,10 @@ a.btn-3DVRTour {
     .sidebar .detail {
       margin: 0 0 25px; }
       .sidebar .detail li {
-        margin: 0 25px 46px;
-        line-height: 32px; }
+        padding: 0px 0 0 35px;
+        margin: 0 auto 46px;
+        line-height: 32px;
+        width: 350px; }
 
   .slider .thumbnail {
     padding: 0 15px; }
@@ -3667,6 +3678,6 @@ a.btn-3DVRTour {
     margin: 0 5px 10px; }
 
   .sidebar .detail li .icon {
-    left: 10% !important; } }
+    left: 20% !important; } }
 
 /*# sourceMappingURL=main3.css.map */
