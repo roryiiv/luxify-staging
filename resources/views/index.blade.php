@@ -285,10 +285,9 @@
             var w = bg.width(), h = bg.height();
 
             $('#video_bg').YTPlayer({
+
                 fitToBackground: true,
-                videoId: '15VwTs0nFlM',
-                width: w+500,
-                ratio: (w/ h),
+                videoId: 'LSmgKRx5pBo'
             });
         });
       });
