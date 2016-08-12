@@ -281,8 +281,8 @@
     <script>
       $(document).ready(function(){
         $(".banner-image img").load(function() {
-            let bg = $('.bg-img:nth-child(2)');
-            let w = bg.width(), h = bg.height();
+            var bg = $('.bg-img:nth-child(2)');
+            var w = bg.width(), h = bg.height();
 
             $('#video_bg').YTPlayer({
                 fitToBackground: true,
