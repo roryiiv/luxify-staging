@@ -1,3 +1,7 @@
+$font-icomoon : icomon
+$font-normal : "Montserrat", "Helvetica Neue", "Helvetica", sans-serif
+$font-roboto : "Roboto", "Arial", "Helvetica Neue", "Helvetica", sans-serif
+
 @font-face
   font-family: "icomoon"
   src: url("../fonts/icomoon/icomoon.eot?jcr319")
@@ -12,7 +16,7 @@ body
 
 [class^="icon-"], [class*=" icon-"]
   /* use !important to prevent issues with browser extensions that change fonts
-  font-family: "icomoon" !important
+  font-family: $font-icomoon !important
   speak: none
   font-style: normal
   font-weight: normal
@@ -159,7 +163,7 @@ a
     border-radius: 40px
   &.cancel
     font-size: 14px
-    font-family: "Montserrat", "Helvetica Neue", "Helvetica", sans-serif
+    font-family: $font-normal
     color: #d9d2c6
     -webkit-transition: color .3s
     transition: color .3s
@@ -350,7 +354,7 @@ div.lightbox
   text-align: center
 
 .pagination
-  font-family: "Montserrat", "Helvetica Neue", "Helvetica", sans-serif
+  font-family: $font-normal
   font-weight: normal
   font-size: 14px
   margin: 34px 0
@@ -478,7 +482,8 @@ div.lightbox
   .product-img-container
     position: relative
     height: 300px
-    width: 300px
+    /*width: 300px;
+    padding: 5px
     box-sizing: border-box
     text-align: center
     margin: 0 auto
@@ -626,7 +631,7 @@ div.lightbox
       position: relative
       padding-right: 17px
       &:before
-        font-family: "icomoon"
+        font-family: $font-icomoon
         position: absolute
         top: 50%
         right: 0
@@ -695,7 +700,8 @@ div.lightbox
 
 .inner-banner
   /* height: 475px;
-  height: 40rem
+  /*height: 40rem;
+  height: 415px
   position: relative
   padding: 85px 0 0 0
   font-size: 18px
@@ -738,7 +744,7 @@ div.lightbox
   border-radius: 50px
   position: relative
   &:before
-    font-family: "icomoon"
+    font-family: $font-icomoon
     position: absolute
     top: 50%
     left: 24px
@@ -770,7 +776,7 @@ div.lightbox
   overflow: hidden
   .form-control
     height: 56px
-    font: 500 14px/1.425 "Roboto", "Arial", "Helvetica Neue", "Helvetica", sans-serif
+    font: 500 14px/1.425 $font-roboto
     color: #988866
     border: none
     -webkit-appearance: none
@@ -1013,7 +1019,7 @@ div.lightbox
     text-transform: uppercase
 
 .item-title
-  font-family: "Roboto", "Arial", "Helvetica Neue", "Helvetica", sans-serif !important
+  font-family: $font-roboto !important
   font-weight: 100 !important
 
 .items-table
@@ -1231,12 +1237,12 @@ div.lightbox
 .sidebar
   float: right
   width: 360px
-  margin: 15px 20px 0 100px
+  margin: 0px 20px 0 100px
   text-align: center
   padding: 10px 0 38px
   border: solid #c5beb2
   border-width: 1px 0
-  box-shadow: 0 0 12px 6px rgba(0, 0, 0, 0.3)
+  box-shadow: 0px 5px 12px 6px rgba(0, 0, 0, 0.2)
   .detail
     padding: 18px 0 0
     margin: 0 0 5px
@@ -1310,6 +1316,9 @@ div.lightbox
     line-height: 40px
     margin: 0 0 19px
 
+.btn-left
+  margin-left: 10px
+
 .description
   padding: 20px 0 0
   dl
@@ -1366,14 +1375,14 @@ div.lightbox
     right: 0
     &:before
       content: "\e905"
-      font-family: "icomoon"
+      font-family: $font-icomoon
       line-height: 1
       display: block
   .slick-prev
     left: 0
     &:before
       content: "\e910"
-      font-family: "icomoon"
+      font-family: $font-icomoon
       line-height: 1
       display: block
   .thumbnail
@@ -1579,14 +1588,14 @@ div.lightbox
     right: -60px
     &:before
       content: "\e905"
-      font-family: "icomoon"
+      font-family: $font-icomoon
       line-height: 1
       display: block
-  .slick-prev
+  .slick-prev"icomoon"
     left: -60px
     &:before
       content: "\e910"
-      font-family: "icomoon"
+      font-family: $font-icomoon
       line-height: 1
       display: block
 
@@ -2337,7 +2346,7 @@ div.lightbox
     top: 0
     &:before
       content: "\e900"
-      font-family: "icomoon" !important
+      font-family: $font-icomoon !important
       position: absolute
       right: 11px
       top: 50%
@@ -2655,7 +2664,7 @@ body > .jcf-select-drop
 
 .irs-from, .irs-to, .irs-single
   color: #000
-  font-family: "Montserrat", "Helvetica Neue", "Helvetica", sans-serif
+  font-family: $font-normal
   font-size: 14px
   line-height: 16px
   text-shadow: none
@@ -2741,6 +2750,274 @@ body > .jcf-select-drop
     &:hover
       background: #796d52
       color: #fff
+
+.form-group
+  label
+    padding-top: 20px
+  .col-lg-9
+    text-align: left
+    .jcf-select-text
+      font-size: 16px
+      color: #000
+      padding-left: 10px
+      padding-top: 5px
+  .col-lg-4 .jcf-select-text
+    font-size: 16px
+    color: #000
+    padding-left: 10px
+    padding-top: 5px
+  .col-lg-5 input
+    font-size: 16px
+    color: #000
+    padding-left: 10px
+    width: 92%
+  .col-lg-9 .width_more
+    font-size: 16px
+    color: #000
+    padding-left: 10px
+    width: 97%
+
+.about_buisness
+  padding-top: 0px !important
+
+.hold .row
+  margin-bottom: 20px
+
+.references_header
+  border-top: 1px solid black
+  padding-top: 20px
+
+body
+  font-size: 12px
+
+h1
+  font-size: 4.5rem
+
+.holder h1
+  font-size: 3em
+
+.banner h2
+  font-size: 1.5em
+
+.input-group
+  .form-control
+    font-size: 1.15em
+  .btn
+    font-size: 1em
+
+nav.banner-nav, .banner-image
+  margin-left: 4.8%
+  margin-right: 4.8%
+
+.banner-nav li
+  font-size: 1em
+
+.navbar-brand
+  width: 112px
+
+#heading1, .text-box
+  font-size: 1.2rem
+
+.btn
+  font-size: 1rem
+
+.info-block
+  font-size: 1.2rem
+  .title
+    font-size: 1rem
+
+.info-wrap
+  font-size: 1.4em
+
+.subscribe-form .title
+  font-size: 1.375em
+
+.footer-nav
+  font-size: 1.3rem
+  h4
+    font-size: 1.9rem
+    margin-bottom: 15px 0 20px
+    border-bottom: 1px solid #ececec
+    padding-bottom: 12px
+
+.social-networks a
+  width: 26px
+  height: 26px
+  line-height: 26px
+  font-size: 0.9em
+  [class^="icon-"], [class*=" icon-"]
+    line-height: 26px
+
+.navbar-nav > li .dropdown-menu a
+  font-size: 0.7em
+
+.category-search
+  max-width: 600px
+
+.thumbnail .price
+  font-size: 1.5rem
+  float: left
+
+h3
+  font-size: 2rem
+
+.banner-text
+  font-size: 1em
+
+.banner-social a
+  min-width: 270px
+
+.register-form
+  max-width: 600px
+
+.about-block
+  font-size: 1.5em
+
+.founder-box, .service-wrap .title
+  font-size: 1.4em
+
+.benefit-block h3
+  font-size: 1.8em
+
+.schedule-block
+  font-size: 1.4em
+
+.schedule-form h2
+  font-size: 1.8em
+
+.dealer-block
+  font-size: 2em
+
+.dealer-info .title
+  font-size: 1.2em
+
+.custom-col
+  [class^="col-"], [class*=" col-"]
+    font-size: 12px
+
+.sell-block
+  .wrap
+    max-width: 480px
+  font-size: 1.4em
+
+.quote-wrap, .block-header h2
+  font-size: 2em
+
+.navbar-nav
+  padding-top: 3px
+  margin-left: 30px
+
+.client-list li
+  padding: 16px 12px
+
+.b
+  position: absolute
+  top: 2.5px
+  left: 215px
+  font-size: 44px
+  z-index: 100
+  color: #000
+
+.content-holder
+  margin-bottom: 70px
+
+#input-group1
+  font-size: 1em
+
+#form-control1
+  font-size: 0.85em
+
+.header2
+  font-size: 2.5em
+
+.work-image
+  margin-left: -30px
+  margin-right: -30px
+
+.work-column
+  margin-left: -45px
+  margin-inline-end: -45px
+
+#text1
+  h3
+    font-size: 1.3em
+    margin-bottom: 6px
+  p
+    font-size: 1.2em
+    padding-right: 10px
+
+#icon1 img
+  max-width: 48px
+
+.work-column
+  line-height: 1.2625
+
+#icon1
+  width: 75px
+
+.w
+  max-width: 180px
+
+.create-account h1
+  font-size: 2.8em
+
+#text2 p
+  font-size: 14.5px
+
+.description
+  dl dt
+    width: 90px
+  .desc-label
+    margin: 0 15px 17px 0
+
+section.images
+  border-bottom: 1px solid #ddd
+  ul
+    min-width: 74rem
+    white-space: nowrap
+    overflow-x: scroll
+    overflow-y: hidden
+    height: 33rem
+    max-height: 33rem
+    background-color: #fff
+    margin: 0 !important
+    -webkit-padding-start: 0px !important
+    li
+      display: inline-block
+      white-space: normal
+      height: 33rem
+      border-right: 1px solid #ddd
+      &:last-child
+        border-right: none
+      img
+        height: 33rem
+        width: auto
+
+a.btn-3DVRTour
+  margin-bottom: 15px !important
+  border: 0px
+  border-radius: 0
+
+.item-description
+  tbody tr th
+    width: 30%
+  font-size: 1.3rem
+
+.we-chat-wrapper
+  width: 300px
+  height: 300px
+  text-align: center
+  border-radius: 0px
+  >
+  img
+    width: 150px
+    height: 150px
+    margin: 75px auto
+    display: block
+    button
+      margin: 10px 10px
+
+/* fix for the wider screen
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5)
   #fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span
@@ -2864,6 +3141,17 @@ body > .jcf-select-drop
   .client-list.add
     text-align: center
 
+@media (min-width: 1200px)
+  .container
+    width: 1300px
+
+@media (min-width: 767px)
+  .left_image
+    position: absolute
+    left: 0px
+    top: 0px
+    max-width: 55%
+
 @media (max-width: 1439px)
   .navbar-brand
     margin-right: 30px
@@ -2885,6 +3173,23 @@ body > .jcf-select-drop
       left: -37px
   .schedule-block .right-img
     right: -12%
+  .b
+    left: 195px
+  .inner-banner
+    /* height: 475px;
+    height: 415px
+  .block-header .btn-primary
+    min-width: 100px
+    font-size: 1.0rem
+    margin: 5px 0 0 0px
+  .btn-left
+    margin: 0px
+  .thumbnail .product-img-container
+    height: 230px
+    width: 199px
+    img.product-img
+      max-height: 230px
+      max-width: 199px
 
 @media (max-width: 991px)
   h1
@@ -2951,10 +3256,12 @@ body > .jcf-select-drop
     width: 100%
     box-shadow: none
     margin: 0
+    border-width: 1px
     .detail
       margin: 0 0 25px
       li
-        margin: 0 25px 57px
+        margin: 0 25px 46px
+        line-height: 32px
   .slider .thumbnail
     padding: 0 15px
   .learn-more .btn
@@ -3011,12 +3318,26 @@ body > .jcf-select-drop
       display: inline-block
       vertical-align: top
       margin: 0 10px 10px
+  .b
+    left: 165px
+  .sidebar .detail .text
+    font-size: 1.8rem
+  .inner-banner
+    /* height: 475px;
+    height: 410px
+    padding: 80px 0 0 0
+  .thumbnail .product-img-container
+    height: 180px
+    width: 150px
+    img.product-img
+      max-height: 180px
+      max-width: 150px
 
 @media (max-width: 767px)
   h1
     font-size: 30px
   .breadcrumb
-    display: none
+    display: block
   .thumbnail
     width: 200px
     display: inline-block
@@ -3204,6 +3525,15 @@ body > .jcf-select-drop
   .footer-bottom
     padding: 20px 0
     font-size: 14px
+  .sidebar .detail li .icon
+    left: 20% !important
+  .b
+    font-size: 30px
+    left: 158px
+    top: 12px
+  .inner-banner
+    padding: 60px 0 0 0
+    height: 390px
 
 @media (max-width: 479px)
   h1
@@ -3300,301 +3630,5 @@ body > .jcf-select-drop
     padding-bottom: 15px
   .bottom-nav li
     margin: 0 5px 10px
-
-.form-group
-  label
-    padding-top: 20px
-  .col-lg-9
-    text-align: left
-    .jcf-select-text
-      font-size: 16px
-      color: #000
-      padding-left: 10px
-      padding-top: 5px
-  .col-lg-4 .jcf-select-text
-    font-size: 16px
-    color: #000
-    padding-left: 10px
-    padding-top: 5px
-  .col-lg-5 input
-    font-size: 16px
-    color: #000
-    padding-left: 10px
-    width: 92%
-  .col-lg-9 .width_more
-    font-size: 16px
-    color: #000
-    padding-left: 10px
-    width: 97%
-
-.about_buisness
-  padding-top: 0px !important
-
-.hold .row
-  margin-bottom: 20px
-
-.references_header
-  border-top: 1px solid black
-  padding-top: 20px
-
-body
-  font-size: 12px
-
-h1
-  font-size: 4.5rem
-
-.holder h1
-  font-size: 3em
-
-.banner h2
-  font-size: 1.5em
-
-.input-group
-  .form-control
-    font-size: 1.15em
-  .btn
-    font-size: 1em
-
-nav.banner-nav, .banner-image
-  margin-left: 4.8%
-  margin-right: 4.8%
-
-.banner-nav li
-  font-size: 1em
-
-.navbar-brand
-  width: 112px
-
-#heading1, .text-box
-  font-size: 1.2rem
-
-.btn
-  font-size: 1rem
-
-.info-block
-  font-size: 1.2rem
-  .title
-    font-size: 1rem
-
-.info-wrap
-  font-size: 1.4em
-
-.subscribe-form .title
-  font-size: 1.375em
-
-.footer-nav
-  font-size: 1.3rem
-  h4
-    font-size: 1.9rem
-    margin-bottom: 15px 0 20px
-    border-bottom: 1px solid #ececec
-    padding-bottom: 12px
-
-.social-networks a
-  width: 26px
-  height: 26px
-  line-height: 26px
-  font-size: 0.9em
-  [class^="icon-"], [class*=" icon-"]
-    line-height: 26px
-
-.navbar-nav > li .dropdown-menu a
-  font-size: 0.7em
-
-.category-search
-  max-width: 600px
-
-.thumbnail .price
-  font-size: 1.5rem
-  float: left
-
-h3
-  font-size: 2rem
-
-.banner-text
-  font-size: 1em
-
-.banner-social a
-  min-width: 270px
-
-.register-form
-  max-width: 600px
-
-.about-block
-  font-size: 1.5em
-
-.founder-box, .service-wrap .title
-  font-size: 1.4em
-
-.benefit-block h3
-  font-size: 1.8em
-
-.schedule-block
-  font-size: 1.4em
-
-.schedule-form h2
-  font-size: 1.8em
-
-.dealer-block
-  font-size: 2em
-
-.dealer-info .title
-  font-size: 1.2em
-
-.custom-col
-  [class^="col-"], [class*=" col-"]
-    font-size: 12px
-
-.sell-block
-  .wrap
-    max-width: 480px
-  font-size: 1.4em
-
-.quote-wrap
-  font-size: 2em
-
-.sidebar .detail .text
-  font-size: 2.2rem
-
-.block-header h2
-  font-size: 2em
-
-.navbar-nav
-  padding-top: 3px
-  margin-left: 30px
-
-.client-list li
-  padding: 16px 12px
-
-.b
-  position: absolute
-  top: 2.5px
-  left: 215px
-  font-size: 44px
-  z-index: 100
-  color: #000
-
-@media (max-width: 1199px)
-  .b
-    left: 195px
-
-@media (max-width: 991px)
-  .b
-    left: 165px
-
-@media (max-width: 767px)
-  .b
-    font-size: 30px
-    left: 158px
-    top: 12px
-
-@media (min-width: 767px)
-  .left_image
-    position: absolute
-    left: 0px
-    top: 0px
-    max-width: 55%
-
-.content-holder
-  margin-bottom: 70px
-
-#input-group1
-  font-size: 1em
-
-#form-control1
-  font-size: 0.85em
-
-.header2
-  font-size: 2.5em
-
-.work-image
-  margin-left: -30px
-  margin-right: -30px
-
-.work-column
-  margin-left: -45px
-  margin-inline-end: -45px
-
-#text1
-  h3
-    font-size: 1.3em
-    margin-bottom: 6px
-  p
-    font-size: 1.2em
-    padding-right: 10px
-
-#icon1 img
-  max-width: 48px
-
-.work-column
-  line-height: 1.2625
-
-#icon1
-  width: 75px
-
-.w
-  max-width: 180px
-
-.create-account h1
-  font-size: 2.8em
-
-#text2 p
-  font-size: 14.5px
-
-.description dl dt
-  width: 90px
-
-description .desc-label
-  margin: 0 15px 17px 0
-
-section.images
-  border-bottom: 1px solid #ddd
-  ul
-    min-width: 74rem
-    white-space: nowrap
-    overflow-x: scroll
-    overflow-y: hidden
-    height: 33rem
-    max-height: 33rem
-    background-color: #fff
-    margin: 0 !important
-    -webkit-padding-start: 0px !important
-    li
-      display: inline-block
-      white-space: normal
-      height: 33rem
-      border-right: 1px solid #ddd
-      &:last-child
-        border-right: none
-      img
-        height: 33rem
-        width: auto
-
-a.btn-3DVRTour
-  margin-bottom: 15px !important
-  border: 0px
-  border-radius: 0
-
-.item-description
-  tbody tr th
-    width: 30%
-  font-size: 1.3rem
-
-.we-chat-wrapper
-  width: 300px
-  height: 300px
-  text-align: center
-  border-radius: 0px
-  >
-  img
-    width: 150px
-    height: 150px
-    margin: 75px auto
-    display: block
-    button
-      margin: 10px 10px
-
-/* fix for the wider screen
-@media (min-width: 1200px)
-  .container
-    width: 1300px
+  .sidebar .detail li .icon
+    left: 10% !important
