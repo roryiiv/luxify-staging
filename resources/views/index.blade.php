@@ -6,17 +6,23 @@
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/jQuery.YoutubeBackground.css">
     <style>
 
         #video_bg{
-            position:relative;;
-            overflow:hidden;
-            width:100%;
-            height:100%;
-            background: transparent;
+          background-position: top center;
+          background-repeat: no-repeat;
+          bottom: 0;
+          left: 0;
+          overflow: hidden;
+          position: fixed;
+          right: 0;
+          top: 0;
         }
-        .ytplayer-player{
-            position: absolute;
+        .ytplayer-player {
+          position: absolute;
+          top: 0;
+          z-index: -1;
         }
 
     </style>
@@ -281,13 +287,14 @@
     <script>
       $(document).ready(function(){
         $(".banner-image img").load(function() {
-            let bg = $('.bg-img:nth-child(2)');
-            let w = bg.width(), h = bg.height();
+            var bg = $('.bg-img:nth-child(2)');
+            var w = bg.width(), h = bg.height();
 
             $('#video_bg').YTPlayer({
-
                 fitToBackground: true,
-                videoId: 'LSmgKRx5pBo'
+                videoId: '15VwTs0nFlM',
+    //            width: (w + 500),
+   //             ratio: (w/h),
             });
         });
       });
