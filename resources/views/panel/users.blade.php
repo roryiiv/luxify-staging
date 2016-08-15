@@ -216,11 +216,13 @@
                                                          </div>
                                                         @endif
                                                     </td>
-                                                     @if(Auth::user()->role == 'editor' && $user->edited_by != 0)
-                                                        <?php $editor = func::getTableByID('users', $user->edited_by)?>
-                                                        <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y H:m", strtotime($user->updated_at))}}</td>
-                                                    @else
-                                                        <td class="text-right">-</td>
+                                                     @if(Auth::user()->role == 'editor')
+                                                         @if($user->edited_by != 0)
+                                                            <?php $editor = func::getTableByID('users',$user->edited_by)?>
+                                                            <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y H:m", strtotime($user->updated_at))}}</td>
+                                                        @else
+                                                            <td class="text-right">-</td>
+                                                        @endif
                                                     @endif
                                                     @if(Auth::user()->role != 'editor')
                                                     <td>{{date("m/d/Y", strtotime($user->created_at))}}</td>

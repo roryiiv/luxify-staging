@@ -228,22 +228,13 @@
                 return true;
             }            
             function redrawflotchart(html) {
-                var d = [{!!$flotchart!!}],
-                    c = [
-                        [0, 0],
-                        [1, 0],
-                        [2, 0],
-                        [3, 0],
-                        [4, 0],
-                        [5, 0],
-                        [6, 0],
-                        [7, 0],
-                        [8, 0],
-                        [9, 0],
-                        [10, 0],
-                        [11, 0]
-                    ],
-                h = [{
+                var json_data = JSON.parse(html);
+                status = json_data.status;
+                if(status!='true'){
+                    alert('error');
+                }else{
+                    d = JSON.parse(json_data.data);
+                var h = [{
                     label: "New/Old visitors",
                     data: d,
                     color: "#988866",
@@ -255,33 +246,6 @@
                     curvedLines: {
                         apply: !0,
                         monotonicFit: !0
-                    }
-                }, {
-                    data: d,
-                    color: "#988866",
-                    lines: {
-                        show: !0,
-                        lineWidth: 0
-                    }
-                }, {
-                    label: "Returning visitors",
-                    data: c,
-                    color: "#988866",
-                    lines: {
-                        show: !0,
-                        fill: .9,
-                        lineWidth: 0
-                    },
-                    curvedLines: {
-                        apply: !1,
-                        monotonicFit: !0
-                    }
-                }, {
-                    data: c,
-                    color: "#988866",
-                    lines: {
-                        show: !0,
-                        lineWidth: 0
                     }
                 }],
                 g = {
@@ -326,16 +290,12 @@
                         labelBoxBorderColor: "#FFF",
                         margin: 0
                     }
-                };
-                $.plot($("#flot-visitor"), h, g), $("#flot-visitor").bind("plothover", function(e, t, a) {
-                    a ? $(".flotTip").text(a.datapoint[1].toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " visitors").css({
-                        top: a.pageY + 15,
-                        left: a.pageX + 10
-                    }).show() : $(".flotTip").hide()
-                })
+                }
+                $.plot($("#flot-visitor"), h, g);
+                }
 
             }
-            var data_json = [{!!$flotchart!!}];
+            var data_json = {{$flotchart}};
             var data_ticks = [{!!$get_tick!!}];
             function e() {
                 $("#addNewEvent").modal("hide"), $("#fullcalendar").fullCalendar("renderEvent", {
@@ -426,7 +386,7 @@
                     }
                 };
                 $.plot($("#flot-revenue"), l, s);
-                var d = data_json,
+                    d = data_json,
                     c = [
                         [0, 0],
                         [1, 0],
@@ -454,33 +414,6 @@
                         curvedLines: {
                             apply: !0,
                             monotonicFit: !0
-                        }
-                    }, {
-                        data: d,
-                        color: "#988866",
-                        lines: {
-                            show: !0,
-                            lineWidth: 0
-                        }
-                    }, {
-                        label: "Returning visitors",
-                        data: c,
-                        color: "#988866",
-                        lines: {
-                            show: !0,
-                            fill: .9,
-                            lineWidth: 0
-                        },
-                        curvedLines: {
-                            apply: !1,
-                            monotonicFit: !0
-                        }
-                    }, {
-                        data: c,
-                        color: "#988866",
-                        lines: {
-                            show: !0,
-                            lineWidth: 0
                         }
                     }],
                     g = {
@@ -556,19 +489,15 @@
                 cache : false,
                 success : function(html){
                     if(checkjson(html)){
-                        console.log('re draw the flotchart')
                         redrawflotchart(html)
                     }else{
-                        console.log('error, this is not json')
                         errorflotchart(html)
                     }
                 },
                 error: function(xhr, status, html) {
                     if(checkjson(html)){
                         redrawflotchart(html)
-                        console.log('re draw the flotchart')
                     }else{
-                        console.log('error, this is not json')
                         errorflotchart(html)
                     }
                 }

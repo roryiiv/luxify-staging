@@ -92,7 +92,7 @@ class PageCount extends Model
         return $data;
     }
     public static function get_json(){
-        $dataset='';
+        $dataset=array();
         $userId = Auth::user()->id;
         for ($i=0; $i<30 ; $i++) { 
         $total = PageCount::where('visited_at',Carbon::today()->subDays($i))
@@ -101,12 +101,12 @@ class PageCount extends Model
         //$total = ($total<30)?$total+30:$total;
         $key = 29-$i;
 
-        $dataset .='['.$key.','.$total.'],';
+        $dataset[] =array($key,$total);
 //        array_push($dataset,$datas);
         }
         //$dataset = array_reverse($dataset);
         //return json_encode($dataset);
-        return $dataset;
+        return json_encode(array_reverse($dataset));
     }
         public static function get_tick(){
         $dataset='';

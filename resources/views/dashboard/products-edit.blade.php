@@ -357,39 +357,38 @@
                 </fieldset>
                 <h3>Step 5: SEO Section</h3>
                 <fieldset>
-                    <div class="form-group">
-                                <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
-                                <div class="col-sm-9">
-                                    <div class="hideslug">
-                                        <div class="input-group">
-                                          <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
-                                          <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
-                                          ">
-                                          <span class="createorupdateslug input-group-addon btn">
-                                              Save URL
-                                          </span>
-                                        </div>    
-                                    </div>
-                                    
-                                    <div class="showslug">
-                                    <?php
-                                    if(strlen($item->slug)<=40){
-                                        $newslug =  $item->slug;
-                                    }else{
-                                        $count = strlen($item->slug);
-                                        $newslug = substr($item->slug,0,20).' ....... '.substr($item->slug,$count-20,$count);
-                                    }
-                                    ?>
-                                        <a class="updatelink" href="{{url('/'.$item->url_object).'/'.$item->slug}} " target="_blank" style="text-decoration: underline;" >{{url('/'.$item->url_object).'/'}}<strong>{{$newslug}}</strong></a>
-                                         &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
-                                    </div>
+                <div class="form-group">
+                            <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
+                            <div class="col-sm-9">
+                                <div class="hideslug">
+                                    <div class="input-group">
+                                      <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
+                                      <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
+                                      ">
+                                      <span class="createorupdateslug input-group-addon btn">
+                                          Save URL
+                                      </span>
+                                    </div>    
+                                </div>
+                                
+                                <div class="showslug">
+                                <?php
+                                if(strlen($item->slug)<=40){
+                                    $newslug =  $item->slug;
+                                }else{
+                                    $count = strlen($item->slug);
+                                    $newslug = substr($item->slug,0,20).' ....... '.substr($item->slug,$count-20,$count);
+                                }
+                                ?>
+                                    <a class="updatelink" href="{{url('/'.$item->url_object).'/'.$item->slug}} " target="_blank" style="text-decoration: underline;" >{{url('/'.$item->url_object).'/'}}<strong>{{$newslug}}</strong></a>
+                                     &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="meta_title" class="col-sm-3 control-label">Title</label>
                             <div class="col-sm-9">
-                                <input id="meta_title" max ="60" name='meta_title' type="text" class="form-control" placeholder="{{$item->meta_title}}">
+                                <input id="meta_title" name='meta_title' type="text" class="form-control" max="60" placeholder="{{$item->meta_title}}">
                             </div>
                         </div>
                         <div class="form-group" style="display:none;">
@@ -423,12 +422,10 @@
                         <div class="form-group">
                              <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
                             <div class="col-sm-9">
-                                <input id="meta_author" max ="60" name='meta_author' type="text" class="form-control" placeholder="{{$item->meta_author}}">
+                                <input id="meta_author" name='meta_author' type="text" maxlength="60" class="form-control" placeholder="{{$item->meta_author}}">
                             </div>
                         </div>
-                    </section>
-                    </div>
-                </fieldset>
+            </fieldset>
               </form>
 
             </div>

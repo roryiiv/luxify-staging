@@ -393,13 +393,15 @@
                                                            }
                                                         }
                                                     ?>
-                                                    <td>{{ $customerName }}</td>
+                                                    <td>{!! $customerName !!}</td>
                                                     {{--<td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>--}}
-                                                    @if(Auth::user()->role == 'editor' && $products[$i]->edited_by != 0)
-                                                        <?php $editor = func::getTableByID('users',$products[$i]->edited_by)?>
-                                                        <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y H:m", strtotime($products[$i]->updated_at))}}</td>
-                                                    @else
-                                                        <td class="text-right">-</td>
+                                                    @if(Auth::user()->role == 'editor')
+                                                        @if($products[$i]->edited_by != 0)
+                                                            <?php $editor = func::getTableByID('users',$products[$i]->edited_by)?>
+                                                            <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y H:m", strtotime($products[$i]->updated_at))}}</td>
+                                                        @else
+                                                            <td class="text-right">-</td>
+                                                        @endif
                                                     @endif
                                                  @if(Auth::user()->role != 'editor')
                                                      @if($products[$i]->price)
