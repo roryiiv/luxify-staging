@@ -256,7 +256,18 @@
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="phoneNumber" data-role='taginput' class="control-label">Contact Phone Numbers</label>
-                                                    <?php $phones = json_decode($user->phoneNumber); ?>
+                                                    <?php 
+                                                      $phones = null;
+                                                      if (isset($user->phoneNumber) && !empty($user->phoneNumber)) {
+                                                        if (!is_array($user->phoneNumber)) {
+                                                          $phones = array();
+                                                          $phones[] = $user->phoneNumber;
+                                                        } else {
+                                                        
+                                                          $phones = json_decode($user->phoneNumber);
+                                                        } 
+                                                      }
+                                                    ?>
                                                     <div class="pt-15">
                                                         <input id="phoneNumber" type="text" class="form-control" value="{{ !empty($phones) ? join(',', $phones): ''}}">
                                                     </div>

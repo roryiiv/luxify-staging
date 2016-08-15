@@ -147,7 +147,11 @@
                         @endif
                         <table class="table" style="margin: 0 auto; max-width: 330px; text-align: center; margin-top: 20px;">
                         <?php 
-                            $address= is_array(json_decode($dealer->companyAddress))? join(" ", json_decode($dealer->companyAddress)) : $dealer->companyAddress;
+                            $addresss = null;
+                            if (isset($dealer->companyAddress) && !empty($dealer->companyAddress)) {
+                            
+                              $address= is_array(json_decode($dealer->companyAddress))? join(" ", json_decode($dealer->companyAddress)) : $dealer->companyAddress;
+                            }
                         ?>
                         @if(!empty($address))
                           <tr>
@@ -173,7 +177,7 @@
                         @endif
                         @if(!empty(json_decode($dealer->phoneNumber)))
                         <?php 
-                            $phones= join("<br>", json_decode($dealer->phoneNumber));
+                            $phones= is_array($dealer->phoneNumber) ? join("<br>", json_decode($dealer->phoneNumber)) : $dealer->phoneNumber ;
                         ?>
                         <tr>
                            <td>
