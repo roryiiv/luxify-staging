@@ -116,7 +116,7 @@
 <p>The Website may contain a link to third-party websites, under no circumstances does Luxify endorse or control such third-party websites. Use of third-party websites, whether included as a link on the Website or otherwise, is entirely at your own risk and subject to the terms of use contained within any such website.</p>
 <p>These Terms do not intend to limit or exclude liability for death or personal injury caused by the negligence or fraudulent misrepresentation of Luxify, its employees or agents and nothing is intended to affect your statutory rights.</p>
 <p>Luxify shall not be liable for any special, exemplary, direct, indirect, punitive, incidental or consequential damages of any kind, whether based in contract, tort (including negligence) or otherwise or are in any way connected with these Terms, use of the services, a failure or delay or any actions or inactions of a user.</p>
-                      <h3>10/ Right of indemnity</h3>
+                      <h3>11/ Final Provision</h3>
                       <p>You may cancel your account at any time, if you choose to do so.</p>
 
 <p>Luxify reserves the right to cancel any unconfirmed or inactive accounts at any time, without providing further notice.
