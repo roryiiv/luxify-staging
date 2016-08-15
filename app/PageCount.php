@@ -109,19 +109,19 @@ class PageCount extends Model
         return json_encode(array_reverse($dataset));
     }
         public static function get_tick(){
-        $dataset='';
+        $dataset=array();
         for ($i=0; $i<30 ; $i++) { 
         $date = Carbon::today()->subDays($i);
         $dt = Carbon::parse($date);
         $day = $dt->day;
         $key = 29-$i;
 
-        $dataset .='['.$key.','.$day.'],';
+        $dataset[] =array($key,$day);
 //        array_push($dataset,$datas);
         }
         //$dataset = array_reverse($dataset);
         //return json_encode($dataset);
-        return $dataset;
+        return json_encode(array_reverse($dataset));
     }
     public static function get_json_vm(){
         $userId = Auth::user()->id;

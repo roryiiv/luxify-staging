@@ -218,6 +218,89 @@
     <script type="text/javascript" src="/db/js/index.js"></script>-->
     <script>
         $(document).ready(function() {
+            //ajax first load for flotchart 12month
+            loadajaxflotchart();
+
+            function loadajaxflotchart(){
+            d = [[0, 0]],
+           /* m =data_ticks,*/
+            h = [{
+                label: "New/Old visitors",
+                data: d,
+                color: "#988866",
+                lines: {
+                    show: !0,
+                    fill: .9,
+                    lineWidth: 0
+                },
+                curvedLines: {
+                    apply: !0,
+                    monotonicFit: !0
+                }
+            }],
+            g = {
+                series: {
+                    curvedLines: {
+                        active: !0
+                    },
+                    shadowSize: 0
+                },
+                grid: {
+                    borderWidth: 0,
+                    hoverable: !0,
+                    labelMargin: 15
+                },
+                yaxis: {
+                    tickLength: 0,
+                    font: {
+                        color: "#9a9a9a",
+                        size: 11
+                    }
+                },
+                tooltip: {
+                    show: !1
+                },
+                legend: {
+                    show: !0,
+                    container: $("#flot-visitor-legend"),
+                    noColumns: 4,
+                    labelBoxBorderColor: "#FFF",
+                    margin: 0
+                }
+            };
+                $.plot($("#flot-visitor"), h, g), $("#flot-visitor").bind("plothover", function(e, t, a) {
+                    a ? $(".flotTip").text(a.datapoint[1].toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " visitors").css({
+                        top: a.pageY + 15,
+                        left: a.pageX + 10
+                    }).show() : $(".flotTip").hide()
+                });
+
+
+           $("#flot-visitor").append('<span style="position: absolute; width: 100%; height: 100%; text-align: center; font-size: 18px; background: rgba(255, 255, 255, 0.6) none repeat scroll 0% 0%; padding-top: 10%;" class="flot_loading"><img style="width: 110px;" src="{{url("/img/spin.gif")}}"><span style="position: relative; margin-left: -35px;">Loading...</span></span>'),
+        $('.flot_loading').show();
+        year = moment().year();
+            $.ajax({
+                url:'{{route("get_json_flot_year")}}/'+year,
+                async : false,
+                cache : false,
+                success : function(html){
+                    $('.flot_loading').hide();
+                    if(checkjson(html)){
+                        redrawflotchart(html)
+                    }else{
+                        errorflotchart(html)
+                    }
+                },
+                error: function(xhr, status, html) {
+                    $('.flot_loading').hide();
+                    if(checkjson(html)){
+                        redrawflotchart(html)
+                    }else{
+                        errorflotchart(html)
+                    }
+                }
+            });
+            }
             //check is_json for flotchart
             function checkjson(html) {
                 try {
@@ -260,14 +343,14 @@
                         hoverable: !0,
                         labelMargin: 15
                     },
-                    // xaxis: {
-                    //     ticks: m,
-                    //     tickLength: 0,
-                    //     font: {
-                    //         color: "#9a9a9a",
-                    //         size: 11
-                    //     }
-                    // },
+                    xaxis: {
+                            ticks: JSON.parse(json_data.tick),
+                            tickLength: 0,
+                            font: {
+                                color: "#9a9a9a",
+                                size: 11
+                            }
+                    },
                     yaxis: {
                         tickLength: 0,
                         // tickSize: 1e6,
@@ -295,8 +378,6 @@
                 }
 
             }
-            var data_json = {{$flotchart}};
-            var data_ticks = [{!!$get_tick!!}];
             function e() {
                 $("#addNewEvent").modal("hide"), $("#fullcalendar").fullCalendar("renderEvent", {
                     title: $("#inputTitleEvent").val(),
@@ -386,88 +467,9 @@
                     }
                 };
                 $.plot($("#flot-revenue"), l, s);
-                    d = data_json,
-                    c = [
-                        [0, 0],
-                        [1, 0],
-                        [2, 0],
-                        [3, 0],
-                        [4, 0],
-                        [5, 0],
-                        [6, 0],
-                        [7, 0],
-                        [8, 0],
-                        [9, 0],
-                        [10, 0],
-                        [11, 0]
-                    ],
-                    // m =data_ticks,
-                    h = [{
-                        label: "New/Old visitors",
-                        data: d,
-                        color: "#988866",
-                        lines: {
-                            show: !0,
-                            fill: .9,
-                            lineWidth: 0
-                        },
-                        curvedLines: {
-                            apply: !0,
-                            monotonicFit: !0
-                        }
-                    }],
-                    g = {
-                        series: {
-                            curvedLines: {
-                                active: !0
-                            },
-                            shadowSize: 0
-                        },
-                        grid: {
-                            borderWidth: 0,
-                            hoverable: !0,
-                            labelMargin: 15
-                        },
-                        // xaxis: {
-                        //     ticks: m,
-                        //     tickLength: 0,
-                        //     font: {
-                        //         color: "#9a9a9a",
-                        //         size: 11
-                        //     }
-                        // },
-                        yaxis: {
-                            tickLength: 0,
-                            // tickSize: 1e6,
-                            font: {
-                                color: "#9a9a9a",
-                                size: 11
-                            }
-                            /* ,
-                            tickFormatter: function(e, t) {
-                                return e > 0 ? (e / 1e6).toFixed(t.tickDecimals) + " M" : (e / 1e6).toFixed(t.tickDecimals)
-                            } */                
-                        },
-                        tooltip: {
-                            show: !1
-                        },
-                        legend: {
-                            show: !0,
-                            container: $("#flot-visitor-legend"),
-                            noColumns: 4,
-                            labelBoxBorderColor: "#FFF",
-                            margin: 0
-                        }
-                    };
-    $.plot($("#flot-visitor"), h, g), $("#flot-visitor").bind("plothover", function(e, t, a) {
-        a ? $(".flotTip").text(a.datapoint[1].toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " visitors").css({
-            top: a.pageY + 15,
-            left: a.pageX + 10
-        }).show() : $(".flotTip").hide()
-    }), $("#daterangepicker").daterangepicker({
+            $("#daterangepicker").daterangepicker({
         ranges: {
-            Today: [moment(), moment()],
-            Yesterday: [moment().subtract("days", 1), moment().subtract("days", 1)],
+            'Last 3 Days': [moment().subtract("days", 2), moment()],
             "Last 7 Days": [moment().subtract("days", 6), moment()],
             "Last 30 Days": [moment().subtract("days", 29), moment()],
             "This Month": [moment().startOf("month"), moment().endOf("month")],
@@ -478,16 +480,19 @@
         endDate: moment(),
         applyClass: "btn-raised btn-black",
         cancelClass: "btn-raised btn-default"
-    }, function(e, t, a) {
+    },
+    function(e, t, a) {
         //additional check date
+        $("#flot-visitor").append('<span style="position: absolute; width: 100%; height: 100%; text-align: center; font-size: 18px; background: rgba(255, 255, 255, 0.6) none repeat scroll 0% 0%; padding-top: 10%;" class="flot_loading"><img style="width: 110px;" src="{{url("/img/spin.gif")}}"><span style="position: relative; margin-left: -35px;">Loading...</span></span>'),
+        $('.flot_loading').show();
         d_start = e.format("YYYY-MM-D"),
         d_end = t.format("YYYY-MM-D"),
-        alert(d_start + d_end),
             $.ajax({
                 url:'{{route("get_json_flot")}}/'+d_start+'/'+d_end,
                 async : false,
                 cache : false,
                 success : function(html){
+                    $('.flot_loading').hide();
                     if(checkjson(html)){
                         redrawflotchart(html)
                     }else{
@@ -495,6 +500,7 @@
                     }
                 },
                 error: function(xhr, status, html) {
+                    $('.flot_loading').hide();
                     if(checkjson(html)){
                         redrawflotchart(html)
                     }else{

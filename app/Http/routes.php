@@ -153,6 +153,8 @@ Route::get('/panel/get_keyword_json', 'Panel@get_keyword_json')->name('get_keywo
 //get flotchart json
 Route::get('/dashboard/get_flot_chart/', 'Dashboard@zonk')->name('get_json_flot');
 Route::get('/dashboard/get_flot_chart/{start}/{end}', 'Dashboard@get_flot_chart');
+Route::get('/dashboard/get_flot_chart_year/', 'Dashboard@zonk')->name('get_json_flot_year');
+Route::get('/dashboard/get_flot_chart_year/{year}', 'Dashboard@get_first_flot_chart');
 
 
 //routes for DASHBOARD (seller)

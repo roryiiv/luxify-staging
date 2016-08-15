@@ -955,5 +955,10 @@ class Dashboard extends Controller
         $json_flot_chart = Analytics::get_flot_data($start,$end,$user_id);
         return $json_flot_chart;
     }
+    function get_first_flot_chart($year){
+        $user_id = Auth::user()->id;
+        $json_flot_chart = Analytics::get_flot_first($year,$user_id);
+        return $json_flot_chart;
+    }
 
 }
