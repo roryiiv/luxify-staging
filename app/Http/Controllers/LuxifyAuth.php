@@ -122,7 +122,7 @@ class LuxifyAuth extends Controller
         if ($newUser->id ) {
             $username_to = $fullname;
             $details = array('to' => $email);
-            Mail::send('emails.luxify-welcome-en-us', ['username_to' => $username_to], function ($message) use ($details){
+            Mail::send('emails.luxify-welcome-en-us', ['username_to' => $username_to, 'this_url'=> 'https://www.luxify.com'], function ($message) use ($details){
 
                 $message->from('technology@luxify.com', 'Luxify Admin');
                 $message->subject('Welcome to Luxify');
