@@ -429,7 +429,33 @@
             win.focus();
         }
         $(document).ready(function () {
-            $("form.form-horizontal").validate();
+          $("form.form-horizontal").validate({
+        rules: {
+          email: {
+            required: true,
+              email: true,
+          },
+          name: {
+            required: true,
+            minlength: 4
+          },
+          password: {
+            minlength: 8,
+            required: true,
+            equalTo: '#password_confirmation',
+          },
+          password_confirmation: {
+            minlength: 8,
+            required: true,
+            equalTo: '#password',
+          },
+          agreeTerms: {
+            required: function(ele) {
+              return $(ele).prop('checked');
+            },
+          }
+        },
+      });
             var token = "{{ Session::getToken() }}";
             $("#sweet-3, .sweet-3").each(function () {
                 $(this).on("click", function () {

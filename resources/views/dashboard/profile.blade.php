@@ -121,7 +121,7 @@
                                         <div class="form-group">
                                             <label for="first_name" class="col-sm-3 col-md-4 control-label">First Name</label>
                                             <div class="col-sm-9 col-md-8">
-                                                <input id="first_name" name="first_name" type="text" placeholder="{{ucfirst($user->firstName)}}" class="form-control">
+                                                <input id="first_name" name="first_name" type="text" placeholder="{{ucfirst($user->firstName)}}" class="form-control" value="{{ !empty($user->firstName)? ucfirst($user->firstName): ''}}">
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@
                                         <div class="form-group">
                                             <label for="last_name" class="col-sm-3 col-md-4 control-label">Last Name</label>
                                             <div class="col-sm-9 col-md-8">
-                                                <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ucfirst($user->lastName)}}">
+                                                <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ucfirst($user->lastName)}}" value="{{ !empty($user->lastName)? ucfirst($user->lastName): ''}}">
                                             </div>
                                         </div>
                                     </div>
@@ -418,10 +418,34 @@
             win.focus();
         }
         $(document).ready(function () {
-            $("form.form-horizontal").validate();
+            $("form.form-horizontal").validate({
+              rules: {
+                email: {
+                  required: true,
+                  email: true,
+                },
+                first_name: {
+                  required: true,
+                  minlength: 2
+                },
+                last_name: {
+                  required: true,
+                  minlength: 2
+                },
+                txtPassword: {
+                  minlength: 8,
+                  equalTo: '#txtConfirmPassword',
+                },
+                txtConfirmPassword: {
+                  minlength: 8,
+                  equalTo: '#txtPassword',
+                },
+              }
+            });
             var token = "{{ Session::getToken() }}";
             $("#sweet-3, .sweet-3").each(function () {
                 $(this).on("click", function () {
+                  if ($("form.form-horizontal").valid()) {
                     swal({
                         title: "Update Profile",
                         text: "Are you sure you want to update your profile?",
@@ -453,6 +477,7 @@
                         }
                         // $("form[name='profile']").submit();
                     });
+                  }
                 });
             }),
             Dropzone.options.myAwesomeDropzone = !1, Dropzone.autoDiscover = !1,
