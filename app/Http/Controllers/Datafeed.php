@@ -103,7 +103,6 @@ class DataFeed extends Controller
     $newListing = new Listings;
     if ($newListing->validate($inputs)) {
       $newListing->fill($inputs); 
-      var_dump($newListing); exit();
       $newListing->slug = SlugService::createSlug(Listings::class, 'slug', $inputs['title']);
       $newId = $newListing->save();
       if ($newId) {
