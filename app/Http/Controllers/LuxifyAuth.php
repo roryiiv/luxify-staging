@@ -69,9 +69,6 @@ class LuxifyAuth extends Controller
                             case 'admin':
                             return redirect()->intended('/panel');
                             break;
-                            case 'editor':
-                            return redirect()->intended('/panel');
-                            break;
                             case 'seller':
                             return redirect()->intended('/dashboard');
                             break;
@@ -108,61 +105,57 @@ class LuxifyAuth extends Controller
 
     }
     public function register() {
-        $email = $_POST['email'];
-        $fullname = $_POST['fullname'];
-        $hashed = $_POST['hashed'];
-        $salt= $_POST['salt'];
-        $password = $_POST['password'];
-        $password_confirmation = $_POST['password_confirmation'];
-        if ($password ===  $password_confirmation) {
-            $newUser = new User;
-            $newUser->hashedPassword = $hashed;
-            $newUser->salt = $salt;
-            $newUser->username = $fullname;
-            $newUser->email = $email;
-            $newUser->role = 'user';
-            $newUser->save();
-            if ($newUser->id ) {
-                $username_to = $fullname;
-                $details = array('to' => $email);
-                $this_url = url('/');
-                Mail::send('emails.luxify-welcome-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){
+      $email = $_POST['email'];
+      $fullname = $_POST['fullname'];
+      $hashed = $_POST['hashed'];
+      $salt= $_POST['salt'];
+      $password = $_POST['password'];
+      $password_confirmation = $_POST['password_confirmation'];
+      if ($password ===  $password_confirmation) {
+        $newUser = new User;
+        $newUser->hashedPassword = $hashed;
+        $newUser->salt = $salt;
+        $newUser->username = $fullname;
+        $newUser->email = $email;
+        $newUser->role = 'user';
+        $newUser->save();
+        if ($newUser->id ) {
+            $username_to = $fullname;
+            $details = array('to' => $email);
+            Mail::send('emails.luxify-welcome-en-us', ['username_to' => $username_to, 'this_url'=> 'https://www.luxify.com'], function ($message) use ($details){
 
-                    $message->from('technology@luxify.com', 'Luxify Admin');
-                    $message->subject('Welcome to Luxify');
-                    $message->replyTo('no_reply@luxify.com', $name = null);
-                    $message->to($details['to']);
+                $message->from('technology@luxify.com', 'Luxify Admin');
+                $message->subject('Welcome to Luxify');
+                $message->replyTo('no_reply@luxify.com', $name = null);
+                $message->to($details['to']);
 
-                });
+            });
+            $auth = User::where('email', '=', $email)->where('hashedPassword', '=', $hashed)->where('salt', '=', $salt)->first();
 
-                $auth = User::where('email', '=', $email)->where('hashedPassword', '=', $hashed)->where('salt', '=', $salt)->first();
-                if($auth) {
-                    // Authentication passed...
-                    Auth::login($auth);
-                    $role = Auth::user()->role;
-                    // var_dump(Auth::user()); var_dump(Auth::user()->role); exit();
-                    switch($role){
-                        case 'admin':
-                        return redirect()->intended('/panel');
-                        break;
-                        case 'editor':
-                        return redirect()->intended('/panel');
-                        break;
-                        case 'seller':
-                        return redirect()->intended('/dashboard');
-                        break;
-                        case 'user':
-                        return redirect()->intended('/dashboard/profile');
-                        break;
-                    }
+            if($auth) {
+                // Authentication passed...
+                Auth::login($auth);
+                $role = Auth::user()->role;
+                // var_dump(Auth::user()); var_dump(Auth::user()->role); exit();
+                switch($role){
+                    case 'admin':
+                    return redirect()->intended('/panel');
+                    break;
+                    case 'seller':
+                    return redirect()->intended('/dashboard');
+                    break;
+                    case 'user':
+                    return redirect()->intended('/dashboard/profile');
+                    break;
                 }
-            } else {
-              return redirect()->intended('/login');
             }
-          } else {
-            //return redirect()->intended('/register');
-            return view('auth.register');
-          }
+        } else {
+          return redirect()->intended('/login');
+        }
+      } else {
+        //return redirect()->intended('/register');
+        return view('auth.register');
+      }
 
 
     }

@@ -127,7 +127,7 @@ class Dashboard extends Controller
 
         $error_arr = array();
         if((isset($_POST['txtPassword']) && !empty($_POST['txtPassword'])) && (isset($_POST['txtConfirmPassword']) && !empty($_POST['txtConfirmPassword']))){
-            if($_POST['txtPassword'] == $_POST['txtConfirmPassword']) {
+            if($_POST['txtPassword'] == $_POST['txtConfirmPassword']  && strlen($_POST['txtPassword']) >= 8) {
                 // reset user password
                 if(isset($_POST['hashed']) && !empty($_POST['hashed'])){
                     $user->hashedPassword = $_POST['hashed'];
@@ -135,7 +135,7 @@ class Dashboard extends Controller
                 if(isset($_POST['salt']) && !empty($_POST['salt'])){
                     $user->salt = $_POST['salt'];
                 }
-            }else{
+            } else {
                 $error_arr['password'] = 'password not matching.';
             }
         }
@@ -143,12 +143,6 @@ class Dashboard extends Controller
             $user->firstName = $_POST['first_name'];
         }
         if(isset($_POST['last_name']) && !empty($_POST['last_name'])){
-            $user->lastName = $_POST['last_name'];
-        }
-        if(isset($_POST['']) && !empty($_POST[''])){
-            $user->lastName = $_POST['last_name'];
-        }
-        if(isset($_POST['']) && !empty($_POST[''])){
             $user->lastName = $_POST['last_name'];
         }
         if(isset($_POST['country']) && !empty($_POST['country'])){
