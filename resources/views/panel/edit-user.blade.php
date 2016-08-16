@@ -405,7 +405,8 @@
                                                 <div class="form-group">
                                                     <label for="meta_title" class="col-sm-3 control-label">Title</label>
                                                     <div class="col-sm-9">
-                                                        <input id="meta_title" name='meta_title' maxlength="60" type="text" class="form-control" placeholder="{{$user->meta_title}}">
+                                                   	<?php $meta_title_alt = $user->companyName == '' ? $user->firstName.' '.$user->lastName : $company[0].' '. $company[1]; ?>
+                                                        <input id="meta_title" name='meta_title' maxlength="60" type="text" class="form-control" placeholder="{{$user->meta_title == '' ? $meta_title_alt : $user->meta_title}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group" style="display:none;">
@@ -417,7 +418,7 @@
                                                 <div class="form-group">
                                                     <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
                                                     <div class="col-sm-9">
-                                                        <textarea id="meta_description" name='meta_description' class="form-control " maxlength="160">{{$user->meta_description}}</textarea>
+                                                        <textarea id="meta_description" name='meta_description' class="form-control " maxlength="500" placeholder="{{$user->meta_description == '' ? $user->companySummary : $user->meta_description}}"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -439,7 +440,7 @@
                                                 <div class="form-group">
                                                      <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
                                                     <div class="col-sm-9">
-                                                        <input id="meta_author" maxlength="60" name='meta_author' type="text" class="form-control" placeholder="{{$user->meta_author}}">
+                                                        <input id="meta_author" maxlength="60" name='meta_author' type="text" class="form-control" placeholder="{{$user->meta_author == '' ? $meta_title_alt : $user->meta_author}}">
                                                     </div>
                                                 </div>
                                             </section>
@@ -591,6 +592,7 @@
                            $('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
                             })
                           }
+                          $(window).unbind('beforeunload');
                           $("form[name='profile']").submit();
                         }else{
                             swal("Cancelled", "User profile is not updated.", "error");

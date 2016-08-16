@@ -322,9 +322,8 @@
               </div>
             </div>
 
-   <script type='text/template' class="dz-preview dz-file-preview" id="dz-preview-template" style="display:none;">
-              <div class="row">
-              </div>
+   			<script type='text/template' class="dz-preview dz-file-preview" id="dz-preview-template" style="display:none;">
+   			<div class="row"></div>
             </script>
 @endsection
 

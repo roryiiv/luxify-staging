@@ -55,7 +55,7 @@
             </div>
         </div>
     @endif
-    <section class="inner-banner parallax" style="background-image:url({{ func::img_url($banner, 1960) }});">
+    <section class="inner-banner dealer-page parallax" style="background-image:url({{ func::img_url($banner, 1960) }});">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-center">
@@ -65,7 +65,7 @@
                             if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
                               $company = json_decode($dealer->companyName);
                                 if(is_array($company)){
-                                $title = "<strong>".$company[0]."</strong></br>".$company[1]; 
+                                $title = $company[0]."</br>".$company[1]; 
                                 }else{
                                  $title = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
                                 }
@@ -218,10 +218,16 @@
               </div>
           </div>
       </div>
-      <?php $feat = func::getFeatured($dealer->id); ?>
-      @if(!empty($feat))
-          <?php $mainImageUrl = !empty($feat->mainImageUrl) ? $feat->mainImageUrl : 'about-banner.jpg'; ?>
-          <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }});">
+      <?php 
+     // $feat = func::getFeatured($dealer->id); 
+      $featured = json_decode($dealer->featured_item);
+      ?>
+      @if($featured == NULL)
+        <?php
+        $feat = func::getFeatured($dealer->id);
+        $mainImageUrl = !empty($feat->mainImageUrl) ? $feat->mainImageUrl : 'about-banner.jpg';
+        ?>
+        <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }});">
               <div class="container">
                   <div class="row">
                       <div class="col-sm-6">
@@ -235,7 +241,31 @@
                       </div>
                   </div>
               </div>
-          </div>
+        </div>
+      @else
+      <div class="cycle-slideshow" data-cycle-fx="scrollHorz" data-cycle-timeout="2000" data-cycle-slides="> div">  
+        @foreach($featured as $value)
+              <?php 
+              $isi = DB::table('listings')->where('id',$value)->first();
+              $mainImageUrl = !empty($isi->mainImageUrl) ? $isi->mainImageUrl : 'about-banner.jpg'; 
+              ?>
+              <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }}); background-size: 100%;">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-6">
+                              <div class="text-box">
+                                  <a href="/listing/{{ $isi->slug }}" class="ferrari_featured_link"><strong class="title">Featured</strong></a>
+                                  <h1>{{ $isi->title }}</h1>
+                                  <?php $description = !empty($isi->description) ? $isi->description : 'Coming soon.'; ?>
+                                  <p>{{ func::truncate(strip_tags($description), 130) }}</p>
+                                  <a href="/listing/{{ $isi->slug }}" class="btn btn-primary">View more</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            @endforeach 
+      </div>
       @endif
 
       <div class="more_items_section">
@@ -298,6 +328,7 @@
   </main>
 @endsection
 @section('scripts')
+
     <script>
         $(document).ready(function() {
                               
@@ -313,6 +344,7 @@
         {{ csrf_field() }}
         <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
+        <script src="/assets/js/jquery.cycle2.min.js"></script>
         <script>
         $(document).ready(function(){
             $('a.favourite').each(function(){

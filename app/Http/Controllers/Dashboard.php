@@ -955,10 +955,28 @@ class Dashboard extends Controller
         $json_flot_chart = Analytics::get_flot_data($start,$end,$user_id);
         return $json_flot_chart;
     }
+    
     function get_first_flot_chart($year){
         $user_id = Auth::user()->id;
         $json_flot_chart = Analytics::get_flot_first($year,$user_id);
         return $json_flot_chart;
+    }
+
+    function FeaturedItem($dataid){
+        if(isset($_POST['values'])){
+            $value = $_POST['values'];
+        }else{
+            $value = array();
+        }
+        $checkbtn = json_encode($value);
+        $update = User::where('id',$dataid)->update(['featured_item'=>$checkbtn]);
+        if($update){
+
+            return 'Are You Sure?';
+            //console.log($item);
+        }else{
+            return 'Error';
+        }
     }
 
 }

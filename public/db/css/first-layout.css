@@ -4913,7 +4913,7 @@ table.dataTable tbody>tr>.selected {
 }
 
 #product-list_wrapper table tr th:nth-child(6) {
-    display: none;
+    /*display: none;*/
 }
 
 .error {

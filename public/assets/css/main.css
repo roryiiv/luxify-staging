@@ -694,6 +694,9 @@ div.lightbox {
     margin-bottom: 20px;
     text-transform: capitalize;
 }
+.inner-banner.dealer-page h1 {
+    text-transform: none;
+}
 .inner-banner .title {
     display: block;
     font-weight: normal;

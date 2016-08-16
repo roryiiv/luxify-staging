@@ -13,7 +13,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shop</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('home.header_menu_shop')</a>
                         <div class="dropdown-menu">
                             <ul>
                                 <li><a href="/luxify-estates/3d-estates">Luxify Estates 3D</a></li>
@@ -30,10 +30,10 @@
                             </ul>
                         </div>
                     </li>
-                    <li><a href="/why-luxify">Why luxify</a></li>
-                    <li><a target="_blank" href="/blog">BLog</a></li>
+                    <li><a href="/why-luxify">@lang('home.header_menu_whyLuxify')</a></li>
+                    <li><a target="_blank" href="/blog">@lang('home.header_menu_blog')</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('home.header_menu_more')</a>
                         <div class="dropdown-menu sm">
                             <ul>
                                 <li><a href="/about">About Luxify</a></li>

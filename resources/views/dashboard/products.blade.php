@@ -362,8 +362,19 @@
                                                     <?php
                                                     $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
                                                     $price_format = func::formatPrice($products[$i]->currencyId, $sess_currency, $products[$i]->price);
+                                                    $user = DB::table('users')->where('id',$products[$i]->userId)->first();
+                                                    $featured_item = $user->featured_item;
+                                                    $featured = json_decode($featured_item);
                                                     ?>
-                                                    <td> <input type="radio" name="featureditem" value="{{$products[$i]->id}}" style="margin-left :45px" data-id="{{$products[$i]->userId}}" onchange="FeaturedItem()"></td>
+                                                    <td>
+                                                    @if (is_array($featured))
+                                                    	<?php $checked = in_array(($products[$i]->id), $featured) ? 'checked' : ''; ?>
+                                                	@else
+                                                		<?php $checked = ''; ?>
+                                                    @endif
+                                                    
+                                                     <input id="product-{{$i}}" type="checkbox" {{$checked}} name="checkbox[]" value="{{$products[$i]->id}}" dataid="{{$products[$i]->userId}}" class="FeaturedItem">
+                                                    </td>
                                                     <td class="text-right">{{$price_format}}</td>
                                                     {{-- <td class="text-right">320</td> --}}
                                                     <td><span class="label label-default">{{$products[$i]->status}}</span></td>
@@ -439,24 +450,34 @@
         $('#view').change(function(){
             $('form#sorter').submit();
         });
-    });
-    </script>
-    <script type="text/javascript">
-        function FeaturedItem(){
-            var check_radio = $(this).val();
-            var id = $(this).attr('data-id');
+        
+         $('.FeaturedItem').on('change',function(){
+        var arr = [];
+        arr.length = 0;
+            $('.FeaturedItem').each(function(){
+                if($(this).is(':checked')){
+                    arr.push($(this).val());
+                }
+            });
+            console.log(arr);
+            //validasi
+
+            //save
+            var id = $(this).attr('dataid');
+            //alert(checkbtn+id);
 
             $.ajax({
-                url : '/update/'+id+'/'+check_radio,
+                url : '/add/featured-item/'+id,
                 method :'post',
+                data :{values: arr, _token: '{{ csrf_token()}}'},
                 success:function(result){
-                    $(this).val(result);
+                    // alert(result);
                     console.log(result);
                 }
             });
 
-        }
-
+        });
+    });
     </script>
 
 @endsection

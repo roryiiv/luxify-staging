@@ -88,7 +88,7 @@
                                 <div id="flot-visitor" style="height: 300px"></div>
                                 <div class="row row-0 mt-10 text-center">
                                     <div class="col-xs-4">
-                                        <div class="fs-30 fw-600">{{$visitor_m}}</div>
+                                        <div class="fs-30 fw-600 visitorget">{{$visitor_m}}</div>
                                         <h5 class="m-0">Overall Visitors {!!$pr_visitor!!}</h5>
                                     </div>
                                     <div class="col-xs-4">
@@ -96,7 +96,7 @@
                                         <h5 class="m-0">Avg. Visit Duration <span class="text-success"><i class="ti-arrow-up fs-13"></i> 12.54%</span></h5>
                                     </div>
                                     <div class="col-xs-4">
-                                        <div class="fs-30 fw-600">{{$visitor_m/$total_product}}</div>
+                                        <div class="fs-30 fw-600 itempervisit">{{$visitor_m/$total_product}}</div>
                                         <h5 class="m-0">Item/Visit <span class="text-success"><i class="ti-arrow-up fs-13"></i> 5.62%</span></h5>
                                     </div>
                                 </div>
@@ -375,6 +375,8 @@
                     }
                 }
                 $.plot($("#flot-visitor"), h, g);
+                $(".visitorget").html(json_data.total);
+                $(".itempervisit").html(json_data.itempervisit);
                 }
 
             }
@@ -476,8 +478,9 @@
             "Last Month": [moment().subtract("month", 1).startOf("month"), moment().subtract("month", 1).endOf("month")]
         },
         opens: "left",
-        startDate: moment().subtract(29, "days"),
-        endDate: moment(),
+        //startDate: moment().subtract(29, "days"),
+        startDate: moment().startOf('year'),
+        endDate: moment().endOf('year'),
         applyClass: "btn-raised btn-black",
         cancelClass: "btn-raised btn-default"
     },
@@ -509,7 +512,7 @@
                 }
             });
         $("#daterangepicker span").html(e.format("MMMM D, YYYY") + " - " + t.format("MMMM D, YYYY"))
-    }), $("#daterangepicker span").html(moment().subtract(29, "days").format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY")), Morris.Donut({
+    }), $("#daterangepicker span").html('This Year'), Morris.Donut({
         element: "morris-browser",
         data: [{
             label: "Chrome",

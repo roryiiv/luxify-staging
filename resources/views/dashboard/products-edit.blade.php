@@ -388,7 +388,7 @@
                         <div class="form-group">
                             <label for="meta_title" class="col-sm-3 control-label">Title</label>
                             <div class="col-sm-9">
-                                <input id="meta_title" name='meta_title' type="text" class="form-control" max="60" placeholder="{{$item->meta_title}}">
+                                <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$item->meta_title == '' ? $item->title : $item->meta_title}}">
                             </div>
                         </div>
                         <div class="form-group" style="display:none;">
@@ -400,7 +400,7 @@
                         <div class="form-group">
                             <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
                             <div class="col-sm-9">
-                                <textarea id="meta_description" name='meta_description' class="form-control " maxlength="160">{{$item->meta_description}}</textarea>
+                                <textarea id="meta_description" name='meta_description' class="form-control " maxlength="500" placeholder="{{$item->meta_description == '' ? $item->description : $item->meta_description}}"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -422,7 +422,7 @@
                         <div class="form-group">
                              <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
                             <div class="col-sm-9">
-                                <input id="meta_author" name='meta_author' type="text" maxlength="60" class="form-control" placeholder="{{$item->meta_author}}">
+                                <input id="meta_author" name='meta_author' type="text" maxlength="60" class="form-control" placeholder="{{$item->meta_author == '' ? $item->title : $item->meta_author}}">
                             </div>
                         </div>
             </fieldset>

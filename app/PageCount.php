@@ -27,9 +27,6 @@ class PageCount extends Model
                 $input->listing_id = $id_slug;
                 $input->user_id = $a;
                 $input->visitor = $visitor;
-//              pakai request laravel  
-                //$input->ip = Request::ip();
-//              pakai native php
                 $input->ip = $_SERVER['REMOTE_ADDR'];
                 $input->save();
             });
@@ -72,11 +69,10 @@ class PageCount extends Model
         $day = $dt->day;
 
         //data_bulanan
-
         $data = array();
         $data['date'] = $datenow;
-        //alogaritm for add null count
 
+        //alogaritm for add null count
         $data['visitor_all'] = $all_visitor;
         $data['visitor_m'] = $visitor_monthly;
         $data['pr_visitor'] = $pr_visitor;

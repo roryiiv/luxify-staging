@@ -63,6 +63,7 @@ $(document).ready(function () {
         return editProductForm.valid();
       },
       onFinishing: function (event, currentIndex) {
+      	$(window).unbind('beforeunload');
         swal({
           title: "Good job!",
           text: "You have updated the listing.",
