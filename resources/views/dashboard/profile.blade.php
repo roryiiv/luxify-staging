@@ -38,7 +38,7 @@
     }
     .bootstrap-tagsinput {
            width: 100%;
-       }
+    }
     </style>
 @endsection
 
@@ -247,10 +247,10 @@
                                 @if(Auth::user())
                                     @if(Auth::user()->role == 'user')
                                                 <div class="col-sm-9 col-md-8 col-md-offset-4 col-sm-offset-3">
-                                                <label for="notificationCheck">
-                                                    <input type="checkbox" id="notificationCheck"> I wish to be notified by email</label>
+                                                    <label for="notificationCheck">
+                                                        <input type="checkbox" id="notificationCheck"> I wish to be notified by email</label>
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                     @endif
                                 @endif
@@ -318,19 +318,21 @@
                                                     <div class="pt-15">
                                                         <input id="companyName" name="companyName[]" type="text" class="form-control" placeholder="{{ $company[0] }}" value="">
                                                     </div>
+                                                    <div class="pt-15">
+                                                        <input id="companyName" name="companyName[]" type="text" class="form-control" placeholder="{{ $company[1] }}" value="">
+                                                    </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="phoneNumber" class="control-label">Contact Phone Numbers</label>
                                                     <?php $phones = json_decode($user->phoneNumber); ?>
                                                     <div class="pt-15">
-                                                        <input id="companyName" name="companyName[]" type="text" class="form-control" placeholder="{{ $company[1] }}" value="">
                                                         <input id="phoneNumber"  data-role='taginput' type="text" class="form-control" value="{{ !empty($phones) ? join(',', $phones): ''}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="txtCompanyRegNum" class="control-label">Company Registration No.:</label>
                                                     <div class="pt-15">
-                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}" value="{{$user->companyName}}">
+                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}" value="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
@@ -350,7 +352,7 @@
                                                     <div class="pt-15">
                                                         <textarea name="contactDetails" id="contactDetails " cols="3" rows="15" class="form-control" placeholder="{{$user->contactDetails}}"></textarea>
                                                     </div>
-                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -416,15 +418,15 @@
                                                     <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
                                                     <div class="col-sm-9">
                                                         <div class="hideslug">
-                                                        <div class="bootstrap-filestyle input-group">
+                                                            <div class="bootstrap-filestyle input-group">
                                                                 <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
                                                                 <div type="text" class="input-group-addon" disabled  style="background:#eee;border-color:#ccc;">{{ url('/dealer') . '/' . $user->id . '/'}}</div>
                                                                 <input class="get_slug form-control" data-id ="{{$user->id}}" type="text" value="{{$slug }}" name="slug">
-                                                            <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                                                    <label for="fulImage" class="btn btn-outline btn-primary">
+                                                                <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                                                        <label for="fulImage" class="btn btn-outline btn-primary">
                                                                             <span class="buttonText editslugajax">save</span>
-                                                                    </label>
-                                                            </span>
+                                                                        </label>
+                                                                </span>
                                                             </div> 
                                                         </div>
                                                         
@@ -475,8 +477,8 @@
                                                         <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="{{$user->meta_keyword}}">
                                                         </div>
                                                     </div>
-                                            </div>
-                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
                                                      <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
                                                     <div class="col-sm-9">
@@ -584,87 +586,87 @@
             $('.editslugajax').click(function(){
                 var newslug = $('.get_slug').val();
                 var id = $('.get_slug').attr('data-id');
-                    $.ajax({
-                        url: "{{route('get_slug_user')}}/"+id+"/"+newslug,
-                        async: false,
-                        cache: false,
-                        success:function( html ) {
-                            $( ".get_slug" ).val( html );
-                            var count = html.length;
-                            if(count<=40){
-                                newslug = html;
-                            }else{
-                                newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
-                            }
-                            $('.updatelink').html('{{url("/")}}/dealer/'+id+'/<strong>'+newslug+'</strong>');
-                            $('.updatelink').attr('href','{{url("/")}}/dealer/'+id+'/'+html);
-                            $('.hideslug').hide();
-                            $('.showslug').show();
+                $.ajax({
+                    url: "{{route('get_slug_user')}}/"+id+"/"+newslug,
+                    async: false,
+                    cache: false,
+                    success:function( html ) {
+                        $( ".get_slug" ).val( html );
+                        var count = html.length;
+                        if(count<=40){
+                            newslug = html;
+                        }else{
+                            newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
+                        }
+                        $('.updatelink').html('{{url("/")}}/dealer/'+id+'/<strong>'+newslug+'</strong>');
+                        $('.updatelink').attr('href','{{url("/")}}/dealer/'+id+'/'+html);
+                        $('.hideslug').hide();
+                        $('.showslug').show();
 
                     }
                 });
             });
 
             $("form.form-horizontal").validate({
-              rules: {
-                email: {
-                  required: true,
-                  email: true,
-                },
-                first_name: {
-                  required: true,
-                  minlength: 2
-                },
-                last_name: {
-                  required: true,
-                  minlength: 2
-                },
-                txtPassword: {
-                  minlength: 8,
-                  equalTo: '#txtConfirmPassword',
-                },
-                txtConfirmPassword: {
-                  minlength: 8,
-                  equalTo: '#txtPassword',
-                },
-              }
+              	rules: {
+                	email: {
+                  		required: true,
+                  		email: true,
+                	},
+                	first_name: {
+                  		required: true,
+                  		minlength: 2
+                	},
+                	last_name: {
+                  		required: true,
+                  		minlength: 2
+                	},
+                	txtPassword: {
+                  		minlength: 8,
+                  		equalTo: '#txtConfirmPassword',
+                	},
+                	txtConfirmPassword: {
+                 	 	minlength: 8,
+                  		equalTo: '#txtPassword',
+                	},
+            	}
             });
             var token = "{{ Session::getToken() }}";
             $("#sweet-3, .sweet-3").each(function () {
                 $(this).on("click", function () {
-                  if ($("form.form-horizontal").valid()) {
-                    swal({
-                        title: "Update Profile",
-                        text: "Are you sure you want to update your profile?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#A1D9F2",
-                        confirmButtonText: "Yes!",
-                        cancelButtonText: "No!",
-                        closeOnConfirm: true,
-                        closeOnCancel: false
-                    },
-                    function(isConfirm){
-                        if (isConfirm) {
-                          if ($('#txtPassword').val() !== '') {
-                            var salt = encrypt.makeSalt();
-                            var hashed = encrypt.password($('#txtPassword').val(), salt);
-                            $('input#salt').val(salt);
-                            $('input#hashed').val(hashed);
-                          }
-                          if ($('#phoneNumber').val() !== '') {
-                            var phones = $('#phoneNumber').tagsinput('items');
-                            $(phones).each(function(idx, ele) {
-                              $('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
-                            });
-                          }
+                  	if ($("form.form-horizontal").valid()) {
+	                    swal({
+	                        title: "Update Profile",
+	                        text: "Are you sure you want to update your profile?",
+	                        type: "warning",
+	                        showCancelButton: true,
+	                        confirmButtonColor: "#A1D9F2",
+	                        confirmButtonText: "Yes!",
+	                        cancelButtonText: "No!",
+	                        closeOnConfirm: true,
+	                        closeOnCancel: false
+	                    },
+	                    function(isConfirm){
+	                        if (isConfirm) {
+	                          	if ($('#txtPassword').val() !== '') {
+	                            	var salt = encrypt.makeSalt();
+	                            	var hashed = encrypt.password($('#txtPassword').val(), salt);
+	                            	$('input#salt').val(salt);
+	                            	$('input#hashed').val(hashed);
+	                          	}
+	                          	if ($('#phoneNumber').val() !== '') {
+	                            	var phones = $('#phoneNumber').tagsinput('items');
+	                            	$(phones).each(function(idx, ele) {
+	                              		$('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
+	                            	});
+	                          	}
 	                          	$(window).unbind('beforeunload');
-                          $("form[name='profile']").submit();
-                        }else{
-                            swal("Cancelled", "Your profile is not updated.", "error");
-                        }
-                        // $("form[name='profile']").submit();
-                    });
+	                            $("form[name='profile']").submit();
+	                        }else{
+	                            swal("Cancelled", "Your profile is not updated.", "error");
+	                        }
+	                        // $("form[name='profile']").submit();
+	                    });
                 	}
                 });
             }),
