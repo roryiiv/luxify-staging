@@ -55,7 +55,8 @@ class Listings extends Model
       'categoryId',
       'userId',
       'description',
-      'additionalInfo'
+      'additionalInfo',
+      'html_desc'
       ];
     
     protected $rules = array(
@@ -63,7 +64,6 @@ class Listings extends Model
       'baseCurrencyPrice' => 'min:0',
       'images' => 'string',
       'status' => 'required|String|in:APPROVED,PENDING,SOLD,EXPIRED,REJECTED',
-      'price' => 'min:0',
       'mainImageUrl' => 'required',
       'condition' => 'required|in:PRE-OWNED,NEW',
       'buyNowUrl' => 'URL',
@@ -81,7 +81,8 @@ class Listings extends Model
       'userId' => 'required|integer',
       'description' => 'required|string',
       'slug' => 'alpha_dash',
-      'additionalInfo' => 'string'
+      'additionalInfo' => 'string',
+      'html_desc' => 'string'
     );
 
     protected $errors;
