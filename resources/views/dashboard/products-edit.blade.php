@@ -391,7 +391,8 @@
     var optionalFields = <?php echo json_encode($item->optionFields, JSON_PRETTY_PRINT) ?>;
 
 
-    function deleteImg(ele, i, filename, onS3 = false) {
+    function deleteImg(ele, i, filename, onS3) {
+      onS3 = (typeof onS3 === 'undefined') ? false : onS3;
         $.ajax({
             url:'/removeImage',
             method: 'POST',

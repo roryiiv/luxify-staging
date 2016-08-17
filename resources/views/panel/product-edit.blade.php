@@ -1,4 +1,4 @@
-@extends('layouts.panel')
+extends('layouts.panel')
 @section('head')
 <!-- PACE-->
 <link rel="stylesheet" type="text/css" href="/db/css/pace-theme-flash.css">
@@ -390,8 +390,9 @@
     var optionalFields = <?php echo json_encode($item->optionFields, JSON_PRETTY_PRINT) ?>;
 
 
-    function deleteImg(ele, i, filename, onS3 = false) {
-        $.ajax({
+    function deleteImg(ele, i, filename, onS3) {
+      onS3 = (typeof onS3 === 'undefined') ? false : onS3;
+      $.ajax({
             url:'/removeImage',
             method: 'POST',
             data: {
