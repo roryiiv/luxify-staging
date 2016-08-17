@@ -62,13 +62,13 @@
                 @if(is_array($images))
                     @foreach($images as $image)
                         <li>
-                          <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                            <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                          <a {{schema::itemType('URL')}} rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
+                            <img {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
                           </a>
                         </li>
                     @endforeach
                 @else
-                    <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
+                    <li><img {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
                 @endif
             </ul>
 
@@ -80,7 +80,7 @@
     </div>
     <!-- end of banner -->
     <!-- main informative part of the page -->
-    <main id="main">
+    <main id="main" {{schema::itemScope()}}>
         <!-- item description -->
         <div class="item-description">
             <div class="container">
@@ -100,32 +100,32 @@
                             $price_format = func::formatPrice($listing->currencyId, $sess_currency, $listing->price);
                             ?>
                             <ul class="detail">
-                                <li><span class="icon icon-tag"></span><span class="text">{{ $price_format }}</span></li>
+                                <li><span class="icon icon-tag"></span><span class="text" itemprop="price" {{schema::itemType('Integer')}}>{{ $price_format }}</span></li>
                                 <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
                             </ul>
                             <ul class="social-links">
                                <?php $added = func::is_wishlist($user_id, $listing->id) == 1 ? ' added' : ''; ?>
                             @if (Auth::user()) 
                               @if($added !== '')
-                                  <li><a class="favourite {{$added}}" data-id="{{$listing->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a></li>
+                                  <li><a {{schema::itemType('URL')}} class="favourite {{$added}}" data-id="{{$listing->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a></li>
                               @else
-                                  <li><a class="favourite" data-id="{{$listing->id}}" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
+                                  <li><a {{schema::itemType('URL')}} class="favourite" data-id="{{$listing->id}}" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
                               @endif
                             @else
                               <li><a data-toggle="modal" data-listing="{{$listing->id}}" data-target="#login-form" class="" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
                             @endif
                                 <li>
-                                    <a class="social-link" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=1100408396697613&amp;display=popup&amp;caption={{urlencode($listing->description)}} &amp;link={{ $url . '/listing/' . $listing->slug}}&amp;redirect_uri={{ $url . '/listing/' . $listing->slug}}">
+                                    <a {{schema::itemType('URL')}} class="social-link" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=1100408396697613&amp;display=popup&amp;caption={{urlencode($listing->description)}} &amp;link={{ $url . '/listing/' . $listing->slug}}&amp;redirect_uri={{ $url . '/listing/' . $listing->slug}}">
                                         <span class="icon icon-facebook"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="social-link" target="_blank" href="https://twitter.com/share?url={{ urlencode($url . '/listing/' . $listing->slug) }}&text={{urlencode($listing->description)}}">
+                                    <a {{schema::itemType('URL')}} class="social-link" target="_blank" href="https://twitter.com/share?url={{ urlencode($url . '/listing/' . $listing->slug) }}&text={{urlencode($listing->description)}}">
                                         <span class="icon icon-twitter"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="social-link" target="_blank" href="https://pinterest.com/pin/create/button/?url={{ $url }}/listing/{{ $listing->slug }}&media=https://s3-ap-southeast-1.amazonaws.com/luxify/images/{{$listing->mainImageUrl}}&description={{ urlencode($listing->description) }}">
+                                    <a {{schema::itemType('URL')}} class="social-link" target="_blank" href="https://pinterest.com/pin/create/button/?url={{ $url }}/listing/{{ $listing->slug }}&media=https://s3-ap-southeast-1.amazonaws.com/luxify/images/{{$listing->mainImageUrl}}&description={{ urlencode($listing->description) }}">
                                         <span class="icon icon-pinterest"></span>
                                     </a>
                                 </li>
@@ -146,10 +146,10 @@
                                 <span class="small-text">Luxify dealer since {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
                                     <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                    <a href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">Dealer page</a>
-                                    <a href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
+                                    <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">Dealer page</a>
+                                    <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
                                     @if($listing->buyNowUrl)
-                                    <a target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</a>
+                                    <a {{schema::itemType('URL')}} target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</a>
                                     @endif
                                 </div>
                             </div>
@@ -161,12 +161,12 @@
                             <ol class="breadcrumb">
                                 <li><a href="/">Home</a></li>
                                 @if($category && $category != '')
-                                    <li><a href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
+                                    <li><a  {{schema::itemProp('category')}} {{schema::itemType("URL")}} href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
                                 @endif
                                 <li class="active">{{ $cat && !empty($cat) ? $cat->title : $listing->title }}</li>
                             </ol>
                             <header class="block-header">
-                                <h1 class="item-title">{{ $listing->title }}</h1>
+                                <h1 {{schema::itemProp('name')}} {{ schema::itemType('Text') }} class="item-title">{{ $listing->title }}</h1>
                                 @if(!empty($listing->aerialLook3DUrl))
                                     <a href="{{ $listing->aerialLook3DUrl }}" rel="lightbox_3d_video" data-fancybox-type="iframe" class="btn btn-primary lightbox">3D Virtual Tour &nbsp;<span class="glyphicon glyphicon-play"></span></a>
                                 @endif
@@ -176,19 +176,19 @@
                             </header>
                             <div class="description">
                                 <h5>Description</h5>
-                                <p>
+                                <p {{schema::itemProp('description')}} {{schema::itemType('Text')}}>
                                     {!! nl2br(e($listing->description)) !!}
                                 </p>
                                 @if(!empty($infos))
                                     <h5 style="margin-top:45px;">Specifications</h5>
-                                    <table class="table item-description">
+                                    <table class="table item-description" {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
                                         <thead>
                                         </thead>
                                         <tbody>
                                         @foreach($infos as $info)
                                           <tr>
-                                            <th scope="row" style="padding: 8px 0px;">{{$info->label}}</th>
-                                            <td class='text-center'>{{$info->value}}</td>
+                                            <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{$info->label}}</th>
+                                            <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
                                           </tr>
                                         @endforeach
                                         </tbody>
