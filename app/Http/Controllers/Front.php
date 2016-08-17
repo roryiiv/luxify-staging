@@ -22,6 +22,8 @@ use DB;
 
 use func;
 
+use schema;
+
 use Illuminate\Routing\Controller;
 
 use \Cviebrock\EloquentSluggable\Services\SlugService;
