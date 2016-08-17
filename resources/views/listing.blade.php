@@ -286,10 +286,10 @@
                                             <div class="caption">
                                                 <h3><a href="/listing/{{ $rel->slug }}">{{ $rel->title }}</a></h3>
                                                 <?php
-                                                $rel_seller = func::getTableByID('users', $rel->userId);
-                                                $rel_sellerImg = !empty($rel_seller->companyLogoUrl) ? $rel_seller->companyLogoUrl : 'default-logo.png';
-                                                $rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
-                                                $rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
+                                                  $rel_seller = func::getTableByID('users', $rel->userId);
+                                                  $rel_sellerImg = !empty($rel_seller->companyLogoUrl) ? $rel_seller->companyLogoUrl : 'default-logo.png';
+                                                  $rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                  $rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
                                                 ?>
                                                 <div>
                                                 </div>
@@ -297,7 +297,7 @@
                                                   <span class="country">{{$rel->country}}</span>
                                                 </div>
                                                 <div class="item-logo">
-                                                    <img data-src="{{ func::img_url($rel_sellerImg, 90, '', true) }}" alt="">
+                                                    <img src="{{ func::img_url($rel_sellerImg, 90, '', true) }}" alt="">
                                                 </div>
                                             </div>
                                         </div>
