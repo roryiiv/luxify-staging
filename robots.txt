@@ -1,9 +1,0 @@
-User-agent: *
-Disallow: /app/
-Disallow: /config/
-Disallow: /resources/
-Disallow: /storage/
-Disallow: /vendor/
-Disallow: /bootstrap/
-Disallow: /database/
-Disallow: /tests/
