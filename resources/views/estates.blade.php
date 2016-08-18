@@ -175,7 +175,7 @@
                             <img src="{{func::img_url('banners/estates-3D-poster.jpg', '', '', false, true)}}" alt="image description">
                         </div>
                     </div>
-						        <a class="play lightbox fancybox.iframe" href="https://my.matterport.com/show/?m=1VXKRhH7xcd"><span class="icon-play"></span></a>
+						        <a class="play lightbox fancybox.iframe" href="https://my.matterport.com/show/?m=uRGXgoiYk9f"><span class="icon-play"></span></a>
                 </div>
                 </div>
                  </div> <!-- end of new grid -->
