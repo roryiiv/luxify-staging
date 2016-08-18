@@ -4,6 +4,13 @@
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
+@section('meta-data')
+
+<meta name="title" content="{{$dealer->companyName}}">
+<meta name="description" content="{{preg_replace('/\r|\n/', '', $dealer->companySummary)}}">
+
+@endsection
+
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
