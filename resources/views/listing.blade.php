@@ -6,7 +6,7 @@
 @section('meta-data')
 
 <meta name="title" content="{{$listing->title}}">
-<meta name="description" content="{{substr(preg_replace('/\r|\n/', '', $listing->description), 0, 160)}}">
+<meta name="description" content="{{ func::trimDownText($listing->description, 160)}}">
 
 @endsection
 

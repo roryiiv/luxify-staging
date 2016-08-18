@@ -7,7 +7,7 @@
 @section('meta-data')
 
 <meta name="title" content="{{$dealer->companyName}}">
-<meta name="description" content="{{substr(preg_replace('/\r|\n/', '', $dealer->companySummary), 0, 160)}}">
+<meta name="description" content="{{ func::trimDownText($dealer->companySummary, 160)}}">
 
 @endsection
 
