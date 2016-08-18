@@ -67,9 +67,9 @@ class Functions
             $processor .= !empty($height) ? $height : '';
         }
         if (!$static) {
-          $processor .= '/https://luxify.s3-accelerate.amazonaws.com/images/';
+          $processor .= '/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/images/';
         } else {
-          $processor .= '/https://luxify.s3-accelerate.amazonaws.com/static/';
+          $processor .= '/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/';
         }
         return $processor . $url;
     }
