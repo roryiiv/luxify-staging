@@ -1,20 +1,20 @@
+@inject('s_meta', 'App\Meta')
 @extends('layouts.front')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
-@section('title', $listing->title )
+@section('title', trim(preg_replace('/\s\s+/', ' ', $meta->title)))
 
-@section('meta-data')
+@section('meta')
 
-<meta name="title" content="{{$listing->title}}">
 <meta name="description" content="{{ func::trimDownText($listing->description, 160)}}">
-
+<meta name="keyword" content="{{$meta->keyword}}">
+<meta name="author" content="{{$meta->author}}">
 @endsection
 
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main2.css">
-@endsection
-@section('content')
+
     <style>
      .added span {
        color: red;
@@ -39,16 +39,28 @@
        font-weight: 100;
      }
     </style>
+@endsection
+@section('content')
     <!-- main banner of the page -->
     <div class="inner-banner">
         <!-- banner image -->
         <section class="images">
             <?php
+                $otherImages = json_decode($listing->images);
+                //check if the mainImage is exist on images
+                $check_mainImage = array();
+                $check_mainImage[] = $listing->mainImageUrl;
+                $checking = array_intersect($otherImages, $check_mainImage);
+                if(count($checking)===0){
                $images = json_decode($listing->images);
                if (!empty($listing->mainImageUrl)) {
                  // prepend main image to the images array
                  array_unshift($images, $listing->mainImageUrl);
+                   }                    
+                }else{
+                    $images = json_decode($listing->images);
                }
+
             ?>
             <ul>
                 @if($listing->aerialLook3DUrl)
@@ -68,14 +80,22 @@
                 @endif
                 @if(is_array($images))
                     @foreach($images as $image)
+                    <?php
+                    $ori = $s_meta::get_slug_img($image);
+                    if($ori!=''){
+                        $alt = $s_meta::get_slug_img($image);
+                    }else{
+                        $alt = 'luxify';
+                    }
+                    ?>
                         <li>
-                          <a {{schema::itemType('URL')}} rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                            <img {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                          <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
+                            <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
                           </a>
                         </li>
                     @endforeach
                 @else
-                    <li><img {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
+                    <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
                 @endif
             </ul>
 
