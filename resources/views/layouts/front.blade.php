@@ -125,33 +125,33 @@
                                         <nav class="footer-nav">
                                             <h4>Luxify</h4>
                                             <ul>
-                                                <li><a href="/about">About us / Careers</a></li>
-                                                <li><a href="/why-luxify">How it works</a></li>
-                                                <li><a target="_blank" href="http://press.luxify.com">Press</a> / <a href="/blog">Blog</a></li>
-                                                <li><a href="/dealer-directory">Dealer Directory</a></li>
+                                                <li><a href="/about">@lang('home.front_aboutUsCareers')</a></li>
+                                                <li><a href="/why-luxify">@lang('home.front_howItWorks')</a></li>
+                                                <li><a target="_blank" href="http://press.luxify.com">@lang('home.front_press')</a> / <a href="/blog">@lang('home.front_blog')</a></li>
+                                                <li><a href="/dealer-directory">@lang('home.front_dealerDirectory')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>Platform</h4>
+                                            <h4>@lang('home.front_platform')</h4>
                                             <ul>
                                                 @if(Auth::user())
-                                                    <li><a href="/logout">Logout</a></li>
+                                                    <li><a href="/logout">@lang('home.front_logout')</a></li>
                                                 @else
-                                                    <li><a href="/login">Member Login</a></li>
+                                                    <li><a href="/login">@lang('home.front_memberLogin')</a></li>
                                                 @endif
 
-                                                <li><a href="/pricing">Pricing</a></li>
-                                                <li><a href="/dealer-application">Dealer Application</a></li>
-                                                <li><a href="/luxify-estates">Luxify Estates</a></li>
-												<li><a href="/contact">Contact Us</a></li>
+                                                <li><a href="/pricing">@lang('home.front_pricing')</a></li>
+                                                <li><a href="/dealer-application">@lang('home.front_dealerApplication')</a></li>
+                                                <li><a href="/luxify-estates">@lang('home.front_luxifyEstates')</a></li>
+												<li><a href="/contact">@lang('home.front_contactUs')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>Our Office</h4>
+                                            <h4>@lang('home.front_ouroffice')</h4>
                                             <ul>
                                                 <li><a href="mailto:concierge@luxify.com">concierge@luxify.com</a></li>
                                                 <li>
@@ -163,7 +163,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>Follow us</h4>
+                                            <h4>@lang('home.front_followus')</h4>
                                             <ul class="social-networks">
                                                 <li><a target="_blank" href="https://www.facebook.com/LuxifyOfficial/"><span class="icon-facebook"></span></a></li>
                                                 <li><a target="_blank" href="https://twitter.com/luxifyofficial"><span class="icon-twitter"></span></a></li>
@@ -231,6 +231,11 @@
             var code = $(this).val();
             // alert(code);
             window.location.href = '/api/currency/switch/' + code;
+        });
+        $('#langSelect').on('change', function(){
+            var code = $(this).val();
+            // alert(code);
+            window.location.href = '/api/lang/switch/' + code;
         });
     });
     </script>

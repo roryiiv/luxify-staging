@@ -367,13 +367,16 @@
                                                     $featured = json_decode($featured_item);
                                                     ?>
                                                     <td>
-                                                    @if (is_array($featured))
-                                                    	<?php $checked = in_array(($products[$i]->id), $featured) ? 'checked' : ''; ?>
-                                                	@else
-                                                		<?php $checked = ''; ?>
-                                                    @endif
-                                                    
-                                                     <input id="product-{{$i}}" type="checkbox" {{$checked}} name="checkbox[]" value="{{$products[$i]->id}}" dataid="{{$products[$i]->userId}}" class="FeaturedItem">
+                                                    <?php
+                                                    if (in_array(($products[$i]->id), $featured)){
+                                                        $checked = "checked";
+                                                    }
+                                                    else
+                                                    {
+                                                        $checked ="";
+                                                    }
+                                                    ?>
+                                                     <input id="product-{{$i}}" type="checkbox" {{$checked}} name="checkbox[]" value="{{$products[$i]->id}}" dataid="{{$products[$i]->userId}}" class="FeaturedItem" style="margin-left:45%">
                                                     </td>
                                                     <td class="text-right">{{$price_format}}</td>
                                                     {{-- <td class="text-right">320</td> --}}
@@ -467,7 +470,7 @@
             //alert(checkbtn+id);
 
             $.ajax({
-                url : '/add/featured-item/'+id,
+                url : '/update/'+id,
                 method :'post',
                 data :{values: arr, _token: '{{ csrf_token()}}'},
                 success:function(result){

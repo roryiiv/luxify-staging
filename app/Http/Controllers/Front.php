@@ -26,8 +26,6 @@ use DB;
 
 use func;
 
-use schema;
-
 use Illuminate\Routing\Controller;
 
 use \Cviebrock\EloquentSluggable\Services\SlugService;
@@ -35,6 +33,8 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 use App\PageCount;
 
 use App\Wishlists;
+
+use App\Language;
 
 class Front extends Controller {
     //Front end Controller
@@ -596,6 +596,17 @@ class Front extends Controller {
             ->join('countries', 'countries.id', '=', 'listings.countryId')
             ->select('listings.*', 'countries.name as country')
             ->paginate(51);
+
+/*              on editing
+            $json_price = DB::table('listings')
+            ->where('status', 'APPROVED')
+            ->whereIn('listings.categoryId', $cat_ids)
+            ->where($search_arr)
+            ->orderBy($orderby, $order)
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.price', 'countries.name as country')
+            ->get();
+            dd($json_price);*/
         }else{
             $listings = DB::table('listings')
             ->where('status', 'APPROVED')
@@ -669,6 +680,28 @@ class Front extends Controller {
         }else{
             return view('auth.register');
         }
+    }
+
+    public function forgetPassword() {
+        return view('auth.forget-password');  
+    }
+
+    public function resetPassword($token) {
+    	$reset_arr = DB::table('reset_password')
+    	->where('token', $token)
+    	->where('status', 'OPEN')
+    	->first();
+        return view('auth.reset-password', ['reset_arr' => $reset_arr]);  
+    }
+
+    public function EmailInUse(Request $request){
+        $email = $request->input('email');
+
+        $checkemail = DB::table('users')
+                   ->where('email', $email)
+                   ->first();
+
+        return Response::json(['response' => $checkemail != null]);
     }
 
     public function dealerDirectory() {
@@ -1745,6 +1778,10 @@ class Front extends Controller {
 
     public function switchCurrency(Request $request, $code){
         $request->session()->put('currency', $code);
+        return back();
+    }
+    public function switchLanguage(Request $request, $code){
+        $updatelang = Language::updatelang($code);
         return back();
     }
 

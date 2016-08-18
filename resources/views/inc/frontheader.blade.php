@@ -16,17 +16,17 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('home.header_menu_shop')</a>
                         <div class="dropdown-menu">
                             <ul>
-                                <li><a href="/luxify-estates/3d-estates">Luxify Estates 3D</a></li>
-                                <li><a href="/category/real-estates">Real Estates</a></li>
-                                <li><a href="/category/jewellery-watches">Watches & Jewelry</a></li>
-                                <li><a href="/category/motors">Motors</a></li>
-                                <li><a href="/category/handbags-accessories">Handbags & Accessories</a></li>
-                                <li><a href="/category/experiences">Experiences</a></li>
-                                <li><a href="/category/collectibles-furnitures">Collectibles & Furnitures</a></li>
-                                <li><a href="/category/yachts">Yachts</a></li>
-                                <li><a href="/category/aircrafts">Aircrafts</a></li>
-                                <li><a href="/category/art-antiques">Art & Antiques</a></li>
-                                <li><a href="/category/fine-wines-spirits">Fine Wines & Spirits</a></li>
+                                <li><a href="/luxify-estates/3d-estates">@lang('home.header_menu_luxifyEstate3d')</a></li>
+                                <li><a href="/category/real-estates">@lang('home.header_menu_realEstates')</a></li>
+                                <li><a href="/category/jewellery-watches">@lang('home.header_menu_whatches&Jewelry')</a></li>
+                                <li><a href="/category/motors">@lang('home.header_menu_motors')</a></li>
+                                <li><a href="/category/handbags-accessories">@lang('home.header_menu_handbags&Accessories')</a></li>
+                                <li><a href="/category/experiences">@lang('home.header_menu_experiences')</a></li>
+                                <li><a href="/category/collectibles-furnitures">@lang('home.header_menu_collectibles&Furnitures')</a></li>
+                                <li><a href="/category/yachts">@lang('home.header_menu_yachts')</a></li>
+                                <li><a href="/category/aircrafts">@lang('home.header_menu_aircrafts')</a></li>
+                                <li><a href="/category/art-antiques">@lang('home.header_menu_art&Antiques')</a></li>
+                                <li><a href="/category/fine-wines-spirits">@lang('home.header_menu_fineWines&Spirits')</a></li>
                             </ul>
                         </div>
                     </li>
@@ -36,19 +36,29 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('home.header_menu_more')</a>
                         <div class="dropdown-menu sm">
                             <ul>
-                                <li><a href="/about">About Luxify</a></li>
-                                <li><a href="/pricing">Pricing</a></li>
-                                <li><a href="/dealer-application">Dealer Application</a></li>
-                                <li><a href="/luxify-estates">Luxify Estates</a></li>
-                                <li><a href="/contact">Contact Us</a></li>
+                                <li><a href="/about">@lang('home.header_more_aboutLuxify')</a></li>
+                                <li><a href="/pricing">@lang('home.header_more_pricing')</a></li>
+                                <li><a href="/dealer-application">@lang('home.header_more_dealerApplication')</a></li>
+                                <li><a href="/luxify-estates">@lang('home.header_more_luxifyEstates')</a></li>
+                                <li><a href="/contact">@lang('home.header_more_contactUs')</a></li>
                             </ul>
                         </div>
                     </li>
                 </ul>
-                <?php $currencies = func::build_curr(); ?>
-                <?php $sess_currency = null !==  session('currency') ? session('currency') : 'USD'; ?>
+                <?php
+                    $languages = func::build_lang();
+                    $sess_lang = func::get_lang();
+                    $currencies = func::build_curr();
+                    $sess_currency = null !==  session('currency') ? session('currency') : 'USD'; ?>
                 @if(Auth::user())
                     <ul class="nav navbar-nav navbar-right">
+                        <li class="currency-selector-container">
+                            <select id="langSelect" class="language-selector">
+                                @foreach($languages as $language)
+                                    <option value="{{$language['val']}}"{{func::selected($language['code'], $sess_lang)}}>{{$language['label']}}</option>
+                                @endforeach
+                            </select>
+                        </li>
                         <li class="currency-selector-container">
                             <select id="currSelect" class="currency-selector">
                                 @foreach($currencies as $currency)
@@ -57,15 +67,15 @@
                             </select>
                         </li>
                         <li class="dropdown">
-                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Welcome {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a>
+                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">@lang('home.header_menu_welcome') {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a>
                           <div class="dropdown-menu" id="user-menu">
                               <ul>
                                   @if(Auth::user()->role == 'admin')
-                                    <li><a href="/panel">Admin Panel</a></li>
+                                    <li><a href="/panel">@lang('home.header_menu_adminPanel')</a></li>
                                   @else
-                                    <li><a href="/dashboard">Dashboard</a></li>
+                                    <li><a href="/dashboard">@lang('home.header_menu_dashboard')</a></li>
                                   @endif
-                                  <li><a href="/logout">Logout</a></li>
+                                  <li><a href="/logout">@lang('home.header_menu_logout')</a></li>
                               </ul>
                           </div>
                         </li>
@@ -73,13 +83,20 @@
                 @else
                     <ul class="nav navbar-nav navbar-right">
                         <li class="currency-selector-container">
+                            <select id="langSelect" class="language-selector">
+                                @foreach($languages as $language)
+                                    <option value="{{$language['val']}}"{{func::selected($language['code'], $sess_lang)}}>{{$language['label']}}</option>
+                                @endforeach
+                            </select>
+                        </li>
+                        <li class="currency-selector-container">
                            <select id="currSelect" class="currency-selector">
                              @foreach($currencies as $currency)
                                <option value="{{$currency['code']}}"{{func::selected($currency['code'], $sess_currency)}}>{{$currency['code']}} {{$currency['symbol']}}</option>
                              @endforeach
                            </select>
                         </li>
-                        <li><a href="/register">Sign up</a></li>
+                        <li><a href="/register">Sign Up</a></li>
                         <li><a href="/login">Login</a></li>
                     </ul>
                 @endif

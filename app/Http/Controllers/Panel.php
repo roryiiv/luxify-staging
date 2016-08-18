@@ -22,7 +22,7 @@ use App\Users;
 
 use DB;
 
-use Response;
+use Illuminate\Http\Response;
 
 use Aws\S3\S3Client;
 
@@ -39,6 +39,8 @@ use App\Meta;
 use func;
 
 use Cache;
+
+use Storage;
 
 class Panel extends Controller
 {
@@ -604,7 +606,8 @@ class Panel extends Controller
             $user->currencyId = $_POST['currency'];
         }
         if(isset($_POST['phoneNumber']) && !empty($_POST['phoneNumber'])) {
-            $user->phoneNumber = json_encode($_POST['phoneNumber']); 
+        	$phoneNumber = json_encode($_POST['phoneNumber']);
+            $user->phoneNumber = $phoneNumber;
         }
         if(isset($_POST['contactDetails']) && !empty($_POST['contactDetails'])){
             $user->contactDetails = $_POST['contactDetails'];
@@ -1159,5 +1162,18 @@ class Panel extends Controller
         }
         $array_unique = array_unique($keywords);
         return json_encode(array_values($array_unique));
+    }
+    function downloadImage($image){
+        $filename ="https://s3-ap-southeast-1.amazonaws.com/luxify/images/" . $image;
+            $buffer = file_get_contents($filename);
+            header("Content-Type: application/force-download");
+            header("Content-Type: application/octet-stream");
+            header("Content-Type: application/download");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+            header("Content-Type: application/octet-stream");
+            header("Content-Transfer-Encoding: binary");
+            header("Content-Length: " . strlen($buffer));
+            header("Content-Disposition: attachment; filename=$image");
+            echo $buffer; 
     }
 }

@@ -343,7 +343,7 @@
                                 <th class="text-center" colspan="2">Image</th>
                                 <th>Image Url</th>
                                 <th style="width: 20%">Featured Image</th>
-                                <th class="text-center">Remove</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -445,7 +445,7 @@
                             <div class="col-sm-9">
                                 <input id="meta_author" name='meta_author' type="text" maxlength="60" class="form-control" placeholder="{{$item->meta_author == '' ? $item->title : $item->meta_author}}">
                             </div>
-                </div>
+                        </div>
             </fieldset>
         </form>
     </div>
@@ -540,9 +540,9 @@
         //images is not contain mainImageurl
         $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
 
-    for($i = 0; $i < count($otherImages); $i++) {
+        for($i = 0; $i < count($otherImages); $i++) {
             $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
-    }
+        }
     }else{
         //images is not contain mainImageurl
             for($i = 0; $i < count($otherImages); $i++) {
@@ -558,7 +558,7 @@
 
     function deleteImg(ele, i, filename, onS3) {
       onS3 = (typeof onS3 === 'undefined') ? false : onS3;
-      $.ajax({
+        $.ajax({
             url:'/removeImage',
             method: 'POST',
             data: {
@@ -581,12 +581,14 @@
             }
         });
     }
+    function downloadImg(ele, i, filename, onS3 = false) {
+    }
 
     function genImagesPreview() {
         var table = $("#images-preview-table tbody");
         table.html('');
         for (var i = 0; i < images_array.length; i++) {
-            $('<tr class="draganddropcustom"><td class="dot-hidden" style="border-right:medium none;"></td><td class="text-center" style="border-left: medium none;"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(radiomainimage==images_array[i].filename?"checked":"")+' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + images_array[i].filename +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
+            $('<tr class="draganddropcustom"><td class="dot-hidden" style="border-right:medium none;"></td><td class="text-center" style="border-left: medium none;"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(radiomainimage==images_array[i].filename?"checked":"")+' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + images_array[i].filename +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button> <a href="{{url("/download-image")}}/'+images_array[i].filename+'" target="_blank" type="button" class="btn btn-sm btn-outline btn-success"><i class="ti-download"></i></a></td></tr>').appendTo(table);
         }
     }
     function genControls({id, type, name, label, optionValues, value, valueId}){
@@ -830,7 +832,7 @@
     function exitPage(){
         $.get('/api/ajax/exit/{{$item->id}}', function(data) {
             return data;
-    });
+        });
     }
 
     function timerIncrement() {

@@ -52,14 +52,14 @@
                 $check_mainImage[] = $listing->mainImageUrl;
                 $checking = array_intersect($otherImages, $check_mainImage);
                 if(count($checking)===0){
-               $images = json_decode($listing->images);
-               if (!empty($listing->mainImageUrl)) {
-                 // prepend main image to the images array
-                 array_unshift($images, $listing->mainImageUrl);
+                   $images = json_decode($listing->images);
+                   if (!empty($listing->mainImageUrl)) {
+                     // prepend main image to the images array
+                     array_unshift($images, $listing->mainImageUrl);
                    }                    
                 }else{
                     $images = json_decode($listing->images);
-               }
+                }
 
             ?>
             <ul>
@@ -170,11 +170,11 @@
                                     </a>
                                 </div>
 
-                                <span class="small-text">Luxify dealer since {{ date("Y", strtotime($dealer->created_at)) }}</span>
+                                <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
                                     <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                    <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">Dealer page</a>
-                                    <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
+                                    <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">>@lang('home.listing_dealerPage')</a>
+                                    <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> @lang('home.listing_contactDealer')</a>
                                     @if($listing->buyNowUrl)
                                     <a {{schema::itemType('URL')}} target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</a>
                                     @endif
@@ -236,7 +236,7 @@
                 <!-- new grid -->
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
-                        <h1 class="text-center">More from this seller</h1>
+                        <h1 class="text-center">@lang('home.listing_mftseller')</h1>
                         <div class="slider">
                             @if(!empty($mores))
                                 @foreach($mores as $more)
@@ -292,7 +292,7 @@
                 <!-- new grid -->
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
-                        <h1 class="text-center">You may also like</h1>
+                        <h1 class="text-center">@lang('home.listing_ymalike')</h1>
                         <div class="slider">
                             @if(!empty($relates))
                                 @foreach($relates as $rel)
@@ -313,10 +313,10 @@
                                             <div class="caption">
                                                 <h3><a href="/listing/{{ $rel->slug }}">{{ $rel->title }}</a></h3>
                                                 <?php
-                                                  $rel_seller = func::getTableByID('users', $rel->userId);
-                                                  $rel_sellerImg = !empty($rel_seller->companyLogoUrl) ? $rel_seller->companyLogoUrl : 'default-logo.png';
-                                                  $rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
-                                                  $rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
+                                                $rel_seller = func::getTableByID('users', $rel->userId);
+                                                $rel_sellerImg = !empty($rel_seller->companyLogoUrl) ? $rel_seller->companyLogoUrl : 'default-logo.png';
+                                                $rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                $rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
                                                 ?>
                                                 <div>
                                                 </div>

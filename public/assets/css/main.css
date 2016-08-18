@@ -4235,6 +4235,24 @@ a.btn-3DVRTour {
     background-color: rgba( 10, 10, 10, 0.6);
     z-index: 100;
 }
+.cycle-next, .cycle-prev {
+	width:100px; 
+	height:100px; 
+	background:#ddd; 
+	position:absolute; 
+	z-index:100; 
+	top:235px;
+}
+.cycle-next {
+	right: 0;
+}
+.cycle-prev {
+	left: 0;
+}
+.cycle-next span, .cycle-prev span {
+	font-size: 50px;
+    margin: 23px;
+}
 @media ( min-width:1200px) {
     .item-list .thumbnail figure {
         width: 346px !important;

@@ -169,4 +169,43 @@ class LuxifyAuth extends Controller
         Auth::logout();
         return redirect()->intended('/login');
     }
+    
+    public function forgetPassword(Request $request){
+        $email = $request->input('email');
+
+        $checkemail = DB::table('users')
+                   ->where('email', $email)
+                   ->count();
+        if($checkemail < 1){
+            return redirect('/forget-password?error=3');
+        }else{
+        	// Email found!!
+        	$token = str_random(32);
+        	$date = date("Y-m-d H:m:s");
+        	DB::table('reset_password')->insert(['username' => $email, 'token' => $token, 'reset_at' => $date]);
+        	
+
+        	$details = array('to' => $email);
+        	$this_url = url('/') . '/reset-password/' . $token;
+        	// var_dump($this_url); exit;
+        	Mail::send('emails.luxify-reset-password-en-us', ['this_url' => $this_url], function ($message) use ($details){
+
+        	    $message->from('technology@luxify.com', 'Luxify Admin');
+        	    $message->subject('Reset Password');
+        	    $message->replyTo('no_reply@luxify.com', $name = null);
+        	    $message->to($details['to']);
+
+        	});
+            return redirect('/forget-password?success=1');
+        }
+        
+    }
+
+    public function resetPassword(Request $request){
+    	$email = $request->input('email');
+    	DB::table('users')
+    	->where('email', $email)
+    	->update(['hashedPassword' => $request->input('hashed'), 'salt' => $request->input('salt')]);
+    	return redirect()->intended('/login');
+    }
 }

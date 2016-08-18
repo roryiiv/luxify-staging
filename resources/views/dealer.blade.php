@@ -90,9 +90,9 @@
                 </div>
                 <div class="button-wrap">
                     <input type="hidden" name="_ref" value="/dealer/{{$dealer->id}}" />
-                    <a class="btn btn-default" href="/search?search=&user_id={{$dealer->id}}"><span class="glyphicon glyphicon-th-large"></span> View listings</a>
+                    <a class="btn btn-default" href="/search?search=&user_id={{$dealer->id}}"><span class="glyphicon glyphicon-th-large"></span> @lang('home.dealer_viewlistings')</a>
                     <!--<a href="/dealer/contact/{{ $dealer->id }}/0" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>-->
-                  <a href="#" data-toggle="modal" data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
+                  <a href="#" data-toggle="modal" data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> @lang('home.dealer_contactDealer')</a>
               </div>
           </div>
       </div>
@@ -177,7 +177,7 @@
                             $addresss = null;
                             if (isset($dealer->companyAddress) && !empty($dealer->companyAddress)) {
                             
-                              $address= is_array(json_decode($dealer->companyAddress))? join(" ", json_decode($dealer->companyAddress)) : $dealer->companyAddress;
+                            $address= is_array(json_decode($dealer->companyAddress))? join(" ", json_decode($dealer->companyAddress)) : $dealer->companyAddress;
                             }
                         ?>
                         @if(!empty($address))
@@ -231,7 +231,7 @@
         $feat = func::getFeatured($dealer->id);
         $mainImageUrl = !empty($feat->mainImageUrl) ? $feat->mainImageUrl : 'about-banner.jpg';
         ?>
-          <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }});">
+        <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }});">
               <div class="container">
                   <div class="row">
                       <div class="col-sm-6">
@@ -245,19 +245,22 @@
                       </div>
                   </div>
               </div>
-          </div>
+        </div>
       @else
-      <div class="cycle-slideshow" data-cycle-fx="scrollHorz" data-cycle-timeout="2000" data-cycle-slides="> div">  
+
+      <div  class="cycle-slideshow" style="width:auto;" data-cycle-fx="scrollHorz" data-cycle-timeout="4000" data-cycle-slides="> div.parallax"> 
+      <div class="cycle-prev"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+      <div class="cycle-next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
         @foreach($featured as $value)
               <?php 
               $isi = DB::table('listings')->where('id',$value)->first();
               $mainImageUrl = !empty($isi->mainImageUrl) ? $isi->mainImageUrl : 'about-banner.jpg'; 
-              ?>
-              <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }}); background-size: 100%;">
+              ?>  
+              <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true)}});width: 100%; background-size: 100%;">
                   <div class="container">
                       <div class="row">
                           <div class="col-sm-6">
-                              <div class="text-box">
+                              <div class="text-box" style="min-height: 500px">
                                   <a href="/listing/{{ $isi->slug }}" class="ferrari_featured_link"><strong class="title">Featured</strong></a>
                                   <h1>{{ $isi->title }}</h1>
                                   <?php $description = !empty($isi->description) ? $isi->description : 'Coming soon.'; ?>
@@ -275,7 +278,7 @@
       <div class="more_items_section">
           <div class="container">
               <div class="heading">
-                  <h1 class="text-center">More From This Seller</h1>
+                  <h1 class="text-center">@lang('home.dealer_mftseller')</h1>
               </div>
               <div class="row">
                @if(!empty($listings))

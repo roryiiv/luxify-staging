@@ -64,7 +64,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                                 <input id="exampleCheckboxRemember" type="checkbox" value="remember">
                                 <label for="exampleCheckboxRemember" class="checkbox-muted text-muted">Remember me</label>
                             </div>
-                            {{--<div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">Forgot Passowrd?</a></div>--}}
+                            <div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">Forgot Passowrd?</a></div>
                         </div>
                     </div>
                     <button id="login_btn" type="submit" class="btn-lg btn btn-primary btn-block" style="border-radius: 0px;">Sign in</button>

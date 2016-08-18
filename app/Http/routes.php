@@ -76,11 +76,15 @@ Route::post('/api/mailbox/delete', 'Mailbox@deleteMessage');
 Route::post('/api/product/setStatus', 'Panel@product_change_status');
 Route::post('/api/dealer/setStatus', 'Panel@dealer_change_status');
 Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
+Route::get('/api/lang/switch/{code}', 'Front@switchLanguage');
 Route::post('/api/bulkActions', 'Panel@bulkActions');
 Route::get('/api/ajax/checkemail/{email}', 'Dashboard@IsEmailInUse');
 Route::get('/api/ajax/checkemail/{email}', 'Panel@IsEmailInUse');
 Route::get('/api/ajax/exit/{item}', 'Panel@exitPage');
-Route::post('/add/featured-item/{id}', 'Dashboard@FeaturedItem');
+Route::post('/update/{id}', 'Dashboard@FeaturedItem');
+Route::post('/api/ajax/checkemail/{email}', 'Front@EmailInUse');
+Route::post('/forget-password','LuxifyAuth@forgetPassword');
+Route::post('/reset-password','LuxifyAuth@resetPassword');
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 
@@ -106,6 +110,8 @@ Route::post('/search','Front@search');
 Route::post('/searchAjax','Front@searchAjax');
 Route::post('/wishlist/add','Front@wishlistAdd');
 Route::post('/dealer-application','Front@dealerApplication');
+Route::get('/forget-password','Front@forgetPassword');
+Route::get('/reset-password/{token}','Front@resetPassword');
 //Route::get('/build', 'Front@build');
 
 //routes for social oauth login/signup
@@ -182,6 +188,8 @@ Route::post('/upload_multiple', 'Dashboard@multiple_upload');
 Route::post('/removeImage', 'Dashboard@remove_image');
 //Dashboard support
 Route::post('/dashboard/support', 'Dashboard@supportSend');
+
+Route::get('/download-image/{image}', 'Panel@downloadImage');
 
 // Route::auth();
 Route::get('/home', 'HomeController@index');

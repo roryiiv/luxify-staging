@@ -89,8 +89,8 @@
                                             <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">User Role</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <select id="txtUserRole" name="txtUserRole" class="form-control">
-                                                  <option value="user" {{ $user->role === 'user' ? 'selected' : ''}}>User</option>
-                                                  <option value="seller" {{ $user->role === 'seller' ? 'selected' : ''}}>Seller</option>
+                                                    <option value="user" {{ $user->role === 'user' ? 'selected' : ''}}>User</option>
+                                                    <option value="seller" {{ $user->role === 'seller' ? 'selected' : ''}}>Seller</option>
                                                     <option value="editor" {{ $user->role === 'editor' ? 'selected' : ''}}>Editor</option>
                                                 </select>
                                             </div>
@@ -275,15 +275,15 @@
                                                 <div class="form-group m-0">
                                                     <label for="phoneNumber" data-role='taginput' class="control-label">Contact Phone Numbers</label>
                                                     <?php 
-                                                      $phones = null;
-                                                      if (isset($user->phoneNumber) && !empty($user->phoneNumber)) {
+                                                    $phones = null;
+                                                    if (isset($user->phoneNumber) && !empty($user->phoneNumber)) {
                                                     	$phones = json_decode($user->phoneNumber); //json is string, condition invalid.
                                                         if (!is_array($phones)) { 
                                                         	//if data here is already json it will output json string
-                                                          $phones = array();
-                                                          $phones[] = $user->phoneNumber;
+                                                          	$phones = array();
+                                                          	$phones[] = $user->phoneNumber;
                                                         }
-                                                      }
+                                                  	}
                                                     ?>
                                                     <div class="pt-15">
                                                         <input id="phoneNumber" type="text" class="form-control" value="{{ !empty($phones) ? join(',', $phones): ''}}">
@@ -386,15 +386,15 @@
                                                     <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
                                                     <div class="col-sm-9">
                                                         <div class="hideslug">
-                                                        <div class="bootstrap-filestyle input-group">
-                                                            <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
+                                                            <div class="bootstrap-filestyle input-group">
+                                                                <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
                                                                 <div type="text" class="input-group-addon" disabled  style="background:#eee;border-color:#ccc;">{{ url('/dealer') . '/' . $user->id . '/'}}</div>
                                                                 <input class="get_slug form-control" data-id ="{{$user->id}}" type="text" value="{{$slug }}" name="slug">
-                                                            <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                                                    <label for="fulImage" class="btn btn-outline btn-primary">
+                                                                <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                                                        <label for="fulImage" class="btn btn-outline btn-primary">
                                                                             <span class="buttonText editslugajax">Save URL</span>
-                                                                    </label>
-                                                            </span>
+                                                                        </label>
+                                                                </span>
                                                             </div> 
                                                         </div>
                                                         
@@ -445,8 +445,8 @@
                                                         <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="{{$user->meta_keyword}}">
                                                         </div>
                                                     </div>
+                                                    </div>
                                                 </div>
-                                            </div>
                                                 <div class="form-group">
                                                      <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
                                                     <div class="col-sm-9">
@@ -512,15 +512,15 @@
                	allowDuplicates: false 
             });
             var keywords = new Bloodhound({
-              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-              queryTokenizer: Bloodhound.tokenizers.whitespace,
-              prefetch: {
-                url: '{{route('get_keyword_json')}}',
-                filter: function(list) {
-                  return $.map(list, function(keyword) {
-                    return { name: keyword }; });
-                }
-              }
+              	datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              	queryTokenizer: Bloodhound.tokenizers.whitespace,
+              	prefetch: {
+                	url: '{{route('get_keyword_json')}}',
+                	filter: function(list) {
+                  		return $.map(list, function(keyword) {
+                    	return { name: keyword }; });
+                	}
+              	}
             });
             keywords.clearPrefetchCache();
             var keywords = new Bloodhound({
@@ -539,66 +539,66 @@
              * Typeahead
              */
             $('.tagit-sugestion > > input').tagsinput({
-              typeaheadjs: {
-                name: 'keywords',
-                displayKey: 'name',
-                valueKey: 'name',
-                source: keywords,
-                limit: 100,
-              }
+              	typeaheadjs: {
+                	name: 'keywords',
+                	displayKey: 'name',
+                	valueKey: 'name',
+                	source: keywords,
+                	limit: 100,
+              	}
             });
             $(".twitter-typeahead").css('display', 'inline');
 
             $('.editslugajax').click(function(){
                 var newslug = $('.get_slug').val();
                 var id = $('.get_slug').attr('data-id');
-                    $.ajax({
-                        url: "{{route('get_slug_user')}}/"+id+"/"+newslug,
-                        async: false,
-                        cache: false,
-                        success:function( html ) {
-                            $( ".get_slug" ).val( html );
-                            var count = html.length;
-                            if(count<=40){
-                                newslug = html;
-                            }else{
-                                newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
-                            }
-                            $('.updatelink').html('{{url("/")}}/dealer/'+id+'/<strong>'+newslug+'</strong>');
-                            $('.updatelink').attr('href','{{url("/")}}/dealer/'+id+'/'+html);
-                            $('.hideslug').hide();
-                            $('.showslug').show();
+                $.ajax({
+                    url: "{{route('get_slug_user')}}/"+id+"/"+newslug,
+                    async: false,
+                    cache: false,
+                    success:function( html ) {
+                        $( ".get_slug" ).val( html );
+                        var count = html.length;
+                        if(count<=40){
+                            newslug = html;
+                        }else{
+                            newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
+                        }
+                        $('.updatelink').html('{{url("/")}}/dealer/'+id+'/<strong>'+newslug+'</strong>');
+                        $('.updatelink').attr('href','{{url("/")}}/dealer/'+id+'/'+html);
+                        $('.hideslug').hide();
+                        $('.showslug').show();
 
                     }
                 });
             });
-          $("form.form-horizontal").validate({
-        rules: {
-          email: {
-            required: true,
-              email: true,
-          },
-          name: {
-            required: true,
-            minlength: 4
-          },
-          password: {
-            minlength: 8,
-            required: true,
-            equalTo: '#password_confirmation',
-          },
-          password_confirmation: {
-            minlength: 8,
-            required: true,
-            equalTo: '#password',
-          },
-          agreeTerms: {
-            required: function(ele) {
-              return $(ele).prop('checked');
-            },
-          }
-        },
-      });
+            $("form.form-horizontal").validate({
+		        rules: {
+		          	email: {
+		            	required: true,
+		              	email: true,
+		          	},
+		          	name: {
+		            	required: true,
+		            	minlength: 4
+		          	},
+		          	password: {
+		            	minlength: 8,
+		            	required: true,
+		            	equalTo: '#password_confirmation',
+		          	},
+		          	password_confirmation: {
+		            	minlength: 8,
+		            	required: true,
+		            	equalTo: '#password',
+		          	},
+		          	agreeTerms: {
+		            	required: function(ele) {
+		              		return $(ele).prop('checked');
+		            	},
+		          	}
+		        },
+	      	});
             var token = "{{ Session::getToken() }}";
             $("#sweet-3, .sweet-3").each(function () {
                 $(this).on("click", function () {
@@ -615,20 +615,20 @@
                     },
                     function(isConfirm){
                         if (isConfirm) {
-                          if ($('#txtPassword').val() !== '') {
-                            var salt = encrypt.makeSalt();
-                            var hashed = encrypt.password($('#txtPassword').val(), salt);
-                            $('input#salt').val(salt);
-                            $('input#hashed').val(hashed);
-                          }
-                          if ($('#phoneNumber').val() !== '') {
-                            var phones = $('#phoneNumber').tagsinput('items');
-                              $(phones).each(function(idx, ele) {
-                           $('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
-                            })
-                          }
-                          $(window).unbind('beforeunload');
-                          $("form[name='profile']").submit();
+                          	if ($('#txtPassword').val() !== '') {
+                            	var salt = encrypt.makeSalt();
+                            	var hashed = encrypt.password($('#txtPassword').val(), salt);
+                            	$('input#salt').val(salt);
+                            	$('input#hashed').val(hashed);
+                          	}
+                          	if ($('#phoneNumber').val() !== '') {
+                            	var phones = $('#phoneNumber').tagsinput('items');
+                              	$(phones).each(function(idx, ele) {
+                           			$('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
+                            	})
+                          	}
+                          	$(window).unbind('beforeunload');
+                          	$("form[name='profile']").submit();
                         }else{
                             swal("Cancelled", "User profile is not updated.", "error");
                         }
