@@ -1,4 +1,4 @@
-extends('layouts.panel')
+@extends('layouts.panel')
 @section('head')
 <!-- PACE-->
 <link rel="stylesheet" type="text/css" href="/db/css/pace-theme-flash.css">
