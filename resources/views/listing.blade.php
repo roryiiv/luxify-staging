@@ -3,6 +3,13 @@
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('title', $listing->title )
 
+@section('meta-data')
+
+<meta name="title" content="{{$listing->title}}">
+<meta name="description" content="{{preg_replace('/\r|\n/', '', $listing->description)}}">
+
+@endsection
+
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main2.css">
