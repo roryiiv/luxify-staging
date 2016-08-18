@@ -15,6 +15,17 @@ use Carbon\Carbon;
 
 class Functions
 {
+    static function trimDownText($txt, $len) {
+        $txt = preg_replace('/\r|\n/', '', $txt);
+        $txt = preg_replace('/<br\s?\/>/', '', $txt);
+        if (strlen($txt) > $len){
+           $txt = wordwrap($txt, $len); 
+           return substr($txt, 0, strpos($txt, "\n"));
+        } else {
+          return $txt;
+        }
+    }
+
     static function getVal($method = 'get', $key) {
       if ($method === 'get') {
         if (isset($_GET[$key]) && !empty($_GET[$key])) {
