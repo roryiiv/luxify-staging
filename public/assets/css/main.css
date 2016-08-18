@@ -4242,6 +4242,7 @@ a.btn-3DVRTour {
 	position:absolute; 
 	z-index:100; 
 	top:235px;
+	cursor: pointer;
 }
 .cycle-next {
 	right: 0;

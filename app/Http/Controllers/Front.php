@@ -1683,7 +1683,7 @@ class Front extends Controller {
                         $return .= '<li>';
                         $return .= '<a href="/listing/'. $list->slug.'" title="'. $list->title .'">';
                         $item_img = !empty($list->mainImageUrl) ? $list->mainImageUrl : 'default-logo.png';
-                        $return .= '<img class="result-img" src="/img/ring.gif" data-src="https://images.luxify.com/35/https://luxify.s3-accelerate.amazonaws.com/images/'. $item_img .'" width="35" height="35" alt="Image">';
+                        $return .= '<img class="result-img" src="/img/ring.gif" data-src="https://images.luxify.com/35/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/images/'. $item_img .'" width="35" height="35" alt="Image">';
                         $return .= $list->title;
                         //fixes for currency
                         $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
@@ -1711,7 +1711,7 @@ class Front extends Controller {
                         $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName);
                         $return .= '<a href="/dealer/'.$dealer->id.'/'.$slug.'" title="'.(!empty($dealer->companyName)? $dealer->companyName : $dealer->fullName).'">';
                         $dealer_img = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png';
-                        $return .= '<img src="https://images.luxify.com/150/https://luxify.s3-accelerate.amazonaws.com/images/'. $dealer_img .'" width="35" height="35" alt="Image">';
+                        $return .= '<img src="https://images.luxify.com/150/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/images/'. $dealer_img .'" width="35" height="35" alt="Image">';
                         $return .= '<span style="display: block; margin-top: 10px;">'. (!empty($dealer->companyName)? $dealer->companyName : $dealer->firstName . ' ' . $dealer->lastName). '</span>';
                         $return .= '</a>';
                         $return .= '</li>';

@@ -249,8 +249,6 @@
       @else
 
       <div  class="cycle-slideshow" style="width:auto;" data-cycle-fx="scrollHorz" data-cycle-timeout="4000" data-cycle-slides="> div.parallax"> 
-      <div class="cycle-prev"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-      <div class="cycle-next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
         @foreach($featured as $value)
               <?php 
               $isi = DB::table('listings')->where('id',$value)->first();
@@ -271,14 +269,16 @@
                       </div>
                   </div>
               </div>
-            @endforeach 
+            @endforeach
+            <div class="cycle-prev"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+            <div class="cycle-next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div> 
       </div>
       @endif
 
       <div class="more_items_section">
           <div class="container">
               <div class="heading">
-                  <h1 class="text-center">@lang('home.dealer_mftseller')</h1>
+                  <h1 class="text-center">More From This Seller</h1>
               </div>
               <div class="row">
                @if(!empty($listings))
