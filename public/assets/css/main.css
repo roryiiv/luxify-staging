@@ -4240,7 +4240,7 @@ a.btn-3DVRTour {
 	height:100px; 
 	background:#ddd; 
 	position:absolute; 
-	z-index:100; 
+	z-index:1000; 
 	top:235px;
 	cursor: pointer;
 }

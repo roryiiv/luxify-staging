@@ -385,6 +385,13 @@ class Dashboard extends Controller
             $newItem->expired_at = Carbon::createFromFormat('Y-m-d', $_POST['expiryDate']);
         }
 
+        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
+            $newItem->latitude = $_POST['latitude'];
+        }
+        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
+            $newItem->longitude = $_POST['longitude'];
+        }
+
         if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
             $newItem->buyNowUrl = $_POST['buyNowURL'];
         }
@@ -492,6 +499,13 @@ class Dashboard extends Controller
             $item->status = $_POST['status'];
         }
 
+        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
+            $item->latitude = $_POST['latitude'];
+        }
+        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
+            $item->longitude = $_POST['longitude'];
+        }
+
         if ( isset($_POST['description']) && !empty($_POST['description']) ) {
             $item->description = $_POST['description'];
         } else {
@@ -552,6 +566,14 @@ class Dashboard extends Controller
             } else {
                 $error_arr['images'] = 'Error in uploaded images.';
             }
+        }
+
+        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
+            $item->latitude = $_POST['latitude'];
+        }
+
+        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
+            $item->longitude = $_POST['longitude'];
         }
 
         if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {

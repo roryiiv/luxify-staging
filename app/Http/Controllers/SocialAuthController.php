@@ -23,6 +23,10 @@ class SocialAuthController extends Controller
     {
         return Socialite::driver('twitter')->redirect();
     }
+    public function in_redirect()
+    {
+        return Socialite::driver('linkedin')->redirect();
+    }
 
     public function provider_callback(SocialAccountService $service, $provider)
     {

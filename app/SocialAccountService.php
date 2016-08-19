@@ -8,45 +8,6 @@ use Laravel\Socialite\Contracts\Provider;
 
 
 class SocialAccountService{
-/*    public function createOrGetUser(ProviderUser $providerUser)
-    {
-        $account = SocialAccount::whereProvider($providerUser)
-            ->whereProviderUserId($providerUser->getId())
-            ->first();
-
-        if ($account) {
-            //login
-            return $account->user;
-        } else {
-            //create
-            $account = new SocialAccount([
-                'provider_user_id' => $providerUser->getId(),
-                'provider' => $providerUser
-            ]);
-
-            $user = User::whereEmail($providerUser->getEmail())->first();
-
-            if (!$user) {
-
-                $user = User::create([
-                    'email' => $providerUser->getEmail(),
-                    'firstName' => $providerUser->getNickname(),
-                    'fullname' => $providerUser->getName(),
-                    'role' => 'user',
-
-//                    getId(), getNickname(), getName(), getEmail(), getAvatar()
-                ]);
-            }
-
-            $account->user()->associate($user);
-            $account->save();
-
-            return $user;
-
-        }
-
-    }
-    */
     public function createOrGetUser(Provider $provider) {
 
         $providerUser = $provider->user();
@@ -68,9 +29,17 @@ class SocialAccountService{
             //check email??
             if($checkemail){
                 $user = User::where('email', $providerUser->getEmail())->first();
-                $row_social = ($providerName=='FacebookProvider')?'socialFacebook':'socialTwitter';
-                $link = ($providerName=='FacebookProvider')?'https://facebook.com':'https://twitter.com';
 
+                if($providerName=='FacebookProvider'){
+                    $row_social = 'socialFacebook';
+                    $link = 'https://facebook.com';
+                }else if($providerName=='twitterProvider'){
+                    $row_social = 'socialTwitter';
+                    $link = 'https://twitter.com';
+                }else if($providerName=='LinkedInProvider'){
+                    $row_social = 'socialLinkedin';
+                    $link = 'https://linkedin.com';
+                }
                 $user->email = $providerUser->getEmail();
                 $user->$row_social = $link.'/'.$providerUser->getId();
                 $user->save();
@@ -91,11 +60,8 @@ class SocialAccountService{
                         'provider_user_id' => $providerUser->getId(),
                         'provider' => $providerName
                     ]);
-
                     $user = User::whereEmail($providerUser->getEmail())->first();
-
                     if (!$user) {
-
                         $user = User::create([
                             'email' => $providerUser->getEmail(),
                             'firstName' => $providerUser->getNickname(),
@@ -121,48 +87,3 @@ class SocialAccountService{
         }
     }
 }
-/*
-namespace App;
-
-use Laravel\Socialite\Contracts\Provider;
-
-class SocialAccountService
-{
-    public function createOrGetUser(Provider $provider)
-    {
-
-        $providerUser = $provider->user();
-        $providerName = class_basename($provider);
-
-        $account = SocialAccount::whereProvider($providerName)
-            ->whereProviderUserId($providerUser->getId())
-            ->first();
-
-        if ($account) {
-            return $account->user;
-        } else {
-
-            $account = new SocialAccount([
-                'provider_user_id' => $providerUser->getId(),
-                'provider' => $providerName
-            ]);
-
-            $user = User::whereEmail($providerUser->getEmail())->first();
-
-            if (!$user) {
-
-                $user = User::create([
-                    'email' => $providerUser->getEmail(),
-                    'name' => $providerUser->getName(),
-                ]);
-            }
-
-            $account->user()->associate($user);
-            $account->save();
-
-            return $user;
-
-        }
-
-    }
-}*/

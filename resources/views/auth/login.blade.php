@@ -81,17 +81,21 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                     @endif
                 </form>
                 <hr>
-                <p class="text-muted" >Sign in with your Facebook or Twitter accounts</p>
-                <div class="clearfix" >
-                    <div class="pull-left">
+                <p class="text-muted" >Sign in with your Social Media accounts</p>
+                <div class="clearfix row" >
+                    <div class="col-sm-4">
                     <!--add class login_to_facebook-->
-                        <a href="#" type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-primary login_to_facebook"><i class="ti-facebook mr-5"></i> Facebook</a>
+                        <a href="#" type="button" style="width:97px;" class="btn btn-outline btn-rounded btn-primary login_to_facebook btn-sm"><i class="ti-facebook mr-5"></i>Facebook</a>
                     </div>
-                    <div class="pull-right">
-                        <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info login_to_twitter"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
+                    <div class="col-sm-4">
+                    <!--add class login_to_facebook-->
+                        <a href="#" type="button" style="width:97px;" class="btn btn-outline btn-rounded btn-primary login_to_linkedin btn-sm"><i class="ti-linkedin mr-5"></i>Linkedin</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" style="width:100%;" class="btn btn-outline btn-rounded btn-primary login_to_twitter btn-sm"><i class="ti-twitter-alt mr-5"></i>Twitter</button>
                     </div>
                 </div>
-                {{-- <hr> --}}
+                <hr>
                 <div class="clearfix">
                     <p class="text-muted mb-0 pull-left">Create a new account</p><a href="/register" class="inline-block pull-right">Sign Up</a>
                 </div>
@@ -129,6 +133,10 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
       $('.login_to_twitter').click(function(){
         //window.open("{{route('redirect_fb')}}");
         window.location = "{{route('redirect_tw')}}";
+      });
+      $('.login_to_linkedin').click(function(){
+        //window.open("{{route('redirect_fb')}}");
+        window.location = "{{route('redirect_in')}}";
       });
         $('#login_btn').click(function(event){
             event.preventDefault();

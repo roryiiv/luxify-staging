@@ -453,6 +453,13 @@ class Panel extends Controller
             }
         }
 
+        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
+            $item->latitude = $_POST['latitude'];
+        }
+        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
+            $item->longitude = $_POST['longitude'];
+        }
+
         if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
             $item->buyNowUrl = $_POST['buyNowURL'];
         }

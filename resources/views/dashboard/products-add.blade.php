@@ -221,6 +221,18 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="latitude" class="col-sm-3 control-label">Latitude</label>
+                            <div class="col-sm-9">
+                                <input id="latitude" name='latitude' type="text"  class="form-control" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="longitude" class="col-sm-3 control-label">Longitude</label>
+                            <div class="col-sm-9">
+                                <input id="longitude" name='longitude' type="text"  class="form-control" >
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="expiryDate" class="col-sm-3 control-label">Expiry Date (Optional)</label>
                             <div class="col-sm-9">
                                 <input id="startDate" name='expiryDate' type="text" class="form-control" value='{{ date_format(date_create('now'), 'Y-m-d')}}'>

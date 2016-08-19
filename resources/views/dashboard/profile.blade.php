@@ -219,6 +219,28 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-6">
+                                         @endif
+                                        <div class="form-group">
+                                            <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">Latitude</label>
+                                            <div class="col-sm-9 col-md-8">
+                                                <input id="latitude" name="latitude" type="text" placeholder="{{$user->latitude}}" class="form-control">
+                                            </div>
+                                        </div>
+                                         @if(Auth::user()->role == 'seller')
+                                    </div>
+                                    <div class="col-md-6">
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">Longitude</label>
+                                            <div class="col-sm-9 col-md-8">
+                                                <input id="longitude" name="longitude" type="text" placeholder="{{$user->longitude}}" class="form-control">
+                                            </div>
+                                        </div>
+                                        @if(Auth::user()->role == 'seller')
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-xs-12">
                                         @endif
                                         <div class="form-group">

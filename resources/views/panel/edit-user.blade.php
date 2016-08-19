@@ -177,6 +177,24 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="first_name" class="col-sm-3 col-md-4 control-label">Latitude</label>
+                                            <div class="col-sm-9 col-md-8">
+                                                <input id="latitude" name="latitude" type="text" placeholder="{{$user->latitude}}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="last_name" class="col-sm-3 col-md-4 control-label">Longitude</label>
+                                            <div class="col-sm-9 col-md-8">
+                                                <input id="longitude" name="longitude" type="text" class="form-control" placeholder="{{$user->longitude}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <label for="currency" class="col-sm-3 col-md-2 control-label">Price Display In</label>

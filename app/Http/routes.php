@@ -117,6 +117,7 @@ Route::get('/reset-password/{token}','Front@resetPassword');
 //routes for social oauth login/signup
 Route::get('/oauth/redirect/facebook', 'SocialAuthController@fb_redirect')->name("redirect_fb");
 Route::get('/oauth/redirect/twitter', 'SocialAuthController@tw_redirect')->name("redirect_tw");
+Route::get('/oauth/redirect/linkedin', 'SocialAuthController@in_redirect')->name("redirect_in");
 Route::get('/oauth/callback/{provider}', 'SocialAuthController@provider_callback');
 
 // PANEL Routes (admin)
