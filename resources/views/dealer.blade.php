@@ -235,11 +235,7 @@
                   <div class="row">
                       <div class="col-sm-6">
                           <div class="text-box">
-                              <a href="/listing/{{ $feat->slug }}" class="ferrari_featured_link"><strong class="title">@lang('home.dealer_featured')</strong></a>
-                              <h1>{{ $feat->title }}</h1>
-                              <?php $description = !empty($feat->description) ? $feat->description : 'Coming soon.'; ?>
-                              <p>{{ func::truncate(strip_tags($description), 130) }}</p>
-                              <a href="/listing/{{ $feat->slug }}" class="btn btn-primary">@lang('home.dealer_viewmore')</a>
+                              <h1>This user has not yet list an item.</h1>
                           </div>
                       </div>
                   </div>
