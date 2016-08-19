@@ -34,9 +34,9 @@ return [
     'login'=>'Login',
 
     //* Login menu - logged in   
-    'header_menu_welcome'=>'Welcome',
-    'header_menu_adminPanel'=>'Admin Panel',
-    'header_menu_dashboard'=>'Dashboard',
-    'header_menu_logout'=>'Logout',
+    'welcome'=>'Welcome',
+    'adminPanel'=>'Admin Panel',
+    'dashboard'=>'Dashboard',
+    'logout'=>'Logout',
 
 ];
