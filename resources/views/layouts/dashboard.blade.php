@@ -1,6 +1,7 @@
 <?php
 $notifs = func::get_notif();
 $num_notif = count($notifs);
+$num_notif  = 2;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +53,11 @@ $num_notif = count($notifs);
         <ul class="notification-bar list-inline pull-right">
             <li class="visible-xs"><a href="javascript:;" role="button" class="header-icon search-bar-toggle"><i class="ti-search"></i></a></li>
             @if(Auth::user()->role == 'seller' || Auth::user()->role == 'user')
-                <li class="dropdown"><a id="dropdownMenu1" href="profile.html#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle bubble header-icon"><i class="ti-world"></i><span id="num_notif" class="badge bg-danger">{{ $num_notif == 0 ? '0' : $num_notif }}</span></a>
+                <li class="dropdown"><a id="dropdownMenu1" href="profile.html#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle bubble header-icon"><i class="ti-world"></i>
+
+                        <span id="num_notif" class="badge bg-danger">{{ $num_notif == 0 ? '0' : $num_notif }}</span>
+
+                    </a>
                     <div aria-labelle/dby="dropdownMenu1" class="dropdown-menu dropdown-menu-right dm-medium fs-12 animated fadeInDown">
                         <h5 class="dropdown-header">You have {{ $num_notif == 0 ? 'no' : $num_notif }} notifications</h5>
                         <ul data-mcs-theme="minimal-dark" class="media-list mCustomScrollbar">
@@ -88,7 +93,7 @@ $num_notif = count($notifs);
                             </div>
                         </div>
                     </a>
-                    <ul aria-labelle/dby="dropdownMenu2" class="dropdown-menu fs-12 animated fadeInDown">
+                    <ul aria-labelle/dby="dropdownMenu2" class="dropdown-menu fs-12 animated fadeInDown dropdown-menu-right" >
                         <li><a href="{{ url('/dashboard/profile') }}"><i class="ti-user mr-5"></i> User Profile</a></li>
                         <li><a href="{{ url('/logout') }}"><i class="ti-power-off mr-5"></i>Logout</a></li>
                     </ul>

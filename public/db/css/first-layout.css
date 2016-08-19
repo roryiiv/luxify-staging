@@ -1593,7 +1593,10 @@ lesshat-selector {
 .dropdown-menu>li>a>img {
     margin-right: 8px;
 }
+.dropdown-menu-right{
 
+    right:20px;
+}
 .dm-large {
     width: 400px;
 }
@@ -4475,7 +4478,7 @@ table.dataTable tbody>tr>.selected {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    min-height: auto;
+    /*min-height: auto;*/
     width: 340px;
 }
 

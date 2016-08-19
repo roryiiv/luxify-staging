@@ -24,7 +24,6 @@
     <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
 <body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
     <div class="container page-container">
         @include('inc.loginheader')

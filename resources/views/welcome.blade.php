@@ -1,3 +1,4 @@
+<?php exit;?>
 @extends('layouts.app')
 
 @section('content')

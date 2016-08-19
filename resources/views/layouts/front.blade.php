@@ -11,13 +11,8 @@
     @yield('meta-data')
     <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
 
-    <title>@yield('title')</title>
-	@yield('meta')
-	
-
-
-    <!-- title of the page -->
-    <!-- <title>@yield('title')</title> -->
+    <title>@yield('title') - Luxify - Asia’s leading marketplace for luxury</title>
+	  @yield('meta')
 
     <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png?v=2">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png?v=2">
@@ -123,35 +118,35 @@
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>Luxify</h4>
+                                            <h4>@lang('footer.aboutLuxify')</h4>
                                             <ul>
-                                                <li><a href="/about">@lang('home.front_aboutUsCareers')</a></li>
-                                                <li><a href="/why-luxify">@lang('home.front_howItWorks')</a></li>
-                                                <li><a target="_blank" href="http://press.luxify.com">@lang('home.front_press')</a> / <a href="/blog">@lang('home.front_blog')</a></li>
-                                                <li><a href="/dealer-directory">@lang('home.front_dealerDirectory')</a></li>
+                                                <li><a href="/about">@lang('footer.aboutUsCareers')</a></li>
+                                                <li><a href="/why-luxify">@lang('footer.howItWorks')</a></li>
+                                                <li><a target="_blank" href="http://press.luxify.com">@lang('footer.press')</a> / <a href="/blog">@lang('footer.blog')</a></li>
+                                                <li><a href="/dealer-directory">@lang('footer.dealerDirectory')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>@lang('home.front_platform')</h4>
+                                            <h4>@lang('footer.platform')</h4>
                                             <ul>
                                                 @if(Auth::user())
-                                                    <li><a href="/logout">@lang('home.front_logout')</a></li>
+                                                    <li><a href="/logout">@lang('footer.logout')</a></li>
                                                 @else
-                                                    <li><a href="/login">@lang('home.front_memberLogin')</a></li>
+                                                    <li><a href="/login">@lang('footer.memberLogin')</a></li>
                                                 @endif
 
-                                                <li><a href="/pricing">@lang('home.front_pricing')</a></li>
-                                                <li><a href="/dealer-application">@lang('home.front_dealerApplication')</a></li>
-                                                <li><a href="/luxify-estates">@lang('home.front_luxifyEstates')</a></li>
-												<li><a href="/contact">@lang('home.front_contactUs')</a></li>
+                                                <li><a href="/pricing">@lang('footer.pricing')</a></li>
+                                                <li><a href="/dealer-application">@lang('footer.dealerApplication')</a></li>
+                                                <li><a href="/luxify-estates">@lang('footer.luxifyEstates')</a></li>
+												<li><a href="/contact">@lang('footer.contactUs')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>@lang('home.front_ouroffice')</h4>
+                                            <h4>@lang('footer.ourOffice')</h4>
                                             <ul>
                                                 <li><a href="mailto:concierge@luxify.com">concierge@luxify.com</a></li>
                                                 <li>
@@ -163,7 +158,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>@lang('home.front_followus')</h4>
+                                            <h4>@lang('footer.followUs')</h4>
                                             <ul class="social-networks">
                                                 <li><a target="_blank" href="https://www.facebook.com/LuxifyOfficial/"><span class="icon-facebook"></span></a></li>
                                                 <li><a target="_blank" href="https://twitter.com/luxifyofficial"><span class="icon-twitter"></span></a></li>
@@ -180,7 +175,6 @@
 												</div>
 											  </div>
 											</div>
-                                            <span class="nav-text">We’re socialized!</span>
                                         </nav>
                                     </div>
                               </div>
@@ -197,8 +191,8 @@
                                     <div class="col-md-7">
                                         <nav class="bottom-nav">
                                             <ul>
-                                                <li><a href="/terms">Terms of Service</a></li>
-                                                <li><a href="/privacy">Privacy Policy</a></li>
+                                                <li><a href="/terms">@lang('footer.terms')</a></li>
+                                                <li><a href="/privacy">@lang('footer.policy')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
