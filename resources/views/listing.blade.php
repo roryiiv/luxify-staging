@@ -1,20 +1,20 @@
+@inject('s_meta', 'App\Meta')
 @extends('layouts.front')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
-@section('title', $listing->title )
+@section('title', trim(preg_replace('/\s\s+/', ' ', $meta->title)))
 
-@section('meta-data')
+@section('meta')
 
-<meta name="title" content="{{$listing->title}}">
 <meta name="description" content="{{ func::trimDownText($listing->description, 160)}}">
-
+<meta name="keyword" content="{{$meta->keyword}}">
+<meta name="author" content="{{$meta->author}}">
 @endsection
 
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/main2.css">
-@endsection
-@section('content')
+
     <style>
      .added span {
        color: red;
@@ -39,16 +39,28 @@
        font-weight: 100;
      }
     </style>
+@endsection
+@section('content')
     <!-- main banner of the page -->
     <div class="inner-banner">
         <!-- banner image -->
         <section class="images">
             <?php
-               $images = json_decode($listing->images);
-               if (!empty($listing->mainImageUrl)) {
-                 // prepend main image to the images array
-                 array_unshift($images, $listing->mainImageUrl);
-               }
+                $otherImages = json_decode($listing->images);
+                //check if the mainImage is exist on images
+                $check_mainImage = array();
+                $check_mainImage[] = $listing->mainImageUrl;
+                $checking = array_intersect($otherImages, $check_mainImage);
+                if(count($checking)===0){
+                   $images = json_decode($listing->images);
+                   if (!empty($listing->mainImageUrl)) {
+                     // prepend main image to the images array
+                     array_unshift($images, $listing->mainImageUrl);
+                   }                    
+                }else{
+                    $images = json_decode($listing->images);
+                }
+
             ?>
             <ul>
                 @if($listing->aerialLook3DUrl)
@@ -68,14 +80,22 @@
                 @endif
                 @if(is_array($images))
                     @foreach($images as $image)
+                    <?php
+                    $ori = $s_meta::get_slug_img($image);
+                    if($ori!=''){
+                        $alt = $s_meta::get_slug_img($image);
+                    }else{
+                        $alt = 'luxify';
+                    }
+                    ?>
                         <li>
-                          <a {{schema::itemType('URL')}} rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                            <img {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                          <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
+                            <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
                           </a>
                         </li>
                     @endforeach
                 @else
-                    <li><img {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
+                    <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
                 @endif
             </ul>
 
@@ -150,11 +170,11 @@
                                     </a>
                                 </div>
 
-                                <span class="small-text">Luxify dealer since {{ date("Y", strtotime($dealer->created_at)) }}</span>
+                                <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
                                     <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                    <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">Dealer page</a>
-                                    <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
+                                    <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">>@lang('home.listing_dealerPage')</a>
+                                    <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> @lang('home.listing_contactDealer')</a>
                                     @if($listing->buyNowUrl)
                                     <a {{schema::itemType('URL')}} target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</a>
                                     @endif
@@ -216,7 +236,7 @@
                 <!-- new grid -->
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
-                        <h1 class="text-center">More from this seller</h1>
+                        <h1 class="text-center">@lang('home.listing_mftseller')</h1>
                         <div class="slider">
                             @if(!empty($mores))
                                 @foreach($mores as $more)
@@ -272,7 +292,7 @@
                 <!-- new grid -->
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
-                        <h1 class="text-center">You may also like</h1>
+                        <h1 class="text-center">@lang('home.listing_ymalike')</h1>
                         <div class="slider">
                             @if(!empty($relates))
                                 @foreach($relates as $rel)
@@ -293,10 +313,10 @@
                                             <div class="caption">
                                                 <h3><a href="/listing/{{ $rel->slug }}">{{ $rel->title }}</a></h3>
                                                 <?php
-                                                  $rel_seller = func::getTableByID('users', $rel->userId);
-                                                  $rel_sellerImg = !empty($rel_seller->companyLogoUrl) ? $rel_seller->companyLogoUrl : 'default-logo.png';
-                                                  $rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
-                                                  $rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
+                                                $rel_seller = func::getTableByID('users', $rel->userId);
+                                                $rel_sellerImg = !empty($rel_seller->companyLogoUrl) ? $rel_seller->companyLogoUrl : 'default-logo.png';
+                                                $rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                $rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
                                                 ?>
                                                 <div>
                                                 </div>

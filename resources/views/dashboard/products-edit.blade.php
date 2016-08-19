@@ -1,3 +1,4 @@
+@inject('s_meta', 'App\Meta')
 @extends('layouts.dashboard')
 @section('head')
 <!-- PACE-->
@@ -28,7 +29,45 @@
 <!-- Primary Style-->
 <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
 <link rel="stylesheet" type="text/css" href="/db/css/custom.css">
+<!-- Boostraps_markdown Plugin Style -->
+<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
+<!-- Boostraps_tagit Plugin Style -->
+<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
 <style>
+    .hideslug{
+        display: none;
+    }
+    .showslug{
+        display: block;
+    }
+    .draganddropcustom{
+        background: #fff;
+    }
+    .draganddropcustom:focus{
+        background: #fffcec;
+    }
+    .dot-hidden{
+        width: 5px !important;
+        background:repeating-linear-gradient( -50deg,
+            #fafafa,
+            #fafafa 4px,
+            #eee 5px,
+            #eee 7px
+            );
+    }
+    .dragplaceholder{
+        background:#fafafa;
+        height: 150px;
+
+    }
+    .overdrag{
+        opacity: 0.8;
+        background: #ddd;
+    }
+    .draganddropcustom:hover > .dot-hidden{
+        cursor: move;
+    }
   .sweet-alert .sa-icon.sa-success .sa-line {
     height: 5px !important;
     background-color: #5cb85c !important;
@@ -226,8 +265,14 @@
                         <div class="form-group">
                             <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
                             <div class="col-sm-9">
-                                <textarea id="description" name='description' class="form-control" cols="3" rows="5">{{$item->description}}</textarea>
+                                <textarea id="description editor-markdown" name='description' data-hidden-buttons="cmdCode cmdQuote" class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
                                 <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
+                                <div class="" style="display: none;">
+                                <h5>history</h5>
+                                    <?php foreach ($history->description as $key => $value) { ?>
+                                        <div class="">{{$value}}</div>
+                                    <?php } ?>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -269,10 +314,10 @@
                         </div>
 
 
-                        <table style="width: 100%" class="table table-bordered" id="images-preview-table">
+                        <table style="width: 100%" class="table table-bordered sortir" id="images-preview-table">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Image</th>
+                                    <th class="text-center" colspan="2">Image</th>
                                     <th>Image Url</th>
                                     <th style="width: 20%">Featured Image</th>
                                     <th class="text-center">Remove</th>
@@ -304,8 +349,83 @@
                                 <input id="aerial3DLookURL" name='aerial3DLookURL' type="text" class="form-control" value={{$item->aerialLook3DUrl}}>
                             </div>
                         </div>
+                        <hr/>
+                    <section>
+                    <div>
+                    </section>
                     </div>
                 </fieldset>
+                <h3>Step 5: SEO Section</h3>
+                <fieldset>
+                <div class="form-group">
+                            <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
+                            <div class="col-sm-9">
+                                <div class="hideslug">
+                                    <div class="input-group">
+                                      <div class="input-group-addon" style="background:#eee;border-color:#ccc;">{{url('/'.$item->url_object)}}/</div>
+                                      <input type="text" class="form-control get_slug" id="" name="slug" data-id = "{{$item->id}}" value="{{$item->slug}}"
+                                      ">
+                                      <span class="createorupdateslug input-group-addon btn">
+                                          Save URL
+                                      </span>
+                                    </div>    
+                                </div>
+                                
+                                <div class="showslug">
+                                <?php
+                                if(strlen($item->slug)<=40){
+                                    $newslug =  $item->slug;
+                                }else{
+                                    $count = strlen($item->slug);
+                                    $newslug = substr($item->slug,0,20).' ....... '.substr($item->slug,$count-20,$count);
+                                }
+                                ?>
+                                    <a class="updatelink" href="{{url('/'.$item->url_object).'/'.$item->slug}} " target="_blank" style="text-decoration: underline;" >{{url('/'.$item->url_object).'/'}}<strong>{{$newslug}}</strong></a>
+                                     &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_title" class="col-sm-3 control-label">Title</label>
+                            <div class="col-sm-9">
+                                <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$item->meta_title == '' ? $item->title : $item->meta_title}}">
+                            </div>
+                        </div>
+                        <div class="form-group" style="display:none;">
+                            <label for="meta_alttext" class="col-sm-3 control-label">Alt Text</label>
+                            <div class="col-sm-9">
+                                <input id="alttext" name='meta_alttext' type="text" class="form-control" placeholder="{{$item->meta_alt_text}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
+                            <div class="col-sm-9">
+                                <textarea id="meta_description" name='meta_description' class="form-control " maxlength="500" placeholder="{{$item->meta_description == '' ? $item->description : $item->meta_description}}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_keyword" class="col-sm-3 control-label">Meta Keyword</label>
+                            <div class="col-sm-9 "><div class="tagit-sugestion">
+                                
+                                <style>
+                                    .bootstrap-tagsinput{
+                                        width: 100%;
+                                    }
+                                </style>
+                                <div>
+                                    
+                                <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="{{$item->meta_keyword}}">
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                             <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
+                            <div class="col-sm-9">
+                                <input id="meta_author" name='meta_author' type="text" maxlength="60" class="form-control" placeholder="{{$item->meta_author == '' ? $item->title : $item->meta_author}}">
+                            </div>
+                        </div>
+            </fieldset>
               </form>
 
             </div>
@@ -340,6 +460,9 @@
 @section('scripts')
 <!-- jQuery-->
 <script type="text/javascript" src="/db/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/db/js/jquery-ui.js"></script>
+
 <script type="text/javascript" src="/db/js/main.js"></script>
 <!-- Bootstrap JavaScript-->
 <script type="text/javascript" src="/db/js/bootstrap.min.js"></script>
@@ -375,16 +498,24 @@
 <script type="text/javascript" src="/db/js/date-range-picker.js"></script>
 <script type="text/javascript" src="/db/js/lodash.core.min.js"></script>
 <script type="text/javascript" src="/db/js/jquery.cookie.js"></script>
+<!-- Boostraps_markdown Plugin Script -->
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/markdown.js"></script>
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/to-markdown.js"></script>
+<script type="text/javascript" src="/plugins/bootstrap-markdown/js/jquery.hotkeys.js"></script>
+<!-- Booostraps_tagit input plugin -->
+<script type="text/javascript" src="/plugins/typeahead.js/dist/typeahead.bundle.min.js"></script>
+<script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 
 <script>
     <?php
     $otherImages = json_decode($item->images);
 
     $images = array();
-    $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true);
+    $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl));
 
     for($i = 0; $i < count($otherImages); $i++) {
-        $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true);
+        $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl));
     }
     ?>
     var images_array = <?php echo json_encode($images, JSON_PRETTY_PRINT); ?>;
@@ -421,7 +552,7 @@
         var table = $("#images-preview-table tbody");
         table.html('');
         for (var i = 0; i < images_array.length; i++) {
-            $('<tr><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
+            $('<tr class="draganddropcustom"><td class="dot-hidden" style="border-right:medium none;"></td><td class="text-center" style="border-left: medium none;"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(i===0? 'checked':'') +' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'" class="reindex">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button></td></tr>').appendTo(table);
         }
     }
     function genControls({id, type, name, label, optionValues, value, valueId}){
@@ -453,7 +584,101 @@
         }
     }
     $(document).ready(function () {
+                //new edit slug
+        $('.edit_slug').click(function(){
+            $('.showslug').hide();
+            $('.hideslug').show();
+        });
+        var keywords = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: {
+            url: '{{route('get_keyword_json')}}',
+            filter: function(list) {
+              return $.map(list, function(keyword) {
+                return { name: keyword }; });
+            }
+          }
+        });
+        keywords.clearPrefetchCache();
+        var keywords = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: {
+            url: '{{route('get_keyword_json')}}',
+            filter: function(list) {
+              return $.map(list, function(keyword) {
+                return { name: keyword }; });
+            }
+          }
+        });
+        keywords.initialize();
+        /**
+         * Typeahead
+         */
+        $('.tagit-sugestion > > input').tagsinput({
+          typeaheadjs: {
+            name: 'keywords',
+            displayKey: 'name',
+            valueKey: 'name',
+            source: keywords,
+            limit: 100,
+          }
+        });
+        $(".twitter-typeahead").css('display', 'inline');
 
+
+        //sortable edit
+
+        var fixHelperModified = function(e, tr) {
+            var $originals = tr.children();
+            var $helper = tr.clone();
+            $helper.children().each(function(index) {
+                $(this).width($originals.eq(index).width())
+            });
+            return $helper;
+        },
+/*        updateIndex = function(e, ui) {
+            $('.reindex', ui.item.parent()).each(function (i) {
+                $(this).val(i);
+            });
+        },*/
+        overIndex = function(e, ui) {
+            $(ui.helper[0]).addClass("overdrag");
+          }
+
+        $(".sortir tbody").sortable({
+            helper: fixHelperModified,
+            //stop: updateIndex,
+            placeholder: "dragplaceholder",
+            over: overIndex
+        });
+
+        //markdown
+        $('#editor-markdown').markdown();
+        $('.createorupdateslug').click(function(){
+            var newslug = $('.get_slug').val();
+            var id = $('.get_slug').attr('data-id');
+                $.ajax({
+                    url: "{{route('get_slug')}}/"+id+"/"+newslug,
+                    async: false,
+                    cache: false,
+                    success:function( html ) {
+                        $( ".get_slug" ).val( html );
+                        var count = html.length;
+                        if(count<=40){
+                            newslug = html;
+                        }else{
+                            newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
+                        }
+                        $('.updatelink').html('{{url("/")}}/listing/'+newslug);
+                        $('.updatelink').attr('href','{{url("/")}}/listing/'+html);
+                        $('.hideslug').hide();
+                        $('.showslug').show();
+
+                    }
+                });
+        });
         genImagesPreview();
 
         for (var i = 0; i < optionalFields.length ; i++){
@@ -527,6 +752,17 @@
             }
         });
     });
+    
+    // on leave remove edit warning sign.
+    $(window).bind('beforeunload', function(e){
+        exitPage();
+        return 'Are you sure?';
+    });
 
+    function exitPage(){
+        $.get('/api/ajax/exit/{{$item->id}}', function(data) {
+            return data;
+        });
+    }
 </script>
 @endsection

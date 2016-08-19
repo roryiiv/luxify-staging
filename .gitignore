@@ -12,3 +12,4 @@ public/temp
 config.js
 *.sql
 /.idea
+*.bak

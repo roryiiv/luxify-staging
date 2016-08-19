@@ -2,13 +2,139 @@
 
 namespace App;
 
-use Laravel\Socialite\Contracts\User as ProviderUser;
+//use Laravel\Socialite\Contracts\User as ProviderUser;
+use Laravel\Socialite\Contracts\Provider;
+
+
+
+class SocialAccountService{
+/*    public function createOrGetUser(ProviderUser $providerUser)
+    {
+        $account = SocialAccount::whereProvider($providerUser)
+            ->whereProviderUserId($providerUser->getId())
+            ->first();
+
+        if ($account) {
+            //login
+            return $account->user;
+        } else {
+            //create
+            $account = new SocialAccount([
+                'provider_user_id' => $providerUser->getId(),
+                'provider' => $providerUser
+            ]);
+
+            $user = User::whereEmail($providerUser->getEmail())->first();
+
+            if (!$user) {
+
+                $user = User::create([
+                    'email' => $providerUser->getEmail(),
+                    'firstName' => $providerUser->getNickname(),
+                    'fullname' => $providerUser->getName(),
+                    'role' => 'user',
+
+//                    getId(), getNickname(), getName(), getEmail(), getAvatar()
+                ]);
+            }
+
+            $account->user()->associate($user);
+            $account->save();
+
+            return $user;
+
+        }
+
+    }
+    */
+    public function createOrGetUser(Provider $provider) {
+
+        $providerUser = $provider->user();
+        $providerName = class_basename($provider);
+
+        $account = SocialAccount::whereProvider($providerName)
+            ->whereProviderUserId($providerUser->getId())
+            ->first();
+
+        if ($account) {
+            //jika account ditemukan di table social_accounts
+            $data['status'] = true;
+            $data['user'] = $account->user;
+            return $data;
+        } else {
+            //account user_id di social_account tidak ditemukan
+
+            $checkemail = User::whereEmail($providerUser->getEmail())->first();
+            //check email??
+            if($checkemail){
+                $user = User::where('email', $providerUser->getEmail())->first();
+                $row_social = ($providerName=='FacebookProvider')?'socialFacebook':'socialTwitter';
+                $link = ($providerName=='FacebookProvider')?'https://facebook.com':'https://twitter.com';
+
+                $user->email = $providerUser->getEmail();
+                $user->$row_social = $link.'/'.$providerUser->getId();
+                $user->save();
+
+                $data['email'] = $providerUser->getEmail();
+                $data['status'] = false;
+                $data['error'] = 101;
+                return $data;
+            }else{
+
+                if($providerUser->getEmail()==null){
+                $data['status'] = false;
+                $data['error'] = 102;
+                return $data;
+                }else{
+                    //data tidak di temukan, dan membuat data sendiri.
+                    $account = new SocialAccount([
+                        'provider_user_id' => $providerUser->getId(),
+                        'provider' => $providerName
+                    ]);
+
+                    $user = User::whereEmail($providerUser->getEmail())->first();
+
+                    if (!$user) {
+
+                        $user = User::create([
+                            'email' => $providerUser->getEmail(),
+                            'firstName' => $providerUser->getNickname(),
+                            'fullname' => $providerUser->getName(),
+                            'role' => 'user',
+                        ]);
+                    }
+                    $account->user()->associate($user);
+                    $account->save();
+
+                    if($account){
+                        $data['status'] = true;
+                        $data['user'] = $user;
+                        return $data;
+                    }else{
+                        $data['status'] = false;
+                        $data['error'] = 103;
+                        return $data;
+                        
+                    }
+                }
+            }            
+        }
+    }
+}
+/*
+namespace App;
+
+use Laravel\Socialite\Contracts\Provider;
 
 class SocialAccountService
 {
-    public function createOrGetUser(ProviderUser $providerUser)
+    public function createOrGetUser(Provider $provider)
     {
-        $account = SocialAccount::whereProvider('facebook')
+
+        $providerUser = $provider->user();
+        $providerName = class_basename($provider);
+
+        $account = SocialAccount::whereProvider($providerName)
             ->whereProviderUserId($providerUser->getId())
             ->first();
 
@@ -18,7 +144,7 @@ class SocialAccountService
 
             $account = new SocialAccount([
                 'provider_user_id' => $providerUser->getId(),
-                'provider' => 'facebook'
+                'provider' => $providerName
             ]);
 
             $user = User::whereEmail($providerUser->getEmail())->first();
@@ -39,4 +165,4 @@ class SocialAccountService
         }
 
     }
-}
+}*/

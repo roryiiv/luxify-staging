@@ -6,6 +6,8 @@ Use Mail;
 
 use App\Categories;
 
+use App\Exceptions\Handler;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,17 +18,23 @@ use App\User;
 
 use App\Users;
 
+use App\Meta;
+
 use Illuminate\Support\Facades\Auth;
 
 use DB;
 
 use func;
 
-use schema;
-
 use Illuminate\Routing\Controller;
 
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+
+use App\PageCount;
+
+use App\Wishlists;
+
+use App\Language;
 
 class Front extends Controller {
     //Front end Controller
@@ -93,6 +101,9 @@ class Front extends Controller {
         ->first();
 
         if ($listing) {
+        $users_id = $listing->userId;
+            //counting user
+            PageCount::counting($listing->id,$users_id);
             $category = array();
             foreach($cat_ids as $key => $val){
                 if(in_array($listing->categoryId, $val)){
@@ -129,7 +140,39 @@ class Front extends Controller {
             ->select('listings.*', 'countries.name as country')
             ->paginate(10);
 
-          return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category]);
+            //additonal parameters
+            $dealer = DB::table('users')->where('id',$users_id)
+            ->first();
+            $meta = new Meta;
+            $meta->title = trim(Meta::get_data_listing($listing->id,'title'));
+            if(!empty($meta->title) && ($meta->title !=null)){
+                $meta->title = substr(Meta::get_data_listing($listing->id,'title'),0,60);
+            }else{
+                $meta->title = substr($listing->title,0,60);
+            }
+            $meta->alt_text = Meta::get_data_listing($listing->id,'alt_text');
+            $meta->description = !empty(Meta::get_data_listing($listing->id,'description')) ? Meta::get_data_listing($listing->id,'description') : str_limit(trim(preg_replace('/\s\s+/', ' ', $listing->description, 160)));
+            $meta->author = Meta::get_data_listing($listing->id,'author');
+            if(!empty($meta->author) && ($meta->author !=null)){
+                $meta->author = Meta::get_data_listing($listing->id,'author');
+            }else{
+                if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                    $company = json_decode($dealer->companyName);
+                    if(is_array($company)){
+                        $meta->author = $company[0]; 
+                    }else{
+                        $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
+                    }
+                }else{
+                  $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                }
+            }
+            $meta->keyword = Meta::get_data_listing($listing->id,'keyword');
+
+          return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
+        }
+        else {
+            return abort(404);
         }
     }
 
@@ -553,6 +596,17 @@ class Front extends Controller {
             ->join('countries', 'countries.id', '=', 'listings.countryId')
             ->select('listings.*', 'countries.name as country')
             ->paginate(51);
+
+/*              on editing
+            $json_price = DB::table('listings')
+            ->where('status', 'APPROVED')
+            ->whereIn('listings.categoryId', $cat_ids)
+            ->where($search_arr)
+            ->orderBy($orderby, $order)
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.price', 'countries.name as country')
+            ->get();
+            dd($json_price);*/
         }else{
             $listings = DB::table('listings')
             ->where('status', 'APPROVED')
@@ -628,6 +682,28 @@ class Front extends Controller {
         }
     }
 
+    public function forgetPassword() {
+        return view('auth.forget-password');  
+    }
+
+    public function resetPassword($token) {
+    	$reset_arr = DB::table('reset_password')
+    	->where('token', $token)
+    	->where('status', 'OPEN')
+    	->first();
+        return view('auth.reset-password', ['reset_arr' => $reset_arr]);  
+    }
+
+    public function EmailInUse(Request $request){
+        $email = $request->input('email');
+
+        $checkemail = DB::table('users')
+                   ->where('email', $email)
+                   ->first();
+
+        return Response::json(['response' => $checkemail != null]);
+    }
+
     public function dealerDirectory() {
       $dealers = Users::whereNotNull('companyName')
         ->where('role', 'seller')
@@ -654,7 +730,44 @@ class Front extends Controller {
         ->select('listings.*', 'countries.name as country')
         ->take(6)
         ->get();
-        return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
+        //add meta
+        $meta = new Meta;
+        $meta->title = trim(Meta::get_data_user($id,'title'));
+        if(!empty($meta->title) && ($meta->title !=null)){
+            $meta->title = substr(Meta::get_data_user($id,'title'),0,60);
+        }else{
+            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                $company = json_decode($dealer->companyName);
+                if(is_array($company)){
+                    $meta->title = substr($company[0].' '.$company[1],0,60); 
+                }else{
+                    $meta->title = substr(ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName),0,60); 
+                }
+            }else{
+              $meta->title = substr(ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName),0,60);
+            }
+        }
+
+        $meta->alt_text = Meta::get_data_user($id,'alt_text');
+        $meta->description = !empty(Meta::get_data_listing($dealer->id,'companySummary')) ? Meta::get_data_listing($dealer->id,'companySummary') : str_limit(trim(preg_replace('/\s\s+/', ' ', $dealer->companySummary, 160)));
+        $meta->author = trim(Meta::get_data_user($id,'author'));
+        if(!empty($meta->author) && ($meta->author !=null)){
+            $meta->author = Meta::get_data_user($id,'author');
+        }else{
+            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                $company = json_decode($dealer->companyName);
+                if(is_array($company)){
+                    $meta->author = $company[0]; 
+                }else{
+                    $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
+                }
+            }else{
+              $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+            }
+        }
+        $meta->keyword = Meta::get_data_user($id,'keyword');
+
+        return view('dealer', ['dealer' => $dealer, 'listings' => $listings, 'meta' => $meta]);
     }
 
     public function viewDealerNoSlug($id) {
@@ -1665,6 +1778,10 @@ class Front extends Controller {
 
     public function switchCurrency(Request $request, $code){
         $request->session()->put('currency', $code);
+        return back();
+    }
+    public function switchLanguage(Request $request, $code){
+        $updatelang = Language::updatelang($code);
         return back();
     }
 

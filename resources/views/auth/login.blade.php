@@ -1,3 +1,18 @@
+<?php
+if(isset($_GET['err']) && $_GET['err'] != ''){
+  switch($_GET['err']){
+    case '101':
+      $error_msg = "Your social account information has been registered. Please login using your luxify account.";
+    break;
+    case '102':
+      $error_msg = 'It seemed you set your social media in private mode. Please set your account.';
+    break;
+    case '103':
+      $error_msg = 'ERROR - No Authorization made.';
+    break;
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en" style="height: 100%">
 
@@ -35,7 +50,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input id="email" name="email" type="email" placeholder="Email" class="form-control">
+                            <input id="email" name="email" type="email" placeholder="Email" class="form-control" <?= isset($_GET['email'])?'value="'.$_GET['email'].'"':''; ?>>
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,7 +64,7 @@
                                 <input id="exampleCheckboxRemember" type="checkbox" value="remember">
                                 <label for="exampleCheckboxRemember" class="checkbox-muted text-muted">Remember me</label>
                             </div>
-                            {{--<div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">Forgot Passowrd?</a></div>--}}
+                            <div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">Forgot Passowrd?</a></div>
                         </div>
                     </div>
                     <button id="login_btn" type="submit" class="btn-lg btn btn-primary btn-block" style="border-radius: 0px;">Sign in</button>
@@ -59,20 +74,21 @@
                     <p id="login_error" style="margin: 15px 0; display: none;">
                         <span class="alert danger" style="color: red;">Username or Email is not registered.</span>
                     </p>
-                    @if(isset($_GET['err']))
+                    @if(isset($error_msg) || !empty($error_msg))
                         <p id="login_error" style="margin: 15px 0;">
-                            <span class="alert danger">{{ ucfirst($_GET['err']) }}</span>
+                            <span class="alert danger">{{ ucfirst($error_msg) }}</span>
                         </p>
                     @endif
                 </form>
                 <hr>
-                <p class="text-muted" style="display: none;">Sign in with your Facebook or Twitter accounts</p>
-                <div class="clearfix" style="display: none;">
+                <p class="text-muted" >Sign in with your Facebook or Twitter accounts</p>
+                <div class="clearfix" >
                     <div class="pull-left">
-                        <a href="javascript:;" type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-primary"><i class="ti-facebook mr-5"></i> Facebook</a>
+                    <!--add class login_to_facebook-->
+                        <a href="#" type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-primary login_to_facebook"><i class="ti-facebook mr-5"></i> Facebook</a>
                     </div>
                     <div class="pull-right">
-                        <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
+                        <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info login_to_twitter"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
                     </div>
                 </div>
                 {{-- <hr> --}}
@@ -104,6 +120,15 @@
             required: true 
           }
         } 
+      });
+      //add function facebook link go_to new blank document
+      $('.login_to_facebook').click(function(){
+        //window.open("{{route('redirect_fb')}}");
+        window.location = "{{route('redirect_fb')}}";
+      });
+      $('.login_to_twitter').click(function(){
+        //window.open("{{route('redirect_fb')}}");
+        window.location = "{{route('redirect_tw')}}";
       });
         $('#login_btn').click(function(event){
             event.preventDefault();

@@ -7,6 +7,12 @@ use Mail;
 use App\User;
 use App\Users;
 use App\Listings;
+use App\PageCount;
+use App\Meta;
+use App\History;
+use App\Wishlists;
+use App\Analytics;
+use Response;
 
 Use Auth;
 
@@ -24,6 +30,7 @@ use App\Http\Requests;
 
 Use Input;
 Use DB;
+use Cache;
 
 class Dashboard extends Controller
 {
@@ -43,8 +50,19 @@ class Dashboard extends Controller
      */
     public function index() {
         if($this->user_role == 'seller'){
-            //return view('dashboard.home');
-            return redirect('/dashboard/products');
+
+//            penambahan untuk mendapatkan data;
+            
+            $data= PageCount::get_data();
+            $data['flotchart']= PageCount::get_json();
+            $data['get_tick']= PageCount::get_tick();
+            $data['get_vm']= PageCount::get_json_vm();
+            $data['get_ws']= PageCount::get_json_rn();
+
+
+
+             return view('dashboard.home',$data);
+            //return redirect('/dashboard/products');
         }elseif($this->user_role == 'user'){
             return redirect('/dashboard/profile');
         }elseif($this->user_role == 'editor'){
@@ -53,32 +71,34 @@ class Dashboard extends Controller
             return redirect('/panel/users');
         }
     }
+    public function test() {
+
+//            penambahan untuk mendapatkan data;
+        $data = [];
+        array_push($data,PageCount::get_json());
+        array_push($data,PageCount::get_data());
+        return dd($data);
+        
+    }
 
     public function profile() {
         $user = User::where('id', $this->user_id)->first();
         // var_dump($user);
+        $user->meta_title = Meta::get_data_user($this->user_id,'title');
+        $user->meta_alt_text = Meta::get_data_user($this->user_id,'alt_text');
+        $user->meta_description = Meta::get_data_user($this->user_id,'description');
+        $user->meta_author = Meta::get_data_user($this->user_id,'author');
+        $user->meta_keyword = Meta::get_data_user($this->user_id,'keyword');
+
+        $curr_edited = Cache::get($this->user_id);
+        if($curr_edited == ''){
+            Cache::forever($this->user_id, 'edited'); // marked being edited.
+        }
         return view('dashboard.profile', ['user' => $user]);
     }
 
     public function profile_update() {
         $user = User::where('id', $this->user_id)->first(); // always have it declared for first or else empty value sent
-
-        //we'll rebuild the slug here and save it
-        if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
-            if($user->company != ''){ //just in case.
-                $company = $user->company;
-            }elseif($_POST['companyName'] != ''){ //the admin update the user company, so...
-                $company = $_POST['companyName'];
-            }else{
-                $company = '';
-            }
-            if($company != ''){
-                $slug = SlugService::createSlug(Users::class, 'slug', $company);
-            }else{
-                $slug = '';
-            }
-            $user->slug = $slug;
-        }
 
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
@@ -152,8 +172,12 @@ class Dashboard extends Controller
         if(isset($_POST['mapZoomLevel']) && !empty($_POST['mapZoomLevel'])){
             $user->mapZoomLevel = $_POST['mapZoomLevel'];
         }
-        if(isset($_POST['companyName']) && !empty($_POST['companyName'])){
-            $user->companyName = $_POST['companyName'];
+        if(isset($_POST['companyName']) && is_array($_POST['companyName'])){
+            $companyName = array_filter($_POST['companyName']);
+            if(!empty($companyName)){
+                $user->companyName = json_encode($_POST['companyName']);
+            }
+           
         }
         if(isset($_POST['companyRegNumber']) && !empty($_POST['companyRegNumber'])){
             $user->companyRegNumber = $_POST['companyRegNumber'];
@@ -176,10 +200,34 @@ class Dashboard extends Controller
         if(isset($_POST['txtTwitterLink']) && !empty($_POST['txtTwitterLink'])){
             $user->socialTwitter = $_POST['txtTwitterLink'];
         }
+        //additional
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+
         if(!empty($error_arr)){
             $error = json_encode($error_arr);
             echo $error;
         }else{
+            $object_type = 'users';
+            $savemeta = Meta::saveorupdate($this->user_id,$meta,$object_type);
             if($user->save()) return redirect('/dashboard/profile?update=success');
         }
     }
@@ -219,7 +267,22 @@ class Dashboard extends Controller
             if ($optionalFields) {
                 $item['optionFields'] = $optionalFields;
             }
-            return view('dashboard.products-edit', ['item' => $item] );
+            //additonal parameters
+            $item->url_object = 'listing';
+            $item->meta_title = Meta::get_data_listing($itemId,'title');
+            $item->meta_alt_text = Meta::get_data_listing($itemId,'alt_text');
+            $item->meta_description = Meta::get_data_listing($itemId,'description');
+            $item->meta_author = Meta::get_data_listing($itemId,'author');
+            $item->meta_keyword = Meta::get_data_listing($itemId,'keyword');
+            $history = new History;
+            $history->description = History::where('object_id',$itemId)->get();
+
+            $curr_edited = Cache::get($itemId);
+            if($curr_edited == ''){
+                Cache::forever($itemId, 'edited'); // marked being edited.
+            }
+
+            return view('dashboard.products-edit', ['item' => $item,'history' => $history] );
         }
     }
 
@@ -404,7 +467,7 @@ class Dashboard extends Controller
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             $item->title = $_POST['title'];
-            $item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
+            /*$item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);*/
         } else {
             $error_arr['title'] = 'Item title is required.';
         }
@@ -465,6 +528,18 @@ class Dashboard extends Controller
             }
 
             if (count($uploadedImage) === count($_POST['images'])) {
+                //add history for image versioning
+                //if oldversionarray json is same as new, return no history
+                //if there is different json oldversionarray and newarray, write the history
+                $history = History::versioning_image($uploadedImage,$itemId);
+                //additional add alt image here
+                for ($i=0; $i < count($uploadedImage); $i++) {
+                    //add meta with value
+                    $object_id = $uploadedImage[$i];
+                    $value = $_POST['alt_text'][$i];
+                    $save = Meta::alt_text_image($object_id,$value);
+                }
+
                 if (isset($_POST['mainImage']) && !empty($_POST['mainImage'])) {
                     $item->mainImageUrl = array_slice($uploadedImage, intval($_POST['mainImage']), 1)[0];
                     array_splice($uploadedImage, intval($_POST['mainImage']), 1);
@@ -491,6 +566,33 @@ class Dashboard extends Controller
             $item->aerialLook3DUrl = $_POST['aerial3DLookURL'];
         }
 
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+        //additional parameters
+/*        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
+            //$newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
+            $newslug = Listings::newslug($itemId,$_POST['slug']);
+            $item->slug = $newslug;
+        }*/
+
         // delete the existing optional fields first
         DB::table('extrainfos')->where('listingId', $item->id )->delete();
         $form = DB::table('forms')
@@ -514,6 +616,12 @@ class Dashboard extends Controller
         if(!empty($error_arr)){
             echo json_encode($error_arr);
         }else{
+            //save or update meta listing
+            //$id = id listing
+            //$meta = data array meta
+            //$object_type = listing/users;
+            $object_type = 'listings';
+            $savemeta = Meta::saveorupdate($itemId,$meta,$object_type);
             if ($item->save()) {
                 return redirect('/dashboard/product/edit/'.$item->id);
             }
@@ -799,4 +907,70 @@ class Dashboard extends Controller
         // var_dump($input); exit;
         return back();
     }
+
+     public function IsEmailInUse(Request $request){
+        $email = $request->input('email');
+
+        $checkemail = DB::table('users')
+                   ->where('email', $email)
+                   ->first();
+
+        return Response::json(['response' => $checkemail != null]);
+
+    }
+    function createupdateslug($id,$slug){
+        $newslug = SlugService::createSlug(Listings::class, 'slug', $slug);
+        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }
+/*        $newslug = Listings::newslug($id,$slug);
+        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }*/
+    }
+    function createupdatesluguser($id,$slug){
+        $newslug = SlugService::createSlug(User::class, 'slug', $slug);
+        //dd($newslug);
+        $updates = DB::table('users')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }
+    }
+    function get_flot_chart($start,$end){
+        $user_id = Auth::user()->id;
+        $json_flot_chart = Analytics::get_flot_data($start,$end,$user_id);
+        return $json_flot_chart;
+    }
+    
+    function get_first_flot_chart($year){
+        $user_id = Auth::user()->id;
+        $json_flot_chart = Analytics::get_flot_first($year,$user_id);
+        return $json_flot_chart;
+    }
+
+    function FeaturedItem($dataid){
+        if(isset($_POST['values'])){
+            $value = $_POST['values'];
+        }else{
+            $value = array();
+        }
+        $checkbtn = json_encode($value);
+        $update = User::where('id',$dataid)->update(['featured_item'=>$checkbtn]);
+        if($update){
+
+            return 'Are You Sure?';
+            //console.log($item);
+        }else{
+            return 'Error';
+        }
+    }
+
 }

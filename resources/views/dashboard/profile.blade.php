@@ -24,13 +24,23 @@
     <link rel="stylesheet" type="text/css" href="/db/css/jquery.steps.css">
     <!-- Primary Style-->
     <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
+    <!-- Boostraps_markdown Plugin Style -->
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
+        <!-- Boostraps_tagit Plugin Style -->
     <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
-    <style>    
-       .bootstrap-tagsinput {
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
+    <style type="text/css">
+    .hideslug{
+        display: none;
+    }
+    .showslug{
+        display: block;
+    }
+    .bootstrap-tagsinput {
            width: 100%;
-       }
+    }
     </style>
-@endsection    
+@endsection
 
 @section('content')
     <div class="page-container">
@@ -69,6 +79,32 @@
                             <h3>Personal Information</h3>
                             <fieldset>
                                 <div class="row">
+                                 @if(Auth::user()->role == 'user')
+                                    <div class="col-md-6 pull-right">
+                                        <div class="widget">
+                                            <div class="widget-heading">
+                                                <h5 class="m-0">Profile Picture</h5>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div id="api-profile-image" class="dropzone text-center"></div>
+                                                <input type="hidden" name="profile_img" id="profile_img" value="" />
+                                            </div>
+                                            <div class="widget-heading pt-0">
+                                                <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
+                                            </div>
+                                            <div class="widget-body">
+                                                <h6>Current Profile Image</h6>
+                                                <div id="current-cover-image" style="overflow:hidden;" class="text-center">
+                                                    @if(!empty($user->companyLogoUrl))
+                                                        <img src="{{func::img_url($user->companyLogoUrl, 425, '')}}" alt="{{$user->companyLogoUrl}}" />
+                                                    @else
+                                                        <p>You have not uploaded any Profile Image yet, please upload one.</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="txtFirstNameBillingTab" class="col-sm-3 col-md-4 control-label">Username</label>
@@ -76,28 +112,35 @@
                                                 <input id="txtFirstNameBillingTab" name="txtFirstNameBillingTab" type="text" class="form-control" value="{{$user->username}}" disabled="disabled">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">User Role</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtUserRole" name="txtUserRole" type="text" class="form-control" value="{{ucfirst($user->role)}}" disabled="disabled">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="txtEmailAddress" class="col-sm-3 col-md-4 control-label">Email</label>
                                             <div class="col-sm-9 col-md-8">
-                                                <input id="txtEmailAddress" name="txtEmailAddress" type="text" class="form-control" value="{{$user->email}}" disabled="disabled">
+                                                <input id="txtEmailAddress" name="txtEmailAddress" type="text" class="form-control" value="{{$user->email}}" onblur="IsEmailInUse()">
+                                                <div class="log" style="display:none;"></div>
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                         @endif
                                         <div class="form-group">
                                             <label for="txtPassword" class="col-sm-3 col-md-4 control-label">Password</label>
                                             <div class="col-sm-9 col-md-8">
@@ -106,36 +149,44 @@
                                                 <input id="salt" type="hidden" name="salt">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="txtConfirmPassword" class="col-sm-3 col-md-4 control-label">Confirm password</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtConfirmPassword" type="password" name="txtConfirmPassword" placeholder="Enter confirm password" class="form-control">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                         @endif
                                         <div class="form-group">
                                             <label for="first_name" class="col-sm-3 col-md-4 control-label">First Name</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="first_name" name="first_name" type="text" placeholder="{{ucfirst($user->firstName)}}" class="form-control" value="{{ !empty($user->firstName)? ucfirst($user->firstName): ''}}">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="last_name" class="col-sm-3 col-md-4 control-label">Last Name</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ucfirst($user->lastName)}}" value="{{ !empty($user->lastName)? ucfirst($user->lastName): ''}}">
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="country" class="col-sm-3 col-md-4 control-label">Location</label>
                                             <div class="col-sm-9 col-md-8">
@@ -148,8 +199,10 @@
                                                 </select>
                                             </div>
                                         </div>
+                                         @if(Auth::user()->role == 'seller')
                                     </div>
                                     <div class="col-md-6">
+                                        @endif
                                         <div class="form-group">
                                             <label for="language" class="col-sm-3 col-md-4 control-label">Language</label>
                                             <div class="col-sm-9 col-md-8">
@@ -162,13 +215,22 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
+                                        @endif
                                         <div class="form-group">
+                                        @if(Auth::user()->role == 'seller')
                                             <label for="currency" class="col-sm-3 col-md-2 control-label">Price Display In</label>
                                             <div class="col-sm-9 col-md-10">
+                                        @endif
+                                        @if(Auth::user()->role == 'user')
+                                            <label for="currency" class="col-sm-3 col-md-4 control-label">Price Display In</label>
+                                            <div class="col-sm-9 col-md-8">
+                                        @endif
+
                                                 <?php $currs = func::build_curr(); ?>
                                                 <select id="currency" name="currency" class="form-control">
                                                     <option value="">--Please Select--</option>
@@ -178,14 +240,16 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @if(Auth::user()->role == 'seller')
                                     </div>
                                 </div>
+                                        @endif
                                 @if(Auth::user())
                                     @if(Auth::user()->role == 'user')
-                                        <div class="row">
-                                            <div class="col-sm-9 col-md-10 col-md-offset-2 col-sm-offset-3">
-                                                <label for="notificationCheck">
-                                                    <input type="checkbox" id="notificationCheck"> I wish to be notified by email</label>
+                                                <div class="col-sm-9 col-md-8 col-md-offset-4 col-sm-offset-3">
+                                                    <label for="notificationCheck">
+                                                        <input type="checkbox" id="notificationCheck"> I wish to be notified by email</label>
+                                                </div>
                                             </div>
                                         </div>
                                     @endif
@@ -250,8 +314,12 @@
 
                                                 <div class="form-group m-0">
                                                     <label for="txtFirstNameShippingTab" class="control-label">Company Name</label>
+                                                    <?php $company = json_decode($user->companyName);?>
                                                     <div class="pt-15">
-                                                        <input id="companyName" name="companyName" type="text" class="form-control" placeholder="{{$user->companyName}}" value="{{$user->companyName}}">
+                                                        <input id="companyName" name="companyName[]" type="text" class="form-control" placeholder="{{ $company[0] }}" value="">
+                                                    </div>
+                                                    <div class="pt-15">
+                                                        <input id="companyName" name="companyName[]" type="text" class="form-control" placeholder="{{ $company[1] }}" value="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
@@ -264,27 +332,27 @@
                                                 <div class="form-group m-0">
                                                     <label for="txtCompanyRegNum" class="control-label">Company Registration No.:</label>
                                                     <div class="pt-15">
-                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}" value="{{$user->companyName}}">
+                                                        <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}" value="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="companyAddress" class="control-label">Company Address</label>
                                                     <div class="pt-15">
-                                                        <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder="{{$user->companyAddress}}">{{$user->companyAddress}}</textarea>
+                                                        <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder="{{$user->companyAddress}}"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="companySummary" class="control-label">Company Summary</label>
                                                     <div class="pt-15">
-                                                        <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}">{{$user->companySummary}}</textarea>
+                                                        <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}"></textarea>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="form-group m-0">
+                                                <div class="form-group m-0">
                                                     <label for="contactDetails" class="control-label">Company Details</label>
                                                     <div class="pt-15">
-                                                        <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder="{{$user->contactDetails}}">{{$user->contactDetails}}</textarea>
+                                                        <textarea name="contactDetails" id="contactDetails " cols="3" rows="15" class="form-control" placeholder="{{$user->contactDetails}}"></textarea>
                                                     </div>
-                                                </div>-->
+                                                </div>
                                             </div>
                                         </div>
 
@@ -298,14 +366,6 @@
                             <h3>Social Connections</h3>
                             <fieldset>
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group ml-0 mr-0">
-                                            <label for="txtWebsite" class="control-label pb-10"><i class="fa fa-home "></i> Company Website</label>
-                                            <div class="">
-                                                <input id="website" name="website" type="text" class="form-control" placeholder="{{$user->website}}">
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
                                             <label for="txtFacebookLink" class="control-label pb-10"><i class="fa fa-facebook-official"></i> Facebook</label>
@@ -351,30 +411,85 @@
                             </fieldset>
                             @if(Auth::user())
                                 @if(Auth::user()->role == 'seller')
-                                    <h3>Dealer Page URL</h3>
+                                     <h3>SEO Section</h3>
                                     <fieldset>
-                                        <div class="row">
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <div class="form-group ml-0 mr-0">
-                                                        <label for="txtWebsiteLink" class="control-label pb-10"><i class="fa fa-globe"></i> Website</label>
-                                                        <div class="bootstrap-filestyle input-group">
-                                                            <?php $slug = Auth::user()->slug != '' ? Auth::user()->slug : strtolower(Auth::user()->firstName).'-'.strtolower(Auth::user()->lastName); ?>
-                                                            <input type="text" class="form-control" value="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" placeholder="" disabled="">
-                                                            <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                                                <a href="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" target="_blank">
-                                                                    <label for="fulImage" class="btn btn-outline btn-primary">
-                                                                        <span class="icon-span-filestyle ti-image"></span>
-                                                                        <span class="buttonText">Preview</span>
-                                                                    </label>
-                                                                </a>
-                                                            </span>
+                                        <section>
+                                                <div class="form-group">
+                                                    <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
+                                                    <div class="col-sm-9">
+                                                        <div class="hideslug">
+                                                            <div class="bootstrap-filestyle input-group">
+                                                                <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
+                                                                <div type="text" class="input-group-addon" disabled  style="background:#eee;border-color:#ccc;">{{ url('/dealer') . '/' . $user->id . '/'}}</div>
+                                                                <input class="get_slug form-control" data-id ="{{$user->id}}" type="text" value="{{$slug }}" name="slug">
+                                                                <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                                                        <label for="fulImage" class="btn btn-outline btn-primary">
+                                                                            <span class="buttonText editslugajax">save</span>
+                                                                        </label>
+                                                                </span>
+                                                            </div> 
+                                                        </div>
+                                                        
+                                                        <div class="showslug">
+                                                        <?php
+                                                        if(strlen($user->slug)<=40){
+                                                            $newslug =  $user->slug;
+                                                        }else{
+                                                            $count = strlen($user->slug);
+                                                            $newslug = substr($user->slug,0,20).' ....... '.substr($user->slug,$count-20,$count);
+                                                        }
+                                                        ?>
+                                                            <a class="updatelink" href="{!! url('/dealer') . '/' . Auth::user()->id . '/'.$slug !!}" target="_blank" style="text-decoration: underline;" >{!! url('/dealer') . '/' . Auth::user()->id . '/<strong>'.$slug.'</strong>' !!}</a>
+                                                             &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">edit</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label for="meta_title" class="col-sm-3 control-label">Title</label>
+                                                    <div class="col-sm-9">
+                                                    <?php $meta_title_alt = !empty($company) || $company != '' ? $user->firstName.' '.$user->lastName : $company[0].' '. $company[1]; ?>
+                                                        <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$user->meta_title == '' ? $meta_title_alt : $user->meta_title}}" maxlength="60">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none;">
+                                                    <label for="meta_alttext" class="col-sm-3 control-label">Alt Text</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="alttext" name='meta_alttext' type="text" class="form-control" placeholder="{{$user->meta_alt_text}}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
+                                                    <div class="col-sm-9">
+                                                        <textarea id="meta_description" name='meta_description' class="form-control " maxlength="500" placeholder="{{$user->meta_description == '' ? $user->companySummary : $user->meta_description}}"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="meta_keyword" class="col-sm-3 control-label">Meta Keyword</label>
+                                                    <div class="col-sm-9 "><div class="tagit-sugestion">
+                                                        
+                                                        <style>
+                                                            .bootstrap-tagsinput{
+                                                                width: 100%;
+                                                            }
+                                                        </style>
+                                                        <div>
+                                                            
+                                                        <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="{{$user->meta_keyword}}">
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                     <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="meta_author" name='meta_author' type="text" class="form-control" placeholder="{{$user->meta_author == '' ? $meta_title_alt : $user->meta_author}}" maxlength="60">
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        <div class="row p-10 text-right">
+                                            <button id="sweet-3" type="button" class="btn btn-raised btn-success btn-lg">Update</button>
                                         </div>
-                                    </fieldset>
+                                    </fieldset> 
                                 @endif
                             @endif
                         </form>
@@ -412,72 +527,147 @@
     <script type="text/javascript" src="/db/js/sweet-alert.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/js/bundle.js"></script>
+    <!-- Boostraps_markdown Plugin Script -->
+    <script type="text/javascript" src="/plugins/bootstrap-markdown/js/markdown.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-markdown/js/to-markdown.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-markdown/js/jquery.hotkeys.js"></script>
+    <!-- Booostraps_tagit input plugin -->
+    <script type="text/javascript" src="/plugins/typeahead.js/dist/typeahead.bundle.min.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script type="text/javascript">
         function OpenInNewTab(url) {
             var win = window.open(url, '_blank');
             win.focus();
         }
         $(document).ready(function () {
-            $("form.form-horizontal").validate({
-              rules: {
-                email: {
-                  required: true,
-                  email: true,
-                },
-                first_name: {
-                  required: true,
-                  minlength: 2
-                },
-                last_name: {
-                  required: true,
-                  minlength: 2
-                },
-                txtPassword: {
-                  minlength: 8,
-                  equalTo: '#txtConfirmPassword',
-                },
-                txtConfirmPassword: {
-                  minlength: 8,
-                  equalTo: '#txtPassword',
-                },
+            $('.edit_slug').click(function(){
+                $('.showslug').hide();
+                $('.hideslug').show();
+            });
+            var keywords = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              prefetch: {
+                url: '{{route('get_keyword_json')}}',
+                filter: function(list) {
+                  return $.map(list, function(keyword) {
+                    return { name: keyword }; });
+                }
               }
+            });
+            keywords.clearPrefetchCache();
+            var keywords = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              prefetch: {
+                url: '{{route('get_keyword_json')}}',
+                filter: function(list) {
+                  return $.map(list, function(keyword) {
+                    return { name: keyword }; });
+                }
+              }
+            });
+            keywords.initialize();
+            /**
+             * Typeahead
+             */
+            $('.tagit-sugestion > > input').tagsinput({
+              typeaheadjs: {
+                name: 'keywords',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: keywords,
+                limit: 100,
+              }
+            });
+            $(".twitter-typeahead").css('display', 'inline');
+
+            $('.editslugajax').click(function(){
+                var newslug = $('.get_slug').val();
+                var id = $('.get_slug').attr('data-id');
+                $.ajax({
+                    url: "{{route('get_slug_user')}}/"+id+"/"+newslug,
+                    async: false,
+                    cache: false,
+                    success:function( html ) {
+                        $( ".get_slug" ).val( html );
+                        var count = html.length;
+                        if(count<=40){
+                            newslug = html;
+                        }else{
+                            newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
+                        }
+                        $('.updatelink').html('{{url("/")}}/dealer/'+id+'/<strong>'+newslug+'</strong>');
+                        $('.updatelink').attr('href','{{url("/")}}/dealer/'+id+'/'+html);
+                        $('.hideslug').hide();
+                        $('.showslug').show();
+
+                    }
+                });
+            });
+
+            $("form.form-horizontal").validate({
+              	rules: {
+                	email: {
+                  		required: true,
+                  		email: true,
+                	},
+                	first_name: {
+                  		required: true,
+                  		minlength: 2
+                	},
+                	last_name: {
+                  		required: true,
+                  		minlength: 2
+                	},
+                	txtPassword: {
+                  		minlength: 8,
+                  		equalTo: '#txtConfirmPassword',
+                	},
+                	txtConfirmPassword: {
+                 	 	minlength: 8,
+                  		equalTo: '#txtPassword',
+                	},
+            	}
             });
             var token = "{{ Session::getToken() }}";
             $("#sweet-3, .sweet-3").each(function () {
                 $(this).on("click", function () {
-                  if ($("form.form-horizontal").valid()) {
-                    swal({
-                        title: "Update Profile",
-                        text: "Are you sure you want to update your profile?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#A1D9F2",
-                        confirmButtonText: "Yes!",
-                        cancelButtonText: "No!",
-                        closeOnConfirm: true,
-                        closeOnCancel: false
-                    },
-                    function(isConfirm){
-                        if (isConfirm) {
-                          if ($('#txtPassword').val() !== '') {
-                            var salt = encrypt.makeSalt();
-                            var hashed = encrypt.password($('#txtPassword').val(), salt);
-                            $('input#salt').val(salt);
-                            $('input#hashed').val(hashed);
-                          }
-                          if ($('#phoneNumber').val() !== '') {
-                            var phones = $('#phoneNumber').tagsinput('items');
-                            $(phones).each(function(idx, ele) {
-                              $('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
-                            });
-                          }
-                          $("form[name='profile']").submit();
-                        }else{
-                            swal("Cancelled", "Your profile is not updated.", "error");
-                        }
-                        // $("form[name='profile']").submit();
-                    });
-                  }
+                  	if ($("form.form-horizontal").valid()) {
+	                    swal({
+	                        title: "Update Profile",
+	                        text: "Are you sure you want to update your profile?",
+	                        type: "warning",
+	                        showCancelButton: true,
+	                        confirmButtonColor: "#A1D9F2",
+	                        confirmButtonText: "Yes!",
+	                        cancelButtonText: "No!",
+	                        closeOnConfirm: true,
+	                        closeOnCancel: false
+	                    },
+	                    function(isConfirm){
+	                        if (isConfirm) {
+	                          	if ($('#txtPassword').val() !== '') {
+	                            	var salt = encrypt.makeSalt();
+	                            	var hashed = encrypt.password($('#txtPassword').val(), salt);
+	                            	$('input#salt').val(salt);
+	                            	$('input#hashed').val(hashed);
+	                          	}
+	                          	if ($('#phoneNumber').val() !== '') {
+	                            	var phones = $('#phoneNumber').tagsinput('items');
+	                            	$(phones).each(function(idx, ele) {
+	                              		$('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
+	                            	});
+	                          	}
+	                          	$(window).unbind('beforeunload');
+	                            $("form[name='profile']").submit();
+	                        }else{
+	                            swal("Cancelled", "Your profile is not updated.", "error");
+	                        }
+	                        // $("form[name='profile']").submit();
+	                    });
+                	}
                 });
             }),
             Dropzone.options.myAwesomeDropzone = !1, Dropzone.autoDiscover = !1,
@@ -494,8 +684,9 @@
                 addRemoveLinks: true,
                 dictDefaultMessage: "<i class='icon-dz fa fa-file-o'></i>Drop files here to upload",
                 sending: function(file, xhr, formData) {
-                    // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
-                    // formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
+                    /*Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
+                    formData.append("_token", $('[name=_token').val()); 
+                    Laravel expect the token post value to be named _token by default*/
                     $('.dz-success-mark').hide();
                     $('.dz-error-mark').hide();
 
@@ -570,4 +761,59 @@
         });
         </script>
     @endif
+     <script type="text/javascript">
+        function IsEmailInUse () {
+            var update_email = $('#txtEmailAddress').val();
+            var emailreg = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+            console.log(update_email);
+
+            $.getJSON('/api/ajax/checkemail/{email}', {email: update_email}, function (json) {
+                
+
+                console.log(json.response);
+                if (json.response == true )
+                {
+                    $("#txtEmailAddress").css({'border' : '1px solid #8a8044'});
+                    $("#txtEmailAddress").focus();
+                    $("div.log").text( "Email In Use!" );
+                    $("div.log").fadeIn('slow');
+                }
+                else
+                {  
+
+                    if(emailreg.test(update_email)){
+                        
+                        $("#txtEmailAddress").css({'border' : '1px solid #e6e6e6'});
+                        $("div.log" ).text("");
+                        $("div.log").fadeOut('fast');
+                       
+                       
+                    }
+                    else {
+                        $("#txtEmailAddress").css({'border' : '1px solid #8a8044'});
+                        $("txtEmailAddress").focus();
+                        $("div.log" ).text( "Email Not Valid!" );
+                        $("div.log").fadeIn('slow');
+                         
+                    }
+
+                }
+                console.log(json);
+            });
+            
+            return false;         
+        }
+
+        // on leave remove edit warning sign.
+        $(window).bind('beforeunload', function(e){
+            exitPage();
+            return 'Are you sure?';
+        });
+
+        function exitPage(){
+            $.get('/api/ajax/exit/{{$user->id}}', function(data) {
+                return data;
+            });
+        }   
+    </script>
 @endsection

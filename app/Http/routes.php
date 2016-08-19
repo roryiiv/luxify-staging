@@ -12,6 +12,7 @@
 */
 
 use App\Listings;
+use App\Language;
 
 Route::get('/buildHashedId', 'Front@updateHashed');
 //static front pages
@@ -75,7 +76,15 @@ Route::post('/api/mailbox/delete', 'Mailbox@deleteMessage');
 Route::post('/api/product/setStatus', 'Panel@product_change_status');
 Route::post('/api/dealer/setStatus', 'Panel@dealer_change_status');
 Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
+Route::get('/api/lang/switch/{code}', 'Front@switchLanguage');
 Route::post('/api/bulkActions', 'Panel@bulkActions');
+Route::get('/api/ajax/checkemail/{email}', 'Dashboard@IsEmailInUse');
+Route::get('/api/ajax/checkemail/{email}', 'Panel@IsEmailInUse');
+Route::get('/api/ajax/exit/{item}', 'Panel@exitPage');
+Route::post('/update/{id}', 'Dashboard@FeaturedItem');
+Route::post('/api/ajax/checkemail/{email}', 'Front@EmailInUse');
+Route::post('/forget-password','LuxifyAuth@forgetPassword');
+Route::post('/reset-password','LuxifyAuth@resetPassword');
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 
@@ -101,11 +110,14 @@ Route::post('/search','Front@search');
 Route::post('/searchAjax','Front@searchAjax');
 Route::post('/wishlist/add','Front@wishlistAdd');
 Route::post('/dealer-application','Front@dealerApplication');
+Route::get('/forget-password','Front@forgetPassword');
+Route::get('/reset-password/{token}','Front@resetPassword');
 //Route::get('/build', 'Front@build');
 
 //routes for social oauth login/signup
-Route::get('/oauth/redirect/facebook', 'SocialAuthController@fb_redirect');
-Route::get('/oauth/callback/facebook', 'SocialAuthController@fb_callback');
+Route::get('/oauth/redirect/facebook', 'SocialAuthController@fb_redirect')->name("redirect_fb");
+Route::get('/oauth/redirect/twitter', 'SocialAuthController@tw_redirect')->name("redirect_tw");
+Route::get('/oauth/callback/{provider}', 'SocialAuthController@provider_callback');
 
 // PANEL Routes (admin)
 Route::get('/panel','Panel@index');
@@ -138,10 +150,22 @@ Route::get('/panel/extrainfo/rebuild/{id}','Panel@extra_rebuild');
 Route::get('/panel/products/confirm','Panel@products_confirm');
 Route::get('/panel/currency/exec', 'Panel@currencyExec');
 
+//panel additional ajax slug #create_update_slug
+Route::get('/panel/cu_slug/', 'Panel@zonk')->name("get_slug");
+Route::get('/panel/cu_slug_user/', 'Panel@zonk')->name("get_slug_user");
+Route::get('/panel/cu_slug_user/{id}/{slug}', 'Panel@createupdatesluguser');
+Route::get('/panel/cu_slug/{id}/{slug}', 'Panel@createupdateslug');
+//get keywords json
+Route::get('/panel/get_keyword_json', 'Panel@get_keyword_json')->name('get_keyword_json');
+//get flotchart json
+Route::get('/dashboard/get_flot_chart/', 'Dashboard@zonk')->name('get_json_flot');
+Route::get('/dashboard/get_flot_chart/{start}/{end}', 'Dashboard@get_flot_chart');
+Route::get('/dashboard/get_flot_chart_year/', 'Dashboard@zonk')->name('get_json_flot_year');
+Route::get('/dashboard/get_flot_chart_year/{year}', 'Dashboard@get_first_flot_chart');
+
 
 //routes for DASHBOARD (seller)
-//Route::get('/dashboard', 'Dashboard@index');
-Route::get('/dashboard', 'Dashboard@products');
+Route::get('/dashboard', 'Dashboard@index');
 Route::get('/dashboard/profile', 'Dashboard@profile');
 Route::post('/dashboard/profile', 'Dashboard@profile_update');
 Route::get('/dashboard/mailbox', 'Dashboard@mailbox');
@@ -164,6 +188,8 @@ Route::post('/upload_multiple', 'Dashboard@multiple_upload');
 Route::post('/removeImage', 'Dashboard@remove_image');
 //Dashboard support
 Route::post('/dashboard/support', 'Dashboard@supportSend');
+
+Route::get('/download-image/{image}', 'Panel@downloadImage');
 
 // Route::auth();
 Route::get('/home', 'HomeController@index');

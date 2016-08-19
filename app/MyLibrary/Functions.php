@@ -13,6 +13,12 @@ use DateTime;
 
 use Carbon\Carbon;
 
+use App;
+
+use Illuminate\Support\Facades\Session;
+
+use Illuminate\Support\Facades\Config;
+
 class Functions
 {
     static function trimDownText($txt, $len) {
@@ -149,6 +155,7 @@ class Functions
             for ($x = 0; $x < count($langs); $x++) {
                 $return[$x]['val'] = $langs[$x]->id;
                 $return[$x]['label'] = $langs[$x]->name;
+                $return[$x]['code'] = $langs[$x]->code;
             }
         }
         return $return;
@@ -325,6 +332,23 @@ class Functions
 
 
         return $return;
+    }
+    public static function get_lang(){
+        if(Auth::user()){
+            $languageId = Auth::user()->languageId;
+            if($languageId !='' && !empty($languageId)){
+                $return = DB::table('languages')->where('id',$languageId)->value('code');
+            }else{
+                if(Session::has('lang')){
+                    $return = Session::get('lang');
+                }else{
+                    $return = Config::get('app.locale');                  
+                }
+            }
+            return $return;
+        }else{
+            return Session::has('lang') ? Session::get('lang') : Config::get('app.locale');
+        }
     }
 	/*
     public static function leafNode() {

@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'en_us',
 
     /*
     |--------------------------------------------------------------------------
@@ -215,6 +215,12 @@ return [
         'Markdown'  => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
         'Image' => Intervention\Image\Facades\Image::class
 
+    ],
+
+    //multiple language
+    'locales' => [
+        'en' => 'English',
+        'cn' => '简体中文'
     ],
 
 ];
