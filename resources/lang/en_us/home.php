@@ -12,4 +12,6 @@ return[
     'dealer_mftseller'=>'More From This Seller',
     'dealer_viewlistings'=>'View listings',
     'dealer_contactDealer'=>'Contact dealer',
+    'dealer_featured'=>'Featured',
+    'dealer_viewmore'=>'View more',
 ];

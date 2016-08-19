@@ -13,4 +13,6 @@ return[
     'dealer_mftseller'=>'更多来自此商家的商品',
     'dealer_viewlistings'=>'查看所有商品',
     'dealer_contactDealer'=>'联系商家',
+    'dealer_featured'=>'精选',
+    'dealer_viewmore'=>'查看更多',
 ];
