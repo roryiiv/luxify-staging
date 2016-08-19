@@ -31,7 +31,7 @@ $(document).ready(function() {
         if($(that).hasClass('added')) {
           var url = '/dashboard/wishlist/delete'; 
           var itemID = $(that).attr('data-id');
-          var userID = "{{ $user_id }}";
+          var userID = "{{ isset($user_id) ? $user_id : '' }}";
           var token = $('input[name=_token]').val();
           var data = {uid: userID, lid: itemID};
             $.ajax({
@@ -54,7 +54,7 @@ $(document).ready(function() {
         } else {
           var url = '/dashboard/wishlist/add'; 
           var itemID = $(that).attr('data-id'); 
-          var userID = "{{ $user_id }}";
+          var userID = "{{ isset($user_id) ? $user_id : '' }}";
           var token = $('input[name=_token]').val();
            var data = {uid: userID, lid: itemID};
            $.ajax({

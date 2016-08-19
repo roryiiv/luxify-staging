@@ -4916,9 +4916,16 @@ table.dataTable tbody>tr>.selected {
 }
 
 #product-list_wrapper table tr th:nth-child(6) {
-    display: none;
+    /*display: none;*/
 }
 
 .error {
     color: #8a8044;
+}
+
+.log{
+    border: 1px;
+    color: #ffffff;
+    background-color: #8a8044;
+    padding: 10px;
 }

@@ -4,7 +4,7 @@
 
 @section('meta-data')
 <meta name="keywords" content="online shopping,luxury goods,pre owned,vintage">
-<meta name="description" content="We make online shopping easier and more transparent. Luxify is the perfect place to explore a large collection of new, vintage and pre-owned luxury goods.">
+<meta name="description" content="we make online shopping easier and more transparent. luxify is the perfect place to explore a large collection of new, vintage and pre-owned luxury goods.">
 @endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>

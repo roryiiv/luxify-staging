@@ -77,6 +77,7 @@ $subs = func::categories('all');
                         </label>
                     </div>
                     <div class="col-sm-8 ion-range">
+                        <span class="irs-bars"></span>
                         <input type="text" id="range" value="{{ isset($filters['range']) && !empty($filters['range']) ? $filters['range'] : '' }}" name="range" />
                     </div>
                 </div>

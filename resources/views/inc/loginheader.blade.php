@@ -142,7 +142,7 @@
         </ul>-->
         @if(Auth::user())
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/dashboard">Welcome {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
+                <li><a href="/dashboard">@lang('home.header_menu_welcome') {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
             </ul>
         @else
             <ul class="nav navbar-nav navbar-right">
