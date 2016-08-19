@@ -691,17 +691,13 @@ class Front extends Controller {
     	->where('token', $token)
     	->where('status', 'OPEN')
     	->first();
+
+    	DB::table('reset_password')
+    	->where('token', $token)
+    	->where('username', $reset_arr->username)
+    	->update(['status' => 'EXPIRED']);
+
         return view('auth.reset-password', ['reset_arr' => $reset_arr]);  
-    }
-
-    public function EmailInUse(Request $request){
-        $email = $request->input('email');
-
-        $checkemail = DB::table('users')
-                   ->where('email', $email)
-                   ->first();
-
-        return Response::json(['response' => $checkemail != null]);
     }
 
     public function dealerDirectory() {

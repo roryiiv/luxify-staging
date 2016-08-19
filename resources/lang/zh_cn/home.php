@@ -45,6 +45,8 @@ return[
     'dealer_mftseller'=>'更多来自此卖家',
     'dealer_viewlistings'=>'查看列表',
     'dealer_contactDealer'=>'联系代理商',
+    'dealer_featured'=>'精选',
+    'dealer_viewmore'=>'查看更多',
 //file:layouts.front
     //*footer
     'front_aboutUsCareers'=>'关于我们/招聘',
