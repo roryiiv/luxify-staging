@@ -96,8 +96,8 @@
                              @endforeach
                            </select>
                         </li>
-                        <li><a href="/register">Sign Up</a></li>
-                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">@lang('home.header_signUp')</a></li>
+                        <li><a href="/login">@lang('home.header_login')</a></li>
                     </ul>
                 @endif
             </div>

@@ -146,8 +146,8 @@
             </ul>
         @else
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/register">Sign up</a></li>
-                <li><a href="/login">Login</a></li>
+                <li><a href="/register">@lang('home.header_signUp')</a></li>
+                <li><a href="/login">@lang('home.header_login')</a></li>
             </ul>
         @endif
 
