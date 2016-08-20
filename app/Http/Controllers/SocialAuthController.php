@@ -36,7 +36,7 @@ class SocialAuthController extends Controller
             return redirect()->to('/dashboard/profile');
         }else{
             $error = $user['error'];
-            if($user['email']){
+            if(isset($user['email'])){
                 $email = $user['email'];
                 return redirect()->to('/login?err='.$error.'&email='.$email);
             }else{

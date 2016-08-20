@@ -349,13 +349,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header"> 
-        <h2>Send a message</h2>
+        <h2>@lang('home.sm_sendMessege')</h2>
       </div>
       <div class="modal-body"> 
         <form id="message-form">
            <textarea id='content' required rows="8" name="content" placeholder="Let the dealer know why you are interested. A copy of the mesage will be included in your dashboard as well."></textarea>
            <input type="hidden" id="listing-id" value="{{ isset($listing->id) ? $listing->id : 0 }}" />
-           <button id="message-send-btn">Send</button>
+           <button id="message-send-btn">@lang('home.sm_send')</button>
            <div class='ajax-loading' style="display:none; margin-top:10px; text-align: center; width:100%">
                <img src="/assets/images/ajax-loader_2.gif" />
            </div>
@@ -370,31 +370,31 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header"> 
-        <h2>welcome to luxify</h2>
-        <h5>asia’s leading marketplace for luxury</h5>
+        <h2>@lang('home.sm_welcome')</h2>
+        <h5>@lang('home.sm_description')</h5>
       </div>
       <div class="modal-body"> 
         <div class="row split-box" >
            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
              <div class="left">
-               <h4>I'm New Here</h4>
-               <p>Creating an account quick and easy. You can also have your own wishlist, contact our dealers,  edit your profile, and much more.</p>
-               <a class="button" href="/register">Sign Up</a>
+               <h4>@lang('home.sm_newhere')</h4>
+               <p>@lang('home.sm_messegeLeft')</p>
+               <a class="button" href="/register">@lang('auth.signUp')</a>
              </div>
            </div>
            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
              <div class="right">
                <form id="login-form-ajax">
-                 <h4>Existing User</h4>
-                 <p>Please login to your account</p>
-                 <input name="email" id="email" type="text" placeholder="Email" />
-                 <input name="password" id="password" type="password"  placeholder="Password" />
+                 <h4>@lang('home.sm_existinguser')</h4>
+                 <p>@lang('home.sm_pleaselogin')</p>
+                 <input name="email" id="email" type="text" placeholder="@lang('auth.email')" />
+                 <input name="password" id="password" type="password"  placeholder="@lang('auth.password')" />
             
 <?php if(!isset($dealer) || empty($dealer)) {
   $dealer = (object) ['id' => 0];
 } 
 ?>
-                 <button class="button" id="sign-in-btn">Login</button>
+                 <button class="button" id="sign-in-btn">@lang('home.sm_login')</button>
                  <div class='ajax-loading' style="display:none; margin-top:10px; text-align: center; width:100%">
                      <img src="/assets/images/ajax-loader_2.gif" />
                  </div>
@@ -412,13 +412,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header"> 
-        <h2>Message Sent</h2>
-        <h5>Stay tuned! You will receive email notification when the seller replies.</h5>
+        <h2>@lang('home.sm_messageSent')</h2>
+        <h5>@lang('home.sm_stayTuned')</h5>
       </div>
       <div class="modal-body"> 
         <div class="action-box">
-          <a href="/dashboard/mailbox" class='button'>View Inbox</a>
-          <button data-dismiss="modal">Return To Item</button>
+          <a href="/dashboard/mailbox" class='button'>@lang('home.sm_viewInbox')</a>
+          <button data-dismiss="modal">@lang('home.sm_returnItem')</button>
         </div>
       </div>
     </div>
@@ -429,13 +429,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header"> 
-        <h2>Item has been added to wishlist</h2>
-        <h5>You can check your wishlist in the dashboard</h5>
+        <h2>@lang('home.sm_addedWishlist')</h2>
+        <h5>@lang('home.sm_checkWishlist')</h5>
       </div>
       <div class="modal-body"> 
         <div class="action-box">
-          <a href="/dashboard/wishlist" class='button'>View Wishlist</a>
-          <button data-dismiss="modal">Return To Item</button>
+          <a href="/dashboard/wishlist" class='button'>@lang('home.sm_viewWishlist')</a>
+          <button data-dismiss="modal">@lang('home.sm_returnItem')</button>
         </div>
       </div>
     </div>

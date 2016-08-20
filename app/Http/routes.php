@@ -12,7 +12,6 @@
 */
 
 use App\Listings;
-use App\Language;
 
 Route::get('/buildHashedId', 'Front@updateHashed');
 //static front pages
