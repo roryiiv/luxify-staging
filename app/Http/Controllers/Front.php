@@ -36,6 +36,8 @@ use App\Wishlists;
 
 use App\Language;
 
+Use Cache;
+
 class Front extends Controller {
     //Front end Controller
     public function index() {
@@ -687,17 +689,23 @@ class Front extends Controller {
     }
 
     public function resetPassword($token) {
-    	$reset_arr = DB::table('reset_password')
-    	->where('token', $token)
-    	->where('status', 'OPEN')
-    	->first();
+    	if(Cache::has($token)){
+			$reset_arr = DB::table('reset_password')
+			->where('token', $token)
+			->where('status', 'OPEN')
+			->first();
 
-    	DB::table('reset_password')
-    	->where('token', $token)
-    	->where('username', $reset_arr->username)
-    	->update(['status' => 'EXPIRED']);
+			DB::table('reset_password')
+			->where('token', $token)
+			->where('username', $reset_arr->username)
+			->update(['status' => 'EXPIRED']);
 
-        return view('auth.reset-password', ['reset_arr' => $reset_arr]);  
+		    return view('auth.reset-password', ['reset_arr' => $reset_arr]); 
+    	}else{
+    		$reset_arr = NULL;
+    		return view('auth.reset-password', ['reset_arr' => $reset_arr]); 
+    	}
+    	 
     }
 
     public function dealerDirectory() {
