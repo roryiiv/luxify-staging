@@ -128,8 +128,11 @@
                                                 <option value="50"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],50) : ''}}>50</option>
                                                 {{-- <option value="-1"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],-1) : ''}}>All</option> --}}
                                             </select>
-                                            entries</label>
+                                            entries
+                                            </label>
                                         </form>
+                                        </br>
+                                        <td>Showing {{ $users->count() }} of {{ $users->total() }} entries</td>
                                     </div>
                                 </div>
                             </div>
@@ -146,9 +149,16 @@
                                                 </th>
                                                 <th>Customer Name</th>
                                                 <th>Email</th>
+                                                @if(Auth::user()->role != 'editor')
                                                 <th>Customer Group</th>
+                                                @endif
                                                 <th>Account Status</th>
+                                                @if(Auth::user()->role == 'editor')
+                                                <th class="text-right">Last Edited By</th>
+                                                @endif
+                                                @if(Auth::user()->role != 'editor')
                                                 <th>Date Added</th>
+                                                @endif
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -162,20 +172,38 @@
                                                         </div>
                                                     </td>
                                                     <?php
-                                                       $customerName = '';
-                                                       if (isset($user->companyName) && !empty($user->companyName)) {
-                                                         $customerName = $user->companyName; 
-                                                       } else if (isset($user->fullName) && !empty($user->fullName)) {
-                                                         $customerName = $user->fullName; 
-                                                       } else if (!empty($user->firstName) && !empty($user->lastName)) {
-                                                         $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName);
-                                                       } else {
-                                                         $customerName = $user->username;
-                                                       }
+                                                        
+                                                        $customerName = '';
+                                                        if (!empty($user->companyName) && ($user->companyName) !=null) {
+                                                            $company = json_decode($user->companyName);
+                                                            if(is_array($company)){
+                                                                $customerName = $company[0]."</br>". $company[1];
+                                                            }else{
+                                                                $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName); 
+                                                            }
+
+                                                       }else{
+                                                            if (!empty($user->firstName) && !empty($user->lastName)) {
+                                                                $customerName = ucfirst($user->firstName) . ' ' . ucfirst($user->lastName);
+                                                            }elseif (isset($user->fullName) && !empty($user->fullName)) {
+                                                                $customerName = $user->fullName; 
+                                                            }else{
+                                                                $customerName = $user->username;
+                                                            }
+                                                        }                                                       
                                                     ?>
-                                                    <td>{{ $customerName }}</td>
+                                                    <td>
+                                                        {!! $customerName !!}
+                                                        @if (Cache::get($user->id) == 'edited') 
+                                                            {{-- true expr --}}
+                                                            <br/><span class="text-warning pull-right"><i class="ti-alert"></i> Edited</span>
+                                                        @endif
+                                                    </td>
+
                                                     <td>{{$user->email}}</td>
+                                                    @if(Auth::user()->role != 'editor')
                                                     <td>{{ucfirst($user->role)}}</td>
+                                                    @endif
                                                     <td>
                                                         @if($user->dealer_status === 'approved')
                                                             <span class="label label-success">Approved</span>
@@ -188,18 +216,29 @@
                                                          </div>
                                                         @endif
                                                     </td>
+                                                     @if(Auth::user()->role == 'editor')
+                                                         @if($user->edited_by != 0)
+                                                            <?php $editor = func::getTableByID('users',$user->edited_by)?>
+                                                            <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y H:m", strtotime($user->updated_at))}}</td>
+                                                        @else
+                                                            <td class="text-right">-</td>
+                                                        @endif
+                                                    @endif
+                                                    @if(Auth::user()->role != 'editor')
                                                     <td>{{date("m/d/Y", strtotime($user->created_at))}}</td>
+                                                    @endif
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
                                                             <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
                                                             <a href="{{ $user->role != 'seller' ? 'javascript:;' : url('/dealer') . '/' . $user->id . '/' . $slug }}" target="_blank" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                            <a target="_blank" href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
-                                                            @if($user->isSuspended == 0)
-                                                                <a href="/panel/user/delete/{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
-                                                            @else
-                                                                <a href="/panel/user/revoke/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-power-off"></i></a>
+                                                            <a href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
+                                                            @if(Auth::user()->role == 'admin')
+                                                                @if($user->isSuspended == 0)
+                                                                    <a href="/panel/user/delete/{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                                @else
+                                                                    <a href="/panel/user/revoke/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-power-off"></i></a>
+                                                                @endif
                                                             @endif
-
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -224,7 +263,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="dataTables_info" id="product-list_info" role="status" aria-live="polite">
-                                        Showing {{ $users->firstItem() }} to {{ $users->count() }} of {{ $users->total() }} entries
+                                        Showing {{ $users->count() }} of {{ $users->total() }} entries
                                     </div>
                                 </div>
                                 <div class="col-sm-7">

@@ -1,0 +1,160 @@
+.navbar-nav .header-search .dropdown-menu
+  padding-left: 0
+  padding-right: 0
+.navbar-default
+  color: #ffffff
+  background-color: transparent
+  border-color: transparent
+  .navbar-nav
+    > li
+      > a
+        color: #fff
+.navbar-default .navbar-nav > .open > a
+  background-color: transparent
+  color: #fff
+  &:hover, &:focus
+    background-color: transparent
+    color: #fff
+.header-search .search-form
+  .form-control
+    border: none
+    box-shadow: none
+    height: 36px
+    font-size: 15px
+    font-weight: 300
+  .btn
+    height: 36px
+    min-width: 0
+    background-color: #fff
+    color: rgba(71, 71, 71, 0.5)
+    padding: 8px 10px
+    &:hover, &:focus
+      color: #474747
+
+.navbar-brand
+  padding: 0
+  width: 112px
+  height: auto
+  float: left
+  margin-right: 70px
+  position: relative
+  color: #fff
+  img
+    width: 100%
+
+.navbar-toggle
+  float: right
+  border: none
+  margin: 8px 0 0
+  padding: 0
+  position: relative
+  padding-right: 30px
+  text-transform: uppercase
+  font-weight: 700
+  font-size: 12px
+  color: #fff
+  height: 20px
+  background: none !important
+  -webkit-transition: color 200ms ease
+  transition: color 200ms ease
+  span
+    position: absolute
+    right: 0
+    top: 50%
+    height: 2px
+    width: 18px
+    background: #fff
+    margin-top: -2px
+    &:before, &:after
+      content: ""
+      position: absolute
+      left: 0
+      right: 0
+      height: 2px
+      background: #fff
+      -webkit-transition: -webkit-transform 200ms ease
+      transition: transform 200ms ease
+    &:before
+      top: -8px
+    &:after
+      bottom: -8px
+  &:hover
+    color: #958867
+
+.nav-active .navbar-toggle
+  color: #958867
+  span
+    background-color: transparent
+    &:before
+      top: 50%
+      -webkit-transform: rotate(45deg)
+      -ms-transform: rotate(45deg)
+      transform: rotate(45deg)
+    &:after
+      bottom: auto
+      top: 50%
+      -webkit-transform: rotate(-45deg)
+      -ms-transform: rotate(-45deg)
+      transform: rotate(-45deg)
+
+.navbar-nav
+  padding-top: 3px
+  > li
+    > a
+      text-transform: uppercase
+      font-weight: 500
+      position: relative
+      letter-spacing: 1px
+      margin: 0 20px 0 0
+      padding: 0
+      color: #fff
+    &:hover > a, &.open > a
+      color: #988866
+    .dropdown-toggle
+      position: relative
+      padding-right: 14px
+      &:before
+        font-family: "icomoon"
+        position: absolute
+        top: 50%
+        right: 0
+        font-size: 10px
+        font-weight: 500
+        line-height: 1
+        margin-top: -6px
+        margin-right: -3px
+        color: #9b9b9b
+    .dropdown-menu
+      box-shadow: none
+      border: none
+      padding: 0 10px 5px
+
+.fixed-position .navbar-nav > li .dropdown-menu
+  ul, form
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.1)
+
+.navbar-nav > li .dropdown-menu a
+  font-weight: 400
+  font-size: 14.5px
+  line-height: 1.428
+  display: block
+  padding: 5px 0
+  color: #eee
+  text-decoration: none
+  &:hover
+    color: #988866
+.navbar-default
+  .navbar-collapse, .navbar-form
+    border-color: transparent
+  .navbar-nav > li > a
+    &:hover, &:focus
+      color: #958867
+      background-color: transparent
+.navbar-right
+  margin-right: -8px
+  letter-spacing: 2px
+.navbar .navbar-right li:after
+  display: none
+.navbar
+  margin-bottom: 0px
+  min-height: 35px

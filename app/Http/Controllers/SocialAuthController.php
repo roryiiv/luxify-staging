@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use App\Http\Controllers\Controller;
 use Socialite;
+use App\SocialAccountService;
 
 class SocialAuthController extends Controller
 {
@@ -18,13 +19,30 @@ class SocialAuthController extends Controller
         return Socialite::driver('facebook')->redirect();
     }
 
-    public function fb_callback(SocialAccountService $service)
+    public function tw_redirect()
     {
-        // when facebook call us a with token
-        $user = $service->createOrGetUser(Socialite::driver('facebook')->user());
+        return Socialite::driver('twitter')->redirect();
+    }
+    public function in_redirect()
+    {
+        return Socialite::driver('linkedin')->redirect();
+    }
 
-        auth()->login($user);
-
-        return redirect()->to('/home');
+    public function provider_callback(SocialAccountService $service, $provider)
+    {
+        $user = $service->createOrGetUser(Socialite::driver($provider));
+        if($user['status']== true){
+            auth()->login($user['user']);
+            return redirect()->to('/dashboard/profile');
+        }else{
+            $error = $user['error'];
+            if(isset($user['email'])){
+                $email = $user['email'];
+                return redirect()->to('/login?err='.$error.'&email='.$email);
+            }else{
+                return redirect()->to('/login?err='.$error);
+            }
+            
+        }
     }
 }

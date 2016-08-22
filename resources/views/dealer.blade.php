@@ -1,12 +1,18 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - ' . $dealer->fullName)
+@section('title', trim(preg_replace('/\s\s+/', ' ', $meta->title)))
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
+@section('meta')
+  <meta name="description" content="{{ func::trimDownText($dealer->companySummary, 160)}}">
+  <meta name="keyword" content="{{$meta->keyword}}">
+  <meta name="author" content="{{$meta->author}}">
+@endsection
+
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <style>
         .blocked-seller{
             background: rgba(0,0,0,.8);
@@ -49,23 +55,44 @@
             </div>
         </div>
     @endif
-    <section class="inner-banner parallax" style="background-image:url({{ func::img_url($banner, 1960) }});">
+    <section class="inner-banner dealer-page parallax" style="background-image:url({{ func::img_url($banner, 1960) }});">
         <div class="container">
             <div class="banner-text">
                 <div class="banner-center">
                     <div class="row">
                         <div class="col-lg-12">
-                            <?php $title = !empty($dealer->companyName) ? $dealer->companyName :  $dealer->firstName . ' ' . $dealer->lastName; ?>
-                            <h1>{{ $title }}</h1>
+                            <?php 
+                            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                              $company = json_decode($dealer->companyName);
+                                if(is_array($company)){
+                                $title = $company[0]."</br>".$company[1]; 
+                                }else{
+                                 $title = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
+                                }
+                            }else{
+                              $title = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                            }
+                            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                              $company = json_decode($dealer->companyName);
+                                if(is_array($company)){
+                                  $title1 = $company[0]."</br>".$company[1]; 
+                                }else{
+                                  $title1 = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                                }
+                            }else{
+                              $title1 = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                            }
+                            ?>
+                            <h1>{!! $title !!}</h1>
                             <p style="visibility: hidden;">Official Ferrari importer in Singapore</p>
                         </div>
                     </div>
                 </div>
                 <div class="button-wrap">
                     <input type="hidden" name="_ref" value="/dealer/{{$dealer->id}}" />
-                    <a class="btn btn-default" href="/search?search=&user_id={{$dealer->id}}"><span class="glyphicon glyphicon-th-large"></span> View listings</a>
+                    <a class="btn btn-default" href="/search?search=&user_id={{$dealer->id}}"><span class="glyphicon glyphicon-th-large"></span> @lang('home.dealer_viewlistings')</a>
                     <!--<a href="/dealer/contact/{{ $dealer->id }}/0" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>-->
-                  <a href="#" data-toggle="modal" data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>
+                  <a href="#" data-toggle="modal" data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> @lang('home.dealer_contactDealer')</a>
               </div>
           </div>
       </div>
@@ -78,7 +105,7 @@
           <div class="content-wrapper">
               <div class="row">
                   <div class="col-md-6">
-                      <h1>{{ $title }}</h1>
+                      <h1>{!! $title1 !!}</h1>
                       @if(!empty($dealer->companySummary)) 
                          <p> {!! nl2br(e($dealer->companySummary)) !!} </p>
                       @else 
@@ -147,7 +174,11 @@
                         @endif
                         <table class="table" style="margin: 0 auto; max-width: 330px; text-align: center; margin-top: 20px;">
                         <?php 
+                            $addresss = null;
+                            if (isset($dealer->companyAddress) && !empty($dealer->companyAddress)) {
+                            
                             $address= is_array(json_decode($dealer->companyAddress))? join(" ", json_decode($dealer->companyAddress)) : $dealer->companyAddress;
+                            }
                         ?>
                         @if(!empty($address))
                           <tr>
@@ -173,7 +204,7 @@
                         @endif
                         @if(!empty(json_decode($dealer->phoneNumber)))
                         <?php 
-                            $phones= join("<br>", json_decode($dealer->phoneNumber));
+                            $phones= is_array($dealer->phoneNumber) ? join("<br>", json_decode($dealer->phoneNumber)) : $dealer->phoneNumber ;
                         ?>
                         <tr>
                            <td>
@@ -191,30 +222,75 @@
               </div>
           </div>
       </div>
-      <?php $feat = func::getFeatured($dealer->id); ?>
-      @if(!empty($feat))
-          <?php $mainImageUrl = !empty($feat->mainImageUrl) ? $feat->mainImageUrl : 'about-banner.jpg'; ?>
-          <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }});">
+      <?php 
+     // $feat = func::getFeatured($dealer->id); 
+      $featured = json_decode($dealer->featured_item);
+      ?>
+      @if($featured == NULL)
+        <?php $feat = func::getFeatured($dealer->id); ?>
+       	@if($feat == NULL)
+       	<div class="compare-block parallax">
               <div class="container">
                   <div class="row">
                       <div class="col-sm-6">
                           <div class="text-box">
-                              <a href="/listing/{{ $feat->slug }}" class="ferrari_featured_link"><strong class="title">Featured</strong></a>
-                              <h1>{{ $feat->title }}</h1>
-                              <?php $description = !empty($feat->description) ? $feat->description : 'Coming soon.'; ?>
-                              <p>{{ func::truncate(strip_tags($description), 130) }}</p>
-                              <a href="/listing/{{ $feat->slug }}" class="btn btn-primary">View more</a>
+                              <h1>This user has not yet list an item.</h1>
                           </div>
                       </div>
                   </div>
               </div>
-          </div>
+        </div>
+       	@else
+        <?php $mainImageUrl = !empty($feat->mainImageUrl) ? $feat->mainImageUrl : 'about-banner.jpg'; ?>
+        <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }});">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-sm-6">
+                          <div class="text-box">
+                              <a href="/listing/{{ $feat->slug }}" class="ferrari_featured_link"><strong class="title">@lang('home.dealer_featured')</strong></a>
+                              <h1>{{ $feat->title }}</h1>
+                              <?php $description = !empty($feat->description) ? $feat->description : 'Coming soon.'; ?>
+                              <p>{{ func::truncate(strip_tags($description), 130) }}</p>
+                              <a href="/listing/{{ $feat->slug }}" class="btn btn-primary">@lang('home.dealer_viewmore')</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+        </div>
+        @endif
+      @else
+
+      <div  class="cycle-slideshow" style="width:auto;" data-cycle-fx="scrollHorz" data-cycle-timeout="4000" data-cycle-slides="> div.parallax"> 
+        @foreach($featured as $value)
+              <?php 
+              $isi = DB::table('listings')->where('id',$value)->first();
+              $mainImageUrl = !empty($isi->mainImageUrl) ? $isi->mainImageUrl : 'about-banner.jpg'; 
+              ?>  
+              <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true)}});width: 100%; background-size: 100%;">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-6">
+                              <div class="text-box" style="min-height: 500px">
+                                  <a href="/listing/{{ $isi->slug }}" class="ferrari_featured_link"><strong class="title">@lang('home.dealer_featured')</strong></a>
+                                  <h1>{{ $isi->title }}</h1>
+                                  <?php $description = !empty($isi->description) ? $isi->description : 'Coming soon.'; ?>
+                                  <p>{{ func::truncate(strip_tags($description), 130) }}</p>
+                                  <a href="/listing/{{ $isi->slug }}" class="btn btn-primary">@lang('home.dealer_viewmore')</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            @endforeach
+            <div class="cycle-prev"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+            <div class="cycle-next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div> 
+      </div>
       @endif
 
       <div class="more_items_section">
           <div class="container">
               <div class="heading">
-                  <h1 class="text-center">More From This Seller</h1>
+                  <h1 class="text-center">@lang('home.dealer_mftseller')</h1>
               </div>
               <div class="row">
                @if(!empty($listings))
@@ -271,6 +347,7 @@
   </main>
 @endsection
 @section('scripts')
+
     <script>
         $(document).ready(function() {
                               
@@ -286,6 +363,7 @@
         {{ csrf_field() }}
         <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
+        <script src="/assets/js/jquery.cycle2.min.js"></script>
         <script>
         $(document).ready(function(){
             $('a.favourite').each(function(){

@@ -22,7 +22,7 @@ class OpenAPI extends Controller
                 $filename = $timestamp . '-luxify-public-'. uniqid().'.'. $ext;
                 $moved_path = $upload_path . $filename;
                 $request->file('image')->move($upload_path, $filename);
-                unlink($moved_path);
+                //unlink($moved_path);
                 return response()->json($filename);
             }
         }

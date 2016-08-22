@@ -2,7 +2,6 @@
 
 @section('title', 'Welcome to Luxify')
 
-
 @section('meta-data')
   <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
   <meta name="description" content="We are Asia's leading online marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
@@ -10,7 +9,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
 
 @section('content')

@@ -11,9 +11,8 @@
     @yield('meta-data')
     <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
 
-    @yield('home-title')
-    <title>@yield('title') - Luxify - Asia's Leading Marketplace for Luxury</title>
-    <!-- title of the page -->
+    <title>@yield('title') - Luxify - Asia’s leading marketplace for luxury</title>
+	  @yield('meta')
 
     <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png?v=2">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png?v=2">
@@ -35,13 +34,15 @@
     <!-- link to google font -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
     <!-- include bootstrap stylesheet -->
+    <!--
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <style>
-    .currency-selector-container {
-        margin-right: 2.4rem;
-    }
     .navbar .navbar-right li:after {
         display: none;
+    }
+
+    .currency-selector-container {
+        margin-right: 2.4rem;
     }
 
     .currency-selector-container  .jcf-select {
@@ -89,6 +90,7 @@
         left: 50%;
     }
     </style>
+    -->
     @yield('style')
     <!--[if lt IE 9]>
 		<link rel="stylesheet" href="css/ie.css" />
@@ -119,35 +121,35 @@
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>Luxify</h4>
+                                            <h4>@lang('footer.aboutLuxify')</h4>
                                             <ul>
-                                                <li><a href="/about">About us / Careers</a></li>
-                                                <li><a href="/why-luxify">How it works</a></li>
-                                                <li><a target="_blank" href="http://press.luxify.com">Press</a> / <a href="/blog">Blog</a></li>
-                                                <li><a href="/dealer-directory">Dealer Directory</a></li>
+                                                <li><a href="/about">@lang('footer.aboutUsCareers')</a></li>
+                                                <li><a href="/why-luxify">@lang('footer.howItWorks')</a></li>
+                                                <li><a target="_blank" href="http://press.luxify.com">@lang('footer.press')</a> / <a href="/blog">@lang('footer.blog')</a></li>
+                                                <li><a href="/dealer-directory">@lang('footer.dealerDirectory')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>Platform</h4>
+                                            <h4>@lang('footer.platform')</h4>
                                             <ul>
                                                 @if(Auth::user())
-                                                    <li><a href="/logout">Logout</a></li>
+                                                    <li><a href="/logout">@lang('footer.logout')</a></li>
                                                 @else
-                                                    <li><a href="/login">Member Login</a></li>
+                                                    <li><a href="/login">@lang('footer.memberLogin')</a></li>
                                                 @endif
 
-                                                <li><a href="/pricing">Pricing</a></li>
-                                                <li><a href="/dealer-application">Dealer Application</a></li>
-                                                <li><a href="/luxify-estates">Luxify Estates</a></li>
-												<li><a href="/contact">Contact Us</a></li>
+                                                <li><a href="/pricing">@lang('footer.pricing')</a></li>
+                                                <li><a href="/dealer-application">@lang('footer.dealerApplication')</a></li>
+                                                <li><a href="/luxify-estates">@lang('footer.luxifyEstates')</a></li>
+												<li><a href="/contact">@lang('footer.contactUs')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>Our Office</h4>
+                                            <h4>@lang('footer.ourOffice')</h4>
                                             <ul>
                                                 <li><a href="mailto:concierge@luxify.com">concierge@luxify.com</a></li>
                                                 <li>
@@ -159,7 +161,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <nav class="footer-nav">
-                                            <h4>Follow us</h4>
+                                            <h4>@lang('footer.followUs')</h4>
                                             <ul class="social-networks">
                                                 <li><a target="_blank" href="https://www.facebook.com/LuxifyOfficial/"><span class="icon-facebook"></span></a></li>
                                                 <li><a target="_blank" href="https://twitter.com/luxifyofficial"><span class="icon-twitter"></span></a></li>
@@ -176,7 +178,6 @@
 												</div>
 											  </div>
 											</div>
-                                            <span class="nav-text">Weâ€™re socialized!</span>
                                         </nav>
                                     </div>
                               </div>
@@ -193,8 +194,8 @@
                                     <div class="col-md-7">
                                         <nav class="bottom-nav">
                                             <ul>
-                                                <li><a href="/terms">Terms of Service</a></li>
-                                                <li><a href="/privacy">Privacy Policy</a></li>
+                                                <li><a href="/terms">@lang('footer.terms')</a></li>
+                                                <li><a href="/privacy">@lang('footer.policy')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
@@ -227,6 +228,11 @@
             var code = $(this).val();
             // alert(code);
             window.location.href = '/api/currency/switch/' + code;
+        });
+        $('#langSelect').on('change', function(){
+            var code = $(this).val();
+            // alert(code);
+            window.location.href = '/api/lang/switch/' + code;
         });
     });
     </script>

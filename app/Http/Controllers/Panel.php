@@ -16,9 +16,13 @@ use App\Categories;
 
 use App\Listings;
 
+use App\History;
+
 use App\Users;
 
 use DB;
+
+use Response;
 
 use Aws\S3\S3Client;
 
@@ -30,7 +34,13 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 use Carbon\Carbon;
 
+use App\Meta;
+
 use func;
+
+use Cache;
+
+use Storage;
 
 class Panel extends Controller
 {
@@ -38,12 +48,9 @@ class Panel extends Controller
         $this->middleware('auth'); // make sure no guests
 
         if(Auth::user()){
-            if(Auth::user()->role === 'admin') {
-                $this->user_id = Auth::user()->id;
-                $this->user_role = Auth::user()->role;
-            } else {
-                return redirect('/dashboard'); 
-            }
+            $this->user_id = Auth::user()->id;
+            $this->user_role = Auth::user()->role;
+            $this->accepted = array('admin', 'editor');
         }
     }
 
@@ -96,6 +103,14 @@ class Panel extends Controller
         $filter = array();
         $filter_or = array();
         $filters = array();
+
+        $whereIn = array();
+        if(Auth::user()->role == 'editor'){
+        	$whereIn = ['seller'];
+        }elseif(Auth::user()->role == 'admin'){
+        	$whereIn = ['user', 'seller'];
+        }
+
         if(isset($_GET['txtCustomerName']) && !empty($_GET['txtCustomerName'])){
             $filter[] = ['firstName', 'like', '%'.$_GET['txtCustomerName']. '%'];
             $filter_or[] = ['lastName', 'like', '%'.$_GET['txtCustomerName']. '%'];
@@ -130,12 +145,14 @@ class Panel extends Controller
             if($perpage == -1){
                 $users = DB::table('users')
                 ->where($filter)
+                ->whereIn('role', $whereIn)
                 ->orWhere($filter_or)
                 ->orderby('created_at', 'desc')
                 ->get();
             }else{
                 $users = DB::table('users')
                 ->where($filter)
+                ->whereIn('role', $whereIn)
                 ->orWhere($filter_or)
                 ->orderby('created_at', 'desc')
                 ->paginate($perpage);
@@ -144,12 +161,14 @@ class Panel extends Controller
             if(isset($filter_or)){
                 $users = DB::table('users')
                 ->where($filter)
+                ->whereIn('role', $whereIn)
                 ->orWhere($filter_or)
                 ->orderby('created_at', 'desc')
                 ->paginate($perpage);
             }else{
                 $users = DB::table('users')
                 ->where($filter)
+                ->whereIn('role', $whereIn)
                 ->orderby('created_at', 'desc')
                 ->paginate($perpage);
             }
@@ -161,10 +180,18 @@ class Panel extends Controller
     }
 
     public function user_add($role) {
-        return view('panel.add-user', ['role' => $role]);
+        if($this->user_role == 'admin'){
+            return view('panel.add-user', ['role' => $role]);
+        }else{
+            return redirect('/panel/users');
+        }
+        
     }
 
     public function user_register() {
+        //redirect if user is editor.
+        if($this->user_role == 'editor') return redirect('/panel/users');
+
         $user = new User; // always have it declared for first or else empty value sent
 
         //we'll build the slug here and save it
@@ -321,9 +348,10 @@ class Panel extends Controller
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             echo '1';
             $item->title = $_POST['title'];
-            if($item->slug == '' || $item->slug == null){ //we'll build a new slug on each update.
+
+/*            if($item->slug == '' || $item->slug == null){ //we'll build a new slug on each update.
                 $item->slug = SlugService::createSlug(Listings::class, 'slug', $_POST['title']);
-            }
+            }*/
         } else {
             $error_arr['title'] = 'Item title is required.';
         }
@@ -354,6 +382,11 @@ class Panel extends Controller
         }
         if ( isset($_POST['description']) && !empty($_POST['description'])) {
             $item->description = $_POST['description'];
+            $oldDescription = DB::table('listings')->where('id',$id)->value('description');
+            if($oldDescription != $_POST['description']){
+                $catat = History::catat('description',$id,$_POST['description']);         
+            }
+
         } else {
             $error_arr['description'] = 'Item description is required.';
         }
@@ -392,21 +425,39 @@ class Panel extends Controller
                     $uploadedImage[] = $val;
                 }
             }
+
             
             if (count($uploadedImage) === count($_POST['images'])) {
+                //add history for image versioning
+                //if oldversionarray json is same as new, return no history
+                //if there is different json oldversionarray and newarray, write the history
+                $history = History::versioning_image($uploadedImage,$id);
+
+                                //additional add alt image here
+                for ($i=0; $i < count($uploadedImage); $i++) {
+                    //add meta with value
+                    $object_id = $uploadedImage[$i];
+                    $value = $_POST['alt_text'][$i];
+                    $save = Meta::alt_text_image($object_id,$value);
+                }
                 if (isset($_POST['mainImage']) && !empty($_POST['mainImage'])) {
                      
-                    $item->mainImageUrl = array_slice($uploadedImage, intval($_POST['mainImage']), 1)[0];
-                    array_splice($uploadedImage, intval($_POST['mainImage']), 1);
+                    $item->mainImageUrl = $_POST['mainImage'];
                     $item->images = json_encode($uploadedImage);
                 } else {
                     $item->mainImageUrl = $uploadedImage[0];
-                    array_splice($uploadedImage, 0, 1);
                     $item->images = json_encode($uploadedImage);
                 }
             } else {
                 $error_arr['images'] = 'Error in uploaded images.';
             }
+        }
+
+        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
+            $item->latitude = $_POST['latitude'];
+        }
+        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
+            $item->longitude = $_POST['longitude'];
         }
 
         if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
@@ -420,6 +471,37 @@ class Panel extends Controller
         if (isset($_POST['aerial3DLookURL']) && !empty($_POST['aerial3DLookURL'])) {
             $item->aerialLook3DUrl = $_POST['aerial3DLookURL'];
         }
+
+        //additional parameters
+/*        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
+            //$newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
+            $newslug = Listings::newslug($id,$_POST['slug']);
+            $item->slug = $newslug;
+        }*/
+
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+
 
         // delete the existing optional fields first
         DB::table('extrainfos')->where('listingId', $item->id )->delete();
@@ -438,13 +520,22 @@ class Panel extends Controller
                       DB::insert('insert into extrainfos (formgroupId, listingId, value) values (?, ?, ?)', array($formGroup->id, $item->id, $value));
                   }
               }
-           }
+          }
         }
 
         if(!empty($error_arr)){
             echo json_encode($error_arr);
         }else{
+            //save or update meta listing
+            //$id = id listing
+            //$meta = data array meta
+            //$object_type = listing/users;
+            $object_type = 'listings';
+            $item->edited_by = Auth::user()->id;
+            $savemeta = Meta::saveorupdate($id,$meta,$object_type);
+            //
             if ($item->save()) {
+
                 return redirect('/panel/product/edit/'.$item->id);
             }
         }
@@ -458,6 +549,16 @@ class Panel extends Controller
         $user = DB::table('users')
         ->where('id', $id)
         ->first();
+        $user->meta_title = Meta::get_data_user($id,'title');
+        $user->meta_alt_text = Meta::get_data_user($id,'alt_text');
+        $user->meta_description = Meta::get_data_user($id,'description');
+        $user->meta_author = Meta::get_data_user($id,'author');
+        $user->meta_keyword = Meta::get_data_user($id,'keyword');
+
+        $curr_edited = Cache::get($id);
+        if($curr_edited == ''){
+            Cache::forever($id, 'edited'); // marked being edited.
+        }
         return view('panel.edit-user', ['user' => $user]);
     }
 
@@ -465,21 +566,6 @@ class Panel extends Controller
         $user = User::where('id', $_POST['user_id'])->first(); // always have it declared for first or else empty value sent
 
         //we'll rebuild the slug here and save it
-        if($user->role == 'seller' && $user->slug == ''){ //only if seller doesn't have slug yet.
-            if($user->company != ''){ //just in case.
-                $company = $user->company;
-            }elseif($_POST['companyName'] != ''){ //the admin update the user company, so...
-                $company = $_POST['companyName'];
-            }else{
-                $company = '';
-            }
-            if($company != ''){
-                $slug = SlugService::createSlug(Users::class, 'slug', $company);
-            }else{
-                $slug = '';
-            }
-            $user->slug = $slug;
-        }
 
         //we push the image to S3 first.
         if(isset($_POST['cover_img']) && !empty($_POST['cover_img'])){
@@ -505,19 +591,13 @@ class Panel extends Controller
             } 
         }
 
-
+        
         $error_arr = array();
 
         if(isset($_POST['first_name']) && !empty($_POST['first_name'])){
             $user->firstName = $_POST['first_name'];
         }
         if(isset($_POST['last_name']) && !empty($_POST['last_name'])){
-            $user->lastName = $_POST['last_name'];
-        }
-        if(isset($_POST['']) && !empty($_POST[''])){
-            $user->lastName = $_POST['last_name'];
-        }
-        if(isset($_POST['']) && !empty($_POST[''])){
             $user->lastName = $_POST['last_name'];
         }
         if(isset($_POST['txtUserRole']) && !empty($_POST['txtUserRole'])){
@@ -533,7 +613,8 @@ class Panel extends Controller
             $user->currencyId = $_POST['currency'];
         }
         if(isset($_POST['phoneNumber']) && !empty($_POST['phoneNumber'])) {
-            $user->phoneNumber = json_encode($_POST['phoneNumber']); 
+        	$phoneNumber = json_encode($_POST['phoneNumber']);
+            $user->phoneNumber = $phoneNumber;
         }
         if(isset($_POST['contactDetails']) && !empty($_POST['contactDetails'])){
             $user->contactDetails = $_POST['contactDetails'];
@@ -550,9 +631,16 @@ class Panel extends Controller
         if(isset($_POST['mapZoomLevel']) && !empty($_POST['mapZoomLevel'])){
             $user->mapZoomLevel = $_POST['mapZoomLevel'];
         }
-        if(isset($_POST['companyName']) && !empty($_POST['companyName'])){
-            $user->companyName = $_POST['companyName'];
+        if(isset($_POST['companyName']) && is_array($_POST['companyName'])){
+            $companyName = array_filter($_POST['companyName']);
+            if(!empty($companyName)){
+                $user->companyName = json_encode($_POST['companyName']);
+            }
+           
         }
+        // if(isset($_POST['companyName']) && !empty($_POST['companyName'])){
+        //     $user->companyName = $_POST['companyName'];
+        // }
         if(isset($_POST['companyRegNumber']) && !empty($_POST['companyRegNumber'])){
             $user->companyRegNumber = $_POST['companyRegNumber'];
         }
@@ -581,11 +669,65 @@ class Panel extends Controller
         if(isset($_POST['salt']) && !empty($_POST['salt'])){
             $user->salt = $_POST['salt'];
         }
+/*        if(isset($_POST['slug']) && !empty($_POST['slug'])){
+
+          $oldslug = User::where('id',$_POST['user_id'])->value('slug');
+          $newslug = str_slug($_POST['slug'], '-');
+          //if data not change
+          if($oldslug == $newslug){
+
+            $counts = User::where('slug',$newslug)->count();
+            //if data more than the object original
+            if($counts>1){
+              $newslug_copy = $newslug.'-'.$counts+1;
+                $newslug = $newslug_copy;
+              }else{
+                $newslug;
+              }
+          }else{
+            //if old slug is diff with new slug
+            $othercount = User::where('slug',$newslug)->count();
+            //if newslug is there are same with others slug
+            if($othercount>0){
+              $newslug = $newslug.'-'.$othercount+1;
+            }
+            $newslug = $newslug;
+          }
+            $user->slug = $newslug;
+        }*/
+        //additional meta on user page
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+
+
         if(!empty($error_arr)){
             $error = json_encode($error_arr);
             echo $error;
+
         }else{
-            if($user->save()) return redirect('/panel/users');
+            $user->edited_by = Auth::user()->id;
+            $object_type = 'users';
+            $savemeta = Meta::saveorupdate($_POST['user_id'],$meta,$object_type);
+            //if($user->save()) return redirect('/panel/user');
+            if($user->save()) return redirect('/panel/user/edit/'.$_POST['user_id']);
         }
     }
 
@@ -630,7 +772,7 @@ class Panel extends Controller
     }
 
     public function products() {
-      if($this->user_role != 'admin') return redirect('/');
+      if(!in_array($this->user_role, $this->accepted)) return redirect('/');
       $filter = array();
       //TODO: Searching is case incentive?
       if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
@@ -649,6 +791,9 @@ class Panel extends Controller
       }
       if(isset($_GET['status']) && !empty($_GET['status'])){
           $filter[] = ['listings.status', $_GET['status']];
+      }
+      if(isset($_GET['category']) && !empty($_GET['category'])){
+          $filter[] = ['listings.categoryId', $_GET['category']];
       }
       $products = DB::table('listings')
       ->where($filter)
@@ -723,7 +868,7 @@ class Panel extends Controller
         return 'products confirm method';
     }
 
-    public function products_edit($itemId) {
+    public function products_edit(Request $request, $itemId) {
         $item = Listings::where('id', $itemId)->first();
         if ($item) {
             $optionalFields = DB::table('formfields')
@@ -754,8 +899,46 @@ class Panel extends Controller
             if ($optionalFields) {
                 $item['optionFields'] = $optionalFields;
             }
-            return view('panel.product-edit', ['item' => $item] );
+            //additonal parameters
+            $item->url_object = 'listing';
+            $item->meta_title = Meta::get_data_listing($itemId,'title');
+            $item->meta_alt_text = Meta::get_data_listing($itemId,'alt_text');
+            $item->meta_description = Meta::get_data_listing($itemId,'description');
+            $item->meta_author = Meta::get_data_listing($itemId,'author');
+            $item->meta_keyword = Meta::get_data_listing($itemId,'keyword');
+            // $history = new History;
+            // $history->description = History::where('object_id',$itemId)->get();
+            $history = DB::table('history')
+            ->where('object_id', $itemId)
+            ->where('object_type', 'description')
+            ->orderBy('created_at', 'desc')
+            ->get();
+            $v_images = DB::table('history')
+            ->where('object_id', $itemId)
+            ->where('object_type', 'images')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+            // $request->session()->pull('edited', $item->id);
+            // $request->session()->forget('edited'); // use it to reset.
+            $curr_edited = Cache::get($item->id);
+            if($curr_edited == ''){
+                Cache::forever($item->id, 'edited'); // marked being edited.
+            }
+            // $request->session()->push('edited', $item->id); 
+
+            return view('panel.product-edit', ['item' => $item,'history' => $history,'v_images' => $v_images] );
         }
+    }
+
+    public function exitPage($item){
+        if (Cache::has($item)) {
+            Cache::forget($item);
+            $return = true;
+        }else{
+            $return = false;
+        }
+        return $return;
     }
 
     public function extra_rebuild($id){
@@ -938,5 +1121,66 @@ class Panel extends Controller
       } else {
         return redirect( Auth::user()->role === 'admin'? '/panel': '/dashboard');
       }
+    }
+    function createupdateslug($id,$slug){
+        $newslug = SlugService::createSlug(Listings::class, 'slug', $slug);
+        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }
+/*        $newslug = Listings::newslug($id,$slug);
+        $updates = DB::table('listings')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }*/
+    }
+    function createupdatesluguser($id,$slug){
+        $newslug = SlugService::createSlug(Users::class, 'slug', $slug);
+        //dd($newslug);
+        $updates = DB::table('users')->where('id',$id)->update(['slug'=> $newslug]);
+        if($updates){
+            return $newslug;
+        }else{
+            return $newslug;
+        }
+    }
+    public function IsEmailInUse(Request $request){
+        $email = $request->input('email');
+
+        $checkemail = DB::table('users')
+                   ->where('email', $email)
+                   ->count();
+
+        return Response::json(['response' => $checkemail != null]);
+	}
+
+    function get_keyword_json(){
+        $db_keyword = Meta::where('object_type','listings')->where('meta_key','keyword')->get();
+        $keywords = array();
+        foreach ($db_keyword as $value) {
+            $explode = explode(',', $value['meta_value']);
+            foreach ($explode as $value) {
+                $keywords[] = $value;
+            }
+        }
+        $array_unique = array_unique($keywords);
+        return json_encode(array_values($array_unique));
+    }
+    function downloadImage($image){
+        $filename ="https://s3-ap-southeast-1.amazonaws.com/luxify/images/" . $image;
+        $buffer = file_get_contents($filename);
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type: application/octet-stream");
+        header("Content-Transfer-Encoding: binary");
+        header("Content-Length: " . strlen($buffer));
+        header("Content-Disposition: attachment; filename=$image");
+        echo $buffer; 
     }
 }

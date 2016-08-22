@@ -14,6 +14,8 @@ use App\User;
 
 use Auth;
 
+use Cache;
+
 class LuxifyAuth extends Controller
 {
 
@@ -69,6 +71,9 @@ class LuxifyAuth extends Controller
                             case 'admin':
                             return redirect()->intended('/panel');
                             break;
+                            case 'editor':
+                            return redirect()->intended('/panel');
+                            break;
                             case 'seller':
                             return redirect()->intended('/dashboard');
                             break;
@@ -105,64 +110,104 @@ class LuxifyAuth extends Controller
 
     }
     public function register() {
-      $email = $_POST['email'];
-      $fullname = $_POST['fullname'];
-      $hashed = $_POST['hashed'];
-      $salt= $_POST['salt'];
-      $password = $_POST['password'];
-      $password_confirmation = $_POST['password_confirmation'];
-      if ($password ===  $password_confirmation) {
-        $newUser = new User;
-        $newUser->hashedPassword = $hashed;
-        $newUser->salt = $salt;
-        $newUser->username = $fullname;
-        $newUser->email = $email;
-        $newUser->role = 'user';
-        $newUser->save();
-        if ($newUser->id ) {
-            $username_to = $fullname;
-            $details = array('to' => $email);
-            Mail::send('emails.luxify-welcome-en-us', ['username_to' => $username_to], function ($message) use ($details){
+        $email = $_POST['email'];
+        $fullname = $_POST['fullname'];
+        $hashed = $_POST['hashed'];
+        $salt= $_POST['salt'];
+        $password = $_POST['password'];
+        $password_confirmation = $_POST['password_confirmation'];
+        if ($password ===  $password_confirmation) {
+            $newUser = new User;
+            $newUser->hashedPassword = $hashed;
+            $newUser->salt = $salt;
+            $newUser->username = $fullname;
+            $newUser->email = $email;
+            $newUser->role = 'user';
+            $newUser->save();
+            if ($newUser->id ) {
+                $username_to = $fullname;
+                $details = array('to' => $email);
+                $this_url = url('/');
+                Mail::send('emails.luxify-welcome-en-us', ['username_to' => $username_to, 'this_url' => $this_url], function ($message) use ($details){
 
-                $message->from('technology@luxify.com', 'Luxify Admin');
-                $message->subject('Welcome to Luxify');
-                $message->replyTo('no_reply@luxify.com', $name = null);
-                $message->to($details['to']);
+                    $message->from('technology@luxify.com', 'Luxify Admin');
+                    $message->subject('Welcome to Luxify');
+                    $message->replyTo('no_reply@luxify.com', $name = null);
+                    $message->to($details['to']);
 
-            });
-            $auth = User::where('email', '=', $email)->where('hashedPassword', '=', $hashed)->where('salt', '=', $salt)->first();
+                });
 
-            if($auth) {
-                // Authentication passed...
-                Auth::login($auth);
-                $role = Auth::user()->role;
-                // var_dump(Auth::user()); var_dump(Auth::user()->role); exit();
-                switch($role){
-                    case 'admin':
-                    return redirect()->intended('/panel');
-                    break;
-                    case 'seller':
-                    return redirect()->intended('/dashboard');
-                    break;
-                    case 'user':
-                    return redirect()->intended('/dashboard/profile');
-                    break;
+                $auth = User::where('email', '=', $email)->where('hashedPassword', '=', $hashed)->where('salt', '=', $salt)->first();
+                if($auth) {
+                    // Authentication passed...
+                    Auth::login($auth);
+                    $role = Auth::user()->role;
+                    // var_dump(Auth::user()); var_dump(Auth::user()->role); exit();
+                    switch($role){
+                        case 'admin':
+                        return redirect()->intended('/panel');
+                        break;
+                        case 'editor':
+                        return redirect()->intended('/panel');
+                        break;
+                        case 'seller':
+                        return redirect()->intended('/dashboard');
+                        break;
+                        case 'user':
+                        return redirect()->intended('/dashboard/profile');
+                        break;
+                    }
                 }
+            } else {
+              return redirect()->intended('/login');
             }
         } else {
           return redirect()->intended('/login');
         }
-      } else {
-        //return redirect()->intended('/register');
-        return view('auth.register');
-      }
-
-
     }
 
     public function logout(Request $request) {
         $request->session()->flush();
         Auth::logout();
         return redirect()->intended('/login');
+    }
+    
+    public function forgetPassword(Request $request){
+        $email = $request->input('email');
+
+        $checkemail = DB::table('users')
+                   ->where('email', $email)
+                   ->count();
+        if($checkemail < 1){
+            return redirect('/forget-password?error=3');
+        }else{
+        	// Email found!!
+        	$token = str_random(32);
+        	$date = date("Y-m-d H:m:s");
+        	DB::table('reset_password')->insert(['username' => $email, 'token' => $token, 'reset_at' => $date]);
+        	Cache::put($token, 'resetToken', 3);
+
+        	$details = array('to' => $email);
+        	$this_url = url('/') . '/reset-password/' . $token;
+        	// var_dump($this_url); exit;
+        	Mail::send('emails.luxify-reset-password-en-us', ['this_url' => $this_url], function ($message) use ($details){
+
+        	    $message->from('technology@luxify.com', 'Luxify Admin');
+        	    $message->subject('Reset Password');
+        	    $message->replyTo('no_reply@luxify.com', $name = null);
+        	    $message->to($details['to']);
+
+        	});
+            return redirect('/forget-password?success=1');
+        }
+        
+    }
+
+    public function resetPassword(Request $request){
+    	$email = $request->input('email');
+    	DB::table('users')
+    	->where('email', $email)
+    	->update(['hashedPassword' => $request->input('hashed'), 'salt' => $request->input('salt')]);
+    	return redirect()->intended('/login');
     }
 }
