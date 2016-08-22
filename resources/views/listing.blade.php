@@ -96,7 +96,7 @@
                                     <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
                                         <img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
                                     </a>
-                                    <div>
+                                    </div>
                             </li>
                         @else
                             <li>
@@ -253,44 +253,44 @@
                         <h1 class="text-center">@lang('home.listing_mftseller')</h1>
                         <div class="slider">
                             @if(!empty($mores))
-                                @foreach($mores as $more).first-image
-                                <div class="slide">
-                                    <div class="thumbnail borderless">
-                                        <a href="/listing/{{ $more->slug }}">
-                                            <div class='product-img-container'>
-                                                <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
-                                                <img class='product-img' src="/img/spin.gif" data-src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
-                                                @if(Auth::user())
-                                                    <?php $madded = func::is_wishlist($user_id, $more->id) == 1 ? ' added' : ''; ?>
-                                                    <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
-                                                @else
-                                                    <a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
+                                @foreach($mores as $more)
+                                    <div class="slide">
+                                        <div class="thumbnail borderless">
+                                            <a href="/listing/{{ $more->slug }}">
+                                                <div class='product-img-container'>
+                                                    <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
+                                                    <img class='product-img' src="/img/spin.gif" data-src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
+                                                    @if(Auth::user())
+                                                        <?php $madded = func::is_wishlist($user_id, $more->id) == 1 ? ' added' : ''; ?>
+                                                        <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
+                                                    @else
+                                                        <a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
 
-                                                @endif
-                                            </div>
-                                        </a>
-                                        @if ($dealer)
-                                            <div class="caption">
-                                                <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
-                                                <?php
-                                                $mseller = func::getTableByID('users', $more->userId);
-                                                $msellerImg = !empty($mseller->companyLogoUrl) ? $mseller->companyLogoUrl : 'default-logo.png';
-                                                $msess_currency = null !==  session('currency') ? session('currency') : 'USD';
-                                                $mprice_format = func::formatPrice($more->currencyId, $msess_currency, $more->price);
-                                                ?>
-                                                <div>
-                                                    <span class="price">{{ $mprice_format }}</span>
+                                                    @endif
                                                 </div>
-                                                <div class="country-container">
-                                                    <span class="country">{{$more->country}}</span>
+                                            </a>
+                                            @if ($dealer)
+                                                <div class="caption">
+                                                    <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
+                                                    <?php
+                                                    $mseller = func::getTableByID('users', $more->userId);
+                                                    $msellerImg = !empty($mseller->companyLogoUrl) ? $mseller->companyLogoUrl : 'default-logo.png';
+                                                    $msess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                    $mprice_format = func::formatPrice($more->currencyId, $msess_currency, $more->price);
+                                                    ?>
+                                                    <div>
+                                                        <span class="price">{{ $mprice_format }}</span>
+                                                    </div>
+                                                    <div class="country-container">
+                                                        <span class="country">{{$more->country}}</span>
+                                                    </div>
+                                                    <div class="item-logo">
+                                                        <img src="{{ func::img_url($msellerImg, 90, '', true) }}" alt="{{ $mseller->fullName }}">
+                                                    </div>
                                                 </div>
-                                                <div class="item-logo">
-                                                    <img src="{{ func::img_url($msellerImg, 90, '', true) }}" alt="{{ $mseller->fullName }}">
-                                                </div>
-                                            </div>
-                                        @endif
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
                                 @endforeach
                             @endif
                         </div>
@@ -438,6 +438,8 @@
                                 $(this).css({'margin-top':pHiehgt+'px'})
                             }
                         }
+                    }else{
+                        $('.first-image').removeClass('first-image');
                     }
                 });
             });
