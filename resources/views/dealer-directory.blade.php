@@ -4,7 +4,7 @@
 
 @section('style')
   <!-- include the site stylesheet -->
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/luxify.css">
   <style>
    h1 {
      margin: 30px 0 10px 0!important;
