@@ -369,6 +369,7 @@
                                                     ?>
                                                     <td>
                                                     <?php
+                                                    $checked ='';
                                                     if ($featured) {
                                                       if (in_array(($products[$i]->id), $featured)){
                                                           $checked = "checked";
@@ -377,9 +378,10 @@
                                                       {
                                                           $checked ="";
                                                       }
+                                                    
                                                     } else {
-                                                      $checked = ''; 
-                                                    }
+                                                      $checked = ""; 
+                                                    } 
                                                     ?>
                                                      <input id="product-{{$i}}" type="checkbox" {{$checked}} name="checkbox[]" value="{{$products[$i]->id}}" dataid="{{$products[$i]->userId}}" class="FeaturedItem" style="margin-left:45%">
                                                     </td>

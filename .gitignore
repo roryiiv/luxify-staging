@@ -4,7 +4,8 @@
 /public/js/vendor
 /public/RoryTest
 /public/assets/.sass-cache
-/public/assets/assets_backup/
+/public/assets_backup
+/public/blog
 Homestead.yaml
 Homestead.json
 .env

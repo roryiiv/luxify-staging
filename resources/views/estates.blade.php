@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Virtual Reality Property Tour')
+@section('title')
+  <title>{{ func::genTitle('Virtual Reality Property Tour', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 

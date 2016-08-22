@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Terms of Service')
+@section('title')
+  <title>{{ func::genTitle('Terms of Service', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('meta-data')
