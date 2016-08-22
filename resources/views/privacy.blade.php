@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Privacy Policy')
+@section('title')
+  <title>{{ func::genTitle('Privacy Policy', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 

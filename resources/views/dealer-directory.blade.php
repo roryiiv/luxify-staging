@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Dealer Directory')
+@section('title')
+  <title>{{ func::genTitle('Dealer Directory', false)}}</title>
+@endsection
 
 @section('style')
   <!-- include the site stylesheet -->

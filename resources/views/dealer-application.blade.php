@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Dealer Application')
+@section('title')
+  <title>{{ func::genTitle('Dealer Application', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('meta-data')

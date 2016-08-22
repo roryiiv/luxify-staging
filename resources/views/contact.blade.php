@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Contact Us')
+@section('title')
+  <title>{{ func::genTitle('Contact Us', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('meta-data')

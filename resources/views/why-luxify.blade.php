@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Why Shop At Luxify')
+@section('title')
+  <title>{{ func::genTitle('Why Shop At Luxify', false)}}</title>
+@endsection
 
 @section('meta-data')
 <meta name="keywords" content="online shopping,luxury goods,pre owned,vintage">
