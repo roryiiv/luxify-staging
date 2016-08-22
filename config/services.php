@@ -41,4 +41,10 @@ return [
         'redirect' => 'http://staging.luxify.com/oauth/callback/facebook'
     ],
 
+    'twitter' => [
+        'client_id' => '7Hd52pGSBKbK5cAHF8nfND8xY',
+        'client_secret' => 'bNcX3VwoXW0Y87yczYpvrLsgXdSl1J4yrjZZuLNYBtHFkFxDJf',
+        'redirect' => 'http://staging.luxify.com/oauth/callback/twitter'
+    ],
+
 ];

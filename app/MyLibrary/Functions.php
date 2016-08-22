@@ -13,8 +13,25 @@ use DateTime;
 
 use Carbon\Carbon;
 
+use App;
+
+use Illuminate\Support\Facades\Session;
+
+use Illuminate\Support\Facades\Config;
+
 class Functions
 {
+    static function trimDownText($txt, $len) {
+        $txt = preg_replace('/\r|\n/', '', $txt);
+        $txt = preg_replace('/<br\s?\/>/', '', $txt);
+        if (strlen($txt) > $len){
+           $txt = wordwrap($txt, $len); 
+           return substr($txt, 0, strpos($txt, "\n"));
+        } else {
+          return $txt;
+        }
+    }
+
     static function getVal($method = 'get', $key) {
       if ($method === 'get') {
         if (isset($_GET[$key]) && !empty($_GET[$key])) {
@@ -56,9 +73,9 @@ class Functions
             $processor .= !empty($height) ? $height : '';
         }
         if (!$static) {
-          $processor .= '/https://luxify.s3-accelerate.amazonaws.com/images/';
+          $processor .= '/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/images/';
         } else {
-          $processor .= '/https://luxify.s3-accelerate.amazonaws.com/static/';
+          $processor .= '/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/';
         }
         return $processor . $url;
     }
@@ -138,6 +155,7 @@ class Functions
             for ($x = 0; $x < count($langs); $x++) {
                 $return[$x]['val'] = $langs[$x]->id;
                 $return[$x]['label'] = $langs[$x]->name;
+                $return[$x]['code'] = $langs[$x]->code;
             }
         }
         return $return;
@@ -314,6 +332,23 @@ class Functions
 
 
         return $return;
+    }
+    public static function get_lang(){
+        if(Auth::user()){
+            $languageId = Auth::user()->languageId;
+            if($languageId !='' && !empty($languageId)){
+                $return = DB::table('languages')->where('id',$languageId)->value('code');
+            }else{
+                if(Session::has('lang')){
+                    $return = Session::get('lang');
+                }else{
+                    $return = Config::get('app.locale');                  
+                }
+            }
+            return $return;
+        }else{
+            return Session::has('lang') ? Session::get('lang') : Config::get('app.locale');
+        }
     }
 	/*
     public static function leafNode() {

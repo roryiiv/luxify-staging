@@ -25,6 +25,17 @@
     <!-- Primary Style-->
     <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
     <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <!-- Boostraps_tagit Plugin Style -->
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
+    <style type="text/css">
+    .hideslug{
+        display: none;
+    }
+    .showslug{
+        display: block;
+    }
+    </style>
 @endsection
 
 @section('content')
@@ -78,9 +89,9 @@
                                             <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">User Role</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <select id="txtUserRole" name="txtUserRole" class="form-control">
-                                                  <option value="user" {{ $user->role === 'user' ? 'selected' : ''}}>User</option>
-                                                  <option value="seller" {{ $user->role === 'seller' ? 'selected' : ''}}>Seller</option>
-            
+                                                    <option value="user" {{ $user->role === 'user' ? 'selected' : ''}}>User</option>
+                                                    <option value="seller" {{ $user->role === 'seller' ? 'selected' : ''}}>Seller</option>
+                                                    <option value="editor" {{ $user->role === 'editor' ? 'selected' : ''}}>Editor</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -91,7 +102,8 @@
                                         <div class="form-group">
                                             <label for="txtEmailAddress" class="col-sm-3 col-md-4 control-label">Email</label>
                                             <div class="col-sm-9 col-md-8">
-                                                <input id="txtEmailAddress" name="txtEmailAddress" type="text" class="form-control" value="{{$user->email}}" disabled="disabled">
+                                                <input id="txtEmailAddress" name="txtEmailAddress" type="text" class="form-control" value="{{$user->email}}" onblur="IsEmailInUse()">
+                                                <div class="log" style="display:none;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -250,23 +262,28 @@
 
                                                 <div class="form-group m-0">
                                                     <label for="txtFirstNameShippingTab" class="control-label">Company Name</label>
+                                                    <?php $company = json_decode($user->companyName);?>
                                                     <div class="pt-15">
-                                                        <input id="companyName" name="companyName" type="text" class="form-control" placeholder="{{$user->companyName}}" value="{{$user->companyName}}">
+                                                        <input id="companyName" name="companyName[]" type="text" class="form-control" placeholder="{{ $company[0]}}" value="">
                                                     </div>
+                                                    
+                                                    <div class="pt-15">
+                                                        <input id="companyName" name="companyName[]" type="text" class="form-control" placeholder="{{ $company[1]}}" value="" >
+                                                    </div>
+                                                   
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="phoneNumber" data-role='taginput' class="control-label">Contact Phone Numbers</label>
                                                     <?php 
-                                                      $phones = null;
-                                                      if (isset($user->phoneNumber) && !empty($user->phoneNumber)) {
-                                                        if (!is_array($user->phoneNumber)) {
-                                                          $phones = array();
-                                                          $phones[] = $user->phoneNumber;
-                                                        } else {
-                                                        
-                                                          $phones = json_decode($user->phoneNumber);
-                                                        } 
-                                                      }
+                                                    $phones = null;
+                                                    if (isset($user->phoneNumber) && !empty($user->phoneNumber)) {
+                                                    	$phones = json_decode($user->phoneNumber); //json is string, condition invalid.
+                                                        if (!is_array($phones)) { 
+                                                        	//if data here is already json it will output json string
+                                                          	$phones = array();
+                                                          	$phones[] = $user->phoneNumber;
+                                                        }
+                                                  	}
                                                     ?>
                                                     <div class="pt-15">
                                                         <input id="phoneNumber" type="text" class="form-control" value="{{ !empty($phones) ? join(',', $phones): ''}}">
@@ -362,30 +379,85 @@
                             </fieldset>
                             @if($user)
                                 @if($user->role == 'seller')
-                                    <h3>Dealer Page URL</h3>
+                                     <h3>SEO Section</h3>
                                     <fieldset>
-                                        <div class="row">
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <div class="form-group ml-0 mr-0">
-                                                        <label for="txtWebsiteLink" class="control-label pb-10"><i class="fa fa-globe"></i> Website</label>
-                                                        <div class="bootstrap-filestyle input-group">
-                                                            <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
-                                                            <input type="text" class="form-control" value="{{ url('/dealer') . '/' . Auth::user()->id . '/' . $slug }}" placeholder="" disabled="">
-                                                            <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                                                <a href="{{ url('/dealer') . '/' . $user->id . '/' . $slug }}" target="_blank">
-                                                                    <label for="fulImage" class="btn btn-outline btn-primary">
-                                                                        <span class="icon-span-filestyle ti-image"></span>
-                                                                        <span class="buttonText">Preview</span>
-                                                                    </label>
-                                                                </a>
-                                                            </span>
+                                        <section>
+                                                <div class="form-group">
+                                                    <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
+                                                    <div class="col-sm-9">
+                                                        <div class="hideslug">
+                                                            <div class="bootstrap-filestyle input-group">
+                                                                <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
+                                                                <div type="text" class="input-group-addon" disabled  style="background:#eee;border-color:#ccc;">{{ url('/dealer') . '/' . $user->id . '/'}}</div>
+                                                                <input class="get_slug form-control" data-id ="{{$user->id}}" type="text" value="{{$slug }}" name="slug">
+                                                                <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                                                        <label for="fulImage" class="btn btn-outline btn-primary">
+                                                                            <span class="buttonText editslugajax">Save URL</span>
+                                                                        </label>
+                                                                </span>
+                                                            </div> 
+                                                        </div>
+                                                        
+                                                        <div class="showslug">
+                                                        <?php
+                                                        if(strlen($user->slug)<=40){
+                                                            $newslug =  $user->slug;
+                                                        }else{
+                                                            $count = strlen($user->slug);
+                                                            $newslug = substr($user->slug,0,20).' ....... '.substr($user->slug,$count-20,$count);
+                                                        }
+                                                        ?>
+                                                            <a class="updatelink" href="{!! url('/dealer') . '/' .  $user->id . '/'.$slug !!}" target="_blank" style="text-decoration: underline;" >{!! url('/dealer') . '/' . $user->id . '/<strong>'.$slug.'</strong>' !!}</a>
+                                                             &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label for="meta_title" class="col-sm-3 control-label">Title</label>
+                                                    <div class="col-sm-9">
+                                                   	<?php $meta_title_alt = $user->companyName == '' ? $user->firstName.' '.$user->lastName : $company[0].' '. $company[1]; ?>
+                                                        <input id="meta_title" name='meta_title' maxlength="60" type="text" class="form-control" placeholder="{{$user->meta_title == '' ? $meta_title_alt : $user->meta_title}}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none;">
+                                                    <label for="meta_alttext" class="col-sm-3 control-label">Alt Text</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="alttext" name='meta_alttext' type="text" class="form-control" placeholder="{{$user->meta_alt_text}}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
+                                                    <div class="col-sm-9">
+                                                        <textarea id="meta_description" name='meta_description' class="form-control " maxlength="500" placeholder="{{$user->meta_description == '' ? $user->companySummary : $user->meta_description}}"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="meta_keyword" class="col-sm-3 control-label">Meta Keyword</label>
+                                                    <div class="col-sm-9 "><div class="tagit-sugestion">
+                                                        
+                                                        <style>
+                                                            .bootstrap-tagsinput{
+                                                                width: 100%;
+                                                            }
+                                                        </style>
+                                                        <div>
+                                                            
+                                                        <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="{{$user->meta_keyword}}">
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                     <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="meta_author" maxlength="60" name='meta_author' type="text" class="form-control" placeholder="{{$user->meta_author == '' ? $meta_title_alt : $user->meta_author}}">
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        <div class="row p-10 text-right">
+                                            <button id="sweet-3" type="button" class="btn btn-raised btn-success btn-lg">Update</button>
                                         </div>
-                                    </fieldset>
+                                    </fieldset> 
                                 @endif
                             @endif
                         </form>
@@ -414,7 +486,6 @@
     <script type="text/javascript" src="/db/js/dropzone.min.js"></script>
     <!-- Sweet Alert-->
     <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
-    <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <!-- Custom JS-->
     <script type="text/javascript" src="/db/js/app.js"></script>
     <script type="text/javascript" src="/db/js/demo.js"></script>
@@ -423,13 +494,111 @@
     <script type="text/javascript" src="/db/js/sweet-alert.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/js/bundle.js"></script>
+    <!-- Booostraps_tagit input plugin -->
+    <script type="text/javascript" src="/plugins/typeahead.js/dist/typeahead.bundle.min.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script type="text/javascript">
         function OpenInNewTab(url) {
             var win = window.open(url, '_blank');
             win.focus();
         }
         $(document).ready(function () {
-            $("form.form-horizontal").validate();
+
+            $('.edit_slug').click(function(){
+                $('.showslug').hide();
+                $('.hideslug').show();
+            });
+            $('#phoneNumber').tagsinput({
+               	allowDuplicates: false 
+            });
+            var keywords = new Bloodhound({
+              	datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              	queryTokenizer: Bloodhound.tokenizers.whitespace,
+              	prefetch: {
+                	url: '{{route('get_keyword_json')}}',
+                	filter: function(list) {
+                  		return $.map(list, function(keyword) {
+                    	return { name: keyword }; });
+                	}
+              	}
+            });
+            keywords.clearPrefetchCache();
+            var keywords = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              prefetch: {
+                url: '{{route('get_keyword_json')}}',
+                filter: function(list) {
+                  return $.map(list, function(keyword) {
+                    return { name: keyword }; });
+                }
+              }
+            });
+            keywords.initialize();
+            /**
+             * Typeahead
+             */
+            $('.tagit-sugestion > > input').tagsinput({
+              	typeaheadjs: {
+                	name: 'keywords',
+                	displayKey: 'name',
+                	valueKey: 'name',
+                	source: keywords,
+                	limit: 100,
+              	}
+            });
+            $(".twitter-typeahead").css('display', 'inline');
+
+            $('.editslugajax').click(function(){
+                var newslug = $('.get_slug').val();
+                var id = $('.get_slug').attr('data-id');
+                $.ajax({
+                    url: "{{route('get_slug_user')}}/"+id+"/"+newslug,
+                    async: false,
+                    cache: false,
+                    success:function( html ) {
+                        $( ".get_slug" ).val( html );
+                        var count = html.length;
+                        if(count<=40){
+                            newslug = html;
+                        }else{
+                            newslug = html.substr(0, 20)+'......'+html.substr(count-20,count)
+                        }
+                        $('.updatelink').html('{{url("/")}}/dealer/'+id+'/<strong>'+newslug+'</strong>');
+                        $('.updatelink').attr('href','{{url("/")}}/dealer/'+id+'/'+html);
+                        $('.hideslug').hide();
+                        $('.showslug').show();
+
+                    }
+                });
+            });
+            $("form.form-horizontal").validate({
+		        rules: {
+		          	email: {
+		            	required: true,
+		              	email: true,
+		          	},
+		          	name: {
+		            	required: true,
+		            	minlength: 4
+		          	},
+		          	password: {
+		            	minlength: 8,
+		            	required: true,
+		            	equalTo: '#password_confirmation',
+		          	},
+		          	password_confirmation: {
+		            	minlength: 8,
+		            	required: true,
+		            	equalTo: '#password',
+		          	},
+		          	agreeTerms: {
+		            	required: function(ele) {
+		              		return $(ele).prop('checked');
+		            	},
+		          	}
+		        },
+	      	});
             var token = "{{ Session::getToken() }}";
             $("#sweet-3, .sweet-3").each(function () {
                 $(this).on("click", function () {
@@ -446,20 +615,20 @@
                     },
                     function(isConfirm){
                         if (isConfirm) {
-                          if ($('#txtPassword').val() !== '') {
-                            var salt = encrypt.makeSalt();
-                            var hashed = encrypt.password($('#txtPassword').val(), salt);
-                            $('input#salt').val(salt);
-                            $('input#hashed').val(hashed);
-                          }
-                          if ($('#phoneNumber').val() !== '') {
-                            var phones = $('#phoneNumber').tagsinput('items');
-                              
-                              $(phones).each(function(idx, ele) {
-                           $('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
-                            })
-                          }
-                          $("form[name='profile']").submit();
+                          	if ($('#txtPassword').val() !== '') {
+                            	var salt = encrypt.makeSalt();
+                            	var hashed = encrypt.password($('#txtPassword').val(), salt);
+                            	$('input#salt').val(salt);
+                            	$('input#hashed').val(hashed);
+                          	}
+                          	if ($('#phoneNumber').val() !== '') {
+                            	var phones = $('#phoneNumber').tagsinput('items');
+                              	$(phones).each(function(idx, ele) {
+                           			$('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
+                            	})
+                          	}
+                          	$(window).unbind('beforeunload');
+                          	$("form[name='profile']").submit();
                         }else{
                             swal("Cancelled", "User profile is not updated.", "error");
                         }
@@ -545,8 +714,16 @@
                     })
                 }
             });
-            $('#phoneNumber').tagsinput({
-               allowDuplicates: false 
+            
+            //Increment the idle time counter every minute.
+            var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+            //Zero the idle timer on mouse movement.
+            $(this).mousemove(function (e) {
+                idleTime = 0;
+            });
+            $(this).keypress(function (e) {
+                idleTime = 0;
             });
         });
     </script>
@@ -557,4 +734,65 @@
         });
         </script>
     @endif
+    <script type="text/javascript">
+        function IsEmailInUse () {
+            var update_email = $('#txtEmailAddress').val();
+            var emailreg = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+            console.log(update_email);
+
+            $.getJSON('/api/ajax/checkemail/{email}', {email: update_email}, function (json) {
+                
+
+                console.log(json.response);
+                if (json.response == true )
+                {
+                    $("#txtEmailAddress").css({'border' : '1px solid #8a8044'});
+                    $("#txtEmailAddress").focus();
+                    $("div.log").text( "Email In Use!" );
+                    $("div.log").fadeIn('slow');
+                }
+                else
+                {  
+
+                    if(emailreg.test(update_email)){
+                        
+                        $("#txtEmailAddress").css({'border' : '1px solid #e6e6e6'});
+                        $("div.log" ).text("");
+                        $("div.log").fadeOut('fast');
+                       
+                       
+                    }
+                    else {
+                        $("#txtEmailAddress").css({'border' : '1px solid #8a8044'});
+                        $("txtEmailAddress").focus();
+                        $("div.log" ).text( "Email Not Valid!" );
+                        $("div.log").fadeIn('slow');
+                         
+                    }
+
+                }
+                console.log(json);
+            });
+            
+            return false;         
+        }
+        // on leave remove edit warning sign.
+        $(window).bind('beforeunload', function(e){
+            exitPage();
+            return 'Are you sure?';
+        });
+
+        function exitPage(){
+            $.get('/api/ajax/exit/{{$user->id}}', function(data) {
+                return data;
+            });
+        }
+
+        function timerIncrement() {
+            idleTime = idleTime + 1;
+            if (idleTime > 9) { // 10 minutes
+                window.location.href = '/logout/';
+            }
+        }   
+    </script>
 @endsection

@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'en_us',
 
     /*
     |--------------------------------------------------------------------------
@@ -211,9 +211,16 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'func' => App\MyLibrary\Functions::class,
+        'schema' => App\MyLibrary\Schema::class,
         'Markdown'  => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
         'Image' => Intervention\Image\Facades\Image::class
 
+    ],
+
+    //multiple language
+    'locales' => [
+        'en' => 'English',
+        'cn' => '简体中文'
     ],
 
 ];
