@@ -12,7 +12,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <style>
         .blocked-seller{
             background: rgba(0,0,0,.8);
@@ -227,25 +227,37 @@
       $featured = json_decode($dealer->featured_item);
       ?>
       @if($featured == NULL)
-        <?php
-        $feat = func::getFeatured($dealer->id);
-        $mainImageUrl = !empty($feat->mainImageUrl) ? $feat->mainImageUrl : 'about-banner.jpg';
-        ?>
-        <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }});">
+        <?php $feat = func::getFeatured($dealer->id); ?>
+       	@if($feat == NULL)
+       	<div class="compare-block parallax">
               <div class="container">
                   <div class="row">
                       <div class="col-sm-6">
                           <div class="text-box">
-                              <a href="/listing/{{ $feat->slug }}" class="ferrari_featured_link"><strong class="title">Featured</strong></a>
-                              <h1>{{ $feat->title }}</h1>
-                              <?php $description = !empty($feat->description) ? $feat->description : 'Coming soon.'; ?>
-                              <p>{{ func::truncate(strip_tags($description), 130) }}</p>
-                              <a href="/listing/{{ $feat->slug }}" class="btn btn-primary">View more</a>
+                              <h1>This user has not yet list an item.</h1>
                           </div>
                       </div>
                   </div>
               </div>
         </div>
+       	@else
+        <?php $mainImageUrl = !empty($feat->mainImageUrl) ? $feat->mainImageUrl : 'about-banner.jpg'; ?>
+        <div class="compare-block parallax" style="background-image:url({{ func::img_url($mainImageUrl, 1920, '', true) }});">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-sm-6">
+                          <div class="text-box">
+                              <a href="/listing/{{ $feat->slug }}" class="ferrari_featured_link"><strong class="title">@lang('home.dealer_featured')</strong></a>
+                              <h1>{{ $feat->title }}</h1>
+                              <?php $description = !empty($feat->description) ? $feat->description : 'Coming soon.'; ?>
+                              <p>{{ func::truncate(strip_tags($description), 130) }}</p>
+                              <a href="/listing/{{ $feat->slug }}" class="btn btn-primary">@lang('home.dealer_viewmore')</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+        </div>
+        @endif
       @else
 
       <div  class="cycle-slideshow" style="width:auto;" data-cycle-fx="scrollHorz" data-cycle-timeout="4000" data-cycle-slides="> div.parallax"> 
@@ -259,11 +271,11 @@
                       <div class="row">
                           <div class="col-sm-6">
                               <div class="text-box" style="min-height: 500px">
-                                  <a href="/listing/{{ $isi->slug }}" class="ferrari_featured_link"><strong class="title">Featured</strong></a>
+                                  <a href="/listing/{{ $isi->slug }}" class="ferrari_featured_link"><strong class="title">@lang('home.dealer_featured')</strong></a>
                                   <h1>{{ $isi->title }}</h1>
                                   <?php $description = !empty($isi->description) ? $isi->description : 'Coming soon.'; ?>
                                   <p>{{ func::truncate(strip_tags($description), 130) }}</p>
-                                  <a href="/listing/{{ $isi->slug }}" class="btn btn-primary">View more</a>
+                                  <a href="/listing/{{ $isi->slug }}" class="btn btn-primary">@lang('home.dealer_viewmore')</a>
                               </div>
                           </div>
                       </div>
@@ -278,7 +290,7 @@
       <div class="more_items_section">
           <div class="container">
               <div class="heading">
-                  <h1 class="text-center">More From This Seller</h1>
+                  <h1 class="text-center">@lang('home.dealer_mftseller')</h1>
               </div>
               <div class="row">
                @if(!empty($listings))

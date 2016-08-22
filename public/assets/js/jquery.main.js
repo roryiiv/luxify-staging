@@ -21,7 +21,9 @@ jQuery(document).ready( function(){
 	openApplicationForm();
 
 });
-
+function isMobile(){
+  return ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))?true:false;
+}
 function openApplicationForm(){
 	$('#apply-btn-one, #apply-btn-two').click(function(){
 		$('#application-form').slideDown();

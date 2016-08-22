@@ -12,4 +12,7 @@ public/temp
 config.js
 *.sql
 /.idea
+/public/RoryTest
+/composer.phar
+temp.txt
 *.bak

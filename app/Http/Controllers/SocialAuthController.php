@@ -23,6 +23,10 @@ class SocialAuthController extends Controller
     {
         return Socialite::driver('twitter')->redirect();
     }
+    public function in_redirect()
+    {
+        return Socialite::driver('linkedin')->redirect();
+    }
 
     public function provider_callback(SocialAccountService $service, $provider)
     {
@@ -32,7 +36,7 @@ class SocialAuthController extends Controller
             return redirect()->to('/dashboard/profile');
         }else{
             $error = $user['error'];
-            if($user['email']){
+            if(isset($user['email'])){
                 $email = $user['email'];
                 return redirect()->to('/login?err='.$error.'&email='.$email);
             }else{

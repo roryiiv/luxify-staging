@@ -11,7 +11,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
 @section('content')
     <!-- main banner of the page -->
