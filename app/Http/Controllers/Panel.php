@@ -22,7 +22,7 @@ use App\Users;
 
 use DB;
 
-use Illuminate\Http\Response;
+use Response;
 
 use Aws\S3\S3Client;
 
@@ -451,6 +451,13 @@ class Panel extends Controller
             } else {
                 $error_arr['images'] = 'Error in uploaded images.';
             }
+        }
+
+        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
+            $item->latitude = $_POST['latitude'];
+        }
+        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
+            $item->longitude = $_POST['longitude'];
         }
 
         if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
@@ -1146,7 +1153,7 @@ class Panel extends Controller
 
         $checkemail = DB::table('users')
                    ->where('email', $email)
-                   ->first();
+                   ->count();
 
         return Response::json(['response' => $checkemail != null]);
 	}
@@ -1165,15 +1172,15 @@ class Panel extends Controller
     }
     function downloadImage($image){
         $filename ="https://s3-ap-southeast-1.amazonaws.com/luxify/images/" . $image;
-            $buffer = file_get_contents($filename);
-            header("Content-Type: application/force-download");
-            header("Content-Type: application/octet-stream");
-            header("Content-Type: application/download");
-            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-            header("Content-Type: application/octet-stream");
-            header("Content-Transfer-Encoding: binary");
-            header("Content-Length: " . strlen($buffer));
-            header("Content-Disposition: attachment; filename=$image");
-            echo $buffer; 
+        $buffer = file_get_contents($filename);
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type: application/octet-stream");
+        header("Content-Transfer-Encoding: binary");
+        header("Content-Length: " . strlen($buffer));
+        header("Content-Disposition: attachment; filename=$image");
+        echo $buffer; 
     }
 }

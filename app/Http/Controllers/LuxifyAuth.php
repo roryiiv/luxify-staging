@@ -14,6 +14,8 @@ use App\User;
 
 use Auth;
 
+use Cache;
+
 class LuxifyAuth extends Controller
 {
 
@@ -183,7 +185,7 @@ class LuxifyAuth extends Controller
         	$token = str_random(32);
         	$date = date("Y-m-d H:m:s");
         	DB::table('reset_password')->insert(['username' => $email, 'token' => $token, 'reset_at' => $date]);
-        	
+        	Cache::put($token, 'resetToken', 3);
 
         	$details = array('to' => $email);
         	$this_url = url('/') . '/reset-password/' . $token;

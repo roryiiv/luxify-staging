@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/db/css/toastr.min.css">
     <!-- SpinKit-->
     <link rel="stylesheet" type="text/css" href="/db/css/7-three-bounce.css">
-    <!-- Jvector Map-->po
+    <!-- Jvector Map-->
     <link rel="stylesheet" type="text/css" href="/db/css/jquery-jvectormap-2.0.3.css">
     <!-- Morris Chart-->
     <link rel="stylesheet" type="text/css" href="/db/css/morris.css">
