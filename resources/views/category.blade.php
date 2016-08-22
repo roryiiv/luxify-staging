@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify')
+@section('title')
+   
+@endsection 
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
