@@ -30,6 +30,9 @@ class SocialAuthController extends Controller
 
     public function provider_callback(SocialAccountService $service, $provider)
     {
+        if(isset($_GET['error']) OR isset($_GET['denied'])){
+            return redirect('/login');
+        }
         $user = $service->createOrGetUser(Socialite::driver($provider));
         if($user['status']== true){
             auth()->login($user['user']);
