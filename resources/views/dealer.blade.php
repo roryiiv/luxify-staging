@@ -150,7 +150,7 @@
                       </ul>
                   </div>
                   <?php $logo = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
-                  <div class="col-md-5 col-sm-offset-1">
+                  <div class="col-md-5 col-sm-offset-1 dealer_box">
                       <div class="col-md-12" style="margin-bottom: 35px;">
                         <img style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}" alt="image_link">
                       </div>
