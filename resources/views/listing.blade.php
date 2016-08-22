@@ -13,38 +13,48 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main2.css">
-
-    <style>
-     .added span {
-       color: red;
-     }
-     img.listing-img {
-       width: 40px!important;
-       height: 40px!important;
-       margin: 140px!important;
-        //opacity: 0;
-        //transition: opacity .3s ease-in;
-      }
-     .Tour3DCTA {
-       color: white;
-       font-size: 46px;
-       text-align: center;
-       width: 214px;
-       position: relative;
-       top: 6rem;
-       left: 14rem;
-       text-transform: UPPERCASE;
-       font-family: 'Roboto';
-       font-weight: 100;
-     }
-    </style>
+    <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
 @section('content')
+    <style>
+
+        .added span {
+            color: red;
+        }
+        img.listing-img {
+            width: 40px!important;
+            height: 40px!important;
+            margin: 140px!important;
+        }
+        .Tour3DCTA {
+            color: white;
+            font-size: 46px;
+            text-align: center;
+            width: 214px;
+            position: relative;
+            top: 6rem;
+            left: 14rem;.inner-banner
+            text-transform: UPPERCASE;
+            font-family: 'Roboto';
+            font-weight: 100;
+        }
+        #header{
+            background: #4a4a4a;
+            padding: 15px 0;
+        }
+        .first-image{
+            width: 100%;
+            max-height: 33rem;
+        }
+        section.images ul li .first-image img{
+            height:auto;
+
+        }
+    </style>
     <!-- main banner of the page -->
-    <div class="inner-banner">
+    <div class="inner-banner listing-page">
         <!-- banner image -->
-        <section class="images">
+        <section class="images" id="listing-image">
             <?php
                 $otherImages = json_decode($listing->images);
                 //check if the mainImage is exist on images
@@ -56,7 +66,7 @@
                    if (!empty($listing->mainImageUrl)) {
                      // prepend main image to the images array
                      array_unshift($images, $listing->mainImageUrl);
-                   }                    
+                   }
                 }else{
                     $images = json_decode($listing->images);
                 }
@@ -64,35 +74,37 @@
             ?>
             <ul>
                 @if($listing->aerialLook3DUrl)
-                  <li>
-                    <a style="position: relative;" rel="lightbox_3D" class="3DTour fancybox fancybox.iframe" href="{{$listing->aerialLook3DUrl}}">
-                      <div style="width:48rem; height: 33rem; position: absolute;" >
-                         <h2 class='Tour3DCTA' style="z-index: 2;">3D Virtual Tour
-                           <br />
-                           <span style="margin-top: 20px; z-index:2" class="glyphicon glyphicon-play-circle"></span>
-                         </h2>
-                         <div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.3);position: absolute; z-index: 1;top: 0;"></div>
-                      </div>
-                      <img style="width: 48rem; height:33rem;z-index:1;"src="/assets/images/3DTour_sample_2.gif">
+                    <li>
+                        <a style="position: relative;" rel="lightbox_3D" class="3DTour fancybox fancybox.iframe" href="{{$listing->aerialLook3DUrl}}">
+                            <div style="width:48rem; height: 33rem; position: absolute;" >
+                                <h2 class='Tour3DCTA' style="z-index: 2;">3D Virtual Tour
+                                    <br />
+                                    <span style="margin-top: 20px; z-index:2" class="glyphicon glyphicon-play-circle"></span>
+                                </h2>
+                                <div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.3);position: absolute; z-index: 1;top: 0;"></div>
+                            </div>
+                            <img style="width: 48rem; height:33rem;z-index:1;"src="/assets/images/3DTour_sample_2.gif">
 
-                    </a>
-                  </li>
+                        </a>
+                    </li>
                 @endif
                 @if(is_array($images))
-                    @foreach($images as $image)
-                    <?php
-                    $ori = $s_meta::get_slug_img($image);
-                    if($ori!=''){
-                        $alt = $s_meta::get_slug_img($image);
-                    }else{
-                        $alt = 'luxify';
-                    }
-                    ?>
-                        <li>
-                          <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                            <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
-                          </a>
-                        </li>
+                    @foreach($images as $number => $image)
+                        @if($number == 0 && !$listing->aerialLook3DUrl)
+                            <li>
+                                <div class="first-image" style="text-align:center">
+                                    <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
+                                        <img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                                    </a>
+                                <div>
+                            </li>
+                        @else
+                                <li>
+                                    <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
+                                        <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                                    </a>
+                                </li>
+                        @endif
                     @endforeach
                 @else
                     <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
@@ -101,13 +113,13 @@
 
         </section>
         <div class="bg-img overlay">
-        <!--<img src="assets/images/banner-itempage.jpg" alt="image description">-->
+            <!--<img src="assets/images/banner-itempage.jpg" alt="image description">-->
         </div>
         <!-- end of banner image -->
     </div>
     <!-- end of banner -->
     <!-- main informative part of the page -->
-    <main id="main" {{schema::itemScope()}}>
+    <main id="main" class="listing-main">
         <!-- item description -->
         <div class="item-description">
             <div class="container">
@@ -120,7 +132,7 @@
                             $dealer = func::getTableByID('users', $listing->userId);
 
                             if(!empty($listing->countryId)) {
-                              $country = func::getTableByID('countries', $listing->countryId);
+                                $country = func::getTableByID('countries', $listing->countryId);
                             }
                             $url = 'http://' . $_SERVER['HTTP_HOST'];
                             $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
@@ -165,14 +177,14 @@
                                 <li><a href="#"><span class="icon icon-social"></span></a></li> --}}
                             </ul>
                             @if ($dealer)
-                            <?php $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName); ?>
-                            <div class="link-btn">
-                                <div class="logo-aside">
-                                    <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
-                                    <a href="/dealer/{{$dealer->id}}/{{$slug}}">
-                                        <img src="{{ func::img_url($dealer_img, 235) }}" alt="image description" width="233" height="29">
-                                    </a>
-                                </div>
+                                <?php $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName); ?>
+                                <div class="link-btn">
+                                    <div class="logo-aside">
+                                        <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
+                                        <a href="/dealer/{{$dealer->id}}/{{$slug}}">
+                                            <img src="{{ func::img_url($dealer_img, 235) }}" alt="image description" width="233" height="29">
+                                        </a>
+                                    </div>
 
                                 <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
@@ -260,24 +272,24 @@
                                                 </div>
                                             </a>
                                             @if ($dealer)
-                                            <div class="caption">
-                                                <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
-                                                <?php
-                                                $mseller = func::getTableByID('users', $more->userId);
-                                                $msellerImg = !empty($mseller->companyLogoUrl) ? $mseller->companyLogoUrl : 'default-logo.png';
-                                                $msess_currency = null !==  session('currency') ? session('currency') : 'USD';
-                                                $mprice_format = func::formatPrice($more->currencyId, $msess_currency, $more->price);
-                                                ?>
-                                                <div>
-                                                  <span class="price">{{ $mprice_format }}</span>
+                                                <div class="caption">
+                                                    <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
+                                                    <?php
+                                                    $mseller = func::getTableByID('users', $more->userId);
+                                                    $msellerImg = !empty($mseller->companyLogoUrl) ? $mseller->companyLogoUrl : 'default-logo.png';
+                                                    $msess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                    $mprice_format = func::formatPrice($more->currencyId, $msess_currency, $more->price);
+                                                    ?>
+                                                    <div>
+                                                        <span class="price">{{ $mprice_format }}</span>
+                                                    </div>
+                                                    <div class="country-container">
+                                                        <span class="country">{{$more->country}}</span>
+                                                    </div>
+                                                    <div class="item-logo">
+                                                        <img src="{{ func::img_url($msellerImg, 90, '', true) }}" alt="{{ $mseller->fullName }}">
+                                                    </div>
                                                 </div>
-                                                <div class="country-container">
-                                                  <span class="country">{{$more->country}}</span>
-                                                </div>
-                                                <div class="item-logo">
-                                                    <img src="{{ func::img_url($msellerImg, 90, '', true) }}" alt="{{ $mseller->fullName }}">
-                                                </div>
-                                            </div>
                                             @endif
                                         </div>
                                     </div>
@@ -325,7 +337,7 @@
                                                 <div>
                                                 </div>
                                                 <div class="country-container">
-                                                  <span class="country">{{$rel->country}}</span>
+                                                    <span class="country">{{$rel->country}}</span>
                                                 </div>
                                                 <div class="item-logo">
                                                     <img src="{{ func::img_url($rel_sellerImg, 90, '', true) }}" alt="">
@@ -357,13 +369,13 @@
 
         $('.social-links > li > a.social-link').on('click', function(e){
             var
-                verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
-                horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
+                    verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
+                    horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
 
             var popup = window.open($(this).prop('href'), 'social',
-                'width='+popupSize.width+',height='+popupSize.height+
-                ',left='+verticalPos+',top='+horisontalPos+
-                ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1');
+                    'width='+popupSize.width+',height='+popupSize.height+
+                    ',left='+verticalPos+',top='+horisontalPos+
+                    ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1');
 
             if (popup) {
                 popup.focus();
@@ -379,45 +391,57 @@
     @endif
     {{ csrf_field() }}
     <script>
-      $(document).ready(function(){
-          $(".3DTour").fancybox({
-              fitToView	: true,
-              width		: '90%',
-              height		: '90%',
-              autoSize	: true,
-              closeClick	: false,
-              openEffect	: 'none',
-              closeEffect	: 'none',
-              arrows: false,
-              mouseWheel: false,
-          });
+        $(document).ready(function(){
 
-          $(".fancybox-thumb").fancybox({
-              padding: 2,
-              fitToView	: false,
-              width		: '70%',
-              height		: '70%',
-              autoSize	: false,
-              closeClick	: false,
-              openEffect	: 'none',
-              closeEffect	: 'none',
-              helpers : {
-                  thumbs  : {
-                      width : 50,
-                      height  : 50
-                  }
-              }
-          });
-          $('[data-toggle="tooltip"]').tooltip();
 
-          $("img.listing-img, img.product-img").unveil(300, function() {
-            $(this).load(function() {
-               $(this).removeClass('listing-img');
-               $(this).hide();
-               $(this).fadeIn('slow');
+            $('.first-image').css({width:$('body').width()+'px'})
+
+            $(".3DTour").fancybox({
+                fitToView	: true,
+                width		: '90%',
+                height		: '90%',
+                autoSize	: true,
+                closeClick	: false,
+                openEffect	: 'none',
+                closeEffect	: 'none',
+                arrows: false,
+                mouseWheel: false,
             });
-          });
-      });
+
+            $(".fancybox-thumb").fancybox({
+                padding: 2,
+                fitToView	: false,
+                width		: '70%',
+                height		: '70%',
+                autoSize	: false,
+                closeClick	: false,
+                openEffect	: 'none',
+                closeEffect	: 'none',
+                helpers : {
+                    thumbs  : {
+                        width : 50,
+                        height  : 50
+                    }
+                }
+            });
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $("img.listing-img, img.product-img").unveil(300, function() {
+                $(this).load(function() {
+                    $(this).removeClass('listing-img');
+                    $(this).hide();
+                    $(this).fadeIn('slow');
+                    if($(this).hasClass('first-img')){
+                        var pHiehgt = (330 - $('.first-img').height())/2;
+                        if(pHiehgt < 0 ){
+                            $(this).css({'margin-top':pHiehgt+'px'})
+                        }
+                    };
+
+                });
+            });
+
+        });
     </script>
     @include('inc.send-message-script')
 @endsection

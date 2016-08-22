@@ -34,13 +34,15 @@
     <!-- link to google font -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
     <!-- include bootstrap stylesheet -->
+    <!--
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <style>
-    .currency-selector-container {
-        margin-right: 2.4rem;
-    }
     .navbar .navbar-right li:after {
         display: none;
+    }
+
+    .currency-selector-container {
+        margin-right: 2.4rem;
     }
 
     .currency-selector-container  .jcf-select {
@@ -88,6 +90,7 @@
         left: 50%;
     }
     </style>
+    -->
     @yield('style')
     <!--[if lt IE 9]>
 		<link rel="stylesheet" href="css/ie.css" />
