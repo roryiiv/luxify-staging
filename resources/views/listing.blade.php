@@ -8,9 +8,9 @@
 
 @section('meta')
 
-<meta name="description" content="{{ func::trimDownText($listing->description, 160)}}">
-<meta name="keyword" content="{{$meta->keyword}}">
-<meta name="author" content="{{$meta->author}}">
+    <meta name="description" content="{{ func::trimDownText($listing->description, 160)}}">
+    <meta name="keyword" content="{{$meta->keyword}}">
+    <meta name="author" content="{{$meta->author}}">
 @endsection
 
 @section('style')
@@ -36,7 +36,7 @@
             position: relative;
             top: 6rem;
             left: 14rem;.inner-banner
-            text-transform: UPPERCASE;
+        text-transform: UPPERCASE;
             font-family: 'Roboto';
             font-weight: 100;
         }
@@ -58,20 +58,20 @@
         <!-- banner image -->
         <section class="images" id="listing-image">
             <?php
-                $otherImages = json_decode($listing->images);
-                //check if the mainImage is exist on images
-                $check_mainImage = array();
-                $check_mainImage[] = $listing->mainImageUrl;
-                $checking = array_intersect($otherImages, $check_mainImage);
-                if(count($checking)===0){
-                   $images = json_decode($listing->images);
-                   if (!empty($listing->mainImageUrl)) {
-                     // prepend main image to the images array
-                     array_unshift($images, $listing->mainImageUrl);
-                   }
-                }else{
-                    $images = json_decode($listing->images);
+            $otherImages = json_decode($listing->images);
+            //check if the mainImage is exist on images
+            $check_mainImage = array();
+            $check_mainImage[] = $listing->mainImageUrl;
+            $checking = array_intersect($otherImages, $check_mainImage);
+            if(count($checking)===0){
+                $images = json_decode($listing->images);
+                if (!empty($listing->mainImageUrl)) {
+                    // prepend main image to the images array
+                    array_unshift($images, $listing->mainImageUrl);
                 }
+            }else{
+                $images = json_decode($listing->images);
+            }
 
             ?>
             <ul>
@@ -98,14 +98,14 @@
                                     <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
                                         <img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
                                     </a>
-                                <div>
+                                    </div>
                             </li>
                         @else
-                                <li>
-                                    <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                                        <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
-                                    </a>
-                                </li>
+                            <li>
+                                <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
+                                    <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                                </a>
+                            </li>
                         @endif
                     @endforeach
                 @else
@@ -147,16 +147,16 @@
                                 {{--<li><span class="text">Lon:{{ implode($lon) }}</span></li>--}}
                             </ul>
                             <ul class="social-links">
-                               <?php $added = func::is_wishlist($user_id, $listing->id) == 1 ? ' added' : ''; ?>
-                            @if (Auth::user()) 
-                              @if($added !== '')
-                                  <li><a {{schema::itemType('URL')}} class="favourite {{$added}}" data-id="{{$listing->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a></li>
-                              @else
-                                  <li><a {{schema::itemType('URL')}} class="favourite" data-id="{{$listing->id}}" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
-                              @endif
-                            @else
-                              <li><a data-toggle="modal" data-listing="{{$listing->id}}" data-target="#login-form" class="" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
-                            @endif
+                                <?php $added = func::is_wishlist($user_id, $listing->id) == 1 ? ' added' : ''; ?>
+                                @if (Auth::user())
+                                    @if($added !== '')
+                                        <li><a {{schema::itemType('URL')}} class="favourite {{$added}}" data-id="{{$listing->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a></li>
+                                    @else
+                                        <li><a {{schema::itemType('URL')}} class="favourite" data-id="{{$listing->id}}" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
+                                    @endif
+                                @else
+                                    <li><a data-toggle="modal" data-listing="{{$listing->id}}" data-target="#login-form" class="" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
+                                @endif
                                 <li>
                                     <a {{schema::itemType('URL')}} class="social-link" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=1100408396697613&amp;display=popup&amp;caption={{urlencode($listing->description)}} &amp;link={{ $url . '/listing/' . $listing->slug}}&amp;redirect_uri={{ $url . '/listing/' . $listing->slug}}">
                                         <span class="icon icon-facebook"></span>
@@ -186,17 +186,17 @@
                                         </a>
                                     </div>
 
-                                <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
-                                <div class="btn-holder">
-                                    <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                    <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">@lang('home.listing_dealerPage')</a>
-                                    <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span>@lang('home.listing_contactDealer')</a>
-                                    @if($listing->buyNowUrl)
-                                    <a {{schema::itemType('URL')}} target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> @lang('home.listing_buynow')</a>
-                                    @endif
+                                    <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
+                                    <div class="btn-holder">
+                                        <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
+                                        <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">@lang('home.listing_dealerPage')</a>
+                                        <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span>@lang('home.listing_contactDealer')</a>
+                                        @if($listing->buyNowUrl)
+                                            <a {{schema::itemType('URL')}} target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> @lang('home.listing_buynow')</a>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
                         </aside>
 
                         <article class="block-content">
@@ -229,10 +229,10 @@
                                         </thead>
                                         <tbody>
                                         @foreach($infos as $info)
-                                          <tr>
-                                            <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{$info->label}}</th>
-                                            <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
-                                          </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{$info->label}}</th>
+                                                <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
+                                            </tr>
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -394,7 +394,7 @@
         $(document).ready(function(){
 
 
-            $('.first-image').css({width:$('body').width()+'px'})
+
 
             $(".3DTour").fancybox({
                 fitToView	: true,
@@ -431,13 +431,18 @@
                     $(this).removeClass('listing-img');
                     $(this).hide();
                     $(this).fadeIn('slow');
-                    if($(this).hasClass('first-img')){
-                        var pHiehgt = (330 - $('.first-img').height())/2;
-                        if(pHiehgt < 0 ){
-                            $(this).css({'margin-top':pHiehgt+'px'})
+                    if(isMobile()){
+                        $('.first-image').css({width:$('body').width()+'px'});
+                        if($(this).hasClass('first-img')){
+                            var pHiehgt = (330 - $('.first-img').height())/2;
+                            console.log(pHiehgt);
+                            if(pHiehgt > 0 ){
+                                $(this).css({'margin-top':pHiehgt+'px'})
+                            }
                         }
-                    };
-
+                    }else{
+                        $('.first-image').removeClass('first-image');
+                    }
                 });
             });
 
