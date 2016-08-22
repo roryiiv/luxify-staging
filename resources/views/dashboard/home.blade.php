@@ -83,7 +83,6 @@
                                         <div class="btn-toolbar">
                                             <button id="daterangepicker" type="button" class="btn btn-raised btn-black"><i class="ti-calendar"> </i><span></span></button>
                                         </div>
-                                    </div>
                                 </div>
                                 <div id="flot-visitor" style="height: 300px"></div>
                                 <div class="row row-0 mt-10 text-center">
@@ -96,7 +95,7 @@
                                         <h5 class="m-0">Avg. Visit Duration <span class="text-success"><i class="ti-arrow-up fs-13"></i> 12.54%</span></h5>
                                     </div>
                                     <div class="col-xs-4">
-                                        <div class="fs-30 fw-600 itempervisit">{{$visitor_m/$total_product}}</div>
+                                        <div class="fs-30 fw-600 itempervisit">{{ $total_product !== 0 ? $visitor_m/$total_product: 0}}</div>
                                         <h5 class="m-0">Item/Visit <span class="text-success"><i class="ti-arrow-up fs-13"></i> 5.62%</span></h5>
                                     </div>
                                 </div>
