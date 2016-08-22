@@ -2,7 +2,8 @@
 /node_modules
 /public/storage
 /public/js/vendor
-/public/assets/.sass-cache/
+/public/RoryTest
+/public/assets/.sass-cache
 /public/assets/assets_backup/
 Homestead.yaml
 Homestead.json
@@ -14,7 +15,6 @@ public/temp
 config.js
 *.sql
 /.idea
-/public/RoryTest
 /composer.phar
 temp.txt
 *.bak

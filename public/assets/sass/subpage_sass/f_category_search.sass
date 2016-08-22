@@ -138,6 +138,7 @@
     line-height: 1px
     z-index: 22
     color: #ffffff
+    @include transition(all .3s)
   .input-group .form-control
     border-radius: 0px
     border: none
@@ -165,6 +166,10 @@
       &::-webkit-input-placeholder
         @include transition(all .3s)
         color: #89898b
+.category-icoColor
+  &:before
+    @include transition(all .3s)
+    color: #89898b
 .service-list-wrap .image-wrap
   overflow: hidden
   border-radius: 6px
