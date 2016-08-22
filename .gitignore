@@ -2,6 +2,8 @@
 /node_modules
 /public/storage
 /public/js/vendor
+/public/assets/.sass-cache/
+/public/assets/assets_backup/
 Homestead.yaml
 Homestead.json
 .env
