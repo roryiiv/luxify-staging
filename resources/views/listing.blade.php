@@ -137,8 +137,6 @@
                             $url = 'http://' . $_SERVER['HTTP_HOST'];
                             $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
                             $price_format = func::formatPrice($listing->currencyId, $sess_currency, $listing->price);
-                            $lat = DB::table('listings')->where('id', $listing->id)->pluck('latitude');
-                            $lon = DB::table('listings')->where('id', $listing->id)->pluck('longitude');
                             ?>
                             <ul class="detail">
                                 <li><span class="icon icon-tag"></span><span class="text" itemprop="price" {{schema::itemType('Integer')}}>{{ $price_format }}</span></li>
@@ -190,7 +188,7 @@
                                 <div class="btn-holder">
                                     <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
                                     <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">@lang('home.listing_dealerPage')</a>
-                                    <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> @lang('home.listing_contactDealer')</a>
+                                    <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span>@lang('home.listing_contactDealer')</a>
                                     @if($listing->buyNowUrl)
                                     <a {{schema::itemType('URL')}} target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> @lang('home.listing_buynow')</a>
                                     @endif

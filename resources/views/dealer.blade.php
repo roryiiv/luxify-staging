@@ -225,7 +225,6 @@
       <?php 
      // $feat = func::getFeatured($dealer->id); 
       $featured = json_decode($dealer->featured_item);
-
       ?>
       @if($featured == NULL)
         <?php $feat = func::getFeatured($dealer->id); ?>
