@@ -2,16 +2,16 @@
 <html>
 
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
     <!-- set the encoding of your site -->
-    <meta charset="utf-8">
-	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @yield('title')
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- set the viewport width and initial-scale on mobile devices -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     @yield('meta-data')
     <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
 
-    <title>@yield('title') - Luxify - Asia’s leading marketplace for luxury</title>
 	  @yield('meta')
 
     <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png?v=2">
