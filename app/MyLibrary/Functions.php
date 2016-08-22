@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Config;
 class Functions
 {
     static function genTitle($pageName,  $categories) {
-      if (!isset($categories)) {
+      if (!($categories)) {
           if ($pageName === 'homepage') {
             return 'Luxify.com - Asia&#39;s Leading Marketplace for Luxury';
           } else {
