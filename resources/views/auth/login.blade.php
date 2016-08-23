@@ -10,6 +10,21 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
         case '103':
             $error_msg = 'ERROR - No Authorization made.';
         break;
+        case '104':
+            $error_title = 'Facebook Error Login';
+            $error_desc = $_GET['msg'];
+            $error_msg = '';
+        break;
+        case '105':
+            $error_title = 'Twitter Error Login';
+            $error_desc = $_GET['msg'];
+            $error_msg = '';
+        break;
+        case '106':
+            $error_title = 'Linkedin Error';
+            $error_desc = $_GET['msg'];
+            $error_msg = '';
+        break;
     }
 }
 ?>
@@ -134,12 +149,107 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
             right: 0;
             top: 0;
         }
+        .modal-content {
+            border-radius: 0px;
+        }
+        .modal-body {
+            padding: 25px;
+        }
+        #cancel-form .modal-dialog {
+            height: 50%;
+            min-height: 420px; 
+        }
+        #cancel .modal-content {
+            height: 100%;
+        }
+
+        #success-form .modal-content .modal-header > h5 {
+            font-weight: 300;
+            font-size: 15px; 
+            text-align: center;
+        }
+        #cancel-form .modal-content .modal-header > h5 {
+            font-weight: 300;
+            font-size: 15px; 
+            text-align: center;
+        }
+        /*  mobile css end */
+        @media (min-width: 768px) {
+            #cancel-form .modal-dialog {
+                width: 600px;
+                height: 50%;
+                min-height: 383px
+            }
+            #cancel-form .modal-content {
+                background-color: white;
+                margin: 35% auto;
+                padding: 36px 73px;
+                max-width: 800px;
+                height: 70%;
+                width: 400px;
+                border: 2px solid #998967;
+                border-radius: 0px;
+            }
+            .modal-content .modal-header {
+                border-bottom: 0px solid #fff;
+            }
+            .modal-content .modal-body {
+                padding: 0px!important;
+            }
+
+
+            .modal-content .modal-header > h2,h5 {
+                color: #56616F;
+            }
+        }
+        #cancel-form h2 {
+            text-align: center;
+            font-weight: 300;
+            color: #56616F;
+        }
+        #cancel-form button{
+            background-color: #998967;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 400;
+            color: white;
+            width: 139px;
+            height: 30px;
+            float: right;
+            border: 0;
+            box-shadow: none;
+            margin-top: 5px;
+            font-size: 10px;
+            padding-top: 4px;
+            margin-right: 24%;
+        }
+
+ 
+  
+</style>
     </style>
 </head>
 
 <body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
     <div class="parallax"></div>
     <div class="container page-container">
+    @if(isset($_GET['err']))
+        @if($_GET['err']==104 || $_GET['err']==105 || $_GET['err']==106)
+        <div class="modal fade" id="cancel-form" tabindex="-1" role="dialog" aria-labelledby="cancelForm">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>{{$error_title}}</h2>
+                        <h5>message : {{$error_desc}}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <button type="button" class="close-all" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+    @endif
         @include('inc.loginheader')
         <div class="page-content">
             <div class="v2">
@@ -221,6 +331,11 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
     <script src="/assets/js/jquery.main.js"></script>
     <script>
     $(document).ready(function() {
+        @if(isset($_GET['err']))
+            @if($_GET['err']==104 || $_GET['err']==105 || $_GET['err']==106)
+                $("#cancel-form").modal('show');
+            @endif
+        @endif
         $('#langSelect').on('change', function(){
             var code = $(this).val();
             // alert(code);
