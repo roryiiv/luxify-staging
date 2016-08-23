@@ -13,3 +13,4 @@ config.js
 *.sql
 /.idea
 *.bak
+config/services.php
