@@ -110,7 +110,7 @@
   h2 {
     color: #737373 !important;
     font-weight: 500 !important;
-    margin-top: 20px !important;
+    margin-top: -14px !important;
     margin-bottom: 10px !important;
     font-size: 30px !important;
   }
@@ -273,18 +273,6 @@
                                         <div class="">{{$value}}</div>
                                     <?php } ?>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="latitude" class="col-sm-3 control-label">Latitude</label>
-                            <div class="col-sm-9">
-                                <input id="latitude" name='latitude' type="text" placeholder="{{$item->latitude}}" class="form-control" >
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="longitude" class="col-sm-3 control-label">Longitude</label>
-                            <div class="col-sm-9">
-                                <input id="longitude" name='longitude' type="text" placeholder="{{$item->longitude}}" class="form-control" >
                             </div>
                         </div>
 
@@ -468,6 +456,7 @@
               <div class="row">
               </div>
             </script>
+@include('inc.product-message')
 @endsection
 
 @section('scripts')
@@ -699,7 +688,11 @@
         }
 
         $('.actions ul li').click(function () {
-            $(".sweet-alert p").html("Your item has been submitted for approval");
+            var x = $(this).find('a').attr('href');
+            // console.log(x);
+            if(x == '#finish'){
+                $("#update-product-form").modal('show');
+            }
         });
         $('#itemCategory').on('change', function(){
             var _token = $('input[name=_token]').val();

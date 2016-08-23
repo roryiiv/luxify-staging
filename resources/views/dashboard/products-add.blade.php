@@ -72,8 +72,8 @@
 
   h2 {
     color: #737373 !important;
-    font-weight: 500 !important;
-    margin-top: 20px !important;
+    font-weight: 300 !important;
+    margin-top: -14px !important;
     margin-bottom: 10px !important;
     font-size: 30px !important;
   }
@@ -221,18 +221,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="latitude" class="col-sm-3 control-label">Latitude</label>
-                            <div class="col-sm-9">
-                                <input id="latitude" name='latitude' type="text"  class="form-control" >
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="longitude" class="col-sm-3 control-label">Longitude</label>
-                            <div class="col-sm-9">
-                                <input id="longitude" name='longitude' type="text"  class="form-control" >
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="expiryDate" class="col-sm-3 control-label">Expiry Date (Optional)</label>
                             <div class="col-sm-9">
                                 <input id="startDate" name='expiryDate' type="text" class="form-control" value='{{ date_format(date_create('now'), 'Y-m-d')}}'>
@@ -337,6 +325,7 @@
    			<script type='text/template' class="dz-preview dz-file-preview" id="dz-preview-template" style="display:none;">
    			<div class="row"></div>
             </script>
+@include('inc.product-message')
 @endsection
 
 @section('scripts')
@@ -448,7 +437,11 @@
         $('#editor-markdown').markdown();
 
         $('.actions ul li').click(function () {
-            $(".sweet-alert p").html("Your item has been submitted for approval");
+            var x = $(this).find('a').attr('href');
+            // console.log(x);
+            if(x == '#finish'){
+                $("#add-product-form").modal('show');
+            } 
         });
         $('#itemCategory').on('change', function(){
             $.get({
