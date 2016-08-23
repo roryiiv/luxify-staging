@@ -19,3 +19,4 @@ config.js
 /composer.phar
 temp.txt
 *.bak
+.DS_Store
