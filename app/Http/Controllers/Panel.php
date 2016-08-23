@@ -453,12 +453,7 @@ class Panel extends Controller
             }
         }
 
-        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
-            $item->latitude = $_POST['latitude'];
-        }
-        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
-            $item->longitude = $_POST['longitude'];
-        }
+        
 
         if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
             $item->buyNowUrl = $_POST['buyNowURL'];
@@ -603,6 +598,9 @@ class Panel extends Controller
         if(isset($_POST['txtUserRole']) && !empty($_POST['txtUserRole'])){
             $user->role = $_POST['txtUserRole'];
         }
+        if(isset($_POST['txtEmailAddress']) && !empty($_POST['txtEmailAddress'])){
+            $user->email = $_POST['txtEmailAddress'];
+        }
         if(isset($_POST['country']) && !empty($_POST['country'])){
             $user->countryId = $_POST['country'];
         }
@@ -727,7 +725,7 @@ class Panel extends Controller
             $object_type = 'users';
             $savemeta = Meta::saveorupdate($_POST['user_id'],$meta,$object_type);
             //if($user->save()) return redirect('/panel/user');
-            if($user->save()) return redirect('/panel/user/edit/'.$_POST['user_id']);
+            if($user->save()) return redirect('/panel/user/edit/'.$_POST['user_id'].'?update=success');
         }
     }
 

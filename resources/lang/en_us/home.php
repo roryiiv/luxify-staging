@@ -25,7 +25,7 @@ return[
     'sm_messegeLeft'=>'Creating an account quick and easy. You can also have your own wishlist, contact our dealers,  edit your profile, and much more.',
     'sm_existinguser'=>'Existing User',
     'sm_pleaselogin'=>'Please login to your account',
-    'sm_login'=>'Login'=>'sm_login'=>'Login',
+    'sm_login'=>'Login',
     'sm_messageSent'=>'Message Sent',
     'sm_stayTuned'=>'Stay tuned! You will receive email notification when the seller replies.',
     'sm_viewInbox'=>'View Inbox',

@@ -142,6 +142,11 @@ class Dashboard extends Controller
         if(isset($_POST['first_name']) && !empty($_POST['first_name'])){
             $user->firstName = $_POST['first_name'];
         }
+
+        if(isset($_POST['txtEmailAddress']) && !empty($_POST['txtEmailAddress'])){
+            $user->email = $_POST['txtEmailAddress'];
+        }
+
         if(isset($_POST['last_name']) && !empty($_POST['last_name'])){
             $user->lastName = $_POST['last_name'];
         }
@@ -385,13 +390,6 @@ class Dashboard extends Controller
             $newItem->expired_at = Carbon::createFromFormat('Y-m-d', $_POST['expiryDate']);
         }
 
-        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
-            $newItem->latitude = $_POST['latitude'];
-        }
-        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
-            $newItem->longitude = $_POST['longitude'];
-        }
-
         if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
             $newItem->buyNowUrl = $_POST['buyNowURL'];
         }
@@ -499,13 +497,6 @@ class Dashboard extends Controller
             $item->status = $_POST['status'];
         }
 
-        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
-            $item->latitude = $_POST['latitude'];
-        }
-        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
-            $item->longitude = $_POST['longitude'];
-        }
-
         if ( isset($_POST['description']) && !empty($_POST['description']) ) {
             $item->description = $_POST['description'];
         } else {
@@ -568,13 +559,6 @@ class Dashboard extends Controller
             }
         }
 
-        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
-            $item->latitude = $_POST['latitude'];
-        }
-
-        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
-            $item->longitude = $_POST['longitude'];
-        }
 
         if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
             $item->buyNowUrl = $_POST['buyNowURL'];

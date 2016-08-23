@@ -2619,7 +2619,7 @@ body> .jcf-select-drop.jcf-drop-flipped {
     -ms-user-select: none;
     user-select: none;
 }
-.irs:before {
+/*.irs:before {
     width: 207px;
     height: 55px;
     content: "";
@@ -2630,7 +2630,7 @@ body> .jcf-select-drop.jcf-drop-flipped {
     transform: translateX(-50%);
     top: -30px;
     background: url(../images/bar.jpg) no-repeat;
-}
+}*/
 .irs-line {
     position: relative;
     display: block;
