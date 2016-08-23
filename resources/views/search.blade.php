@@ -62,73 +62,67 @@
 					<div class="item-list">
 					<!-- <div class="container"> second containar removal, /div stays; for resising-->
 						<div class="row">
-               @if(!empty($listings))
-                 @for($i = 0 ; $i < count($listings); $i++)
-                   <?php $item = $listings[$i]; ?>
-                   <div class="col-md-4 col-sm-6">
-        			   	   <div class="thumbnail">
-                        <a href="/listing/{{ $item->slug }}">
-            	   	   		<figure>
-            	   	   			<img class="listing-img" src='/img/spin.gif' data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
-                             @if(Auth::user())
+               				@if(!$listings->isEmpty())
+                 				@for($i = 0 ; $i < count($listings); $i++)
+                   				<?php $item = $listings[$i]; ?>
+                   					<div class="col-md-4 col-sm-6">
+        			   	   				<div class="thumbnail">
+                        					<a href="/listing/{{ $item->slug }}">
+            	   	   							<figure>
+            	   	   								<img class="listing-img" src='/img/spin.gif' data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
+                             						@if(Auth::user())
 
-                                 @if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
-                                   <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
-                                   @if($added !== '')
-                                     <a class="favourite {{$added}}" data-id="{{$item->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a>
-                                   @else
-                                     <a class="favourite" data-id="{{$item->id}}" title="{{ $item->title }}" href="#"><span class="icon icon-heart"></span></a>
-                                   @endif
-                                 @elseif(Auth::user()->role === 'admin')
+                                 						@if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
+                                   							<?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
+                                   							@if($added !== '')
+                                     							<a class="favourite {{$added}}" data-id="{{$item->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a>
+                                   							@else
+                                     							<a class="favourite" data-id="{{$item->id}}" title="{{ $item->title }}" href="#"><span class="icon icon-heart"></span></a>
+                                   							@endif
+                                 						@elseif(Auth::user()->role === 'admin')
                              
-                                     <a class="editListing" data-id="{{$item->id}}" href="/panel/product/edit/{{$item->id}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
-                                     <a class="deleteListing" data-id="{{$item->id}}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                                 @endif
-                             @else
-                                 <a data-toggle="modal" data-listing="{{$item->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
-                             @endif
-            	   	   		</figure>
-                        </a>
-        			   	     <div class="caption">
-        			   	   	  <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
-                            <?php
-                              $dealer = func::getTableByID('users', $item->userId);
-                              $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
-                              $price_format = func::formatPrice($item->currencyId, $sess_currency, $item->price);
-                            ?>
-                            <div>
-                              <span class="price">{{ $price_format }}</span>
-                            </div>
-                            <div class="country-container">
-                              <span class="country">{{$item->country}}</span>
-                            </div>
-        			   	   	  <div class="item-logo">
-        			   	   	   	<img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}" alt="image description">
-        			   	   	  </div>
-        			   	     </div>
-        			   	   </div>
-        			     </div>
-                   @if(($i+1)%3 ===0)
-                     <div class="clearfix visible-md-block"></div>
-                   @endif
-                   @if(($i+1)%2 ===0)
-                     <div class="clearfix visible-sm-block"></div>
-                   @endif
-                 @endfor
-               @else
-                 <div class="col-md-12 col-sm-12">
-                   <p>
-                     No Items found
-                   </p>
-                 </div>
-               @endif
+                                     						<a class="editListing" data-id="{{$item->id}}" href="/panel/product/edit/{{$item->id}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
+                                     						<a class="deleteListing" data-id="{{$item->id}}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                 						@endif
+                             						@else
+                                 						<a data-toggle="modal" data-listing="{{$item->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
+                             						@endif
+            	   	   							</figure>
+                        					</a>
+        			   	     				<div class="caption">
+        			   	   	  					<h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
+					                            <?php
+				                              	$dealer = func::getTableByID('users', $item->userId);
+				                              	$sess_currency = null !==  session('currency') ? session('currency') : 'USD';
+				                              	$price_format = func::formatPrice($item->currencyId, $sess_currency, $item->price);
+					                            ?>
+                            					<div><span class="price">{{ $price_format }}</span></div>
+                            					<div class="country-container"><span class="country">{{$item->country}}</span></div>
+        			   	   	  					<div class="item-logo">
+        			   	   	   						<img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}" alt="image description">
+        			   	   	  					</div>
+        			   	     				</div>
+        			   	   				</div>
+        			     			</div>
+                   					@if(($i+1)%3 ===0)
+                     					<div class="clearfix visible-md-block"></div>
+                   					@endif
+                   					@if(($i+1)%2 ===0)
+                     					<div class="clearfix visible-sm-block"></div>
+                   					@endif
+                 				@endfor
+               				@else
+	                 			<div class="col-md-12 col-sm-12">
+	                   				<h3>No Items found</h3>
+	                 			</div>
+               				@endif
 						</div>
 						<!-- pagination -->
 						<div class="pagination-wrap">
                               {{ $listings->links() }}
 						</div>
 						<!-- end of pagination -->
-						</div> <!-- end of items -->
+					</div> <!-- end of items -->
 			    </div>
             </div> <!-- end of new grid -->
 		</div> <!-- end main container -->
@@ -138,6 +132,45 @@
     <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
     <script>
     $(document).ready(function(){
+        var newstart = $('#startrange').val(),
+            newend = $('#endrange').val();
+        updateInputs();
+        $('.inputrange').on('change',function(){
+            svalue = $('#startrange').val();
+            evalue = $('#endrange').val();
+            if(validatingrange(svalue,evalue)){
+                updaterange();
+            }else{
+                console.log('error');
+            }
+        });
+        function validatingrange(start,end){
+            start = parseInt(start);
+            end = parseInt(end);
+            if(start>0 && end<1000000001 && start<=end){
+                return true;
+            }else{
+                if(start>end){
+                    $('#startrange').val(end);
+                    return true;
+                }else if((start<1) || isNaN(start) || (start=='') || (start==0)){
+                    $('#startrange').val(1);
+                    return true;
+                }else if((end>1000000000) || isNaN(end) || (end=='') || (end==0)){
+                    $('#endrange').val(1000000000);
+                    return true;
+                }
+            }
+
+        }
+        function updateInputs(){
+            var ranges = $('#range').val();
+            splits = ranges.split(';');
+            startrange = splits[0];
+            endrange = splits[1];
+            $('#startrange').val(startrange);
+            $('#endrange').val(endrange);
+        }
         $("#category").change(function () {
             var val = $(this).val();
             if (val == "real-estates") {
@@ -165,7 +198,6 @@
 
         var ranges = $('input#range').val();
         var splitted = ranges.split(';');
-        console.log(splitted);
         $("#range").ionRangeSlider({
             hide_min_max: true,
             keyboard: true,
@@ -178,8 +210,19 @@
             prefix: "$",
             grid: false,
             prettify_enabled: true,
-            prettify_separator: ","
+            prettify_separator: ",",
+            onStart: updateInputs,
+            onChange: updateInputs,
+            onFinish: updateInputs
         });
+        function updaterange(){
+            range = $("#range").data("ionRangeSlider");
+            range.update({
+                from: $('#startrange').val(),
+                to: $('#endrange').val(),
+            });
+            $('#range').val($('#startrange').val()+';'+$('#endrange').val());
+        }
         $("img.listing-img").unveil(300, function() {
           $(this).load(function() {
              $(this).hide();
