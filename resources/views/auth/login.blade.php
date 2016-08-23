@@ -416,6 +416,9 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
           e.stopPropagation();
         })
     </script>
-</body>
+    <a href="#" class="login_to_facebook"></i>F</a>
+    <a href="#" class="login_to_linkedin"></i>L</a>
+    <a href="#" class="login_to_twitter"></i>T</a>
 
+  </body>
 </html>
