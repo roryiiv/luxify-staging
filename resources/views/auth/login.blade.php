@@ -179,6 +179,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                     @endif
                 </form>
                 <hr>
+@if(false)
                 <p class="text-muted" >@lang('auth.signInSocialAccount')</p>
                 <div class="clearfix row" >
                     <div class="col-xs-4">
@@ -194,6 +195,8 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                     </div>
                 </div>
                 <hr>
+@endif
+
                 <div class="clearfix">
                     <p class="text-muted mb-0 pull-left">@lang('auth.createANewAccount')</p><a href="/register" class="inline-block pull-right">@lang('auth.signUp')</a>
                 </div>
