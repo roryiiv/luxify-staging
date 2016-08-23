@@ -8,6 +8,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\FatalErrorException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use DB;
 
@@ -48,7 +49,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Exception $e)
     {
-      if ($e instanceof NotFoundHttpException) {
+      if ($e instanceof NotFoundHttpException || $e instanceof FatalErrorException) {
         $mores = DB::table('listings')
         ->where('status', 'APPROVED')
         ->join('countries', 'countries.id', '=', 'listings.countryId')
@@ -56,7 +57,11 @@ class Handler extends ExceptionHandler
         ->select('listings.mainImageUrl', 'listings.title', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'listings.slug', 'users.fullName')
         ->paginate(10);
 
-        return response()->view('exception.missing', ['mores' => $mores], 404);
+        if ($e instanceof NotFoundHttpException) {
+          return response()->view('exception.missing', ['mores' => $mores], 404);
+        } else {
+          return response()->view('exception.missing', ['mores' => $mores], 500);
+        }
       } else {
         return parent::render($request, $e);
       }
