@@ -1,7 +1,9 @@
 @extends('layouts.front')
-@section('home-title')
-  <title>Luxify.com - Asia's Leading Marketplace for Luxury</title>
+
+@section('title')
+  <title>{{func::genTitle('homepage', false)}}</title>
 @endsection
+
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">
@@ -19,7 +21,7 @@
 
 @section('meta-data')
     <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-    <meta name="description" content="We are Asia's leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+    <meta name="description" content="We are Asia&#39;s leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
 @endsection
 
 @section('content')

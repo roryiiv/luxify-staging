@@ -275,18 +275,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="latitude" class="col-sm-3 control-label">Latitude</label>
-                            <div class="col-sm-9">
-                                <input id="latitude" name='latitude' type="text" placeholder="{{$item->latitude}}" class="form-control" >
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="longitude" class="col-sm-3 control-label">Longitude</label>
-                            <div class="col-sm-9">
-                                <input id="longitude" name='longitude' type="text" placeholder="{{$item->longitude}}" class="form-control" >
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label for="expiryDate" class="col-sm-3 control-label">Expiry Date (Optional)</label>

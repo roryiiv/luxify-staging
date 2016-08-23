@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', trim(preg_replace('/\s\s+/', ' ', $meta->title)))
+@section('title')
+  <title>{{trim(preg_replace('/\s\s+/', ' ', $meta->title))}} - Luxify</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 

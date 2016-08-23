@@ -33,13 +33,4 @@ return[
     'sm_addedWishlist'=>'Item has been added to wishlist',
     'sm_checkWishlist'=>'You can check your wishlist in the dashboard',
     'sm_viewWishlist'=>'View Wishlist',
-
-
-
-
-
-
-
-
-
 ];

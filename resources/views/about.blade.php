@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'About Luxify')
+@section('title')
+  <title>{{ func::genTitle('About Us', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
@@ -51,7 +53,7 @@
 					<div class="col-lg-4 col-sm-offset-1 col-sm-5 col-xs-10 col-xs-offset-1">
 					<h1>What's Luxify</h1>
 					<p>Luxify is Asia’s leading online marketplace for luxury. Our website is the go-to destination for luxury enthusiasts and collectors in Asia, providing easy, safe and reliable market access to the luxury market.</p>
-					<p>On Luxify you will discover one of the Internet's largest collections of luxury products. Our website is the perfect place to discover, search and browse through a whole host of the very finest luxury goods.”</p>
+					<p>On Luxify you will discover one of the Internet's largest collections of luxury products. Our website is the perfect place to discover, search and browse through a whole host of the very finest luxury goods.</p>
 					<a href="/why-luxify" class="btn btn-primary">How it works?</a>
 			</div>
 			</div>

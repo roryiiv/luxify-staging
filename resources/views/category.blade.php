@@ -1,6 +1,13 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify')
+@section('title')
+  <title>{{func::genTitle($meta['title'], true)}}</title>
+@endsection
+   
+@section('meta-data')
+    <meta name="keywords" content="{{ $meta['keywords']}}">
+    <meta name="description" content="{{ $meta['desc']}}">
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
