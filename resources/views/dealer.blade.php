@@ -64,19 +64,23 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <?php 
-                            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                            if(!empty($dealer->companyName) && ($dealer->companyName) !== null){
                               $company = json_decode($dealer->companyName);
-                                if(is_array($company)){
-                                $title = $company[0]."</br>".$company[1]; 
-                                }else{
-                                 $title = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
+                              if ($company === NULL) {
+                                  $title = $dealer->companyName; 
+                              } else if(is_array($company)){
+                                  $title = $company[0]."</br>".$company[1]; 
+                              } else {
+                                  $title = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
                                 }
                             }else{
                               $title = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
                             }
                             if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
                               $company = json_decode($dealer->companyName);
-                                if(is_array($company)){
+                              if($company === NULL) {
+                                $title1 = $dealer->companyName; 
+                              } else if(is_array($company)){
                                   $title1 = $company[0]."</br>".$company[1]; 
                                 }else{
                                   $title1 = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
