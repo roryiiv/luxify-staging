@@ -157,8 +157,9 @@
                                 @else
                                     <li><a data-toggle="modal" data-listing="{{$listing->id}}" data-target="#login-form" class="" title="{{ $listing->title }}" href="#"><span class="icon icon-heart"></span></a></li>
                                 @endif
+                                {{-- Don't merge this line below. Different APP KEY --}}
                                 <li>
-                                    <a {{schema::itemType('URL')}} class="social-link" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=1100408396697613&amp;display=popup&amp;caption={{urlencode($listing->description)}} &amp;link={{ $url . '/listing/' . $listing->slug}}&amp;redirect_uri={{ $url . '/listing/' . $listing->slug}}">
+                                    <a {{schema::itemType('URL')}} class="social-link" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=1832673026944164&amp;display=popup&amp;caption={{urlencode($listing->description)}} &amp;link={{ $url . '/listing/' . $listing->slug}}&amp;redirect_uri={{ $url . '/listing/' . $listing->slug}}">
                                         <span class="icon icon-facebook"></span>
                                     </a>
                                 </li>
@@ -175,6 +176,7 @@
                                 {{--Hide this for now as no back end information made for this (faulty by design)  --}}
                                 {{-- <li><a href="#"><span class="icon icon-wechat"></span></a></li>
                                 <li><a href="#"><span class="icon icon-social"></span></a></li> --}}
+                                {{-- Don't merge this line above. Different APP KEY --}}
                             </ul>
                             @if ($dealer)
                                 <?php $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName); ?>
