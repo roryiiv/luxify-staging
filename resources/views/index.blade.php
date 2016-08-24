@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('home-title')
-  <title>Luxify.com - Asia&#39;s Leading Marketplace for Luxury</title>
+  <title>Luxify.com - Asia's Leading Marketplace for Luxury</title>
 @endsection
 @section('style')
     <!-- include the site stylesheet -->

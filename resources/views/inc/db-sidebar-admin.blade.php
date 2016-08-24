@@ -8,16 +8,9 @@
                 <li><a href="/panel/users">User list</a></li>
                 <li><a href="/panel/user/add/user">Add User</a></li>
                 <li><a href="/panel/user/add/seller">Add Dealer</a></li>
-            </ul>
-        </li>
-        <li class="panel"><a role="button" data-toggle="collapse" data-parent=".navigation" href="#collapse20" aria-expanded="false" aria-controls="collapse20" class="collapsed"><i class="ti-user"></i><span class="sidebar-title">Category</span></a>
-            <ul id="collapse20" class="list-unstyled collapse">
-                <li><a href="/panel/categories">Category list</a></li>
-                <li><a href="/panel/categories/add">Add Category</a></li>
-            </ul>
-        </li>
 
-        
+            </ul>
+        </li>
 
         <li class="panel"><a role="button" data-toggle="collapse" data-parent=".navigation" href="#collapse19" aria-expanded="false" aria-controls="collapse18" class="collapsed"><i class="ti-shopping-cart"></i><span class="sidebar-title">Product Management</span></a>
             <ul id="collapse19" class="list-unstyled collapse">

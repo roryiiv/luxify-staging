@@ -125,11 +125,14 @@
                             $url = 'http://' . $_SERVER['HTTP_HOST'];
                             $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
                             $price_format = func::formatPrice($listing->currencyId, $sess_currency, $listing->price);
-                            
+                            $lat = DB::table('listings')->where('id', $listing->id)->pluck('latitude');
+                            $lon = DB::table('listings')->where('id', $listing->id)->pluck('longitude');
                             ?>
                             <ul class="detail">
                                 <li><span class="icon icon-tag"></span><span class="text" itemprop="price" {{schema::itemType('Integer')}}>{{ $price_format }}</span></li>
                                 <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
+                                {{--<li><span class="text">Lat:{{ implode($lat) }}</span></li>--}}
+                                {{--<li><span class="text">Lon:{{ implode($lon) }}</span></li>--}}
                             </ul>
                             <ul class="social-links">
                                <?php $added = func::is_wishlist($user_id, $listing->id) == 1 ? ' added' : ''; ?>
