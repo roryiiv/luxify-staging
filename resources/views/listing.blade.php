@@ -231,12 +231,13 @@
                                         </thead>
                                         <tbody>
                                         @foreach($infos as $key => $info)
-                                            @if(isset($info->lable))
+                                            @if(isset($info->label))
                                               <tr>
                                                   <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{$info->label}}</th>
                                                   <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
                                               </tr>
                                             @else
+                                              <?php var_dump($info); exit(); ?>
                                               <tr>
                                                   <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{$key}}</th>
                                                   <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info}}</td>
