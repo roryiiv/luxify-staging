@@ -101,7 +101,7 @@ Route::get('/dealer/listings/{id}', 'Front@dealerListing');
 Route::post('/contact/dealer/{dealerId}','Front@sendMessage');
 Route::get('/register','Front@register');
 Route::post('/register','LuxifyAuth@register');
-Route::get('/login','Front@login');
+Route::get('/login','Front@login')->name('login');
 Route::post('/login','LuxifyAuth@authenticate');
 Route::get('/logout','LuxifyAuth@logout');
 Route::get('/search','Front@search');

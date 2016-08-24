@@ -157,7 +157,7 @@ class Front extends Controller {
             $meta->author = Meta::get_data_listing($listing->id,'author');
             if(!empty($meta->author) && ($meta->author !=null)){
                 $meta->author = Meta::get_data_listing($listing->id,'author');
-            }else{
+            } else {
                 if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
                     $company = json_decode($dealer->companyName);
                     if(is_array($company)){
@@ -166,7 +166,9 @@ class Front extends Controller {
                         $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
                     }
                 }else{
-                  $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                  if ($dealer) {
+                    $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                  }
                 }
             }
             $meta->keyword = Meta::get_data_listing($listing->id,'keyword');

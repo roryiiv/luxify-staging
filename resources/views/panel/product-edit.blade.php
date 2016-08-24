@@ -110,8 +110,8 @@
 
   h2 {
     color: #737373 !important;
-    font-weight: 500 !important;
-    margin-top: 20px !important;
+    font-weight: 300 !important;
+    margin-top: -14px !important;
     margin-bottom: 10px !important;
     font-size: 30px !important;
   }
@@ -124,6 +124,7 @@
   .sweet-alert[data-has-cancel-button=false] button {
     box-shadow: 0 3px 0 0 #117b66 !important;
   }
+  
 </style>
 
 @endsection
@@ -475,6 +476,7 @@
         <div class="row">
         </div>
     </script>
+@include('inc.product-message')
 @endsection
 
 @section('scripts')
@@ -722,7 +724,11 @@
         }
 
         $('.actions ul li').click(function () {
-            $(".sweet-alert p").html("Your item has been submitted for approval");
+           var x = $(this).find('a').attr('href');
+            // console.log(x);
+            if(x == '#finish'){
+                $("#update-product-form").modal('show');
+            }
         });
         $('#itemCategory').on('change', function(){
             var _token = $('input[name=_token]').val();
