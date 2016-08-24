@@ -228,7 +228,6 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                     @endif
                 </form>
                 <hr>
-@if(false)
                 <p class="text-muted" >@lang('auth.signInSocialAccount')</p>
                 <div class="clearfix row" >
                     <div class="col-xs-12 col-md-4 login_share_btn_width">
@@ -244,8 +243,6 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                     </div>
                 </div>
                 <hr>
-@endif
-
                 <div class="clearfix">
                     <p class="text-muted mb-0 pull-left">@lang('auth.createANewAccount')</p><a href="/register" class="inline-block pull-right">@lang('auth.signUp')</a>
                 </div>
@@ -355,9 +352,9 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
           e.stopPropagation();
         })
     </script>
-    <a href="#" class="login_to_facebook"></i>F</a>
+<!--    <a href="#" class="login_to_facebook"></i>F</a>
     <a href="#" class="login_to_linkedin"></i>L</a>
-    <a href="#" class="login_to_twitter"></i>T</a>
+    <a href="#" class="login_to_twitter"></i>T</a>-->
 
   </body>
 </html>
