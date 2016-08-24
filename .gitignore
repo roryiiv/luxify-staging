@@ -21,4 +21,4 @@ temp.txt
 *.bak
 .DS_Store
 config/services.php
-app/Providers/AppServiceProvider.php
+/app/Providers/AppServiceProvider.php
