@@ -71,7 +71,7 @@
         <div class="page-content container-fluid">
 
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <div class="col-lg-12">
                         <div class="widget clear">
                             <h3 class="widget-title pull-left">Items Traffic</h3>
@@ -92,55 +92,48 @@
                                         <h5 class="m-0">Overall Visitors {!!$pr_visitor!!}</h5>
                                     </div>
                                     <div class="col-xs-4">
-                                        <div class="fs-30 fw-600">15:32</div>
-                                        <h5 class="m-0">Avg. Visit Duration <span class="text-success"><i class="ti-arrow-up fs-13"></i> 12.54%</span></h5>
+                                        <div class="fs-12 fw-300">
+                                        <?php
+                                            if(count($top3_listing)>0){
+                                            echo'<span class="get_height" style="text-align:left;display: inline-block;margin-bottom:10px;">';
+                                                    $i = 1;
+                                                foreach ($top3_listing as $value) {
+                                                    $id = $value->listing_id;
+                                                    $nama = DB::table('listings')->where('id',$id)->value('title');
+                                                    echo'<span>'.$i.'. '.$nama.'</span><br/>';
+                                                    $i++;
+                                                }
+                                                echo'</span>';
+                                            }else{
+                                                echo'<span class="switch">there is no data</span>';
+                                            }
+                                        ?>
+                                        </div>
+                                        <h5 class="m-0">Top 3 Item Listings Most View</h5>
                                     </div>
                                     <div class="col-xs-4">
-                                        <div class="fs-30 fw-600 itempervisit">{{$visitor_m/$total_product}}</div>
-                                        <h5 class="m-0">Item/Visit <span class="text-success"><i class="ti-arrow-up fs-13"></i> 5.62%</span></h5>
+                                        <div class="fs-12 fw-300 itempervisit">
+                                        <?php
+                                            if(count($top3_country)>0){
+                                            echo'<span class="get_height" style="text-align:left;display: inline-block;margin-bottom:10px;">';
+                                                    $i = 1;
+                                                foreach ($top3_country as $value) {
+                                                    $id = $value->country_id;
+                                                    $nama = DB::table('countries')->where('code2',$id)->value('name');
+                                                    $nama = (!empty($nama))?$nama:'not identify';
+                                                    echo'<span>'.$i.'. '.$nama.'</span><br/>';
+                                                    $i++;
+                                                }
+                                                echo'</span>';
+                                            }else{
+                                                echo'<span class="switch">there is no data</span>';
+                                            }
+                                        ?>
+                                            
+                                        </div>
+                                        <h5 class="m-0">Top 3 Countries Most Visit</h5>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-4">
-                            <div class="mb-30">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="media-heading">Total Visitors <span class="text-success"><i class="ti-arrow-up fs-13"></i> 5.28%</span></h5>
-                                        <div class="fs-36 fw-600 counter">{{$visitor_all}}</div>
-                                    </div>
-                                    <div class="media-right"><i class="fs-30 ti-user"></i></div>
-                                </div>
-                                <div id="flot-order" style="height: 74px"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-4">
-                            <div class="mb-30">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="media-heading">Total Inquiries <span class="text-danger"><i class="ti-arrow-down fs-13"></i> 1.06%</span></h5>
-                                        <div class="fs-36 fw-600"><span class="counter">{{$wishlists}}</span></div>
-                                    </div>
-                                    <div class="media-right"><i class="fs-30 ti-email"></i></div>
-                                </div>
-                                <div id="flot-revenue" style="height: 74px"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-4">
-                            <div class="mb-30">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="media-heading">Total Products <span class="text-danger"><i class="ti-arrow-down fs-13"></i> 3.76%</span></h5>
-                                        <div class="fs-36 fw-600 counter">{{$total_product  }}</div>
-                                    </div>
-                                    <div class="media-right"><i class="fs-30 ti-shopping-cart"></i></div>
-                                </div>
-                                <ul class="list-unstyled">
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -218,12 +211,12 @@
     <script type="text/javascript" src="/db/js/index.js"></script>-->
     <script>
         $(document).ready(function() {
+
             //ajax first load for flotchart 12month
             loadajaxflotchart();
 
             function loadajaxflotchart(){
             d = [[0, 0]],
-           /* m =data_ticks,*/
             h = [{
                 label: "New/Old visitors",
                 data: d,
@@ -258,7 +251,9 @@
                     }
                 },
                 tooltip: {
-                    show: !1
+                    show: !0,
+                    content: "%s: %y",
+                    defaultTheme: !1
                 },
                 legend: {
                     show: !0,
@@ -376,7 +371,7 @@
                 }
                 $.plot($("#flot-visitor"), h, g);
                 $(".visitorget").html(json_data.total);
-                $(".itempervisit").html(json_data.itempervisit);
+                //$(".itempervisit").html(json_data.itempervisit);
                 }
 
             }
@@ -388,87 +383,6 @@
                     color: $("#inputBackgroundEvent").val()
                 }, !0)
             }
-            var n = [{!!$get_vm!!}],
-                o = [{
-                    label: "Visitors",
-                    data: n,
-                    color: "#988866"
-                }],
-                r = {
-                    series: {
-                        lines: {
-                            show: !0,
-                            lineWidth: 1
-                        },
-                        points: {
-                            show: !0,
-                            lineWidth: 0,
-                            fill: !0,
-                            fillColor: "#988866"
-                        },
-                        shadowSize: 0
-                    },
-                    grid: {
-                        hoverable: !0,
-                        borderWidth: 0
-                    },
-                    xaxis: {
-                        ticks: 0
-                    },
-                    yaxis: {
-                        ticks: 0
-                    },
-                    tooltip: {
-                        show: !0,
-                        content: "%s: %y",
-                        defaultTheme: !1
-                    },
-                    legend: {
-                        show: !1
-                    }
-                };
-            $.plot($("#flot-order"), o, r);
-            var i = [{!!$get_ws!!}
-                ],
-                l = [{
-                    label: "Inquiries",
-                    data: i,
-                    color: "#988866"
-                }],
-                s = {
-                    series: {
-                        lines: {
-                            show: !0,
-                            lineWidth: 1
-                        },
-                        points: {
-                            show: !0,
-                            lineWidth: 0,
-                            fill: !0,
-                            fillColor: "#988866"
-                        },
-                        shadowSize: 0
-                    },
-                    grid: {
-                        hoverable: !0,
-                        borderWidth: 0
-                    },
-                    xaxis: {
-                        ticks: 0
-                    },
-                    yaxis: {
-                        ticks: 0
-                    },
-                    tooltip: {
-                        show: !0,
-                        content: "%s: %y",
-                        defaultTheme: !1
-                    },
-                    legend: {
-                        show: !1
-                    }
-                };
-                $.plot($("#flot-revenue"), l, s);
             $("#daterangepicker").daterangepicker({
         ranges: {
             'Last 3 Days': [moment().subtract("days", 2), moment()],

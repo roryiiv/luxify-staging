@@ -142,6 +142,16 @@ Route::get('/panel/product/delete/{id}', 'Panel@product_delete');
 Route::post('/panel/products/{itemId}', 'Panel@product_edit'); //Update
 Route::post('/panel/products/delete/{id}','Panel@products_delete');
 
+//Categories and Optional Fields
+Route::get('/panel/categories','Panel@categories');
+Route::get('/panel/categories/add','Panel@categories_add');
+Route::get('/panel/optional-fields','Panel@optional_fields');
+Route::get('/panel/optional-fields/add{id}','Panel@optional_fields_add');
+Route::post('/panel/categories','Panel@category_add');
+Route::get('/panel/categories/delete/{id}','Panel@category_delete');
+Route::get('/panel/categories/edit/{id}', 'Panel@category_edit');
+Route::post('/panel/category', 'Panel@category_update');
+
 //Other Database related operations
 Route::get('/panel/categories/rebuild','Panel@cat_rebuild');
 Route::get('/panel/listings/rebuild','Panel@listing_rebuild');

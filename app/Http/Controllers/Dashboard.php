@@ -52,8 +52,11 @@ class Dashboard extends Controller
         if($this->user_role == 'seller'){
 
 //            penambahan untuk mendapatkan data;
-            
+            $user_id = Auth::user()->id;
             $data= PageCount::get_data();
+            $data['top3_listing']= Analytics::get_top_three($user_id);
+            $data['top3_country']= Analytics::get_top_three_country($user_id);
+            $data['pr_visitor']= Analytics::get_prvisitor($user_id);
             $data['flotchart']= PageCount::get_json();
             $data['get_tick']= PageCount::get_tick();
             $data['get_vm']= PageCount::get_json_vm();
