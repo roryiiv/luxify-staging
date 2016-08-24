@@ -149,6 +149,15 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
             right: 0;
             top: 0;
         }
+
+        h2 {
+            color: #737373 !important;
+            font-weight: 300 !important;
+            margin-top: -14px !important;
+            margin-bottom: 18px !important;
+            font-size: 30px !important;
+        }
+
         .modal-content {
             border-radius: 0px;
         }
@@ -172,6 +181,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
             font-weight: 300;
             font-size: 15px; 
             text-align: center;
+            font-family: Poppins,sans-serif;
         }
         /*  mobile css end */
         @media (min-width: 768px) {
@@ -185,8 +195,8 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                 margin: 35% auto;
                 padding: 36px 73px;
                 max-width: 800px;
-                height: 70%;
-                width: 400px;
+                height: 55%;
+                width: 495px;
                 border: 2px solid #998967;
                 border-radius: 0px;
             }
@@ -205,6 +215,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
         #cancel-form h2 {
             text-align: center;
             font-weight: 300;
+            font-family: Poppins,sans-serif;
             color: #56616F;
         }
         #cancel-form button{
@@ -221,7 +232,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
             margin-top: 5px;
             font-size: 10px;
             padding-top: 4px;
-            margin-right: 24%;
+            margin-right: 32%;
         }
 
  
