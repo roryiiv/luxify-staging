@@ -3,6 +3,14 @@ $locs = func::build_countries();
 $cats = func::categories('all');
 $subs = func::categories('all');
 ?>
+<style>
+    .irs-bars {
+    position: relative;
+    top: 25px;
+    width: 100%;
+    display: block;
+}
+</style>
 <div class="filter-block">
     <a role="button" data-toggle="collapse" href="#filter-drop" aria-expanded="false" class="btn btn-primary">Filter</a>
     <div id="filter-drop" class="collapse">
@@ -76,9 +84,25 @@ $subs = func::categories('all');
                             <span class="check-text">Include price of request</span>
                         </label>
                     </div>
-                    <div class="col-sm-8 ion-range">
-                        <span class="irs-bars"></span>
-                        <input type="text" id="range" value="{{ isset($filters['range']) && !empty($filters['range']) ? $filters['range'] : '' }}" name="range" />
+                    <div class="col-sm-8 ">
+                        <div class="ion-range">
+                            <span class="irs-bars"></span>
+                            <input type="text" id="range" value="{{ isset($filters['range']) && !empty($filters['range']) ? $filters['range'] : '' }}" name="range" />
+                        </div>
+                        <br/>
+                        <div class="inputrange row">
+                            <div class="col-xs-12">
+                                <div class="form-inline">
+                                    <div class="input-group" style="display:inline-block;">
+                                        <input type="number" class="form-control" style="color:#555;" id="startrange" placeholder="$ 1">                
+                                    </div>
+                                    <strong>-</strong>
+                                    <div class="input-group" style="display:inline-block;">
+                                        <input type="number" class=" form-control" style="color:#555;" id="endrange" placeholder="$ 1,000,000,000">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

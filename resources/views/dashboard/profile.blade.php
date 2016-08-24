@@ -277,7 +277,8 @@
                                     @endif
                                 @endif
                                 <div class="row p-10 text-right">
-                                    <button id="sweet-3" type="button" class="btn btn-raised btn-success btn-lg">Update</button>
+                                
+                                    <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">Update</button>
                                 </div>
                             </fieldset>
                             @if(Auth::user())
@@ -379,7 +380,8 @@
                                         </div>
 
                                         <div class="row p-10 text-right">
-                                            <button id="sweet-3" type="button" class="btn btn-raised btn-success btn-lg sweet-3">Update</button>
+                                        
+                                            <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">Update</button>
 
                                         </div>
                                     </fieldset>
@@ -428,7 +430,8 @@
                                     <div class="well well-sm"><strong>Profile Updated At</strong> {{ $user->updated_at }}</div>
                                 </div>
                                 <div class="row p-10 text-right">
-                                    <button id="sweet-3" type="button" class="btn btn-raised btn-success btn-lg">Update</button>
+                                
+                                    <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">Update</button>
                                 </div>
                             </fieldset>
                             @if(Auth::user())
@@ -509,7 +512,8 @@
                                                 </div>
                                             </section>
                                         <div class="row p-10 text-right">
-                                            <button id="sweet-3" type="button" class="btn btn-raised btn-success btn-lg">Update</button>
+                                            
+                                            <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">Update</button>
                                         </div>
                                     </fieldset> 
                                 @endif
@@ -519,6 +523,7 @@
                 </div>
             </div>
         </div>
+@include('inc.update-message')
 @endsection
 
 @section('scripts')
@@ -654,7 +659,36 @@
             	}
             });
             var token = "{{ Session::getToken() }}";
-            $("#sweet-3, .sweet-3").each(function () {
+            $("#yes-button").on("click", function () { 
+                if($("form.form-horizontal").valid()){       
+                    if ($('#txtPassword').val() !== '') {
+                        var salt = encrypt.makeSalt();
+                        var hashed = encrypt.password($('#txtPassword').val(), salt);
+                        $('input#salt').val(salt);
+                        $('input#hashed').val(hashed);
+                    }
+                    if ($('#phoneNumber').val() !== '') {
+                        var phones = $('#phoneNumber').tagsinput('items');
+                        $(phones).each(function(idx, ele) {
+                        $('<input name="phoneNumber[]" type="hidden" value="'+ele+'"/>').appendTo($('#phoneNumber').parent());
+                        });
+                    }
+                    $(window).unbind('beforeunload');
+                    $("form[name='profile']").submit();
+                }else{
+                    $("#update-form").modal('hide');
+                }
+            });
+            $("#cancel-button").on("click",function(){
+                $("#cancel-form").modal('show');
+                $("#update-form").modal('hide');
+            });
+            $(".close-all").on("click",function(){
+               $("#cancel-form").modal('hide');
+            });
+               
+          
+           /* $("#sweet-3, .sweet-3").each(function () {
                 $(this).on("click", function () {
                   	if ($("form.form-horizontal").valid()) {
 	                    swal({
@@ -691,7 +725,7 @@
 	                    });
                 	}
                 });
-            }),
+            }),*/
             Dropzone.options.myAwesomeDropzone = !1, Dropzone.autoDiscover = !1,
             $("#api-cover-image").dropzone({
                 url: "/upload",
@@ -779,7 +813,7 @@
     @if(isset($_GET['update']) && $_GET['update'] == 'success')
         <script>
         $(document).ready(function(){
-            swal("Updated!", "Your profile has been updated.", "success");
+           $("#success-form").modal('show');
         });
         </script>
     @endif
