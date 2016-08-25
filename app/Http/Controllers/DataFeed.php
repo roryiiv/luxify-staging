@@ -63,6 +63,7 @@ class DataFeed extends Controller
     $limit = func::getVal('post', 'limit');
     $order = func::getVal('post', 'order');
     $table = func::getVal('post', 'table');
+    $join = func::getVal('post', 'order');
 
     if (!$table) {
       $table = 'listings';
@@ -84,6 +85,13 @@ class DataFeed extends Controller
       }
       if ($limit & intval($limit) !== 0) {
         $q->take(intval($limit));
+      }
+      if ($order && is_array($order)) {
+        foreach($order as $key => $direction) {
+          if (in_array($direction, ['desc', 'asc'])) {
+            $q->orderBy($key, $direction); 
+          }
+        } 
       }
       $result = $q->get();
       if ($result) {
