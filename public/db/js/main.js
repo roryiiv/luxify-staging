@@ -25,13 +25,13 @@ $(document).ready(function () {
             return addProductForm.valid();
         },
         onFinishing: function (event, currentIndex) {
-            swal({
-                title: "New Listing Created!",
-                text: "Admin will review your listing soon.",
-                type: "success",
-                confirmButtonClass: "btn-raised btn-success",
-                confirmButtonText: "OK"
-            });
+            // swal({
+            //     title: "New Listing Created!",
+            //     text: "Admin will review your listing soon.",
+            //     type: "success",
+            //     confirmButtonClass: "btn-raised btn-success",
+            //     confirmButtonText: "OK"
+            // });
             addProductForm.submit();
             return true;
         },
@@ -64,13 +64,13 @@ $(document).ready(function () {
       },
       onFinishing: function (event, currentIndex) {
       	$(window).unbind('beforeunload');
-        swal({
-          title: "Good job!",
-          text: "You have updated the listing.",
-          type: "success",
-          confirmButtonClass: "btn-raised btn-success",
-          confirmButtonText: "OK"
-        });
+        // swal({
+        //   title: "Good job!",
+        //   text: "You have updated the listing.",
+        //   type: "success",
+        //   confirmButtonClass: "btn-raised btn-success",
+        //   confirmButtonText: "OK"
+        // });
         editProductForm.submit();
         return true;
       },
