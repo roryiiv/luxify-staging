@@ -3,8 +3,8 @@
 namespace App;
 use Validator;
 use Illuminate\Database\Eloquent\Model;
-
 use Cviebrock\EloquentSluggable\Sluggable;
+use DB;
 
 class Listings extends Model
 {
@@ -138,69 +138,5 @@ class Listings extends Model
 
       }
     }
-    public static function newslug($id,$slug){
-      $oldslug = Listings::where('id',$id)->value('slug');
-      $newslug = str_slug($slug, '-');
-      //if data not change old and new
-        if($oldslug == $newslug){
-            $counts = Listings::where('slug',$newslug)->count();
-            //if data more than the object original
-            if($counts>1){
-                //recheck if second slug are unique
-                $status = true;
-                $ekor = 1;
-                while($status){
-                  $second_slug = str_slug($slug, '-').'-'.($newcount+$ekor);
-                  $check = Listings::where('slug',$second_slug)->first();
 
-                  if(count($check)>0){
-                    if($second_slug != $check->slug){
-                      $status=true;
-                    }else{
-                      $status=false;
-                      return $second_slug;                        
-                    }
-                  }else{
-                    $status=false;
-                    return $second_slug;
-                  }
-                  $ekor+=1;
-                }
-            }else{
-                return str_slug($slug, '-');
-            }
-        }
-      //if data change
-      else{
-            //count slug 
-            $newcount = Listings::where('slug',$newslug)->count();
-            //dd($newcount);
-            //if newslug is there are same with others slug
-            if($newcount>0){
-                //recheck if second slug are unique
-                $status = true;
-                $ekor = 1;
-                while($status){
-                  $second_slug = str_slug($slug, '-').'-'.($newcount+$ekor);
-                  $check = Listings::where('slug',$second_slug)->first();
-
-                  if(count($check)>0){
-                    if($second_slug != $check->slug){
-                      $status=true;
-                    }else{
-                      $status=false;
-                      return $second_slug;                        
-                    }
-                  }else{
-                    $status=false;
-                    return $second_slug;
-                  }
-                  $ekor+=1;
-                }
-            }else{
-                return str_slug($slug, '-') ;
-            }
-        }
-    
-    }
 }

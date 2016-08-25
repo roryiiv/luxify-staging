@@ -1,7 +1,12 @@
 @extends('layouts.front')
 
+<<<<<<< HEAD
 @section('title')
   <title>{{func::genTitle('homepage', false)}}</title>
+=======
+@section('home-title')
+  <title>Luxify.com - Asia&#39;s Leading Marketplace for Luxury</title>
+>>>>>>> ad80d3aafb0f54c8acb96427b757c55c8e788aeb
 @endsection
 
 @section('style')

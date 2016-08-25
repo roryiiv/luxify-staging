@@ -143,8 +143,6 @@
                             <ul class="detail">
                                 <li><span class="icon icon-tag"></span><span class="text" itemprop="price" {{schema::itemType('Integer')}}>{{ $price_format }}</span></li>
                                 <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
-                                {{--<li><span class="text">Lat:{{ implode($lat) }}</span></li>--}}
-                                {{--<li><span class="text">Lon:{{ implode($lon) }}</span></li>--}}
                             </ul>
                             <ul class="social-links">
                                 <?php $added = func::is_wishlist($user_id, $listing->id) == 1 ? ' added' : ''; ?>
@@ -225,16 +223,16 @@
                                     {!! nl2br(e($listing->description)) !!}
                                 </p>
                                 @if(!empty($infos))
-                                    <h5 style="margin-top:45px;">Specifications</h5>
+                                    <h5 style="margin-top:45px;">{{ _t('Specifications', [], App::getLocale()) }}</h5>
                                     <table class="table item-description" {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
                                         <thead>
                                         </thead>
                                         <tbody>
                                         @foreach($infos as $info)
-                                            <tr>
-                                                <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{$info->label}}</th>
-                                                <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
-                                            </tr>
+                                          <tr>
+                                            <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ _t($info->label, [], App::getLocale()) }}</th>
+                                            <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
+                                          </tr>
                                         @endforeach
                                         </tbody>
                                     </table>

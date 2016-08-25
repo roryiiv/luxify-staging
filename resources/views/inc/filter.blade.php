@@ -94,11 +94,11 @@ $subs = func::categories('all');
                             <div class="col-xs-12">
                                 <div class="form-inline">
                                     <div class="input-group" style="display:inline-block;">
-                                        <input type="number" class="form-control" style="color:#555;" id="startrange" placeholder="$ 1">                
+                                        <input type="number" class="form-control inputrange" style="color:#555;" id="startrange" placeholder="$ 1">                
                                     </div>
                                     <strong>-</strong>
                                     <div class="input-group" style="display:inline-block;">
-                                        <input type="number" class=" form-control" style="color:#555;" id="endrange" placeholder="$ 1,000,000,000">
+                                        <input type="number" class=" form-control inputrange" style="color:#555;" id="endrange" placeholder="$ 1,000,000,000">
                                     </div>
                                 </div>
                             </div>

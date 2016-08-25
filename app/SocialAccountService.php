@@ -33,14 +33,16 @@ class SocialAccountService{
                 if($providerName=='FacebookProvider'){
                     $row_social = 'socialFacebook';
                     $link = 'https://facebook.com';
+                    $user->email = $providerUser->getEmail();
                 }else if($providerName=='twitterProvider'){
                     $row_social = 'socialTwitter';
                     $link = 'https://twitter.com';
+                    $user->email = $providerUser->getEmail();
                 }else if($providerName=='LinkedInProvider'){
                     $row_social = 'socialLinkedin';
                     $link = 'https://linkedin.com';
+                    $user->email = $providerUser->getNickname().'@twitter.com';
                 }
-                $user->email = $providerUser->getEmail();
                 $user->$row_social = $link.'/'.$providerUser->getId();
                 $user->save();
 
@@ -49,12 +51,6 @@ class SocialAccountService{
                 $data['error'] = 101;
                 return $data;
             }else{
-
-                if($providerUser->getEmail()==null){
-                $data['status'] = false;
-                $data['error'] = 102;
-                return $data;
-                }else{
                     //data tidak di temukan, dan membuat data sendiri.
                     $account = new SocialAccount([
                         'provider_user_id' => $providerUser->getId(),
@@ -63,7 +59,7 @@ class SocialAccountService{
                     $user = User::whereEmail($providerUser->getEmail())->first();
                     if (!$user) {
                         $user = User::create([
-                            'email' => $providerUser->getEmail(),
+                            'email' => $providerUser->getNickname().'@twitter.com',
                             'firstName' => $providerUser->getNickname(),
                             'fullname' => $providerUser->getName(),
                             'role' => 'user',
@@ -82,7 +78,7 @@ class SocialAccountService{
                         return $data;
                         
                     }
-                }
+                
             }            
         }
     }
