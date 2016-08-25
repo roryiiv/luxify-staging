@@ -63,7 +63,7 @@ class DataFeed extends Controller
     $limit = func::getVal('post', 'limit');
     $order = func::getVal('post', 'order');
     $table = func::getVal('post', 'table');
-    $join = func::getVal('post', 'order');
+    $join = func::getVal('post', 'join');
 
     if (!$table) {
       $table = 'listings';
@@ -83,7 +83,12 @@ class DataFeed extends Controller
            $q->addSelect($s);
         }
       }
-      if ($limit & intval($limit) !== 0) {
+      if($join && is_array($join)) {
+        foreach($join as $key => $j) {
+          $q->join($key, $j['lhs'], '=', $j['rhs']);
+        }
+      }
+      if ($limit && intval($limit) !== 0) {
         $q->take(intval($limit));
       }
       if ($order && is_array($order)) {
