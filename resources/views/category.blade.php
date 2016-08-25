@@ -137,6 +137,45 @@
 @section('scripts')
     <script>
     $(document).ready(function(){
+        var newstart = $('#startrange').val(),
+            newend = $('#endrange').val();
+        updateInputs();
+        $('.inputrange').on('change',function(){
+            svalue = $('#startrange').val();
+            evalue = $('#endrange').val();
+            if(validatingrange(svalue,evalue)){
+                updaterange();
+            }else{
+                console.log('error');
+            }
+        });
+        function validatingrange(start,end){
+            start = parseInt(start);
+            end = parseInt(end);
+            if(start>0 && end<1000000001 && start<=end){
+                return true;
+            }else{
+                if(start>end){
+                    $('#startrange').val(end);
+                    return true;
+                }else if((start<1) || isNaN(start) || (start=='') || (start==0)){
+                    $('#startrange').val(1);
+                    return true;
+                }else if((end>1000000000) || isNaN(end) || (end=='') || (end==0)){
+                    $('#endrange').val(1000000000);
+                    return true;
+                }
+            }
+
+        }
+        function updateInputs(){
+            var ranges = $('#range').val();
+            splits = ranges.split(';');
+            startrange = splits[0];
+            endrange = splits[1];
+            $('#startrange').val(startrange);
+            $('#endrange').val(endrange);
+        }
         $("#category").change(function () {
             var val = $(this).val();
             $('form.filter-form').attr('action', '/category/'+val);
@@ -178,8 +217,19 @@
             prefix: "$",
             grid: false,
             prettify_enabled: true,
-            prettify_separator: ","
+            prettify_separator: ",",
+            onStart: updateInputs,
+            onChange: updateInputs,
+            onFinish: updateInputs
         });
+        function updaterange(){
+            range = $("#range").data("ionRangeSlider");
+            range.update({
+                from: $('#startrange').val(),
+                to: $('#endrange').val(),
+            });
+            $('#range').val($('#startrange').val()+';'+$('#endrange').val());
+        }
 
         $("img.listing-img").unveil(300, function() {
           $(this).load(function() {

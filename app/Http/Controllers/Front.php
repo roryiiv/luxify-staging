@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+Use App;
+
 Use Mail;
 
 use App\Categories;
@@ -38,7 +40,9 @@ use App\Language;
 
 Use Cache;
 
-Use Searchy;
+use TNTSearch;
+
+use Stevebauman\Translation\Facades\Translation;
 
 class Front extends Controller {
     //Front end Controller
@@ -172,6 +176,10 @@ class Front extends Controller {
                 }
             }
             $meta->keyword = Meta::get_data_listing($listing->id,'keyword');
+
+            // translation 
+            $listing->description = Translation::translate($listing->description,[], App::getLocale());
+            $listing->title = Translation::translate($listing->title,[], App::getLocale());
 
           return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
         }
@@ -1343,11 +1351,9 @@ class Front extends Controller {
 
         $search = \Request::get('search');
         $search = urldecode($search);
-        $index_list = Searchy::listings('title', 'description')->query($search)->getQuery()->having('relevance', '>', 30)->get();
-        $indexed_ids = array();
-        foreach($index_list as $indexed){
-        	$indexed_ids[] = $indexed->id;
-        }
+        TNTSearch::selectIndex("luxify.index");
+        $index_list = TNTSearch::searchBoolean($search, 1000);
+        $indexed_ids = $index_list['ids'];
         // var_dump($indexed_ids); exit;
         
         $search_arr = array();
@@ -1669,9 +1675,13 @@ class Front extends Controller {
                     }
                 }
 
-                $listings = Listings::where('status', 'APPROVED')
-//                ->where('title','like','%'.$search.'%')
-                  ->where(function($query) use ($search_keywords) {
+                TNTSearch::selectIndex("luxify.index");
+                $index_list = TNTSearch::searchBoolean($search, 1000);
+                $indexed_ids = $index_list['ids'];
+
+                /*$listings = Listings::where('status', 'APPROVED')
+                ->where('title','like','%'.$search.'%')
+                ->where(function($query) use ($search_keywords) {
                     foreach($search_keywords as $key) {
                       $query->where('title', 'like', '%'. $key .'%');
                       $query->orWhere('description', 'like', '%'. $key .'%'); 
@@ -1682,7 +1692,12 @@ class Front extends Controller {
                   // ->groupBy('categoryId')
                   // ->having('id', '>', 0)
                   // ->skip(0)
-                  ->paginate(10);
+                  ->paginate(10);*/
+            	$listings = Listings::whereIn('id', $indexed_ids)
+                ->where('status', 'APPROVED')
+                ->orWhere($search_arr)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
 
                 $cats = array();
                 $dealers = array();
@@ -1731,7 +1746,13 @@ class Front extends Controller {
                         $return .= '<a href="/dealer/'.$dealer->id.'/'.$slug.'" title="'.(!empty($dealer->companyName)? $dealer->companyName : $dealer->fullName).'">';
                         $dealer_img = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png';
                         $return .= '<img src="https://images.luxify.com/150/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/images/'. $dealer_img .'" width="35" height="35" alt="Image">';
-                        $return .= '<span style="display: block; margin-top: 10px;">'. (!empty($dealer->companyName)? $dealer->companyName : $dealer->firstName . ' ' . $dealer->lastName). '</span>';
+                        $companyName = json_decode($dealer->companyName);
+                        if($companyName != NULL){
+                        	$coName = $companyName[0] . ' ' . $companyName[1];
+                        }else{
+                        	$coName = !empty($dealer->companyName)? $dealer->companyName : $dealer->firstName . ' ' . $dealer->lastName;
+                        }
+                        $return .= '<span style="display: block; margin-top: 10px;">'. $coName . '</span>';
                         $return .= '</a>';
                         $return .= '</li>';
                     }

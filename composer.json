@@ -16,7 +16,8 @@
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "alfredo-ramos/parsedown-extra-laravel": "~0.4",
         "intervention/image": "^2.3",
-        "tom-lingham/searchy" : "2.*"
+        "teamtnt/tntsearch": "0.6.*",
+        "stevebauman/translation": "^1.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

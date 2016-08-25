@@ -2,6 +2,7 @@
 
 namespace App;
 use Auth;
+use App\MyLibrary\Geoplugin;
 use DB;
 use App\Users;
 use App\Wishlists;
@@ -17,7 +18,9 @@ class PageCount extends Model
     public static function counting($id_slug,$a){
 	    try{
             DB::transaction(function () use ($id_slug,$a) {
-                //mahasiswa
+                $geoplugin = new Geoplugin();
+                $geoplugin->locate($_SERVER['REMOTE_ADDR']);
+
 				$visitor = (Auth::user())?'user':'guess';
 				$date = Carbon::now()->toDateString();
 
@@ -28,6 +31,7 @@ class PageCount extends Model
                 $input->user_id = $a;
                 $input->visitor = $visitor;
                 $input->ip = $_SERVER['REMOTE_ADDR'];
+                $input->country_id = $geoplugin->countryCode;
                 $input->save();
             });
         }catch(Exception $e){
@@ -60,9 +64,6 @@ class PageCount extends Model
             $pr_visitor='<span class="text-success"><i class="ti-arrow-up fs-13"></i> '.$pr_visitor.'%</span>';
         }
 
-
-
-
         $dt = Carbon::parse($datenow);
         $month = $dt->month;
         $year = $dt->year;
@@ -75,7 +76,6 @@ class PageCount extends Model
         //alogaritm for add null count
         $data['visitor_all'] = $all_visitor;
         $data['visitor_m'] = $visitor_monthly;
-        $data['pr_visitor'] = $pr_visitor;
         $data['total_product'] = DB::table('listings')->where('userId',Auth::user()->id)->count();
 
         
