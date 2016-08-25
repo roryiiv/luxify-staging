@@ -8,6 +8,8 @@ use App\Http\Requests;
 
 use App\Listings;
 
+use App\Meta;
+
 use App\Users;
 
 use App\FormGroups;
@@ -177,5 +179,38 @@ class DataFeed extends Controller
     } else {
       echo json_encode(['result' => 0, 'message' => 'No data exists in the database']); 
     }
+  }
+  public function updateMeta() {
+    $table = func::get_val('post', 'table');
+    $id = func::get_val('post', 'id');
+    $meta = func::get_val('post', 'meta');
+    
+    foreach ($meta  as $key => $value) {
+      if (!in_array($key, ['alt_text', 'author', 'description', 'keyword', 'title'])) {
+        echo json_encode(['result'=> 0, 'message' => '`' .$key . '` is an invalid meta_key.']);
+        exit();
+      }   
+    }
+
+    if ($table && $id && $meta) {
+      if ($table === 'listings') {
+        $listing = Listings::find($id);
+        if ($listing) {
+          Meta::saveorupdate($id, $meta, 'listings');
+        } else {
+          echo json_encode(['result' => 0, 'message' => 'Lisitng does not exists.']); 
+        }
+      } else if ($table === 'users') {
+        $user = Users::find($id);
+        if ($user) {
+          Meta::saveorupdate($id, $meta, 'users');
+        } else {
+          echo json_encode(['result' => 0, 'message' => 'Lisitng does not exists.']); 
+        }
+
+      }
+    } else {
+      echo json_encode(['result' => 0, 'message' => 'Please provide enough parameters.']); 
+    } 
   }
 }
