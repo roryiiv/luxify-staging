@@ -69,12 +69,10 @@ class DataFeed extends Controller
     if (!$table) {
       $table = 'listings';
     }
-    var_dump($join); exit();
 
-    //try {
     $q = DB::table($table);
     if($where) {
-      $q->where(function($query) use ($where, $limit, $order){
+      $q->where(function($query) use ($where, $limit, $order) {
         foreach ($where as $field => $w) {
           if ((isset($w['op']) && !empty($w['op'])) && (isset($w['val']) && !empty($w['val']))) {
             $query->where($field, $w['op'], $w['val'] );
@@ -101,19 +99,15 @@ class DataFeed extends Controller
           }
         } 
       }
-        $result = $q->get();
-        if ($result) {
-          echo json_encode(['result'=> 1, 'data' => $result]);
-        } else {
-          echo json_encode(['result'=> 1, 'data' => [] ]);
-        }
+      $result = $q->get();
+      if ($result) {
+        echo json_encode(['result'=> 1, 'data' => $result]);
+      } else {
+        echo json_encode(['result'=> 1, 'data' => [] ]);
+      }
     } else {
       echo json_encode(['result' => 0, 'message' => 'Please supply enough parameter or check the structure of your request']); 
     }
-
-  //    } catch(\Illuminate\Database\QueryException $e) {
-  //      var_dump($e); exit();
-  //    }
   }
 
   public function product_get($id) {
