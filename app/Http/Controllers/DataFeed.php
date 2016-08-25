@@ -205,6 +205,16 @@ class DataFeed extends Controller
       echo json_encode(['result' => 0, 'message' => 'No data exists in the database']); 
     }
   }
+  public function getNoMetaRecords() {
+    $table = func::getVal('post', 'table');
+    $limit = func::getVal('post', 'limit');
+    $records = DB::select("SELECT * FROM `${table}` WHERE `id` NOT IN (select `object_id` from `metas` where `object_type` = '${table}') limit ${limit}");
+    if ($records) {
+      echo json_encode(['result'=> 1, 'data' => $records]);  
+    } else {
+      echo json_encode(['result' => 0, 'message' => 'No records found without meta']); 
+    }
+  }
   public function updateMeta() {
     $table = func::getVal('post', 'table');
     $id = func::getVal('post', 'id');
