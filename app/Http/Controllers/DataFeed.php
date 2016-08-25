@@ -181,22 +181,24 @@ class DataFeed extends Controller
     }
   }
   public function updateMeta() {
-    $table = func::get_val('post', 'table');
-    $id = func::get_val('post', 'id');
-    $meta = func::get_val('post', 'meta');
+    $table = func::getVal('post', 'table');
+    $id = func::getVal('post', 'id');
+    $meta = func::getVal('post', 'meta');
     
-    foreach ($meta  as $key => $value) {
-      if (!in_array($key, ['alt_text', 'author', 'description', 'keyword', 'title'])) {
-        echo json_encode(['result'=> 0, 'message' => '`' .$key . '` is an invalid meta_key.']);
-        exit();
-      }   
-    }
-
     if ($table && $id && $meta) {
+      if ($table !== 'images') {
+        foreach ($meta  as $key => $value) {
+          if (!in_array($key, ['alt_text', 'author', 'description', 'keyword', 'title'])) {
+            echo json_encode(['result'=> 0, 'message' => '`' .$key . '` is an invalid meta_key.']);
+            exit();
+          }   
+        }
+      }
       if ($table === 'listings') {
         $listing = Listings::find($id);
         if ($listing) {
           Meta::saveorupdate($id, $meta, 'listings');
+          echo json_encode(['result' => 1]);
         } else {
           echo json_encode(['result' => 0, 'message' => 'Lisitng does not exists.']); 
         }
@@ -204,10 +206,16 @@ class DataFeed extends Controller
         $user = Users::find($id);
         if ($user) {
           Meta::saveorupdate($id, $meta, 'users');
+          echo json_encode(['result' => 1]);
         } else {
           echo json_encode(['result' => 0, 'message' => 'Lisitng does not exists.']); 
         }
-
+      } else if ($table === 'images') {
+        $allImage = $meta;
+        foreach($allImage as $key =>$img) {
+          Meta::saveorupdate($key, $img, 'images');
+        }
+        echo json_encode(['result' => 1]);
       }
     } else {
       echo json_encode(['result' => 0, 'message' => 'Please provide enough parameters.']); 

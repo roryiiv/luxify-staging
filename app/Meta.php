@@ -10,7 +10,10 @@ class Meta extends Model
 	protected $table = 'metas';
 	public $timestamps = false;
 
-  // `object_type`: ['listings', 'users', 'images']
+  // `object_type` (table): ['listings', 'users', 'images']
+  // `id` (id in table)
+  // meta[key] => value 
+  //  key: alt_text, author, description, keyword, title
 	public static function saveorupdate($id,$meta,$object_type){
 		foreach ($meta as $key => $value) {
 			$exist= Meta::where('object_id',$id)->where('meta_key',$key)->first();
