@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://www.luxify.com'),
+    'url' => env('APP_URL', 'http://www.luxify.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -153,6 +153,8 @@ return [
         Skovmand\Mailchimp\MailchimpServiceProvider::class,
         AlfredoRamos\ParsedownExtra\ParsedownExtraServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        TeamTNT\TNTSearch\TNTSearchServiceProvider::class,
+        Stevebauman\Translation\TranslationServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -211,16 +213,12 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'func' => App\MyLibrary\Functions::class,
+        'Geoplugin' => App\MyLibrary\Geoplugin::class,
         'schema' => App\MyLibrary\Schema::class,
         'Markdown'  => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
-        'Image' => Intervention\Image\Facades\Image::class
-
-    ],
-
-    //multiple language
-    'locales' => [
-        'en' => 'English',
-        'cn' => '简体中文'
+        'Image' => Intervention\Image\Facades\Image::class,
+        'TNTSearch' => TeamTNT\TNTSearch\Facades\TNTSearch::class,
+        'Translation' => Stevebauman\Translation\Facades\Translation::class,
     ],
 
 ];

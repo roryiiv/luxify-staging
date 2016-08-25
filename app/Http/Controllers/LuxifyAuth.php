@@ -176,8 +176,8 @@ class LuxifyAuth extends Controller
         $email = $request->input('email');
 
         $checkemail = DB::table('users')
-                   ->where('email', $email)
-                   ->count();
+		->where('email', $email)
+		->count();
         if($checkemail < 1){
             return redirect('/forget-password?error=3');
         }else{
@@ -185,7 +185,7 @@ class LuxifyAuth extends Controller
         	$token = str_random(32);
         	$date = date("Y-m-d H:m:s");
         	DB::table('reset_password')->insert(['username' => $email, 'token' => $token, 'reset_at' => $date]);
-        	Cache::put($token, 'resetToken', 3);
+        	Cache::put($token, 'resetToken', 120);
 
         	$details = array('to' => $email);
         	$this_url = url('/') . '/reset-password/' . $token;
