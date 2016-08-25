@@ -57,6 +57,7 @@ class DataFeed extends Controller
     }
   
   }
+
   public function product_search() {
     $where = func::getVal('post', 'where' );  
     $select = func::getVal('post', 'select');
@@ -68,7 +69,9 @@ class DataFeed extends Controller
     if (!$table) {
       $table = 'listings';
     }
+    var_dump($join); exit();
 
+    //try {
     $q = DB::table($table);
     if($where) {
       $q->where(function($query) use ($where, $limit, $order){
@@ -98,15 +101,19 @@ class DataFeed extends Controller
           }
         } 
       }
-      $result = $q->get();
-      if ($result) {
-        echo json_encode(['result'=> 1, 'data' => $result]);
-      } else {
-        echo json_encode(['result'=> 1, 'data' => [] ]);
-      }
+        $result = $q->get();
+        if ($result) {
+          echo json_encode(['result'=> 1, 'data' => $result]);
+        } else {
+          echo json_encode(['result'=> 1, 'data' => [] ]);
+        }
     } else {
       echo json_encode(['result' => 0, 'message' => 'Please supply enough parameter or check the structure of your request']); 
     }
+
+  //    } catch(\Illuminate\Database\QueryException $e) {
+  //      var_dump($e); exit();
+  //    }
   }
 
   public function product_get($id) {
