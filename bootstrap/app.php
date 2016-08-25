@@ -1,5 +1,8 @@
 <?php
 
+//require '';
+require (realpath(__DIR__ . '/../../presskit/wp-load.php'));
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application

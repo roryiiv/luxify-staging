@@ -194,3 +194,6 @@ Route::get('/download-image/{image}', 'Panel@downloadImage');
 
 // Route::auth();
 Route::get('/home', 'HomeController@index');
+Route::get('/press', function() {
+  return view('about');
+});
