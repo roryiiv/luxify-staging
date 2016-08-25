@@ -60,9 +60,17 @@ class DataFeed extends Controller
   public function product_search() {
     $where = func::getVal('post', 'where' );  
     $select = func::getVal('post', 'select');
-    $q = DB::table('listings');
+    $limit = func::getVal('post', 'limit');
+    $order = func::getVal('post', 'order');
+    $table = func::getVal('post', 'table');
+
+    if (!$table) {
+      $table = 'listings';
+    }
+
+    $q = DB::table($table);
     if($where) {
-      $q->where(function($query) use ($where){
+      $q->where(function($query) use ($where, $limit, $order){
         foreach ($where as $field => $w) {
           if ((isset($w['op']) && !empty($w['op'])) && (isset($w['val']) && !empty($w['val']))) {
             $query->where($field, $w['op'], $w['val'] );
@@ -70,9 +78,12 @@ class DataFeed extends Controller
         }
       });
       if ($select && is_array($select)) {
-        foreach($select  as $s) {
+        foreach($select as $s) {
            $q->addSelect($s);
         }
+      }
+      if ($limit & intval($limit) !== 0) {
+        $q->take(intval($limit));
       }
       $result = $q->get();
       if ($result) {
