@@ -314,7 +314,6 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
         });
         $('#login_btn').click(function(event){
             event.preventDefault();
-            console.log('stop the default action first');
 
             var email = $('input#email').val(), pass = $('input#password').val();
             var token = $('input[name=_token]').val();
