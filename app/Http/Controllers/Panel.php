@@ -179,6 +179,68 @@ class Panel extends Controller
         return view('panel.users', ['users' => $users, 'filters' => $filters]);
     }
 
+    public function categories(){
+
+        $perpage = 10;
+        if(isset($_GET['view-perpage']) && !empty($_GET['view-perpage'])){
+            $perpage = $_GET['view-perpage'];
+            if($perpage == -1){
+                $categories = DB::table('category_2')
+                ->get();
+            }else{
+                $categories = DB::table('category_2')
+                ->paginate($perpage);
+            }
+        }else{
+            $categories = DB::table('category_2')->paginate($perpage);
+        }
+
+       //$categories = DB::table('category_2')->get();
+        return view('panel.category-list', ['categories' => $categories]);
+    }
+
+    public function  categories_add(){
+        return view('panel.add-category');
+    }
+
+    public function category_add() {
+
+        $newCategories = DB::table('category_2')->insert([
+            'name' => $_POST['txtNameCategory'],
+            'slug' => $_POST['txtSlugCategory'],
+            'label' => $_POST['txtLabelCategory'],
+            'description' => $_POST['txtDescription'],
+            'parent' => $_POST['parent']
+            ]);
+
+        return redirect('/panel/categories');
+        
+        }
+
+    public function category_delete($id){
+        DB::table('category_2')->where('id',$id)->delete();
+        return redirect('/panel/categories');
+    }
+
+    public function category_edit($id){
+        $category = DB::table('category_2')->where('id',$id)->first();
+        
+        return view('panel.category-edit',['category' => $category]);
+    }
+
+    public function category_update(){
+
+        $categories = DB::table('category_2')->where('id',$_POST['id'])->update([
+            'name' => $_POST['txtNameCategory'],
+            'slug' => $_POST['txtSlugCategory'],
+            'label' => $_POST['txtLabelCategory'],
+            'description' => $_POST['txtDescription'],
+            'parent' => $_POST['parent']
+            ]);
+
+        return redirect('/panel/categories');
+    }
+
     public function user_add($role) {
         if($this->user_role == 'admin'){
             return view('panel.add-user', ['role' => $role]);
@@ -453,12 +515,7 @@ class Panel extends Controller
             }
         }
 
-        if(isset($_POST['latitude']) && !empty($_POST['latitude'])){
-            $item->latitude = $_POST['latitude'];
-        }
-        if(isset($_POST['longitude']) && !empty($_POST['longitude'])){
-            $item->longitude = $_POST['longitude'];
-        }
+        
 
         if (isset($_POST['buyNowURL']) && !empty($_POST['buyNowURL'])) {
             $item->buyNowUrl = $_POST['buyNowURL'];
@@ -603,6 +660,9 @@ class Panel extends Controller
         if(isset($_POST['txtUserRole']) && !empty($_POST['txtUserRole'])){
             $user->role = $_POST['txtUserRole'];
         }
+        if(isset($_POST['txtEmailAddress']) && !empty($_POST['txtEmailAddress'])){
+            $user->email = $_POST['txtEmailAddress'];
+        }
         if(isset($_POST['country']) && !empty($_POST['country'])){
             $user->countryId = $_POST['country'];
         }
@@ -727,7 +787,7 @@ class Panel extends Controller
             $object_type = 'users';
             $savemeta = Meta::saveorupdate($_POST['user_id'],$meta,$object_type);
             //if($user->save()) return redirect('/panel/user');
-            if($user->save()) return redirect('/panel/user/edit/'.$_POST['user_id']);
+            if($user->save()) return redirect('/panel/user/edit/'.$_POST['user_id'].'?update=success');
         }
     }
 

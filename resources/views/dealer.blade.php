@@ -96,7 +96,7 @@
                 </div>
                 <div class="button-wrap">
                     <input type="hidden" name="_ref" value="/dealer/{{$dealer->id}}" />
-                    <a class="btn btn-default" href="/search?search=&user_id={{$dealer->id}}"><span class="glyphicon glyphicon-th-large"></span> @lang('home.dealer_viewlistings')</a>
+                    <a class="btn btn-default" href="/listings/{{$dealer->slug}}"><span class="glyphicon glyphicon-th-large"></span> @lang('home.dealer_viewlistings')</a>
                     <!--<a href="/dealer/contact/{{ $dealer->id }}/0" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>-->
                   <a href="#" data-toggle="modal" data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> @lang('home.dealer_contactDealer')</a>
               </div>

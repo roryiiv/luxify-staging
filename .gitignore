@@ -22,3 +22,4 @@ temp.txt
 .DS_Store
 config/services.php
 /app/Providers/AppServiceProvider.php
+/storage/*
