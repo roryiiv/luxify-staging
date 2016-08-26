@@ -19,18 +19,7 @@ if($getPostName!=''){
     $getPostID = (isset($_GET['release']) && intval($_GET['release']))?intval($_GET['release']):'';
 }
 
-$newsLogoImgArr = array(
-        'BBC'               => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-bbc-news.png',
-        'CBNC'              => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-cbc.png',
-        'Techinasia'        => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-techinasia.png',
-        'China Daily'       => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-chinadaily.png',
-        'WealthX'           => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-wealthx.png',
-        'Japanese Times'    => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-japanese-times.png',
-        'Yahoo Finance'     => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-yahoo-news.png',
-        'Forbes'            => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-forbes.png',
-        'Boomarang'         => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-bloomberg.png',
-        'Daily Mail'        => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-daily-mail.png',
-);
+
 
 ?>
 @section('title')
