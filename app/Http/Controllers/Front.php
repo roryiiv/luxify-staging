@@ -52,9 +52,21 @@ class Front extends Controller {
         return view('index');
     }
 
-    public function products() {
-        $listings = DB::table('listings')->orderBy('created_at', 'desc')->paginate(16);
-        return view('listings', ['listings' => $listings]);
+    public function products($id) {
+    	$dealer = DB::table('users')
+    	->where('slug', $id)
+    	->leftJoin('countries', 'countries.id', '=', 'users.countryId')
+        ->select('users.*', 'countries.name as country')
+    	->first();
+
+        $listings = DB::table('listings')
+        ->where('userId', $dealer->id)
+        ->where('status', 'APPROVED')
+        ->join('countries', 'countries.id', '=', 'listings.countryId')
+        ->select('listings.*', 'countries.name as country')
+        ->orderBy('created_at', 'desc')
+        ->paginate(30);
+        return view('listings', ['listings' => $listings, 'dealer' => $dealer]);
     }
 
     public function product_details($slug) {

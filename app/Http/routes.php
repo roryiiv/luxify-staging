@@ -25,15 +25,15 @@ Route::get('/contact', function(){
     return view('contact');
 });
 Route::get('/luxify-estates', function(){
-   $listings = Listings::where('status', 'APPROVED') 
-     ->whereNotNull('aerialLook3DUrl')
-     ->leftJoin('users', 'listings.userId', '=', 'users.id')
-     ->join('countries', 'countries.id', '=', 'listings.countryId')
-     ->select('listings.slug', 'listings.mainImageUrl', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'users.fullName')
-     ->orderby('listings.created_at', 'desc')
-     ->limit(10)
-     ->get();
-    return view('estates', ['mores'=>$listings]);
+   	$listings = Listings::where('status', 'APPROVED') 
+ 	->whereNotNull('aerialLook3DUrl')
+ 	->leftJoin('users', 'listings.userId', '=', 'users.id')
+ 	->join('countries', 'countries.id', '=', 'listings.countryId')
+ 	->select('listings.slug', 'listings.mainImageUrl', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'users.fullName')
+ 	->orderby('listings.created_at', 'desc')
+ 	->limit(10)
+ 	->get();
+	return view('estates', ['mores'=>$listings]);
 });
 Route::get('/terms', function(){
     return view('terms');
@@ -88,7 +88,7 @@ Route::post('/reset-password','LuxifyAuth@resetPassword');
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 
 //Front end Routes
-Route::get('/listings','Front@products');
+Route::get('/listings/{id}','Front@products');
 Route::get('/listing/{id}','Front@product_details');
 Route::get('/categories','Front@categories');
 Route::get('/luxify-estates/3d-estates','Front@product_3d_estates');
