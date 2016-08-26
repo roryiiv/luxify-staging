@@ -1438,7 +1438,7 @@ class Front extends Controller {
           $orWhere_arr[] = ['description','like','%'.$key.'%'];
         }*/
 
-        if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])){
+        if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])) {
             $search_arr[] = ['userId', $_REQUEST['user_id']];
         }
         // $search_arr[] = ['status', 'APPROVED'];
@@ -1661,7 +1661,8 @@ class Front extends Controller {
             }
         }
 
-        // var_dump($search_arr); exit;
+        var_dump($search_arr); exit;
+
 
         if(isset($cat_ids)){
             if(isset($filtered_listing)){

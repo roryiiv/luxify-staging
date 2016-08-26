@@ -13,6 +13,7 @@
 
 use App\Listings;
 
+
 Route::get('/buildHashedId', 'Front@updateHashed');
 //static front pages
 Route::get('/', function(){

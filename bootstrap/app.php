@@ -1,7 +1,9 @@
 <?php
 
 //require '';
-require (realpath(__DIR__ . '/../../presskit/wp-load.php'));
+if (file_exists(realpath(__DIR__ . '/../../presskit/wp-load.php'))){
+  require (realpath(__DIR__ . '/../../presskit/wp-load.php'));
+}
 
 /*
 |--------------------------------------------------------------------------
