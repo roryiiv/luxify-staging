@@ -18,6 +18,9 @@ Route::get('/buildHashedId', 'Front@updateHashed');
 Route::get('/', function(){
     return View::make('index');
 });
+Route::get('press', function() {
+  return view('press_page.presskit_main');
+});
 Route::get('/about', function(){
     return view('about');
 });
