@@ -73,12 +73,11 @@ class Analytics extends Model
         }
 
         $flot_chart['data'] = json_encode(array_reverse($data),JSON_HEX_APOS);
-
-        $flot_chart['itempervisit'] = $flot_chart['total']/(DB::table('listings')->where('userId',$user_id)->count());
-
+        $divide = (DB::table('listings')->where('userId',$user_id)->count()==0)?1:DB::table('listings')->where('userId',$user_id)->count();
+        $flot_chart['itempervisit'] = $flot_chart['total']/$divide;
         return json_encode($flot_chart,JSON_HEX_APOS);
     }    
-        public static function get_flot_first($year,$user_id){
+    public static function get_flot_first($year,$user_id){
     	$flot_chart = array();
     	$flot_chart['status']=true;
         $month = array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
@@ -103,8 +102,76 @@ class Analytics extends Model
             $data[] =array($i , $counting);
         }
         $flot_chart['data'] = json_encode($data,JSON_HEX_APOS);
-        $flot_chart['itempervisit'] = $flot_chart['total']/(DB::table('listings')->where('userId',$user_id)->count());
+        $divide = (DB::table('listings')->where('userId',$user_id)->count()==0)?1:DB::table('listings')->where('userId',$user_id)->count();
+        $flot_chart['itempervisit'] = $flot_chart['total']/$divide;
 
         return json_encode($flot_chart,JSON_HEX_APOS);
+    }
+    public static function get_top_three($user_id){
+        $data = DB::table('analytics')
+                     ->select(DB::raw('count(*) as count, listing_id'))
+                     ->where('user_id',$user_id)
+                     ->groupBy('listing_id')
+                     ->orderBy('count','desc')
+                     ->take(3)
+                     ->get();
+        return $data;
+    }
+    public static function get_top_three_country($user_id){
+        $data = DB::table('analytics')
+                     ->select(DB::raw('count(*) as count, country_id'))
+                     ->where('user_id',$user_id)
+                     ->groupBy('country_id')
+                     ->orderBy('count','desc')
+                     ->take(3)
+                     ->get();
+        return $data;
+    }
+    public static function get_date_count($user_id){
+        $year_now = Carbon::now()->year;
+
+        $first_date = Analytics::where('visited_at','<=',Carbon::parse($year_now.'-12-31')->toDateString())
+                    ->where('visited_at','>=',Carbon::parse($year_now.'-01-01')->toDateString())
+                    ->where('user_id',$user_id)
+                    ->orderBy('visited_at','asc')
+                    ->select('visited_at')
+                    ->first();
+
+        $last_date = Analytics::where('visited_at','<=',Carbon::parse($year_now.'-12-31')->toDateString())
+                    ->where('visited_at','>=',Carbon::parse($year_now.'-01-01')->toDateString())
+                    ->where('user_id',$user_id)
+                    ->orderBy('visited_at','desc')
+                    ->select('visited_at')
+                    ->first();
+        if(count($last_date)>0 && count($first_date)>0 ){
+            $fd = strtotime($first_date->visited_at);
+            $ld = strtotime($last_date->visited_at);
+            $nfd = date('Y-m-d',$fd);
+            $nld = date('Y-m-d',$ld);
+            $data = Carbon::parse($nfd)->format('M d, Y').' - '.Carbon::parse($nld)->format('M d, Y');
+        }else{
+            $data='';
+        }
+        return $data;
+    }
+    public static function get_prvisitor($user_id){
+        $year_now = Carbon::now()->year;
+        $year_ago = Carbon::now()->subYears(1)->year;
+
+        $data_now = Analytics::where('visited_at','<=',Carbon::parse($year_now.'-12-31')->toDateString())
+        ->where('visited_at','>=',Carbon::parse($year_now.'-01-01')->toDateString())
+        ->where('user_id',$user_id)
+        ->count();
+        $data_ago = Analytics::where('visited_at','<=',Carbon::parse($year_ago.'-12-31')->toDateString())
+        ->where('visited_at','>=',Carbon::parse($year_ago.'-01-01')->toDateString())
+        ->where('user_id',$user_id)
+        ->count();
+        $pr = ($data_now-$data_ago)/(($data_now>0)?$data_now:1) *100;
+        if($data_ago>$data_now){
+            $pr_visitor='<span class="text-danger"><i class="ti-arrow-down fs-13"></i> '.$pr.'%</span>';
+        }else{
+            $pr_visitor='<span class="text-success"><i class="ti-arrow-up fs-13"></i> '.$pr.'%</span>';
+        }
+        return $pr_visitor;
     }
 }

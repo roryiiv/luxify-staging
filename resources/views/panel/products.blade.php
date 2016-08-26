@@ -412,7 +412,7 @@
                                                  @endif
                                                     {{-- <td class="text-right">320</td> --}}
                                                     @if(Auth::user()->role == 'admin')
-                                                    <td class="text-center">
+                                                    <td class="text-center" style="width: 20%;">
                                                        @if ($products[$i]->status == 'APROVED')
                                                          <div role="group" aria-label="soldExpiredButton" class="btn-group btn-group-sm">
                                                             <button onclick="changeListingStatus(this, {{$products[$i]->id}}, 'SOLD')" class="btn btn-outline btn-primary">SOLD</button>
@@ -430,7 +430,7 @@
                                                        @endif
                                                     </td>
                                                     @endif
-                                                    <td class="text-center">
+                                                    <td class="text-center" style="width: 17%;">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
                                                             <a target='_blank' href="/listing/{{ $products[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
                                                             <a href="/panel/product/edit/{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>

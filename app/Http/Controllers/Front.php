@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+Use App;
+
 Use Mail;
 
 use App\Categories;
@@ -38,6 +40,10 @@ use App\Language;
 
 Use Cache;
 
+use TNTSearch;
+
+use Stevebauman\Translation\Facades\Translation;
+
 class Front extends Controller {
     //Front end Controller
     public function index() {
@@ -46,9 +52,21 @@ class Front extends Controller {
         return view('index');
     }
 
-    public function products() {
-        $listings = DB::table('listings')->orderBy('created_at', 'desc')->paginate(16);
-        return view('listings', ['listings' => $listings]);
+    public function products($id) {
+    	$dealer = DB::table('users')
+    	->where('slug', $id)
+    	->leftJoin('countries', 'countries.id', '=', 'users.countryId')
+        ->select('users.*', 'countries.name as country')
+    	->first();
+
+        $listings = DB::table('listings')
+        ->where('userId', $dealer->id)
+        ->where('status', 'APPROVED')
+        ->join('countries', 'countries.id', '=', 'listings.countryId')
+        ->select('listings.*', 'countries.name as country')
+        ->orderBy('created_at', 'desc')
+        ->paginate(30);
+        return view('listings', ['listings' => $listings, 'dealer' => $dealer]);
     }
 
     public function product_details($slug) {
@@ -177,6 +195,10 @@ class Front extends Controller {
                 }
             }
             $meta->keyword = Meta::get_data_listing($listing->id,'keyword');
+
+            // translation 
+            $listing->description = Translation::translate($listing->description,[], App::getLocale());
+            $listing->title = Translation::translate($listing->title,[], App::getLocale());
 
           return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
         }
@@ -774,6 +796,11 @@ class Front extends Controller {
 
 		    return view('auth.reset-password', ['reset_arr' => $reset_arr]); 
     	}else{
+    		// we need to set the key to expired first here
+    		DB::table('reset_password')
+			->where('token', $token)
+			->update(['status' => 'EXPIRED']);
+			
     		$reset_arr = NULL;
     		return view('auth.reset-password', ['reset_arr' => $reset_arr]); 
     	}
@@ -1408,21 +1435,27 @@ class Front extends Controller {
 
         $search = \Request::get('search');
         $search = urldecode($search);
+        TNTSearch::selectIndex("luxify.index");
+        $index_list = TNTSearch::searchBoolean($search, 1000);
+        $indexed_ids = $index_list['ids'];
+        // var_dump($indexed_ids); exit;
         
         $search_arr = array();
+        /*$orWhere_arr = array();
         // break the searching string by 'space'
         $search_keywords = explode(' ', $search);
         foreach($search_keywords as $key) {
           $search_arr[] = ['title','like','%'.$key.'%'];
           //$search_arr[] = ['description','like','%'.$search.'%'];
-        }
+          $orWhere_arr[] = ['description','like','%'.$key.'%'];
+        }*/
 
         if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])){
             $search_arr[] = ['userId', $_REQUEST['user_id']];
         }
         // $search_arr[] = ['status', 'APPROVED'];
 
-        $orderby = 'created_at';
+        $orderby = 'price';
         $order = 'desc';
         $filters = array();
 
@@ -1443,7 +1476,7 @@ class Front extends Controller {
             }
 
             // var_dump($price_range); exit;
-            if(isset($_filter['category']) && $_filter['category'] != 'Category'){
+            if(isset($_filter['category']) && $_filter['category'] !== 'Category'){
                 unset($cat_ids);
                 $cat_ids = array();
                 if(isset($_filter['sub_category']) && !empty($_filter['sub_category'])){
@@ -1601,11 +1634,8 @@ class Front extends Controller {
                 $filters['use_price'] = 'on';
 
                 $price_lists = DB::table('listings')
-                ->where('status', 'APPROVED')
-                // ->whereIn('categoryId', $cat_ids)
+                ->whereIn('listings.id', $indexed_ids)
                 ->where($search_arr)
-                ->join('countries', 'countries.id', '=', 'listings.countryId')
-                ->select('listings.*', 'countries.name as country')
                 ->get();
 
                 // var_dump($price_lists); exit;
@@ -1643,7 +1673,7 @@ class Front extends Controller {
             }
         }
 
-        // var_dump($search_arr);
+        // var_dump($search_arr); exit;
 
         if(isset($cat_ids)){
             if(isset($filtered_listing)){
@@ -1671,6 +1701,7 @@ class Front extends Controller {
             if(isset($filtered_listing)){
                 // var_dump($filtered_listing); exit;
                 $listings = DB::table('listings')
+                ->whereIn('listings.id', $indexed_ids)
                 ->where('status', 'APPROVED')
                 ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
@@ -1680,6 +1711,7 @@ class Front extends Controller {
                 ->paginate(51);
             }else{
                 $listings = DB::table('listings')
+                ->whereIn('listings.id', $indexed_ids)
                 ->where('status', 'APPROVED')
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
@@ -1727,11 +1759,16 @@ class Front extends Controller {
                     }
                 }
 
-                $listings = Listings::where('status', 'APPROVED')
-//                ->where('title','like','%'.$search.'%')
-                  ->where(function($query) use ($search_keywords) {
+                TNTSearch::selectIndex("luxify.index");
+                $index_list = TNTSearch::searchBoolean($search, 1000);
+                $indexed_ids = $index_list['ids'];
+
+                /*$listings = Listings::where('status', 'APPROVED')
+                ->where('title','like','%'.$search.'%')
+                ->where(function($query) use ($search_keywords) {
                     foreach($search_keywords as $key) {
-                      $query->where('title', 'like', '%'. $key .'%'); 
+                      $query->where('title', 'like', '%'. $key .'%');
+                      $query->orWhere('description', 'like', '%'. $key .'%'); 
                     }
                   })
                   ->orWhere($search_arr)
@@ -1739,7 +1776,12 @@ class Front extends Controller {
                   // ->groupBy('categoryId')
                   // ->having('id', '>', 0)
                   // ->skip(0)
-                  ->paginate(10);
+                  ->paginate(10);*/
+            	$listings = Listings::whereIn('id', $indexed_ids)
+                ->where('status', 'APPROVED')
+                ->orWhere($search_arr)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
 
                 $cats = array();
                 $dealers = array();
@@ -1788,7 +1830,13 @@ class Front extends Controller {
                         $return .= '<a href="/dealer/'.$dealer->id.'/'.$slug.'" title="'.(!empty($dealer->companyName)? $dealer->companyName : $dealer->fullName).'">';
                         $dealer_img = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png';
                         $return .= '<img src="https://images.luxify.com/150/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/images/'. $dealer_img .'" width="35" height="35" alt="Image">';
-                        $return .= '<span style="display: block; margin-top: 10px;">'. (!empty($dealer->companyName)? $dealer->companyName : $dealer->firstName . ' ' . $dealer->lastName). '</span>';
+                        $companyName = json_decode($dealer->companyName);
+                        if($companyName != NULL){
+                        	$coName = $companyName[0] . ' ' . $companyName[1];
+                        }else{
+                        	$coName = !empty($dealer->companyName)? $dealer->companyName : $dealer->firstName . ' ' . $dealer->lastName;
+                        }
+                        $return .= '<span style="display: block; margin-top: 10px;">'. $coName . '</span>';
                         $return .= '</a>';
                         $return .= '</li>';
                     }
