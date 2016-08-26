@@ -228,19 +228,22 @@
                                         <thead>
                                         </thead>
                                         <tbody>
+
                                         @foreach($infos as $key => $info)
                                             @if(isset($info->label))
-                                              <tr>
-                                                  <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ _t($info->label, [], App::getLocale()) }}</th>
-                                                  <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
-                                              </tr>
-				                                    @else
-				                                      @if(gettype($info) !== 'object') 
+                                              @if(gettype($info->label) === 'string' && gettype($info->value) === 'string')
+                                                <tr>
+                                                    <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ _t($info->label, [], App::getLocale()) }}</th>
+                                                    <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
+                                                </tr>
+                                              @endif
+                                            @else
+                                              @if(gettype($info) === 'string')
                                                 <tr>
                                                     <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{$key}}</th>
                                                     <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info}}</td>
                                                 </tr>
-				                                      @endif
+                                              @endif
                                             @endif
                                         @endforeach
                                         </tbody>
