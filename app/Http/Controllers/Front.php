@@ -131,6 +131,11 @@ class Front extends Controller {
             ->where('extrainfos.listingId', $listing->id)
             ->select('forms.name', 'formfields.label', 'extrainfos.value')
             ->get();
+            if (!$infos) {
+              if($listing->additionalInfo) {
+                $infos = json_decode($listing->additionalInfo);
+              }
+            }
 
 
             $relates = DB::table('listings')
