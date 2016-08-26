@@ -208,7 +208,16 @@ class DataFeed extends Controller
   public function getNoMetaRecords() {
     $table = func::getVal('post', 'table');
     $limit = func::getVal('post', 'limit');
-    $records = DB::select("SELECT * FROM `${table}` WHERE `id` NOT IN (select `object_id` from `metas` where `object_type` = '${table}') limit ${limit}");
+    $records = null;
+    switch($table) {
+      case 'listings':
+        $records = DB::select("SELECT * FROM `${table}` WHERE `id` NOT IN (select distinct `object_id` from `metas` where `object_type` = '${table}') AND status = 'APPROVED' ORDER BY id DESC limit ${limit}");
+      break;
+      case 'users':
+        $records = DB::select("SELECT * FROM `${table}` WHERE `id` NOT IN (select distinct `object_id` from `metas` where `object_type` = '${table}') AND role = 'seller' AND companySummary IS NOT NULL AND dealer_status = 'approved' ORDER BY id DESC limit ${limit}");
+      break;
+    }
+
     if ($records) {
       echo json_encode(['result'=> 1, 'data' => $records]);  
     } else {
