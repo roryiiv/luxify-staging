@@ -79,7 +79,7 @@ global $post;
     </div>
 </div>
 <!-- press Press coverage -->
-<div class="press-block full-line-block">
+<div class="press-block ">
     <div class="container press-coverage">
         <div class="row">
             <div class="col-lg-12 title">Press Coverage</div>
@@ -120,7 +120,9 @@ global $post;
         </div>
     </div>
 </div>
+
 <!-- press Brand assets -->
+<!--
 <div class="press-block background-white">
     <div class="container press-assets">
         <div class="row">
@@ -130,7 +132,6 @@ global $post;
                 <br/><br/>
                 On Luxify you will discover one of the Internet's largest collections of luxury products. Our website is the perfect place to discover, search and browse through a whole host of the very finest luxury goods.
                 <div class="press-link"><a href="assets/download/LuxifyMediaKit.zip">Download</a></div>
-                <!--
                 <?php
                     $my_query = new WP_Query('category_name=brand-assets');
                     global $post;
@@ -158,8 +159,8 @@ global $post;
                     </div>
                 </div>
                 <?php wp_reset_postdata(); endwhile; ?>
-                -->
             </div>
         </div>
     </div>
 </div>
+-->

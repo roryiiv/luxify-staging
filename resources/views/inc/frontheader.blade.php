@@ -38,6 +38,7 @@
                             <ul>
                                 <li><a href="/about">@lang('header.more_aboutLuxify')</a></li>
                                 <li><a href="/pricing">@lang('header.more_pricing')</a></li>
+                                <li><a href="/press">@lang('footer.press')</a></li>
                                 <li><a href="/dealer-application">@lang('header.more_dealerApplication')</a></li>
                                 <li><a href="/luxify-estates">@lang('header.more_luxifyEstates')</a></li>
                                 <li><a href="/contact">@lang('header.more_contactUs')</a></li>
