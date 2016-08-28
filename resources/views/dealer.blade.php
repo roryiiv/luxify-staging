@@ -1,3 +1,4 @@
+@inject('s_meta', 'App\Meta')
 @extends('layouts.front')
 
 @section('title')
@@ -158,7 +159,7 @@
                   <?php $logo = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                   <div class="col-md-5 col-sm-offset-1 dealer_box">
                       <div class="col-md-12" style="margin-bottom: 35px;">
-                        <img style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}" alt="image_link">
+                        <img style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}"  title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}">
                       </div>
                       <div class="col-md-12">
                         @if(isset($dealer->country) && !empty($dealer->country))
@@ -305,8 +306,8 @@
                    <div class="col-md-4 col-sm-6">
                      <div class="thumbnail">
                         <a href="/listing/{{ $item->slug }}">
-                        <div class='product-img-container'>
-                          <img class='product-img' src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}" alt="{{ $item->title }}">
+                        <div class='product-img-container>
+                          <img class='product-img' src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}">
                               @if(Auth::user())
                                 <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
                                 <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
@@ -328,7 +329,7 @@
                           <span class="country">{{$item->country}}</span>
                         </div>
                         <div class="item-logo">
-                          <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}" alt="image description">
+                          <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}">
                         </div>
                        </div>
                      </div>
