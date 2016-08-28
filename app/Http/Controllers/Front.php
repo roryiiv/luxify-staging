@@ -1673,9 +1673,6 @@ class Front extends Controller {
             }
         }
 
-        var_dump($search_arr); exit;
-
-
         if(isset($cat_ids)){
             if(isset($filtered_listing)){
                 // var_dump($filtered_listing); exit;
