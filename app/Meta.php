@@ -60,20 +60,21 @@ class Meta extends Model
 		$data= Meta::where('object_type','listings')
 		->where('object_id',$itemId)
 		->where('meta_key',$key)
-		->value('meta_value');
+    ->value('meta_value'); 
 		return ($data)?$data:'';
 	}
 	public static function get_data_user($userId,$key){
 		$data= Meta::where('object_type','users')
 		->where('object_id',$userId)
 		->where('meta_key',$key)
-		->value('meta_value');
+    ->value('meta_value'); 
 		return ($data)?$data:'';
 	}
 	public static function get_slug_img($img){
 		$data= Meta::where('object_type','images')
 		->where('object_id',$img)
-		->value('meta_value');
-		return ($data)?$data:'';	
+    ->select('meta_value')
+    ->first();
+		return ($data)?$data['meta_value']:'';	
 	}
 }
