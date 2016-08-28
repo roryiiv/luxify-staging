@@ -3,7 +3,7 @@
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('title')
-  <title>{{trim(preg_replace('/\s\s+/', ' ', $meta->title))}} - Luxify</title>
+  <title>{{trim(preg_replace('/\s\s+/', ' ', $meta->title))}}</title>
 @endsection
 
 @section('meta')
@@ -96,14 +96,14 @@
                             <li>
                                 <div class="first-image" style="text-align:center">
                                     <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                                        <img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                                        <img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" alt_text="{{ $s_meta->get_slug_img($image) }}" />
                                     </a>
                                     </div>
                             </li>
                         @else
                             <li>
                                 <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                                    <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                                    <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" alt_text="{{ $s_meta->get_slug_img($image) }}"/>
                                 </a>
                             </li>
                         @endif

@@ -69,12 +69,10 @@ class DataFeed extends Controller
     if (!$table) {
       $table = 'listings';
     }
-    var_dump($join); exit();
 
-    //try {
     $q = DB::table($table);
     if($where) {
-      $q->where(function($query) use ($where, $limit, $order){
+      $q->where(function($query) use ($where, $limit, $order) {
         foreach ($where as $field => $w) {
           if ((isset($w['op']) && !empty($w['op'])) && (isset($w['val']) && !empty($w['val']))) {
             $query->where($field, $w['op'], $w['val'] );
@@ -101,19 +99,15 @@ class DataFeed extends Controller
           }
         } 
       }
-        $result = $q->get();
-        if ($result) {
-          echo json_encode(['result'=> 1, 'data' => $result]);
-        } else {
-          echo json_encode(['result'=> 1, 'data' => [] ]);
-        }
+      $result = $q->get();
+      if ($result) {
+        echo json_encode(['result'=> 1, 'data' => $result]);
+      } else {
+        echo json_encode(['result'=> 1, 'data' => [] ]);
+      }
     } else {
       echo json_encode(['result' => 0, 'message' => 'Please supply enough parameter or check the structure of your request']); 
     }
-
-  //    } catch(\Illuminate\Database\QueryException $e) {
-  //      var_dump($e); exit();
-  //    }
   }
 
   public function product_get($id) {
@@ -211,40 +205,57 @@ class DataFeed extends Controller
       echo json_encode(['result' => 0, 'message' => 'No data exists in the database']); 
     }
   }
-  public function updateMeta() {
+  public function getNoMetaRecords() {
     $table = func::getVal('post', 'table');
-    $id = func::getVal('post', 'id');
-    $meta = func::getVal('post', 'meta');
-    
-    if ($table && $id && $meta) {
-      if ($table !== 'images') {
-        foreach ($meta  as $key => $value) {
-          if (!in_array($key, ['alt_text', 'author', 'description', 'keyword', 'title'])) {
-            echo json_encode(['result'=> 0, 'message' => '`' .$key . '` is an invalid meta_key.']);
+    $limit = func::getVal('post', 'limit');
+    $records = null;
+    switch($table) {
+      case 'listings':
+        $records = DB::select("SELECT ${table}.slug, ${table}.id, ${table}.title, ${table}.description, ${table}.mainImageUrl, ${table}.images, `users`.companyName, `users`.firstName, `users`.lastName FROM `${table}` JOIN `users` ON `${table}`.userId = `users`.id WHERE ${table}.`id` NOT IN (select distinct `object_id` from `metas` where `object_type` = '${table}') AND status = 'APPROVED' ORDER BY id DESC limit ${limit}");
+      break;
+      case 'users':
+        $records = DB::select("SELECT id, slug, companySummary, companyName, firstName, lastName, companyLogoUrl, coverImageUrl FROM `${table}` WHERE `id` NOT IN (select distinct `object_id` from `metas` where `object_type` = '${table}') AND role = 'seller' AND companySummary IS NOT NULL AND dealer_status = 'approved' ORDER BY id DESC limit ${limit}");
+      break;
+    }
+
+    if ($records) {
+      echo json_encode(['result'=> 1, 'data' => $records]);  
+    } else {
+      echo json_encode(['result' => 0, 'message' => 'No records found without meta']); 
+    }
+  }
+  public function updateMeta() {
+    $metas = func::getVal('post', 'metas');
+
+    if ($metas && is_array($metas)) {
+      foreach($metas as $meta)  {
+        if ($meta['object_type'] !== 'images') {
+          foreach ($meta['meta'] as $meta_key => $meta_value) {
+            if (!in_array($meta_key, ['alt_text', 'author', 'description', 'keyword', 'title'])) {
+              echo json_encode(['result'=> 0, 'message' => '`' .$key . '` is an invalid meta_key.']);
+              exit();
+            }   
+          }
+        } 
+      
+        if ($meta['object_type'] === 'listings') {
+          $listing = Listings::find($meta['object_id']);
+          if ($listing) {
+            Meta::saveorupdate($meta['object_id'], $meta['meta'] , 'listings');
+          } else {
+            echo json_encode(['result' => 0, 'message' => 'Lisitng does not exists.']); 
             exit();
-          }   
-        }
-      }
-      if ($table === 'listings') {
-        $listing = Listings::find($id);
-        if ($listing) {
-          Meta::saveorupdate($id, $meta, 'listings');
-          echo json_encode(['result' => 1]);
-        } else {
-          echo json_encode(['result' => 0, 'message' => 'Lisitng does not exists.']); 
-        }
-      } else if ($table === 'users') {
-        $user = Users::find($id);
-        if ($user) {
-          Meta::saveorupdate($id, $meta, 'users');
-          echo json_encode(['result' => 1]);
-        } else {
-          echo json_encode(['result' => 0, 'message' => 'Lisitng does not exists.']); 
-        }
-      } else if ($table === 'images') {
-        $allImage = $meta;
-        foreach($allImage as $key =>$img) {
-          Meta::saveorupdate($key, $img, 'images');
+          }
+        } else if ($meta['object_type'] === 'users') {
+          $user = Users::find($meta['object_id']);
+          if ($user) {
+            Meta::saveorupdate($meta['object_id'], $meta['meta'], 'users');
+          } else {
+            echo json_encode(['result' => 0, 'message' => 'User does not exists.']); 
+            exit();
+          }
+        } else if ($meta['object_type'] === 'images') {
+          Meta::saveorupdate($meta['object_id'], $meta['meta'], 'images');
         }
         echo json_encode(['result' => 1]);
       }
