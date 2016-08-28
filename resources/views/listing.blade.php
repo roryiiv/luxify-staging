@@ -3,7 +3,13 @@
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('title')
-  <title>{{trim(preg_replace('/\s\s+/', ' ', $meta->title))}}</title>
+<?php 
+  $title = func::genTitle($listing->title, false);
+  if(isset($meta->title) && !empty($meta->title)) {
+    $title = trim(preg_replace('/\s\s+/', ' ', $meta->title));
+  } 
+?>
+  <title>{{ $title }}</title>
 @endsection
 
 @section('meta')
