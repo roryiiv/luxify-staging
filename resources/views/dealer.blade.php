@@ -306,7 +306,7 @@
                    <div class="col-md-4 col-sm-6">
                      <div class="thumbnail">
                         <a href="/listing/{{ $item->slug }}">
-                        <div class='product-img-container>
+                        <div class='product-img-container'>
                           <img class='product-img' src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}">
                               @if(Auth::user())
                                 <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
