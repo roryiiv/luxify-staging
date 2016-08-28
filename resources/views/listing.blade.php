@@ -182,7 +182,7 @@
                                     <div class="logo-aside">
                                         <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                                         <a href="/dealer/{{$dealer->id}}/{{$slug}}">
-                                            <img src="{{ func::img_url($dealer_img, 235) }}" alt="image description" width="233" height="29">
+                                            <img src="{{ func::img_url($dealer_img, 235) }}" title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" width="233" height="29">
                                         </a>
                                     </div>
 

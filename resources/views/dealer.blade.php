@@ -211,7 +211,7 @@
                         @endif
                         @if(!empty(json_decode($dealer->phoneNumber)))
                         <?php 
-                            $phones= is_array($dealer->phoneNumber) ? join("<br>", json_decode($dealer->phoneNumber)) : $dealer->phoneNumber ;
+                            $phones= is_array(json_decode($dealer->phoneNumber)) ? join("<br>", json_decode($dealer->phoneNumber)) : $dealer->phoneNumber ;
                         ?>
                         <tr>
                            <td>
