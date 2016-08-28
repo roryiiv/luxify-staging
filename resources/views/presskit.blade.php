@@ -15,23 +15,18 @@ if($getPostName!=''){
         $getPostID =  $post->ID;
         wp_reset_postdata();
     endwhile;
-}else{
-    $getPostID = (isset($_GET['release']) && intval($_GET['release']))?intval($_GET['release']):'';
-}
-
-
-
+   }else{
+       $getPostID = (isset($_GET['release']) && intval($_GET['release']))?intval($_GET['release']):'';
+   }
 ?>
 @section('title')
-    <title>{{func::genTitle('homepage', false)}}</title>
+    <title>{{func::genTitle('Presskit - Luxify', false)}}</title>
 @endsection
 
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">
     <style>
-
-
         .bg-img {
             z-index: -1010;
         }

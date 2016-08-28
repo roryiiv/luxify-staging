@@ -20,7 +20,7 @@ Route::get('/', function(){
     return View::make('index');
 });
 Route::get('press', function() {
-  return view('press_page.presskit_main');
+  return view('presskit');
 });
 Route::get('/about', function(){
     return view('about');
@@ -209,6 +209,3 @@ Route::get('/download-image/{image}', 'Panel@downloadImage');
 
 // Route::auth();
 Route::get('/home', 'HomeController@index');
-Route::get('/press', function() {
-  return view('about');
-});
