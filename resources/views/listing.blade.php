@@ -68,6 +68,7 @@
             //check if the mainImage is exist on images
             $check_mainImage = array();
             $check_mainImage[] = $listing->mainImageUrl;
+            $otherImage = is_array($otherImages)? $otherImages: []; 
             $checking = array_intersect($otherImages, $check_mainImage);
             if(count($checking)===0){
                 $images = json_decode($listing->images);
