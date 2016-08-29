@@ -3,7 +3,13 @@
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('title')
-  <title>{{trim(preg_replace('/\s\s+/', ' ', $meta->title))}} - Luxify</title>
+<?php 
+  $title = func::genTitle($listing->title, false);
+  if(isset($meta->title) && !empty($meta->title)) {
+    $title = trim(preg_replace('/\s\s+/', ' ', $meta->title));
+  } 
+?>
+  <title>{{ $title }}</title>
 @endsection
 
 @section('meta')
@@ -58,10 +64,17 @@
         <!-- banner image -->
         <section class="images" id="listing-image">
             <?php
+            $listing->images = str_replace('\"', '"', $listing->images);
             $otherImages = json_decode($listing->images);
+		
+//var_dump(json_last_error());
             //check if the mainImage is exist on images
             $check_mainImage = array();
             $check_mainImage[] = $listing->mainImageUrl;
+            $otherImages = is_array($otherImages)? $otherImages: array(); 
+
+//var_dump($otherImage); exit();
+
             $checking = array_intersect($otherImages, $check_mainImage);
             if(count($checking)===0){
                 $images = json_decode($listing->images);
@@ -96,14 +109,14 @@
                             <li>
                                 <div class="first-image" style="text-align:center">
                                     <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                                        <img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                                        <img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}" />
                                     </a>
                                     </div>
                             </li>
                         @else
                             <li>
                                 <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                                    <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" />
+                                    <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}"/>
                                 </a>
                             </li>
                         @endif
@@ -182,7 +195,7 @@
                                     <div class="logo-aside">
                                         <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                                         <a href="/dealer/{{$dealer->id}}/{{$slug}}">
-                                            <img src="{{ func::img_url($dealer_img, 235) }}" alt="image description" width="233" height="29">
+                                            <img src="{{ func::img_url($dealer_img, 235) }}" title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" width="233" height="29">
                                         </a>
                                     </div>
 

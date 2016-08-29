@@ -26,7 +26,7 @@ class Functions
           if ($pageName === 'homepage') {
             return 'Luxify.com - Asia&#39;s Leading Marketplace for Luxury';
           } else {
-            return $pageName . ' - Luxify - Asia&#39;s Leading Marketplace for Luxury';
+            return $pageName . ' - Luxify';
           } 
       } else {
         return $pageName;

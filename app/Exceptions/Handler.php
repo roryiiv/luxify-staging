@@ -49,7 +49,8 @@ class Handler extends ExceptionHandler
 
     public function render($request, Exception $e)
     {
-      if ($e instanceof NotFoundHttpException || $e instanceof FatalErrorException) {
+      //var_dump($e); exit();
+      if ($e instanceof NotFoundHttpException || $e instanceof ErrorException) {
         $mores = DB::table('listings')
         ->where('status', 'APPROVED')
         ->join('countries', 'countries.id', '=', 'listings.countryId')

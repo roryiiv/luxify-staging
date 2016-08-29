@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <div class="button-wrap">
-                    <a href="mailto:careers@luxify.com" href="_blank" class="btn btn-primary">Apply now</a>
+                    <a href="mailto:careers@luxify.com" target="_blank" class="btn btn-primary">Apply now</a>
                 </div>
                 </div>
             </div> <!-- end of new grid -->

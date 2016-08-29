@@ -173,7 +173,7 @@ class Front extends Controller {
             if(!empty($meta->title) && ($meta->title !=null)){
                 $meta->title = substr(Meta::get_data_listing($listing->id,'title'),0,60);
             }else{
-                $meta->title = substr($listing->title,0,60);
+                $meta->title = null;
             }
             $meta->alt_text = Meta::get_data_listing($listing->id,'alt_text');
             $meta->description = !empty(Meta::get_data_listing($listing->id,'description')) ? Meta::get_data_listing($listing->id,'description') : str_limit(trim(preg_replace('/\s\s+/', ' ', $listing->description, 160)));
@@ -1450,7 +1450,7 @@ class Front extends Controller {
           $orWhere_arr[] = ['description','like','%'.$key.'%'];
         }*/
 
-        if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])){
+        if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])) {
             $search_arr[] = ['userId', $_REQUEST['user_id']];
         }
         // $search_arr[] = ['status', 'APPROVED'];
@@ -1672,8 +1672,6 @@ class Front extends Controller {
                 $filters['use_price'] = 'off';
             }
         }
-
-        // var_dump($search_arr); exit;
 
         if(isset($cat_ids)){
             if(isset($filtered_listing)){
