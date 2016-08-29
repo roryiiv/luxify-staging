@@ -33,6 +33,19 @@
     <meta name="theme-color" content="#ffffff">
     <!-- link to google font -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
+    <style>
+       .mobileBg:after {
+         content: "";
+         width: 100%;
+         height: 100%;
+         position: absolute;
+         top: 0;
+         left: 0;
+         display: block;
+         background-color: rgba(10,10,10,0.6);
+         z-index: 3;
+       }
+    </style>
     <!-- include bootstrap stylesheet -->
     <!--
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
@@ -218,7 +231,9 @@
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/carousel.js"></script>
     <script src="/assets/js/ajaxchimp.js"></script>
-    <script src="/assets/js/parallax.js"></script>
+    <!--<script src="/assets/js/parallax.js"></script> -->
+    <script src="/assets/js/jarallax.js"></script>
+
 <!--    <script src="/assets/js/smooth-scroll.js"></script>-->
     <script src="/assets/js/jquery.main.js"></script>
     <script src="/assets/js/jquery.unveil.js"></script>

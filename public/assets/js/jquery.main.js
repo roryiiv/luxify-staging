@@ -116,12 +116,17 @@ function suggestedSearchResults(){
 }
 
 function luxifyParallax(){
-	$( '.parallax' ).jarallax({
+	$('.parallax').jarallax({
 		speed: 0.5,
-		imgWidth: 1366,
-		imgHeight: 768,
-    position: 'bottom bottom',
+		//imgWidth: 1366,
+		//imgHeight: 768,
+    position: 'top bottom',
+    type: 'scroll',
+    noAndroid: true,
 	});
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    $('section.parallax').toggleClass('mobileBg');
+   }
 }
 
 function clientsCarousel(){
