@@ -134,7 +134,7 @@
     </div>
     <!-- end of banner -->
     <!-- main informative part of the page -->
-    <main id="main" class="listing-main" {{schema::itemScope()}} {{schema::itemType('Prodcut')}}>
+    <main id="main" class="listing-main" {{schema::itemScope()}} {{schema::itemType('Product')}}>
         <!-- item description -->
         <div class="item-description">
             <div class="container">
