@@ -74,7 +74,7 @@ if($getPostName!=''){
             </div>
         </div>
     @else
-        @include('press_page.presskit_main')
+        @include('inc.press_main')
     @endif
 
     </main>
