@@ -72,7 +72,7 @@
                                 @if(!empty($listings))
                                     @for($i = 0 ; $i < count($listings); $i++)
                                         <?php $item = $listings[$i]; ?>
-                                        <div class="col-sm-6 col-md-4">
+                                        <div class="col-sm-6 col-md-4 co-lg-4">
                                             <div class="thumbnail">
                                                 <a href="/listing/{{ $item->slug }}">
                                                     <figure>
@@ -116,7 +116,7 @@
                                             </div>
                                         </div>
                                         @if(($i+1)%3 ===0)
-                                            <div class="clearfix visible-md-block"></div>
+                                            <div class="clearfix visible-md-block visible-lg-block"></div>
                                         @endif
                                         @if(($i+1)%2 ===0)
                                             <div class="clearfix visible-sm-block"></div>
