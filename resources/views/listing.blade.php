@@ -157,7 +157,7 @@
                                 <li><span class="icon icon-tag"></span><span class="text">{{ $price_format }}</span></li>
                                 <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
                                @if($listing->price)
-                                  <div style="display:none;" itemprop="price" {{schema::itemType('Integer')}}>{{$listing->price}}"</div>
+                                  <div style="display:none;" itemprop="price" {{schema::itemType('Integer')}}>{{$listing->price}}</div>
                                @endif
                             </ul>
                             <ul class="social-links">
@@ -195,7 +195,7 @@
                             @if ($dealer)
                                 <?php $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName); ?>
                                 <div class="link-btn">
-                                    <div class="logo-aside" {{schema::itemScope()}} {{schema::itemProp('brand')}} {{schema::itemType('Brand')}}>
+                                    <div class="logo-aside" {{schema::itemScope()}}  {{schema::itemType('Brand')}}>
                                         <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                                         <a href="/dealer/{{$dealer->id}}/{{$slug}}">
                                             <img {{schema::itemProp('logo')}} src="{{ func::img_url($dealer_img, 235) }}" title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" width="233" height="29">
@@ -205,7 +205,7 @@
                                     <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                     <div class="btn-holder">
                                         <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                        <div style="display:none;" {{schema::itemProp('name')}}>{{$dealer->companyName ? $dealer->companyName : '' }}</div>
+                                        <div style="display:none;" {{schema::itemProp('brand')}}>{{$dealer->companyName ? $dealer->companyName : '' }}</div>
                                         <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">@lang('home.listing_dealerPage')</a>
                                         <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span>@lang('home.listing_contactDealer')</a>
                                         @if($listing->buyNowUrl)
