@@ -39,10 +39,22 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="title">Frequently Asked Questions (FAQs)</div>
+                        <div class="FAQTitle"><u>About Luxify</u></div>
                         <div class="FAQBox">
-                            <div class="FAQTitle">About Luxify</div>
-                            <div class="question">What is Luxify?</div>
-                            <div class="answer">Luxify is Asia’s leading marketplace for luxury. Luxury enthusiasts visit our platform to to discover, search and browse through a whole host of the very finest new, vintage and pre-owned luxury goods in a safe and simple way.</div>
+                            <div class="question"><span class="BigQA">Q</span>What is Luxify?</div>
+                            <div class="answer"><span class="BigQA">A</span>Luxify is Asia’s leading marketplace for luxury. Luxury enthusiasts visit our platform to to discover, search and browse through a whole host of the very finest new, vintage and pre-owned luxury goods in a safe and simple way.</div>
+                        </div>
+                        <div class="FAQBox">
+                            <div class="question"><span class="BigQA">Q</span>Where is Luxify located?</div>
+                            <div class="answer"><span class="BigQA">A</span>Our headquarters is located in Hong Kong and we have operating offices in London, Singapore and Shanghai.</div>
+                        </div>
+                        <div class="FAQBox">
+                            <div class="question"><span class="BigQA">Q</span>How does Luxify work?</div>
+                            <div class="answer"><span class="BigQA">A</span>Buying on Luxify is free of charge. Luxify simply connects buyers and dealers of luxury.</div>
+                        </div>
+                        <div class="FAQBox">
+                            <div class="question"><span class="BigQA">Q</span>Who visits Luxify?</div>
+                            <div class="answer"><span class="BigQA">A</span>Luxify is the leading marketplace for luxury in Asia. Our audience is from across the world with a primary user base in Asia (China, Hong Kong and South East Asia).</div>
                         </div>
                     </div>
                     <!-- end of new grid -->

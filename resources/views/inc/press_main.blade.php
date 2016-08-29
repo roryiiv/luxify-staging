@@ -19,7 +19,7 @@ $newsLogoImgArr = array(
     <div class="container press-contact">
         <div class="row">
             <div class="col-lg-12 title">Contact us</div>
-            <div class="col-lg-12 press-link"><a href="mailto:concierge@luxify.com">concierge@luxify.com</a></div>
+            <div class="col-lg-12 press-link"><a href="mailto:press@luxify.com">press@luxify.com</a></div>
             <div class="col-lg-11 col-lg-offset-1">
                 <?php echo get_post_field('post_content', 11); ?>
             </div>
