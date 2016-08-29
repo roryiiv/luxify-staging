@@ -157,7 +157,7 @@
                                 <li><span class="icon icon-tag"></span><span class="text">{{ $price_format }}</span></li>
                                 <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
                                @if($listing->price)
-                                <div style="display:none;" {{schema::itemType('Offer')}}>
+                                <div style="display:none;" {{schema::itemProp('offers')}} {{schema::itemType('Offer')}}>
                                   <div style="display:none;" {{schema::itemProp('price')}} {{schema::itemType('Integer')}}>{{$listing->price}}</div>
                                 </div>
                                @endif
