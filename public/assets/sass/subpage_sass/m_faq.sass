@@ -10,9 +10,10 @@
   .FAQBox
     text-align: left
     background-color: #ffffff
-    @include transition(color 0.1s linear)
+    @include transition(color 3.0s linear)
     &:hover , &:focus
-      background-color: #ffffe6
+      @include transition(color 3.0s linear)
+      background-color: #fbffe8
   .FAQTitle
     color: #000
     font-size: 2.6rem
