@@ -1,4 +1,5 @@
 <?php
+
 global $post;
 $newsLogoImgArr = array(
         'BBC'               => 'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/banners/home-logo-bbc-news.png',
@@ -18,7 +19,7 @@ $newsLogoImgArr = array(
     <div class="container press-contact">
         <div class="row">
             <div class="col-lg-12 title">Contact us</div>
-            <div class="col-lg-12 press-link"><a href="mailto:press@luxify.com">press@luxify.com</a></div>
+            <div class="col-lg-12 press-link"><a href="mailto:concierge@luxify.com">concierge@luxify.com</a></div>
             <div class="col-lg-11 col-lg-offset-1">
                 <?php echo get_post_field('post_content', 11); ?>
             </div>
@@ -73,7 +74,7 @@ $newsLogoImgArr = array(
         <div class="row">
             <div class="col-lg-12 title">Press Releases</div>
             <div class="col-lg-12 ">
-                <?php $my_query = new WP_Query('category_name=press-releases'); ?>
+                <?php $my_query = new WP_Query('category_name=press-releases&showposts=-1'); ?>
                 <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
                 <div class="col-lg-3 col-sm-4 col-mb-4 press-releases-content">
                     <div class="press-releases-text">
@@ -96,7 +97,7 @@ $newsLogoImgArr = array(
         <div class="row">
             <div class="col-lg-12 title">Press Coverage</div>
             <div class="col-lg-12 ">
-                <?php $my_query = new WP_Query('category_name=press-coverage&showposts=4'); ?>
+                <?php $my_query = new WP_Query('category_name=press-coverage&showposts=-1'); ?>
                 <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
                 <div class="col-lg-3 col-sm-4 col-mb-4 press-coverage-content">
                     <div class="press-coverage-text">
