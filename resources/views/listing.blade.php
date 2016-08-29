@@ -156,7 +156,9 @@
                             <ul class="detail">
                                 <li><span class="icon icon-tag"></span><span class="text">{{ $price_format }}</span></li>
                                 <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
-                                <input type="hidden" itemprop="price" {{schema::itemType('Integer')}} name="price" value="{{$listing->price}}" >
+                               @if($listing->price)
+                                  <div style="display:none;" itemprop="price" {{schema::itemType('Integer')}}>{{$listing->price}}"</div>
+                               @endif
                             </ul>
                             <ul class="social-links">
                                 <?php $added = func::is_wishlist($user_id, $listing->id) == 1 ? ' added' : ''; ?>
@@ -203,7 +205,7 @@
                                     <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                     <div class="btn-holder">
                                         <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                        <input {{schema::itemProp('name')}} type="hidden" name="dealer_name" value="{{$dealer->companyName ? $dealer->companyName : '' }}">
+                                        <div style="display:none;" {{schema::itemProp('name')}}>{{$dealer->companyName ? $dealer->companyName : '' }}</div>
                                         <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">@lang('home.listing_dealerPage')</a>
                                         <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span>@lang('home.listing_contactDealer')</a>
                                         @if($listing->buyNowUrl)
