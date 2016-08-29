@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\ErrorException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\FatalErrorException;
@@ -49,7 +50,6 @@ class Handler extends ExceptionHandler
 
     public function render($request, Exception $e)
     {
-      //var_dump($e); exit();
       if ($e instanceof NotFoundHttpException || $e instanceof ErrorException) {
         $mores = DB::table('listings')
         ->where('status', 'APPROVED')
