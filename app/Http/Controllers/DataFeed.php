@@ -156,6 +156,10 @@ class DataFeed extends Controller
   public function product_update($id, Request $request) {
     if ($id) {
       $inputs = $request->all();
+      if(isset($inputs->images) && !empty($inputs->images)) {
+        $re = "/\\\\\\\"/";
+        $inputs->images = preg_replace($re, '"', $input->images); 
+      }
       $oldListing = Listings::find($id);
       if ($oldListing) {
         $oldListing->fill($inputs); 
