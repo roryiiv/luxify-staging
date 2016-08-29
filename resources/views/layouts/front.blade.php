@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
     <!-- set the encoding of your site -->
-    <meta charset="utf-8">
-	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @yield('title')
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- set the viewport width and initial-scale on mobile devices -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     @yield('meta-data')
     <meta name="google-site-verification" content="vuPt0SaqgHqxd-9NRfgrTmlQMZ2FK7_G72NNmosgAL0" />
 
-    <title>@yield('title') - Luxify - Asia&#39;s leading marketplace for luxury</title>
 	  @yield('meta')
 
     <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png?v=2">
@@ -34,13 +34,15 @@
     <!-- link to google font -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
     <!-- include bootstrap stylesheet -->
+    <!--
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <style>
-    .currency-selector-container {
-        margin-right: 2.4rem;
-    }
     .navbar .navbar-right li:after {
         display: none;
+    }
+
+    .currency-selector-container {
+        margin-right: 2.4rem;
     }
 
     .currency-selector-container  .jcf-select {
@@ -88,12 +90,13 @@
         left: 50%;
     }
     </style>
+    -->
     @yield('style')
     <!--[if lt IE 9]>
 		<link rel="stylesheet" href="css/ie.css" />
 	<![endif]-->
 
-	<script src="//load.sumome.com/" data-sumo-site-id="096641acc338e360e68a6fa01ce6c0af808492a48eb251f5cbe64035503f5c2d" async="async"></script>
+	<!--<script src="//load.sumome.com/" data-sumo-site-id="096641acc338e360e68a6fa01ce6c0af808492a48eb251f5cbe64035503f5c2d" async="async"></script> -->
 </head>
 
 <body>
@@ -124,7 +127,7 @@
                                             <ul>
                                                 <li><a href="/about">@lang('footer.aboutUsCareers')</a></li>
                                                 <li><a href="/why-luxify">@lang('footer.howItWorks')</a></li>
-                                                <li><a target="_blank" href="http://press.luxify.com">@lang('footer.press')</a> / <a href="/blog">@lang('footer.blog')</a></li>
+                                                <li><a target="_blank" href="https://www.luxify.com/press">@lang('footer.press')</a> / <a href="/blog">@lang('footer.blog')</a></li>
                                                 <li><a href="/dealer-directory">@lang('footer.dealerDirectory')</a></li>
                                             </ul>
                                         </nav>

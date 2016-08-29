@@ -1,10 +1,17 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Dealer Directory')
+@section('title')
+  <title>{{ func::genTitle('Dealer Directory', false)}}</title>
+@endsection
+
+@section('meta-data')
+<meta name="keywords" content="Luxury Sellers, Luxury Dealers, Luxury Marketplace">
+<meta name="description" content="A directory of Luxify trusted dealers. High quality luxury dealers around the world.">
+@endsection
 
 @section('style')
   <!-- include the site stylesheet -->
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/luxify.css">
   <style>
    h1 {
      margin: 30px 0 10px 0!important;

@@ -1,12 +1,17 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify')
+@section('title')
+<?php 
+  $dealerName = isset($dealer->companyName) && !empty($dealer->companyName) ? $dealer->companyName : $dealer->firstName . ' ' . $dealer->lastName;
+?>
+  <title>{{ func::genTitle( $dealerName . ' Listings', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <style>
       .added span {
         color: red;
@@ -17,6 +22,7 @@
       }
     </style>
 @endsection
+
 @section('content')
 <?php $banner = !empty($dealer->coverImageUrl) ? $dealer->coverImageUrl : 'about-banner.jpg'; ?>
     <section class="inner-banner auto-height parallax" style="background-image:url({{ func::img_url($banner, 1560) }});">
@@ -26,7 +32,7 @@
 				    <div class="row">
 					    <div class="col-lg-12">
 					    <?php 
-					    if(!empty($dealer->companyName) && ($dealer->companyName) !== null){
+					    if(!empty($dealer->companyName)){
 					      $company = json_decode($dealer->companyName);
 					      if ($company === NULL) {
 					          $title = $dealer->companyName; 
@@ -52,7 +58,7 @@
 					    }
 					    ?>
 						    <h1>{!! $title !!}</h1>
-                            <p style="visibility: hidden;">Official Ferrari importer in Singapore</p>
+                <!--<p style="visibility: hidden;">Official Ferrari importer in Singapore</p>-->
 					    </div>
 				    </div>
 				    <div class="row">

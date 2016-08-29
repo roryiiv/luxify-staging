@@ -1,42 +1,27 @@
 @extends('layouts.front')
 
-@section('home-title')
-  <title>Luxify.com - Asia&#39;s Leading Marketplace for Luxury</title>
+@section('title')
+  <title>{{func::genTitle('homepage', false)}}</title>
 @endsection
+
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/jQuery.YoutubeBackground.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <style>
 
+
         .bg-img {
-          z-index: -1010;
+            z-index: -1010;
         }
         .content-wrapper, .info-block {
-          background-color: white;
+            background-color: white;
         }
-        #video_bg{
-          background-position: top center;
-          background-repeat: no-repeat;
-          bottom: 0;
-          left: 0;
-          overflow: hidden;
-          position: fixed;
-          right: 0;
-          top: 0;
-        }
-        .ytplayer-player {
-          position: absolute;
-          top: 0;
-          z-index: -1;
-        }
-
     </style>
 @endsection
 
 @section('meta-data')
     <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-    <meta name="description" content="We are Asia's leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+    <meta name="description" content="We are Asia&#39;s leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
 @endsection
 
 @section('content')
@@ -291,18 +276,15 @@
 @endsection
 @section('scripts')
     <script>
-      $(document).ready(function(){
-        $(".banner-image img").load(function() {
-            var bg = $('.bg-img:nth-child(2)');
-            var w = bg.width(), h = bg.height();
 
-            $('#video_bg').YTPlayer({
-                fitToBackground: true,
-                videoId: '15VwTs0nFlM',
-    //            width: (w + 500),
-   //             ratio: (w/h),
-            });
+        $(document).ready(function(){
+            if(!isMobile()){
+                $('#video_bg').YTPlayer({
+                    fitToBackground: true,
+                    videoId: '15VwTs0nFlM',
+                });
+            }
         });
-      });
+
     </script>
 @endsection

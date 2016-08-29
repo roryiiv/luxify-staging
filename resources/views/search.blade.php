@@ -1,12 +1,15 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Search')
+
+@section('title')
+  <title>Search Result - Luxify</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <style>
       .added span {
         color: red;

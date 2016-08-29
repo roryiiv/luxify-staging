@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Dealer Application')
+@section('title')
+  <title>{{ func::genTitle('Dealer Application', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('meta-data')
@@ -10,7 +12,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
     <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
     <style>

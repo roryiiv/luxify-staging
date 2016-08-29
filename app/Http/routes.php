@@ -13,10 +13,14 @@
 
 use App\Listings;
 
+
 Route::get('/buildHashedId', 'Front@updateHashed');
 //static front pages
 Route::get('/', function(){
     return View::make('index');
+});
+Route::get('press', function() {
+  return view('presskit');
 });
 Route::get('/about', function(){
     return view('about');
@@ -59,6 +63,8 @@ Route::get('datafeed/product/{id}', 'DataFeed@product_get');
 Route::get('datafeed/dealers', 'DataFeed@dealers_list');
 Route::get('datafeed/getTable/{tableName}', 'DataFeed@getTable');
 Route::post('datafeed/images/upload', 'DataFeed@downloadImageToS3');
+Route::post('datafeed/meta/update', 'DataFeed@updateMeta');
+Route::post('datafeed/meta/noMeta', 'DataFeed@getNoMetaRecords');
 
 // Open for public dealer application
 // TODO: add captcha to the application form form

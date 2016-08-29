@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Page cannot be found')
+@section('title')
+  <title>{{ func::genTitle('Page cannot be found', false)}}</title>
+@endsection
 
 @section('content')
 	<section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/about-us-main.jpg', '', '', false, true)}});">
@@ -72,7 +74,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
 @section('script')
   @include('inc.send-message-script')
