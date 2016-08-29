@@ -129,6 +129,10 @@ class DataFeed extends Controller
     $inputs = $request->all();
     $newListing = new Listings;
     if ($newListing->validate($inputs)) {
+      if(isset($inputs->images) && !empty($inputs->images)) {
+        $re = "/\\\\\\\"/";
+        $inputs->images = preg_replace($re, '"', $input->images); 
+      }
       $newListing->fill($inputs); 
       $newListing->slug = SlugService::createSlug(Listings::class, 'slug', $inputs['title']);
       $newId = $newListing->save();
