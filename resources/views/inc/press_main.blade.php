@@ -76,10 +76,14 @@ $newsLogoImgArr = array(
             <div class="col-lg-12 ">
                 <?php $my_query = new WP_Query('category_name=press-releases&showposts=-1'); ?>
                 <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
+                <?php
+                    $out = strlen(get_the_title($post->ID)) > 50 ? substr(get_the_title($post->ID),0,50)."..." : get_the_title($post->ID);
+                ?>
+
                 <div class="col-lg-3 col-sm-4 col-mb-4 press-releases-content">
                     <div class="press-releases-text">
                         <div class="press-releases-title">
-                            <a href="?release=<?php echo $post->post_name;?>"><?php echo get_the_title($post->ID); ?></a>
+                            <a href="?release=<?php echo $post->post_name;?>"><?php echo $out; ?></a>
                         </div>
                         <div class="press-releases-date">
                             <?php echo get_the_time('F j , Y'); ?>
@@ -114,6 +118,8 @@ $newsLogoImgArr = array(
                                     $feat_image =  'https://images.luxify.com/q100,/https%3A%2F%2Fluxify.s3-accelerate.amazonaws.com/static/luxify-logo.png';
                                 }
                             }
+                            $out = strlen(get_the_title($post->ID)) > 50 ? substr(get_the_title($post->ID),0,50)."..." : get_the_title($post->ID);
+
                             //echo get_post_meta($post->ID, 'link', true);
                             ?>
                             <a href="{{get_post_meta($postID, 'link', true)}}">
@@ -121,7 +127,7 @@ $newsLogoImgArr = array(
                             </a>
                         </div>
                         <div class="press-coverage-title">
-                            <a href="{{get_post_meta($postID, 'link', true)}}"><?php echo get_the_title($postID);?></a>
+                            <a href="{{get_post_meta($postID, 'link', true)}}"><?php echo $out;?></a>
                         </div>
                         <div class="press-coverage-date">
                             <?php echo get_post_meta($postID, 'source', true).' - '.get_the_time('F j , Y'); ?>

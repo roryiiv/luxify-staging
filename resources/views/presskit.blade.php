@@ -20,7 +20,7 @@ if($getPostName!=''){
    }
 ?>
 @section('title')
-    <title>{{func::genTitle('Presskit - Luxify', false)}}</title>
+    <title>{{func::genTitle('Press', false)}}</title>
 @endsection
 
 @section('style')
