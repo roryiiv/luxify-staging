@@ -64,11 +64,17 @@
         <!-- banner image -->
         <section class="images" id="listing-image">
             <?php
+            $listing->images = str_replace('\"', '"', $listing->images);
             $otherImages = json_decode($listing->images);
+		
+//var_dump(json_last_error());
             //check if the mainImage is exist on images
             $check_mainImage = array();
             $check_mainImage[] = $listing->mainImageUrl;
-            $otherImage = is_array($otherImages)? $otherImages: []; 
+            $otherImages = is_array($otherImages)? $otherImages: array(); 
+
+//var_dump($otherImage); exit();
+
             $checking = array_intersect($otherImages, $check_mainImage);
             if(count($checking)===0){
                 $images = json_decode($listing->images);
