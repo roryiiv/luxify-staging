@@ -512,12 +512,29 @@
 <script>
     <?php
     $otherImages = json_decode($item->images);
-
+    foreach ($otherImages as $key => $img) {
+        if(!file_exists(func::img_url($item->mainImageUrl, 100, ''))){
+        	unset($otherImages[$key]);
+        }
+    }
+    //check if the mainImage is exist on images
+    $check_mainImage = array();
+    $check_mainImage[] = $item->mainImageUrl;
+    $checking = array_intersect($otherImages, $check_mainImage);
     $images = array();
-    $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl));
-
-    for($i = 0; $i < count($otherImages); $i++) {
-        $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl));
+    if(count($checking)===0){
+        //images is not contain mainImageurl
+        if(file_exists(func::img_url($item->mainImageUrl, 100, ''))){
+            $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
+        }
+        for($i = 0; $i < count($otherImages); $i++) {
+            $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
+        }
+    }else{
+        //images is contain mainImageurl
+            for($i = 0; $i < count($otherImages); $i++) {
+            $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
+        }
     }
     ?>
     var images_array = <?php echo json_encode($images, JSON_PRETTY_PRINT); ?>;
