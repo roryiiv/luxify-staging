@@ -134,9 +134,9 @@
     </div>
     <!-- end of banner -->
     <!-- main informative part of the page -->
-    <main id="main" class="listing-main" {{schema::itemScope()}} {{schema::itemType('Product')}}>
+    <main id="main" class="listing-main" >
         <!-- item description -->
-        <div class="item-description">
+        <div class="item-description" {{schema::itemScope()}} {{schema::itemType('Product')}}>
             <div class="container">
                 <!-- new grid -->
                 <div class="row">
