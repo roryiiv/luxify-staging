@@ -14,11 +14,17 @@ Use Auth;
 
 use App\Categories;
 
+use App\newcategory;
+
 use App\Listings;
 
 use App\History;
 
 use App\Users;
+
+use App\FormFields;
+
+use App\CategoryMeta;
 
 use DB;
 
@@ -186,17 +192,38 @@ class Panel extends Controller
             $perpage = $_GET['view-perpage'];
             if($perpage == -1){
                 $categories = DB::table('category_2')
+                ->where('parent', 0)
                 ->get();
             }else{
                 $categories = DB::table('category_2')
+                ->where('parent', 0)
                 ->paginate($perpage);
             }
         }else{
-            $categories = DB::table('category_2')->paginate($perpage);
+            $categories = DB::table('category_2')
+            ->where('parent', 0)
+            ->paginate($perpage);
         }
 
-       //$categories = DB::table('category_2')->get();
-        return view('panel.category-list', ['categories' => $categories]);
+        $lists = array();
+
+       	for($x = 0; $x < count($categories); $x++){
+       		$lists[$x]['id'] = $categories[$x]->id;
+       		$lists[$x]['name'] = $categories[$x]->name;
+       		$lists[$x]['slug'] = $categories[$x]->slug;
+       		$lists[$x]['description'] = $categories[$x]->description;
+       		$this_children = DB::table('category_2')
+       		->where('parent', $categories[$x]->id)
+       		->get();
+       		$children = array();
+       		foreach($this_children as $child){
+       			$children[] = $child->id;
+       		}
+       		$lists[$x]['children'] = $children;
+       	}
+       	$lists = json_decode(json_encode($lists), FALSE);
+       	// $lists = $this->modelNested('category_2', 'parent');
+        return view('panel.category-list', ['categories' => $categories, 'lists' => $lists]);
     }
 
     public function  categories_add(){
@@ -204,18 +231,35 @@ class Panel extends Controller
     }
 
     public function category_add() {
+        $newslug1 = SlugService::createSlug(newcategory::class, 'slug', $_POST['txtNameCategory']);
+        $newslug2 = SlugService::createSlug(newcategory::class, 'slug', $_POST['txtSlugCategory']);
+        $creator = Auth::user()->id;
+        if(!empty($_POST['txtSlugCategory'])){
+            $lastslug = $newslug2;
+        }else{
+            $lastslug = $newslug1; 
+        }
+        if(empty($_POST['optionalfield']) || $_POST['optionalfield']==''){
+            $optionalfields =array();
+            $optionalfields = json_encode($optionalfields);
+        }else{
+            $optionalfields = explode(',',$_POST['optionalfield']);
+            $optionalfields = json_encode($optionalfields);
+        }
 
-        $newCategories = DB::table('category_2')->insert([
-            'name' => $_POST['txtNameCategory'],
-            'slug' => $_POST['txtSlugCategory'],
-            'label' => $_POST['txtLabelCategory'],
-            'description' => $_POST['txtDescription'],
-            'parent' => $_POST['parent']
-            ]);
+        $input = new newcategory;
+        $input->name = $_POST['txtNameCategory'];
+        $input->slug = $lastslug;
+        $input->label = $_POST['txtLabelCategory'];
+        $input->description = $_POST['txtDescription'];
+        $input->parent = $_POST['parent'];
+        $input->created_by = $creator;
+        $input->optional_field = $optionalfields;
+        $input->save();
 
         return redirect('/panel/categories');
         
-        }
+    }
 
     public function category_delete($id){
         DB::table('category_2')->where('id',$id)->delete();
@@ -229,16 +273,54 @@ class Panel extends Controller
     }
 
     public function category_update(){
+        $newslug = SlugService::createSlug(newcategory::class, 'slug', $_POST['txtSlugCategory']);
+        $editor = Auth::user()->id;
+        if(empty($_POST['optionalfield']) || $_POST['optionalfield']==''){
+            $optionalfields =array();
+            $optionalfields = json_encode($optionalfields);
+        }else{
+            $optionalfields = explode(',',$_POST['optionalfield']);
+            $optionalfields = json_encode($optionalfields);
+        }
 
-        $categories = DB::table('category_2')->where('id',$_POST['id'])->update([
-            'name' => $_POST['txtNameCategory'],
-            'slug' => $_POST['txtSlugCategory'],
-            'label' => $_POST['txtLabelCategory'],
-            'description' => $_POST['txtDescription'],
-            'parent' => $_POST['parent']
-            ]);
+        $update = newcategory::where('id',$_POST['id'])->first();
+        $update->name = $_POST['txtNameCategory'];
+        $update->slug = $newslug;
+        $update->label = $_POST['txtLabelCategory'];
+        $update->description = $_POST['txtDescription'];
+        $update->parent = $_POST['parent'];
+        $update->updated_by = $editor;
+        $update->optional_field = $optionalfields;
+        $update->save();
 
         return redirect('/panel/categories');
+    }
+
+    private function modelNested($table, $column){
+    	$parents = DB::table($table)
+    	->where($column, 0)
+    	->get();
+
+    	// var_dump($parents); exit;
+
+    	$return = $this->addRelation($table, $column, $parents);
+    	return $return;
+    }
+
+    protected function getChildren($table, $column, $parent){
+    	$children = DB::table($table)->where($column, $parent)->get();
+
+    	$return = $this->addRelation($table, $column, $children);
+    	return $return;
+    }
+
+    protected function addRelation($table, $column, $data){
+    	$item->children = array();
+    	foreach($data as $item){
+    		$sub = $this->getChildren($table, $column, $item->id);
+    		$item->children .= $sub;
+    		return $item;
+    	}
     }
 
     public function user_add($role) {
@@ -385,6 +467,7 @@ class Panel extends Controller
         $error_arr = array();
 
         //$item->userId = Auth::user()->id;
+        // var_dump($_POST); exit;
 
         if ( isset($_POST['itemLocation']) && !empty($_POST['itemLocation']) ) {
             $item->countryId = $_POST['itemLocation'];
@@ -1243,4 +1326,118 @@ class Panel extends Controller
         header("Content-Disposition: attachment; filename=$image");
         echo $buffer; 
     }
+    function optional_fields(){
+
+        $perpage = 10;
+        if(isset($_GET['view-perpage']) && !empty($_GET['view-perpage'])){
+            $perpage = $_GET['view-perpage'];
+            if($perpage == -1){
+                $optionfields = CategoryMeta::get();
+            }else{
+                $optionfields = CategoryMeta::paginate($perpage);
+            }
+        }else{
+            $optionfields = $optionfields = CategoryMeta::paginate($perpage);
+        }
+
+        return view('panel.optionfields-list', ['optionfields' => $optionfields]);
+
+    }
+    function optional_fields_add(){
+        return view('panel.add-optionfield');
+    }
+    function post_optional_fields_add(){
+        $user = Auth::user()->id;
+        $type = $_POST['meta_type'];
+        if($type=='select' || $type=='checkbox' || $type=='radiobutton' || $type=='dropdown'){
+            if(isset($_POST['idAtr'])){
+                $count = count($_POST['idAtr']);
+                $optionalvalues = array();
+                for ($i=0; $i <$count ; $i++) { 
+                    $idAtr = array(
+                        'idAtr'=>$_POST['idAtr'][$i],
+                        'cssAtr'=>$_POST['cssAtr'][$i],
+                        'value'=>$_POST['value'][$i],
+                        'text'=>$_POST['text'][$i]);
+                    $optionalvalues[] = $idAtr;
+                }
+                $optionalvalues = json_encode($optionalvalues);
+            }else{
+                $optionalvalues = array();
+                $optionalvalues = json_encode($optionalvalues);
+            }
+        }else{
+            $optionalvalues = array();
+            $optionalvalues = json_encode($optionalvalues);
+        }
+        $input = new CategoryMeta;
+        $input->title = $_POST['title'];
+        $input->name = $_POST['name'];
+        $input->label = $_POST['label'];
+        $input->meta_type = $_POST['meta_type'];
+        $input->meta_value = $optionalvalues;
+        $input->placeholder = $_POST['placeholder'];
+        $input->meta_description = $_POST['meta_description'];
+        $input->created_by = $user;
+        $input->save();
+        return redirect('/panel/optional-fields');
+    }
+    function optional_fields_delete($id){
+        CategoryMeta::where('id',$id)->delete();
+        return redirect('/panel/optional-fields');
+    }
+    function optional_fields_edit($id){
+        $formfields = CategoryMeta::where('id',$id)->first();
+        return view('panel.optionfields-edit',['formfields' => $formfields]);
+    }
+    function optional_fields_update($id){
+        $user = Auth::user()->id;
+        $type = $_POST['meta_type'];
+        if($type=='select' || $type=='checkbox' || $type=='radiobutton' || $type=='dropdown'){
+            if(isset($_POST['idAtr'])){
+                $count = count($_POST['idAtr']);
+                $optionalvalues = array();
+                for ($i=0; $i <$count ; $i++) { 
+                    $idAtr = array(
+                        'idAtr'=>$_POST['idAtr'][$i],
+                        'cssAtr'=>$_POST['cssAtr'][$i],
+                        'value'=>$_POST['value'][$i],
+                        'text'=>$_POST['text'][$i]);
+                    $optionalvalues[] = $idAtr;
+                }
+                $optionalvalues = json_encode($optionalvalues);
+            }else{
+                $optionalvalues = array();
+                $optionalvalues = json_encode($optionalvalues);
+            }
+        }else{
+            $optionalvalues = array();
+            $optionalvalues = json_encode($optionalvalues);
+        }
+        $input = CategoryMeta::where('id',$id)->first();
+
+        if(isset($_POST['title']) && !empty($_POST['title'])){
+            $input->title = $_POST['title'];
+        }
+        if(isset($_POST['name']) && !empty($_POST['name'])){
+            $input->name = $_POST['name'];
+        }
+        if(isset($_POST['label']) && !empty($_POST['label'])){
+            $input->label = $_POST['label'];
+        }
+        if(isset($_POST['meta_type']) && !empty($_POST['meta_type'])){
+            $input->meta_type = $_POST['meta_type'];
+        }
+        if(isset($_POST['placeholder']) && !empty($_POST['placeholder'])){
+            $input->placeholder = $_POST['placeholder'];
+        }
+        if(isset($_POST['meta_description']) && !empty($_POST['meta_description'])){
+            $input->meta_description = $_POST['meta_description'];
+        }
+        $input->meta_value = $optionalvalues;
+        $input->edited_by = $user;
+        $input->save();
+        return redirect('/panel/optional-fields');
+    }
+
 }

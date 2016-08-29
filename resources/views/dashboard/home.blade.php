@@ -111,7 +111,7 @@
                                                 }
                                                 echo'</span>';
                                             }else{
-                                                echo'<span class="switch">there is no data</span>';
+                                                echo'<span class="get_height" style="text-align:left;display: inline-block;">there is no data</span>';
                                             }
                                         ?>
                                         </div>
@@ -132,7 +132,7 @@
                                                 }
                                                 echo'</span>';
                                             }else{
-                                                echo'<span class="switch">there is no data</span>';
+                                                echo'<span class="get_height" style="text-align:left;display: inline-block;">there is no data</span>';
                                             }
                                         ?>
                                             

@@ -621,16 +621,16 @@ class Front extends Controller {
             ->select('listings.*', 'countries.name as country')
             ->paginate(51);
 
-/*              on editing
+
             $json_price = DB::table('listings')
             ->where('status', 'APPROVED')
             ->whereIn('listings.categoryId', $cat_ids)
             ->where($search_arr)
-            ->orderBy($orderby, $order)
-            ->join('countries', 'countries.id', '=', 'listings.countryId')
-            ->select('listings.price', 'countries.name as country')
+            ->orderBy('listings.price','asc')
+            ->select('listings.price')
             ->get();
-            dd($json_price);*/
+
+            dd(json_encode($json_price));
         }else{
             $listings = DB::table('listings')
             ->where('status', 'APPROVED')

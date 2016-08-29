@@ -983,4 +983,17 @@ class Dashboard extends Controller
         }
     }
 
+    public  function CategoryChoosen($dataid){
+
+        $cat = DB::table('category_2')->where('parent','=',$dataid)->get();
+        $return = "";
+        foreach ($cat as $value) {
+            $return .= "<option value='".$value->id."'>".$value->name."</option>";
+
+        }
+
+        echo $return;
+
+    }
+
 }
