@@ -540,7 +540,6 @@
 	        unset($otherImages[$key]);
         }
     }
-    
     //check if the mainImage is exist on images
     $check_mainImage = array();
     $check_mainImage[] = $item->mainImageUrl;

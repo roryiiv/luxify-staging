@@ -39,8 +39,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
     <meta name="keywords" content="luxify member log in,luxury goods">
     <meta name="description" content="Log in to your account to discover one of the Internet’s largest collections of luxury goods and experiences.">
     <!-- PACE-->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/assets/css/luxify.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" type="text/css" href="./plugins/PACE/themes/blue/pace-theme-flash.css">
     <script type="text/javascript" src="./plugins/PACE/pace.min.js"></script>
     <!-- Bootstrap CSS-->
@@ -71,9 +70,10 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
         }
         .navbar-right {
             margin-right: 0px;
+            letter-spacing: 0px;
         }
         .navbar-nav {
-
+            padding-top: 0px;
         }
         .navbar-nav > li > a{
             margin: 0;
@@ -82,11 +82,72 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
             height: 34px;
         }
 
+
         .currency-selector-container {
-            margin-right: 0 rem !important;
+            margin-right: 2.4rem;
         }
-        .login_share_btn_width{
-            padding:5px 3px !important;
+        .jcf-hidden {
+            position: absolute !important;
+            left: -9999px !important;
+            height: 1px !important;
+            width: 1px !important;
+            margin: 0px !important;
+            border-width: 0px !important;
+            -moz-appearance: none;
+        }
+        .currency-selector-container .jcf-select {
+            font-weight: 200;
+        }
+        .currency-selector-container .jcf-select {
+            background-color: transparent;
+            height: 30px;
+            border: 1px solid white;
+            border-radius: 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: default;
+            display: block;
+            font-size: 14px;
+        }
+        .jcf-unselectable {
+            -moz-user-select: none;
+        }
+        .jcf-select {
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            background: #fff;
+            width: 100%;
+            height: 42px;
+            margin-right: 8px;
+            border: 1px solid #c5c5c5;
+        }
+        .currency-selector-container .jcf-select .jcf-select-text {
+            color: white;
+            line-height: 30px;
+        }
+        .jcf-select .jcf-select-text {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: default;
+            display: block;
+            font-size: 14px;
+            line-height: 40px;
+            color: #988866;
+            margin: 0 35px 0 8px;
+        }
+        .currency-selector-container .jcf-select .jcf-select-opener {
+            color: white;
+        }
+        .jcf-select .jcf-select-opener {
+            position: absolute;
+            text-align: center;
+            width: 26px;
+            bottom: 0;
+            right: 0;
+            top: 0;
         }
 
         h2 {
@@ -241,15 +302,15 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                 <hr>
                 <p class="text-muted" >@lang('auth.signInSocialAccount')</p>
                 <div class="clearfix row" >
-                    <div class="col-xs-12 col-md-4 login_share_btn_width">
+                    <div class="col-xs-4">
                     <!--add class login_to_facebook-->
-                        <a href="#" type="button" style="width:100%;" class="btn btn-outline btn-rounded btn-primary login_to_facebook btn-sm"><i class="ti-facebook mr-5"></i>Facebook</a>
+                        <a href="#" type="button" style="width:97px;" class="btn btn-outline btn-rounded btn-primary login_to_facebook btn-sm"><i class="ti-facebook mr-5"></i>Facebook</a>
                     </div>
-                    <div class="col-xs-12 col-md-4 login_share_btn_width">
+                    <div class="col-xs-4">
                     <!--add class login_to_facebook-->
-                        <a href="#" type="button" style="width:100%;" class="btn btn-outline btn-rounded btn-primary login_to_linkedin btn-sm"><i class="ti-linkedin mr-5"></i>Linkedin</a>
+                        <a href="#" type="button" style="width:97px;" class="btn btn-outline btn-rounded btn-primary login_to_linkedin btn-sm"><i class="ti-linkedin mr-5"></i>Linkedin</a>
                     </div>
-                    <div class="col-xs-12 col-md-4 login_share_btn_width">
+                    <div class="col-xs-4">
                         <button type="button" style="width:100%;" class="btn btn-outline btn-rounded btn-primary login_to_twitter btn-sm"><i class="ti-twitter-alt mr-5"></i>Twitter</button>
                     </div>
                 </div>
@@ -314,6 +375,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
         });
         $('#login_btn').click(function(event){
             event.preventDefault();
+            console.log('stop the default action first');
 
             var email = $('input#email').val(), pass = $('input#password').val();
             var token = $('input[name=_token]').val();
@@ -362,9 +424,6 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
           e.stopPropagation();
         })
     </script>
-<!--    <a href="#" class="login_to_facebook"></i>F</a>
-    <a href="#" class="login_to_linkedin"></i>L</a>
-    <a href="#" class="login_to_twitter"></i>T</a>-->
+</body>
 
-  </body>
 </html>

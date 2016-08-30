@@ -9,9 +9,7 @@
     <meta name="keywords" content="luxify member registration,luxury goods">
     <meta name="description" content="Register for an account for free to discover one of the Internet’s largest collections of luxury goods and experiences.">
     <!-- PACE-->
-    <link rel="stylesheet" href="/assets/css/luxify.css">
-
-
+    <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" type="text/css" href="./plugins/PACE/themes/blue/pace-theme-flash.css">
     <script type="text/javascript" src="./plugins/PACE/pace.min.js"></script>
     <!-- Bootstrap CSS-->
@@ -42,9 +40,10 @@
         }
         .navbar-right {
             margin-right: 0px;
+            letter-spacing: 0px;
         }
         .navbar-nav {
-
+            padding-top: 0px;
         }
         .navbar-nav > li > a{
             margin: 0;
@@ -55,7 +54,7 @@
 
 
         .currency-selector-container {
-            margin-right: 0 rem !important;
+            margin-right: 2.4rem;
         }
         .jcf-hidden {
             position: absolute !important;
@@ -120,10 +119,6 @@
             right: 0;
             top: 0;
         }
-        .form-control{
-            box-shadow:none !important;
-        }
-
     </style>
 </head>
 <body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
@@ -244,14 +239,14 @@
             },
             messages: {
                 password: {
-                    equalTo: "Please re-enter the paasword below."
-                }
+                    equalTo: "Please re-enter the paasword below." 
+                } 
             }
         });
         $('#submit-btn').on('click', function(e) {
             e.preventDefault();
             var token = $('input[name=_token]').val();
-            if ($('#register-form').valid()){
+            if ($('#register-form').valid()){ 
                 if($('#agreeTerms').prop('checked')) {
                     $.ajax({
                         type: "POST",
@@ -278,7 +273,7 @@
                     });
                 }else {
                     $('p#terms_error').slideDown(500);
-                }
+                } 
             }
         });
     $('.dropdown-toggle').dropdown().hover(function() {
@@ -287,7 +282,7 @@
     
     });
     $('.dropdown-menu').hover(function(){
-        },
+        }, 
         function(e){
             $(this).dropdown('toggle');
             e.stopPropagation();

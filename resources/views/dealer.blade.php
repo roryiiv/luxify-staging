@@ -1,9 +1,6 @@
-@inject('s_meta', 'App\Meta')
 @extends('layouts.front')
 
-@section('title')
-  <title>{{trim(preg_replace('/\s\s+/', ' ', $meta->title))}} - Luxify</title>
-@endsection
+@section('title', trim(preg_replace('/\s\s+/', ' ', $meta->title)))
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
@@ -15,7 +12,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/luxify.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <style>
         .blocked-seller{
             background: rgba(0,0,0,.8);
@@ -157,9 +154,9 @@
                       </ul>
                   </div>
                   <?php $logo = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
-                  <div class="col-md-5 col-sm-offset-1 dealer_box">
+                  <div class="col-md-5 col-sm-offset-1">
                       <div class="col-md-12" style="margin-bottom: 35px;">
-                        <img style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}"  title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}">
+                        <img style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}" alt="image_link">
                       </div>
                       <div class="col-md-12">
                         @if(isset($dealer->country) && !empty($dealer->country))
@@ -211,7 +208,7 @@
                         @endif
                         @if(!empty(json_decode($dealer->phoneNumber)))
                         <?php 
-                            $phones= is_array(json_decode($dealer->phoneNumber)) ? join("<br>", json_decode($dealer->phoneNumber)) : $dealer->phoneNumber ;
+                            $phones= is_array($dealer->phoneNumber) ? join("<br>", json_decode($dealer->phoneNumber)) : $dealer->phoneNumber ;
                         ?>
                         <tr>
                            <td>
@@ -232,6 +229,7 @@
       <?php 
      // $feat = func::getFeatured($dealer->id); 
       $featured = json_decode($dealer->featured_item);
+
       ?>
       @if($featured == NULL)
         <?php $feat = func::getFeatured($dealer->id); ?>
@@ -307,7 +305,7 @@
                      <div class="thumbnail">
                         <a href="/listing/{{ $item->slug }}">
                         <div class='product-img-container'>
-                          <img class='product-img' src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}">
+                          <img class='product-img' src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}" alt="{{ $item->title }}">
                               @if(Auth::user())
                                 <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
                                 <a id="{{ $item->id }}" href="javascript:;" data-id="{{ $item->id }}" class="favourite{{ $added }}"><span class="icon-heart"></span></a>
@@ -329,7 +327,7 @@
                           <span class="country">{{$item->country}}</span>
                         </div>
                         <div class="item-logo">
-                          <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}">
+                          <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}" alt="image description">
                         </div>
                        </div>
                      </div>

@@ -1,27 +1,28 @@
 <style>
+    body {
+        font-family: "Roboto", "Arial", "Helvetica Neue", "Helvetica", sans-serif;
+    }
     .navbar {
-        border-radius:0px;
-        position: absolute;
-        width: 100%;
+        border-radius:0px; 
+        position: absolute; 
+        width: 100%; 
         min-height: 67px;
-        background-color: rgba(0,0,0, 0.2);
-        top:0;
+        background-color: rgba(0,0,0, 0.2); 
+        top:0; 
         left:0;
-        padding-top: 10px;
-        z-index:3
     }
     .navbar-header {
-
+        margin-left: 15px;
         margin-right: 40px;
     }
     .navbar-header > .navbar-brand {
-
+        padding: 20px 15px;
     }
     .navbar-header > .navbar-brand img {
         height: 26px;
     }
     .nav > li {
-
+        margin-top: 8px
     }
     .nav > li > a:hover, .nav > li.open > a{
         background-color: transparent;
@@ -36,12 +37,12 @@
     .nav > li > a, .nav-toggle, .dropdown-menu ul li a {
         color: white;
         text-transform: uppercase;
-        font-weight: 500;
+        font-weight: 800;
         font-size: 13px;
     }
     .dropdown-menu > ul > li > a {
         font-weight: 500;
-    }
+    } 
     .dropdown-menu {
         padding: 13px 15px;
         width: 236px;
@@ -78,9 +79,6 @@
         -moz-animation-timing-function: ease;
         -moz-animation-fill-mode: forwards;
     }
-    .currency-selector-container .jcf-select .jcf-select-text{
-        font-weight: 500;
-    }
     @keyframes slidenavAnimation {
         from {
             opacity: 0;
@@ -97,39 +95,6 @@
             opacity: 1;
         }
     }
-    @media (max-width: 991px){
-        .navbar-header {
-            overflow: hidden;
-            padding-bottom: 10px;
-            width: auto !important;
-        }
-        .jcf-select{
-            margin-top:10px;
-        }
-        .navbar-toggle {
-            line-height: 2px;
-            width: 100px;
-            margin-top:20px;
-        }
-    }
-    @media (max-width: 479px){
-        .body-bg-full.v2 .page-container .page-content .v2{
-            width:275px;
-
-        }
-        .body-bg-full .page-container .page-content{
-            padding-top: 85px;
-        }
-        .navbar-toggle{
-            line-height: 2px;
-
-            margin-right:0px;
-        }
-        .navbar{
-            background-color: rgba(0,0,0, 1);
-        }
-
-    }
 
 </style>
 <nav class="navbar">
@@ -143,7 +108,38 @@
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
-
+        <!--<ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shop</a>
+                <div class="dropdown-menu">
+                    <ul>
+                        <li><a href="/category/real-estate">Real Estate</a></li>
+                        <li><a href="/category/jewellery-watches">Watches & Jewelry</a></li>
+                        <li><a href="/category/motors">Motors</a></li>
+                        <li><a href="/category/handbags-accessories">Handbags & Accessories</a></li>
+                        <li><a href="/category/experiences">Experiences</a></li>
+                        <li><a href="/category/collectibles-furnitures">Collectibles & Furnitures</a></li>
+                        <li><a href="/category/yachts">Yachts</a></li>
+                        <li><a href="/category/aircrafts">Aircrafts</a></li>
+                        <li><a href="/category/art-antiques">Art & Antiques</a></li>
+                        <li><a href="/category/fine-wines-spirits">Fine Wines & Spirits</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="/why-luxify">Why luxify</a></li>
+            <li><a target="_blank" href="http://blog.luxify.com">BLog</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
+                <div class="dropdown-menu sm">
+                    <ul>
+                        <li><a href="/about">About Luxify</a></li>
+                        <li><a href="/estate">Luxify Estate</a></li>
+                        <li><a href="/dealer-application">Dealer Application</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>-->
         <?php
             $languages = func::build_lang();
             $sess_lang = func::get_lang();

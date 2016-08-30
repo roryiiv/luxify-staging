@@ -149,11 +149,6 @@ class Front extends Controller {
             ->where('extrainfos.listingId', $listing->id)
             ->select('forms.name', 'formfields.label', 'extrainfos.value')
             ->get();
-            if (!$infos) {
-              if($listing->additionalInfo) {
-                $infos = json_decode($listing->additionalInfo);
-              }
-            }
 
 
             $relates = DB::table('listings')
@@ -173,14 +168,14 @@ class Front extends Controller {
             if(!empty($meta->title) && ($meta->title !=null)){
                 $meta->title = substr(Meta::get_data_listing($listing->id,'title'),0,60);
             }else{
-                $meta->title = null;
+                $meta->title = substr($listing->title,0,60);
             }
             $meta->alt_text = Meta::get_data_listing($listing->id,'alt_text');
             $meta->description = !empty(Meta::get_data_listing($listing->id,'description')) ? Meta::get_data_listing($listing->id,'description') : str_limit(trim(preg_replace('/\s\s+/', ' ', $listing->description, 160)));
             $meta->author = Meta::get_data_listing($listing->id,'author');
             if(!empty($meta->author) && ($meta->author !=null)){
                 $meta->author = Meta::get_data_listing($listing->id,'author');
-            } else {
+            }else{
                 if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
                     $company = json_decode($dealer->companyName);
                     if(is_array($company)){
@@ -189,9 +184,7 @@ class Front extends Controller {
                         $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
                     }
                 }else{
-                  if ($dealer) {
-                    $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
-                  }
+                  $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
                 }
             }
             $meta->keyword = Meta::get_data_listing($listing->id,'keyword');
@@ -310,13 +303,8 @@ class Front extends Controller {
         $listings->setPath($ref);
 
         $title_cat = '3D Real Estates';
-        $meta = array(
-          'title' => "3D Real Estate- Luxify- Asia&#39;s leading marketplace for luxury",
-          'keywords' => 'luxury real estate,virtual reality,luxury homes,estate',
-          'desc' => "Search for luxury real estate through virtual reality property tours on Luxify. Explore one of the Internet’s largest collections of luxury homes and estates."
-        );
         $banner = 'banner-estate.jpg';
-        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta]);
+        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
     
     }
 
@@ -401,66 +389,6 @@ class Front extends Controller {
             $title_cat = 'Fine Wines &amp; Spirits';
             break;
         }
-        $desc = '';
-        $keywords = '';
-        $title = '';
-        switch($id){
-            case 'real-estates':
-                $desc = 'Luxury real estate available on Luxify. Browse our collections of estate, apartments, houses and land around the world.';
-                $keywords = 'real esate for sale,luxury real estate,apartments,houses,land,estate';
-                $title = 'Real Estate For Sale: Estate | Apartments | Houses |  Land';
-            break;
-            case 'jewellery-watches':
-                $desc = "Buy luxury watches from top brands including Rolex, Omega, Cartier, Zenith and Patek Philippe. Browse the Internet's largest collections of luxury watches on Luxify.";
-                $keywords = 'luxury watches,rolex,omega,cartier,watches for sale ';
-                $title = 'Luxury Watches: Rolex | Omega | Cartier';
-            break;
-            case 'motors':
-                $desc = "Buy cars online from Ferrari, Porsche, Lamborghini, Aston Martin, Mercedes and more. Discover the Internet’s largest collections of luxury cars on Luxify.";
-                $keywords = 'cars for sale,ferrari,porsche,lamborghini,buy cars online';
-                $title = 'Cars For Sale: Ferrari| Porsche| Lamborghini';
-            break;
-            case 'handbags-accessories':
-                $desc = 'Buy designer handbags from top brands including Michael Kors, Louis Vuitton, Chanel, Coach, Gucci and Hermes. Discover the Internet’s largest collections of luxury handbags on Luxify.';
-                $keywords = 'michael kors,louis vuitton,chanel,coach,gucci,hermes,luxury handbags';
-                $title = 'Luxury Handbags: Louis Vuitton | Michael Kors | Chanel';
-            break;
-            case 'experiences':
-                $desc = 'We offer tailor made private jet charter. Fly a real fighter jet like MiG-29 today through Luxify.';
-                $keywords = 'private jet charter,tailor made,fighter jet,mig 29';
-                $title = 'Private Jet Charter | Fighter Jet | MiG-29';
-            break;
-            case 'collectibles-furnitures':
-                $desc = 'Buy luxury furniture from Cattelan Italia, Lema, Flexform and more. Get your ultimate luxurious home experience by exploring in Luxify. ';
-                $keywords = 'furniture,chairs,table,sofa,cattelan Italia,Lema,Flexform';
-                $title = 'Luxury Furniture: Chairs, Table and Sofa - Cattelan Italia|Lema|Flexform';
-            break;
-            case 'yachts':
-                $desc = 'Luxury yachts for sale from Majesty, Cruiser, Carlo and more. Choose from our collections of the most luxurious yachts.';
-                $keywords = 'luxury yachts for sale,majesty,cruiser,carlo';
-                $title = 'Luxury Yachts For Sale: Majesty | Cruisers | Monte Carlo ';
-            break;
-            case 'aircrafts':
-                $desc = 'Aircraft for sale, from Gulfstream, Bombardier Learjet and more. Get your most luxurious flying experience at Luxify';
-                $keywords = 'Aircraft for sale,Gulfstream,Bombardier Learjet';
-                $title = 'Luxury Aircrafts For Sale: Gulfstream,Bombardier Learjet and more';
-            break;
-            case 'art-antiques':
-                $desc = 'Art and antiques for sale by selected dealers worldwide. Discover one of the largest collections of art and antiques online.';
-                $keywords = 'luxify,art,antiques dealers,artiques online,paintings, sculptures';
-                $title = 'Luxify - your arts and antiques dealers online: paintings, sculpture and more';
-            break;
-            case 'fine-wines-spirits':
-                $desc = 'Buy fine wine and spirits online, included Japanese whiskies and sake on Luxify.';
-                $keywords = 'luxify,fine wine and good spirits,Japanese Whiskies,sake';
-                $title = 'Fine Wines and good Spirits - Find Japanese whiskies and sakes at Luxify';
-            break;
-        }
-        $meta = array(
-          'title' => $title,
-          'keywords' => $keywords,
-          'desc' => $desc
-        );
 
         // $title_cat = ucwords(str_replace('-', ' ', $id));
 
@@ -693,16 +621,16 @@ class Front extends Controller {
             ->select('listings.*', 'countries.name as country')
             ->paginate(51);
 
-/*              on editing
+
             $json_price = DB::table('listings')
             ->where('status', 'APPROVED')
             ->whereIn('listings.categoryId', $cat_ids)
             ->where($search_arr)
-            ->orderBy($orderby, $order)
-            ->join('countries', 'countries.id', '=', 'listings.countryId')
-            ->select('listings.price', 'countries.name as country')
+            ->orderBy('listings.price','asc')
+            ->select('listings.price')
             ->get();
-            dd($json_price);*/
+
+            dd(json_encode($json_price));
         }else{
             $listings = DB::table('listings')
             ->where('status', 'APPROVED')
@@ -721,7 +649,7 @@ class Front extends Controller {
         $listings->setPath($ref);
 
 
-        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta]);
+        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
     }
 
     public function product_luxify_estates() {
@@ -1450,7 +1378,7 @@ class Front extends Controller {
           $orWhere_arr[] = ['description','like','%'.$key.'%'];
         }*/
 
-        if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])) {
+        if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])){
             $search_arr[] = ['userId', $_REQUEST['user_id']];
         }
         // $search_arr[] = ['status', 'APPROVED'];
@@ -1672,6 +1600,8 @@ class Front extends Controller {
                 $filters['use_price'] = 'off';
             }
         }
+
+        // var_dump($search_arr); exit;
 
         if(isset($cat_ids)){
             if(isset($filtered_listing)){

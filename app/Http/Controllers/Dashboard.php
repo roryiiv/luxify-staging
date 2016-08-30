@@ -63,8 +63,10 @@ class Dashboard extends Controller
             $data['get_vm']= PageCount::get_json_vm();
             $data['get_ws']= PageCount::get_json_rn();
 
-            //return view('dashboard.home',$data);
-            return redirect('/dashboard/products');
+
+
+             return view('dashboard.home',$data);
+            //return redirect('/dashboard/products');
         }elseif($this->user_role == 'user'){
             return redirect('/dashboard/profile');
         }elseif($this->user_role == 'editor'){
@@ -979,6 +981,19 @@ class Dashboard extends Controller
         }else{
             return 'Error';
         }
+    }
+
+    public  function CategoryChoosen($dataid){
+
+        $cat = DB::table('category_2')->where('parent','=',$dataid)->get();
+        $return = "";
+        foreach ($cat as $value) {
+            $return .= "<option value='".$value->id."'>".$value->name."</option>";
+
+        }
+
+        echo $return;
+
     }
 
 }

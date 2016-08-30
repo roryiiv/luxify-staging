@@ -20,24 +20,8 @@ jQuery(document).ready( function(){
 	suggestedSearchResults();
 	openApplicationForm();
 
-    search_ico();
 });
-function isMobile(){
-  return ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))?true:false;
-}
-function search_ico(){
-  $('.search-wrapper').hover(function() {
-    $(".category-search").addClass('category-icoColor');
-  },function(){
-    $(".category-search").removeClass('category-icoColor');
-  });
-  $('#search_query').bind('focus', function() {
-    $(".category-search").addClass('category-icoColor');
-  }).focusout(function(){
-    $(".category-search").removeClass('category-icoColor');
-  });
 
-}
 function openApplicationForm(){
 	$('#apply-btn-one, #apply-btn-two').click(function(){
 		$('#application-form').slideDown();

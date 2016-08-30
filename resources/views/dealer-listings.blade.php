@@ -6,7 +6,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/luxify.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
 @endsection
 @section('content')
     <section class="inner-banner auto-height parallax" style="background-image:url(assets/images/about-banner.jpg);">

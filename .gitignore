@@ -2,10 +2,6 @@
 /node_modules
 /public/storage
 /public/js/vendor
-/public/RoryTest
-/public/assets/.sass-cache
-/public/assets_backup
-/public/blog
 Homestead.yaml
 Homestead.json
 .env
@@ -16,11 +12,5 @@ public/temp
 config.js
 *.sql
 /.idea
-/composer.phar
-temp.txt
 *.bak
-.DS_Store
 config/services.php
-config/session.php
-/app/Providers/AppServiceProvider.php
-/storage/*

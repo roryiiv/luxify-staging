@@ -8,8 +8,6 @@ use App\Http\Requests;
 
 use App\Listings;
 
-use App\Meta;
-
 use App\Users;
 
 use App\FormGroups;
@@ -57,22 +55,12 @@ class DataFeed extends Controller
     }
   
   }
-
   public function product_search() {
     $where = func::getVal('post', 'where' );  
     $select = func::getVal('post', 'select');
-    $limit = func::getVal('post', 'limit');
-    $order = func::getVal('post', 'order');
-    $table = func::getVal('post', 'table');
-    $join = func::getVal('post', 'join');
-
-    if (!$table) {
-      $table = 'listings';
-    }
-
-    $q = DB::table($table);
+    $q = DB::table('listings');
     if($where) {
-      $q->where(function($query) use ($where, $limit, $order) {
+      $q->where(function($query) use ($where){
         foreach ($where as $field => $w) {
           if ((isset($w['op']) && !empty($w['op'])) && (isset($w['val']) && !empty($w['val']))) {
             $query->where($field, $w['op'], $w['val'] );
@@ -80,24 +68,9 @@ class DataFeed extends Controller
         }
       });
       if ($select && is_array($select)) {
-        foreach($select as $s) {
+        foreach($select  as $s) {
            $q->addSelect($s);
         }
-      }
-      if($join && is_array($join)) {
-        foreach($join as $key => $j) {
-          $q->join($key, $j['lhs'], '=', $j['rhs']);
-        }
-      }
-      if ($limit && intval($limit) !== 0) {
-        $q->take(intval($limit));
-      }
-      if ($order && is_array($order)) {
-        foreach($order as $key => $direction) {
-          if (in_array($direction, ['desc', 'asc'])) {
-            $q->orderBy($key, $direction); 
-          }
-        } 
       }
       $result = $q->get();
       if ($result) {
@@ -129,10 +102,6 @@ class DataFeed extends Controller
     $inputs = $request->all();
     $newListing = new Listings;
     if ($newListing->validate($inputs)) {
-      if(isset($inputs->images) && !empty($inputs->images)) {
-        $re = "/\\\\\\\"/";
-        $inputs->images = preg_replace($re, '"', $input->images); 
-      }
       $newListing->fill($inputs); 
       $newListing->slug = SlugService::createSlug(Listings::class, 'slug', $inputs['title']);
       $newId = $newListing->save();
@@ -156,10 +125,6 @@ class DataFeed extends Controller
   public function product_update($id, Request $request) {
     if ($id) {
       $inputs = $request->all();
-      if(isset($inputs->images) && !empty($inputs->images)) {
-        $re = "/\\\\\\\"/";
-        $inputs->images = preg_replace($re, '"', $input->images); 
-      }
       $oldListing = Listings::find($id);
       if ($oldListing) {
         $oldListing->fill($inputs); 
@@ -212,63 +177,5 @@ class DataFeed extends Controller
     } else {
       echo json_encode(['result' => 0, 'message' => 'No data exists in the database']); 
     }
-  }
-  public function getNoMetaRecords() {
-    $table = func::getVal('post', 'table');
-    $limit = func::getVal('post', 'limit');
-    $records = null;
-    switch($table) {
-      case 'listings':
-        $records = DB::select("SELECT ${table}.slug, ${table}.id, ${table}.title, ${table}.description, ${table}.mainImageUrl, ${table}.images, `users`.companyName, `users`.firstName, `users`.lastName FROM `${table}` JOIN `users` ON `${table}`.userId = `users`.id WHERE ${table}.`id` NOT IN (select distinct `object_id` from `metas` where `object_type` = '${table}') AND status = 'APPROVED' ORDER BY id DESC limit ${limit}");
-      break;
-      case 'users':
-        $records = DB::select("SELECT id, slug, companySummary, companyName, firstName, lastName, companyLogoUrl, coverImageUrl FROM `${table}` WHERE `id` NOT IN (select distinct `object_id` from `metas` where `object_type` = '${table}') AND role = 'seller' AND companySummary IS NOT NULL AND dealer_status = 'approved' ORDER BY id DESC limit ${limit}");
-      break;
-    }
-
-    if ($records) {
-      echo json_encode(['result'=> 1, 'data' => $records]);  
-    } else {
-      echo json_encode(['result' => 0, 'message' => 'No records found without meta']); 
-    }
-  }
-  public function updateMeta() {
-    $metas = func::getVal('post', 'metas');
-
-    if ($metas && is_array($metas)) {
-      foreach($metas as $meta)  {
-        if ($meta['object_type'] !== 'images') {
-          foreach ($meta['meta'] as $meta_key => $meta_value) {
-            if (!in_array($meta_key, ['alt_text', 'author', 'description', 'keyword', 'title'])) {
-              echo json_encode(['result'=> 0, 'message' => '`' .$key . '` is an invalid meta_key.']);
-              exit();
-            }   
-          }
-        } 
-      
-        if ($meta['object_type'] === 'listings') {
-          $listing = Listings::find($meta['object_id']);
-          if ($listing) {
-            Meta::saveorupdate($meta['object_id'], $meta['meta'] , 'listings');
-          } else {
-            echo json_encode(['result' => 0, 'message' => 'Lisitng does not exists.']); 
-            exit();
-          }
-        } else if ($meta['object_type'] === 'users') {
-          $user = Users::find($meta['object_id']);
-          if ($user) {
-            Meta::saveorupdate($meta['object_id'], $meta['meta'], 'users');
-          } else {
-            echo json_encode(['result' => 0, 'message' => 'User does not exists.']); 
-            exit();
-          }
-        } else if ($meta['object_type'] === 'images') {
-          Meta::saveorupdate($meta['object_id'], $meta['meta'], 'images');
-        }
-        echo json_encode(['result' => 1]);
-      }
-    } else {
-      echo json_encode(['result' => 0, 'message' => 'Please provide enough parameters.']); 
-    } 
   }
 }

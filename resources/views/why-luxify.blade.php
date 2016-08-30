@@ -1,8 +1,6 @@
 @extends('layouts.front')
 
-@section('title')
-  <title>{{ func::genTitle('Why Shop At Luxify', false)}}</title>
-@endsection
+@section('title', 'Why Shop At Luxify')
 
 @section('meta-data')
 <meta name="keywords" content="online shopping,luxury goods,pre owned,vintage">
@@ -13,7 +11,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/luxify.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
 @endsection
 @section('content')
     <!-- main banner of the page -->

@@ -1,8 +1,6 @@
 @extends('layouts.front')
 
-@section('title')
-  <title>{{ func::genTitle('Terms of Service', false)}}</title>
-@endsection
+@section('title', 'Terms of Service')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('meta-data')
@@ -12,7 +10,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/luxify.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
 @endsection
 @section('content')
     <!-- main banner of the page -->

@@ -1,8 +1,6 @@
 @extends('layouts.front')
 
-@section('title')
-  <title>{{ func::genTitle('Privacy Policy', false)}}</title>
-@endsection
+@section('title', 'Privacy Policy')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
@@ -13,7 +11,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/luxify.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
 @endsection
 @section('content')
     <!-- main banner of the page -->
@@ -43,7 +41,7 @@
     <!-- main informative part of the page -->
     <main id="main">
         <!-- terms and condition text block -->
-        <div class="content-wrapper m_privacy">
+        <div class="content-wrapper">
             <div class="container">
                 <!-- new grid -->
                       <div class="row">

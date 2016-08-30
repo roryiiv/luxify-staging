@@ -8,4 +8,3 @@ ssh
 public/temp
 .gitignore
 .env
-storage/

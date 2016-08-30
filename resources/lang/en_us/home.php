@@ -20,7 +20,7 @@ return[
     'sm_sendMessege'=>'Send a message',
     'sm_send'=>'Send',
     'sm_welcome'=>'welcome to luxify',
-    'sm_description'=>'asiaï¿½s leading marketplace for luxury',
+    'sm_description'=>'asia’s leading marketplace for luxury',
     'sm_newhere'=>'I\'m New Here',
     'sm_messegeLeft'=>'Creating an account quick and easy. You can also have your own wishlist, contact our dealers,  edit your profile, and much more.',
     'sm_existinguser'=>'Existing User',
@@ -33,4 +33,13 @@ return[
     'sm_addedWishlist'=>'Item has been added to wishlist',
     'sm_checkWishlist'=>'You can check your wishlist in the dashboard',
     'sm_viewWishlist'=>'View Wishlist',
+
+
+
+
+
+
+
+
+
 ];

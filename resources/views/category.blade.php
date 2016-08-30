@@ -1,19 +1,12 @@
 @extends('layouts.front')
 
-@section('title')
-  <title>{{func::genTitle($meta['title'], true)}}</title>
-@endsection
-   
-@section('meta-data')
-    <meta name="keywords" content="{{ $meta['keywords']}}">
-    <meta name="description" content="{{ $meta['desc']}}">
-@endsection
+@section('title', 'Luxify')
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/luxify.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <style>
       .added span {
         color: red;
@@ -72,7 +65,7 @@
                                 @if(!empty($listings))
                                     @for($i = 0 ; $i < count($listings); $i++)
                                         <?php $item = $listings[$i]; ?>
-                                        <div class="col-sm-6 col-md-4 co-lg-4">
+                                        <div class="col-sm-6 col-md-4">
                                             <div class="thumbnail">
                                                 <a href="/listing/{{ $item->slug }}">
                                                     <figure>
@@ -116,7 +109,7 @@
                                             </div>
                                         </div>
                                         @if(($i+1)%3 ===0)
-                                            <div class="clearfix visible-md-block visible-lg-block"></div>
+                                            <div class="clearfix visible-md-block"></div>
                                         @endif
                                         @if(($i+1)%2 ===0)
                                             <div class="clearfix visible-sm-block"></div>
