@@ -108,13 +108,13 @@
   <!-- end of banner -->
   <!-- main informative part of the page -->
   <main id="main">
-      <div class="container">
+      <div class="container" {{schema::itemScope()}} {{schema::itemType('Store')}}>
           <div class="content-wrapper">
               <div class="row">
                   <div class="col-md-6">
-                      <h1>{!! $title1 !!}</h1>
+                      <h1 {{schema::itemProp('name')}} {{schema::itemType('Text')}}>{!! $title1 !!}</h1>
                       @if(!empty($dealer->companySummary)) 
-                         <p> {!! nl2br(e($dealer->companySummary)) !!} </p>
+                         <p {{schema::itemProp('description')}} {{schema::itemType('Text')}}> {!! nl2br(e($dealer->companySummary)) !!} </p>
                       @else 
                          <span>Coming soon.</span>
                       @endif
@@ -159,11 +159,12 @@
                   <?php $logo = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                   <div class="col-md-5 col-sm-offset-1 dealer_box">
                       <div class="col-md-12" style="margin-bottom: 35px;">
-                        <img style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}"  title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}">
+                        <img {{schema::itemProp('logo')}} {{schema::itemType('ImageObject') }}style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}"  title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}">
                       </div>
                       <div class="col-md-12">
                         @if(isset($dealer->country) && !empty($dealer->country))
-                             <h4 style="text-align: center; margin-bottom: 5px;">{{$dealer->country}}</h4>
+                             <h4  style="text-align: center; margin-bottom: 5px;" >{{$dealer->country}}</h4>
+			     <div style="display:none;" {{schema::itemProp('location')}} {{schema::itemType('Text')}}>{{$dealer->country}}</div>
                         @endif
                         @if(!empty($dealer->website))
                         <?php 
@@ -193,7 +194,7 @@
                               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                              </td>
                              <td>
-                                 <span> {{$address}}</span>
+                                 <span {{schema::itemProp('address')}} {{schema::itemType('PostalAddress')}}>{{$address}}</span>
                              </td>
                           </tr>
                         @endif 
@@ -218,7 +219,7 @@
                               <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
                            </td>
                            <td>
-                               <span> {!! $phones !!}</span>
+                               <span {{schema::itemProp('telephone')}} {{schema::itemType('Text')}}> {!! $phones !!}</span>
                            </td>
                           </tr>
                         </div>

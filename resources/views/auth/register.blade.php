@@ -207,6 +207,8 @@
     <script src="/assets/js/carousel.js"></script>
     <script src="/assets/js/ajaxchimp.js"></script>
     <script src="/assets/js/jquery.counterup.min.js"></script>
+    <script src="/assets/js/jquery.slick.js"></script>
+    <script src="/assets/js/jquery.IonRangeSlider.js"></script>
     <script src="/assets/js/jquery.main.js"></script>
     <script>
         $(document).ready(function(){

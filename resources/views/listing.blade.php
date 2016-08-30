@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
 @section('content')
+    <div  {{schema::itemScope()}} {{schema::itemType('Product')}}>
     <style>
         .added span {
             color: red;
@@ -107,20 +108,25 @@
                             <li>
                                 <div class="first-image" style="text-align:center">
                                     <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                                        <img {{schema::itemProp('image')}} class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}" />
+                                        <img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}" />
                                     </a>
                                     </div>
                             </li>
                         @else
                             <li>
                                 <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                                    <img {{schema::itemProp('image')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}"/>
+                                    <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}"/>
+				    <img  {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} style="display:none;" src="{{ func::img_url($image,'' ,396) }}">
                                 </a>
                             </li>
                         @endif
                     @endforeach
                 @else
-                    <li><img {{schema::itemProp('image')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
+                    <li>
+		        <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" />
+                        <img  {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} style="display:none;" src="{{ func::img_url($image,'' ,396) }}">
+	            </li>
+	            
                 @endif
             </ul>
 
@@ -134,7 +140,7 @@
     <!-- main informative part of the page -->
     <main id="main" class="listing-main" {{schema::itemScope()}} {{schema::itemType('ItemPage')}} {{schema::itemProp('isBaseOn')}}>
         <!-- item description -->
-        <div class="item-description" {{schema::itemScope()}} {{schema::itemType('Product')}}>
+        <div class="item-description">
             <div class="container">
                 <!-- new grid -->
                 <div class="row">
@@ -153,10 +159,11 @@
                             ?>
                             <ul class="detail">
                                 <li><span class="icon icon-tag"></span><span class="text">{{ $price_format }}</span></li>
-                                <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
+                                <li><span class="icon icon-globe"></span><span  {{schema::itemProp('location')}} {{schema::itemType('Text')}} class="text">{{ isset($country) ? $country->name : '' }}</span></li>
                                @if($listing->price)
                                 <div style="display:none;" {{schema::itemScope()}} {{schema::itemProp('offers')}} {{schema::itemType('Offer')}}>
-                                  <div style="display:none;" {{schema::itemProp('price')}} {{schema::itemType('Integer')}}>{{$listing->price}}</div>
+                                  <div style="display:none;" {{schema::itemProp('price')}} {{schema::itemType('Number')}}>{{$listing->baseCurrencyPrice}}</div>
+                                  <div style="display:none;" {{schema::itemProp('priceCurrency')}} {{schema::itemType('String')}}>USD</div>
                                 </div>
                                @endif
                             </ul>
@@ -195,17 +202,17 @@
                             @if ($dealer)
                                 <?php $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName); ?>
                                 <div class="link-btn">
-                                    <div class="logo-aside" {{schema::itemScope()}}  {{schema::itemType('Brand')}}>
+                                    <div class="logo-aside" {{schema::itemScope()}}  {{schema::itemProp('brand')}} {{schema::itemType('Store')}}>
                                         <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                                         <a href="/dealer/{{$dealer->id}}/{{$slug}}">
-                                            <img {{schema::itemProp('logo')}} src="{{ func::img_url($dealer_img, 235) }}" title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" width="233" height="29">
+                                            <img {{schema::itemProp('logo')}} {{schema::itemType('ImageObject')}} src="{{ func::img_url($dealer_img, 235) }}" title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" width="233" height="29">
                                         </a>
+                                        <div style="display:none;" {{schema::itemProp('name')}} {{schema::itemType('Text')}}>{{$dealer->companyName ? $dealer->companyName : '' }}</div>
                                     </div>
 
                                     <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                     <div class="btn-holder">
                                         <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                        <div style="display:none;" {{schema::itemProp('brand')}}>{{$dealer->companyName ? $dealer->companyName : '' }}</div>
                                         <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">@lang('home.listing_dealerPage')</a>
                                         <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span>@lang('home.listing_contactDealer')</a>
                                         @if($listing->buyNowUrl)
@@ -221,7 +228,7 @@
                             <ol class="breadcrumb">
                                 <li><a href="/">Home</a></li>
                                 @if($category && $category != '')
-                                    <li><a  {{schema::itemProp('category')}} {{schema::itemType("URL")}} href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
+                                    <li><a  {{schema::itemProp('category')}} {{schema::itemType("Text")}} href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
                                 @endif
                                 <li class="active">{{ $cat && !empty($cat) ? $cat->title : $listing->title }}</li>
                             </ol>
@@ -384,6 +391,7 @@
         </div>
         <!-- end of carousel block -->
     </main>
+</div>
     @include('inc.send-message')
 @endsection
 @section('scripts')
