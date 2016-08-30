@@ -125,7 +125,7 @@ function luxifyParallax(){
     noAndroid: true,
 	});
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-    $('section.parallax').toggleClass('mobileBg');
+    $('section.parallax, .benefit-block, .imageinfo-block').toggleClass('mobileBg');
    }
 }
 

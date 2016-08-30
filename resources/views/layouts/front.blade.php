@@ -45,6 +45,11 @@
          background-color: rgba(10,10,10,0.6);
          z-index: 3;
        }
+       .inner-banner {
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-position: 50% 50%;
+       }
     </style>
     <!-- include bootstrap stylesheet -->
     <!--
