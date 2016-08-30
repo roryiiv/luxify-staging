@@ -50,7 +50,7 @@
             <div class="text-holder">
                 <h3>This Account is suspended</h3>
                 <p>
-                    <a href="/">click here to browse again.</a>
+                    <a href="{{func::set_url('/')}}">click here to browse again.</a>
                 </p>
             </div>
         </div>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="button-wrap">
                     <input type="hidden" name="_ref" value="/dealer/{{$dealer->id}}" />
-                    <a class="btn btn-default" href="/listings/{{$dealer->slug}}"><span class="glyphicon glyphicon-th-large"></span> @lang('home.dealer_viewlistings')</a>
+                    <a class="btn btn-default" href="{{func::set_url('/listings/'.$dealer->slug)}}"><span class="glyphicon glyphicon-th-large"></span> @lang('home.dealer_viewlistings')</a>
                     <!--<a href="/dealer/contact/{{ $dealer->id }}/0" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> Contact dealer</a>-->
                   <a href="#" data-toggle="modal" data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary smooth-scroll"><span class="glyphicon glyphicon-earphone"></span> @lang('home.dealer_contactDealer')</a>
               </div>
@@ -252,11 +252,11 @@
                   <div class="row">
                       <div class="col-sm-6">
                           <div class="text-box">
-                              <a href="/listing/{{ $feat->slug }}" class="ferrari_featured_link"><strong class="title">@lang('home.dealer_featured')</strong></a>
+                              <a href="{{func::set_url('/listing/'.$feat->slug) }}" class="ferrari_featured_link"><strong class="title">@lang('home.dealer_featured')</strong></a>
                               <h1>{{ $feat->title }}</h1>
                               <?php $description = !empty($feat->description) ? $feat->description : 'Coming soon.'; ?>
                               <p>{{ func::truncate(strip_tags($description), 130) }}</p>
-                              <a href="/listing/{{ $feat->slug }}" class="btn btn-primary">@lang('home.dealer_viewmore')</a>
+                              <a href="{{func::set_url('/listing/'.$feat->slug)}}" class="btn btn-primary">@lang('home.dealer_viewmore')</a>
                           </div>
                       </div>
                   </div>
@@ -280,7 +280,7 @@
                                   <h1>{{ $isi->title }}</h1>
                                   <?php $description = !empty($isi->description) ? $isi->description : 'Coming soon.'; ?>
                                   <p>{{ func::truncate(strip_tags($description), 130) }}</p>
-                                  <a href="/listing/{{ $isi->slug }}" class="btn btn-primary">@lang('home.dealer_viewmore')</a>
+                                  <a href="{{func::set_url('/listing/'.$isi->slug)}}" class="btn btn-primary">@lang('home.dealer_viewmore')</a>
                               </div>
                           </div>
                       </div>
@@ -303,7 +303,7 @@
                    <?php $item = $listings[$i]; ?>
                    <div class="col-md-4 col-sm-6">
                      <div class="thumbnail">
-                        <a href="/listing/{{ $item->slug }}">
+                        <a href="{{func::set_url('/listing/'.$item->slug)}}">
                         <div class='product-img-container'>
                           <img class='product-img' src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 300, '', true) : func::img_url('default-logo.png', 300, '', true) }}" alt="{{ $item->title }}">
                               @if(Auth::user())
@@ -313,7 +313,7 @@
                         </div>
                         </a>
                        <div class="caption">
-                        <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
+                        <h3><a href="{{func::set_url('/listing/'.$item->slug)}}">{{ $item->title }}</a></h3>
                             <?php
                               $curr = func::getTableByID('currencies', $item->currencyId);
                               $dealer = func::getTableByID('users', $item->userId);

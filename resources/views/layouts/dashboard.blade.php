@@ -48,7 +48,7 @@ $num_notif  = 2;
     <!-- Header start-->
     <header>
 
-        <a href="{{ url('/') }}" class="brand pull-left"><img src="/db/images/logo/logo-light.png" alt="" width="100"></a><a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
+        <a href="{{func::set_url('/') }}" class="brand pull-left"><img src="/db/images/logo/logo-light.png" alt="" width="100"></a><a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
 
         <ul class="notification-bar list-inline pull-right">
             <li class="visible-xs"><a href="javascript:;" role="button" class="header-icon search-bar-toggle"><i class="ti-search"></i></a></li>
@@ -64,7 +64,7 @@ $num_notif  = 2;
                             @foreach($notifs as $notif)
                                 <?php $profile = func::get_profile($notif->fromUserId); ?>
                                 <li class="media">
-                                    <a href="/dashboard/mailbox?id={{ $notif->id }}">
+                                    <a href="{{func::set_url('/dashboard/')}}mailbox?id={{ $notif->id }}">
                                         <div class="media-left avatar">
                                             <img src="{{ !empty($profile->companyLogoUrl) ? func::img_url($profile->companyLogoUrl, 30) : func::img_url('placeholder.png', 30) }}" alt="" class="media-object img-circle">
                                         </div>
@@ -79,7 +79,7 @@ $num_notif  = 2;
                                 </li>
                             @endforeach
                         </ul>
-                        <div class="dropdown-footer text-center p-10"><a href="/dashboard/mailbox" class="fw-500 text-muted">See all inquiries</a></div>
+                        <div class="dropdown-footer text-center p-10"><a href="{{func::set_url('/dashboard/mailbox')}}" class="fw-500 text-muted">See all inquiries</a></div>
                     </div>
                 </li>
             @endif
@@ -94,8 +94,8 @@ $num_notif  = 2;
                         </div>
                     </a>
                     <ul aria-labelle/dby="dropdownMenu2" class="dropdown-menu fs-12 animated fadeInDown dropdown-menu-right" >
-                        <li><a href="{{ url('/dashboard/profile') }}"><i class="ti-user mr-5"></i> User Profile</a></li>
-                        <li><a href="{{ url('/logout') }}"><i class="ti-power-off mr-5"></i>Logout</a></li>
+                        <li><a href="{{func::set_url('/dashboard/profile') }}"><i class="ti-user mr-5"></i> User Profile</a></li>
+                        <li><a href="{{func::set_url('/logout') }}"><i class="ti-power-off mr-5"></i>Logout</a></li>
                     </ul>
                 @endif
             </li>

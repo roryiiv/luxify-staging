@@ -283,7 +283,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                                 <input id="exampleCheckboxRemember" type="checkbox" value="remember">
                                 <label for="exampleCheckboxRemember" class="checkbox-muted text-muted">@lang('auth.rememberMe')</label>
                             </div>
-                            <div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">@lang('auth.forgotPassword?')</a></div>
+                            <div class="pull-right"><a href="{{func::set_url('/forget-password')}}" class="inline-block form-control-static">@lang('auth.forgotPassword?')</a></div>
                         </div>
                     </div>
                     <button id="login_btn" type="submit" class="btn-lg btn btn-primary btn-block" style="border-radius: 0px;">@lang('auth.signIn')</button>
@@ -316,7 +316,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                 </div>
                 <hr>
                 <div class="clearfix">
-                    <p class="text-muted mb-0 pull-left">@lang('auth.createANewAccount')</p><a href="/register" class="inline-block pull-right">@lang('auth.signUp')</a>
+                    <p class="text-muted mb-0 pull-left">@lang('auth.createANewAccount')</p><a href="{{func::set_url('/register')}}" class="inline-block pull-right">@lang('auth.signUp')</a>
                 </div>
             </div>
         </div>

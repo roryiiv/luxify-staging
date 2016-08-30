@@ -73,7 +73,7 @@
                             <h1>Create your account for free</h1>
                     </div>
                     <div class="col-sm-4">
-						<a href="/register" class="btn btn-primary">Get Started</a>
+						<a href="{{func::set_url('/register')}}" class="btn btn-primary">Get Started</a>
                     </div>
                 </div>
                 </div>

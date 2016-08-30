@@ -31,7 +31,7 @@
 					   </div>
 				   </div>
 				   <div class="button-wrap">
-						<a href="/contact" class="btn btn-primary smooth-scroll">Contact Us</a>
+						<a href="{{func::set_url('/contact')}}" class="btn btn-primary smooth-scroll">Contact Us</a>
 					</div>
                 </div>
             </div>
@@ -101,7 +101,7 @@
 					</div>
                 </header>
 				   <div class="button-wrap" style="text-align: center;">
-						<a href="/dealer-application" class="btn btn-primary smooth-scroll">Dealer Application</a>
+						<a href="{{func::set_url('/dealer-application')}}" class="btn btn-primary smooth-scroll">Dealer Application</a>
 					</div>
                 <!-- image column wrapper -->
           </div>

@@ -111,9 +111,9 @@
                                                     <td>{{$cat->description}}</td>
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
-                                                            <a target="_blank" href="/category/{{ $cat->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                            <a href="/panel/categories/edit/{{ $cat->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
-                                                            <a href="/panel/categories/delete/{{ $cat->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                            <a target="_blank" href="{{func::set_url('/category/'.$cat->slug) }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
+                                                            <a href="{{func::set_url('/panel/categories/edit/'.$cat->id)}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
+                                                            <a href="{{func::set_url('/panel/categories/delete/'.$cat->id)}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                         </div>
                                                     </td>   
                                                 </tr>
@@ -133,8 +133,8 @@
                                                             <td class="text-center">
                                                                 <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
                                                                     <a target="_blank" href="/category/{{ $child->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                                    <a href="/panel/categories/edit/{{ $child->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
-                                                                    <a href="/panel/categories/delete/{{ $child->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                                    <a href="{{func::set_url('/panel/categories/edit/'.$child->id) }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
+                                                                    <a href="{{func::set_url('/panel/categories/delete/'.$child->id)}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                                 </div>
                                                             </td>   
                                                         </tr>

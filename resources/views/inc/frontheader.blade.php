@@ -5,7 +5,7 @@
                 <!-- menu opener and logo -->
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">Menu<span></span></button>
                 <!-- logo of the page -->
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="{{func::set_url('/')}}">
                     <img src="{{func::img_url('luxify-logo.png', '', '', false, true)}}" alt="Luxify" class="normal">
                 </a>
             </div>
@@ -16,31 +16,31 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.shop')</a>
                         <div class="dropdown-menu">
                             <ul>
-                                <li><a href="/luxify-estates/3d-estates">@lang('header.shop_luxifyEstate3d')</a></li>
-                                <li><a href="/category/real-estates">@lang('header.shop_realEstates')</a></li>
-                                <li><a href="/category/jewellery-watches">@lang('header.shop_whatches&Jewelry')</a></li>
-                                <li><a href="/category/motors">@lang('header.shop_motors')</a></li>
-                                <li><a href="/category/handbags-accessories">@lang('header.shop_handbags&Accessories')</a></li>
-                                <li><a href="/category/experiences">@lang('header.shop_experiences')</a></li>
-                                <li><a href="/category/collectibles-furnitures">@lang('header.shop_collectibles&Furnitures')</a></li>
-                                <li><a href="/category/yachts">@lang('header.shop_yachts')</a></li>
-                                <li><a href="/category/aircrafts">@lang('header.shop_aircrafts')</a></li>
-                                <li><a href="/category/art-antiques">@lang('header.shop_art&Antiques')</a></li>
-                                <li><a href="/category/fine-wines-spirits">@lang('header.shop_fineWines&Spirits')</a></li>
+                                <li><a href="{{func::set_url('/luxify-estates/3d-estates')}}">@lang('header.shop_luxifyEstate3d')</a></li>
+                                <li><a href="{{func::set_url('/category/real-estates')}}">@lang('header.shop_realEstates')</a></li>
+                                <li><a href="{{func::set_url('/category/jewellery-watches')}}">@lang('header.shop_whatches&Jewelry')</a></li>
+                                <li><a href="{{func::set_url('/category/motors')}}">@lang('header.shop_motors')</a></li>
+                                <li><a href="{{func::set_url('/category/handbags-accessories')}}">@lang('header.shop_handbags&Accessories')</a></li>
+                                <li><a href="{{func::set_url('/category/experiences')}}">@lang('header.shop_experiences')</a></li>
+                                <li><a href="{{func::set_url('/category/collectibles-furnitures')}}">@lang('header.shop_collectibles&Furnitures')</a></li>
+                                <li><a href="{{func::set_url('/category/yachts')}}">@lang('header.shop_yachts')</a></li>
+                                <li><a href="{{func::set_url('/category/aircrafts')}}">@lang('header.shop_aircrafts')</a></li>
+                                <li><a href="{{func::set_url('/category/art-antiques')}}">@lang('header.shop_art&Antiques')</a></li>
+                                <li><a href="{{func::set_url('/category/fine-wines-spirits')}}">@lang('header.shop_fineWines&Spirits')</a></li>
                             </ul>
                         </div>
                     </li>
-                    <li><a href="/why-luxify">@lang('header.whyLuxify')</a></li>
-                    <li><a target="_blank" href="/blog">@lang('header.blog')</a></li>
+                    <li><a href="{{func::set_url('/why-luxify')}}">@lang('header.whyLuxify')</a></li>
+                    <li><a target="_blank" href="{{func::set_url('/blog')}}">@lang('header.blog')</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.more')</a>
                         <div class="dropdown-menu sm">
                             <ul>
-                                <li><a href="/about">@lang('header.more_aboutLuxify')</a></li>
-                                <li><a href="/pricing">@lang('header.more_pricing')</a></li>
-                                <li><a href="/dealer-application">@lang('header.more_dealerApplication')</a></li>
-                                <li><a href="/luxify-estates">@lang('header.more_luxifyEstates')</a></li>
-                                <li><a href="/contact">@lang('header.more_contactUs')</a></li>
+                                <li><a href="{{func::set_url('/about')}}">@lang('header.more_aboutLuxify')</a></li>
+                                <li><a href="{{func::set_url('/pricing')}}">@lang('header.more_pricing')</a></li>
+                                <li><a href="{{func::set_url('/dealer-application')}}">@lang('header.more_dealerApplication')</a></li>
+                                <li><a href="{{func::set_url('/luxify-estates')}}">@lang('header.more_luxifyEstates')</a></li>
+                                <li><a href="{{func::set_url('/contact')}}">@lang('header.more_contactUs')</a></li>
                             </ul>
                         </div>
                     </li>
@@ -71,11 +71,11 @@
                           <div class="dropdown-menu" id="user-menu">
                               <ul>
                                   @if(Auth::user()->role == 'admin')
-                                    <li><a href="/panel">@lang('header.adminPanel')</a></li>
+                                    <li><a href="{{func::set_url('/panel')}}">@lang('header.adminPanel')</a></li>
                                   @else
-                                    <li><a href="/dashboard">@lang('header.dashboard')</a></li>
+                                    <li><a href="{{func::set_url('/dashboard')}}">@lang('header.dashboard')</a></li>
                                   @endif
-                                  <li><a href="/logout">@lang('header.logout')</a></li>
+                                  <li><a href="{{func::set_url('/logout')}}">@lang('header.logout')</a></li>
                               </ul>
                           </div>
                         </li>
@@ -96,8 +96,8 @@
                              @endforeach
                            </select>
                         </li>
-                        <li><a href="/register">@lang('header.signUp')</a></li>
-                        <li><a href="/login">@lang('header.login')</a></li>
+                        <li><a href="{{func::set_url('/register')}}">@lang('header.signUp')</a></li>
+                        <li><a href="{{func::set_url('/login')}}">@lang('header.login')</a></li>
                     </ul>
                 @endif
             </div>

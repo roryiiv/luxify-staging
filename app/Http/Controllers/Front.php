@@ -810,7 +810,43 @@ class Front extends Controller {
         ->select('listings.*', 'countries.name as country')
         ->take(6)
         ->get();
-        return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
+        //add meta
+        $meta = new Meta;
+        $meta->title = trim(Meta::get_data_user($id,'title'));
+        if(!empty($meta->title) && ($meta->title !=null)){
+            $meta->title = substr(Meta::get_data_user($id,'title'),0,60);
+        }else{
+            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                $company = json_decode($dealer->companyName);
+                if(is_array($company)){
+                    $meta->title = substr($company[0].' '.$company[1],0,60); 
+                }else{
+                    $meta->title = substr(ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName),0,60); 
+                }
+            }else{
+              $meta->title = substr(ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName),0,60);
+            }
+        }
+
+        $meta->alt_text = Meta::get_data_user($id,'alt_text');
+        $meta->description = !empty(Meta::get_data_listing($dealer->id,'companySummary')) ? Meta::get_data_listing($dealer->id,'companySummary') : str_limit(trim(preg_replace('/\s\s+/', ' ', $dealer->companySummary, 160)));
+        $meta->author = trim(Meta::get_data_user($id,'author'));
+        if(!empty($meta->author) && ($meta->author !=null)){
+            $meta->author = Meta::get_data_user($id,'author');
+        }else{
+            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
+                $company = json_decode($dealer->companyName);
+                if(is_array($company)){
+                    $meta->author = $company[0]; 
+                }else{
+                    $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
+                }
+            }else{
+              $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+            }
+        }
+        $meta->keyword = Meta::get_data_user($id,'keyword');
+        return view('dealer', ['dealer' => $dealer, 'listings' => $listings, 'meta' => $meta]);
     }
 
     public function updateHashed() {
@@ -1835,7 +1871,8 @@ class Front extends Controller {
     public function switchLanguage(Request $request, $code){    
         $updatelang = Language::updatelang($code);
 
-        $code = DB::table('languages')->where('id',$code)->value('lang_str');
+        $code = DB::table('languages')->where('id',$code)->value('lang_str'); 
+        
         if($code=='en'){
             $langcode='';
         }else{
@@ -1844,14 +1881,20 @@ class Front extends Controller {
         $full_url = $request->header();
         $host = 'http://'.$full_url['host'][0].'/';
         $referer = $full_url['referer'][0];
+
         $get = DB::table('languages')->get();
         foreach ($get as $key) {
             $referer = str_replace($host.$key->lang_str.'/','',$referer);
+            $lang_arr[] = $key->lang_str;
         }
+
         $last_url = str_replace($host,'',$referer);
+        
+        if(in_array($last_url, $lang_arr)){
+        	$last_url = '';
+        }
 
         $get_redirect_url = $host.$langcode.$last_url;
-
         return redirect($get_redirect_url);
     }
 

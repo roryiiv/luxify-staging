@@ -122,10 +122,10 @@
                                         <nav class="footer-nav">
                                             <h4>@lang('footer.aboutLuxify')</h4>
                                             <ul>
-                                                <li><a href="/about">@lang('footer.aboutUsCareers')</a></li>
-                                                <li><a href="/why-luxify">@lang('footer.howItWorks')</a></li>
-                                                <li><a target="_blank" href="http://press.luxify.com">@lang('footer.press')</a> / <a href="/blog">@lang('footer.blog')</a></li>
-                                                <li><a href="/dealer-directory">@lang('footer.dealerDirectory')</a></li>
+                                                <li><a href="{{func::set_url('/about')}}">@lang('footer.aboutUsCareers')</a></li>
+                                                <li><a href="{{func::set_url('/why-luxify')}}">@lang('footer.howItWorks')</a></li>
+                                                <li><a target="_blank" href="http://press.luxify.com">@lang('footer.press')</a> / <a href="{{func::set_url('/blog')}}">@lang('footer.blog')</a></li>
+                                                <li><a href="{{func::set_url('/dealer-directory')}}">@lang('footer.dealerDirectory')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
@@ -134,15 +134,15 @@
                                             <h4>@lang('footer.platform')</h4>
                                             <ul>
                                                 @if(Auth::user())
-                                                    <li><a href="/logout">@lang('footer.logout')</a></li>
+                                                    <li><a href="{{func::set_url('/logout')}}">@lang('footer.logout')</a></li>
                                                 @else
-                                                    <li><a href="/login">@lang('footer.memberLogin')</a></li>
+                                                    <li><a href="{{func::set_url('/login')}}">@lang('footer.memberLogin')</a></li>
                                                 @endif
 
-                                                <li><a href="/pricing">@lang('footer.pricing')</a></li>
-                                                <li><a href="/dealer-application">@lang('footer.dealerApplication')</a></li>
-                                                <li><a href="/luxify-estates">@lang('footer.luxifyEstates')</a></li>
-												<li><a href="/contact">@lang('footer.contactUs')</a></li>
+                                                <li><a href="{{func::set_url('/pricing')}}">@lang('footer.pricing')</a></li>
+                                                <li><a href="{{func::set_url('/dealer-application')}}">@lang('footer.dealerApplication')</a></li>
+                                                <li><a href="{{func::set_url('/luxify-estates')}}">@lang('footer.luxifyEstates')</a></li>
+												<li><a href="{{func::set_url('/contact')}}">@lang('footer.contactUs')</a></li>
                                             </ul>
                                         </nav>
                                     </div>
@@ -193,8 +193,8 @@
                                     <div class="col-md-7">
                                         <nav class="bottom-nav">
                                             <ul>
-                                                <li><a href="/terms">@lang('footer.terms')</a></li>
-                                                <li><a href="/privacy">@lang('footer.policy')</a></li>
+                                                <li><a href="{{func::set_url('/terms')}}">@lang('footer.terms')</a></li>
+                                                <li><a href="{{func::set_url('/privacy')}}">@lang('footer.policy')</a></li>
                                             </ul>
                                         </nav>
                                     </div>

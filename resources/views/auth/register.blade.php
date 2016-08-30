@@ -157,7 +157,7 @@
                         <div class="col-xs-12">
                             <div style="margin-bottom: 7px" class="checkbox-inline checkbox-custom">
                                 <input type="checkbox" id="agreeTerms" name='agreeTerms' />
-                                <label for="agreeTerms" class="checkbox-muted text-muted">@lang('auth.agreeThe') <a href="/terms" target="_blank">@lang('auth.termsPolicies')</a></label>
+                                <label for="agreeTerms" class="checkbox-muted text-muted">@lang('auth.agreeThe') <a href="{{func::set_url('/terms')}}" target="_blank">@lang('auth.termsPolicies')</a></label>
                             </div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                     </div>
                 </div>
                 <div class="clearfix">
-                    <p class="text-muted mb-0 pull-left">@lang('auth.alreadyHaveAccount?') </p><a href="/login" class="inline-block pull-right">@lang('auth.signIn')</a>
+                    <p class="text-muted mb-0 pull-left">@lang('auth.alreadyHaveAccount?') </p><a href="{{func::set_url('/login')}}" class="inline-block pull-right">@lang('auth.signIn')</a>
                 </div>
             </div>
         </div>

@@ -438,7 +438,7 @@
                                                             $newslug = substr($user->slug,0,20).' ....... '.substr($user->slug,$count-20,$count);
                                                         }
                                                         ?>
-                                                            <a class="updatelink" href="{!! url('/dealer') . '/' .  $user->id . '/'.$slug !!}" target="_blank" style="text-decoration: underline;" >{!! url('/dealer') . '/' . $user->id . '/<strong>'.$slug.'</strong>' !!}</a>
+                                                            <a class="updatelink" href="{{func::set_url('/dealer').'/'.$user->id.'/'.$slug}}" target="_blank" style="text-decoration: underline;" >{!! url('/dealer') . '/' . $user->id . '/<strong>'.$slug.'</strong>' !!}</a>
                                                              &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
                                                         </div>
                                                     </div>

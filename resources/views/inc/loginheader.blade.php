@@ -102,7 +102,7 @@
         <!-- menu opener and logo -->
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">Menu<span></span></button>
         <!-- logo of the page -->
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="{{func::set_url('/')}}">
             <img src="{{func::img_url('luxify-logo.png', '', '', false, true)}}" alt="Luxify" class="normal">
         </a>
     </div>
@@ -153,7 +153,7 @@
                     @endforeach
                     </select>
                 </li>
-                <li><a href="/dashboard">@lang('home.header_menu_welcome') {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
+                <li><a href="{{func::set_url('/dashboard')}}">@lang('home.header_menu_welcome') {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
             </ul>
         @else
             <ul class="nav navbar-nav navbar-right">
@@ -164,8 +164,8 @@
                     @endforeach
                     </select>
                 </li>
-                <li><a href="/register">@lang('header.signUp')</a></li>
-                <li><a href="/login">@lang('header.login')</a></li>
+                <li><a href="{{func::set_url('/register')}}">@lang('header.signUp')</a></li>
+                <li><a href="{{func::set_url('/login')}}">@lang('header.login')</a></li>
             </ul>
         @endif
 

@@ -37,7 +37,7 @@
             <div class="col-lg-12">
 				   <div class="button-wrap">
 						<a class="btn btn-default lightbox fancybox.iframe" href="https://my.matterport.com/show/?m=uRGXgoiYk9f"><span class="icon-play"></span> Experience</a>
-						<a href="/category/real-estates" class="btn btn-primary smooth-scroll">View Listings</a>
+						<a href="{{func::set_url('/category/real-estates')}}" class="btn btn-primary smooth-scroll">View Listings</a>
 					</div>
         </div>
          </div>
@@ -62,7 +62,7 @@
                 @foreach($mores as $more)
                   <div class="slide">
                     <div class="thumbnail borderless">
-                      <a href="/listing/{{ $more->slug }}">
+                      <a href="{{func::set_url('/listing/'.$more->slug)}}">
                         <div class='product-img-container'>
                         <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
                           <img class='product-img' src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
@@ -75,7 +75,7 @@
                         </div>
                       </a>
                       <div class="caption">
-                        <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
+                        <h3><a href="{{func::set_url('/listing/'.$more->slug)}}">{{ $more->title }}</a></h3>
                         <?php
                           $msess_currency = null !==  session('currency') ? session('currency') : 'USD';
                           $mprice_format = func::formatPrice($more->currencyId, $msess_currency, $more->price);
@@ -97,7 +97,7 @@
           @endif
         </div>
         <div class="col-lg-12" style="text-align: center; margin-bottom: 30px;">
-						<a href="/luxify-estates/3d-estates" class="btn btn-primary smooth-scroll">View More</a>
+						<a href="{{func::set_url('/luxify-estates/3d-estates')}}" class="btn btn-primary smooth-scroll">View More</a>
         </div>
       </div>
     </div>
@@ -267,7 +267,7 @@
                             <h1>Our concierge is here to help</h1>
                     </div>
                     <div class="col-sm-4">
-						<a href="/contact" class="btn btn-primary">Contact Us</a>
+						<a href="{{func::set_url('/contact')}}" class="btn btn-primary">Contact Us</a>
                     </div>
                 </div>
                 </div>

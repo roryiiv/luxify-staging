@@ -118,8 +118,8 @@
                                                     <td>{{$option->placeholder}}</td>
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
-                                                            <a href="/panel/optional-fields/edit/{{ $option->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
-                                                            <a href="/panel/optional-fields/delete/{{ $option->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                            <a href="{{func::set_url('/panel/optional-fields/edit/'.$option->id)}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
+                                                            <a href="{{func::set_url('/panel/optional-fields/delete/'.$option->id)}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                         </div>
                                                     </td>   
                                                 </tr>

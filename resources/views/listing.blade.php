@@ -166,7 +166,7 @@
                             <div class="link-btn">
                                 <div class="logo-aside">
                                     <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
-                                    <a href="/dealer/{{$dealer->id}}/{{$slug}}">
+                                    <a href="{{func::set_url('/dealer/'.$dealer->id.'/'.$slug)}}">
                                         <img src="{{ func::img_url($dealer_img, 235) }}" alt="image description" width="233" height="29">
                                     </a>
                                 </div>
@@ -174,7 +174,7 @@
                                 <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                 <div class="btn-holder">
                                     <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
-                                    <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">@lang('home.listing_dealerPage')</a>
+                                    <a {{schema::itemType('URL')}} href="{{func::set_url('/dealer/'.$dealer->id.'/'.$slug)}}" class="btn btn-primary">@lang('home.listing_dealerPage')</a>
                                     <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span> @lang('home.listing_contactDealer')</a>
                                     @if($listing->buyNowUrl)
                                     <a {{schema::itemType('URL')}} target="_blank" href="{{$listing->buyNowUrl}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-shopping-cart"></span> @lang('home.listing_buynow')</a>
@@ -187,9 +187,9 @@
                         <article class="block-content">
                             <?php $cat = func::getTableByID('categories', $listing->categoryId); ?>
                             <ol class="breadcrumb">
-                                <li><a href="/">Home</a></li>
+                                <li><a href="{{func::set_url('/')}}">Home</a></li>
                                 @if($category && $category != '')
-                                    <li><a  {{schema::itemProp('category')}} {{schema::itemType("URL")}} href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
+                                    <li><a  {{schema::itemProp('category')}} {{schema::itemType("URL")}} href="{{func::set_url('/category/'.$category['slug'])}}">{{ $category['title'] }}</a></li>
                                 @endif
                                 <li class="active">{{ $cat && !empty($cat) ? $cat->title : $listing->title }}</li>
                             </ol>
@@ -243,7 +243,7 @@
                                 @foreach($mores as $more)
                                     <div class="slide">
                                         <div class="thumbnail borderless">
-                                            <a href="/listing/{{ $more->slug }}">
+                                            <a href="{{func::set_url('/listing/'.$more->slug)}}">
                                                 <div class='product-img-container'>
                                                     <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
                                                     <img class='product-img' src="/img/spin.gif" data-src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
@@ -258,7 +258,7 @@
                                             </a>
                                             @if ($dealer)
                                             <div class="caption">
-                                                <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
+                                                <h3><a href="{{func::set_url('/listing/'.$more->slug)}}">{{ $more->title }}</a></h3>
                                                 <?php
                                                 $mseller = func::getTableByID('users', $more->userId);
                                                 $msellerImg = !empty($mseller->companyLogoUrl) ? $mseller->companyLogoUrl : 'default-logo.png';
@@ -299,7 +299,7 @@
                                 @foreach($relates as $rel)
                                     <div class="slide">
                                         <div class="thumbnail borderless">
-                                            <a href="/listing/{{ $rel->slug }}">
+                                            <a href="{{func::set_url('/listing/'.$rel->slug)}}">
                                                 <div class='product-img-container'>
                                                     <?php $rel_img = !empty($rel->mainImageUrl) ? $rel->mainImageUrl : 'default-logo.png'; ?>
                                                     <img class='product-img' src="/img/spin.gif" data-src="{{ func::img_url($rel_img, 300, '', true) }}" alt="image description">
@@ -312,7 +312,7 @@
                                                 </div>
                                             </a>
                                             <div class="caption">
-                                                <h3><a href="/listing/{{ $rel->slug }}">{{ $rel->title }}</a></h3>
+                                                <h3><a href="{{func::set_url('/listing/'.$rel->slug)}}">{{ $rel->title }}</a></h3>
                                                 <?php
                                                 $rel_seller = func::getTableByID('users', $rel->userId);
                                                 $rel_sellerImg = !empty($rel_seller->companyLogoUrl) ? $rel_seller->companyLogoUrl : 'default-logo.png';

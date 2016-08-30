@@ -28,7 +28,7 @@
                 @foreach($mores as $more)
                   <div class="slide">
                     <div class="thumbnail borderless">
-                      <a href="/listing/{{ $more->slug }}">
+                      <a href="{{func::set_url('/listing/'.$more->slug)}}">
                         <div class='product-img-container'>
                         <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
                           <img class='product-img' src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
@@ -41,7 +41,7 @@
                         </div>
                       </a>
                       <div class="caption">
-                        <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
+                        <h3><a href="{{func::set_url('/listing/'.$more->slug)}}">{{ $more->title }}</a></h3>
                         <?php
                           $msess_currency = null !==  session('currency') ? session('currency') : 'USD';
                           $mprice_format = func::formatPrice($more->currencyId, $msess_currency, $more->price);

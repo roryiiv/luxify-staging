@@ -41,7 +41,7 @@
                      </div>
 					 <div class="row">
 					 	<div class="col-sm-6 col-sm-offset-3">
-							<a href="/register" class="btn btn-primary btn-block" title="Register for Free">Register Now</a>
+							<a href="{{func::set_url('/register')}}" class="btn btn-primary btn-block" title="Register for Free">Register Now</a>
 						</div>
 					 </div>
                 </div>
@@ -159,7 +159,7 @@
                             <h1>Create your account for free</h1>
                     </div>
                     <div class="col-sm-4">
-						<a href="/register" class="btn btn-primary">Get Started</a>
+						<a href="{{func::set_url('/register')}}" class="btn btn-primary">Get Started</a>
                     </div>
                 </div>
                 </div>

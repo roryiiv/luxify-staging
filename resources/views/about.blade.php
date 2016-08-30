@@ -52,7 +52,7 @@
 					<h1>What's Luxify</h1>
 					<p>Luxify is Asia’s leading online marketplace for luxury. Our website is the go-to destination for luxury enthusiasts and collectors in Asia, providing easy, safe and reliable market access to the luxury market.</p>
 					<p>On Luxify you will discover one of the Internet's largest collections of luxury products. Our website is the perfect place to discover, search and browse through a whole host of the very finest luxury goods.”</p>
-					<a href="/why-luxify" class="btn btn-primary">How it works?</a>
+					<a href="{{func::set_url('/why-luxify')}}" class="btn btn-primary">How it works?</a>
 			</div>
 			</div>
             </div>
@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <div class="button-wrap">
-                    <a href="mailto:careers@luxify.com" href="_blank" class="btn btn-primary">Apply now</a>
+                    <a href="mailto:careers@luxify.com" target="_blank" class="btn btn-primary">Apply now</a>
                 </div>
                 </div>
             </div> <!-- end of new grid -->
@@ -151,7 +151,7 @@
                             <h1>Create your account for free</h1>
                     </div>
                     <div class="col-sm-4">
-						<a href="/register" class="btn btn-primary">Get Started</a>
+						<a href="{{func::set_url('/register')}}" class="btn btn-primary">Get Started</a>
                     </div>
                 </div>
                 </div>

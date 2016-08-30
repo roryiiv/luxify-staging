@@ -234,9 +234,9 @@
                                                             <a href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
                                                             @if(Auth::user()->role == 'admin')
                                                                 @if($user->isSuspended == 0)
-                                                                    <a href="/panel/user/delete/{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                                    <a href="{{func::set_url('/panel/user/delete/')}}{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                                 @else
-                                                                    <a href="/panel/user/revoke/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-power-off"></i></a>
+                                                                    <a href="{{func::set_url('/panel/user/revoke/')}}{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-power-off"></i></a>
                                                                 @endif
                                                             @endif
                                                         </div>

@@ -432,10 +432,10 @@
                                                     @endif
                                                     <td class="text-center" style="width: 17%;">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
-                                                            <a target='_blank' href="/listing/{{ $products[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                            <a href="/panel/product/edit/{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
+                                                            <a target='_blank' href="{{func::set_url('/listing/')}}{{ $products[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
+                                                            <a href="{{func::set_url('/panel/product/edit/')}}{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
                                                             @if(Auth::user()->role == 'admin')
-                                                                <a href="/panel/product/delete/{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                                <a href="{{func::set_url('/panel/product/delete/')}}{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                             @endif
                                                         </div>
                                                     </td>
