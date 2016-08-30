@@ -13,7 +13,6 @@
 @endsection
 
 @section('meta')
-
     <meta name="description" content="{{ func::trimDownText($listing->description, 160)}}">
     <meta name="keyword" content="{{$meta->keyword}}">
     <meta name="author" content="{{$meta->author}}">
@@ -25,7 +24,6 @@
 @endsection
 @section('content')
     <style>
-
         .added span {
             color: red;
         }
@@ -134,7 +132,7 @@
     </div>
     <!-- end of banner -->
     <!-- main informative part of the page -->
-    <main id="main" class="listing-main" >
+    <main id="main" class="listing-main" {{schema::itemScope()}} {{schema::itemType('ItemPage')}} {{schema::itemProp('isBaseOn')}}>
         <!-- item description -->
         <div class="item-description" {{schema::itemScope()}} {{schema::itemType('Product')}}>
             <div class="container">
