@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
@@ -33,6 +32,25 @@
     <meta name="theme-color" content="#ffffff">
     <!-- link to google font -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
+    <style>
+       .mobileBg:after {
+         content: "";
+         width: 100%;
+         height: 100%;
+         position: absolute;
+         top: 0;
+         left: 0;
+         display: block;
+         background-color: rgba(10,10,10,0.6);
+         z-index: 3;
+       }
+       .inner-banner {
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-position: 50% 50%;
+       }
+    </style>
+
     @yield('style')
     <!--[if lt IE 9]>
 		<link rel="stylesheet" href="css/ie.css" />
@@ -160,8 +178,9 @@
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/carousel.js"></script>
     <script src="/assets/js/ajaxchimp.js"></script>
-    <script src="/assets/js/parallax.js"></script>
-<!--    <script src="/assets/js/smooth-scroll.js"></script>-->
+    <script src="/assets/js/jarallax.js"></script>
+
+
     <script src="/assets/js/jquery.main.js"></script>
     <script src="/assets/js/jquery.slick.js"></script>
     <script src="/assets/js/jquery.IonRangeSlider.js"></script>

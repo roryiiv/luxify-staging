@@ -175,7 +175,12 @@
 @section('scripts')
     <script>
      jQuery(document).ready(function() {
-       jQuery('#jarallax-container-0 > div').css('top', '-99px');
+  jarallax(document.querySelectorAll('.jarallax'), {
+    onInit: function() {
+      console.log('hihi'); 
+    } 
+  });
+ //      jQuery('#jarallax-container-0 > div').css('top', '-99px');
      });
     </script>
 @endsection

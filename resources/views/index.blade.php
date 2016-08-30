@@ -230,7 +230,7 @@
         </div>
         <!-- information block with image -->
         <div class="imageinfo-block parallax" style="background-image:url({{func::img_url('realestate.jpg')}})">
-            <div class="container">
+            <div class="container" style="z-index: 4;">
                 <div class="info-wrap heading">
                     <h2 class="h1">3D Virtual Property Tour</h2>
                     <div class="wrap">

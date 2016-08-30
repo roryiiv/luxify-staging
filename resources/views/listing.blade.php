@@ -109,20 +109,20 @@
                             <li>
                                 <div class="first-image" style="text-align:center">
                                     <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                                        <img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}" />
+                                        <img {{schema::itemProp('image')}} class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}" />
                                     </a>
                                     </div>
                             </li>
                         @else
                             <li>
                                 <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-                                    <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}"/>
+                                    <img {{schema::itemProp('image')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}"/>
                                 </a>
                             </li>
                         @endif
                     @endforeach
                 @else
-                    <li><img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
+                    <li><img {{schema::itemProp('image')}} class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" /></li>
                 @endif
             </ul>
 
@@ -134,9 +134,9 @@
     </div>
     <!-- end of banner -->
     <!-- main informative part of the page -->
-    <main id="main" class="listing-main">
+    <main id="main" class="listing-main" >
         <!-- item description -->
-        <div class="item-description">
+        <div class="item-description" {{schema::itemScope()}} {{schema::itemType('Product')}}>
             <div class="container">
                 <!-- new grid -->
                 <div class="row">
@@ -154,8 +154,13 @@
                             $price_format = func::formatPrice($listing->currencyId, $sess_currency, $listing->price);
                             ?>
                             <ul class="detail">
-                                <li><span class="icon icon-tag"></span><span class="text" itemprop="price" {{schema::itemType('Integer')}}>{{ $price_format }}</span></li>
+                                <li><span class="icon icon-tag"></span><span class="text">{{ $price_format }}</span></li>
                                 <li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
+                               @if($listing->price)
+                                <div style="display:none;" {{schema::itemScope()}} {{schema::itemProp('offers')}} {{schema::itemType('Offer')}}>
+                                  <div style="display:none;" {{schema::itemProp('price')}} {{schema::itemType('Integer')}}>{{$listing->price}}</div>
+                                </div>
+                               @endif
                             </ul>
                             <ul class="social-links">
                                 <?php $added = func::is_wishlist($user_id, $listing->id) == 1 ? ' added' : ''; ?>
@@ -192,16 +197,17 @@
                             @if ($dealer)
                                 <?php $slug = $dealer->slug != '' ? $dealer->slug : strtolower($dealer->firstName).'-'.strtolower($dealer->lastName); ?>
                                 <div class="link-btn">
-                                    <div class="logo-aside">
+                                    <div class="logo-aside" {{schema::itemScope()}}  {{schema::itemType('Brand')}}>
                                         <?php $dealer_img = (isset($dealer->companyLogoUrl) && !empty ($dealer->companyLogoUrl)) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                                         <a href="/dealer/{{$dealer->id}}/{{$slug}}">
-                                            <img src="{{ func::img_url($dealer_img, 235) }}" title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" width="233" height="29">
+                                            <img {{schema::itemProp('logo')}} src="{{ func::img_url($dealer_img, 235) }}" title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl)}}" width="233" height="29">
                                         </a>
                                     </div>
 
                                     <span class="small-text">@lang('home.listing_dealerSince') {{ date("Y", strtotime($dealer->created_at)) }}</span>
                                     <div class="btn-holder">
                                         <input type="hidden" name="_ref" value="/listing/{{$listing->slug}}" />
+                                        <div style="display:none;" {{schema::itemProp('brand')}}>{{$dealer->companyName ? $dealer->companyName : '' }}</div>
                                         <a {{schema::itemType('URL')}} href="/dealer/{{ $dealer->id }}/{{ $slug }}" class="btn btn-primary">@lang('home.listing_dealerPage')</a>
                                         <a {{schema::itemType('URL')}} href="#" id="contact-dealer-btn" data-toggle="modal" data-listing="{{$listing->id}}" data-listing-title='{{$listing->title}}'  data-target="{{ Auth::user() ? '#contact-dealer-form': '#login-form'}}" class="btn btn-primary trans"><span class="glyphicon glyphicon-earphone"></span>@lang('home.listing_contactDealer')</a>
                                         @if($listing->buyNowUrl)

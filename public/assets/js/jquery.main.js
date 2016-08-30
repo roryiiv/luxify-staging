@@ -50,126 +50,131 @@ function openApplicationForm(){
 
 function suggestedSearchResults(){
   var timer;
-  $( '#search_query' ).on('input', function() {
-    var val = $('input#search_query').val();
-    var token = $('input[name=_token]').val();
-    var dataA = {search: val, action: 'search', _token: token};
-    // console.log(dataA);
-    $('#search-left').html('');
-    // Set timeout for after user finish typing.
-    if(val.length >= 3) {
-      window.clearTimeout(timer);
-      timer = setTimeout(function(){
-        $.ajax({
-          type: "POST",
-          url: "/searchAjax",
-          headers: {'X-CSRF-TOKEN': token},
-          data: dataA,
-          dataType: "html",
-          // contentType: "application/json; charset=utf-8",
-          success: function(data){
-            // alert('it is a success');
-            if(data){
-              $('#search-left').html(data);
-              setTimeout(function() {
-                $('img.result-img').unveil(300, function() {
-                  $(this).load(function() {
-                    $(this).hide();
-                    $(this).fadeIn('slow');
-                  });
+	$( '#search_query' ).on('input', function() {
+		var val = $('input#search_query').val();
+		var token = $('input[name=_token]').val();
+		var dataA = {search: val, action: 'search', _token: token};
+		// console.log(dataA);
+		$('#search-left').html('');
+      // Set timeout for after user finish typing.
+      if(val.length >= 3) {
+        window.clearTimeout(timer);
+        timer = setTimeout(function(){
+          $.ajax({
+      		  type: "POST",
+      		  url: "/searchAjax",
+      		  headers: {'X-CSRF-TOKEN': token},
+      		  data: dataA,
+      		  dataType: "html",
+      		  // contentType: "application/json; charset=utf-8",
+      		  success: function(data){
+      		  	// alert('it is a success');
+      		  	if(data){
+      		  		$('#search-left').html(data);
+                setTimeout(function() {
+                  $('img.result-img').unveil(300, function() {
+                $(this).load(function() {
+                   $(this).hide();
+                   $(this).fadeIn('slow');
                 });
-              }, 200);
-            }else{
-              $('#search-left').html('<p>No data found</p>');
-            }
-            /*
-             $("img.result-img").unveil(300, function() {
-             $(this).load(function() {
-             $(this).hide();
-             $(this).fadeIn('slow');
-             });
-             });
-             */
-          },
-          failure: function(errMsg){
-            alert(errMsg);
-          }
-        });
-        $( '.suggested-results' ).fadeIn( 800 );
-        $( '.search-term > strong' ).text( $('.search-tracker').val() );
-      }, 700);
+              });
+                }, 200);
+      		  	}else{
+      		  		$('#search-left').html('<p>No data found</p>');
+      		  	}
+              /*
+              $("img.result-img").unveil(300, function() {
+                $(this).load(function() {
+                   $(this).hide();
+                   $(this).fadeIn('slow');
+                });
+              });
+              */
+      		  },
+      		  failure: function(errMsg){
+      		  	alert(errMsg);
+      		  }
+      	  });
+    		$( '.suggested-results' ).fadeIn( 800 );
+    		$( '.search-term > strong' ).text( $('.search-tracker').val() );
+    	}, 700);
     }
-  });
-  $( '#search_query').on('blur', function() {
-    setTimeout(function(){
+	});
+	$( '#search_query').on('blur', function() {
+		setTimeout(function(){
       $( '.suggested-results' ).fadeOut( 1200 );
-      $( '.search-term > strong' ).text( '' );
-    }, 1000);
-  });
+			$( '.search-term > strong' ).text( '' );
+		}, 1000);
+	});
   $('.suggested-results').mouseover(function(){
-    $('.suggested-results').show();
+      $('.suggested-results').show();
   });
 
   $('.suggested-results').mouseleave(function(){
-    // $('.suggested-results').fadeOut(1000);
+      // $('.suggested-results').fadeOut(1000);
   });
 }
 
 function luxifyParallax(){
-  $( '.parallax' ).jarallax({
-    speed: 0.5,
-    imgWidth: 1366,
-    imgHeight: 768,
-    position: 'bottom bottom',
-  });
+	$('.parallax').jarallax({
+		speed: 0.5,
+		//imgWidth: 1366,
+		//imgHeight: 768,
+    position: 'top bottom',
+    type: 'scroll',
+    noAndroid: true,
+	});
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    $('section.parallax, .benefit-block, .imageinfo-block').toggleClass('mobileBg');
+   }
 }
 
 function clientsCarousel(){
-  $(".owl-carousel").owlCarousel({
-    loop:true,
-    margin:10,
-    responsiveClass:true,
-    nav:false,
-    autoplay:true,
-    autoplayTimeout:2500,
-    autoplayHoverPause:true,
-    responsive:{
-      0:{
-        items:3,
-      },
-      600:{
-        items:5,
-      },
-      1000:{
-        items:7,
-      }
-    }
-  });
+	$(".owl-carousel").owlCarousel({
+		loop:true,
+		margin:10,
+		responsiveClass:true,
+		nav:false,
+		autoplay:true,
+		autoplayTimeout:2500,
+		autoplayHoverPause:true,
+		responsive:{
+			0:{
+				items:3,
+			},
+			600:{
+				items:5,
+			},
+			1000:{
+				items:7,
+			}
+		}
+	});
 }
 
 function mailChimpSub(){
-  $('#mailchimp').ajaxChimp({
-    callback: mailchimpCallback,
-    url: "http://luxify.us8.list-manage.com/subscribe/post?u=43de99b343f47ff032f021519&amp;id=40bee79be6"
-    //http://oscodo.us9.list-manage.com/subscribe/post?u=aef5e76b30521b771cf866464&id=f9f9e8db45
-  });
-  function mailchimpCallback(resp) {
-    if (resp.result === 'success') {
-      $('#mailchimp .subscription-success').html('<i class="icon_check_alt2"></i>' + resp.msg).slideDown(1000);
-      $('#mailchimp .subscription-error').slideUp(500);
+	$('#mailchimp').ajaxChimp({
+		callback: mailchimpCallback,
+		url: "http://luxify.us8.list-manage.com/subscribe/post?u=43de99b343f47ff032f021519&amp;id=40bee79be6"
+		//http://oscodo.us9.list-manage.com/subscribe/post?u=aef5e76b30521b771cf866464&id=f9f9e8db45
+	});
+	function mailchimpCallback(resp) {
+		 if (resp.result === 'success') {
+			$('#mailchimp .subscription-success').html('<i class="icon_check_alt2"></i>' + resp.msg).slideDown(1000);
+			$('#mailchimp .subscription-error').slideUp(500);
 
-    } else if(resp.result === 'error') {
-      $('#mailchimp .subscription-success').slideUp(500);
-      $('#mailchimp .subscription-error').html('<i class="icon_close_alt2"></i>' + resp.msg).slideDown(1000);
-    }
-  }
+		} else if(resp.result === 'error') {
+			$('#mailchimp .subscription-success').slideUp(500);
+			$('#mailchimp .subscription-error').html('<i class="icon_close_alt2"></i>' + resp.msg).slideDown(1000);
+		}
+	}
 }
 
 
 function countUp() {
   $('.counter').counterUp({
-    delay: 10,
-    time: 1000
+     delay: 10,
+     time: 1000
   });
 };
 
@@ -192,11 +197,11 @@ function initFixedScroll() {
   var scrollBLock = $(".filter-block");
   $(window).scroll(function() {
     var scroll = $(window).scrollTop();
-    if (scroll >= (window.innerHeight - 145) ) {
-      scrollBLock.addClass("fixed");
-    } else {
-      scrollBLock.removeClass("fixed");
-    }
+       if (scroll >= (window.innerHeight - 145) ) {
+          scrollBLock.addClass("fixed");
+        } else {
+          scrollBLock.removeClass("fixed");
+        }
   });
 }
 
@@ -233,18 +238,18 @@ function initSlick() {
     slidesToShow: 3,
     arrows: true,
     responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-          dots: false
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 2,
+        dots: false
         }
       },
       {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          dots: false
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        dots: false
         }
       }
     ]
@@ -261,35 +266,35 @@ function initSlick() {
 }
 
 function initIonRangeSlider() {
-  // jQuery("#range").ionRangeSlider({
-  //     hide_min_max: true,
-  //     keyboard: true,
-  //     min: 1,
-  //     max: 1000000000,
-  //     from: 1,
-  //     to: 1000000000,
-  //     type: 'double',
-  //     step: 100000,
-  //     prefix: "$",
-  //     grid: false,
-  //     prettify_enabled: true,
-  //     prettify_separator: ","
-  // });
+    // jQuery("#range").ionRangeSlider({
+    //     hide_min_max: true,
+    //     keyboard: true,
+    //     min: 1,
+    //     max: 1000000000,
+    //     from: 1,
+    //     to: 1000000000,
+    //     type: 'double',
+    //     step: 100000,
+    //     prefix: "$",
+    //     grid: false,
+    //     prettify_enabled: true,
+    //     prettify_separator: ","
+    // });
 }
 
 // fixed header
 function initFixedHeader() {
-  var $body = $('body');
-  var $win = $(window);
-  var $doc = $(document);
+ var $body = $('body');
+ var $win = $(window);
+ var $doc = $(document);
 
-  var onSCroll = function() {
-    var sticky = $('#header'),
-        scroll = $win.scrollTop();
-    sticky.toggleClass('fixed-position', scroll >= sticky.height());
-  };
-  $win.scroll(onSCroll);
-  onSCroll();
+ var onSCroll = function() {
+     var sticky = $('#header'),
+         scroll = $win.scrollTop();
+     sticky.toggleClass('fixed-position', scroll >= sticky.height());
+ };
+ $win.scroll(onSCroll);
+ onSCroll();
 }
 
 // navbar toggle add class on body
@@ -323,8 +328,8 @@ function initBackgroundImage() {
     function setBgImage(pBlockClass){
       var elem = pBlockClass.getElementsByTagName('img')[0];
       if(elem){
-        var imgloc = elem.getAttribute('src');
-        pBlockClass.setAttribute('style','background-image: url('+imgloc.toString()+')');
+          var imgloc = elem.getAttribute('src');
+          pBlockClass.setAttribute('style','background-image: url('+imgloc.toString()+')');
       }
     }
 
@@ -345,7 +350,6 @@ function initBackgroundImage() {
  *
  * Version: 1.1.3
  */
-
 ;(function(root, factory) {
   'use strict';
   if (typeof define === 'function' && define.amd) {
@@ -379,13 +383,13 @@ function initBackgroundImage() {
 
   // detect device type
   var isTouchDevice = ('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch,
-      isWinPhoneDevice = /Windows Phone/.test(navigator.userAgent);
+    isWinPhoneDevice = /Windows Phone/.test(navigator.userAgent);
   commonOptions.isMobileDevice = !!(isTouchDevice || isWinPhoneDevice);
 
   // create global stylesheet if custom forms are used
   var createStyleSheet = function() {
     var styleTag = $('<style>').appendTo('head'),
-        styleSheet = styleTag.prop('sheet') || styleTag.prop('styleSheet');
+      styleSheet = styleTag.prop('sheet') || styleTag.prop('styleSheet');
 
     // crossbrowser style handling
     var addCSSRule = function(selector, rules, index) {
@@ -422,8 +426,8 @@ function initBackgroundImage() {
   // simplified pointer events handler
   (function() {
     var pointerEventsSupported = navigator.pointerEnabled || navigator.msPointerEnabled,
-        touchEventsSupported = ('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch,
-        eventList, eventMap = {}, eventPrefix = 'jcf-';
+      touchEventsSupported = ('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch,
+      eventList, eventMap = {}, eventPrefix = 'jcf-';
 
     // detect events to attach
     if (pointerEventsSupported) {
@@ -474,8 +478,8 @@ function initBackgroundImage() {
     var lastTouch = null;
     var mouseEventSimulated = function(e) {
       var dx = Math.abs(e.pageX - lastTouch.x),
-          dy = Math.abs(e.pageY - lastTouch.y),
-          rangeDistance = 25;
+        dy = Math.abs(e.pageY - lastTouch.y),
+        rangeDistance = 25;
 
       if (dx <= rangeDistance && dy <= rangeDistance) {
         return true;
@@ -485,8 +489,8 @@ function initBackgroundImage() {
     // normalize event
     var fixEvent = function(e) {
       var origEvent = e || window.event,
-          touchEventData = null,
-          targetEventName = eventMap[origEvent.type];
+        touchEventData = null,
+        targetEventName = eventMap[origEvent.type];
 
       e = $.event.fix(origEvent);
       e.type = eventPrefix + targetEventName;
@@ -522,7 +526,7 @@ function initBackgroundImage() {
   // custom mousewheel/trackpad handler
   (function() {
     var wheelEvents = ('onwheel' in document || document.documentMode >= 9 ? 'wheel' : 'mousewheel DOMMouseScroll').split(' '),
-        shimEventName = 'jcf-mousewheel';
+      shimEventName = 'jcf-mousewheel';
 
     $.event.special[shimEventName] = {
       setup: function() {
@@ -644,7 +648,7 @@ function initBackgroundImage() {
       // parse options from HTML attribute
       var getInlineOptions = function(element) {
         var dataOptions = element.data(commonOptions.optionsKey),
-            attrOptions = element.attr(commonOptions.optionsKey);
+          attrOptions = element.attr(commonOptions.optionsKey);
 
         if (dataOptions) {
           return dataOptions;
@@ -693,7 +697,7 @@ function initBackgroundImage() {
     },
     replace: function(elements, moduleName, customOptions) {
       var self = this,
-          instance;
+        instance;
 
       if (!commonOptions.styleSheetCreated) {
         createStyleSheet();
@@ -701,7 +705,7 @@ function initBackgroundImage() {
 
       $(elements).each(function() {
         var moduleOptions,
-            element = $(this);
+          element = $(this);
 
         instance = element.data(commonOptions.dataKey);
         if (instance) {
@@ -834,7 +838,7 @@ function initBackgroundImage() {
     },
     refresh: function() {
       var typeMismatch = (this.isListBox() && this.instance instanceof ComboBox) ||
-          (!this.isListBox() && this.instance instanceof ListBox);
+                (!this.isListBox() && this.instance instanceof ListBox);
 
       if (typeMismatch) {
         this.createInstance();
@@ -1017,7 +1021,7 @@ function initBackgroundImage() {
     },
     onOutsideClick: function(e) {
       var target = $(e.target),
-          clickedInsideSelect = target.closest(this.fakeElement).length || target.closest(this.dropdown).length;
+        clickedInsideSelect = target.closest(this.fakeElement).length || target.closest(this.dropdown).length;
 
       if (!clickedInsideSelect) {
         this.hideDropdown();
@@ -1094,12 +1098,12 @@ function initBackgroundImage() {
     },
     repositionDropdown: function() {
       var selectOffset = this.fakeElement.offset(),
-          selectWidth = this.fakeElement.outerWidth(),
-          selectHeight = this.fakeElement.outerHeight(),
-          dropHeight = this.dropdown.css('width', selectWidth).outerHeight(),
-          winScrollTop = this.win.scrollTop(),
-          winHeight = this.win.height(),
-          calcTop, calcLeft, bodyOffset, needFlipDrop = false;
+        selectWidth = this.fakeElement.outerWidth(),
+        selectHeight = this.fakeElement.outerHeight(),
+        dropHeight = this.dropdown.css('width', selectWidth).outerHeight(),
+        winScrollTop = this.win.scrollTop(),
+        winHeight = this.win.height(),
+        calcTop, calcLeft, bodyOffset, needFlipDrop = false;
 
       // check flip drop position
       if (selectOffset.top + selectHeight + dropHeight > winScrollTop + winHeight && selectOffset.top - dropHeight > winScrollTop) {
@@ -1176,11 +1180,11 @@ function initBackgroundImage() {
     refreshSelectedText: function() {
       // redraw selected area
       var selectedIndex = this.realElement.prop('selectedIndex'),
-          selectedOption = this.realElement.prop('options')[selectedIndex],
-          selectedOptionImage = selectedOption ? selectedOption.getAttribute('data-image') : null,
-          selectedOptionText = '',
-          selectedOptionClasses,
-          self = this;
+        selectedOption = this.realElement.prop('options')[selectedIndex],
+        selectedOptionImage = selectedOption ? selectedOption.getAttribute('data-image') : null,
+        selectedOptionText = '',
+        selectedOptionClasses,
+        self = this;
 
       if (this.realElement.prop('multiple')) {
         $.each(this.realElement.prop('options'), function(index, option) {
@@ -1441,8 +1445,8 @@ function initBackgroundImage() {
     },
     onSelectItem: function(e) {
       var clickedIndex = parseFloat(e.currentTarget.getAttribute(this.options.indexAttribute)),
-          pointerType = e.data && e.data.savedPointerType || e.pointerType || 'mouse',
-          range;
+        pointerType = e.data && e.data.savedPointerType || e.pointerType || 'mouse',
+        range;
 
       // remove click event handler
       this.listHolder.off('click', this.indexSelector, this.onSelectItem);
@@ -1491,7 +1495,7 @@ function initBackgroundImage() {
     rebuildList: function() {
       // rebuild options
       var self = this,
-          rootElement = this.element[0];
+        rootElement = this.element[0];
 
       // recursively create fake options
       this.storedSelectHTML = rootElement.innerHTML;
@@ -1505,7 +1509,7 @@ function initBackgroundImage() {
 
       // detect max visible items
       var maxCount = this.options.maxVisibleItems,
-          sizeValue = this.element.prop('size');
+        sizeValue = this.element.prop('size');
       if (sizeValue > 1 && !this.element.is('[jcf-size]')) {
         maxCount = sizeValue;
       }
@@ -1534,7 +1538,7 @@ function initBackgroundImage() {
       if (this.options.alwaysPreventMouseWheel) {
         this.preventWheelHandler = function(e) {
           var currentScrollTop = self.listHolder.scrollTop(),
-              maxScrollTop = self.listHolder.prop('scrollHeight') - self.listHolder.innerHeight();
+            maxScrollTop = self.listHolder.prop('scrollHeight') - self.listHolder.innerHeight();
 
           // check edge cases
           if ((currentScrollTop <= 0 && e.deltaY < 0) || (currentScrollTop >= maxScrollTop && e.deltaY > 0)) {
@@ -1546,9 +1550,9 @@ function initBackgroundImage() {
     },
     refreshSelectedClass: function() {
       var self = this,
-          selectedItem,
-          isMultiple = this.element.prop('multiple'),
-          selectedIndex = this.element.prop('selectedIndex');
+        selectedItem,
+        isMultiple = this.element.prop('multiple'),
+        selectedIndex = this.element.prop('selectedIndex');
 
       if (isMultiple) {
         this.realOptions.each(function(index, option) {
@@ -1583,7 +1587,7 @@ function initBackgroundImage() {
     },
     getChangedSelectedIndex: function() {
       var selectedIndex = this.element.prop('selectedIndex'),
-          targetIndex;
+        targetIndex;
 
       if (this.element.prop('multiple')) {
         // multiple selects handling
@@ -1602,11 +1606,11 @@ function initBackgroundImage() {
     getActiveOptionOffset: function() {
       // calc values
       var dropHeight = this.listHolder.height(),
-          dropScrollTop = this.listHolder.prop('scrollTop'),
-          currentIndex = this.getChangedSelectedIndex(),
-          fakeOption = this.fakeOptions.eq(currentIndex),
-          fakeOptionOffset = fakeOption.offset().top - this.list.offset().top,
-          fakeOptionHeight = fakeOption.innerHeight();
+        dropScrollTop = this.listHolder.prop('scrollTop'),
+        currentIndex = this.getChangedSelectedIndex(),
+        fakeOption = this.fakeOptions.eq(currentIndex),
+        fakeOptionOffset = fakeOption.offset().top - this.list.offset().top,
+        fakeOptionHeight = fakeOption.innerHeight();
 
       // scroll list
       if (fakeOptionOffset + fakeOptionHeight >= dropScrollTop + dropHeight) {
@@ -1619,9 +1623,9 @@ function initBackgroundImage() {
     },
     getOverflowHeight: function(sizeValue) {
       var item = this.fakeListItems.eq(sizeValue - 1),
-          listOffset = this.list.offset().top,
-          itemOffset = item.offset().top,
-          itemHeight = item.innerHeight();
+        listOffset = this.list.offset().top,
+        itemOffset = item.offset().top,
+        itemHeight = item.innerHeight();
 
       return itemOffset + itemHeight - listOffset;
     },
@@ -1653,8 +1657,8 @@ function initBackgroundImage() {
     },
     createOptGroup: function(optgroup) {
       var optGroupContainer = document.createElement('span'),
-          optGroupName = optgroup.getAttribute('label'),
-          optGroupCaption, optGroupList;
+        optGroupName = optgroup.getAttribute('label'),
+        optGroupCaption, optGroupList;
 
       // create caption
       optGroupCaption = document.createElement('span');
@@ -1677,11 +1681,11 @@ function initBackgroundImage() {
     },
     createOptionsList: function(container) {
       var self = this,
-          list = document.createElement('ul');
+        list = document.createElement('ul');
 
       $.each(container.children, function(index, currentNode) {
         var item = self.createOptionContainer(currentNode),
-            newNode;
+          newNode;
 
         switch (currentNode.tagName.toLowerCase()) {
           case 'option': newNode = self.createOption(currentNode); break;
