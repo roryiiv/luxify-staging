@@ -54,6 +54,12 @@ Route::get('/why-luxify', function(){
 Route::get('/pricing', function(){
     return view('pricing');
 });
+Route::get('/presskit', function(){
+    return view('presskit');
+});
+Route::get('/faq', function(){
+    return view('faq');
+});
 Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
 Route::post('datafeed/product/update/{id}', 'DataFeed@product_update');
