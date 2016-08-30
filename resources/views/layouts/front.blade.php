@@ -180,10 +180,9 @@
     <script src="/assets/js/ajaxchimp.js"></script>
     <script src="/assets/js/jarallax.js"></script>
 
-
-    <script src="/assets/js/jquery.main.js"></script>
     <script src="/assets/js/jquery.slick.js"></script>
     <script src="/assets/js/jquery.IonRangeSlider.js"></script>
+    <script src="/assets/js/jquery.main.js"></script>
 
     <script src="/assets/js/jquery.unveil.js"></script>
     <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
