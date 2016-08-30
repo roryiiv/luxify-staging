@@ -216,10 +216,11 @@ class DataFeed extends Controller
   public function getNoMetaRecords() {
     $table = func::getVal('post', 'table');
     $limit = func::getVal('post', 'limit');
+    
     $records = null;
     switch($table) {
       case 'listings':
-        $records = DB::select("SELECT ${table}.slug, ${table}.id, ${table}.title, ${table}.description, ${table}.mainImageUrl, ${table}.images, `users`.companyName, `users`.firstName, `users`.lastName FROM `${table}` JOIN `users` ON `${table}`.userId = `users`.id WHERE ${table}.`id` NOT IN (select distinct `object_id` from `metas` where `object_type` = '${table}') AND status = 'APPROVED' ORDER BY id DESC limit ${limit}");
+        $records = DB::select("SELECT ${table}.slug, ${table}.id, ${table}.title, ${table}.description, ${table}.mainImageUrl, ${table}.images, `users`.companyName, `users`.firstName, `users`.lastName FROM `${table}` WHERE `${table}`.`metaProcessed` = 0 AND status = 'APPROVED' ORDER BY id DESC limit ${limit}");
       break;
       case 'users':
         $records = DB::select("SELECT id, slug, companySummary, companyName, firstName, lastName, companyLogoUrl, coverImageUrl FROM `${table}` WHERE `id` NOT IN (select distinct `object_id` from `metas` where `object_type` = '${table}') AND role = 'seller' AND companySummary IS NOT NULL AND dealer_status = 'approved' ORDER BY id DESC limit ${limit}");
