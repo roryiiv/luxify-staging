@@ -13,14 +13,18 @@
 
 use App\Listings;
 
+
 Route::get('/buildHashedId', 'Front@updateHashed');
-//static front pages
-Route::get('/', function(){
-    return View::make('index');
-});
-Route::get('/about', function(){
-    return view('about');
-});
+Route::group(['prefix' => Translation::getRoutePrefix()], function()
+{
+    //static front pages
+    Route::get('/', function(){
+        return View::make('index');
+    });
+    Route::get('/about', function(){
+        return view('about');
+    });
+
 Route::get('/contact', function(){
     return view('contact');
 });
@@ -210,3 +214,5 @@ Route::get('/download-image/{image}', 'Panel@downloadImage');
 
 // Route::auth();
 Route::get('/home', 'HomeController@index');
+
+});

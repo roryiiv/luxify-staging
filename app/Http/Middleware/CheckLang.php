@@ -7,6 +7,7 @@ use App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Config;
+use Stevebauman\Translation\Facades\Translation;
 use Auth;
 use DB;
 
@@ -26,16 +27,19 @@ class CheckLang
             if($languageId !='' && !empty($languageId)){
                 $lang = DB::table('languages')->where('id',$languageId)->value('code');
             }else{
-                if(Session::has('lang')){
-                    $lang = Session::get('lang');
+                if(Translation::getRoutePrefix()==null){
+                    $lang = Config::get('app.locale');
                 }else{
-                    $lang = Config::get('app.locale');                  
+                    $lang = DB::table('languages')->where('lang_str',Translation::getRoutePrefix())->value('code');
                 }
             }
             App::setLocale($lang);
         }else{
-            App::setLocale(Session::has('lang') ? Session::get('lang') : Config::get('app.locale'));
+            $ganti = DB::table('languages')->where('lang_str',Translation::getRoutePrefix())->value('code');
+
+            App::setLocale(Translation::getRoutePrefix()!=null ? $ganti : Config::get('app.locale'));
         }
         return $next($request);
     }
 }
+    

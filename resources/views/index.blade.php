@@ -64,16 +64,16 @@
                         <!-- banner navigation -->
                         <nav class="banner-nav">
                             <ul>
-                                <li><a href="/category/real-estates">Real Estates</a></li>
-                                <li><a href="/category/jewellery-watches">Watches & Jewelry</a></li>
-                                <li><a href="/category/motors">Motors</a></li>
-                                <li><a href="/category/handbags-accessories">Handbags & Accessories</a></li>
-                                <li><a href="/category/experiences">Experiences</a></li>
-                                <li><a href="/category/collectibles-furnitures">Collectibles & Furnitures</a></li>
-                                <li><a href="/category/yachts">Yachts</a></li>
-                                <li><a href="/category/aircrafts">Aircrafts</a></li>
-                                <li><a href="/category/art-antiques">Art & Antiques</a></li>
-                                <li><a href="/category/fine-wines-spirits">Fine Wines & Spirits</a></li>
+                                <li><a href="{{func::set_url('/category/real-estates')}}">Real Estates</a></li>
+                                <li><a href="{{func::set_url('/category/jewellery-watches')}}">Watches & Jewelry</a></li>
+                                <li><a href="{{func::set_url('/category/motors')}}">Motors</a></li>
+                                <li><a href="{{func::set_url('/category/handbags-accessories')}}">Handbags & Accessories</a></li>
+                                <li><a href="{{func::set_url('/category/experiences')}}">Experiences</a></li>
+                                <li><a href="{{func::set_url('/category/collectibles-furnitures')}}">Collectibles & Furnitures</a></li>
+                                <li><a href="{{func::set_url('/category/yachts')}}">Yachts</a></li>
+                                <li><a href="{{func::set_url('/category/aircrafts')}}">Aircrafts</a></li>
+                                <li><a href="{{func::set_url('/category/art-antiques')}}">Art & Antiques</a></li>
+                                <li><a href="{{func::set_url('/category/fine-wines-spirits')}}">Fine Wines & Spirits</a></li>
                             </ul>
                         </nav>
                         <!-- end of banner navigation -->
@@ -148,7 +148,7 @@
                                     <strong class="title">FEATURED</strong>
                                     <h1 style="font-weight: 300;">“Rees Rex”</h1>
                                     <p>One of the most complete and well-preserved skulls of any Tyrannosaurus rex ever discovered, is now available <br/>for sale.</p>
-                                    <a href="/listing/rees-rex-t-rex-skull" class="btn btn-primary">View</a>
+                                    <a href="{{func::set_url('/listing/rees-rex-t-rex-skull')}}" class="btn btn-primary">View</a>
                                 </div>
                             </div>
                         </div>
@@ -211,7 +211,7 @@
                                 <div class="text-box">
                                     <h1>Search &amp; Compare</h1>
                                     <p>Search and compare through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods.</p>
-                                    <a href="/category/handbags-accessories" class="btn btn-primary">View more</a>
+                                    <a href="{{func::set_url('/category/handbags-accessories')}}" class="btn btn-primary">View more</a>
                                 </div>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
                                     <strong class="title">Discover</strong>
                                     <h1>Why Luxify</h1>
                                     <p>We make online luxury shopping easier and more transparent.</p>
-                                    <a href="/why-luxify" class="btn btn-primary">View more</a>
+                                    <a href="{{func::set_url('/why-luxify')}}" class="btn btn-primary">View more</a>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -251,7 +251,7 @@
                     <div class="wrap">
                         <h5>Enjoy a new luxury property viewing experience</h5>
                     </div>
-                    <a href="/luxify-estates" class="btn btn-primary">View more</a>
+                    <a href="{{func::set_url('/luxify-estates')}}" class="btn btn-primary">View more</a>
                 </div>
             </div>
         </div>

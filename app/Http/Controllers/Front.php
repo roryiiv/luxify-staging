@@ -1832,9 +1832,27 @@ class Front extends Controller {
         $request->session()->put('currency', $code);
         return back();
     }
-    public function switchLanguage(Request $request, $code){
+    public function switchLanguage(Request $request, $code){    
         $updatelang = Language::updatelang($code);
-        return back();
+
+        $code = DB::table('languages')->where('id',$code)->value('lang_str');
+        if($code=='en'){
+            $langcode='';
+        }else{
+            $langcode=$code.'/';
+        }
+        $full_url = $request->header();
+        $host = 'http://'.$full_url['host'][0].'/';
+        $referer = $full_url['referer'][0];
+        $get = DB::table('languages')->get();
+        foreach ($get as $key) {
+            $referer = str_replace($host.$key->lang_str.'/','',$referer);
+        }
+        $last_url = str_replace($host,'',$referer);
+
+        $get_redirect_url = $host.$langcode.$last_url;
+
+        return redirect($get_redirect_url);
     }
 
     /* // for build hierarchy field

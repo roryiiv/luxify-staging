@@ -208,14 +208,14 @@
                                     {!! nl2br(e($listing->description)) !!}
                                 </p>
                                 @if(!empty($infos))
-                                    <h5 style="margin-top:45px;">{{ _t('Specifications', [], App::getLocale()) }}</h5>
+                                    <h5 style="margin-top:45px;">{{ Translation::translate('Specifications', [], App::getLocale()) }}</h5>
                                     <table class="table item-description" {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
                                         <thead>
                                         </thead>
                                         <tbody>
                                         @foreach($infos as $info)
                                           <tr>
-                                            <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ _t($info->label, [], App::getLocale()) }}</th>
+                                            <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ Translation::translate($info->label, [], App::getLocale()) }}</th>
                                             <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
                                           </tr>
                                         @endforeach

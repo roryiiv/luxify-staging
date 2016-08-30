@@ -467,7 +467,6 @@ class Panel extends Controller
         $error_arr = array();
 
         //$item->userId = Auth::user()->id;
-        // var_dump($_POST); exit;
 
         if ( isset($_POST['itemLocation']) && !empty($_POST['itemLocation']) ) {
             $item->countryId = $_POST['itemLocation'];
