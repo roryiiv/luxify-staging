@@ -365,16 +365,23 @@
                                                     $user = DB::table('users')->where('id',$products[$i]->userId)->first();
                                                     $featured_item = $user->featured_item;
                                                     $featured = json_decode($featured_item);
+                                                    $checked = '';
                                                     ?>
                                                     <td>
                                                     <?php
-                                                    if (in_array(($products[$i]->id), $featured)){
-                                                        $checked = "checked";
-                                                    }
-                                                    else
-                                                    {
-                                                        $checked ="";
-                                                    }
+                                                    $checked ='';
+                                                    if ($featured) {
+                                                      if (in_array(($products[$i]->id), $featured)){
+                                                          $checked = "checked";
+                                                      }
+                                                      else
+                                                      {
+                                                          $checked ="";
+                                                      }
+                                                    
+                                                    } else {
+                                                      $checked = ""; 
+                                                    } 
                                                     ?>
                                                      <input id="product-{{$i}}" type="checkbox" {{$checked}} name="checkbox[]" value="{{$products[$i]->id}}" dataid="{{$products[$i]->userId}}" class="FeaturedItem" style="margin-left:45%">
                                                     </td>

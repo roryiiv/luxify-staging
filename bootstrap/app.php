@@ -1,5 +1,10 @@
 <?php
 
+//require '';
+if (file_exists(realpath(__DIR__ . '/../../presskit/wp-load.php'))){
+  require (realpath(__DIR__ . '/../../presskit/wp-load.php'));
+}
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application

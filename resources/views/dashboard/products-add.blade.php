@@ -148,28 +148,19 @@
                         <div class="form-group">
                             <label for="itemCategory" class="col-sm-3 control-label">Item Category</label>
                             <div class="col-sm-9">
-                           
-                                <select id="itemCategory" name="itemCategory" class="form-control" data-id= required>
-                                    <option value="">--Please Select--</option>
-                                     <?php
-                                        $data = DB::table('category_2')->where('parent',0)->get();
-                                        foreach ($data as $value) {
-                                        echo "<option value='".$value->id."'>".$value->name."</option>";
+                                <select id="itemCategory" name="itemCategory" class="form-control" required>
 
-                                        }
-                                    ?>
+                                  <option value="">--Please Select--</option>
+                                  <?php $categories = func::build_categories('leaf'); ?>
+
+                                  @foreach($categories as $category)
+                                    <option value="{{ $category['id'] }}">{{ $category['hierarchy'] }}</option>
+                                  @endforeach
+
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="itemSubCategory" class="col-sm-3 control-label">Item Sub Category</label>
-                            <div class="col-sm-9">
-                           
-                                <select id="itemSubCategory" name="itemSubCategory" class="form-control" style="display: none">
-                                    <option value="">--Please Select--</option>
-                                </select>
-                            </div>
-                        </div>
+
                     </div>
                 </fieldset>
 
@@ -443,22 +434,6 @@
         }
     }
     $(document).ready(function () {
-
-        $('#itemCategory').on('change',function(){
-            var parent = $(this).val();
-            console.log(parent);
-            $.ajax({
-                url : '/api/ajax/category/'+parent,
-                method : 'get',
-                success: function(result){  
-                    $('#itemSubCategory').html(result);
-                    $('#itemSubCategory').show();
-                }
-            });
-           
-
-        });
-
         $('#editor-markdown').markdown();
 
         $('.actions ul li').click(function () {

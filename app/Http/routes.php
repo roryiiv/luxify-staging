@@ -13,10 +13,14 @@
 
 use App\Listings;
 
+
 Route::get('/buildHashedId', 'Front@updateHashed');
 //static front pages
 Route::get('/', function(){
     return View::make('index');
+});
+Route::get('press', function() {
+  return view('presskit');
 });
 Route::get('/about', function(){
     return view('about');
@@ -59,6 +63,8 @@ Route::get('datafeed/product/{id}', 'DataFeed@product_get');
 Route::get('datafeed/dealers', 'DataFeed@dealers_list');
 Route::get('datafeed/getTable/{tableName}', 'DataFeed@getTable');
 Route::post('datafeed/images/upload', 'DataFeed@downloadImageToS3');
+Route::post('datafeed/meta/update', 'DataFeed@updateMeta');
+Route::post('datafeed/meta/noMeta', 'DataFeed@getNoMetaRecords');
 
 // Open for public dealer application
 // TODO: add captcha to the application form form
@@ -84,8 +90,6 @@ Route::post('/update/{id}', 'Dashboard@FeaturedItem');
 Route::post('/api/ajax/checkemail/{email}', 'Front@EmailInUse');
 Route::post('/forget-password','LuxifyAuth@forgetPassword');
 Route::post('/reset-password','LuxifyAuth@resetPassword');
-Route::get('/api/ajax/category/{parent}', 'Dashboard@CategoryChoosen');
-
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 
@@ -147,17 +151,12 @@ Route::post('/panel/products/delete/{id}','Panel@products_delete');
 //Categories and Optional Fields
 Route::get('/panel/categories','Panel@categories');
 Route::get('/panel/categories/add','Panel@categories_add');
+Route::get('/panel/optional-fields','Panel@optional_fields');
+Route::get('/panel/optional-fields/add{id}','Panel@optional_fields_add');
 Route::post('/panel/categories','Panel@category_add');
 Route::get('/panel/categories/delete/{id}','Panel@category_delete');
 Route::get('/panel/categories/edit/{id}', 'Panel@category_edit');
 Route::post('/panel/category', 'Panel@category_update');
-
-Route::get('/panel/optional-fields','Panel@optional_fields');
-Route::get('/panel/optional-fields/add','Panel@optional_fields_add');
-Route::post('/panel/optional-fields/add','Panel@post_optional_fields_add');
-Route::get('/panel/optional-fields/delete/{id}','Panel@optional_fields_delete');
-Route::get('/panel/optional-fields/edit/{id}', 'Panel@optional_fields_edit');
-Route::post('/panel/optional-fields/edit/{id}', 'Panel@optional_fields_update');
 
 //Other Database related operations
 Route::get('/panel/categories/rebuild','Panel@cat_rebuild');

@@ -33,7 +33,7 @@ $subs = func::categories('all');
                                     @endforeach
                                 @endif
                             </select>
-                        </div>'
+                        </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="select-hold">
@@ -130,7 +130,7 @@ $subs = func::categories('all');
                 </ul>
             </div>
             <div class="form-row button-wrap">
-                <a href="#" class="btn cancel">Cancel</a>
+                <a data-toggle="collapse" href="#filter-drop" class="btn cancel">Cancel</a>
                 <button type="submit" class="btn btn-primary">Apply Filters</button>
             </div>
         </form>

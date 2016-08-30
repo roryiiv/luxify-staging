@@ -16,12 +16,6 @@
                 <li><a href="/panel/categories/add">Add Category</a></li>
             </ul>
         </li>
-        <li class="panel"><a role="button" data-toggle="collapse" data-parent=".navigation" href="#collapse21" aria-expanded="false" aria-controls="collapse21" class="collapsed"><i class="ti-clipboard"></i><span class="sidebar-title">Optional Field</span></a>
-            <ul id="collapse21" class="list-unstyled collapse">
-                <li><a href="/panel/optional-fields">Optional Field list</a></li>
-                <li><a href="/panel/optional-fields/add">Add Optional Field</a></li>
-            </ul>
-        </li>
 
         
 
