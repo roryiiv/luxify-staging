@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{func::genTitle('homepage', false)}}</title>
+    <title>{{func::genTitle('homepage', false)}}</title>
 @endsection
 
 @section('style')

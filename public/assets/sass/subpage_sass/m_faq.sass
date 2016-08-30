@@ -8,26 +8,51 @@
     font-weight: 300
     padding-bottom: 20px
   .FAQBox
+    margin: 15px 0
     text-align: left
     background-color: #ffffff
-    @include transition(color 3.0s linear)
+    padding:  0 0 8px 15px
+    border: 1px solid #ffffff
+    @include transition(all 0.2s linear)
     &:hover , &:focus
-      @include transition(color 3.0s linear)
-      background-color: #fbffe8
+      @include transition(all 0.2s linear)
+      border: 1px solid #eeeeee
+      background-color: #fcfaf5
   .FAQTitle
     color: #000
     font-size: 2.6rem
     padding: 20px 0 0px 0
     font-weight: 300
   .question
+    width: 100%
     color: #958867
     font-size: 1.8rem
-    padding: 20px 0 0px 0
+    padding-top: 10px
     font-weight: 100
+    padding-bottom: 8px
+    height: 4.2rem
+    .BigQA , .BigQAction
+      line-height: 2.8rem
+      display: table-cell
+      vertical-align: bottom
   .answer
+    width: 100%
+    line-height: 2.8rem
+    max-height: 0px
+    overflow: hidden
     font-size: 1.4rem
-    padding: 0px 0 20px 0
+    padding-bottom: 0px
     font-weight: 100
+    @include transition(all 0.5s linear)
   .BigQA
+    width: 15px
     font-size: 2.6rem
+    padding-right: 10px
+    float: left
+    min-width: 35px
+  .BigQAction
+    width: 95%
+    float: right
     padding-right: 5px
+  .max-height600px
+    max-height: 600px
