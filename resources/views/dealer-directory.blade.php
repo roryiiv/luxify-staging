@@ -1,10 +1,17 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Dealer Directory')
+@section('title')
+  <title>{{ func::genTitle('Dealer Directory', false)}}</title>
+@endsection
+
+@section('meta-data')
+<meta name="keywords" content="Luxury Sellers, Luxury Dealers, Luxury Marketplace">
+<meta name="description" content="A directory of Luxify trusted dealers. High quality luxury dealers around the world.">
+@endsection
 
 @section('style')
   <!-- include the site stylesheet -->
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/luxify.css">
   <style>
    h1 {
      margin: 30px 0 10px 0!important;
@@ -48,46 +55,52 @@
                  <hr>
               </div>
               @foreach($dealers as $dealer)
-                @if(is_numeric($dealer->companyName[0]))
-                  <div class="col-md-4">
-                    <a class='dealer-link' href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
-                  </div>
-                @endif
+              	@if ($dealer->companyName != null || is_array($dealer->companyName))
+              		@if(is_numeric($dealer->companyName[0]))
+	                  	<div class="col-md-4">
+	                    	<a class='dealer-link' href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
+	                  	</div>
+	                @endif
+              	@endif
+                
               @endforeach
 <?php 
   $curHeading = 'A';
   $printedHeading = false;
 ?>
-@foreach($dealers as $dealer) 
-  @if(!is_numeric($dealer->companyName[0]) && ctype_alpha($dealer->companyName[0]))
-    @if(strtoupper($dealer->companyName[0]) === $curHeading)
-       @if(!$printedHeading)
-          <div class="col-md-12">
-           <h1>{{$curHeading}}</h1>
-           <hr>
-          </div>
-         <?php $printedHeading = true; ?>
-       @endif
-      <div class="col-md-4">
-          <a class="dealer-link" href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
-      </div>
-    @else 
-      <?php 
-        $curHeading = strtoupper($dealer->companyName[0]); 
-        $printedHeading = false;
-      ?>
-       @if(!$printedHeading)
-          <div class="col-md-12">
-           <h1>{{$curHeading}}</h1>
-           <hr>
-          </div>
-         <?php $printedHeading = true; ?>
-       @endif
-      <div class="col-md-4">
-          <a class="dealer-link" href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
-      </div>
-    @endif
-  @endif
+@foreach($dealers as $dealer)
+	@if ($dealer->companyName != null || is_array($dealer->companyName))
+		@if(!is_numeric($dealer->companyName[0]) && ctype_alpha($dealer->companyName[0]))
+		    @if(strtoupper($dealer->companyName[0]) === $curHeading)
+		       @if(!$printedHeading)
+		          <div class="col-md-12">
+		           <h1>{{$curHeading}}</h1>
+		           <hr>
+		          </div>
+		         <?php $printedHeading = true; ?>
+		       @endif
+		      <div class="col-md-4">
+		          <a class="dealer-link" href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
+		      </div>
+		    @else 
+		      <?php 
+		        $curHeading = strtoupper($dealer->companyName[0]); 
+		        $printedHeading = false;
+		      ?>
+		       @if(!$printedHeading)
+		          <div class="col-md-12">
+		           <h1>{{$curHeading}}</h1>
+		           <hr>
+		          </div>
+		         <?php $printedHeading = true; ?>
+		       @endif
+		      <div class="col-md-4">
+		          <a class="dealer-link" href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
+		      </div>
+		    @endif
+		  @endif
+	@endif 
+  
 @endforeach
 
 <div class="col-md-12">
@@ -95,11 +108,14 @@
   <hr>
 </div>
 @foreach($dealers as $dealer)
-  @if(!ctype_alnum($dealer->companyName[0]))
-      <div class="col-md-4">
-          <a class="dealer-link" href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
-      </div>
-  @endif
+	@if ($dealer->companyName != null || is_array($dealer->companyName))
+		@if(!ctype_alnum($dealer->companyName[0]))
+			<div class="col-md-4">
+		    	<a class="dealer-link" href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
+		  	</div>
+	  	@endif
+	@endif
+  
 @endforeach
 
 </div> 
