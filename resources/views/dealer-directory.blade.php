@@ -1,8 +1,6 @@
 @extends('layouts.front')
 
-@section('title')
-  <title>{{ func::genTitle('Dealer Directory', false)}}</title>
-@endsection
+@section('title', func::genTitle('Dealer Directory', false))
 
 @section('meta-data')
 <meta name="keywords" content="Luxury Sellers, Luxury Dealers, Luxury Marketplace">
