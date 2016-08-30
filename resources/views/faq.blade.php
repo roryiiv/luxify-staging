@@ -16,7 +16,7 @@
 @endsection
 @section('content')
     <!-- main banner of the page -->
-    <section class="inner-banner parallax top-banner-image" style="background-image:url(../assets/images/faq_bg.jpg);">
+    <section class="inner-banner parallax top-banner-image"style="background-image:url({{func::img_url('banners/faq-main.jpg', '', '', false, true)}});"
         <div class="container">
             <div class="banner-text">
                 <div class="banner-center">

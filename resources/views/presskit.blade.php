@@ -47,7 +47,7 @@ if($getPostName!=''){
     <!-- end of banner -->
     <!-- main informative part of the page -->
     <main id="main" class="press-page">
-        <section class="inner-banner parallax top-banner-image" style="background-image:url(../assets/images/press_bg.jpg);">
+        <section class="inner-banner parallax top-banner-image" style="background-image:url({{func::img_url('banners/press-main.jpg', '', '', false, true)}});">
             <div class="container">
                 <div class="banner-text">
                     <div class="banner-center">
