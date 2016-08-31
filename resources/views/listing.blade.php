@@ -395,31 +395,34 @@
     @include('inc.send-message')
 @endsection
 @section('scripts')
-    <link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
     <script type="text/javascript" src="/assets/js/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
+
     <script>
 
         var popupSize = {
             width: 780,
             height: 450
         };
+        $(document).ready(function() {
+            initSlick();
+            $('.social-links > li > a.social-link').on('click', function(e){
+                var
+                        verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
+                        horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
 
-        $('.social-links > li > a.social-link').on('click', function(e){
-            var
-                    verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
-                    horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
-
-            var popup = window.open($(this).prop('href'), 'social',
-                    'width='+popupSize.width+',height='+popupSize.height+
-                    ',left='+verticalPos+',top='+horisontalPos+
-                    ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1');
-
-            if (popup) {
-                popup.focus();
-                e.preventDefault();
-            }
-
+                var popup = window.open($(this).prop('href'), 'social',
+                        'width='+popupSize.width+',height='+popupSize.height+
+                        ',left='+verticalPos+',top='+horisontalPos+
+                        ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1');
+                if (popup) {
+                    popup.focus();
+                    e.preventDefault();
+                }
+            });
         });
+
     </script>
     @if($user_id)
         {{ csrf_field() }}
@@ -429,10 +432,6 @@
     {{ csrf_field() }}
     <script>
         $(document).ready(function(){
-
-
-
-
             $(".3DTour").fancybox({
                 fitToView	: true,
                 width		: '90%',

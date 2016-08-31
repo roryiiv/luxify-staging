@@ -1,7 +1,7 @@
 @extends('layouts.front')
 <?php
-
-$getPostName = (isset($_GET['release']))?$_GET['release']:'';
+$getPostName = (isset($release) && $release !='')?$release:'';
+$getPostName = (isset($_GET['release']) && $getPostName == '' )?$_GET['release']:$getPostName;
 //
 if($getPostName!=''){
     global $post;

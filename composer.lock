@@ -60,11 +60,7 @@
                 "laravel 5",
                 "markdown extra"
             ],
-<<<<<<< HEAD
-            "time": "2016-08-24 05:17:47"
-=======
             "time": "2016-08-26 02:00:13"
->>>>>>> development-hk
         },
         {
             "name": "aws/aws-sdk-php",

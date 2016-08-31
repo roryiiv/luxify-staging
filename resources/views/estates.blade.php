@@ -282,5 +282,15 @@
     <!-- end of main part -->
 @endsection
 @section('scripts')
+    <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            initSlick();
+        });
+    </script>
     @include('inc.send-message-script')
 @endsection

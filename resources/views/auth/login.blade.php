@@ -32,7 +32,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
 <html lang="en" style="height: 100%">
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Member Login- Luxify- Asia's leading marketplace for luxury</title>
@@ -177,7 +177,6 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
  
   
 </style>
-    </style>
 </head>
 
 <body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
@@ -271,13 +270,21 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
 
     <!--require for main.js-->
-    <script src="/assets/js/parallax.js"></script>
-    <script src="/assets/js/carousel.js"></script>
-    <script src="/assets/js/ajaxchimp.js"></script>
-    <script src="/assets/js/jquery.counterup.min.js"></script>
-    <script src="/assets/js/jquery.slick.js"></script>
-    <script src="/assets/js/jquery.IonRangeSlider.js"></script>
-    <script src="/assets/js/jquery.main.js"></script>
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
+    <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.counterup.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jarallax.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.IonRangeSlider.js"></script>
+    <script type="text/javascript" src="/assets/js/common.js"></script>
+
+
+
+    <script type="text/javascript" src="/assets/js/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.customForms.js"></script>
+
+
+
     <script>
     $(document).ready(function() {
         @if(isset($_GET['err']))
@@ -351,22 +358,20 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
 
             }
         });
+        $('.dropdown-toggle').dropdown().hover(function() {
+            $(this).dropdown('toggle');
+        }, function(){
+
+        });
+        $('.dropdown-menu').hover(function(){
+                },
+                function(e){
+                    $(this).dropdown('toggle');
+                    e.stopPropagation();
+                })
     });
-    $('.dropdown-toggle').dropdown().hover(function() {
-        $(this).dropdown('toggle');
-    }, function(){
-    
-    });
-    $('.dropdown-menu').hover(function(){
-        }, 
-        function(e){
-          $(this).dropdown('toggle');
-          e.stopPropagation();
-        })
+
     </script>
-<!--    <a href="#" class="login_to_facebook"></i>F</a>
-    <a href="#" class="login_to_linkedin"></i>L</a>
-    <a href="#" class="login_to_twitter"></i>T</a>-->
 
   </body>
 </html>
