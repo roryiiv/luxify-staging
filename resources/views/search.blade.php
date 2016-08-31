@@ -108,10 +108,10 @@
         			   	   				</div>
         			     			</div>
                    					@if(($i+1)%3 ===0)
-                     					<div class="clearfix visible-md-block"></div>
+                     					<div class="clearfix visible-md-block visible-lg-block hr-line"></div>
                    					@endif
                    					@if(($i+1)%2 ===0)
-                     					<div class="clearfix visible-sm-block"></div>
+                     					<div class="clearfix visible-sm-block hr-line"></div>
                    					@endif
                  				@endfor
                				@else
