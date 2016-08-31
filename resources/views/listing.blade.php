@@ -422,11 +422,6 @@ $('.social-links > li > a.social-link').on('click', function(e){
 
 });
 </script>
-@if($user_id)
-{{ csrf_field() }}
-<link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">
-<script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
-@endif
 {{ csrf_field() }}
 <script>
   $(document).ready(function(){
