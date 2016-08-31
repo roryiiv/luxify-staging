@@ -370,8 +370,9 @@
 					$rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
 					$rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
 					?>
-					<div>
-					</div>
+					    <div>
+						<span class="price">{{ $mprice_format }}</span>
+					    </div>
 					<div class="country-container">
 					    <span class="country">{{$rel->country}}</span>
 					</div>
@@ -398,6 +399,7 @@
 <link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
 <script type="text/javascript" src="/assets/js/jquery.fancybox-thumbs.js?v=1.0.7"></script>
 <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
 <script>
 
 var popupSize = {
@@ -425,6 +427,7 @@ $('.social-links > li > a.social-link').on('click', function(e){
 {{ csrf_field() }}
 <script>
   $(document).ready(function(){
+    initSlick();
     $(".3DTour").fancybox({
   	  fitToView	: true,
   	  width		: '90%',
