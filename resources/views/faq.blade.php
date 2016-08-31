@@ -18,11 +18,11 @@
     <!-- main banner of the page -->
     <section class="inner-banner parallax top-banner-image"style="background-image:url({{func::img_url('banners/faq-main.jpg', '', '', false, true)}});"
         <div class="container">
-            <div class="banner-text">
+            <div class="banner-text faq-class">
                 <div class="banner-center">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1>Frequently Asked Questions </h1>
+                            <h1>Frequently Asked Questions</h1>
                         </div>
                     </div>
                 </div>
@@ -286,8 +286,11 @@
         $(document).ready(function(){
 
             $('.FAQBox').click(function(e) {
+                console.log('b');
+                var $this = $(this).find('.answer');
                 $('.max-height600px').removeClass('max-height600px');
-                $(this).find('.answer').addClass('max-height600px');
+                $this.addClass('max-height600px');
+
             });
 
 

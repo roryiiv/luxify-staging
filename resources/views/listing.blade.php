@@ -428,62 +428,59 @@ $('.social-links > li > a.social-link').on('click', function(e){
 @endif
 {{ csrf_field() }}
 <script>
-$(document).ready(function(){
-
-
-
-
+  $(document).ready(function(){
     $(".3DTour").fancybox({
-	fitToView	: true,
-	width		: '90%',
-	height		: '90%',
-	autoSize	: true,
-	closeClick	: false,
-	openEffect	: 'none',
-	closeEffect	: 'none',
-	arrows: false,
-	mouseWheel: false,
+  	  fitToView	: true,
+  	  width		: '90%',
+  	  height		: '90%',
+  	  autoSize	: true,
+  	  closeClick	: false,
+  	  openEffect	: 'none',
+  	  closeEffect	: 'none',
+  	  arrows: false,
+  	  mouseWheel: false,
     });
-
+  
     $(".fancybox-thumb").fancybox({
-	padding: 2,
-	fitToView	: false,
-	width		: '70%',
-	height		: '70%',
-	autoSize	: false,
-	closeClick	: false,
-	openEffect	: 'none',
-	closeEffect	: 'none',
-	helpers : {
-	    thumbs  : {
-		width : 50,
-		height  : 50
-	    }
-	}
+  	  padding: 2,
+  	  fitToView	: false,
+  	  width		: '70%',
+  	  height		: '70%',
+  	  autoSize	: false,
+  	  closeClick	: false,
+  	  openEffect	: 'none',
+  	  closeEffect	: 'none',
+  	  helpers : {
+  	    thumbs  : {
+  	  	  width : 50,
+  	  	  height  : 50
+  	    }
+  	  }
     });
+
     $('[data-toggle="tooltip"]').tooltip();
-
+  
     $("img.listing-img, img.product-img").unveil(300, function() {
-	$(this).load(function() {
-	    $(this).removeClass('listing-img');
-	    $(this).hide();
-	    $(this).fadeIn('slow');
-	    if(isMobile()){
-		$('.first-image').css({width:$('body').width()+'px'});
-		if($(this).hasClass('first-img')){
-		    var pHiehgt = (330 - $('.first-img').height())/2;
-		    console.log(pHiehgt);
-		    if(pHiehgt > 0 ){
-			$(this).css({'margin-top':pHiehgt+'px'})
-		    }
-		}
-	    }else{
-		$('.first-image').removeClass('first-image');
-	    }
-	});
-    });
-
-});
+  	  $(this).load(function() {
+  	    $(this).removeClass('listing-img');
+  	    $(this).hide();
+  	    $(this).fadeIn('slow');
+  	    if(isMobile()){
+  		    $('.first-image').css({width:$('body').width()+'px'});
+  		if($(this).hasClass('first-img')){
+  		    var pHiehgt = (330 - $('.first-img').height())/2;
+  		    console.log(pHiehgt);
+  		    if(pHiehgt > 0 ){
+  			$(this).css({'margin-top':pHiehgt+'px'})
+  		    }
+  		}
+  	    }else{
+  		$('.first-image').removeClass('first-image');
+  	    }
+  	});
+      });
+  
+  });
 </script>
     @include('inc.send-message-script')
 @endsection

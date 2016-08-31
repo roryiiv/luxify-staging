@@ -2,7 +2,6 @@
 <?php
 
 $getPostName = isset($release)? $release :'';
-//
 if(!empty($getPostName)){
     global $post;
     $queryArr = array(

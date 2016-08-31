@@ -1,5 +1,7 @@
 @import "compass/css3"
-
+.faq-class
+  .row
+    margin-right: 0px
 .faq-page
   .title
     color: #000
@@ -43,7 +45,7 @@
     font-size: 1.4rem
     padding-bottom: 0px
     font-weight: 100
-    @include transition(all 0.5s linear)
+    @include transition(all 0.1s ease-out)
   .BigQA
     width: 15px
     font-size: 2.6rem
@@ -56,3 +58,4 @@
     padding-right: 5px
   .max-height600px
     max-height: 600px
+    @include transition(all 0.5s ease-out)

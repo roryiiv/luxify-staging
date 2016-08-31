@@ -20,7 +20,6 @@
       }
       img.listing-img {
         opacity: 1;
-        //transition: opacity .3s ease-in;
       }
     </style>
 @endsection
@@ -143,6 +142,9 @@
 	</main>
 @endsection
 @section('scripts')
+
+    <script type="text/javascript" src="/assets/js/jquery.IonRangeSlider.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
     <script>
     $(document).ready(function(){
         var newstart = $('#startrange').val(),
@@ -156,6 +158,12 @@
             }else{
                 console.log('error');
             }
+        });
+        $("img.listing-img").unveil(300, function() {
+            $(this).load(function() {
+                $(this).hide();
+                $(this).fadeIn('slow');
+            });
         });
         function validatingrange(start,end){
             start = parseInt(start);
@@ -239,26 +247,16 @@
             $('#range').val($('#startrange').val()+';'+$('#endrange').val());
         }
 
-        $("img.listing-img").unveil(300, function() {
-          $(this).load(function() {
-             $(this).hide();
-             $(this).fadeIn('slow');
-          });
-        });
+
     });
     </script>
     @if(Auth::user())
         {{ csrf_field() }}
         <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
-        <script>
-        $(document).ready(function(){
-        });
-        </script>
     @endif
     @if(Auth::user() && Auth::user()->role == 'admin')
       {{ csrf_field() }}
-  
     @endif
     @include('inc.send-message-script')
 @endsection
