@@ -290,6 +290,7 @@
         $(document).ready(function() {
 
             initSlick();
+            initBackgroundImage();
         });
     </script>
     @include('inc.send-message-script')
