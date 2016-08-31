@@ -70,9 +70,9 @@
                                                     <img class='product-img' src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $madded = func::is_wishlist(Auth::user()->id, $more->id) == 1 ? ' added' : ''; ?>
-                                                        <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
+                                                        <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="slide-favourite favourite{{ $madded }}"><span class="icon-heart"></span></a>
                                                     @else
-                                                        <a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
+                                                        <a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="slide-favourite favourite" href="#"><span class="icon icon-heart"></span></a>
                                                     @endif
                                                 </div>
                                             </a>

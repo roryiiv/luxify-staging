@@ -168,15 +168,15 @@ function clientsCarousel(){
 }
 
 function mailChimpSub(){
-    $('#mailchimp').ajaxChimp({
-        callback: mailchimpCallback,
-        url: "http://luxify.us8.list-manage.com/subscribe/post?u=43de99b343f47ff032f021519&amp;id=40bee79be6"
-        //http://oscodo.us9.list-manage.com/subscribe/post?u=aef5e76b30521b771cf866464&id=f9f9e8db45
-    });
-    function mailchimpCallback(resp) {
-        if (resp.result === 'success') {
-            $('#mailchimp .subscription-success').html('<i class="icon_check_alt2"></i>' + resp.msg).slideDown(1000);
-            $('#mailchimp .subscription-error').slideUp(500);
+	$('#mailchimp').ajaxChimp({
+		callback: mailchimpCallback,
+		url: "https://luxify.us8.list-manage.com/subscribe/post?u=43de99b343f47ff032f021519&amp;id=40bee79be6"
+		//http://oscodo.us9.list-manage.com/subscribe/post?u=aef5e76b30521b771cf866464&id=f9f9e8db45
+	});
+	function mailchimpCallback(resp) {
+		 if (resp.result === 'success') {
+			$('#mailchimp .subscription-success').html('<i class="icon_check_alt2"></i>' + resp.msg).slideDown(1000);
+			$('#mailchimp .subscription-error').slideUp(500);
 
         } else if(resp.result === 'error') {
             $('#mailchimp .subscription-success').slideUp(500);

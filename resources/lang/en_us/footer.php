@@ -24,4 +24,5 @@ return[
     'policy' => 'Privacy Policy',
     'companyName' => 'Luxify Limited.',
     'rightReserved' => 'All Rights Reserved',
+    'faq' => 'FAQs',
 ];

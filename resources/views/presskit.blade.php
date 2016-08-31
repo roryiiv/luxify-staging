@@ -1,9 +1,8 @@
 @extends('layouts.front')
 <?php
-$getPostName = (isset($release) && $release !='')?$release:'';
-$getPostName = (isset($_GET['release']) && $getPostName == '' )?$_GET['release']:$getPostName;
-//
-if($getPostName!=''){
+
+$getPostName = isset($release)? $release :'';
+if(!empty($getPostName)){
     global $post;
     $queryArr = array(
         'category_name' => 'blog-post',
@@ -16,7 +15,7 @@ if($getPostName!=''){
         wp_reset_postdata();
     endwhile;
    }else{
-       $getPostID = (isset($_GET['release']) && intval($_GET['release']))?intval($_GET['release']):'';
+       $getPostID = (isset($release) && intval($release))?intval($release):'';
    }
 ?>
 @section('title')

@@ -48,7 +48,7 @@
 	<main id="main">
 		<div class="container">
 			<!-- new grid -->
-            <div class="row">
+            <div class="row" style="margin-left: 0px; margin-right: 0px;">
                   <div class="col-lg-12">
 						<div class="filter-holder">
 							<!-- breadcrumb -->
@@ -57,6 +57,7 @@
 									<a href="/">Home</a>
 								</li>
 								<li class="active">{{ $title_cat }}</li>
+                <li class="result-count" style="font-style: italic;">Showing {{ number_format($total)}} matching results</li>
 							</ol>
 							<!-- end of breacrumb -->
 							<!-- filter block -->
@@ -115,10 +116,10 @@
                                             </div>
                                         </div>
                                         @if(($i+1)%3 ===0)
-                                            <div class="clearfix visible-md-block visible-lg-block"></div>
+                                            <div class="clearfix visible-md-block visible-lg-block hr-line"></div>
                                         @endif
                                         @if(($i+1)%2 ===0)
-                                            <div class="clearfix visible-sm-block"></div>
+                                            <div class="clearfix visible-sm-block hr-line"></div>
                                         @endif
                                     @endfor
                                 @else

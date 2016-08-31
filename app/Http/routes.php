@@ -19,8 +19,15 @@ Route::get('/buildHashedId', 'Front@updateHashed');
 Route::get('/', function(){
     return View::make('index');
 });
-Route::get('press', function() {
-  return view('presskit');
+Route::get('/press', function(){
+  return view('presskit'); 
+});
+Route::get('press/{id}', function($id) {
+  if ($id) {
+    return view('presskit', ['release' => $id]);
+  } else {
+    return view('presskit');
+  }
 });
 Route::get('/about', function(){
     return view('about');
@@ -53,9 +60,6 @@ Route::get('/why-luxify', function(){
 });
 Route::get('/pricing', function(){
     return view('pricing');
-});
-Route::get('/presskit', function(){
-    return view('presskit');
 });
 Route::get('/faq', function(){
     return view('faq');

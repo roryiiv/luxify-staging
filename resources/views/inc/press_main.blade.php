@@ -83,10 +83,10 @@ $newsLogoImgArr = array(
                 <div class="col-lg-3 col-sm-4 col-mb-4 press-releases-content">
                     <div class="press-releases-text">
                         <div class="press-releases-title">
-                            <a href="?release=<?php echo $post->post_name;?>"><?php echo $out; ?></a>
+                            <a href="/press/{{$post->post_name}}">{{ $out }}</a>
                         </div>
                         <div class="press-releases-date">
-                            <?php echo get_the_time('F j , Y'); ?>
+                             {{  get_the_time('F j , Y') }}
                         </div>
                     </div>
                 </div>

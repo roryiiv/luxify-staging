@@ -28,6 +28,7 @@ return [
     'more_dealerApplication'=>'Dealer Application',
     'more_luxifyEstates'=>'Luxify Estates',
     'more_contactUs'=>'Contact Us',
+    'more_faq' => 'FAQs',
 
     //* Login menu - guest
     'signUp'=>'Sign up',
