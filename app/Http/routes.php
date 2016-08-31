@@ -60,6 +60,9 @@ Route::get('/presskit', function(){
 Route::get('/faq', function(){
     return view('faq');
 });
+Route::get('/sitemap', function(){
+    return view('sitemap');
+});
 Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
 Route::post('datafeed/product/update/{id}', 'DataFeed@product_update');
