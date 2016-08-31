@@ -300,9 +300,9 @@
 					    <img class='product-img' src="/img/spin.gif" data-src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
 					    @if(Auth::user())
 						<?php $madded = func::is_wishlist($user_id, $more->id) == 1 ? ' added' : ''; ?>
-						<a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
+						<a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="slide-favourite favourite{{ $madded }}"><span class="icon-heart"></span></a>
 					    @else
-						<a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
+						<a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="slide-favourite favourite" href="#"><span class="icon icon-heart"></span></a>
 
 					    @endif
 					</div>
@@ -356,9 +356,9 @@
 					    <img class='product-img' src="/img/spin.gif" data-src="{{ func::img_url($rel_img, 300, '', true) }}" alt="image description">
 					    @if(Auth::user())
 						<?php $rel_added = func::is_wishlist($user_id, $rel->id) == 1 ? ' added' : ''; ?>
-						<a id="{{ $rel->id }}" href="javascript:;" data-id="{{ $rel->id }}" class="favourite{{ $rel_added }}"><span class="icon-heart"></span></a>
+						<a id="{{ $rel->id }}" href="javascript:;" data-id="{{ $rel->id }}" class="slide-favourite favourite{{ $rel_added }}"><span class="icon-heart"></span></a>
 					    @else
-						<a data-toggle="modal" data-listing="{{$rel->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
+						<a data-toggle="modal" data-listing="{{$rel->id}}" data-target="#login-form" class="slide-favourite favourite" href="#"><span class="icon icon-heart"></span></a>
 					    @endif
 					</div>
 				    </a>

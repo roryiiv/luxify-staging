@@ -721,7 +721,7 @@ class Front extends Controller {
         $listings->setPath($ref);
 
 
-        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta]);
+        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta, 'total' => $listings->total()]);
     }
 
     public function product_luxify_estates() {
@@ -1724,7 +1724,7 @@ class Front extends Controller {
         $ref = preg_replace($re, "", $ref);
         $listings->setPath($ref);
 
-        return view('search', ['listings' => $listings, 'search' => $search, 'filters' => $filters]);
+        return view('search', ['listings' => $listings, 'search' => $search, 'filters' => $filters, 'total' => $listings->total()]);
     }
 
     private function get_column($column, $array) {
