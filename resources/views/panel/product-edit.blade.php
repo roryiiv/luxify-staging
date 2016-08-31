@@ -533,6 +533,14 @@
     
     <?php
     $otherImages = json_decode($item->images);
+    $s3_url = 'https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
+    foreach ($otherImages as $key => $img) {
+    	$check_img = get_headers($s3_url . $img);
+        if($check_img[0] != 'HTTP/1.1 200 OK'){
+	        unset($otherImages[$key]);
+        }
+    }
+    
     //check if the mainImage is exist on images
     $check_mainImage = array();
     $check_mainImage[] = $item->mainImageUrl;
@@ -540,13 +548,17 @@
     $images = array();
     if(count($checking)===0){
         //images is not contain mainImageurl
-        $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
+        $check_mainImg = get_headers($s3_url . $item->mainImageUrl);
+        
+        if($check_mainImg[0] == 'HTTP/1.1 200 OK'){
+            $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
+        }
 
         for($i = 0; $i < count($otherImages); $i++) {
             $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
         }
     }else{
-        //images is not contain mainImageurl
+        //images is contain mainImageurl
             for($i = 0; $i < count($otherImages); $i++) {
             $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
         }
