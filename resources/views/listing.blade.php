@@ -46,11 +46,21 @@
         <!-- banner image -->
         <section class="images">
             <?php
-                $otherImages = json_decode($listing->images);
+                $otherImages = json_decode($listing->images, true);
                 //check if the mainImage is exist on images
                 $check_mainImage = array();
                 $check_mainImage[] = $listing->mainImageUrl;
-                $checking = array_intersect($otherImages, $check_mainImage);
+
+                // fix issue here.
+                if(is_array($otherImages)){
+                	$checking = array_intersect($otherImages, $check_mainImage);
+                }else{
+                	if ($otherImages != null) {
+                		$check_mainImage[] = $otherImages;
+                	}
+                	$checking = $check_mainImage;
+                }
+                
                 if(count($checking)===0){
                    $images = json_decode($listing->images);
                    if (!empty($listing->mainImageUrl)) {

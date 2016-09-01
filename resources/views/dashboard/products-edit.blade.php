@@ -517,11 +517,18 @@
         	unset($otherImages[$key]);
         }
     }
-    
     //check if the mainImage is exist on images
     $check_mainImage = array();
     $check_mainImage[] = $item->mainImageUrl;
-    $checking = array_intersect($otherImages, $check_mainImage);
+    // fix issue here.
+    if(is_array($otherImages)){
+    	$checking = array_intersect($otherImages, $check_mainImage);
+    }else{
+    	if ($otherImages != null) {
+    		$check_mainImage[] = $otherImages;
+    	}
+    	$checking = $check_mainImage;
+    }
     $images = array();
     if(count($checking)===0){
         //images is not contain mainImageurl
@@ -533,8 +540,8 @@
         }
     }else{
         //images is contain mainImageurl
-            for($i = 0; $i < count($otherImages); $i++) {
-            $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
+        for($i = 0; $i < count($checking); $i++) {
+        $images[] = array('path'=>func::img_url($checking[$i], 100, ''), 'filename'=>$checking[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($checking[$i]));
         }
     }
     ?>
