@@ -266,8 +266,8 @@ class DataFeed extends Controller
         } else if ($meta['object_type'] === 'images') {
           Meta::saveorupdate($meta['object_id'], $meta['meta'], 'images');
         }
-        echo json_encode(['result' => 1]);
       }
+      echo json_encode(['result' => 1]);
     } else {
       echo json_encode(['result' => 0, 'message' => 'Please provide enough parameters.']); 
     } 
