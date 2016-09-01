@@ -159,7 +159,7 @@
                   <?php $logo = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
                   <div class="col-md-5 col-sm-offset-1 dealer_box">
                       <div class="col-md-12" style="margin-bottom: 35px;">
-                        <img {{schema::itemProp('logo')}} {{schema::itemType('ImageObject') }}style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}"  title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}">
+                        <img {{schema::itemProp('logo')}} {{schema::itemType('ImageObject') }} style="width:50%; margin: 0px auto; display: block;" src="{{ func::img_url($logo, 360, '', true) }}"  title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}">
                       </div>
                       <div class="col-md-12">
                         @if(isset($dealer->country) && !empty($dealer->country))
@@ -356,9 +356,14 @@
 @endsection
 @section('scripts')
 
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
     <script>
         $(document).ready(function() {
                               
+          initSlick();
+          initBackgroundImage();
           $("img.product-img").unveil(300, function() {
             $(this).load(function() {
                $(this).hide();
@@ -449,6 +454,7 @@
             });
         });
         </script>
+
     @endif
     @include('inc.send-message-script')
 @endsection
