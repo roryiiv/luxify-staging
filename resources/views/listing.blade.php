@@ -64,17 +64,22 @@
         <section class="images" id="listing-image">
             <?php
             $listing->images = str_replace('\"', '"', $listing->images);
-            $otherImages = json_decode($listing->images);
-		
-//var_dump(json_last_error());
+            $otherImages = json_decode($listing->images, true);
             //check if the mainImage is exist on images
             $check_mainImage = array();
             $check_mainImage[] = $listing->mainImageUrl;
             $otherImages = is_array($otherImages)? $otherImages: array(); 
 
 //var_dump($otherImage); exit();
-
-            $checking = array_intersect($otherImages, $check_mainImage);
+            $checking = array();
+            if(is_array($otherImages)){
+                $checking = array_intersect($otherImages, $check_mainImage);
+            }else{
+                if ($otherImages != null) {
+                    $check_mainImage[] = $otherImages;
+                }
+                $checking = $check_mainImage;
+            }
             if(count($checking)===0){
                 $images = json_decode($listing->images);
                 if (!empty($listing->mainImageUrl)) {
