@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Config;
 
+use Stevebauman\Translation\Facades\Translation;
+
 class Functions
 {
     static function genTitle($pageName,  $categories) {
@@ -350,16 +352,27 @@ class Functions
             if($languageId !='' && !empty($languageId)){
                 $return = DB::table('languages')->where('id',$languageId)->value('code');
             }else{
-                if(Session::has('lang')){
-                    $return = Session::get('lang');
+                if(Translation::getRoutePrefix()==null){
+                    $return = Config::get('app.locale');
                 }else{
-                    $return = Config::get('app.locale');                  
+                    $return = DB::table('languages')->where('lang_str',Translation::getRoutePrefix())->value('code');
                 }
             }
             return $return;
         }else{
-            return Session::has('lang') ? Session::get('lang') : Config::get('app.locale');
+             $return = DB::table('languages')->where('lang_str',Translation::getRoutePrefix())->value('code');
+            return (Translation::getRoutePrefix()!=null) ?$return: Config::get('app.locale');
         }
+    }
+    public static function set_url($url){
+        $prefix = Translation::getRoutePrefix();
+        if($prefix==null || $prefix=='en'){
+            $prefix='';
+        }else{
+            $prefix='/'.$prefix;
+        }
+        return $prefix.$url;
+
     }
 	/*
     public static function leafNode() {

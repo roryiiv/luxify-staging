@@ -30,7 +30,7 @@ See http://www.geoplugin.com/webservices/php for more specific details of this f
 class Geoplugin {
 	
 	//the geoPlugin server
-	var $host = 'https://www.geoplugin.net/php.gp?ip={IP}&base_currency={CURRENCY}';
+	var $host = '//www.geoplugin.net/php.gp?ip={IP}&base_currency={CURRENCY}';
 		
 	//the default base currency
 	var $currency = 'USD';
