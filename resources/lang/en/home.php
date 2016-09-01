@@ -27,6 +27,8 @@ return[
     'header_more_dealerApplication'=>'Dealer Application',
     'header_more_luxifyEstates'=>'Luxify Estates',
     'header_more_contactUs'=>'Contact Us',
+    'header_more_faq'=>'FAQs',
+
     //*menu Auth
     'header_menu_welcome'=>'Welcome',
     'header_menu_adminPanel'=>'Admin Panel',

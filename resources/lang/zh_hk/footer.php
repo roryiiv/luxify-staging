@@ -22,4 +22,5 @@ return[
     'policy' => '私隱政䇿',
     'companyName' => 'Luxify Limited.',
     'rightReserved' => '版權所有',
+    'faq' => '常見問題',
 ];

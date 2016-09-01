@@ -56,7 +56,8 @@ class Listings extends Model
       'userId',
       'description',
       'additionalInfo',
-      'html_desc'
+      'html_desc',
+      'metaProcessed',
       ];
     
     protected $rules = array(

@@ -70,9 +70,9 @@
                                                     <img class='product-img' src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
                                                     @if(Auth::user())
                                                         <?php $madded = func::is_wishlist(Auth::user()->id, $more->id) == 1 ? ' added' : ''; ?>
-                                                        <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
+                                                        <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="slide-favourite favourite{{ $madded }}"><span class="icon-heart"></span></a>
                                                     @else
-                                                        <a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
+                                                        <a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="slide-favourite favourite" href="#"><span class="icon icon-heart"></span></a>
                                                     @endif
                                                 </div>
                                             </a>
@@ -186,7 +186,7 @@
         <!-- main of main content -->
         <!-- benefit block -->
         <div class="benefit-block parallax" style="background-image:url({{func::img_url('banners/estates-benefits-main.jpg', '', '', false, true)}});">
-            <div class="container">
+            <div class="container" style="z-index: 4;">
                 <!-- new grid -->
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
@@ -282,5 +282,16 @@
     <!-- end of main part -->
 @endsection
 @section('scripts')
+    <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            initSlick();
+            initBackgroundImage();
+        });
+    </script>
     @include('inc.send-message-script')
 @endsection

@@ -26,6 +26,7 @@ return[
     'more_dealerApplication'=>'成为经销商',
     'more_luxifyEstates'=>'乐喜富的房产体验',
     'more_contactUs'=>'联系我们',
+    'more_faq' => '常见问题',
 
     //* Login menu - guest
     'welcome'=>'欢迎',

@@ -168,6 +168,8 @@
 	</main>
 @endsection
 @section('scripts')
+
+
     <script>
     $(document).ready(function(){
         var newstart = $('#startrange').val(),

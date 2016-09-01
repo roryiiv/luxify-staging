@@ -1,15 +1,13 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{func::genTitle('homepage', false)}}</title>
+    <title>{{func::genTitle('homepage', false)}}</title>
 @endsection
 
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">
     <style>
-
-
         .bg-img {
             z-index: -1010;
         }
@@ -230,7 +228,7 @@
         </div>
         <!-- information block with image -->
         <div class="imageinfo-block parallax" style="background-image:url({{func::img_url('realestate.jpg')}})">
-            <div class="container">
+            <div class="container" style="z-index: 4;">
                 <div class="info-wrap heading">
                     <h2 class="h1">3D Virtual Property Tour</h2>
                     <div class="wrap">
@@ -275,10 +273,29 @@
     <!-- end of main part -->
 @endsection
 @section('scripts')
+    <script type="text/javascript" src="/assets/js/jquery.youtubebackground.js"></script>
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
+
+
+    <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
+
+    <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
+
     <script>
 
         $(document).ready(function(){
+
+
+            //index home
+            clientsCarousel();
+            mailChimpSub();
+
+            //index category
+            suggestedSearchResults();
+            search_ico();
+
             if(!isMobile()){
+
                 $('#video_bg').YTPlayer({
                     fitToBackground: true,
                     videoId: '15VwTs0nFlM',

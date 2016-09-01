@@ -16,6 +16,10 @@ if (file_exists(realpath(__DIR__ . '/../../presskit/wp-load.php'))){
 |
 */
 
+if(file_exists('../public/blog/wp-load.php'))
+    require '../public/blog/wp-load.php';
+
+
 $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );

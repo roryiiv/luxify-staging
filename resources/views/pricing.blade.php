@@ -73,7 +73,7 @@
         <!-- main of main content -->
         <!-- benefit block -->
         <div class="benefit-block parallax" style="background-image:url(assets/images/banner-technology.jpg);">
-            <div class="container">
+            <div class="container" style="z-index:4;">
                 <!-- new grid -->
                       <div class="row">
                           <div class="col-sm-10 col-sm-offset-1">
