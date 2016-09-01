@@ -249,7 +249,7 @@
 		    <div class="description">
 			<h5>Description</h5>
 			<p {{schema::itemProp('description')}} {{schema::itemType('Text')}}>
-			    {!! nl2br(e($listing->description)) !!}
+			    {!! Markdown::parse($listing->description) !!}
 			</p>
 			@if(!empty($infos))
 			    <h5 style="margin-top:45px;">{{ _t('Specifications', [], App::getLocale()) }}</h5>
