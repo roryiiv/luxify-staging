@@ -63,33 +63,27 @@
         <!-- banner image -->
         <section class="images" id="listing-image">
             <?php
-            $listing->images = str_replace('\"', '"', $listing->images);
-            $otherImages = json_decode($listing->images, true);
-            //check if the mainImage is exist on images
-            $check_mainImage = array();
-            $check_mainImage[] = $listing->mainImageUrl;
-            $otherImages = is_array($otherImages)? $otherImages: array(); 
+                //process the image json before decode
+				        $listing->images = str_replace('\"', '"', $listing->images);
+                $otherImages = json_decode($listing->images, true);
+                //check if the mainImage is exist on images
+                $mainImage = array();
+                $mainImage[] = $listing->mainImageUrl;
 
-//var_dump($otherImage); exit();
-            $checking = array();
-            if(is_array($otherImages)){
-                $checking = array_intersect($otherImages, $check_mainImage);
-            }else{
-                if ($otherImages != null) {
-                    $check_mainImage[] = $otherImages;
+                $checking = array();
+                // fix issue here.
+                if(is_array($otherImages) && count($otherImages) > 0){
+                	$checking = array_intersect($otherImages, $mainImage);
                 }
-                $checking = $check_mainImage;
-            }
-            if(count($checking)===0){
-                $images = json_decode($listing->images);
-                if (!empty($listing->mainImageUrl)) {
-                    // prepend main image to the images array
-                    array_unshift($images, $listing->mainImageUrl);
+                if(count($checking) === 0){
+                    $images = json_decode($listing->images);
+                    if (!empty($listing->mainImageUrl)) {
+                        // prepend main image to the images array
+                        array_unshift($images, $listing->mainImageUrl);
+                    }
+                } else {
+                    $images = json_decode($listing->images);
                 }
-            }else{
-                $images = json_decode($listing->images);
-            }
-
             ?>
             <ul>
                 @if($listing->aerialLook3DUrl)
@@ -100,40 +94,40 @@
                                     <br />
                                     <span style="margin-top: 20px; z-index:2" class="glyphicon glyphicon-play-circle"></span>
                                 </h2>
-			<div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.3);position: absolute; z-index: 1;top: 0;"></div>
-		    </div>
-		    <img style="width: 48rem; height:33rem;z-index:1;"src="/assets/images/3DTour_sample_2.gif">
+								<div style="width: 100%;height: 100%;background-color:rgba(0,0,0, 0.3);position: absolute; z-index: 1;top: 0;"></div>
+		    				</div>
+		    			<img style="width: 48rem; height:33rem;z-index:1;"src="/assets/images/3DTour_sample_2.gif">
 
-		</a>
-	    </li>
-	@endif
-	@if(is_array($images))
-	    @foreach($images as $number => $image)
-		@if($number == 0 && !$listing->aerialLook3DUrl)
-		    <li>
-			<div class="first-image" style="text-align:center">
-			    <a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-				<img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}" />
-			    </a>
-			    </div>
-		    </li>
-		@else
-		    <li>
-			<a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
-			    <img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}"/>
-			    <img  {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} style="display:none;" src="{{ func::img_url($image,'' ,396) }}">
-			</a>
-		    </li>
-		@endif
-	    @endforeach
-	@else
-	    <li>
-		<img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" />
-		<img  {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} style="display:none;" src="{{ func::img_url($image,'' ,396) }}">
-	    </li>
-	    
-	@endif
-    </ul>
+						</a>
+	    			</li>
+				@endif
+				@if(is_array($images))
+	    			@foreach($images as $number => $image)
+						@if($number == 0 && !$listing->aerialLook3DUrl)
+		    				<li>
+								<div class="first-image" style="text-align:center">
+			    					<a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
+										<img class="listing-img first-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}" />
+			    					</a>
+			    				</div>
+		    				</li>
+						@else
+		    				<li>
+								<a rel="fancybox-thumb" href="{{func::img_url($image, 800, '')}}" class="fancybox-thumb">
+			    					<img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($image,'' ,396) }}" title="{{ $s_meta->get_slug_img($image) }}" alt="{{ $s_meta->get_slug_img($image) }}"/>
+			    					<img  {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} style="display:none;" src="{{ func::img_url($image,'' ,396) }}">
+								</a>
+		    				</li>
+						@endif
+		    		@endforeach
+				@else
+		    		<li>
+						<img class="listing-img" src="/img/ring.gif" data-src="{{ func::img_url($listing->mainImageUrl, '', 396) }}" />
+						<img  {{schema::itemProp('image')}} {{schema::itemType('ImageObject')}} style="display:none;" src="{{ func::img_url($image,'' ,396) }}">
+		    		</li>
+		    
+				@endif
+	    		</ul>
 
 </section>
 <div class="bg-img overlay">

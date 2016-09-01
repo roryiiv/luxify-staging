@@ -547,7 +547,7 @@
     $check_mainImage = array();
     $check_mainImage[] = $item->mainImageUrl;
     // fix issue here.
-    if(is_array($otherImages)){
+    if(is_array($otherImages) && $otherImages != null){
     	$checking = array_intersect($otherImages, $check_mainImage);
     }else{
     	if ($otherImages != null) {
