@@ -50,19 +50,19 @@
             <div class="banner-text">
                 <div class="banner-center">
                     <!-- new grid -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h1>Dealer Application</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-                            <p>We are Asia’s leading online marketplace for luxury. The go-to destination for luxury shoppers in Asia.</p>
-                        </div>
-                    </div>
-                    <div class="button-wrap">
-                        <a href="#application-form" id="apply-btn-one" class="btn btn-primary">Apply now</a>
-                    </div>
+                      <div class="row">
+                          <div class="col-lg-12">
+							<h1>@lang('static.dealer_application_dealer')</h1>
+						   </div>
+					   </div>
+                      <div class="row">
+                          <div class="col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+							<p>@lang('static.dealer_application_asia')</p>
+					   </div>
+				   </div>
+				   <div class="button-wrap">
+						 <a href="#application-form" id="apply-btn-one" class="btn btn-primary">@lang('static.dealer_application_apply')</a>
+					</div>
                 </div>
             </div>
         </div>
@@ -76,53 +76,53 @@
                 @if(isset($_GET['message']))
                     @if($_GET['message'] == 'sent')
                         <p class="alert alert-success">
-                            Your application has been sent, thank you.
+                            @lang('static.dealer_application_sent')
                         </p>
                     @else
                         <p class="alert alert-warning">
-                            Your application has not been sent, please contact <a href="mailto:technology@luxify.com">Admin</a> for support.
+                            @lang('static.dealer_application_contact') <a href="mailto:technology@luxify.com">@lang('static.dealer_application_admin')</a> @lang('static.dealer_application_support')
                         </p>
                     @endif
                 @endif
-                <a data-fancybox-type="iframe" href="https://s3-ap-southeast-1.amazonaws.com/luxify/static/Luxify_Presentation.pdf" class="fancybox btn btn-info">View PDF</a>
-                <span class="txt">Learn more about the power and reach of Luxify</span>
+                <a data-fancybox-type="iframe" href="https://s3-ap-southeast-1.amazonaws.com/luxify/static/Luxify_Presentation.pdf" class="fancybox btn btn-info">@lang('static.dealer_application_pdf')</a>
+                <span class="txt">@lang('static.dealer_application_power')</span>
             </div>
         </div>
         <!-- end of learn more block -->
         <!-- dealer block -->
         <div class="dealer-block">
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1">
-                        <div class="col-sm-6 col-md-5">
-                            <h3>Our Dealers</h3>
-                            <p>We select only prestigious dealers to bring their products to our highly targeted and Asian audience</p>
-                        </div>
-                        <div class="col-sm-5 col-sm-offset-1 col-md-6">
-                            <!-- dealer list -->
-                            <ul class="dealer-list">
-                                <li>
-                                    <img src="{{func::img_url('banners/dealer-application-dealer-01.png', '', '', false, true)}}" alt="Pleyel Paris 1807">
-                                </li>
-                                <li>
-                                    <img src="{{func::img_url('banners/dealer-application-dealer-02.png', '', '', false, true)}}" alt="Migflug">
-                                </li>
-                                <li>
-                                    <img src="{{func::img_url('banners/dealer-application-dealer-03.png', '', '', false, true)}}" alt="Christies">
-                                </li>
-                                <li>
-                                    <img src="{{func::img_url('banners/dealer-application-dealer-04.png', '', '', false, true)}}" alt="Intervino">
-                                </li>
-                                <li>
-                                    <img src="{{func::img_url('banners/dealer-application-dealer-05.png', '', '', false, true)}}" alt="Image description">
-                                </li>
-                                <li>
-                                    <img src="{{func::img_url('banners/dealer-application-dealer-06.png', '', '', false, true)}}" alt="Aviation">
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> <!-- end of new grid -->
+                    <div class="row">
+                          <div class="col-sm-10 col-sm-offset-1">
+                <div class="col-sm-6 col-md-5">
+                    <h3>@lang('static.dealer_application_our_dealer')</h3>
+                    <p>@lang('static.dealer_application_prestigious')</p>
+                </div>
+                <div class="col-sm-5 col-sm-offset-1 col-md-6">
+                    <!-- dealer list -->
+                    <ul class="dealer-list">
+                        <li>
+                            <img src="{{func::img_url('banners/dealer-application-dealer-01.png', '', '', false, true)}}" alt="Pleyel Paris 1807">
+                        </li>
+                        <li>
+                            <img src="{{func::img_url('banners/dealer-application-dealer-02.png', '', '', false, true)}}" alt="Migflug">
+                        </li>
+                        <li>
+                            <img src="{{func::img_url('banners/dealer-application-dealer-03.png', '', '', false, true)}}" alt="Christies">
+                        </li>
+                        <li>
+                            <img src="{{func::img_url('banners/dealer-application-dealer-04.png', '', '', false, true)}}" alt="Intervino">
+                        </li>
+                        <li>
+                            <img src="{{func::img_url('banners/dealer-application-dealer-05.png', '', '', false, true)}}" alt="Image description">
+                        </li>
+                        <li>
+                            <img src="{{func::img_url('banners/dealer-application-dealer-06.png', '', '', false, true)}}" alt="Aviation">
+                        </li>
+                    </ul>
+                </div>
+                </div>
+                 </div> <!-- end of new grid -->
             </div>
         </div>
         <!-- end of dealer block -->
@@ -130,34 +130,32 @@
         <div class="dealer-info grey-bg">
             <div class="container">
                 <!-- new grid -->
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1">
-                        <h1>Why sell on Luxify?</h1>
-                        <div class="row custom-col">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="text-wrap">
-                                    <strong class="title">Qualified luxury audience</strong>
-                                    <p>Reach affluent, luxury enthusiasts and influential buyers in Asia.</p>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="text-wrap">
-                                    <strong class="title">Strong luxury brand association</strong>
-                                    <p>We only select reputable luxury dealers to bring their luxury products to our highly targeted audience</p>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="text-wrap">
-                                    <strong class="title">Full control of the sales process</strong>
-                                    <p>As a Luxify dealer, you are in full control of the sales process including your inventory on Luxify, pricing and communication with buyers</p>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="text-wrap">
-                                    <strong class="title">Cost effective</strong>
-                                    <p>We are a lead generation engine and do not take commission on the transactions you generate on Luxify</p>
-                                </div>
-                            </div>
+                      <div class="row">
+                          <div class="col-sm-10 col-sm-offset-1">
+                <h1>@lang('static.dealer_application_sell')</h1>
+                <div class="row custom-col">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="text-wrap">
+                            <strong class="title">@lang('static.dealer_application_audience')</strong>
+                            <p>@lang('static.dealer_application_reach')</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="text-wrap">
+                            <strong class="title">@lang('static.dealer_application_brand')</strong>
+                            <p>@lang('static.dealer_application_reputable')</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="text-wrap">
+                            <strong class="title">@lang('static.dealer_application_control')</strong>
+                            <p>@lang('static.dealer_application_inventory')</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="text-wrap">
+                            <strong class="title">@lang('static.dealer_application_cost')</strong>
+                            <p>@lang('static.dealer_application_lead')</p>
                         </div>
                     </div>
                 </div> <!-- end of new grid -->
@@ -168,34 +166,34 @@
         <div class="quote-block">
             <div class="container">
                 <!-- new grid -->
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1">
-                        <div class="slide-holder">
-                            <div class="slide">
-                                <blockquote class="quote-wrap">
-                                    <div class="img">
-                                        <img src="{{func::img_url('banners/dealer-application-quote-exotic-cars.jpg', '', '', false, true)}}" alt="image description">
-                                    </div>
-                                    <div class="text">
-                                        <q>“Luxify is a great platform. We use it to bring us qualified buyers from Asia”</q>
-                                        <cite>Hem Udani <span class="post">Director, Exotic Cars London</span></cite>
-                                    </div>
-                                </blockquote>
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1">
+                <div class="slide-holder">
+                    <div class="slide">
+                        <blockquote class="quote-wrap">
+                            <div class="img">
+                                <img src="{{func::img_url('banners/dealer-application-quote-exotic-cars.jpg', '', '', false, true)}}" alt="image description">
                             </div>
-                            <div class="slide">
-                                <blockquote class="quote-wrap">
-                                    <div class="img">
-                                        <img src="{{func::img_url('banners/dealer-application-quote-watch-dealer.jpg', '', '', false, true)}}" alt="image description">
-                                    </div>
-                                    <div class="text">
-                                        <q>“Thanks to Luxify, we managed to get serious prospects and sales. Luxify provides us with more business opportunities.”</q>
-                                        <cite>Frankie Ko<span class="post">Director, Owner Celebrity Style.</span></cite>
-                                    </div>
-                                </blockquote>
+                            <div class="text">
+                                <q>@lang('static.dealer_application_platform')</q>
+                                <cite>@lang('static.dealer_application_hem') <span class="post">@lang('static.dealer_application_exotic')</span></cite>
                             </div>
-                        </div>
+                        </blockquote>
                     </div>
-                </div> <!-- end of new grid -->
+                    <div class="slide">
+                        <blockquote class="quote-wrap">
+                            <div class="img">
+                                <img src="{{func::img_url('banners/dealer-application-quote-watch-dealer.jpg', '', '', false, true)}}" alt="image description">
+                            </div>
+                            <div class="text">
+                                <q>@lang('static.dealer_application_thanks')</q>
+                                <cite>@lang('static.dealer_application_frankie')<span class="post">@lang('static.dealer_application_director')</span></cite>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+                </div>
+                 </div> <!-- end of new grid -->
             </div>
         </div>
         <!-- end of quote block -->
@@ -203,9 +201,9 @@
         <div class="sell-block">
             <div class="container">
                 <div class="wrap">
-                    <h2 class="h1">Start selling today</h2>
-                    <p>Professional dealers use Luxify to transact successful sales of a wide selection of new, vintage and pre-owned luxury goods as well as luxury experiences</p>
-                    <a href="#application-form" id="apply-btn-two" class="btn btn-primary lightbox">Apply Now</a>
+                    <h2 class="h1">@lang('static.dealer_application_selling')</h2>
+                    <p>@lang('static.dealer_application_transact')</p>
+                    <a href="#application-form" id="apply-btn-two" class="btn btn-primary lightbox">@lang('static.dealer_application_applynow')</a>
                 </div>
             </div>
         </div>

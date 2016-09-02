@@ -36,30 +36,20 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">Product List</h4>
+                        <h4 class="mt-0 mb-5">@lang('panel.products_list')</h4>
                         <ol class="breadcrumb mb-0">
-                            <li><a href="">All your products</a></li>
+                            <li><a href="">@lang('panel.products_all')</a></li>
                         </ol>
                     </div>
-                    <div class="col-sm-6" style="display: none;">
-                        <div class="btn-group mt-5">
-                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                            <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                            </ul>
-                        </div>
+                    <div class="col-sm-6">
+                        @include('inc.set-lang-dashboard-panel')
                     </div>
                 </div>
             </div>
             <div class="page-content container-fluid">
                 <div class="widget">
                     <div class="widget-heading">
-                        <h3 class="widget-title">Product List</h3>
+                        <h3 class="widget-title">@lang('panel.products_list1')</h3>
                     </div>
                     <div class="widget-body">
                         <form id="wishlist" name="wishlist" method="get" action="{{ $_SERVER['REQUEST_URI'] }}">
@@ -67,13 +57,13 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="form-group">
-                                        <label for="txtProductName">Product Name</label>
+                                        <label for="txtProductName">@lang('panel.products_name')</label>
                                         <input id="txtProductName" name="txtProductName" type="text" class="form-control" value="{{ isset($_GET['txtProductName']) ? $_GET['txtProductName'] : '' }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="txtPrice">Price</label>
+                                        <label for="txtPrice">@lang('panel.products_price')</label>
                                         <input id="txtPrice" name="txtPrice" type="text" class="form-control" value="{{ isset($_GET['txtPrice']) ? $_GET['txtPrice'] : '' }}">
                                     </div>
                                 </div>
@@ -81,13 +71,13 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="filter-startDate">Date</label>
+                                        <label for="filter-startDate">@lang('panel.products_date')</label>
                                         <input id="filter-startDate" name="startDate" type="text" class="form-control" value="{{ isset($_GET['startDate']) ? $_GET['startDate'] : '' }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="ddlStatus">Status</label>
+                                        <label for="ddlStatus">@lang('panel.products_status')</label>
                                         <select id="ddlStatus" name="status" class="form-control">
                                             <option value="">Choose</option>
                                             <option value="PENDING">Pending</option>
@@ -99,7 +89,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="category">Category</label>
+                                        <label for="category">@lang('panel.products_category')</label>
                                         <select id="category" name="category" class="form-control">
                                         <option value="">Choose</option>
                                             <optgroup label="ESTATES">
@@ -304,7 +294,7 @@
                                 </div>
                             </div>
                             <div class="text-right mb-20">
-                                <button type="submit" class="btn btn-lg btn-raised btn-success">Filter</button>
+                                <button type="submit" class="btn btn-lg btn-raised btn-success">@lang('panel.products_filter')</button>
                             </div>
                         </form>
                         <div id="product-list_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
@@ -312,17 +302,17 @@
                                 <div class="col-sm-6">
                                     <div class="dataTables_length" id="product-list_length">
                                         <form id="sorter" name="sorter" method="get" action="{{ $_SERVER['REQUEST_URI'] }}">
-                                            <label>Show
+                                            <label>@lang('panel.products_show')
                                             <select id="view" name="view-perpage" aria-controls="product-list" class="form-control input-sm">
                                                 <option value="10"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],10) : ''}}>10</option>
                                                 <option value="20"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],20) : ''}}>20</option>
                                                 <option value="50"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],50) : ''}}>50</option>
                                                 {{-- <option value="-1"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],-1) : ''}}>All</option> --}}
                                             </select>
-                                            entries</label> 
+                                            @lang('panel.products_entries')</label> 
                                         </form>
                                         </br>
-                                        <td>Showing {{ $products->count() }} of {{ $products->total() }} entries</td>
+                                        <td>@lang('panel.products_showing') {{ $products->count() }} @lang('panel.products_of') {{ $products->total() }} @lang('panel.products_entries1')</td>
                                     </div>
                                 </div>
                             </div>
@@ -337,19 +327,19 @@
                                                         <label for="checkAll" class="pl-0">&nbsp;</label>
                                                     </div>
                                                 </th>
-                                                <th>Image</th>
-                                                <th>Product Name</th>
-                                                <th>Dealer</th>
+                                                <th>@lang('panel.products_image')</th>
+                                                <th>@lang('panel.products_name1')</th>
+                                                <th>@lang('panel.products_dealer')</th>
                                                 @if(Auth::user()->role == 'editor')
-                                                <th class="text-right">Last Edited By</th>
+                                                <th class="text-right">@lang('panel.products_last')</th>
                                                 @endif
                                                 @if(Auth::user()->role != 'editor')
-                                                <th class="text-right">Price</th>
+                                                <th class="text-right">@lang('panel.products_price1')</th>
                                                 @endif
                                                 @if(Auth::user()->role == 'admin')
-                                                    <th class="text-center">Status</th>
+                                                    <th class="text-center">@lang('panel.products_status')</th>
                                                 @endif
-                                                <th class="text-center">Actions</th>
+                                                <th class="text-center">@lang('panel.products_action')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -432,10 +422,10 @@
                                                     @endif
                                                     <td class="text-center" style="width: 17%;">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
-                                                            <a target='_blank' href="/listing/{{ $products[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                            <a href="/panel/product/edit/{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
+                                                            <a target='_blank' href="{{func::set_url('/listing/')}}{{ $products[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
+                                                            <a href="{{func::set_url('/panel/product/edit/')}}{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
                                                             @if(Auth::user()->role == 'admin')
-                                                                <a href="/panel/product/delete/{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                                <a href="{{func::set_url('/panel/product/delete/')}}{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                             @endif
                                                         </div>
                                                     </td>
@@ -461,7 +451,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="dataTables_info text-center" id="product-list_info" role="status" aria-live="polite">
-                                        Showing {{ $products->count() }} of {{ $products->total() }} entries
+                                        @lang('panel.products_showing1') {{ $products->count() }} @lang('panel.products_of1') {{ $products->total() }} @lang('panel.products_entries1')
                                     </div>
                                 </div>
                                 <div class="col-sm-5 pull-right">

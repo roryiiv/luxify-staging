@@ -284,7 +284,6 @@ class Panel extends Controller
     }
 
     public function category_update(){
-        $newslug = SlugService::createSlug(newcategory::class, 'slug', $_POST['txtSlugCategory']);
         $editor = Auth::user()->id;
         if(empty($_POST['optionalfield']) || $_POST['optionalfield']==''){
             $optionalfields =array();
@@ -295,6 +294,11 @@ class Panel extends Controller
         }
 
         $update = newcategory::where('id',$_POST['id'])->first();
+        if($update->slug == '' && $_POST['txtSlugCategory'] != $update->slug){
+        	$newslug = SlugService::createSlug(newcategory::class, 'slug', $_POST['txtSlugCategory']);
+        }else{
+        	$newslug = $update->slug;
+        }
         if(isset($_POST['profile_img']) && !empty($_POST['profile_img'])){
             $image = base_path() . '/public/temp/' . $_POST['profile_img'];
             $s3 = \Storage::disk('s3');
@@ -306,6 +310,7 @@ class Panel extends Controller
               }
             }
         }
+
         $update->name = $_POST['txtNameCategory'];
         $update->slug = $newslug;
         $update->label = $_POST['txtLabelCategory'];
@@ -313,6 +318,7 @@ class Panel extends Controller
         $update->parent = $_POST['parent'];
         $update->updated_by = $editor;
         $update->optional_field = $optionalfields;
+        $update->order = $_POST['txtOrder'];
         $update->save();
 
         return redirect('/panel/categories');

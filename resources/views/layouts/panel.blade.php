@@ -47,7 +47,7 @@ $num_notif = count($notifs);
     <!-- Header start-->
     <header>
 
-        <a href="{{ url('/') }}" class="brand pull-left"><img src="/db/images/logo/logo-light.png" alt="" width="100"></a><a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
+        <a href="{{func::set_url('/') }}" class="brand pull-left"><img src="/db/images/logo/logo-light.png" alt="" width="100"></a><a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
 
         <ul class="notification-bar list-inline pull-right">
             <li class="visible-xs"><a href="javascript:;" role="button" class="header-icon search-bar-toggle"><i class="ti-search"></i></a></li>
@@ -58,7 +58,7 @@ $num_notif = count($notifs);
                         @foreach($notifs as $notif)
                             <?php $profile = func::get_profile($notif->fromUserId); ?>
                             <li class="media">
-                                <a href="/dashboard/mailbox?id={{ $notif->id }}">
+                                <a href="{{func::set_url('/dashboard/')}}mailbox?id={{ $notif->id }}">
                                     <div class="media-left avatar">
                                         <img src="{{ !empty($profile->companyLogoUrl) ? func::img_url($profile->companyLogoUrl, 50,'') : func::img_url('placeholder.png', 50,'') }}" alt="" class="media-object img-circle">
                                     </div>
@@ -73,7 +73,7 @@ $num_notif = count($notifs);
                             </li>
                         @endforeach
                     </ul>
-                    <div class="dropdown-footer text-center p-10"><a href="/dashboard/mailbox" class="fw-500 text-muted">See all inquiries</a></div>
+                    <div class="dropdown-footer text-center p-10"><a href="{{func::set_url('/dashboard/mailbox')}}" class="fw-500 text-muted">See all inquiries</a></div>
                 </div>
             </li>
             <li class="dropdown visible-lg visible-md">

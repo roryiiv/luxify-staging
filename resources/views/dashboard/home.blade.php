@@ -48,23 +48,11 @@
         <div class="page-header clearfix">
             <div class="row">
                 <div class="col-sm-6">
-                    <h4 class="mt-0 mb-5">Welcome to Luxify</h4>
-                    <p class="text-muted mb-0">Dealer Portal</p>
+                    <h4 class="mt-0 mb-5">@lang('dashboard.home_welcome')</h4>
+                    <p class="text-muted mb-0">@lang('dashboard.home_portal')</p>
                 </div>
                 <div class="col-sm-6">
-                    <div class="btn-group mt-5">
-                        <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                        <!--
-                        <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                        </ul>
--->
-                    </div>
+                @include('inc.set-lang-dashboard-panel')
                 </div>
             </div>
         </div>
@@ -74,7 +62,7 @@
                 <div class="col-lg-12">
                     <div class="col-lg-12">
                         <div class="widget clear">
-                            <h3 class="widget-title pull-left">Items Traffic</h3>
+                            <h3 class="widget-title pull-left">@lang('dashboard.home_traffic')</h3>
                             <br></br>
                             <div class="widget-body">
                                 <div class="clearfix">
@@ -83,6 +71,7 @@
                                         <div class="btn-toolbar">
                                             <button id="daterangepicker" type="button" class="btn btn-raised btn-black"><i class="ti-calendar"> </i><span></span></button>
                                         </div>
+                                    </div>
                                 </div>
                                 <div id="flot-visitor" style="height: 300px"></div>
                                 <div class="row row-0 mt-10 text-center">
@@ -94,7 +83,7 @@
                                                 {{$get_count_date}}
                                             </span>
                                         </div>
-                                        <h5 class="m-0">Overall Visitors {!!$pr_visitor!!}</h5>
+                                        <h5 class="m-0">@lang('dashboard.home_visitor') {!!$pr_visitor!!}</h5>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="fs-12 fw-300">
@@ -110,53 +99,33 @@
                                                 }
                                                 echo'</span>';
                                             }else{
-                                                echo'<span class="switch">there is no data</span>';
+                                                echo'<span class="get_height" style="text-align:left;display: inline-block;">there is no data</span>';
                                             }
                                         ?>
                                         </div>
-                                        <h5 class="m-0">Top 3 Item Listings Most View</h5>
+                                        <h5 class="m-0">@lang('dashboard.home_listings')</h5>
                                     </div>
                                     <div class="col-xs-4">
-                                        <div class="fs-30 fw-600 itempervisit">{{ $total_product !== 0 ? $visitor_m/$total_product: 0}}</div>
-                                        <h5 class="m-0">Item/Visit <span class="text-success"><i class="ti-arrow-up fs-13"></i> 5.62%</span></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-4">
-                            <div class="mb-30">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="media-heading">Total Visitors <span class="text-success"><i class="ti-arrow-up fs-13"></i> 5.28%</span></h5>
-                                        <div class="fs-36 fw-600 counter">{{$visitor_all}}</div>
-                                    </div>
-                                    <div class="media-right"><i class="fs-30 ti-user"></i></div>
-                                </div>
-                                <div id="flot-order" style="height: 74px"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-4">
-                            <div class="mb-30">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="media-heading">Total Inquiries <span class="text-danger"><i class="ti-arrow-down fs-13"></i> 1.06%</span></h5>
-                                        <div class="fs-36 fw-600"><span class="counter">{{$wishlists}}</span></div>
-                                    </div>
-                                    <div class="media-right"><i class="fs-30 ti-email"></i></div>
-                                </div>
-                                <div id="flot-revenue" style="height: 74px"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-4">
-                            <div class="mb-30">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="media-heading">Total Products <span class="text-danger"><i class="ti-arrow-down fs-13"></i> 3.76%</span></h5>
-                                        <div class="fs-36 fw-600 counter">{{$total_product  }}</div>
+                                        <div class="fs-12 fw-300 itempervisit">
+                                        <?php
+                                            if(count($top3_country)>0){
+                                            echo'<span class="get_height" style="text-align:left;display: inline-block;">';
+                                                    $i = 1;
+                                                foreach ($top3_country as $value) {
+                                                    $id = $value->country_id;
+                                                    $nama = DB::table('countries')->where('code2',$id)->value('name');
+                                                    $nama = (!empty($nama))?$nama:'not identify';
+                                                    echo'<span>'.$i.'. '.$nama.'</span><br/>';
+                                                    $i++;
+                                                }
+                                                echo'</span>';
+                                            }else{
+                                                echo'<span class="get_height" style="text-align:left;display: inline-block;">there is no data</span>';
+                                            }
+                                        ?>
+                                            
+                                        </div>
+                                        <h5 class="m-0">@lang('dashboard.home_countries')</h5>
                                     </div>
                                 </div>
                             </div>

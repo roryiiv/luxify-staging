@@ -27,6 +27,7 @@ class History extends Model
         $old_images = json_decode($get_old_json->images);
         $mainImageUrl = $get_old_json->mainImageUrl;
 
+        // fix issue here.
         if(is_array($old_images)){
         	array_unshift($old_images, $mainImageUrl);
         	$get_diff = array_diff($old_images, $new_images);

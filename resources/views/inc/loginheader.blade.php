@@ -157,7 +157,7 @@
                     @endforeach
                     </select>
                 </li>
-                <li><a href="/dashboard">@lang('home.header_menu_welcome') {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
+                <li><a href="{{func::set_url('/dashboard')}}">@lang('home.header_menu_welcome') {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
             </ul>
         @else
             <ul class="nav navbar-nav navbar-right">
@@ -168,8 +168,8 @@
                     @endforeach
                     </select>
                 </li>
-                <li><a href="/register">@lang('header.signUp')</a></li>
-                <li><a href="/login">@lang('header.login')</a></li>
+                <li><a href="{{func::set_url('/register')}}">@lang('header.signUp')</a></li>
+                <li><a href="{{func::set_url('/login')}}">@lang('header.login')</a></li>
             </ul>
         @endif
 

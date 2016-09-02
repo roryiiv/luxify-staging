@@ -151,8 +151,8 @@
                                                     <td><span class="label label-default">{{$wishes[$i]->status}}</span></td>
                                                     <td class="text-center">
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
-                                                            <a href="/listings/{{ $wishes[$i]->id }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
-                                                            <a href="/dashboard/wishlist/delete/{{ $wishes[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                            <a href="{{func::set_url('/listings/'.$wishes[$i]->id) }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
+                                                            <a href="{{func::set_url('/dashboard/wishlist/delete/'.$wishes[$i]->id)}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>

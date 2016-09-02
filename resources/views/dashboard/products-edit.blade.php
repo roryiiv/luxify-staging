@@ -132,33 +132,21 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">Edit Listing</h4>
+                        <h4 class="mt-0 mb-5">@lang('dashboard.product_edit_edit')</h4>
                     </div>
                     <div class="col-sm-6">
-                        <div class="btn-group mt-5">
-                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                            <!--
-                            <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                                <li><a href="edit-product.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                                <li><a href="edit-product.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                                <li><a href="edit-product.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                                <li><a href="edit-product.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                                <li><a href="edit-product.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                            </ul>
--->
-                        </div>
+                        @include('inc.set-lang-dashboard-panel')
                     </div>
                 </div>
             </div>
             <div class="page-content container-fluid">
               <form id="form-tabs_edit_product" class="form-horizontal" action="/dashboard/products/{{$item->id}}" method="post" enctype="multipart/form-data">
                 {!! csrf_field() !!}
-                <h3>Step 1: Category</h3>
+                <h3>@lang('dashboard.product_edit_category')</h3>
                 <fieldset>
                     <div id="category" role="tabpanel" class="tab-pane active">
                         <div class="form-group">
-                            <label for="itemLocation" class="col-sm-3 control-label">Item Location</label>
+                            <label for="itemLocation" class="col-sm-3 control-label">@lang('dashboard.product_edit_location')</label>
                             <div class="col-sm-9">
                                 <select id="itemLocation" name="itemLocation" class="form-control" required>
                                   <?php $countries = func::build_countries(); ?>
@@ -170,7 +158,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="itemAvailability" class="col-sm-3 control-label">Item Availability</label>
+                            <label for="itemAvailability" class="col-sm-3 control-label">@lang('dashboard.product_edit_availability')</label>
                             <div class="col-sm-9">
                                 <select id="itemAvailability" name="itemAvailability" class="form-control" required>
                                     <option value="">--Please Select--</option>
@@ -181,17 +169,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="itemCategory" class="col-sm-3 control-label">Item Category</label>
+                            <label for="itemCategory" class="col-sm-3 control-label">@lang('dashboard.product_edit_itemcategory')</label>
                             <div class="col-sm-9">
                                 <select id="itemCategory" name="itemCategory" class="form-control" required>
+                                    {!! $item->itemCategory!!}
+                                </select>
+                            </div>
+                        </div>
 
-                                  <option value="">--Please Select--</option>
-                                  <?php $categories = func::build_categories('leaf'); ?>
-
-                                  @foreach($categories as $category)
-                                    <option {{func::selected($item->categoryId, $category['id'])}}  value="{{ $category['id'] }}">{{ $category['hierarchy'] }}</option>
-                                  @endforeach
-
+                        <div class="form-group">
+                            <label for="itemSubCategory" class="col-sm-3 control-label">@lang('dashboard.product_edit_itemsub')</label>
+                            <div class="col-sm-9">
+                           
+                                <select id="itemSubCategory" name="itemSubCategory" class="form-control" >
+                                    {!!$item->itemSubCategory!!}
+                                   
                                 </select>
                             </div>
                         </div>
@@ -199,16 +191,16 @@
                     </div>
                 </fieldset>
 
-                <h3>Step 2: Product details</h3>
+                <h3>@lang('dashboard.product_edit_product2')</h3>
                 <fieldset>
                     <div class="form-group">
-                        <label for="title" class="col-sm-3 control-label">Listing Title</label>
+                        <label for="title" class="col-sm-3 control-label">@lang('dashboard.product_edit_title')</label>
                         <div class="col-sm-9">
                             <input id="title" name='title' type="text" class="form-control" value="{{$item->title}}" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="status" class="col-sm-3 control-label">Status</label>
+                        <label for="status" class="col-sm-3 control-label">@lang('dashboard.product_edit_status')</label>
                         <div class="col-sm-9">
                             <select id="status" name="status" class="form-control">
                                 <option value="">--Please Select--</option>
@@ -222,33 +214,33 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="condition" class="col-sm-3 control-label">Condition</label>
+                        <label for="condition" class="col-sm-3 control-label">@lang('dashboard.product_edit_condition')</label>
                         <div class="col-sm-9">
                             <select id="condition" name="condition" class="form-control" required>
                                 <option value="">--Please Select--</option>
                                 <option {{func::selected($item->condition, 'NEW')}}  value="NEW">New</option>
                                 <option {{func::selected($item->condition, 'PRE-OWNED')}} value="PRE-OWNED">Pre-Owned</option>
                             </select>
-                            <h6>Is your item brand new or has it been previously owned?
+                            <h6>@lang('dashboard.product_edit_brand')
                                 </h6>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="price" class="col-sm-3 control-label">Price</label>
+                        <label for="price" class="col-sm-3 control-label">@lang('dashboard.product_edit_price')</label>
                         <div class="col-sm-9">
                             <input id="price" name='price' type="number" class="form-control" min=0 value="{{$item->price}}" {{ $item->price === NULL ? 'disabled': '' }} />
-                            <h6>For price on request tick the box and select a preferred currency.
+                            <h6>@lang('dashboard.product_edit_tick')
                             </h6>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="priceOnRequest" class="col-sm-3 control-label"></label>
                         <div class="col-sm-9">
-                            <input {{ $item->price === NULL ? 'checked': '' }} type="checkbox" id="priceOnRequest" name='priceOnRequest'> Price on request</label>
+                            <input {{ $item->price === NULL ? 'checked': '' }} type="checkbox" id="priceOnRequest" name='priceOnRequest'> @lang('dashboard.product_edit_request')</label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="currency" class="col-sm-3 control-label">Currency</label>
+                        <label for="currency" class="col-sm-3 control-label">@lang('dashboard.product_edit_currency')</label>
                         <div class="col-sm-9">
                             <select id="currency" name="currency" class="form-control" required>
                                 <option value="">--Please Select--</option>
@@ -263,10 +255,10 @@
 
                     <div class="row">
                         <div class="form-group">
-                            <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
+                            <label for="description" class="col-sm-3 control-label">@lang('dashboard.product_edit_description')</label>
                             <div class="col-sm-9">
                                 <textarea id="description editor-markdown" name='description' data-hidden-buttons="cmdCode cmdQuote" class="form-control" cols="3" rows="10" data-provide="markdown">{{$item->description}}</textarea>
-                                <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
+                                <h6>@lang('dashboard.product_edit_enter')</h6>
                                 <div class="" style="display: none;">
                                 <h5>history</h5>
                                     <?php foreach ($history->description as $key => $value) { ?>
@@ -277,40 +269,46 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="expiryDate" class="col-sm-3 control-label">Expiry Date (Optional)</label>
+                            <label for="expiryDate" class="col-sm-3 control-label">@lang('dashboard.product_edit_expiry')</label>
                             <div class="col-sm-9">
                                 <?php $expired_at = date_create($item->expired_at); ?>
                                 <input id="startDate" name='expiryDate' type="text" class="form-control" value="{{ date_format($expired_at, "Y-m-d") }}">
                             </div>
                         </div>
-                        <div class="form-group details_specs">
+                        <div class="form-group">
+                            <label for="optionalFields" class="col-sm-3 control-label title_details">@lang('dashboard.product_edit_optional')</label>
+                            
+                                <div class="col-sm-9 col-sm-offset-3 details_box" id="optionFields">
+        
+                        </div>
+                        <!-- <div class="form-group details_specs">
                             <label class="col-sm-3 control-label title_details">Details/specs (Optional) <i class="fa fa-chevron-down" aria-hidden="true"></i></label>
                             <div class="col-sm-9 col-sm-offset-3 details_box" id="optionFields">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </fieldset>
-                <h3>Step 3: Images</h3>
+                <h3>@lang('dashboard.product_edit_images')</h3>
                 <fieldset>
                     <div id="about" role="tabpanel" class="tab-pane">
                         <div class="widgets">
                             <div class="widget-heading">
-                                <h5 class="m-0">Add Item Images</h5>
+                                <h5 class="m-0">@lang('dashboard.product_edit_addimages')</h5>
                             </div>
                             <div class="widget-body">
                                 <div id="item-images-dz" class="dropzone text-center"></div>
                             </div>
                             <div class="widget-heading pt-0">
-                                <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
+                                <h6 class="m-0">@lang('dashboard.product_edit_result')</h6>
                             </div>
                         </div>
                         <div id='images-preview-zone' class='dropzone-previews' style="display:none;">
                           <div class="images-table">
-                             <div class="header">Image</div>
-                             <div class="header">Image Name</div>
-                             <div class="header">Featured Image</div>
-                             <div class="header">Edit</div>
-                             <div class="header">Remove</div>
+                             <div class="header">@lang('dashboard.product_edit_image1')</div>
+                             <div class="header">@lang('dashboard.product_edit_imagename')</div>
+                             <div class="header">@lang('dashboard.product_edit_featured')</div>
+                             <div class="header">@lang('dashboard.product_edit_edit1')</div>
+                             <div class="header">@lang('dashboard.product_edit_remove')</div>
                           </div>
                         </div>
 
@@ -318,10 +316,10 @@
                         <table style="width: 100%" class="table table-bordered sortir" id="images-preview-table">
                             <thead>
                                 <tr>
-                                    <th class="text-center" colspan="2">Image</th>
+                                    <th class="text-center" colspan="2">@lang('dashboard.product_edit_image2')</th>
                                     <th>Image Url</th>
-                                    <th style="width: 20%">Featured Image</th>
-                                    <th class="text-center">Remove</th>
+                                    <th style="width: 20%">@lang('dashboard.product_edit_featuredimage')</th>
+                                    <th class="text-center">@lang('dashboard.product_edit_remove2')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -329,23 +327,23 @@
                         </table>
                     </div>
                 </fieldset>
-                <h3>Step 4: Additional Info.</h3>
+                <h3>@lang('dashboard.product_edit_additional')</h3>
                 <fieldset>
                     <div id="data" role="tabpanel" class="tab-pane">
                         <div class="form-group">
-                            <label for="buyNowURL" class="col-sm-3 control-label">Buy Now URL</label>
+                            <label for="buyNowURL" class="col-sm-3 control-label">@lang('dashboard.product_edit_url')</label>
                             <div class="col-sm-9">
                                 <input id="buyNowURL" name="buyNowURL" type="text" value="{{$item->buyNowUrl}}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="aerialLookURL" class="col-sm-3 control-label">Promotion Video URL (Optional)</label>
+                            <label for="aerialLookURL" class="col-sm-3 control-label">@lang('dashboard.product_edit_videourl')</label>
                             <div class="col-sm-9">
                                 <input id="aerialLookURL" name="aerialLookURL" type="text" class="form-control" value="{{$item->aerialLookUrl}}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="aerial3DLookURL" class="col-sm-3 control-label">Matterport 3D Tour URL (Optional)</label>
+                            <label for="aerial3DLookURL" class="col-sm-3 control-label">@lang('dashboard.product_edit_3d')</label>
                             <div class="col-sm-9">
                                 <input id="aerial3DLookURL" name='aerial3DLookURL' type="text" class="form-control" value={{$item->aerialLook3DUrl}}>
                             </div>
@@ -356,10 +354,10 @@
                     </section>
                     </div>
                 </fieldset>
-                <h3>Step 5: SEO Section</h3>
+                <h3>@lang('dashboard.product_edit_seo')</h3>
                 <fieldset>
                 <div class="form-group">
-                            <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
+                            <label for="urlslug" class="col-sm-3 control-label">@lang('dashboard.product_edit_url')</label>
                             <div class="col-sm-9">
                                 <div class="hideslug">
                                     <div class="input-group">
@@ -382,30 +380,30 @@
                                 }
                                 ?>
                                     <a class="updatelink" href="{{url('/'.$item->url_object).'/'.$item->slug}} " target="_blank" style="text-decoration: underline;" >{{url('/'.$item->url_object).'/'}}<strong>{{$newslug}}</strong></a>
-                                     &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
+                                     &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">@lang('dashboard.product_edit_editurl')</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="meta_title" class="col-sm-3 control-label">Title</label>
+                            <label for="meta_title" class="col-sm-3 control-label">@lang('dashboard.product_edit_title2')</label>
                             <div class="col-sm-9">
                                 <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="{{$item->meta_title == '' ? $item->title : $item->meta_title}}">
                             </div>
                         </div>
                         <div class="form-group" style="display:none;">
-                            <label for="meta_alttext" class="col-sm-3 control-label">Alt Text</label>
+                            <label for="meta_alttext" class="col-sm-3 control-label">@lang('dashboard.product_edit_alttext')</label>
                             <div class="col-sm-9">
                                 <input id="alttext" name='meta_alttext' type="text" class="form-control" placeholder="{{$item->meta_alt_text}}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
+                            <label for="meta_description" class="col-sm-3 control-label">@lang('dashboard.product_edit_metadesc')</label>
                             <div class="col-sm-9">
                                 <textarea id="meta_description" name='meta_description' class="form-control " maxlength="500" placeholder="{{$item->meta_description == '' ? $item->description : $item->meta_description}}"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="meta_keyword" class="col-sm-3 control-label">Meta Keyword</label>
+                            <label for="meta_keyword" class="col-sm-3 control-label">@lang('dashboard.product_edit_metakey')</label>
                             <div class="col-sm-9 "><div class="tagit-sugestion">
                                 
                                 <style>
@@ -421,7 +419,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                             <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
+                             <label for="meta_author" class="col-sm-3 control-label">@lang('dashboard.product_edit_metaauth')</label>
                             <div class="col-sm-9">
                                 <input id="meta_author" name='meta_author' type="text" maxlength="60" class="form-control" placeholder="{{$item->meta_author == '' ? $item->title : $item->meta_author}}">
                             </div>
@@ -512,42 +510,37 @@
 <script>
     <?php
     $otherImages = json_decode($item->images);
-    $s3_url = 'https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
-    if (is_array($otherImages)) {
-	    foreach ($otherImages as $key => $img) {
-	    	$check_img = get_headers($s3_url . $img);
-	        if($check_img[0] != 'HTTP/1.1 200 OK'){
-		        unset($otherImages[$key]);
-	        }
-	    }
+    foreach ($otherImages as $key => $img) {
+        if(!file_exists(func::img_url($item->mainImageUrl, 100, ''))){
+        	unset($otherImages[$key]);
+        }
     }
-    
     //check if the mainImage is exist on images
     $check_mainImage = array();
     $check_mainImage[] = $item->mainImageUrl;
+
     // fix issue here.
-    if(is_array($otherImages) && $otherImages != null){
+    if(is_array($otherImages && $otherImages != null)){
     	$checking = array_intersect($otherImages, $check_mainImage);
     }else{
     	if ($otherImages != null) {
     		$check_mainImage[] = $otherImages;
+    	}else{
+    		$checking = $check_mainImage;
     	}
     	$checking = $check_mainImage;
     }
     $images = array();
     if(count($checking)===0){
         //images is not contain mainImageurl
-        $check_mainImg = get_headers($s3_url . $item->mainImageUrl);
-        
-        if($check_mainImg[0] == 'HTTP/1.1 200 OK'){
+        if(file_exists(func::img_url($item->mainImageUrl, 100, ''))){
             $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
         }
-
         for($i = 0; $i < count($otherImages); $i++) {
             $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
         }
     }else{
-        //images contain mainImageurl
+        //images is contain mainImageurl
         for($i = 0; $i < count($checking); $i++) {
         $images[] = array('path'=>func::img_url($checking[$i], 100, ''), 'filename'=>$checking[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($checking[$i]));
         }
@@ -727,7 +720,58 @@
                 $("#update-product-form").modal('show');
             }
         });
-        $('#itemCategory').on('change', function(){
+
+        $('#itemCategory').on('change',function(){
+            var parent = $(this).val();
+            console.log(parent);
+            $.ajax({
+                url : '/api/ajax/category/'+parent,
+                method : 'get',
+                success: function(result){  
+                    $('#itemSubCategory').html(result);
+                    $('#itemSubCategory').show();
+                }
+            });
+
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url : '/api/ajax/optional-fields/'+id,
+                method : 'get',
+                success: function(result){  
+                    $('#optionFields').html(result);
+                    $('#optionFields').show();
+
+                }
+            });
+        });
+        $('#itemSubCategory').on('change',function(){
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url : '/api/ajax/optional-fields/'+id,
+                method : 'get',
+                success: function(result){  
+                    $('#optionFields').append(result);
+                    
+                }
+            });
+        });
+        /*$('#itemCategory').on('change',function(){
+            
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url : '/api/ajax/optional-fields/'+id,
+                method : 'get',
+                success: function(result){  
+                    $('#optionFields').html(result);
+                    $('#optionFields').show();
+
+                }
+            });
+        });*/
+        /*$('#itemCategory').on('change', function(){
             var _token = $('input[name=_token]').val();
             $.get({
                 url: '/api/category/'+ $('#itemCategory').val() + '/fields',
@@ -743,7 +787,7 @@
                     }
                 }
             });
-        });
+        });*/
 
         $('#priceOnRequest').on('click', function(){
             $('#price').prop('disabled', $('#priceOnRequest').prop('checked') );

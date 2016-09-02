@@ -34,23 +34,13 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">Add a {{$form_id}}</h4>
+                        <h4 class="mt-0 mb-5">@lang('panel.users_add') {{$form_id}}</h4>
                         <ol class="breadcrumb mb-0">
-                            <li><a href="forms-wizard.html#">Super Admin Access</a></li>
+                            <li><a href="forms-wizard.html#">@lang('panel.users_add_admin')</a></li>
                         </ol>
                     </div>
-                    <div class="col-sm-6" style="display: none;">
-                        <div class="btn-group mt-5">
-                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                            <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                            </ul>
-                        </div>
+                    <div class="col-sm-6" >
+                        @include('inc.set-lang-dashboard-panel')
                     </div>
                 </div>
             </div>
@@ -58,7 +48,7 @@
 
                 <div class="widget">
                     <div class="widget-heading">
-                        <h3 class="widget-title">Add a {{$form_id}}</h3>
+                        <h3 class="widget-title">@lang('panel.users_add1') {{$form_id}}</h3>
                     </div>
                     <div class="widget-body">
 
@@ -66,13 +56,13 @@
                             {!! csrf_field() !!}
                             <input name='salt' id='salt' type='hidden' />
                             <input name='hashed' id='hashed' type='hidden' />
-                            <h3>Personal Information</h3>
+                            <h3>@lang('panel.users_add_personal')</h3>
                             <fieldset>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="username" class="col-sm-3 col-md-4 control-label">Username</label>
+                                            <label for="username" class="col-sm-3 col-md-4 control-label">@lang('panel.users_add_username')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="username" name="username" type="text" class="form-control" class="required">
                                             </div>
@@ -80,7 +70,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">User Role</label>
+                                            <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">@lang('panel.users_add_role')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtUserRole" name="txtUserRole" type="text" class="form-control" value="{{$role}}" disabled>
                                                 <input name='role' id='role' type='hidden' value="{{$role}}" />
@@ -91,7 +81,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="txtEmailAddress" class="col-sm-3 col-md-4 control-label">Email</label>
+                                            <label for="txtEmailAddress" class="col-sm-3 col-md-4 control-label">@lang('panel.users_add_email')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtEmailAddress" name="txtEmailAddress" type="text" class="form-control" class="required">
                                             </div>
@@ -105,7 +95,7 @@
                                     <div class="col-md-6">
 
                                         <div class="form-group">
-                                            <label for="txtPassword" class="col-sm-3 col-md-4 control-label">Password</label>
+                                            <label for="txtPassword" class="col-sm-3 col-md-4 control-label">@lang('panel.users_add_password')</label>
                                             <div class="col-sm-9 col-md-8">
 
                                                 <input id="txtPassword" type="password" name="txtPassword" placeholder="Enter password" data-rule-required="true" data-rule-rangelength="[10,30]" class="form-control required">
@@ -117,7 +107,7 @@
                                     <div class="col-md-6">
 
                                         <div class="form-group">
-                                            <label for="txtConfirmPassword" class="col-sm-3 col-md-4 control-label">Confirm password</label>
+                                            <label for="txtConfirmPassword" class="col-sm-3 col-md-4 control-label">@lang('panel.users_add_confirm')</label>
                                             <div class="col-sm-9 col-md-8">
 
                                                 <input id="txtConfirmPassword" type="password" name="txtConfirmPassword" placeholder="Enter confirm password" data-rule-required="true" data-rule-equalto="#txtPassword" class="form-control required">
@@ -129,7 +119,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="first_name" class="col-sm-3 col-md-4 control-label">First Name</label>
+                                            <label for="first_name" class="col-sm-3 col-md-4 control-label">@lang('panel.users_add_first')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="first_name" name="first_name" type="text" placeholder="" class="form-control">
                                             </div>
@@ -137,7 +127,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="last_name" class="col-sm-3 col-md-4 control-label">Last Name</label>
+                                            <label for="last_name" class="col-sm-3 col-md-4 control-label">@lang('panel.users_add_last')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="last_name" name="last_name" type="text" class="form-control" placeholder="">
                                             </div>
@@ -147,7 +137,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="txtCityBillingTab" class="col-sm-3 col-md-4 control-label">Location</label>
+                                            <label for="txtCityBillingTab" class="col-sm-3 col-md-4 control-label">@lang('panel.users_add_location')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <?php $countries = func::build_countries(); ?>
                                                 <select id="country" name="country" class="form-control">
@@ -161,7 +151,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="txtStateProvinceBillingTab" class="col-sm-3 col-md-4 control-label">Language</label>
+                                            <label for="txtStateProvinceBillingTab" class="col-sm-3 col-md-4 control-label">@lang('panel.users_add_language')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <?php $langs = func::build_lang(); ?>
                                                 <select id="language" name="language" class="form-control">
@@ -177,7 +167,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="form-group">
-                                            <label for="ddlCountryBillingTab" class="col-sm-3 col-md-2 control-label">Price Display In</label>
+                                            <label for="ddlCountryBillingTab" class="col-sm-3 col-md-2 control-label">@lang('panel.users_add_price')</label>
                                             <div class="col-sm-9 col-md-10">
                                                 <?php $currs = func::build_curr(); ?>
                                                 <select id="currency" name="currency" class="form-control">
@@ -193,32 +183,32 @@
                             </fieldset>
                             @if($role)
                                 @if($role == 'seller')
-                                    <h3>Company Information</h3>
+                                    <h3>@lang('panel.users_add_companyinfo')</h3>
                                     <fieldset>
                                         <div class="widget">
                                             <div class="widget-heading">
-                                                <h5 class="m-0">Company Page Cover Image</h5>
+                                                <h5 class="m-0">@lang('panel.users_add_companycover')</h5>
                                             </div>
                                             <div class="widget-body">
                                                 <div id="api-cover-image" class="dropzone text-center"></div>
                                                 <input type="hidden" name="cover_img" id="cover_img" value="" />
                                             </div>
                                             <div class="widget-heading pt-0">
-                                                <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
+                                                <h6 class="m-0">@lang('panel.users_add_best1')</h6>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-6 pull-right mb-20">
                                                 <div class="widget">
                                                     <div class="widget-heading">
-                                                        <h5 class="m-0">Company Logo</h5>
+                                                        <h5 class="m-0">@lang('panel.users_add_companylogo')</h5>
                                                     </div>
                                                     <div class="widget-body">
                                                         <div id="api-profile-image" class="dropzone text-center"></div>
                                                         <input type="hidden" name="profile_img" id="profile_img" value="" />
                                                     </div>
                                                     <div class="widget-heading pt-0">
-                                                        <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
+                                                        <h6 class="m-0">@lang('panel.users_add_best2')</h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -226,7 +216,7 @@
                                             <div class="col-md-6">
 
                                                 <div class="form-group m-0">
-                                                    <label for="txtFirstNameShippingTab" class="control-label">Company Name</label>
+                                                    <label for="txtFirstNameShippingTab" class="control-label">@lang('panel.users_add_companyname')</label>
                                                     <div class="pt-15">
                                                         <input id="companyName" name="companyName" type="text" class="form-control" placeholder="">
                                                     </div>
@@ -240,25 +230,25 @@
                                                 </div>
 -->
                                                 <div class="form-group m-0">
-                                                    <label for="txtCompanyRegNum" class="control-label">Company Registration No.:</label>
+                                                    <label for="txtCompanyRegNum" class="control-label">@lang('panel.users_add_registration')</label>
                                                     <div class="pt-15">
                                                         <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
-                                                    <label for="companyAddress" class="control-label">Company Address</label>
+                                                    <label for="companyAddress" class="control-label">@lang('panel.users_add_address')</label>
                                                     <div class="pt-15">
                                                         <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder=""></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
-                                                    <label for="companySummary" class="control-label">Company Summary</label>
+                                                    <label for="companySummary" class="control-label">@lang('panel.users_add_summary')</label>
                                                     <div class="pt-15">
                                                         <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder=""></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
-                                                    <label for="contactDetails" class="control-label">Company Details</label>
+                                                    <label for="contactDetails" class="control-label">@lang('panel.users_add_details')</label>
                                                     <div class="pt-15">
                                                         <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder=""></textarea>
                                                     </div>
@@ -268,12 +258,12 @@
                                     </fieldset>
                                 @endif
                             @endif
-                            <h3>Social Connections</h3>
+                            <h3>@lang('panel.users_add_social')</h3>
                             <fieldset>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
-                                            <label for="txtFacebookLink" class="control-label pb-10"><i class="fa fa-facebook-official"></i> Facebook</label>
+                                            <label for="txtFacebookLink" class="control-label pb-10"><i class="fa fa-facebook-official"></i> @lang('panel.users_add_facebook')</label>
                                             <div class="">
                                                 <input id="txtFacebookLink" name="txtFacebookLink" type="text" class="form-control" placeholder="">
                                             </div>
@@ -281,7 +271,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
-                                            <label for="txtInstagramLink" class="control-label pb-10"><i class="fa fa-instagram"></i> Instagram</label>
+                                            <label for="txtInstagramLink" class="control-label pb-10"><i class="fa fa-instagram"></i> @lang('panel.users_add_instagram')</label>
                                             <div class="">
                                                 <input id="txtInstagramLink" name="txtInstagramLink" type="text" class="form-control" placeholder="">
                                             </div>
@@ -291,7 +281,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
-                                            <label for="txtPinterestLink" class="control-label pb-10"><i class="fa fa-pinterest-square"></i> Pinterest</label>
+                                            <label for="txtPinterestLink" class="control-label pb-10"><i class="fa fa-pinterest-square"></i> @lang('panel.users_add_pin')</label>
                                             <div class="">
                                                 <input id="txtPinterestLink" name="txtPinterestLink" type="text" class="form-control" placeholder="">
                                             </div>
@@ -299,7 +289,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
-                                            <label for="txtTwitterLink" class="control-label pb-10"><i class="fa fa-twitter-square"></i> Twitter</label>
+                                            <label for="txtTwitterLink" class="control-label pb-10"><i class="fa fa-twitter-square"></i> @lang('panel.users_add_twitter')</label>
                                             <div class="">
                                                 <input id="txtTwitterLink" name="txtTwitterLink" type="text" class="form-control" placeholder="">
                                             </div>
@@ -309,7 +299,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="form-group ml-0 mr-0">
-                                            <label for="txtWebsiteLink" class="control-label pb-10"><i class="fa fa-globe"></i> Website</label>
+                                            <label for="txtWebsiteLink" class="control-label pb-10"><i class="fa fa-globe"></i> @lang('panel.users_add_web')</label>
                                             <div class="">
                                                 <input id="txtWebsiteLink" name="txtWebsiteLink" type="text" class="form-control">
                                             </div>

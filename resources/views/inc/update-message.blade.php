@@ -56,12 +56,25 @@
     height: 100%;
   }
 
+  #image-form .modal-dialog {
+    height: 50%;
+    min-height: 420px; 
+  }
+  #image .modal-content {
+    height: 100%;
+  } 
+
   #success-form .modal-content .modal-header > h5 {
     font-weight: 300;
     font-size: 15px; 
     text-align: center;
   }
   #cancel-form .modal-content .modal-header > h5 {
+    font-weight: 300;
+    font-size: 15px; 
+    text-align: center;
+  }
+  #image-form .modal-content .modal-header > h5 {
     font-weight: 300;
     font-size: 15px; 
     text-align: center;
@@ -116,7 +129,24 @@
         padding: 36px 73px;
         max-width: 800px;
         height: 70%;
-    	width: 400px;
+    	  width: 400px;
+        border: 2px solid #998967;
+        border-radius: 0px;
+    }
+
+    #image-form .modal-dialog {
+      width: 600px;
+      height: 50%;
+      min-height: 383px
+    }
+
+    #image-form .modal-content {
+        background-color: white;
+        margin: 35% auto;
+        padding: 36px 73px;
+        max-width: 800px;
+        height: 58%;
+        width: 459px;
         border: 2px solid #998967;
         border-radius: 0px;
     }
@@ -186,6 +216,12 @@
      font-weight: 300;
      color: #56616F;
   }
+
+  #image-form h2 {
+     text-align: center;
+     font-weight: 300;
+     color: #56616F;
+  }
  
 
   #cancel-form button{
@@ -203,6 +239,23 @@
      font-size: 10px;
      padding-top: 4px;
      margin-right: 24%;
+  }
+
+  #image-form button{
+    background-color: #998967;
+     text-transform: uppercase;
+     text-align: center;
+     font-weight: 400;
+     color: white;
+     width: 139px;
+     height: 30px;
+     float: right;
+     border: 0;
+     box-shadow: none;
+     margin-top: 5px;
+     font-size: 10px;
+     padding-top: 4px;
+     margin-right: 29%;
   }
 
  
@@ -253,6 +306,24 @@
         </div>
         <div class="modal-body">
           <button type="button" class="close-all" data-dismiss="modal">OK</button>
+        </div>
+       </div>
+     </div>
+ </div>
+
+ <div class="modal fade" id="image-form" tabindex="-1" role="dialog" aria-labelledby="imageForm">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Uploading Images</h2>
+          <div class="progress">
+            <div id="proccess" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" >
+              <div id="label">10%</div> 
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <button type="button" data-dismiss="modal">OK</button>
         </div>
        </div>
      </div>

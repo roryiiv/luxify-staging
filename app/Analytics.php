@@ -167,11 +167,16 @@ class Analytics extends Model
         ->where('user_id',$user_id)
         ->count();
         $pr = ($data_now-$data_ago)/(($data_now>0)?$data_now:1) *100;
-        if($data_ago>$data_now){
-            $pr_visitor='<span class="text-danger"><i class="ti-arrow-down fs-13"></i> '.$pr.'%</span>';
-        }else{
-            $pr_visitor='<span class="text-success"><i class="ti-arrow-up fs-13"></i> '.$pr.'%</span>';
+        if ($pr > 0) {
+        	if($data_ago>$data_now){
+        	    $pr_visitor = '<span class="text-danger"><i class="ti-arrow-down fs-13"></i> '.$pr.'%</span>';
+        	}else{
+        	    $pr_visitor = '<span class="text-success"><i class="ti-arrow-up fs-13"></i> '.$pr.'%</span>';
+        	}
+        } else {
+        	$pr_visitor = '';
         }
+        
         return $pr_visitor;
     }
 }
