@@ -7,11 +7,14 @@
   "devDependencies": {
     "bootstrap-sass": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-sass": "dlmanning/gulp-sass#2.x",
     "laravel-elixir": "^5.0.0",
     "polyify": "0.0.4"
   },
   "dependencies": {
     "buffer": "^4.6.0",
-    "crypto-browserify": "^3.11.0"
+    "crypto-browserify": "^3.11.0",
+    "gulp-compass": "^2.1.0",
+    "laravel-elixir": "^6.0.0-10"
   }
 }

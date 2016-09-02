@@ -1,0 +1,20 @@
+#header
+  /*background-color: rgba(74, 74, 74, 0.3)*/
+  position: fixed
+  left: 0
+  right: 0
+  top: 0
+  min-width: 320px
+  z-index: 55
+  padding: 25px 0
+  background: transparent
+  -webkit-transition: background .3s, padding .3s
+  transition: background .3s, padding .3s
+  font-size: 1.25rem
+  &.fixed-position
+    background: #4a4a4a
+    padding: 15px 0
+.nav-active #header
+  background: #4a4a4a
+@import "subfunction/f_navbar"
+@import "subfunction/f_header_currencies"

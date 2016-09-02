@@ -1,0 +1,191 @@
+.client-area
+  background: #3c3c3f
+  padding: 10px 0
+  .row
+    margin: 0px
+
+.count-block
+  background: #f4f4f4
+  padding: 35px 0
+  .container
+    overflow: hidden
+
+.count-list
+  margin: 0 -60px
+  li
+    display: inline-block
+    vertical-align: middle
+    padding: 0 48px
+    text-align: center
+    width: 32.8%
+    font-size: 16px
+    position: relative
+    + li:before
+      content: ""
+      position: absolute
+      left: 0
+      top: 50%
+      margin-top: -50px
+      width: 1px
+      height: 100px
+      background: #988866
+      -webkit-transform: translateX(0) rotate(30deg)
+      -ms-transform: translateX(0) rotate(30deg)
+      transform: translateX(0) rotate(30deg)
+    &:first-child .count.counter:after
+      content: 'B'
+  .count
+    display: block
+    padding-bottom: 5px
+    font-size: 44px
+    line-height: 1.36
+    letter-spacing: 2.75px
+    color: #000
+  .info
+    font-weight: 500
+    color: rgba(0, 0, 0, 0.5)
+
+.content-wrapper, .more_items_section
+  padding: 80px 0
+.heading
+  text-align: center
+  margin: 0 auto 80px
+
+.wrap h5
+  font-weight: 400
+  font-size: 18px
+  line-height: 1.4545
+
+.heading
+  h1
+    color: #43484d
+    font-weight: 100
+    margin-bottom: 24px
+  .wrap
+    max-width: 750px
+    margin: 0 auto
+    font-weight: 400
+    &.add
+      max-width: 650px
+
+.content-holder
+  position: relative
+.compare-block, .featured-block
+  position: relative
+  padding: 53px 0
+  overflow: hidden
+  .container
+    .row
+      margin-right: -15px
+.text-box
+  background: #fff
+  text-align: center
+  padding: 90px
+  box-shadow: 24px 27px 25px rgba(0, 0, 0, 0.1)
+
+.info-block
+  padding-top: 60px
+  .mob-img
+    margin-left: 30px
+  .text-hold
+    max-width: 350px
+    margin: 0 auto
+    padding-top: 147px
+  .text-top
+    max-width: 400px
+    margin: 0 auto
+    padding-top: 40px
+    h1
+      font-weight: 300
+    ul
+      list-style: none
+      padding-left: 0
+      margin-left: 39px
+      li
+        margin-bottom: 10px
+        text-indent: -29px
+        &:before
+          content: ''
+          display: inline-block
+          height: 30px
+          width: 30px
+          background-image: url('/assets/images/circle-check.png')
+          background-size: contain
+          background-repeat: no-repeat
+          position: relative
+          top: 10px
+          right: 11px
+  .title
+    display: block
+    margin-bottom: 5px
+    text-transform: uppercase
+    font-size: 16px
+    color: #776c52
+
+.text-box .title
+  display: block
+  margin-bottom: 5px
+  text-transform: uppercase
+  font-size: 16px
+  color: #776c52
+
+.imageinfo-block
+  position: relative
+  text-align: center
+  color: #fff
+  .h1
+    color: #fff
+
+.info-wrap
+  max-width: 620px
+  margin: 0 auto
+  padding: 100px 0
+  p
+    margin-bottom: 18px
+  .btn
+    margin-top: 40px
+
+.info-block .btn, .text-box .btn
+  margin-top: 20px
+.subscribe-block
+  background: #fafafa
+  .heading
+    margin-bottom: 50px
+
+.subscribe-form
+  max-width: 560px
+  margin: 0 auto
+  text-align: center
+  .title
+    margin-bottom: 53px
+  .input-group
+    max-width: 480px
+    margin: 0 auto
+
+.notifications
+  max-width: 480px
+  margin: 0 auto
+
+.subscribe-form
+  .notifications
+    text-align: left
+    margin: 5px auto 0
+  .input-group
+    .form-control
+      color: #89898b
+      height: 56px
+      &::-webkit-input-placeholder
+        color: #89898b
+      &::-moz-placeholder
+        opacity: 1
+        color: #89898b
+      &:-moz-placeholder, &:-ms-input-placeholder, &.placeholder
+        color: #89898b
+    .btn
+      padding: 4px 30px
+      letter-spacing: 2px
+#subscriber-email
+  padding: 10px 15px
+  letter-spacing: 0.4px
+  background: #fff
+  border: 1px solid #c5c5c5

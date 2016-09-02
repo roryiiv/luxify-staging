@@ -63,33 +63,27 @@
         <!-- banner image -->
         <section class="images" id="listing-image">
             <?php
-				$listing->images = str_replace('\"', '"', $listing->images);
+                //process the image json before decode
+				        $listing->images = str_replace('\"', '"', $listing->images);
                 $otherImages = json_decode($listing->images, true);
                 //check if the mainImage is exist on images
-                $check_mainImage = array();
-                $check_mainImage[] = $listing->mainImageUrl;
+                $mainImage = array();
+                $mainImage[] = $listing->mainImageUrl;
 
+                $checking = array();
                 // fix issue here.
-                if(is_array($otherImages)){
-                	$checking = array_intersect($otherImages, $check_mainImage);
-                }else{
-                	if ($otherImages != null) {
-                		$check_mainImage[] = $otherImages;
-                	}
-                	$checking = $check_mainImage;
+                if(is_array($otherImages) && count($otherImages) > 0){
+                	$checking = array_intersect($otherImages, $mainImage);
                 }
-                
-                if(count($checking)===0){
-                   $images = json_decode($listing->images);
-                   if (!empty($listing->mainImageUrl)) {
-                     // prepend main image to the images array
-                     array_unshift($images, $listing->mainImageUrl);
-                   }                    
-                }else{
+                if(count($checking) === 0){
+                    $images = json_decode($listing->images);
+                    if (!empty($listing->mainImageUrl)) {
+                        // prepend main image to the images array
+                        array_unshift($images, $listing->mainImageUrl);
+                    }
+                } else {
                     $images = json_decode($listing->images);
                 }
-                // var_dump($images); exit;
-
             ?>
             <ul>
                 @if($listing->aerialLook3DUrl)
@@ -253,7 +247,7 @@
 			</p>
 			@if(!empty($infos))
 			    <h5 style="margin-top:45px;">{{ _t('Specifications', [], App::getLocale()) }}</h5>
-			    <table class="table item-description" {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
+			    <table class="table item-description">
 				<thead>
 				</thead>
 				<tbody>
@@ -261,9 +255,9 @@
 				@foreach($infos as $key => $info)
 				    @if(isset($info->label))
 				      @if(gettype($info->label) === 'string' && gettype($info->value) === 'string')
-					<tr>
+					<tr {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
 					    <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ _t($info->label, [], App::getLocale()) }}</th>
-					    <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
+					    <td class='text-center' {{schema::itemProp('')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
 					</tr>
 				      @endif
 				    @else

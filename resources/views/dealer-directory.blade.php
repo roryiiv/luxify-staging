@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', func::genTitle('Dealer Directory', false))
+@section('title')
+  <title>{{ func::genTitle('Dealer Directory', false)}}</title>
+@endsection
 
 @section('meta-data')
 <meta name="keywords" content="Luxury Sellers, Luxury Dealers, Luxury Marketplace">
@@ -22,6 +24,14 @@
 @endsection
 
 @section('content')
+<?php 
+  foreach($dealers as $dealer) {
+    $companyName =  json_decode($dealer->companyName);
+    if (is_array($companyName)) {
+      $dealer->companyName = implode(' ', $companyName);
+    }
+  }
+?>
     <!-- main banner of the page -->
 	  <section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/dealer-application-main.jpg', '', '', false, true)}});">
 		    <div class="container">
@@ -105,7 +115,7 @@
   <hr>
 </div>
 @foreach($dealers as $dealer)
-	@if ($dealer->companyName != null || is_array($dealer->companyName))
+	@if ($dealer->companyName !== null || is_array($dealer->companyName))
 		@if(!ctype_alnum($dealer->companyName[0]))
 			<div class="col-md-4">
 		    	<a class="dealer-link" href="{{func::set_url('/dealer/'.$dealer->id.'/'.$dealer->slug)}}">{{ $dealer->companyName }}</a>
