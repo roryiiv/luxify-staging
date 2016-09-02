@@ -812,7 +812,7 @@ class Front extends Controller {
         ->where('role', 'seller')
         ->where('dealer_status','approved')
         ->where('isSuspended', false)
-        ->orderBy('companyName','asc')
+        ->orderBy('slug','asc')
         ->get();
 
       if ($dealers) {
