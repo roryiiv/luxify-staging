@@ -1,0 +1,207 @@
+@charset "UTF-8"
+$font-normal: "Arial", "Helvetica Neue", "Helvetica", sans-serif
+$font-Montserrat: "Montserrat", $font-normal
+$font-icomoon: icomoon, $font-normal
+$font-Playfair: "Playfair Display", Times,$font-normal
+$font-Roboto: "Roboto", $font-normal
+$fonts-path-icomoon: "/assets/fonts/icomoon/"
+$fonts-path-bootstrap: "/assets/fonts/bootstrap/"
+
+@function unicode($str)
+  @return unquote("\"")+unquote(str-insert($str, "\\", 1))+unquote("\"")
+
+
+@import "compass/css3"
+//ico import
+@include font-face("icomoon", font-files("#{$fonts-path-icomoon}icomoon.eot","#{$fonts-path-icomoon}icomoon.ttf","#{$fonts-path-icomoon}icomoon.woff","#{$fonts-path-icomoon}icomoon.svg"))
+@include font-face("Glyphicons Halflings", font-files("#{$fonts-path-bootstrap}glyphicons-halflings-regular.eot","#{$fonts-path-bootstrap}glyphicons-halflings-regular.ttf","#{$fonts-path-bootstrap}glyphicons-halflings-regular.woff","#{$fonts-path-bootstrap}glyphicons-halflings-regular.svg"))
+
+// Import Bootstrap Compass integration
+@import "bootstrap-compass"
+// Import custom Bootstrap variables
+@import "bootstrap-variables"
+// Import Bootstrap for Sass
+@import "bootstrap"
+
+
+[class^="icon-"], [class*=" icon-"]
+  /* use !important to prevent issues with browser extensions that change fonts
+  font-family: "icomoon" !important
+  speak: none
+  font-style: normal
+  font-weight: normal
+  font-variant: normal
+  text-transform: none
+  line-height: 1
+  /* Better Font Rendering ===========
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+.icon-arrow-right:before
+  content: unicode("e905")
+
+.icon-arrow-left:before
+  content: unicode("e910")
+
+.icon-globe:before
+  content: unicode("e911")
+
+.icon-bookmarn:before
+  content: unicode("e902")
+
+.icon-eye:before
+  content: unicode("e903")
+
+.icon-facebook:before
+  content: unicode("e904")
+
+.icon-heart:before
+  content: unicode("e906")
+
+.icon-instagram:before
+  content: unicode("e907")
+
+.icon-pinterest:before
+  content: unicode("e908")
+
+.icon-play:before
+  content: unicode("e909")
+
+.icon-rss:before
+  content: unicode("e90a")
+
+.icon-social:before
+  content: unicode("e90b")
+
+.icon-tag:before
+  content: unicode("e90c")
+
+.icon-twitter:before
+  content: unicode("e90d")
+
+.icon-wechat:before
+  content: unicode("e90e")
+
+.icon-youtube:before
+  content: unicode("e90f")
+
+.icon-location:before
+  content: unicode("e947")
+
+.icon-location2:before
+  content: unicode("e948")
+
+.icon-arrow-down:before, .navbar-nav > li .dropdown-toggle:before
+  content: unicode("e900")
+
+.icon-search:before, .category-search:before
+  content: unicode("e901")
+
+html
+  height: 100%
+
+body
+  font-family: $font-Roboto !important
+  height: 100%
+  min-width: 320px
+  font-weight: 300
+  font-size: 10px
+
+  color: #5e6977
+
+img
+  max-width: 100%
+  height: auto
+  vertical-align: top
+
+.grey-bg
+  background: #f4f4f4
+
+a
+  color: #958867
+  text-decoration: none
+  @include transition(color 0.3s linear)
+  &:hover , &:focus
+    color: #958867
+
+
+h1, .h1
+  margin: 0 0 20px
+  font-weight: 100
+  font-size: 2.8rem
+  color: #4a4a4a
+
+h2, .h2
+  margin: 0 0 20px
+  color: #4a4a4a
+  font-size: 28px
+
+h3, .h3
+  margin: 0 0 20px
+  font-size: 2.1rem
+  color: #4a4a4a
+
+h4, .h4
+  margin: 0 0 20px
+  font-size: 1.9rem
+  font-weight: 400
+
+
+p
+  margin-bottom: 20px
+  font-size: 1.5rem
+  font-weight: 300
+  line-height: 1.5
+
+.overlay:before
+  content: ""
+  background: rgba(0, 0, 0, 0.57)
+  position: absolute
+  left: 0
+  right: 0
+  top: 0
+  bottom: 0
+  z-index: 3
+
+.col-xs-offset-right-12
+  margin-right: 100%
+
+.col-xs-offset-right-11
+  margin-right: 91.66666667%
+
+.col-xs-offset-right-10
+  margin-right: 83.33333333%
+
+.col-xs-offset-right-9
+  margin-right: 75%
+
+.col-xs-offset-right-8
+  margin-right: 66.66666667%
+
+.col-xs-offset-right-7
+  margin-right: 58.33333333%
+
+.col-xs-offset-right-6
+  margin-right: 50%
+
+.col-xs-offset-right-5
+  margin-right: 41.66666667%
+
+.col-xs-offset-right-4
+  margin-right: 33.33333333%
+
+.col-xs-offset-right-3
+  margin-right: 25%
+
+.col-xs-offset-right-2
+  margin-right: 16.66666667%
+
+.col-xs-offset-right-1
+  margin-right: 8.33333333%
+
+.col-xs-offset-right-0
+  margin-right: 0
+.text-success
+  font-size: 1.3rem
+.text-danger
+  font-size: 1.3rem

@@ -105,7 +105,7 @@
   <hr>
 </div>
 @foreach($dealers as $dealer)
-	@if ($dealer->companyName != null || is_array($dealer->companyName))
+	@if ($dealer->companyName !== null || is_array($dealer->companyName))
 		@if(!ctype_alnum($dealer->companyName[0]))
 			<div class="col-md-4">
 		    	<a class="dealer-link" href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
