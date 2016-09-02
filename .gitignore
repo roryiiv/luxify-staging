@@ -24,3 +24,4 @@ config/services.php
 config/session.php
 /app/Providers/AppServiceProvider.php
 /storage/*
+/.sass-cache
