@@ -875,14 +875,12 @@ class Front extends Controller {
 
     public function viewDealerNoSlug($id) {
         $dealer = DB::table('users')->where('id', $id)->first();
-        $listings = DB::table('listings')
-        ->where('userId', $dealer->id)
-        ->where('status', 'APPROVED')
-        ->join('countries', 'countries.id', '=', 'listings.countryId')
-        ->select('listings.*', 'countries.name as country')
-        ->take(6)
-        ->get();
-        return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
+        if ($dealer) {
+          return redirect('/dealer/'. $id . '/'. (!empty($dealer->slug) ? $dealer->slug : 'unknown'));  
+        } else {
+          echo 'error';
+         }
+//        return view('dealer', ['dealer' => $dealer, 'listings' => $listings, 'meta'=>$meta]);
     }
 
     public function updateHashed() {
