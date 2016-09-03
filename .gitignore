@@ -25,3 +25,9 @@ config/session.php
 /app/Providers/AppServiceProvider.php
 /storage/*
 /.sass-cache
+database/migrations/2014_10_12_000000_create_users_table.php
+database/migrations/2014_10_12_100000_create_password_resets_table.php
+database/migrations/2015_02_03_180720_create_locales_table.php
+database/migrations/2015_02_03_180721_create_translations_table.php
+database/migrations/2016_06_17_165554_create_listings_table.php
+database/migrations/2016_06_17_170952_listings.php
