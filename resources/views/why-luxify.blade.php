@@ -42,7 +42,7 @@
 						</div>
                      </div>
 					 <div class="row">
-					 	<div class="col-sm-6 col-sm-offset-3">
+					 	<div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4">
 							<a href="/register" class="btn btn-primary btn-block" title="Register for Free">Register Now</a>
 						</div>
 					 </div>
@@ -118,7 +118,7 @@
 						</div>
 						<!-- three columns -->
 						<div class="row work-column">
-							<div class="col-sm-4">
+							<div class="col-sm-6 col-xs-12 col-lg-4">
 								<div class="icon" id="icon1">
 									<img src="/assets/images/ico-discover.png" alt="image description">
 								</div>
@@ -127,7 +127,7 @@
 									<p class="w">Browse and find your desired item accordingly</p>
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-6 col-xs-12 col-lg-4">
 								<div class="icon" id="icon1">
 									<img src="/assets/images/ico-compare.png" alt="image description">
 								</div>
@@ -136,7 +136,7 @@
 									<p>Compare brand, price, and where the item is based</p>
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-6 col-xs-12 col-lg-4">
 								<div class="icon" id="icon1">
 									<img src="/assets/images/ico-contact.png" alt="image description">
 								</div>
@@ -158,7 +158,7 @@
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2">
                     <div class="col-sm-8">
-                            <h1>Create your account for free</h1>
+                            <h2>Create Your Account For Free</h2>
                     </div>
                     <div class="col-sm-4">
 						<a href="/register" class="btn btn-primary">Get Started</a>

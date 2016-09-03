@@ -79,9 +79,9 @@
             <div class="container">
                 <!-- new grid -->
                 <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1">
+                    <div class="col-sm-10 col-sm-offset-1 col-xs-offset-1">
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <nav class="footer-nav">
                                     <h4>@lang('footer.aboutLuxify')</h4>
                                     <ul>
@@ -93,7 +93,7 @@
                                     </ul>
                                 </nav>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <nav class="footer-nav">
                                     <h4>@lang('footer.platform')</h4>
                                     <ul>
@@ -110,7 +110,7 @@
                                     </ul>
                                 </nav>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <nav class="footer-nav">
                                     <h4>@lang('footer.ourOffice')</h4>
                                     <ul>
@@ -122,7 +122,7 @@
                                     </ul>
                                 </nav>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <nav class="footer-nav">
                                     <h4>@lang('footer.followUs')</h4>
                                     <ul class="social-networks">
@@ -163,7 +163,7 @@
                                 </nav>
                             </div>
                             <div class="col-md-5 text-center">
-                                <strong class="copyright">&copy; {{ date("Y" )}} Luxify Limited. All Rights Reserved</strong>
+                                <p class="copyright">&copy; {{ date("Y" )}} Luxify Limited. All Rights Reserved</p>
                             </div>
                         </div>
                     </div>
