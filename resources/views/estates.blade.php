@@ -29,65 +29,80 @@
             <div class="banner-text">
                 <div class="banner-center">
                     <!-- new grid -->
-                      <div class="row">
-                          <div class="col-lg-12" style="margin-bottom: 3rem;">
-							<h1>@lang('static.estates_luxify')</h1>
-              <h2>@lang('static.estates_partner')</h2>
-						   </div>
-					   </div>
-          <div class="row" style="margin-bottom: 4.5rem;">
-            <div class="col-lg-12">
-				   <div class="button-wrap">
-						<a class="btn btn-default lightbox fancybox.iframe" href="https://my.matterport.com/show/?m=uRGXgoiYk9f"><span class="icon-play"></span> @lang('static.estates_experience')</a>
-						<a href="{{func::set_url('/category/real-estates')}}" class="btn btn-primary smooth-scroll">@lang('static.estates_listings')</a>
-					</div>
-        </div>
-         </div>
-                      <div class="row">
-                          <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>@lang('static.estates_goal')</p>
-					   </div>
-				   </div>
+                    <div class="row">
+                        <div class="col-lg-12" style="margin-bottom: 3rem;">
+                            <h1>Luxify Estates</h1>
+                            <h2>Your trusted partner for investments in the U.S.</h2>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 4.5rem;">
+                        <div class="col-lg-12">
+                            <div class="button-wrap">
+                                <a class="btn btn-default lightbox fancybox.iframe" href="https://my.matterport.com/show/?m=uRGXgoiYk9f"><span class="icon-play"></span> Experience</a>
+                                <a href="/category/real-estates" class="btn btn-primary smooth-scroll">View Listings</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                            <p>Our goal is to change the way property buyers search for and experience luxury real estate through 3D, virtual reality and video property tour</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- end of banner -->
     <section>
-	    <div class="carousel-block" style="padding-bottom: 0px;">
-	      	<div class="container">
-	        	<div class="row">
-	          		<div class="col-sm-12">
-	            		<h1 style="text-align: center;">@lang('static.estates_virtual')</h1>
-	            		<div class="slider">
-	              		@if(!empty($mores))
-			              	@foreach ($mores as $more)
-			              		<div class="slide">
-				                    <div class="thumbnail borderless">
-				                      	<a href="{{func::set_url('/listing/'.$more->slug)}}">
-				                        	<div class='product-img-container'>
-				                        		<?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
-				                          		<img class='product-img' src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
-				                            	@if(Auth::user())
-					                              	<?php $madded = func::is_wishlist(Auth::user()->id, $more->id) == 1 ? ' added' : ''; ?>
-					                          		<a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="favourite{{ $madded }}"><span class="icon-heart"></span></a>
-				                            	@else
-				                          			<a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="favourite" href="#"><span class="icon icon-heart"></span></a>
-				                           		 @endif
-				                        	</div>
-					                        <div class="col-lg-12" style="text-align: center; margin-bottom: 30px;">
-					                            <a href="/luxify-estates/3d-estates" class="btn btn-primary smooth-scroll">View More</a>
-					                        </div>
-					                    </a>
-				                   	</div>
-				                </div>
-			              	@endforeach
-			            @endif
-			            </div>
-			        </div>
-	            </div>
-	        </div>
-	    </div>  
+        <div class="carousel-block" style="padding-bottom: 0px;border-bottom:0px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 style="text-align: center;">Latest Estates with 3D Virtual Reality</h1>
+                        <div class="slider estates">
+                            @if(!empty($mores))
+                                @foreach($mores as $more)
+                                    <div class="slide">
+                                        <div class="thumbnail borderless">
+                                            <a href="/listing/{{ $more->slug }}">
+                                                <div class='product-img-container'>
+                                                    <?php $more_img = !empty($more->mainImageUrl) ? $more->mainImageUrl : 'default-logo.png'; ?>
+                                                    <img class='product-img' src="{{ func::img_url($more_img, 300, '', true) }}" alt="image description">
+                                                    @if(Auth::user())
+                                                        <?php $madded = func::is_wishlist(Auth::user()->id, $more->id) == 1 ? ' added' : ''; ?>
+                                                        <a id="{{ $more->id }}" href="javascript:;" data-id="{{ $more->id }}" class="slide-favourite favourite{{ $madded }}"><span class="icon-heart"></span></a>
+                                                    @else
+                                                        <a data-toggle="modal" data-listing="{{$more->id}}" data-target="#login-form" class="slide-favourite favourite" href="#"><span class="icon icon-heart"></span></a>
+                                                    @endif
+                                                </div>
+                                            </a>
+                                            <div class="caption">
+                                                <h3><a href="/listing/{{ $more->slug }}">{{ $more->title }}</a></h3>
+                                                <?php
+                                                $msess_currency = null !==  session('currency') ? session('currency') : 'USD';
+                                                $mprice_format = func::formatPrice($more->currencyId, $msess_currency, $more->price);
+                                                $mlogo = $more->companyLogoUrl && !empty($more->companyLogoUrl) ? $more->companyLogoUrl : 'default-logo.png';
+                                                ?>
+                                                <div>
+                                                    <span class="price">{{ $mprice_format }}</span>
+                                                </div>
+                                                <div class="country-container">
+                                                    <span class="country">{{$more->country}}</span>
+                                                </div>
+                                                <div class="item-logo">
+                                                    <img src="{{ func::img_url($mlogo, 90, '', true) }}" alt="{{ $more->fullName}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                        <div class="col-lg-12" style="text-align: center; margin-bottom: 30px;">
+                            <a href="/luxify-estates/3d-estates" class="btn btn-primary smooth-scroll">View More</a>
+                        </div>
+                    </div>
+                </div>
     </section>
     <hr style="width: 80%; border-width: 2px;">
     <!-- main informative part of the page -->
@@ -99,73 +114,73 @@
                 <div class="row">
                     <div class="col-lg-12">
 
-                <header class="heading" id="heading1">
-                    <h1>@lang('static.estates_walk')</h1>
-					<div class="wrap">
-						<h5>@lang('static.estates_tools')</h5>
-					</div>
-                </header>
-                <!-- services wrapper -->
-                <div class="service-wrap">
-                    <div class="column">
-                        <div class="row">
-                            <div class="icon">
-                                <img src="{{func::img_url('banners/estates-3D-icon01.png', '', '', false, true)}}" alt="image description">
+                        <header class="heading" id="heading1">
+                            <h1>3D Virtual Walkthrough</h1>
+                            <div class="wrap">
+                                <h5>We give you the tools to market your luxury property in a new and exciting way</h5>
                             </div>
-                            <strong class="title">@lang('static.estates_share')</strong>
-                            <p>@lang('static.estates_mobile')</p>
+                        </header>
+                        <!-- services wrapper -->
+                        <div class="service-wrap">
+                            <div class="column">
+                                <div class="row">
+                                    <div class="icon">
+                                        <img src="{{func::img_url('banners/estates-3D-icon01.png', '', '', false, true)}}" alt="image description">
+                                    </div>
+                                    <strong class="title">Share and experience anywhere</strong>
+                                    <p>Virtual property walkthrough from your mobile device, desktop or virtual reality headset</p>
+                                </div>
+                                <div class="row">
+                                    <div class="icon">
+                                        <img src="{{func::img_url('banners/estates-3D-icon02.png', '', '', false, true)}}" alt="image description">
+                                    </div>
+                                    <strong class="title">Full immersive experience </strong>
+                                    <p>Experience a luxury property as if you are on location</p>
+                                </div>
+                                <div class="row">
+                                    <div class="icon">
+                                        <img src="{{func::img_url('banners/estates-3D-icon03.png', '', '', false, true)}}" alt="image description">
+                                    </div>
+                                    <strong class="title">No software required</strong>
+                                    <p>Automated and manual tour modes</p>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="row">
+                                    <div class="icon">
+                                        <img src="{{func::img_url('banners/estates-3D-icon04.png', '', '', false, true)}}" alt="image description">
+                                    </div>
+                                    <strong class="title">Informative</strong>
+                                    <p>Contact information and property description</p>
+                                </div>
+                                <div class="row">
+                                    <div class="icon">
+                                        <img src="{{func::img_url('banners/estates-3D-icon05.png', '', '', false, true)}}" alt="image description">
+                                    </div>
+                                    <strong class="title">Easy to share</strong>
+                                    <p>Branded &amp; unbranded tour link</p>
+                                </div>
+                                <div class="row">
+                                    <div class="icon">
+                                        <img src="{{func::img_url('banners/estates-3D-icon06.png', '', '', false, true)}}" alt="image description">
+                                    </div>
+                                    <strong class="title">Powerful tools for business</strong>
+                                    <p>Captivate customers before they even visit</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="icon">
-                                <img src="{{func::img_url('banners/estates-3D-icon02.png', '', '', false, true)}}" alt="image description">
+                        <!-- video -->
+                        <div class="mobile-image">
+                            <img src="{{func::img_url('banners/estates-3D-phone.png', '', '', false, true)}}" alt="image description">
+                            <div class="video-wrap">
+                                <div class="bg-img">
+                                    <img src="{{func::img_url('banners/estates-3D-poster.jpg', '', '', false, true)}}" alt="image description">
+                                </div>
                             </div>
-                            <strong class="title">@lang('static.estates_immersive')</strong>
-                            <p>@lang('static.estates_luxury')</p>
-                        </div>
-                        <div class="row">
-                            <div class="icon">
-                                <img src="{{func::img_url('banners/estates-3D-icon03.png', '', '', false, true)}}" alt="image description">
-                            </div>
-                            <strong class="title">@lang('static.estates_software')</strong>
-                            <p>@lang('static.estates_tour')</p>
+                            <a class="play lightbox fancybox.iframe" href="https://my.matterport.com/show/?m=uRGXgoiYk9f"><span class="icon-play"></span></a>
                         </div>
                     </div>
-                    <div class="column">
-                        <div class="row">
-                            <div class="icon">
-                                <img src="{{func::img_url('banners/estates-3D-icon04.png', '', '', false, true)}}" alt="image description">
-                            </div>
-                            <strong class="title">@lang('static.estates_informative')</strong>
-                            <p>@lang('static.estates_desc')</p>
-                        </div>
-                        <div class="row">
-                            <div class="icon">
-                                <img src="{{func::img_url('banners/estates-3D-icon05.png', '', '', false, true)}}" alt="image description">
-                            </div>
-                            <strong class="title">@lang('static.estates_easy')</strong>
-                            <p>@lang('static.estates_brand')</p>
-                        </div>
-                        <div class="row">
-                            <div class="icon">
-                                <img src="{{func::img_url('banners/estates-3D-icon06.png', '', '', false, true)}}" alt="image description">
-                            </div>
-                            <strong class="title">@lang('static.estates_power')</strong>
-                            <p>@lang('static.estates_captivate')</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- video -->
-                <div class="mobile-image">
-                    <img src="{{func::img_url('banners/estates-3D-phone.png', '', '', false, true)}}" alt="image description">
-                    <div class="video-wrap">
-                        <div class="bg-img">
-                            <img src="{{func::img_url('banners/estates-3D-poster.jpg', '', '', false, true)}}" alt="image description">
-                        </div>
-                    </div>
-				        <a class="play lightbox fancybox.iframe" href="https://my.matterport.com/show/?m=uRGXgoiYk9f"><span class="icon-play"></span></a>
-                </div>
-                </div>
-                 </div> <!-- end of new grid -->
+                </div> <!-- end of new grid -->
             </div>
         </div>
         <!-- main of main content -->
@@ -173,15 +188,15 @@
         <div class="benefit-block parallax" style="background-image:url({{func::img_url('banners/estates-benefits-main.jpg', '', '', false, true)}});">
             <div class="container" style="z-index: 4;">
                 <!-- new grid -->
-              	<div class="row">
+                <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
-                		<header class="heading" id="heading1">
-							<div class="wrap">
-								<h5 style="color:white; font-size: 2rem;">@lang('static.estates_benefit')</h5>
-							</div>
-                    		<h2 class="h1">@lang('static.estates_drive')</h2>
-                		</header>
-                		<!-- benefit articles -->
+                        <header class="heading" id="heading1">
+                            <div class="wrap">
+                                <h5 style="color:white; font-size: 2rem;">Benefits</h5>
+                            </div>
+                            <h2 class="h1">Drive more property sales</h2>
+                        </header>
+                        <!-- benefit articles -->
                         <div class="row">
                             <article class="col-sm-4">
                                 <div class="icon">
@@ -205,39 +220,23 @@
                                 <p>We generate higher levels of online appeal to more potential buyers because they easily find what’s important to them</p>
                             </article>
                         </div>
-                        <h3>@lang('static.estates_large')</h3>
-                        <p>@lang('static.estates_geo')</p>
-	                    <article class="col-sm-4">
-	                        <div class="icon">
-	                            <img src="{{func::img_url('banners/estates-benefits-icon02.png', '', '', false, true)}}" alt="image description">
-	                        </div>
-	                        <h3>@lang('static.estates_correct')</h3>
-	                        <p>@lang('static.estates_photos')</p>
-	                    </article>
-	                    <article class="col-sm-4">
-	                        <div class="icon">
-	                            <img src="{{func::img_url('banners/estates-benefits-icon03.png', '', '', false, true)}}" alt="image description">
-	                        </div>
-	                        <h3>@lang('static.estates_appeal')</h3>
-	                        <p>@lang('static.estates_generate')</p>
-	                    </article>
-                	</div> <!-- end of new grid -->
-            	</div>
-        	</div>
+                    </div>
+                </div> <!-- end of new grid -->
+            </div>
         </div>
-    	<!-- end of benefit block -->
-
+        <!-- end of benefit block -->
         <div class="content-wrap add">
             <div class="container">
                 <!-- new grid -->
                 <div class="row">
-                	<div class="col-sm-10 col-sm-offset-1">
-                		<header class="heading" id="heading1">
-                    		<h1>@lang('static.estates_start')</h1>
-							<div class="wrap">
-								<h5>@lang('static.estates_produce') <br class="hidden-xs">@lang('static.estates_email')</h5>
-							</div>
-                		</header>
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <header class="heading" id="heading1">
+                            <h1>Easy to get started</h1>
+                            <div class="wrap">
+                                <h5>We will send a photographer to your property, then we will produce <br class="hidden-xs">the virtual walkthrough and send it to you via email and list on Luxify</h5>
+                            </div>
+                        </header>
+                        <!-- image column wrapper -->
                         <div class="row">
                             <div class="col-sm-6">
                                 <figure class="image">
@@ -255,33 +254,30 @@
                                 </figure>
                             </div>
                         </div>
-	                </div>  
+                    </div>
                 </div> <!-- end of new grid -->
             </div>
         </div>
-
         <!-- schedule block -->
         <div class="create-account">
             <div class="container">
                 <div class="row">
                     <!-- new grid -->
-                    <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2">
-                    <div class="col-sm-8">
-                            <h1>@lang('static.estates_concierge')</h1>
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="col-sm-8 col-xs-12 col-md-8">
+                            <h2>Our Concierge Is Here To Help</h2>
+                        </div>
+                        <div class="col-sm-4 col-xs-12 col-md-4" style="text-align: center;">
+						                <a href="/register" class="btn btn-primary">Get Started</a>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-						<a href="{{func::set_url('/contact')}}" class="btn btn-primary">@lang('static.estates_contact')</a>
-                    </div>
-                </div>
-                </div>
                  </div> <!-- end of new grid -->
             </div>
         </div>
         <!-- end of schedule block -->
     </main>
-@include('inc.send-message')
-<!-- end of main part -->
+    @include('inc.send-message')
+    <!-- end of main part -->
 @endsection
 @section('scripts')
     <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>

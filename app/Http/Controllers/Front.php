@@ -44,15 +44,6 @@ use TNTSearch;
 
 use Stevebauman\Translation\Facades\Translation;
 
-use Stichoza\GoogleTranslate\TranslateClient;
-
-use App\MyLibrary\TranslateAPI;
-
-use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
-/*use App\MyLibrary\PSKMicrosoftTranslatorAutoLoader;
-
-use App\MyLibrary\MicrosoftTranslator\Client;*/
-
 class Front extends Controller {
     //Front end Controller
     public function index() {
@@ -204,18 +195,14 @@ class Front extends Controller {
                 }
             }
             $meta->keyword = Meta::get_data_listing($listing->id,'keyword');
-            $translate = new TranslateAPI();
-            $description = Markdown::parse($listing->description);
-            
-            $translate->translate($description,App::getLocale());
-            $listing->description = $translate->translation;
-            
-            
-            $title = $listing->title;
-            $translate->translate($title,App::getLocale());
-            $listing->title = $translate->translation;
-          	return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
-        }else {
+
+            // translation 
+            $listing->description = Translation::translate($listing->description,[], App::getLocale());
+            $listing->title = Translation::translate($listing->title,[], App::getLocale());
+
+          return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
+        }
+        else {
             return abort(404);
         }
     }
@@ -711,15 +698,11 @@ class Front extends Controller {
             ->where('status', 'APPROVED')
             ->whereIn('listings.categoryId', $cat_ids)
             ->where($search_arr)
-            ->orderBy('listings.price','asc')
-            ->select('price')
+            ->orderBy($orderby, $order)
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.price', 'countries.name as country')
             ->get();
-            $price = array();
-            foreach ($json_price as $value) {
-                $price[] = $value->price;
-            }
-
-            dd(json_encode($price)); */
+            dd($json_price);*/
         }else{
             $listings = DB::table('listings')
             ->where('status', 'APPROVED')
@@ -768,46 +751,6 @@ class Front extends Controller {
                 echo json_encode((object) ['result'=> 1, 'data'=>$fieldsArray]);
             }
         }
-    }
-
-    public function category_optional_fields($id) {
-        $opt = DB::table('category_2')->where('id', '=', $id)->first();
-        $optional = json_decode($opt->optional_field);
-      
-        foreach ($optional as $value) {
-           $data = DB::table('category_meta')->where('id',$value)->first();
-           $type = $data->meta_type;
-           $drop = json_decode($data->meta_value);
-            if($type=='text'){
-                echo '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control"></div>';
-            }elseif($type=='number'){
-                echo '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control"></div>';
-            }elseif($type=='textarea'){
-                echo '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><textarea id="'. $data->label .'" name="optionfields['. $data->id .']" class="form-control"></textarea></div>';
-            }elseif($type=='dropdown' || $type=='select'){
-                echo  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><select name="optionfields['. $data->id .']" class="form-control">';
-                foreach ($drop as $option) {
-                    echo "<option value='".$option->value."'>".$option->text."</option>";
-                }
-                echo '</select></div>';
-            }elseif($type=='radiobutton'){
-                echo  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
-                foreach ($drop as $option) {
-                    echo "<input name='optionfields[".$data->id."]'  type='radio' value='".$option->value."'>".$option->text."</br>";
-                }
-                echo '</div>';
-            }elseif($type=='checkbox'){
-                echo  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
-                foreach ($drop as $option) {
-                    echo "<input name='optionfields[".$data->id."]' type='checkbox' value='".$option->value."'>".$option->text."</br>";
-                }
-                echo '</div>';
-            }
-            
-        }
-        
-
-        
     }
 
     public function product_brands($name) {
@@ -932,50 +875,12 @@ class Front extends Controller {
 
     public function viewDealerNoSlug($id) {
         $dealer = DB::table('users')->where('id', $id)->first();
-        $listings = DB::table('listings')
-        ->where('userId', $dealer->id)
-        ->where('status', 'APPROVED')
-        ->join('countries', 'countries.id', '=', 'listings.countryId')
-        ->select('listings.*', 'countries.name as country')
-        ->take(6)
-        ->get();
-        //add meta
-        $meta = new Meta;
-        $meta->title = trim(Meta::get_data_user($id,'title'));
-        if(!empty($meta->title) && ($meta->title !=null)){
-            $meta->title = substr(Meta::get_data_user($id,'title'),0,60);
-        }else{
-            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
-                $company = json_decode($dealer->companyName);
-                if(is_array($company)){
-                    $meta->title = substr($company[0].' '.$company[1],0,60); 
-                }else{
-                    $meta->title = substr(ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName),0,60); 
-                }
-            }else{
-              $meta->title = substr(ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName),0,60);
-            }
-        }
-
-        $meta->alt_text = Meta::get_data_user($id,'alt_text');
-        $meta->description = !empty(Meta::get_data_listing($dealer->id,'companySummary')) ? Meta::get_data_listing($dealer->id,'companySummary') : str_limit(trim(preg_replace('/\s\s+/', ' ', $dealer->companySummary, 160)));
-        $meta->author = trim(Meta::get_data_user($id,'author'));
-        if(!empty($meta->author) && ($meta->author !=null)){
-            $meta->author = Meta::get_data_user($id,'author');
-        }else{
-            if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
-                $company = json_decode($dealer->companyName);
-                if(is_array($company)){
-                    $meta->author = $company[0]; 
-                }else{
-                    $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
-                }
-            }else{
-              $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
-            }
-        }
-        $meta->keyword = Meta::get_data_user($id,'keyword');
-        return view('dealer', ['dealer' => $dealer, 'listings' => $listings, 'meta' => $meta]);
+        if ($dealer) {
+          return redirect('/dealer/'. $id . '/'. (!empty($dealer->slug) ? $dealer->slug : 'unknown'));  
+        } else {
+          echo 'error';
+         }
+//        return view('dealer', ['dealer' => $dealer, 'listings' => $listings, 'meta'=>$meta]);
     }
 
     public function updateHashed() {
@@ -1995,33 +1900,9 @@ class Front extends Controller {
         $request->session()->put('currency', $code);
         return back();
     }
-    public function switchLanguage(Request $request, $code){    
+    public function switchLanguage(Request $request, $code){
         $updatelang = Language::updatelang($code);
-        $code = DB::table('languages')->where('id',$code)->value('lang_str');
-
-        if($code=='en'){
-            $langcode='';
-        }else{
-            $langcode=$code.'/';
-        }
-        $full_url = $request->header();
-        $host = 'http://'.$full_url['host'][0].'/';
-        $referer = $full_url['referer'][0];
-
-        $get = DB::table('languages')->get();
-        foreach ($get as $key) {
-            $referer = str_replace($host.$key->lang_str.'/','',$referer);
-            $lang_arr[] = $key->lang_str;
-        }
-
-        $last_url = str_replace($host,'',$referer);
-        
-        if(in_array($last_url, $lang_arr)){
-        	$last_url = '';
-        }
-
-        $get_redirect_url = $host.$langcode.$last_url;
-        return redirect($get_redirect_url);
+        return back();
     }
 
     /* // for build hierarchy field
