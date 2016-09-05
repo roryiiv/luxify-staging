@@ -168,7 +168,8 @@
 	</main>
 @endsection
 @section('scripts')
-
+    <script type="text/javascript" src="/assets/js/jquery.IonRangeSlider.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
 
     <script>
     $(document).ready(function(){
