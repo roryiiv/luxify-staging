@@ -41,7 +41,7 @@
     </section>
     <!-- end of banner -->
     <!-- main informative part of the page -->
-    <div class="info-block">
+    <div class="info-block" id="Value-Proposition">
         <!-- main content wrapper -->
         <div class="container">
             <div class="row">
@@ -72,7 +72,7 @@
       </div>
         <!-- main of main content -->
         <!-- benefit block -->
-        <div class="benefit-block parallax" style="background-image:url(assets/images/banner-technology.jpg);">
+        <div id="Technology" class="benefit-block parallax" style="background-image:url(assets/images/banner-technology.jpg);">
             <div class="container" style="z-index:4;">
                 <!-- new grid -->
                       <div class="row">

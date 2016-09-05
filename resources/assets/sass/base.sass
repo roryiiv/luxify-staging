@@ -11,7 +11,7 @@ $fonts-path-bootstrap: "/assets/fonts/bootstrap/"
   @return unquote("\"")+unquote(str-insert($str, "\\", 1))+unquote("\"")
 
 
-@import "compass/css3"
+@import "../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/css3"
 //ico import
 @include font-face("icomoon", font-files("#{$fonts-path-icomoon}icomoon.eot","#{$fonts-path-icomoon}icomoon.ttf","#{$fonts-path-icomoon}icomoon.woff","#{$fonts-path-icomoon}icomoon.svg"))
 @include font-face("Glyphicons Halflings", font-files("#{$fonts-path-bootstrap}glyphicons-halflings-regular.eot","#{$fonts-path-bootstrap}glyphicons-halflings-regular.ttf","#{$fonts-path-bootstrap}glyphicons-halflings-regular.woff","#{$fonts-path-bootstrap}glyphicons-halflings-regular.svg"))
@@ -22,6 +22,7 @@ $fonts-path-bootstrap: "/assets/fonts/bootstrap/"
 @import "bootstrap-variables"
 // Import Bootstrap for Sass
 @import "bootstrap"
+@import "animate-sass-master/animate"
 
 
 [class^="icon-"], [class*=" icon-"]
@@ -116,6 +117,8 @@ img
 
 .grey-bg
   background: #f4f4f4
+.full-line-block
+  border-bottom: 2px solid #e1e1dc
 
 a
   color: #958867

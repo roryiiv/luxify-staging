@@ -19,10 +19,10 @@ Route::get('/buildHashedId', 'Front@updateHashed');
 Route::get('/', function(){
     return View::make('index');
 });
-Route::get('/press', function(){
+Route::get('/presskit', function(){
   return view('presskit'); 
 });
-Route::get('press/{id}', function($id) {
+Route::get('presskit/{id}', function($id) {
   if ($id) {
     return view('presskit', ['release' => $id]);
   } else {
@@ -67,6 +67,14 @@ Route::get('/faq', function(){
 Route::get('/sitemap', function(){
     return view('sitemap');
 });
+Route::get('sitemap/{id}', function($id) {
+    if ($id) {
+        return view('sitemap', ['release' => $id]);
+    } else {
+        return view('sitemap');
+    }
+});
+
 Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
 Route::post('datafeed/product/update/{id}', 'DataFeed@product_update');
