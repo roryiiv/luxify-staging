@@ -161,7 +161,7 @@
 			<li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
 		       @if($listing->price)
 			<div style="display:none;" {{schema::itemScope()}} {{schema::itemProp('offers')}} {{schema::itemType('Offer')}}>
-			  <div style="display:none;" {{schema::itemProp('price')}} {{schema::itemType('Number')}}>{{$listing->baseCurrencyPrice}}</div>
+			  <div style="display:none;" {{schema::itemProp('price')}} {{schema::itemType('Number')}}>{{(isset($listing->price) && !empty($listing->price))? $listing->price * $curr->rate: 0 }}</div>
 			  <div style="display:none;" {{schema::itemProp('priceCurrency')}} {{schema::itemType('String')}}>USD</div>
 			</div>
 		       @endif
@@ -255,14 +255,14 @@
 				@foreach($infos as $key => $info)
 				    @if(isset($info->label))
 				      @if(gettype($info->label) === 'string' && gettype($info->value) === 'string')
-					<tr {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
+					<tr {{schema::itemScope()}} {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
 					    <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ _t($info->label, [], App::getLocale()) }}</th>
-					    <td class='text-center' {{schema::itemProp('')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
+					    <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
 					</tr>
 				      @endif
 				    @else
 				      @if(gettype($info) === 'string')
-					<tr>
+					<tr {{schema::itemScope()}} {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
 					    <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{$key}}</th>
 					    <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info}}</td>
 					</tr>
