@@ -76,8 +76,9 @@
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
-@section('script')
+@section('scripts')
     <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
     <script>
         $(document).ready(function() {

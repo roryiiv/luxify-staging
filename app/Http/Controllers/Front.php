@@ -812,7 +812,7 @@ class Front extends Controller {
         ->where('role', 'seller')
         ->where('dealer_status','approved')
         ->where('isSuspended', false)
-        ->orderBy('companyName','asc')
+        ->orderBy('slug','asc')
         ->get();
 
       if ($dealers) {
@@ -875,14 +875,22 @@ class Front extends Controller {
 
     public function viewDealerNoSlug($id) {
         $dealer = DB::table('users')->where('id', $id)->first();
-        $listings = DB::table('listings')
-        ->where('userId', $dealer->id)
-        ->where('status', 'APPROVED')
-        ->join('countries', 'countries.id', '=', 'listings.countryId')
-        ->select('listings.*', 'countries.name as country')
-        ->take(6)
-        ->get();
-        return view('dealer', ['dealer' => $dealer, 'listings' => $listings]);
+        if ($dealer) {
+          if (empty($dealer->slug)) {
+            $dealer->slug = SlugService::createSlug(Users::class, 'slug', $dealer['companyName']);
+            $dealer->save();
+          }
+          return redirect('/dealer/'. $id . '/'. $dealer->slug);  
+        } 
+        else {
+          $mores = DB::table('listings') ->where('status', 'APPROVED')
+          ->join('countries', 'countries.id', '=', 'listings.countryId')
+          ->leftJoin('users', 'listings.userId', '=', 'users.id')
+          ->select('listings.mainImageUrl', 'listings.title', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'listings.slug', 'users.fullName')
+          ->orderBy('listings.id', ' desc')
+          ->paginate(10);
+          return response()->view('exception.missing', ['mores' => $mores], 500);
+        }
     }
 
     public function updateHashed() {

@@ -57,6 +57,7 @@ class Handler extends ExceptionHandler
         ->join('countries', 'countries.id', '=', 'listings.countryId')
         ->leftJoin('users', 'listings.userId', '=', 'users.id')
         ->select('listings.mainImageUrl', 'listings.title', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'listings.slug', 'users.fullName')
+        ->orderBy('listings.id', ' desc')
         ->paginate(10);
 
         if ($e instanceof NotFoundHttpException) {

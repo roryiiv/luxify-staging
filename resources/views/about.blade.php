@@ -148,10 +148,10 @@
                 <div class="row">
                     <!-- new grid -->
                     <div class="col-lg-8 col-lg-offset-2">
-                        <div class="col-sm-12 col-xs-12 col-md-8">
-                            <h1>Create your account for free</h1>
+                        <div class="col-sm-8 col-xs-12 col-md-8">
+                            <h2>Create Your Account For Free</h2>
                         </div>
-                        <div class="col-sm-12 col-xs-12 col-md-4">
+                        <div class="col-sm-4 col-xs-12 col-md-4" style="text-align: center;">
 						                <a href="/register" class="btn btn-primary">Get Started</a>
                         </div>
                     </div>

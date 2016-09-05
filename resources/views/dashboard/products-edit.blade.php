@@ -512,29 +512,44 @@
 <script>
     <?php
     $otherImages = json_decode($item->images);
-    foreach ($otherImages as $key => $img) {
-        if(!file_exists(func::img_url($item->mainImageUrl, 100, ''))){
-        	unset($otherImages[$key]);
-        }
+    $s3_url = 'https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
+    if (is_array($otherImages)) {
+	    foreach ($otherImages as $key => $img) {
+	    	$check_img = get_headers($s3_url . $img);
+	        if($check_img[0] != 'HTTP/1.1 200 OK'){
+		        unset($otherImages[$key]);
+	        }
+	    }
     }
     
     //check if the mainImage is exist on images
     $check_mainImage = array();
     $check_mainImage[] = $item->mainImageUrl;
-    $checking = array_intersect($otherImages, $check_mainImage);
+    // fix issue here.
+    if(is_array($otherImages) && $otherImages != null){
+    	$checking = array_intersect($otherImages, $check_mainImage);
+    }else{
+    	if ($otherImages != null) {
+    		$check_mainImage[] = $otherImages;
+    	}
+    	$checking = $check_mainImage;
+    }
     $images = array();
     if(count($checking)===0){
         //images is not contain mainImageurl
-        if(file_exists(func::img_url($item->mainImageUrl, 100, ''))){
+        $check_mainImg = get_headers($s3_url . $item->mainImageUrl);
+        
+        if($check_mainImg[0] == 'HTTP/1.1 200 OK'){
             $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
         }
+
         for($i = 0; $i < count($otherImages); $i++) {
             $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
         }
     }else{
-        //images is contain mainImageurl
-            for($i = 0; $i < count($otherImages); $i++) {
-            $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
+        //images contain mainImageurl
+        for($i = 0; $i < count($checking); $i++) {
+        $images[] = array('path'=>func::img_url($checking[$i], 100, ''), 'filename'=>$checking[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($checking[$i]));
         }
     }
     ?>

@@ -534,17 +534,27 @@
     <?php
     $otherImages = json_decode($item->images);
     $s3_url = 'https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
-    foreach ($otherImages as $key => $img) {
-    	$check_img = get_headers($s3_url . $img);
-        if($check_img[0] != 'HTTP/1.1 200 OK'){
-	        unset($otherImages[$key]);
-        }
+    if (is_array($otherImages)) {
+	    foreach ($otherImages as $key => $img) {
+	    	$check_img = get_headers($s3_url . $img);
+	        if($check_img[0] != 'HTTP/1.1 200 OK'){
+		        unset($otherImages[$key]);
+	        }
+	    }
     }
     
     //check if the mainImage is exist on images
     $check_mainImage = array();
     $check_mainImage[] = $item->mainImageUrl;
-    $checking = array_intersect($otherImages, $check_mainImage);
+    // fix issue here.
+    if(is_array($otherImages) && $otherImages != null){
+    	$checking = array_intersect($otherImages, $check_mainImage);
+    }else{
+    	if ($otherImages != null) {
+    		$check_mainImage[] = $otherImages;
+    	}
+    	$checking = $check_mainImage;
+    }
     $images = array();
     if(count($checking)===0){
         //images is not contain mainImageurl
@@ -558,9 +568,9 @@
             $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
         }
     }else{
-        //images is contain mainImageurl
-            for($i = 0; $i < count($otherImages); $i++) {
-            $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
+        //images contain mainImageurl
+        for($i = 0; $i < count($checking); $i++) {
+        $images[] = array('path'=>func::img_url($checking[$i], 100, ''), 'filename'=>$checking[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($checking[$i]));
         }
     }
 
@@ -602,7 +612,7 @@
         var table = $("#images-preview-table tbody");
         table.html('');
         for (var i = 0; i < images_array.length; i++) {
-            $('<tr class="draganddropcustom"><td class="dot-hidden" style="border-right:medium none;"></td><td class="text-center" style="border-left: medium none;"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(radiomainimage==images_array[i].filename?"checked":"")+' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + images_array[i].filename +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button> <a href="{{url("/download-image")}}/'+images_array[i].filename+'" target="_blank" type="button" class="btn btn-sm btn-outline btn-success"><i class="ti-download"></i></a></td></tr>').appendTo(table);
+            $('<tr class="draganddropcustom"><td class="dot-hidden" style="border-right:medium none;"></td><td class="text-center" style="border-left: medium none;"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /> <br/><input type="text" id="'+images_array[i].filename+'" value="'+ images_array[i].alt_text + '" placeholder="alt text . . ." name="alt_text[]" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" '+(radiomainimage==images_array[i].filename?"checked":"")+' name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + images_array[i].filename +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\', '+ images_array[i].onS3+')"><i class="ti-trash"></i></button> <a href="{{func::set_url("/download-image")}}/'+images_array[i].filename+'" target="_blank" type="button" class="btn btn-sm btn-outline btn-success"><i class="ti-download"></i></a></td></tr>').appendTo(table);
         }
     }
     function genControls({id, type, name, label, optionValues, value, valueId}){

@@ -273,12 +273,21 @@
     <!-- end of main part -->
 @endsection
 @section('scripts')
+    <script type="application/ld+json">
+     {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://www.luxify.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.luxify.com/search?action=search&search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+     }
+    </script>
     <script type="text/javascript" src="/assets/js/jquery.youtubebackground.js"></script>
     <script type="text/javascript" src="/assets/js/carousel.js"></script>
-
-
     <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
-
     <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
 
     <script>
