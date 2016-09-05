@@ -130,6 +130,7 @@
 	</main>
 @endsection
 @section('scripts')
+    <script type="text/javascript" src="/assets/js/jquery.IonRangeSlider.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
     <script>
     $(document).ready(function(){
@@ -234,12 +235,6 @@
     </script>
     @if(Auth::user())
         {{ csrf_field() }}
-        <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">
-        <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
-        <script>
-        $(document).ready(function(){
-        });
-        </script>
     @endif
     @include('inc.send-message-script')
 @endsection

@@ -175,7 +175,7 @@
 </div>
 <script type="text/javascript" src="/assets/js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.counterup.min.js"></script>
-<script type="text/javascript" src="/assets/js/jquery.fancybox.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.fancybox.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/jarallax.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.customForms.js"></script>
