@@ -4,6 +4,7 @@ require 'bootstrap-sass'
 
 # Set this to the root of your project when deployed:
 http_path = "/assets/"
+cache_path = "/resources/assets/sass/.sass-cache"
 css_dir = "/public/assets/css"
 sass_dir = "/resources/assets/sass"
 fonts_dir = "/public/assets/fonts"
