@@ -179,7 +179,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
 </style>
 </head>
 
-<body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
+<body style="background-image: url({{func::img_url('banners/login-main.jpg', '', '', false, true)}})" class="body-bg-full v2">
     <div class="parallax"></div>
     <div class="container page-container">
     @if(isset($_GET['err']))
@@ -272,15 +272,38 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
     <!--require for main.js-->
     <script type="text/javascript" src="/assets/js/carousel.js"></script>
     <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery.counterup.min.js"></script>
-    <script type="text/javascript" src="/assets/js/common.js"></script>
 
     <script type="text/javascript" src="/assets/js/jquery.customForms.js"></script>
 
 
 
     <script>
+    function changeHeaderSelectMenu(){
+    
+      $('#currSelect').on('change', function(){
+        var code = $(this).val();
+        // alert(code);
+        window.location.href = '/api/currency/switch/' + code;
+      });
+      $('#langSelect').on('change', function(){
+        var code = $(this).val();
+        // alert(code);
+        window.location.href = '/api/lang/switch/' + code;
+      });
+    
+    }
+    // initialize custom form elements
+    function initCustomForms() {
+      jcf.setOptions('Select', {
+        wrapNative: false
+      });
+      jcf.replaceAll();
+    }
     $(document).ready(function() {
+
+        changeHeaderSelectMenu();
+        initCustomForms();
+
         @if(isset($_GET['err']))
             @if($_GET['err']==104 || $_GET['err']==105 || $_GET['err']==106)
                 $("#cancel-form").modal('show');

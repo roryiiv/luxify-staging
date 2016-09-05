@@ -25,7 +25,7 @@
     <![endif]-->
 </head>
 
-<body style="background-image: url('/build/images/backgrounds/30.jpg')" class="body-bg-full v2">
+<body style="background-image: url({{func::img_url('banners/login-main.jpg', '', '', false, true)}})" class="body-bg-full v2">
     <div class="container page-container">
         @include('inc.loginheader')
         <div class="page-content">
@@ -76,6 +76,31 @@
     <script type="text/javascript" src="/js/bundle.min.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
     <script>
+    function changeHeaderSelectMenu(){
+    
+      $('#currSelect').on('change', function(){
+        var code = $(this).val();
+        // alert(code);
+        window.location.href = '/api/currency/switch/' + code;
+      });
+      $('#langSelect').on('change', function(){
+        var code = $(this).val();
+        // alert(code);
+        window.location.href = '/api/lang/switch/' + code;
+      });
+    
+    }
+    // initialize custom form elements
+    function initCustomForms() {
+      jcf.setOptions('Select', {
+        wrapNative: false
+      });
+      jcf.replaceAll();
+    }
+    $(document).ready(function() {
+        changeHeaderSelectMenu();
+        initCustomForms();
+    });
   	$('#reset-form').validate({
     	rules: {
       		password: {
