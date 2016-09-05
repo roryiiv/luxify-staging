@@ -3,7 +3,13 @@
     $active = (Translation::getRoutePrefix()!=NULL)?Translation::getRoutePrefix():'en';
     $default = DB::table('languages')
                         ->where('lang_str', $active)
+                        ->orWhere('code',$active)
                         ->first();
+    if(count($default)==0){
+        $default = DB::table('languages')
+                        ->where('lang_str', 'en')
+                        ->first();
+    }
     ?>
     <button type="button" class="btn btn-default btn-outline"><i class="flag-icon {{$default->icon}} mr-5"></i> {{$default->name}}</button>
 
@@ -13,6 +19,7 @@
             $active = (Translation::getRoutePrefix()!=NULL)?Translation::getRoutePrefix():'en';
             $langs = DB::table('languages')
                     ->whereNotIn('lang_str', [$active])
+                    ->WhereNotIn('code', [$active])
                     ->get();
         
         foreach($langs as $lang){ 

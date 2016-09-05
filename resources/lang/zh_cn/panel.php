@@ -309,6 +309,8 @@ return[
 
 'product_edit_seo'=>'步骤5：SEO节',
 
+'category_product_edit_seo'=>'SEO节',
+
 'product_edit_seo1'=>'URL弹头',
 
 'product_edit_seo2'=>'编辑URL',

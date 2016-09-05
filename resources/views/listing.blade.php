@@ -370,7 +370,7 @@
 					$rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
 					?>
 					    <div>
-						<span class="price">{{ $mprice_format }}</span>
+						<span class="price">{{ $rel_price_format }}</span>
 					    </div>
 					<div class="country-container">
 					    <span class="country">{{$rel->country}}</span>

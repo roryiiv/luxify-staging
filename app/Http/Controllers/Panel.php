@@ -267,7 +267,32 @@ class Panel extends Controller
         $input->created_by = $creator;
         $input->optional_field = $optionalfields;
         $input->save();
+        $id = $input->id;
 
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+        $object_type = 'categories';
+        $savemeta = Meta::saveorupdate($id,$meta,$object_type);
         return redirect('/panel/categories');
         
     }
@@ -279,6 +304,12 @@ class Panel extends Controller
 
     public function category_edit($id){
         $category = DB::table('category_2')->where('id',$id)->first();
+        //additonal parameters
+        $category->meta_title = Meta::get_data_categories($id,'title');
+        $category->meta_alt_text = Meta::get_data_categories($id,'alt_text');
+        $category->meta_description = Meta::get_data_categories($id,'description');
+        $category->meta_author = Meta::get_data_categories($id,'author');
+        $category->meta_keyword = Meta::get_data_categories($id,'keyword');
         
         return view('panel.category-edit',['category' => $category]);
     }
@@ -310,7 +341,32 @@ class Panel extends Controller
               }
             }
         }
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
 
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }        
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+        if (isset($_POST['txtOrder']) && !empty($_POST['txtOrder'])) {
+            $update->order = $_POST['txtOrder'];
+        }
         $update->name = $_POST['txtNameCategory'];
         $update->slug = $newslug;
         $update->label = $_POST['txtLabelCategory'];
@@ -318,8 +374,13 @@ class Panel extends Controller
         $update->parent = $_POST['parent'];
         $update->updated_by = $editor;
         $update->optional_field = $optionalfields;
-        $update->order = $_POST['txtOrder'];
+
+        
         $update->save();
+        //updatemeta
+        $id = $_POST['id'];
+        $object_type = 'categories';
+        $savemeta = Meta::saveorupdate($id,$meta,$object_type);
 
         return redirect('/panel/categories');
     }

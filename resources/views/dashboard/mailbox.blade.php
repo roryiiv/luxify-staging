@@ -158,7 +158,7 @@
                             <div class="input-group inbox-text-input-box">
                               <input type="text" id="msgTxt" class="form-control input-lg" placeholder="">
                               <span class="input-group-btn">
-                                <button type="button" id="sendMsg" class="btn btn-raised btn-success btn-lg">@lang('dashboard.mail_send)</button>
+                                <button type="button" id="sendMsg" class="btn btn-raised btn-success btn-lg">@lang('dashboard.mail_send')</button>
                               </span>
                             </div>
                         </div>

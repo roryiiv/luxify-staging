@@ -210,15 +210,63 @@
                                             $optionalfields = DB::table('category_meta')->get();
                                             foreach ($optionalfields as $value) {
                                                 $label = (empty($value->title) || $value->title=='' )?$value->label:$value->title;
-                                                echo '<li data-id="'.$value->id.'">'.$label.'</li>';
+                                                echo '<li data-id="'.$value->id.'" style="cursor: pointer;">'.$label.'</li>';
                                             }
                                             ?>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row p-10 text-right">
+                                    <button id="save-btn" type="button" class="btn btn-raised btn-success btn-lg">@lang('panel.category_addcategory_save')</button>
+                                </div>  
                             </fieldset>
-                            
+                            <h3>@lang('panel.category_product_edit_seo')</h3>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="meta_title" class="col-sm-3 control-label">@lang('panel.product_edit_seo3')</label>
+                                    <div class="col-sm-9">
+                                        <input id="meta_title" name='meta_title' type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;">
+                                    <label for="meta_alttext" class="col-sm-3 control-label">@lang('panel.product_edit_seo4')</label>
+                                    <div class="col-sm-9">
+                                        <input id="alttext" name='meta_alttext' type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="meta_description" class="col-sm-3 control-label">@lang('panel.product_edit_seo5')</label>
+                                    <div class="col-sm-9">
+                                        <textarea id="meta_description" name='meta_description' class="form-control " maxlength="500" placeholder=""></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="meta_keyword" class="col-sm-3 control-label">@lang('panel.product_edit_seo6')</label>
+                                    <div class="col-sm-9 "><div class="tagit-sugestion">
+                                        
+                                        <style>
+                                            .bootstrap-tagsinput{
+                                                width: 100%;
+                                            }
+                                        </style>
+                                        <div>
+                                            
+                                        <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                     <label for="meta_author" class="col-sm-3 control-label">@lang('panel.product_edit_seo7')</label>
+                                    <div class="col-sm-9">
+                                        <input id="meta_author" name='meta_author' type="text" maxlength="60" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="row p-10 text-right">
+                                    <button id="save-btn" type="button" class="btn btn-raised btn-success btn-lg">@lang('panel.category_addcategory_save')</button>
+                                </div> 
+                            </fieldset>                            
                         </form>
                     </div>
                 </div>

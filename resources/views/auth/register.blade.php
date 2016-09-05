@@ -9,7 +9,7 @@
     <meta name="keywords" content="luxify member registration,luxury goods">
     <meta name="description" content="Register for an account for free to discover one of the Internet’s largest collections of luxury goods and experiences.">
     <!-- PACE-->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <link rel="stylesheet" type="text/css" href="{{url('./plugins/PACE/themes/blue/pace-theme-flash.css')}}">
     <script type="text/javascript" src="{{url('./plugins/PACE/pace.min.js')}}"></script>
     <!-- Bootstrap CSS-->

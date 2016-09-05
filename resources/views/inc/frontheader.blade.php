@@ -15,18 +15,15 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.shop')</a>
                         <div class="dropdown-menu">
+                        <?php
+                            $categories = DB::table('category_2')->where('parent',0)->get();
+
+                        ?>
                             <ul>
                                 <li><a href="{{func::set_url('/luxify-estates/3d-estates')}}">@lang('header.shop_luxifyEstate3d')</a></li>
-                                <li><a href="{{func::set_url('/category/real-estates')}}">@lang('header.shop_realEstates')</a></li>
-                                <li><a href="{{func::set_url('/category/jewellery-watches')}}">@lang('header.shop_whatches&Jewelry')</a></li>
-                                <li><a href="{{func::set_url('/category/motors')}}">@lang('header.shop_motors')</a></li>
-                                <li><a href="{{func::set_url('/category/handbags-accessories')}}">@lang('header.shop_handbags&Accessories')</a></li>
-                                <li><a href="{{func::set_url('/category/experiences')}}">@lang('header.shop_experiences')</a></li>
-                                <li><a href="{{func::set_url('/category/collectibles-furnitures')}}">@lang('header.shop_collectibles&Furnitures')</a></li>
-                                <li><a href="{{func::set_url('/category/yachts')}}">@lang('header.shop_yachts')</a></li>
-                                <li><a href="{{func::set_url('/category/aircrafts')}}">@lang('header.shop_aircrafts')</a></li>
-                                <li><a href="{{func::set_url('/category/art-antiques')}}">@lang('header.shop_art&Antiques')</a></li>
-                                <li><a href="{{func::set_url('/category/fine-wines-spirits')}}">@lang('header.shop_fineWines&Spirits')</a></li>
+                                @foreach($categories as $value)
+                                    <li><a href="{{func::set_url('/category/'.$value->slug)}}">{{$value->name}}</a></li>    
+                                @endforeach
                             </ul>
                         </div>
                     </li>

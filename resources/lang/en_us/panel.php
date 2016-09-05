@@ -308,6 +308,8 @@ return[
 
 	'product_edit_seo'=>'Step 5: SEO Section',
 
+	'category_product_edit_seo'=>'SEO Section',
+
 	'product_edit_seo1'=>'Url Slug',
 
 	'product_edit_seo2'=>'Edit URL',

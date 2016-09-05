@@ -106,6 +106,8 @@ Route::post('/api/ajax/checkemail/{email}', 'Front@EmailInUse');
 Route::post('/forget-password','LuxifyAuth@forgetPassword');
 Route::post('/reset-password','LuxifyAuth@resetPassword');
 Route::get('/api/ajax/category/{parent}', 'Dashboard@CategoryChoosen');
+Route::get('/api/getchild/', 'Front@zonk')->name('getchild');
+Route::get('/api/getchild/{id}', 'Front@getchild');
 
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
