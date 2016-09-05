@@ -9,15 +9,15 @@
     <meta name="keywords" content="luxify member registration,luxury goods">
     <meta name="description" content="Register for an account for free to discover one of the Internet’s largest collections of luxury goods and experiences.">
     <!-- PACE-->
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" type="text/css" href="./plugins/PACE/themes/blue/pace-theme-flash.css">
-    <script type="text/javascript" src="./plugins/PACE/pace.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/luxify.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/PACE/themes/blue/pace-theme-flash.css')}}">
+    <script type="text/javascript" src="{{url('./plugins/PACE/pace.min.js')}}"></script>
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" type="text/css" href="./plugins/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Fonts-->
-    <link rel="stylesheet" type="text/css" href="./plugins/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/themify-icons/themify-icons.css')}}">
     <!-- Primary Style-->
-    <link rel="stylesheet" type="text/css" href="./build/css/first-layout.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./build/css/first-layout.css')}}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
     <!--[if lt IE 9]>
@@ -40,10 +40,9 @@
         }
         .navbar-right {
             margin-right: 0px;
-            letter-spacing: 0px;
         }
         .navbar-nav {
-            padding-top: 0px;
+
         }
         .navbar-nav > li > a{
             margin: 0;
@@ -54,7 +53,7 @@
 
 
         .currency-selector-container {
-            margin-right: 2.4rem;
+            margin-right: 0 rem !important;
         }
         .jcf-hidden {
             position: absolute !important;
@@ -119,97 +118,112 @@
             right: 0;
             top: 0;
         }
+        .form-control{
+            box-shadow:none !important;
+        }
+
     </style>
 </head>
-<body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
-    <div class="parralax"></div>
-    <div class="container page-container">
-        @include('inc.loginheader')
-        <div class="page-content">
-            <div class="v2">
-                <div class="logo"><a target="_self" href='/'><img src="./build/images/logo/logo-dark.png" alt="" width="160"></a></div>
-                <form id='register-form' role="form" method="POST" action="{{ url('/register') }}" class="form-horizontal">
-                    {{ csrf_field() }}
+<body style="background-image: url({{url('./build/images/backgrounds/30.jpg')}})" class="body-bg-full v2">
+<div class="parralax"></div>
+<div class="container page-container">
+    @include('inc.loginheader')
+    <div class="page-content">
+        <div class="v2">
+            <div class="logo"><a target="_self" href='/'><img src="./build/images/logo/logo-dark.png" alt="" width="160"></a></div>
+            <form id='register-form' role="form" method="POST" action="{{ url('/register') }}" class="form-horizontal">
+                {{ csrf_field() }}
 
-                    <input name='salt' id='salt' type='hidden' />
-                    <input name='hashed' id='hashed' type='hidden' />
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <input id="fullname" required name="fullname" type="text" placeholder="@lang('auth.username')" class="form-control">
+                <input name='salt' id='salt' type='hidden' />
+                <input name='hashed' id='hashed' type='hidden' />
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input id="fullname" required name="fullname" type="text" placeholder="@lang('auth.username')" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input id="email" name="email" required type="text" placeholder="@lang('auth.email')" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input id="password" name="password" required type="password" placeholder="@lang('auth.password')" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input id="password_confirmation" name="password_confirmation" required type="password" placeholder="@lang('auth.confirmPassword')" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div style="margin-bottom: 7px" class="checkbox-inline checkbox-custom">
+                            <input type="checkbox" id="agreeTerms" name='agreeTerms' />
+                            <label for="agreeTerms" class="checkbox-muted text-muted">@lang('auth.agreeThe') <a href="/terms" target="_blank">@lang('auth.termsPolicies')</a></label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <input id="email" name="email" required type="text" placeholder="@lang('auth.email')" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <input id="password" name="password" required type="password" placeholder="@lang('auth.password')" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <input id="password_confirmation" name="password_confirmation" required type="password" placeholder="@lang('auth.confirmPassword')" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <div style="margin-bottom: 7px" class="checkbox-inline checkbox-custom">
-                                <input type="checkbox" id="agreeTerms" name='agreeTerms' />
-                                <label for="agreeTerms" class="checkbox-muted text-muted">@lang('auth.agreeThe') <a href="{{func::set_url('/terms')}}" target="_blank">@lang('auth.termsPolicies')</a></label>
-                            </div>
-                        </div>
-                    </div>
-                    <button id='submit-btn' type="submit" style="border-radius: 0px!important;" class="btn-lg btn btn-primary btn-block">@lang('auth.signUp')</button>
-                    <p id="login_error" style="margin: 15px 0; display: none;">
+                </div>
+                <button id='submit-btn' type="submit" style="border-radius: 0px!important;" class="btn-lg btn btn-primary btn-block">@lang('auth.signUp')</button>
+                <p id="login_error" style="margin: 15px 0; display: none;">
                         <span class="alert danger">@lang('auth.usernameUsed')<br />
                             @lang('auth.choseOther')</span>
-                    </p>
-                    <p id="terms_error" style="margin: 15px 0; display: none;">
-                        <span class="alert danger">@lang('auth.alertAgreeTermsPolices')</span>
-                    </p>
-                </form>
-                <hr>
-                <p class="text-muted" style="display: none;">Sign up with Facebook or Twitter accounts</p>
-                <div class="clearfix" style="display: none;">
-                    <div class="pull-left">
-                        <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-primary"><i class="ti-facebook mr-5"></i> Facebook</button>
-                    </div>
-                    <div class="pull-right">
-                        <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
-                    </div>
+                </p>
+                <p id="terms_error" style="margin: 15px 0; display: none;">
+                    <span class="alert danger">@lang('auth.alertAgreeTermsPolices')</span>
+                </p>
+            </form>
+            <hr>
+            <p class="text-muted" style="display: none;">Sign up with Facebook or Twitter accounts</p>
+            <div class="clearfix" style="display: none;">
+                <div class="pull-left">
+                    <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-primary"><i class="ti-facebook mr-5"></i> Facebook</button>
                 </div>
-                <div class="clearfix">
-                    <p class="text-muted mb-0 pull-left">@lang('auth.alreadyHaveAccount?') </p><a href="{{func::set_url('/login')}}" class="inline-block pull-right">@lang('auth.signIn')</a>
+                <div class="pull-right">
+                    <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info"><i class="ti-twitter-alt mr-5"></i> Twitter</button>
                 </div>
+            </div>
+            <div class="clearfix">
+                <p class="text-muted mb-0 pull-left">@lang('auth.alreadyHaveAccount?') </p><a href="/login" class="inline-block pull-right">@lang('auth.signIn')</a>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Demo Settings end-->
     <!-- jQuery-->
-    <script type="text/javascript" src="./plugins/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url('./plugins/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap JavaScript-->
-    <script type="text/javascript" src="./plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{url('./plugins/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Custom JS-->
-    <script type="text/javascript" src="./build/js/first-layout/extra-demo.js"></script>
-    <script type="text/javascript" src="/js/bundle.js"></script>
-    <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{{url('./build/js/first-layout/extra-demo.js')}}"></script>
 
-    <!--require for main.js-->
-    <script src="/assets/js/parallax.js"></script>
-    <script src="/assets/js/carousel.js"></script>
-    <script src="/assets/js/ajaxchimp.js"></script>
-    <script src="/assets/js/jquery.counterup.min.js"></script>
-    <script src="/assets/js/jquery.main.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('#langSelect').on('change', function(){
-                var code = $(this).val();
-                // alert(code);
-                window.location.href = '/api/lang/switch/' + code;
-            });
+
+
+
+<script type="text/javascript" src="/js/bundle.js"></script>
+<script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
+
+<!--require for main.js-->
+<script type="text/javascript" src="/assets/js/parallax.js"></script>
+<script type="text/javascript" src="/assets/js/carousel.js"></script>
+<script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.counterup.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.IonRangeSlider.js"></script>
+
+<script type="text/javascript" src="/assets/js/jarallax.js"></script>
+<script type="text/javascript" src="/assets/js/common.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.fancybox.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.customForms.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+        $('#langSelect').on('change', function(){
+            var code = $(this).val();
+            // alert(code);
+            window.location.href = '/api/lang/switch/' + code;
         });
         $('#register-form').validate({
             rules: {
@@ -233,20 +247,20 @@
                 },
                 agreeTerms: {
                     required: function(ele) {
-                      return $(ele).prop('checked');
+                        return $(ele).prop('checked');
                     },
                 }
             },
             messages: {
                 password: {
-                    equalTo: "Please re-enter the paasword below." 
-                } 
+                    equalTo: "Please re-enter the paasword below."
+                }
             }
         });
         $('#submit-btn').on('click', function(e) {
             e.preventDefault();
             var token = $('input[name=_token]').val();
-            if ($('#register-form').valid()){ 
+            if ($('#register-form').valid()){
                 if($('#agreeTerms').prop('checked')) {
                     $.ajax({
                         type: "POST",
@@ -254,9 +268,9 @@
                         dataType: "json",
                         headers: {'X-CSRF-TOKEN': token},
                         data: {
-                          email: $('input#email').val(),
-                          action: 'get_email',
-                          type: 'register'
+                            email: $('input#email').val(),
+                            action: 'get_email',
+                            type: 'register'
                         },
                         dataType: 'json',
                         success: function (data) {
@@ -268,26 +282,28 @@
                                 $('form#register-form').submit();
                             }else{
                                 $('p#login_error').slideDown(500);
-                          }
+                            }
                         }
                     });
                 }else {
                     $('p#terms_error').slideDown(500);
-                } 
+                }
             }
         });
-    $('.dropdown-toggle').dropdown().hover(function() {
-        $(this).dropdown('toggle');
-    }, function(){
-    
-    });
-    $('.dropdown-menu').hover(function(){
-        }, 
-        function(e){
+        $('.dropdown-toggle').dropdown().hover(function() {
             $(this).dropdown('toggle');
-            e.stopPropagation();
-        })
-    </script>
+        }, function(){
+
+        });
+        $('.dropdown-menu').hover(function(){
+                },
+                function(e){
+                    $(this).dropdown('toggle');
+                    e.stopPropagation();
+                })
+    });
+
+</script>
 </body>
 
 </html>

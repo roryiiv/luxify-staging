@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Why Shop At Luxify')
+@section('title')
+  <title>{{ func::genTitle('Why Shop At Luxify', false)}}</title>
+@endsection
 
 @section('meta-data')
 <meta name="keywords" content="online shopping,luxury goods,pre owned,vintage">
@@ -11,7 +13,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
 @section('content')
     <!-- main banner of the page -->
@@ -23,25 +25,25 @@
                     <!-- new grid -->
                       <div class="row">
                           <div class="col-lg-12">
-							<h1>Why Shop at Luxify</h1>
+							<h1>@lang('static.why_luxify_shop')</h1>
 						   </div>
 					   </div>
                       <div class="row">
                           <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>On Luxify you will discover one of the Internet’s largest collections of luxury products and experiences</p>
+							<p>@lang('static.why_luxify_discover')</p>
 						   </div>
 					   </div>
                       <div class="row connect-socials" style="display: none;">
 					  	<div class="col-lg-3 col-lg-offset-3">
-							<a href="javascript:;" class="btn-facebook"><i class="icon-facebook"></i>Sign up with Facebook</a>
+							<a href="javascript:;" class="btn-facebook"><i class="icon-facebook"></i>@lang('static.why_luxify_facebook')</a>
 						</div>
 					  	<div class="col-lg-3">
-							<a href="javascript:;" class="btn-twitter"><i class="icon-twitter"></i>Sign up with Twitter</a>
+							<a href="javascript:;" class="btn-twitter"><i class="icon-twitter"></i>@lang('static.why_luxify_twitter')</a>
 						</div>
                      </div>
 					 <div class="row">
 					 	<div class="col-sm-6 col-sm-offset-3">
-							<a href="{{func::set_url('/register')}}" class="btn btn-primary btn-block" title="Register for Free">Register Now</a>
+							<a href="{{func::set_url('/register')}}" class="btn btn-primary btn-block" title="Register for Free">@lang('static.why_luxify_register')</a>
 						</div>
 					 </div>
                 </div>
@@ -58,9 +60,9 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
                     <header class="heading">
-                            <h2 class="h1">We Make Luxury Shopping Easier</h2>
+                            <h2 class="h1">@lang('static.why_luxify_shopping')</h2>
                             <div class="wrap">
-                                <h5>Luxify is the perfect place to discover, search and browse through a whole host of the very finest new, vintage and pre-owned luxury goods in a safe and simple way.</h5>
+                                <h5>@lang('static.why_luxify_perfect')</h5>
                             </div>
                         </header>
                   </div>
@@ -79,16 +81,16 @@
                                 <div class="col-sm-5 col-sm-offset-1">
 							<ol class="service-list">
 								<li>
-									<h3>We Are A Lead Generation Platform</h3>
-									<p>We will never ask you for your payment details. Instead we match buyers with reputable sellers who have each been carefully handpicked and vetted by us. This ensures you are matched with genuine sellers and can enjoy complete peace of mind when browsing with us</p>
+									<h3>@lang('static.why_luxify_lead')</h3>
+									<p>@lang('static.why_luxify_payment')</p>
 								</li>
 								<li>
-									<h3>Compare Products From All Sellers</h3>
-									<p>When you have found a product you are interested in, we provide an easy way for you to communicate with the seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straightforward one to one basis.</p>
+									<h3>@lang('static.why_luxify_compare')</h3>
+									<p>@lang('static.why_luxify_interest')</p>
 								</li>
 								<li>
-									<h3>You Will Find Your Luxury Item</h3>
-									<p>Whether you are looking for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly what you are looking for a Luxify</p>
+									<h3>@lang('static.why_luxify_find')</h3>
+									<p>@lang('static.why_luxify_unique')</p>
 								</li>
 							</ol>
 						</div>
@@ -105,10 +107,10 @@
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
 						<header class="heading" id="heading1">
-							<h1 class="header2">How it works?</h1>
+							<h1 class="header2">@lang('static.why_luxify_how')</h1>
 							<div class="wrap">
-                                <h5>Luxify simply connects reputable luxury dealers with luxury buyers in Asia
-								<br class="hidden-xs"> who need a reliable source of luxury goods around the world</h5>
+                                <h5>@lang('static.why_luxify_simply')
+								<br class="hidden-xs"> @lang('static.why_luxify_reliable')</h5>
                             </div>
 						</header>
 						<div class="work-image">
@@ -116,31 +118,31 @@
 						</div>
 						<!-- three columns -->
 						<div class="row work-column">
-							<div class="col-sm-4">
+							<div class="col-sm-6 col-xs-12 col-lg-4">
 								<div class="icon" id="icon1">
 									<img src="/assets/images/ico-discover.png" alt="image description">
 								</div>
 								<div class="text" id="text1">
-									<h3>Discover</h3>
-									<p class="w">Browse and find your desired item accordingly</p>
+									<h3>@lang('static.why_luxify_discover1')</h3>
+									<p class="w">@lang('static.why_luxify_browse')</p>
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-6 col-xs-12 col-lg-4">
 								<div class="icon" id="icon1">
 									<img src="/assets/images/ico-compare.png" alt="image description">
 								</div>
 								<div class="text" id="text1">
-									<h3>Compare</h3>
-									<p>Compare brand, price, and where the item is based</p>
+									<h3>@lang('static.why_luxify_compare1')</h3>
+									<p>@lang('static.why_luxify_brand')</p>
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-6 col-xs-12 col-lg-4">
 								<div class="icon" id="icon1">
 									<img src="/assets/images/ico-contact.png" alt="image description">
 								</div>
 								<div class="text" id="text1">
-									<h3>Contact Seller Directly</h3>
-									<p>Communicate directly with the seller</p>
+									<h3>@lang('static.why_luxify_seller')</h3>
+									<p>@lang('static.why_luxify_communicate')</p>
 								</div>
 							</div>
 						</div>
@@ -153,16 +155,14 @@
             <div class="container">
                 <div class="row">
                     <!-- new grid -->
-                    <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2">
-                    <div class="col-sm-8">
-                            <h1>Create your account for free</h1>
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="col-sm-8 col-xs-12 col-md-8">
+                            <h2>@lang('static.why_luxify_create')</h2>
+                        </div>
+                        <div class="col-sm-4 col-xs-12 col-md-4" style="text-align: center;">
+						                <a href="/register" class="btn btn-primary">Get Started</a>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-						<a href="{{func::set_url('/register')}}" class="btn btn-primary">Get Started</a>
-                    </div>
-                </div>
-                </div>
                  </div> <!-- end of new grid -->
             </div>
         </div>
@@ -173,7 +173,12 @@
 @section('scripts')
     <script>
      jQuery(document).ready(function() {
-       jQuery('#jarallax-container-0 > div').css('top', '-99px');
+  jarallax(document.querySelectorAll('.jarallax'), {
+    onInit: function() {
+      console.log('hihi'); 
+    } 
+  });
+ //      jQuery('#jarallax-container-0 > div').css('top', '-99px');
      });
     </script>
 @endsection

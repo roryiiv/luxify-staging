@@ -32,30 +32,20 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">Category List</h4>
+                        <h4 class="mt-0 mb-5">@lang('panel.category_list')</h4>
                         <ol class="breadcrumb mb-0">
-                            <li><a href="">Powerful Admin to see all categories</a></li>
+                            <li><a href="">@lang('panel.category_list_admin')</a></li>
                         </ol>
                     </div>
-                    <div class="col-sm-6" style="display: none;">
-                        <div class="btn-group mt-5">
-                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                            <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                            </ul>
-                        </div>
+                    <div class="col-sm-6" >
+                        @include('inc.set-lang-dashboard-panel')
                     </div>
                 </div>
             </div>
             <div class="page-content container-fluid">
                 <div class="widget">
                     <div class="widget-heading">
-                        <h3 class="widget-title">Category List</h3>
+                        <h3 class="widget-title">@lang('panel.category_list1')</h3>
                     </div>
                     <div class="widget-body">
                       <form id="categories" name="categories" method="get" action="/panel/categories">
@@ -64,18 +54,18 @@
                                 <div class="col-sm-6">
                                     <div class="dataTables_length" id="product-list_length">
                                         <form id="sorter" name="sorter" method="get" action="{{ $_SERVER['REQUEST_URI'] }}">
-                                            <label>Show
+                                            <label>@lang('panel.category_list_show')
                                             <select id="view" name="view-perpage" aria-controls="category-list" class="form-control input-sm">
                                                 <option value="10"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],10) : ''}}>10</option>
                                                 <option value="20"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],20) : ''}}>20</option>
                                                 <option value="50"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],50) : ''}}>50</option>
                                                 {{-- <option value="-1"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],-1) : ''}}>All</option> --}}
                                             </select>
-                                            entries
+                                            @lang('panel.category_list_entries')
                                             </label>
                                         </form>
                                         </br>
-                                        <td>Showing {{ $categories->count() }} of {{ $categories->total() }} entries</td>
+                                        <td>@lang('panel.category_list_showing') {{ $categories->count() }} @lang('panel.category_list_of') {{ $categories->total() }} @lang('panel.category_list_entries1')</td>
                                     </div>
                                 </div>
                             </div>
@@ -90,10 +80,10 @@
                                                         <label for="checkAll" class="pl-0">&nbsp;</label>
                                                     </div>
                                                 </th>
-                                                <th>Name</th>
-                                                <th>Slug</th>
-                                                <th>Description</th>
-                                                <th class="text-center">Action</th>
+                                                <th>@lang('panel.category_list_name')</th>
+                                                <th>@lang('panel.category_list_slug')</th>
+                                                <th>@lang('panel.category_list_desc')</th>
+                                                <th class="text-center">@lang('panel.category_list_action')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -150,7 +140,7 @@
                                 
                                 <div class="col-sm-3">
                                     <div class="dataTables_info" id="category-list_info" role="status" aria-live="polite">
-                                        Showing {{ $categories->count() }} of {{ $categories->total() }} entries
+                                        @lang('panel.category_list_showing1') {{ $categories->count() }} @lang('panel.category_list_of1') {{ $categories->total() }} @lang('panel.category_list_entries2')
                                     </div>
                                 </div>
                                 <div class="col-sm-7">

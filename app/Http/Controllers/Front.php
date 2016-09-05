@@ -44,6 +44,15 @@ use TNTSearch;
 
 use Stevebauman\Translation\Facades\Translation;
 
+use Stichoza\GoogleTranslate\TranslateClient;
+
+use App\MyLibrary\TranslateAPI;
+
+use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
+/*use App\MyLibrary\PSKMicrosoftTranslatorAutoLoader;
+
+use App\MyLibrary\MicrosoftTranslator\Client;*/
+
 class Front extends Controller {
     //Front end Controller
     public function index() {
@@ -149,6 +158,11 @@ class Front extends Controller {
             ->where('extrainfos.listingId', $listing->id)
             ->select('forms.name', 'formfields.label', 'extrainfos.value')
             ->get();
+            if (!$infos) {
+              if($listing->additionalInfo) {
+                $infos = json_decode($listing->additionalInfo);
+              }
+            }
 
 
             $relates = DB::table('listings')
@@ -168,14 +182,14 @@ class Front extends Controller {
             if(!empty($meta->title) && ($meta->title !=null)){
                 $meta->title = substr(Meta::get_data_listing($listing->id,'title'),0,60);
             }else{
-                $meta->title = substr($listing->title,0,60);
+                $meta->title = null;
             }
             $meta->alt_text = Meta::get_data_listing($listing->id,'alt_text');
             $meta->description = !empty(Meta::get_data_listing($listing->id,'description')) ? Meta::get_data_listing($listing->id,'description') : str_limit(trim(preg_replace('/\s\s+/', ' ', $listing->description, 160)));
             $meta->author = Meta::get_data_listing($listing->id,'author');
             if(!empty($meta->author) && ($meta->author !=null)){
                 $meta->author = Meta::get_data_listing($listing->id,'author');
-            }else{
+            } else {
                 if(!empty($dealer->companyName) && ($dealer->companyName)!= null){
                     $company = json_decode($dealer->companyName);
                     if(is_array($company)){
@@ -184,18 +198,24 @@ class Front extends Controller {
                         $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName); 
                     }
                 }else{
-                  $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                  if ($dealer) {
+                    $meta->author = ucfirst($dealer->firstName) . ' ' . ucfirst($dealer->lastName);
+                  }
                 }
             }
             $meta->keyword = Meta::get_data_listing($listing->id,'keyword');
-
-            // translation 
-            $listing->description = Translation::translate($listing->description,[], App::getLocale());
-            $listing->title = Translation::translate($listing->title,[], App::getLocale());
-
-          return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
-        }
-        else {
+            $translate = new TranslateAPI();
+            $description = Markdown::parse($listing->description);
+            
+            $translate->translate($description,App::getLocale());
+            $listing->description = $translate->translation;
+            
+            
+            $title = $listing->title;
+            $translate->translate($title,App::getLocale());
+            $listing->title = $translate->translation;
+          	return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
+        }else {
             return abort(404);
         }
     }
@@ -303,353 +323,196 @@ class Front extends Controller {
         $listings->setPath($ref);
 
         $title_cat = '3D Real Estates';
+        $meta = array(
+          'title' => "3D Real Estate- Luxify- Asia&#39;s leading marketplace for luxury",
+          'keywords' => 'luxury real estate,virtual reality,luxury homes,estate',
+          'desc' => "Search for luxury real estate through virtual reality property tours on Luxify. Explore one of the Internet’s largest collections of luxury homes and estates."
+        );
         $banner = 'banner-estate.jpg';
-        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
+        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta, 'total' => $listings->total()]);
     
     }
 
     public function product_categories($id) {
-        $childs = array(
-            'estates' => array(50,69,16,52,72),
-            'apartment' => array(126,51,49),
-            'house' => array(48),
-            'land' => array(53,54),
-            'others' => array(47,138,57,56,127,15),
-            'antique_jewelry' => array(149),
-            'jewelry' => array(10,110,109,108,39,107,38,37),
-            'watch' => array(36,106,105,89,34,33,31),
-            'cars' => array(2,11,20,19,60,55,18),
-            'classics' => array(66),
-            'motorbike' => array(17),
-            'accessories_men' => array(92.88),
-            'accessories_women' => array(124, 160, 150, 120,119,118,117,161,159,116),
-            'bags' => array(9,43,114,113,42,41,112,111,91,137),
-            'experiences' => array(3,162,169,165,99,97,167,164,166,98,95,96,163,94),
-            'collectibles' => array(1,46,68,67,168,136,64, 70, 61,131,130,90),
-            'furnitures' => array(146, 79, 144, 63, 133, 62, 71, 93),
-            'motor' => array(40,25,24,23,85,76),
-            'sail' => array(22,24),
-            'jet' => array(45),
-            'helicopter' => array(125, 13),
-            'art' => array(12,59,58,129,128),
-            'antiques' => array(139,74,140,81,147,80,73,145,143,142,148,78,77,75,141,),
-            'fine_wines' => array(35,26,30,28,87,29),
-            'spirits' => array(100,101,170,171,102,103,172,173,104),
-            'champagne' => array(27)
-        );
-        switch($id){
-            case 'real-estates':
-            $cat_ids = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
-            $banner = 'realestate.jpg';
-            $title_cat = 'Real Estates';
-            break;
-            case 'jewellery-watches':
-            $cat_ids = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch']);
-            $banner = 'watches_banner.jpg';
-            $title_cat = 'Watches &amp; Jewelry';
-            break;
-            case 'motors':
-            $cat_ids = array_merge($childs['cars'],$childs['classics'],$childs['motorbike']);
-            $banner = 'motors_banner.jpg';
-            $title_cat = 'Motors';
-            break;
-            case 'handbags-accessories':
-            $cat_ids = array_merge($childs['accessories_men'],$childs['accessories_women'],$childs['bags']);
-            $banner = 'bags_banner_bk.jpg';
-            $title_cat = 'Handbags &amp; Accessories';
-            break;
-            case 'experiences':
-            $cat_ids = array_merge($childs['experiences']);
-            $banner = 'experience_banner.jpg';
-            $title_cat = 'Experiences';
-            break;
-            case 'collectibles-furnitures':
-            $cat_ids = array_merge($childs['collectibles'],$childs['furnitures']);
-            $banner = 'collectibles_furnitures.jpg';
-            $title_cat = 'Collectibles &amp; Furnitures';
-            break;
-            case 'yachts':
-            $cat_ids = array_merge($childs['motor'],$childs['sail']);
-            $banner = 'new_yacht.jpg';
-            $title_cat = 'Yachts';
-            break;
-            case 'aircrafts':
-            $cat_ids = array_merge($childs['jet'],$childs['helicopter']);
-            $banner = 'aircraft.jpg';
-            $title_cat = 'Aircrafts';
-            break;
-            case 'art-antiques':
-            $cat_ids = array_merge($childs['art'],$childs['antiques']);
-            $banner = 'arts_banner.jpg';
-            $title_cat = 'Art &amp; Antiques';
-            break;
-            case 'fine-wines-spirits':
-            $cat_ids = array_merge($childs['fine_wines'],$childs['spirits'],$childs['champagne']);
-            $banner = 'wine_banner.jpg';
-            $title_cat = 'Fine Wines &amp; Spirits';
-            break;
-        }
-
-        // $title_cat = ucwords(str_replace('-', ' ', $id));
-
-        $search_arr = array();
-        // $search_arr[] = ['categoryId', $_cat->id];
-        // $search_arr[] = ['status', 'APPROVED'];
-
-        $orderby = 'created_at';
-        $order = 'desc';
-        $filters = array();
-
-        if(isset($_REQUEST['filters']) && $_REQUEST['filters'] == 'on'){
-            $_filter = $_REQUEST;
-            // var_dump($_filter); exit;
-
-            if(!empty($_filter['location']) && $_filter['location'] != 'Location'){
-                $search_arr[] = ['countryId', $_filter['location']];
-                $filters['location'] = $_filter['location'];
+        $data = DB::table('category_2')->where('slug',$id)->first();
+        if(count($data)>0){
+            //get parent and child,
+            $childs = DB::table('category_2')->where('parent',$data->id)->get();
+            //array id parent
+            $cat_ids = array($data->id);
+            //array push the child *if has childs
+            foreach ($childs as  $value) {
+                array_push($cat_ids,$value->id);
             }
+            $banner = (empty($data->mainImageURL))?'banner-estate.jpg':empty($data->mainImageURL);
 
-            // var_dump($price_range); exit;
-            if(isset($_filter['category']) && $_filter['category'] != 'Category'){
-                unset($cat_ids);
-                $cat_ids = array();
-                if(isset($_filter['sub_category']) && !empty($_filter['sub_category'])){
-                    // var_dump($childs['classics']);
-                    $sub_category = $_filter['sub_category'];
-                    // var_dump($sub_category);
-                    switch($sub_category){
-                        case 'estates':
-                        $cat_ids = array(50,69,16,52,72);
+            $title_cat = $data->name;
+
+        
+            $meta = array(
+              'title' => Meta::get_data_categories($data->id,'title'),
+              'keywords' => Meta::get_data_categories($data->id,'keyword'),
+              'desc' => Meta::get_data_categories($data->id,'description')
+            );
+            $search_arr = array();
+
+            $orderby = 'created_at';
+            $order = 'desc';
+            $filters = array();
+
+            if(isset($_REQUEST['filters']) && $_REQUEST['filters'] == 'on'){
+                $_filter = $_REQUEST;
+
+                if(!empty($_filter['location']) && $_filter['location'] != 'Location'){
+                    $search_arr[] = ['countryId', $_filter['location']];
+                    $filters['location'] = $_filter['location'];
+                }
+
+                if(isset($_filter['category']) && $_filter['category'] != 'Category'){
+                    unset($cat_ids);
+                    $cat_ids = array();
+                    if(isset($_filter['sub_category']) && !empty($_filter['sub_category'])){
+
+                        $sub_category = $_filter['sub_category'];
+                        $childs = DB::table('category_2')->where('slug',$sub_category)->first();
+                        $cat_ids = array($childs->id);
+                    }else{
+                         //get parent and child,
+                        $data = DB::table('category_2')->where('slug',$_filter['category'])->first();
+                        $childs = DB::table('category_2')->where('parent',$data->id)->get();
+                        //array id parent
+                        $cat_ids = array($data->id);
+                        //array push the child *if has childs
+                        foreach ($childs as  $value) {
+                            array_push($cat_ids,$value->id);
+                        }
+                        // var_dump($cat_ids); exit;
+                    }
+                    $filters['category'] = $_filter['category'];
+                }
+                if(!empty($_filter['sort-radio'])){
+                    switch($_filter['sort-radio']){
+                        case 'latest':
+                        $orderby = 'created_at';
+                        $order = 'desc';
                         break;
-                        case 'apartment':
-                        $cat_ids = array(126,51,49);
+                        case 'priceUp':
+                        $orderby = 'price';
+                        $order = 'desc';
                         break;
-                        case 'house':
-                        $cat_ids =array(48);
-                        break;
-                        case 'land':
-                        $cat_ids = array(53,54);
-                        break;
-                        case 'others':
-                        $cat_ids = array(47,138,57,56,127,15);
-                        break;
-                        case 'antique_jewelry':
-                        $cat_ids = array(149);
-                        break;
-                        case 'jewelry':
-                        $cat_ids = array(10,110,109,108,39,107,38,37);
-                        break;
-                        case 'watch':
-                        $cat_ids = array(36,106,105,89,34,33,31);
-                        break;
-                        case 'cars':
-                        $cat_ids = array(2,11,20,19,60,55,18);
-                        break;
-                        case 'classics':
-                        $cat_ids = array(66);
-                        break;
-                        case 'motorbike':
-                        $cat_ids = array(17);
-                        break;
-                        case 'accessories_men':
-                        $cat_ids = array(92.88);
-                        break;
-                        case 'accessories_women':
-                        $cat_ids = array(124, 160, 150, 120,119,118,117,161,159,116);
-                        break;
-                        case 'bags':
-                        $cat_ids = array(9,43,114,113,42,41,112,111,91,137);
-                        break;
-                        case 'experiences':
-                        $cat_ids = array(3,162,169,165,99,97,167,164,166,98,95,96,163,94);
-                        break;
-                        case 'collectibles':
-                        $cat_ids = array(1,46,68,67,168,136,64, 70, 61,131,130,90);
-                        break;
-                        case 'furnitures':
-                        $cat_ids = array(146, 79, 144, 63, 133, 62, 71, 93);
-                        break;
-                        case 'motor':
-                        $cat_ids = array(40,25,24,23,85,76);
-                        break;
-                        case 'sail':
-                        $cat_ids = array(22,24);
-                        break;
-                        case 'jet':
-                        $cat_ids = array(45);
-                        break;
-                        case 'helicopter':
-                        $cat_ids = array(125, 13);
-                        break;
-                        case 'art':
-                        $cat_ids = array(12,59,58,129,128);
-                        break;
-                        case 'antiques':
-                        $cat_ids = array(139,74,140,81,147,80,73,145,143,142,148,78,77,75,141,);
-                        break;
-                        case 'fine_wines':
-                        $cat_ids = array(35,26,30,28,87,29);
-                        break;
-                        case 'spirits':
-                        $cat_ids = array(100,101,170,171,102,103,172,173,104);
-                        break;
-                        case 'champagne':
-                        $cat_ids = array(27);
+                        case 'priceDown':
+                        $orderby = 'price';
+                        $order = 'asc';
                         break;
                     }
-                    // var_dump($cat_ids); exit;
+                    $filters['sort'] = $_filter['sort-radio'];
+                }
+
+                if(isset($_REQUEST['use_price']) && $_REQUEST['use_price'] == 'on'){ // need to be put last to filter out the price range based on currency set.
+                    $use_price =  true;
+                    $filters['use_price'] = 'on';
+
+                    $price_lists = DB::table('listings')
+                    ->where('status', 'APPROVED')
+                    ->whereIn('new_category', $cat_ids)
+                    ->where($search_arr)
+                    ->join('countries', 'countries.id', '=', 'listings.countryId')
+                    ->select('listings.*', 'countries.name as country')
+                    ->get();
+
+                    if($use_price && !empty($_REQUEST['range'])){
+                        $price_range = explode(';', $_REQUEST['range']);
+                        $filtered_listing = array();
+                        foreach($price_lists as $key => $val){
+                            $price_set = $val->price;
+                            $currency = DB::table('currencies')->where('id', $val->currencyId)->first();
+                            $set_curr = $currency->code;
+                            $sess_curr = null !== session('currency') ? session('currency') : 'USD';
+                            $session_currency = DB::table('currencies')->where('code', $sess_curr)->first();
+                            if($set_curr != $sess_curr){
+                                $price_sql = $price_set / $currency->rate;
+                                $price = $price_sql * $session_currency->rate;
+                            }else{
+                                $price = $price_set;
+                            }
+
+                            if($price < $price_range[0] || $price > $price_range[1]){
+                                // echo $key . ', ';
+                                $filtered_listing[] = $val->id;
+                            }
+
+                        }
+                        // var_dump($filtered_listing); exit;
+                        // $search_arr[] = ['price', '>=', $price_range[0]];
+                        // $search_arr[] = ['price', '<=', $price_range[1]];
+                        $filters['range'] = $_REQUEST['range'];
+                    }
                 }else{
-                    switch($_filter['category']){
-                        case 'real-estates':
-                        $cat_ids = array_merge($childs['estates'],$childs['apartment'],$childs['house'],$childs['land'],$childs['others']);
-                        $banner = 'banner-estate.jpg';
-                        break;
-                        case 'jewellery-watches':
-                        $cat_ids = array_merge($childs['antique_jewelry'],$childs['jewelry'],$childs['watch']);
-                        $banner = 'watches_banner.jpg';
-                        break;
-                        case 'motors':
-                        $cat_ids = array_merge($childs['cars'],$childs['classics'],$childs['motorbike']);
-                        $banner = 'motors_banner.jpg';
-                        break;
-                        case 'handbags-accessories':
-                        $cat_ids = array_merge($childs['accessories_men'],$childs['accessories_women'],$childs['bags']);
-                        $banner = 'bags_banner_bk.jpg';
-                        break;
-                        case 'experiences':
-                        $cat_ids = array_merge($childs['experiences']);
-                        $banner = 'experience_banner.jpg';
-                        break;
-                        case 'collectibles-furnitures':
-                        $cat_ids = array_merge($childs['collectibles'],$childs['furnitures']);
-                        $banner = 'Collectibles_banner.jpg';
-                        break;
-                        case 'yachts':
-                        $cat_ids = array_merge($childs['motor'],$childs['sail']);
-                        $banner = 'banner-whyluxify.jpg';
-                        break;
-                        case 'aircrafts':
-                        $cat_ids = array_merge($childs['jet'],$childs['helicopter']);
-                        $banner = 'about-banner.jpg';
-                        break;
-                        case 'art-antiques':
-                        $cat_ids = array_merge($childs['art'],$childs['antiques']);
-                        $banner = 'arts_banner.jpg';
-                        break;
-                        case 'fine-wines-spirits':
-                        $cat_ids = array_merge($childs['fine_wines'],$childs['spirits'],$childs['champagne']);
-                        $banner = 'wine_banner.jpg';
-                        break;
-                    }
-                    // var_dump($cat_ids); exit;
+                    $use_price =  false;
+                    $filters['use_price'] = 'off';
                 }
-                $filters['category'] = $_filter['category'];
-            }
-            if(!empty($_filter['sort-radio'])){
-                switch($_filter['sort-radio']){
-                    case 'latest':
-                    $orderby = 'created_at';
-                    $order = 'desc';
-                    break;
-                    case 'priceUp':
-                    $orderby = 'price';
-                    $order = 'desc';
-                    break;
-                    case 'priceDown':
-                    $orderby = 'price';
-                    $order = 'asc';
-                    break;
-                }
-                $filters['sort'] = $_filter['sort-radio'];
             }
 
-            if(isset($_REQUEST['use_price']) && $_REQUEST['use_price'] == 'on'){ // need to be put last to filter out the price range based on currency set.
-                $use_price =  true;
-                $filters['use_price'] = 'on';
-
-                $price_lists = DB::table('listings')
+            // var_dump($cat_ids); exit;
+            if(isset($filtered_listing)){
+                // var_dump($filtered_listing); exit;
+                $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
-                ->whereIn('categoryId', $cat_ids)
+                ->whereIn('listings.categoryId', $cat_ids)
+                ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
+                ->orderBy($orderby, $order)
                 ->join('countries', 'countries.id', '=', 'listings.countryId')
                 ->select('listings.*', 'countries.name as country')
+                ->paginate(51);
+
+    //          editing
+    /*            $json_price = DB::table('listings')
+                ->where('status', 'APPROVED')
+                ->whereIn('listings.categoryId', $cat_ids)
+                ->where($search_arr)
+                ->orderBy('listings.price','asc')
+                ->select('price')
                 ->get();
-
-                if($use_price && !empty($_REQUEST['range'])){
-                    $price_range = explode(';', $_REQUEST['range']);
-                    $filtered_listing = array();
-                    foreach($price_lists as $key => $val){
-                        $price_set = $val->price;
-                        $currency = DB::table('currencies')->where('id', $val->currencyId)->first();
-                        $set_curr = $currency->code;
-                        $sess_curr = null !== session('currency') ? session('currency') : 'USD';
-                        $session_currency = DB::table('currencies')->where('code', $sess_curr)->first();
-                        if($set_curr != $sess_curr){
-                            $price_sql = $price_set / $currency->rate;
-                            $price = $price_sql * $session_currency->rate;
-                        }else{
-                            $price = $price_set;
-                        }
-
-                        if($price < $price_range[0] || $price > $price_range[1]){
-                            // echo $key . ', ';
-                            $filtered_listing[] = $val->id;
-                        }
-
-                    }
-                    // var_dump($filtered_listing); exit;
-                    // $search_arr[] = ['price', '>=', $price_range[0]];
-                    // $search_arr[] = ['price', '<=', $price_range[1]];
-                    $filters['range'] = $_REQUEST['range'];
+                $price = array();
+                foreach ($json_price as $value) {
+                    $price[] = $value->price;
                 }
+                $ranges = array();
+                for ($i=0; $i <500 ; $i++) { 
+                    $int =2000000;
+                    $first = $i*$int;
+                    $second = ($i+1)*$int;
+                    array_push($ranges,array($first,$second));
+                }
+                dd(json_encode($ranges));
+                $result = array();
+                foreach( $ranges as $range) {
+                    list( $start, $end) = $range;
+                    $result[] = array_sum( array_slice( $all_ages, $start, $end - $start + 1));
+                }*/
             }else{
-                $use_price =  false;
-                $filters['use_price'] = 'off';
+                
+                $listings = DB::table('listings')
+                ->where('status', 'APPROVED')
+                ->whereIn('new_category', $cat_ids)
+                ->orderBy($orderby, $order)
+                ->join('countries', 'countries.id', '=', 'listings.countryId')
+                ->select('listings.*', 'countries.name as country')
+                ->paginate(51);
             }
-        }
-
-        // var_dump($cat_ids); exit;
-        if(isset($filtered_listing)){
-            // var_dump($filtered_listing); exit;
-            $listings = DB::table('listings')
-            ->where('status', 'APPROVED')
-            ->whereIn('listings.categoryId', $cat_ids)
-            ->whereNotIn('listings.id', $filtered_listing)
-            ->where($search_arr)
-            ->orderBy($orderby, $order)
-            ->join('countries', 'countries.id', '=', 'listings.countryId')
-            ->select('listings.*', 'countries.name as country')
-            ->paginate(51);
 
 
-            $json_price = DB::table('listings')
-            ->where('status', 'APPROVED')
-            ->whereIn('listings.categoryId', $cat_ids)
-            ->where($search_arr)
-            ->orderBy('listings.price','asc')
-            ->select('listings.price')
-            ->get();
+            $re = "/(\\?|\\&)page=\\d{0,4}/";
+            $ref = $_SERVER['REQUEST_URI'];
+            $ref = preg_replace($re, "", $ref);
+            $listings->setPath($ref);
 
-            dd(json_encode($json_price));
+
+            return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta, 'total' => $listings->total()]);
         }else{
-            $listings = DB::table('listings')
-            ->where('status', 'APPROVED')
-            ->whereIn('categoryId', $cat_ids)
-            ->where($search_arr)
-            ->orderBy($orderby, $order)
-            ->join('countries', 'countries.id', '=', 'listings.countryId')
-            ->select('listings.*', 'countries.name as country')
-            ->paginate(51);
+            return abort(404);
         }
-
-
-        $re = "/(\\?|\\&)page=\\d{0,4}/";
-        $ref = $_SERVER['REQUEST_URI'];
-        $ref = preg_replace($re, "", $ref);
-        $listings->setPath($ref);
-
-
-        return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters]);
     }
 
     public function product_luxify_estates() {
@@ -679,6 +542,46 @@ class Front extends Controller {
                 echo json_encode((object) ['result'=> 1, 'data'=>$fieldsArray]);
             }
         }
+    }
+
+    public function category_optional_fields($id) {
+        $opt = DB::table('category_2')->where('id', '=', $id)->first();
+        $optional = json_decode($opt->optional_field);
+      
+        foreach ($optional as $value) {
+           $data = DB::table('category_meta')->where('id',$value)->first();
+           $type = $data->meta_type;
+           $drop = json_decode($data->meta_value);
+            if($type=='text'){
+                echo '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control"></div>';
+            }elseif($type=='number'){
+                echo '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control"></div>';
+            }elseif($type=='textarea'){
+                echo '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><textarea id="'. $data->label .'" name="optionfields['. $data->id .']" class="form-control"></textarea></div>';
+            }elseif($type=='dropdown' || $type=='select'){
+                echo  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><select name="optionfields['. $data->id .']" class="form-control">';
+                foreach ($drop as $option) {
+                    echo "<option value='".$option->value."'>".$option->text."</option>";
+                }
+                echo '</select></div>';
+            }elseif($type=='radiobutton'){
+                echo  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
+                foreach ($drop as $option) {
+                    echo "<input name='optionfields[".$data->id."]'  type='radio' value='".$option->value."'>".$option->text."</br>";
+                }
+                echo '</div>';
+            }elseif($type=='checkbox'){
+                echo  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
+                foreach ($drop as $option) {
+                    echo "<input name='optionfields[".$data->id."]' type='checkbox' value='".$option->value."'>".$option->text."</br>";
+                }
+                echo '</div>';
+            }
+            
+        }
+        
+
+        
     }
 
     public function product_brands($name) {
@@ -740,7 +643,7 @@ class Front extends Controller {
         ->where('role', 'seller')
         ->where('dealer_status','approved')
         ->where('isSuspended', false)
-        ->orderBy('companyName','asc')
+        ->orderBy('slug','asc')
         ->get();
 
       if ($dealers) {
@@ -803,6 +706,22 @@ class Front extends Controller {
 
     public function viewDealerNoSlug($id) {
         $dealer = DB::table('users')->where('id', $id)->first();
+        if ($dealer) {
+          if (empty($dealer->slug)) {
+            $dealer->slug = SlugService::createSlug(Users::class, 'slug', $dealer['companyName']);
+            $dealer->save();
+          }
+          return redirect('/dealer/'. $id . '/'. $dealer->slug);  
+        } 
+        else {
+          $mores = DB::table('listings') ->where('status', 'APPROVED')
+          ->join('countries', 'countries.id', '=', 'listings.countryId')
+          ->leftJoin('users', 'listings.userId', '=', 'users.id')
+          ->select('listings.mainImageUrl', 'listings.title', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'listings.slug', 'users.fullName')
+          ->orderBy('listings.id', ' desc')
+          ->paginate(10);
+          return response()->view('exception.missing', ['mores' => $mores], 500);
+         }
         $listings = DB::table('listings')
         ->where('userId', $dealer->id)
         ->where('status', 'APPROVED')
@@ -1414,7 +1333,7 @@ class Front extends Controller {
           $orWhere_arr[] = ['description','like','%'.$key.'%'];
         }*/
 
-        if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])){
+        if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])) {
             $search_arr[] = ['userId', $_REQUEST['user_id']];
         }
         // $search_arr[] = ['status', 'APPROVED'];
@@ -1637,8 +1556,6 @@ class Front extends Controller {
             }
         }
 
-        // var_dump($search_arr); exit;
-
         if(isset($cat_ids)){
             if(isset($filtered_listing)){
                 // var_dump($filtered_listing); exit;
@@ -1690,7 +1607,7 @@ class Front extends Controller {
         $ref = preg_replace($re, "", $ref);
         $listings->setPath($ref);
 
-        return view('search', ['listings' => $listings, 'search' => $search, 'filters' => $filters]);
+        return view('search', ['listings' => $listings, 'search' => $search, 'filters' => $filters, 'total' => $listings->total()]);
     }
 
     private function get_column($column, $array) {
@@ -1868,11 +1785,10 @@ class Front extends Controller {
         $request->session()->put('currency', $code);
         return back();
     }
-    public function switchLanguage(Request $request, $code){    
+    public function switchLanguage(Request $request, $code){
         $updatelang = Language::updatelang($code);
+        $code = DB::table('languages')->where('id',$code)->value('lang_str');
 
-        $code = DB::table('languages')->where('id',$code)->value('lang_str'); 
-        
         if($code=='en'){
             $langcode='';
         }else{
@@ -1885,22 +1801,34 @@ class Front extends Controller {
         $get = DB::table('languages')->get();
         foreach ($get as $key) {
             $referer = str_replace($host.$key->lang_str.'/','',$referer);
+            $referer = str_replace($host.$key->code.'/','',$referer);
             $lang_arr[] = $key->lang_str;
+            $lang_arr[] = $key->code;
         }
 
         $last_url = str_replace($host,'',$referer);
         
         if(in_array($last_url, $lang_arr)){
-        	$last_url = '';
+            $last_url = '';
         }
 
         $get_redirect_url = $host.$langcode.$last_url;
         return redirect($get_redirect_url);
     }
+    public function getchild($id){
+        $parent = DB::table('category_2')->where('slug',$id)->first();
+        if(count($parent)>0){
 
-    /* // for build hierarchy field
-    public function build() {
-      return func::startBuild();
+            $data = DB::table('category_2')->where('parent',$parent->id)->get();
+            $option = '';
+            foreach ($data as $value) {
+                $option .='<option value="'.$value->slug.'">'.$value->name.'</option>';
+            }
+        }else{
+            $option = '';
+        }
+        return $option;
+
     }
-     */
+
 }

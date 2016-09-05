@@ -48,23 +48,11 @@
         <div class="page-header clearfix">
             <div class="row">
                 <div class="col-sm-6">
-                    <h4 class="mt-0 mb-5">Welcome to Luxify</h4>
-                    <p class="text-muted mb-0">Dealer Portal</p>
+                    <h4 class="mt-0 mb-5">@lang('dashboard.home_welcome')</h4>
+                    <p class="text-muted mb-0">@lang('dashboard.home_portal')</p>
                 </div>
                 <div class="col-sm-6">
-                    <div class="btn-group mt-5">
-                        <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                        <!--
-                        <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                            <li><a href="index.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                        </ul>
--->
-                    </div>
+                @include('inc.set-lang-dashboard-panel')
                 </div>
             </div>
         </div>
@@ -74,7 +62,7 @@
                 <div class="col-lg-12">
                     <div class="col-lg-12">
                         <div class="widget clear">
-                            <h3 class="widget-title pull-left">Items Traffic</h3>
+                            <h3 class="widget-title pull-left">@lang('dashboard.home_traffic')</h3>
                             <br></br>
                             <div class="widget-body">
                                 <div class="clearfix">
@@ -95,7 +83,7 @@
                                                 {{$get_count_date}}
                                             </span>
                                         </div>
-                                        <h5 class="m-0">Overall Visitors {!!$pr_visitor!!}</h5>
+                                        <h5 class="m-0">@lang('dashboard.home_visitor') {!!$pr_visitor!!}</h5>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="fs-12 fw-300">
@@ -115,7 +103,7 @@
                                             }
                                         ?>
                                         </div>
-                                        <h5 class="m-0">Top 3 Item Listings Most View</h5>
+                                        <h5 class="m-0">@lang('dashboard.home_listings')</h5>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="fs-12 fw-300 itempervisit">
@@ -137,7 +125,7 @@
                                         ?>
                                             
                                         </div>
-                                        <h5 class="m-0">Top 3 Countries Most Visit</h5>
+                                        <h5 class="m-0">@lang('dashboard.home_countries')</h5>
                                     </div>
                                 </div>
                             </div>

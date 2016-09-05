@@ -1,9 +1,8 @@
 @extends('layouts.front')
 <?php
 
-$getPostName = (isset($_GET['release']))?$_GET['release']:'';
-//
-if($getPostName!=''){
+$getPostName = isset($release)? $release :'';
+if(!empty($getPostName)){
     global $post;
     $queryArr = array(
         'category_name' => 'blog-post',
@@ -16,7 +15,7 @@ if($getPostName!=''){
         wp_reset_postdata();
     endwhile;
    }else{
-       $getPostID = (isset($_GET['release']) && intval($_GET['release']))?intval($_GET['release']):'';
+       $getPostID = (isset($release) && intval($release))?intval($release):'';
    }
 ?>
 @section('title')
@@ -47,7 +46,7 @@ if($getPostName!=''){
     <!-- end of banner -->
     <!-- main informative part of the page -->
     <main id="main" class="press-page">
-        <section class="inner-banner parallax top-banner-image" style="background-image:url(../assets/images/press_bg.jpg);">
+        <section class="inner-banner parallax top-banner-image" style="background-image:url({{func::img_url('banners/press-main.jpg', '', '', false, true)}});">
             <div class="container">
                 <div class="banner-text">
                     <div class="banner-center">

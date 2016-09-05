@@ -194,6 +194,11 @@ class Functions
         return $selected;
     }
 
+    static function checked($value_a, $value_b) {
+        $selected = $value_a == $value_b ? ' checked="checked"' : '';
+        return $selected;
+    }
+
     public static function get_notif() {
         //build notifications info
         if(Auth::check()){

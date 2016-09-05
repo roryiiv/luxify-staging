@@ -35,43 +35,33 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">Product List</h4>
+                        <h4 class="mt-0 mb-5">@lang('dashboard.products_list')</h4>
                         <ol class="breadcrumb mb-0">
-                            <li><a href="">All your products</a></li>
+                            <li><a href="">@lang('dashboard.products_all')</a></li>
                         </ol>
                     </div>
-                    <div class="col-sm-6" style="display: none;">
-                        <div class="btn-group mt-5">
-                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                            <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                            </ul>
-                        </div>
+                    <div class="col-sm-6" >
+                        @include('inc.set-lang-dashboard-panel')
                     </div>
                 </div>
             </div>
             <div class="page-content container-fluid">
                 <div class="widget">
                     <div class="widget-heading">
-                        <h3 class="widget-title">Product List</h3>
+                        <h3 class="widget-title">@lang('dashboard.products_list1')</h3>
                     </div>
                     <div class="widget-body">
                         <form id="wishlist" name="wishlist" method="get" action="{{ $_SERVER['REQUEST_URI'] }}">
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="form-group">
-                                        <label for="txtProductName">Product Name</label>
+                                        <label for="txtProductName">@lang('dashboard.products_name')</label>
                                         <input id="txtProductName" name="txtProductName" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="txtPrice">Price</label>
+                                        <label for="txtPrice">@lang('dashboard.products_price')</label>
                                         <input id="txtPrice" name="txtPrice" type="text" class="form-control">
                                     </div>
                                 </div>
@@ -79,13 +69,13 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="startDate">Date</label>
+                                        <label for="startDate">@lang('dashboard.products_date')</label>
                                         <input id="startDate" name="startDate" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="ddlStatus">Status</label>
+                                        <label for="ddlStatus">@lang('dashboard.products_status')</label>
                                         <select id="ddlStatus" name="status" class="form-control">
                                             <option value="">Choose</option>
                                             <option value="PENDING">Pending</option>
@@ -97,7 +87,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="category">Category</label>
+                                        <label for="category">@lang('dashboard.products_category')</label>
                                         <select id="category" name="category" class="form-control">
                                         <option value="">Choose</option>
                                             <optgroup label="ESTATES">
@@ -302,7 +292,7 @@
                                 </div>
                             </div>
                             <div class="text-right mb-20">
-                                <button type="submit" class="btn btn-lg btn-raised btn-success">Filter</button>
+                                <button type="submit" class="btn btn-lg btn-raised btn-success">@lang('dashboard.products_filter')</button>
                             </div>
                         </form>
                         <div id="product-list_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
@@ -310,17 +300,17 @@
                                 <div class="col-sm-6">
                                     <div class="dataTables_length" id="product-list_length">
                                         <form id="sorter" name="sorter" method="get" action="{{ $_SERVER['REQUEST_URI'] }}">
-                                            <label>Show
+                                            <label>@lang('dashboard.products_show')
                                             <select id="view" name="view-perpage" aria-controls="product-list" class="form-control input-sm">
                                                 <option value="10"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],10) : ''}}>10</option>
                                                 <option value="20"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],20) : ''}}>20</option>
                                                 <option value="50"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],50) : ''}}>50</option>
                                                 {{-- <option value="-1"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],-1) : ''}}>All</option> --}}
                                             </select>
-                                            entries</label>
+                                            @lang('dashboard.products_entries')</label>
                                         </form>
                                         </br>
-                                        <td>Showing {{ $products->count() }} of {{ $products->total() }} entries</td>
+                                        <td>@lang('dashboard.products_showing1') {{ $products->count() }} @lang('dashboard.products_of1') {{ $products->total() }} @lang('dashboard.products_entries')</td>
                                     </div>
                                 </div>
                             </div>
@@ -335,14 +325,14 @@
                                                         <label for="checkAll" class="pl-0">&nbsp;</label>
                                                     </div>
                                                 </th>
-                                                <th>Image</th>
-                                                <th>Product Name</th>
-                                                <th>Date</th>
-                                                <th>Featured Item</th>
-                                                <th class="text-right">Price</th>
-                                                {{-- <th class="text-right">Quantity</th> --}}
-                                                <th style="display: block;">Status</th>
-                                                <th class="text-center">Action</th>
+                                                <th>@lang('dashboard.products_image')</th>
+                                                <th>@lang('dashboard.products_productname')</th>
+                                                <th>@lang('dashboard.products_date')</th>
+                                                <th>@lang('dashboard.products_featured')</th>
+                                                <th class="text-right">@lang('dashboard.products_price')</th>
+                                                {{-- <th class="text-right">@lang('dashboard.products_quantity')</th> --}}
+                                                <th style="display: block;">@lang('dashboard.products_status')</th>
+                                                <th class="text-center">@lang('dashboard.products_action')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -397,7 +387,7 @@
                             <div class="row">
                                 <div class="col-sm-5">
                                     <div class="dataTables_info" id="product-list_info" role="status" aria-live="polite">
-                                        Showing {{ $products->count() }} of {{ $products->total() }} entries
+                                        @lang('dashboard.products_showing2') {{ $products->count() }} @lang('dashboard.products_of') {{ $products->total() }} @lang('dashboard.products_entries3')
                                     </div>
                                 </div>
                                 <div class="col-sm-7">

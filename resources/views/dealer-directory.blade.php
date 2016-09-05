@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', func::genTitle('Dealer Directory', false))
+@section('title')
+  <title>{{ func::genTitle('Dealer Directory', false)}}</title>
+@endsection
 
 @section('meta-data')
 <meta name="keywords" content="Luxury Sellers, Luxury Dealers, Luxury Marketplace">
@@ -22,6 +24,14 @@
 @endsection
 
 @section('content')
+<?php 
+  foreach($dealers as $dealer) {
+    $companyName =  json_decode($dealer->companyName);
+    if (is_array($companyName)) {
+      $dealer->companyName = implode(' ', $companyName);
+    }
+  }
+?>
     <!-- main banner of the page -->
 	  <section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/dealer-application-main.jpg', '', '', false, true)}});">
 		    <div class="container">
@@ -30,12 +40,12 @@
                     <!-- new grid -->
                       	<div class="row">
                           	<div class="col-lg-12">
-		                		<h1>Dealer Directory</h1>
+		                		<h1>@lang('static.dealer_directory')</h1>
 						    </div>
 				        </div>
                       	<div class="row">
                           	<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-		               			<p style="font-weight: 300;">High Quality Luxury Dealers Around The World.</p>
+		               			<p style="font-weight: 300;">@lang('static.dealer_directory_quality')</p>
 		    	          	</div>
 				        </div>
                   </div> <!-- end of new grid -->
@@ -56,7 +66,7 @@
               		@if ($dealer->companyName != null || is_array($dealer->companyName))
               			@if(is_numeric($dealer->companyName[0]))
 	                  		<div class="col-md-4">
-	                    		<a class='dealer-link' href="{{func::set_url('/dealer/'.$dealer->id)}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
+	                    		<a class='dealer-link' href="/dealer/{{$dealer->id}}/{{$dealer->slug}}">{{ $dealer->companyName }}</a>
 	                  		</div>
 	                	@endif
               		@endif
@@ -105,7 +115,7 @@
   <hr>
 </div>
 @foreach($dealers as $dealer)
-	@if ($dealer->companyName != null || is_array($dealer->companyName))
+	@if ($dealer->companyName !== null || is_array($dealer->companyName))
 		@if(!ctype_alnum($dealer->companyName[0]))
 			<div class="col-md-4">
 		    	<a class="dealer-link" href="{{func::set_url('/dealer/'.$dealer->id.'/'.$dealer->slug)}}">{{ $dealer->companyName }}</a>
@@ -120,9 +130,9 @@
         <div class="sell-block">
             <div class="container">
                 <div class="wrap">
-                    <h2 class="h1">Becoming a Luxify Dealer</h2>
-                    <p>Professional dealers use Luxify to transact successful sales of a wide selection of new, vintage and pre-owned luxury goods as well as luxury experiences</p>
-                    <a href="{{func::set_url('/dealer-application')}}" id="apply-btn-two" class="btn btn-primary lightbox">Apply Now</a>
+                    <h2 class="h1">@lang('static.dealer_directory_becoming')</h2>
+                    <p>@lang('static.dealer_directory_professional')</p>
+                    <a href="{{func::set_url('/dealer-application')}}" id="apply-btn-two" class="btn btn-primary lightbox">@lang('static.dealer_directory_apply')</a>
                 </div>
             </div>
         </div>

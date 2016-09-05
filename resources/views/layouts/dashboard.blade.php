@@ -1,7 +1,6 @@
 <?php
 $notifs = func::get_notif();
 $num_notif = count($notifs);
-$num_notif  = 2;
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,42 +1,25 @@
 @extends('layouts.front')
 
-@section('home-title')
-  <title>Luxify.com - Asia&#39;s Leading Marketplace for Luxury</title>
+@section('title')
+    <title>{{func::genTitle('homepage', false)}}</title>
 @endsection
+
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/jQuery.YoutubeBackground.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <style>
-
         .bg-img {
-          z-index: -1010;
+            z-index: -1010;
         }
         .content-wrapper, .info-block {
-          background-color: white;
+            background-color: white;
         }
-        #video_bg{
-          background-position: top center;
-          background-repeat: no-repeat;
-          bottom: 0;
-          left: 0;
-          overflow: hidden;
-          position: fixed;
-          right: 0;
-          top: 0;
-        }
-        .ytplayer-player {
-          position: absolute;
-          top: 0;
-          z-index: -1;
-        }
-
     </style>
 @endsection
 
 @section('meta-data')
     <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-    <meta name="description" content="We are Asia's leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+    <meta name="description" content="We are Asia&#39;s leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
 @endsection
 
 @section('content')
@@ -53,8 +36,8 @@
         <!-- end of banner slideshow -->
         <div class="container">
             <div class="holder" id="search_holder">
-                <h1>Luxury Within Reach</h1>
-                <h2>Asia’s leading marketplace for luxury</h2>
+                <h1>@lang('static.index_banner_up')</h1>
+                <h2>@lang('static.index_banner_down')</h2>
                 <!-- category search form -->
             @include('inc.search')
             <!-- end of category search form -->
@@ -64,16 +47,10 @@
                         <!-- banner navigation -->
                         <nav class="banner-nav">
                             <ul>
-                                <li><a href="{{func::set_url('/category/real-estates')}}">Real Estates</a></li>
-                                <li><a href="{{func::set_url('/category/jewellery-watches')}}">Watches & Jewelry</a></li>
-                                <li><a href="{{func::set_url('/category/motors')}}">Motors</a></li>
-                                <li><a href="{{func::set_url('/category/handbags-accessories')}}">Handbags & Accessories</a></li>
-                                <li><a href="{{func::set_url('/category/experiences')}}">Experiences</a></li>
-                                <li><a href="{{func::set_url('/category/collectibles-furnitures')}}">Collectibles & Furnitures</a></li>
-                                <li><a href="{{func::set_url('/category/yachts')}}">Yachts</a></li>
-                                <li><a href="{{func::set_url('/category/aircrafts')}}">Aircrafts</a></li>
-                                <li><a href="{{func::set_url('/category/art-antiques')}}">Art & Antiques</a></li>
-                                <li><a href="{{func::set_url('/category/fine-wines-spirits')}}">Fine Wines & Spirits</a></li>
+                                <?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
+                                @foreach($categories as $value)
+                                    <li><a href="{{func::set_url('/category/'.$value->slug)}}">@lang('categories.'.$value->slug)</a></li>    
+                                @endforeach
                             </ul>
                         </nav>
                         <!-- end of banner navigation -->
@@ -118,17 +95,17 @@
                         <ul class="count-list">
                             <li>
                                 <span class="count counter">{{ func::countMarketValue() }}</span>
-                                <span class="info">Total Market in USD</span>
+                                <span class="info">@lang('static.index_banner_total_market')</span>
                             </li>
                             <li>
                                 <?php $num_listings = number_format(func::countListings(), 0); ?>
                                 <span class="count counter">{{$num_listings}}</span>
-                                <span class="info">Total Listings</span>
+                                <span class="info">@lang('static.index_banner_total_listing')</span>
                             </li>
                             <li>
                                 <?php $num_recents = number_format(func::countNewListings(), 0); ?>
                                 <span class="count counter">{{$num_recents}}</span>
-                                <span class="info">New Listings In The Past 30 Days</span>
+                                <span class="info">@lang('static.index_banner_total_newlisting')</span>
                             </li>
                         </ul>
                     </div>
@@ -145,10 +122,10 @@
                         <div class="row">
                             <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
-                                    <strong class="title">FEATURED</strong>
-                                    <h1 style="font-weight: 300;">“Rees Rex”</h1>
-                                    <p>One of the most complete and well-preserved skulls of any Tyrannosaurus rex ever discovered, is now available <br/>for sale.</p>
-                                    <a href="{{func::set_url('/listing/rees-rex-t-rex-skull')}}" class="btn btn-primary">View</a>
+                                    <strong class="title">@lang('static.index_feature_title')</strong>
+                                    <h1 style="font-weight: 300;">“@lang('static.index_feature_label')”</h1>
+                                    <p>@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
+                                    <a href="{{func::set_url('/listing/rees-rex-t-rex-skull')}}" class="btn btn-primary">@lang('static.index_feature_view')</a>
                                 </div>
                             </div>
                         </div>
@@ -163,9 +140,9 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
                         <header class="heading">
-                            <h2 class="h1">We Make Luxury Shopping Easier</h2>
+                            <h2 class="h1">@lang('static.index_desc1')</h2>
                             <div class="wrap">
-                                <h5>Luxify is the perfect place to discover, search and browse through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods in a safe and simple way.</h5>
+                                <h5>@lang('static.index_desc2')</h5>
                             </div>
                         </header>
                     </div>
@@ -182,16 +159,16 @@
                         <div class="col-sm-5 col-sm-offset-1">
                             <ol class="service-list">
                                 <li>
-                                    <h3>We Are A Lead Generation Platform</h3>
-                                    <p>We will never ask you for your payment details. Instead we match buyers with reputable sellers who have each been carefully handpicked and vetted by us. This ensures you are matched with genuine sellers and can enjoy complete peace of mind when browsing with us</p>
+                                    <h3>@lang('static.index_desc3')</h3>
+                                    <p>@lang('static.index_desc4')</p>
                                 </li>
                                 <li>
-                                    <h3>Compare Products From All Sellers</h3>
-                                    <p>When you have found a product you are interested in, we provide an easy way for you to communicate with the seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straightforward one to one basis</p>
+                                    <h3>@lang('static.index_desc5')</h3>
+                                    <p>@lang('static.index_desc6')</p>
                                 </li>
                                 <li>
-                                    <h3>You Will Find Your Luxury Item</h3>
-                                    <p>Whether you are looking for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly what you are looking for on Luxify</p>
+                                    <h3>@lang('static.index_desc7')</h3>
+                                    <p>@lang('static.index_desc8')</p>
                                 </li>
                             </ol>
                         </div>
@@ -209,9 +186,9 @@
                         <div class="row">
                             <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
-                                    <h1>Search &amp; Compare</h1>
-                                    <p>Search and compare through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods.</p>
-                                    <a href="{{func::set_url('/category/handbags-accessories')}}" class="btn btn-primary">View more</a>
+                                    <h1>@lang('static.index_search1')</h1>
+                                    <p>@lang('static.index_search2')</p>
+                                    <a href="{{func::set_url('/category/handbags-accessories')}}" class="btn btn-primary">@lang('static.index_search3')</a>
                                 </div>
                             </div>
                         </div>
@@ -227,10 +204,10 @@
                         <div class="row">
                             <div class="col-sm-5 col-sm-offset-1 pull-right">
                                 <div class="text-hold">
-                                    <strong class="title">Discover</strong>
-                                    <h1>Why Luxify</h1>
-                                    <p>We make online luxury shopping easier and more transparent.</p>
-                                    <a href="{{func::set_url('/why-luxify')}}" class="btn btn-primary">View more</a>
+                                    <strong class="title">@lang('static.index_discover1')</strong>
+                                    <h1>@lang('static.index_discover2')</h1>
+                                    <p>@lang('static.index_discover3')</p>
+                                    <a href="{{func::set_url('/why-luxify')}}" class="btn btn-primary">@lang('static.index_discover4')</a>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -245,13 +222,13 @@
         </div>
         <!-- information block with image -->
         <div class="imageinfo-block parallax" style="background-image:url({{func::img_url('realestate.jpg')}})">
-            <div class="container">
+            <div class="container" style="z-index: 4;">
                 <div class="info-wrap heading">
-                    <h2 class="h1">3D Virtual Property Tour</h2>
+                    <h2 class="h1">@lang('static.index_3D_1')</h2>
                     <div class="wrap">
-                        <h5>Enjoy a new luxury property viewing experience</h5>
+                        <h5>@lang('static.index_3D_2')</h5>
                     </div>
-                    <a href="{{func::set_url('/luxify-estates')}}" class="btn btn-primary">View more</a>
+                    <a href="{{func::set_url('/luxify-estates')}}" class="btn btn-primary">@lang('static.index_3D_3')</a>
                 </div>
             </div>
         </div>
@@ -262,9 +239,9 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="heading">
-                            <h2>Subscribe to Luxify's ultimate luxury newsletter!</h2>
+                            <h2>@lang('static.index_subscribe_1')</h2>
                             <div class="wrap text-center">
-                                <h5>Get the latest luxury finds in your inbox</h5>
+                                <h5>@lang('static.index_subscribe_2')</h5>
                             </div>
                         </div>
                     </div>
@@ -273,7 +250,7 @@
                     <div class="input-group flat">
                         <input class="form-control" type="email" name="subscriber-email" id="subscriber-email" placeholder="Your Email..." required />
                         <div class="input-group-addon">
-                            <button class="btn btn-primary" name="submit" type="submit" value="Submit">Subscribe</button>
+                            <button class="btn btn-primary" name="submit" type="submit" value="Submit">@lang('static.index_subscribe_3')</button>
                         </div>
                     </div>
 
@@ -290,19 +267,44 @@
     <!-- end of main part -->
 @endsection
 @section('scripts')
-    <script>
-      $(document).ready(function(){
-        $(".banner-image img").load(function() {
-            var bg = $('.bg-img:nth-child(2)');
-            var w = bg.width(), h = bg.height();
+    <script type="application/ld+json">
+     {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://www.luxify.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.luxify.com/search?action=search&search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+     }
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.youtubebackground.js"></script>
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
+    <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
 
-            $('#video_bg').YTPlayer({
-                fitToBackground: true,
-                videoId: '15VwTs0nFlM',
-    //            width: (w + 500),
-   //             ratio: (w/h),
-            });
+    <script>
+
+        $(document).ready(function(){
+
+
+            //index home
+            clientsCarousel();
+            mailChimpSub();
+
+            //index category
+            suggestedSearchResults();
+            search_ico();
+
+            if(!isMobile()){
+
+                $('#video_bg').YTPlayer({
+                    fitToBackground: true,
+                    videoId: '15VwTs0nFlM',
+                });
+            }
         });
-      });
+
     </script>
 @endsection

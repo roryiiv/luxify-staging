@@ -1,6 +1,9 @@
+@inject('s_meta', 'App\Meta')
 @extends('layouts.front')
 
-@section('title', trim(preg_replace('/\s\s+/', ' ', $meta->title)))
+@section('title')
+  <title>{{trim(preg_replace('/\s\s+/', ' ', $meta->title))}} - Luxify</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
@@ -12,7 +15,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <style>
         .blocked-seller{
             background: rgba(0,0,0,.8);
@@ -105,13 +108,13 @@
   <!-- end of banner -->
   <!-- main informative part of the page -->
   <main id="main">
-      <div class="container">
+      <div class="container" {{schema::itemScope()}} {{schema::itemType('Store')}}>
           <div class="content-wrapper">
               <div class="row">
                   <div class="col-md-6">
-                      <h1>{!! $title1 !!}</h1>
+                      <h1 {{schema::itemProp('name')}} {{schema::itemType('Text')}}>{!! $title1 !!}</h1>
                       @if(!empty($dealer->companySummary)) 
-                         <p> {!! nl2br(e($dealer->companySummary)) !!} </p>
+                         <p {{schema::itemProp('description')}} {{schema::itemType('Text')}}> {!! nl2br(e($dealer->companySummary)) !!} </p>
                       @else 
                          <span>Coming soon.</span>
                       @endif
@@ -154,13 +157,14 @@
                       </ul>
                   </div>
                   <?php $logo = !empty($dealer->companyLogoUrl) ? $dealer->companyLogoUrl : 'default-logo.png'; ?>
-                  <div class="col-md-5 col-sm-offset-1">
+                  <div class="col-md-5 col-sm-offset-1 dealer_box">
                       <div class="col-md-12" style="margin-bottom: 35px;">
-                        <img style="width:50%; margin: 0px auto; display: block;"src="{{ func::img_url($logo, 360, '', true) }}" alt="image_link">
+                        <img {{schema::itemProp('logo')}} {{schema::itemType('ImageObject') }} style="width:50%; margin: 0px auto; display: block;" src="{{ func::img_url($logo, 360, '', true) }}"  title="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}" alt="{{ $s_meta->get_slug_img($dealer->companyLogoUrl) }}">
                       </div>
                       <div class="col-md-12">
                         @if(isset($dealer->country) && !empty($dealer->country))
-                             <h4 style="text-align: center; margin-bottom: 5px;">{{$dealer->country}}</h4>
+                             <h4  style="text-align: center; margin-bottom: 5px;" >{{$dealer->country}}</h4>
+			     <div style="display:none;" {{schema::itemProp('location')}} {{schema::itemType('Text')}}>{{$dealer->country}}</div>
                         @endif
                         @if(!empty($dealer->website))
                         <?php 
@@ -190,7 +194,7 @@
                               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                              </td>
                              <td>
-                                 <span> {{$address}}</span>
+                                 <span {{schema::itemProp('address')}} {{schema::itemType('PostalAddress')}}>{{$address}}</span>
                              </td>
                           </tr>
                         @endif 
@@ -208,14 +212,14 @@
                         @endif
                         @if(!empty(json_decode($dealer->phoneNumber)))
                         <?php 
-                            $phones= is_array($dealer->phoneNumber) ? join("<br>", json_decode($dealer->phoneNumber)) : $dealer->phoneNumber ;
+                            $phones= is_array(json_decode($dealer->phoneNumber)) ? join("<br>", json_decode($dealer->phoneNumber)) : $dealer->phoneNumber ;
                         ?>
                         <tr>
                            <td>
                               <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
                            </td>
                            <td>
-                               <span> {!! $phones !!}</span>
+                               <span {{schema::itemProp('telephone')}} {{schema::itemType('Text')}}> {!! $phones !!}</span>
                            </td>
                           </tr>
                         </div>
@@ -229,7 +233,6 @@
       <?php 
      // $feat = func::getFeatured($dealer->id); 
       $featured = json_decode($dealer->featured_item);
-
       ?>
       @if($featured == NULL)
         <?php $feat = func::getFeatured($dealer->id); ?>
@@ -327,7 +330,7 @@
                           <span class="country">{{$item->country}}</span>
                         </div>
                         <div class="item-logo">
-                          <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}" alt="image description">
+                          <img src="{{ !empty($dealer->companyLogoUrl) ? func::img_url($dealer->companyLogoUrl, 200, '', true) : func::img_url('default-logo.png', 200, '', true) }}">
                         </div>
                        </div>
                      </div>
@@ -353,9 +356,14 @@
 @endsection
 @section('scripts')
 
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
     <script>
         $(document).ready(function() {
                               
+          initSlick();
+          initBackgroundImage();
           $("img.product-img").unveil(300, function() {
             $(this).load(function() {
                $(this).hide();
@@ -446,6 +454,7 @@
             });
         });
         </script>
+
     @endif
     @include('inc.send-message-script')
 @endsection

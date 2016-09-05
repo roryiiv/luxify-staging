@@ -95,9 +95,9 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">Add  Product</h4>
+                        <h4 class="mt-0 mb-5">@lang('dashboard.product_add_product')</h4>
                         <ol class="breadcrumb mb-0">
-                            <li class="active">List an item</li>
+                            <li class="active">@lang('dashboard.product_add_item')</li>
                         </ol>
                     </div>
                     <div class="col-sm-6">
@@ -120,11 +120,11 @@
             <div class="page-content container-fluid">
               <form id="form-tabs_approduct" class="form-horizontal" action="/dashboard/products" method="post" enctype="multipart/form-data">
                 {!! csrf_field() !!}
-                <h3>Step 1: Category</h3>
+                <h3>@lang('dashboard.product_add_category')</h3>
                 <fieldset>
                     <div id="category" role="tabpanel" class="tab-pane active">
                         <div class="form-group">
-                            <label for="itemLocation" class="col-sm-3 control-label">Item Location</label>
+                            <label for="itemLocation" class="col-sm-3 control-label">@lang('dashboard.product_add_location')</label>
                             <div class="col-sm-9">
                                 <select id="itemLocation" name="itemLocation" class="form-control" required>
                                   <?php $countries = func::build_countries(); ?>
@@ -136,7 +136,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="itemAvailability" class="col-sm-3 control-label">Item Availability</label>
+                            <label for="itemAvailability" class="col-sm-3 control-label">@lang('dashboard.product_add_availability')</label>
                             <div class="col-sm-9">
                                 <select id="itemAvailability" name="itemAvailability" class="form-control" required>
                                     <option value="">--Please Select--</option>
@@ -146,10 +146,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="itemCategory" class="col-sm-3 control-label">Item Category</label>
+                            <label for="itemCategory" class="col-sm-3 control-label">@lang('dashboard.product_add_itemcategory')</label>
                             <div class="col-sm-9">
-                           
-                                <select id="itemCategory" name="itemCategory" class="form-control" data-id= required>
+                                <select id="itemCategory" name="itemCategory" class="form-control" required>
                                     <option value="">--Please Select--</option>
                                      <?php
                                         $data = DB::table('category_2')->where('parent',0)->get();
@@ -162,7 +161,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="itemSubCategory" class="col-sm-3 control-label">Item Sub Category</label>
+                            <label for="itemSubCategory" class="col-sm-3 control-label">@lang('dashboard.product_add_itemsub')</label>
                             <div class="col-sm-9">
                            
                                 <select id="itemSubCategory" name="itemSubCategory" class="form-control" style="display: none">
@@ -170,45 +169,46 @@
                                 </select>
                             </div>
                         </div>
+                         
                     </div>
                 </fieldset>
 
-                <h3>Step 2: Product details</h3>
+                <h3>@lang('dashboard.product_add_product2')</h3>
                 <fieldset>
                     <div class="form-group">
-                        <label for="title" class="col-sm-3 control-label">Listing Title</label>
+                        <label for="title" class="col-sm-3 control-label">@lang('dashboard.product_add_title')</label>
                         <div class="col-sm-9">
                             <input id="title" name='title' type="text" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="condition" class="col-sm-3 control-label">Condition</label>
+                        <label for="condition" class="col-sm-3 control-label">@lang('dashboard.product_add_condition')</label>
                         <div class="col-sm-9">
                             <select id="condition" name="condition" class="form-control" required>
                                 <option value="">--Please Select--</option>
                                 <option value="NEW">New</option>
                                 <option value="PRE-OWNED">Pre-Owned</option>
                             </select>
-                            <h6>Is your item brand new or has it been previously owned?
+                            <h6>@lang('dashboard.product_add_brand')
                                 </h6>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="price" class="col-sm-3 control-label">Price</label>
+                        <label for="price" class="col-sm-3 control-label">@lang('dashboard.product_add_price')</label>
                         <div class="col-sm-9">
                             <input id="price" name='price' type="number" class="form-control" min=0>
-                            <h6>For price on request tick the box and select a preferred currency.
+                            <h6>@lang('dashboard.product_add_tick')
                                 </h6>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="priceOnRequest" class="col-sm-3 control-label"></label>
                         <div class="col-sm-9">
-                            <input type="checkbox" id="priceOnRequest" name='priceOnRequest'> Price on request</label>
+                            <input type="checkbox" id="priceOnRequest" name='priceOnRequest'> @lang('dashboard.product_add_request')</label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="currency" class="col-sm-3 control-label">Currency</label>
+                        <label for="currency" class="col-sm-3 control-label">@lang('dashboard.product_add_currency')</label>
                         <div class="col-sm-9">
                             <select id="currency" name="currency" class="form-control" required>
                                 <option value="">--Please Select--</option>
@@ -223,48 +223,54 @@
 
                     <div class="row">
                         <div class="form-group">
-                            <label for="description" class="col-sm-3 control-label">Step 3: Description</label>
+                            <label for="description" class="col-sm-3 control-label">@lang('dashboard.product_add_description')</label>
                             <div class="col-sm-9">
                                 <textarea id="description" name='description' class="form-control" id="editor-markdown" data-provide="markdown" data-hidden-buttons="cmdImage cmdCode cmdQuote" cols="3" rows="5" required></textarea>
-                                <h6>You can enter up to 10,000 characters, try to write as muchof this as you can, as longer description get more views and replies!</h6>
+                                <h6>@lang('dashboard.product_add_enter')</h6>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="expiryDate" class="col-sm-3 control-label">Expiry Date (Optional)</label>
+                            <label for="expiryDate" class="col-sm-3 control-label">@lang('dashboard.product_add_expiry')</label>
                             <div class="col-sm-9">
                                 <input id="startDate" name='expiryDate' type="text" class="form-control" value='{{ date_format(date_create('now'), 'Y-m-d')}}'>
                             </div>
                         </div>
-                        <div class="form-group details_specs">
+                        <div class="form-group">
+                            <label for="optionalFields" class="col-sm-3 control-label title_details">@lang('dashboard.product_add_optional')</label>
+                            
+                                <div class="col-sm-9 col-sm-offset-3 details_box" id="optionFields">
+        
+                        </div>
+                       <!--  <div class="form-group details_specs">
                             <label class="col-sm-3 control-label title_details">Details/specs (Optional) <i class="fa fa-chevron-down" aria-hidden="true"></i></label>
                             <div class="col-sm-9 col-sm-offset-3 details_box" id="optionFields">
                             </div>
-                        </div>
+                        </div> -->
 
 
                     </div>
                 </fieldset>
-                <h3>Step 3: Images</h3>
+                <h3>@lang('dashboard.product_add_images')</h3>
                 <fieldset>
                     <div id="about" role="tabpanel" class="tab-pane">
                         <div class="widgets">
                             <div class="widget-heading">
-                                <h5 class="m-0">Add Item Images</h5>
+                                <h5 class="m-0">@lang('dashboard.product_add_addimages')</h5>
                             </div>
                             <div class="widget-body">
                                 <div id="item-images-dz" class="dropzone text-center"></div>
                             </div>
                             <div class="widget-heading pt-0">
-                                <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
+                                <h6 class="m-0">@lang('dashboard.product_add_result')</h6>
                             </div>
                         </div>
                         <div id='images-preview-zone' class='dropzone-previews' style="display:none;">
                           <div class="images-table">
-                             <div class="header">Image</div>
-                             <div class="header">Image Name</div>
-                             <div class="header">Featured Image</div>
-                             <div class="header">Edit</div>
-                             <div class="header">Remove</div>
+                             <div class="header">@lang('dashboard.product_add_image1')</div>
+                             <div class="header">@lang('dashboard.product_add_imagename')</div>
+                             <div class="header">@lang('dashboard.product_add_featured')</div>
+                             <div class="header">@lang('dashboard.product_add_edit')</div>
+                             <div class="header">@lang('dashboard.product_add_remove')</div>
                           </div>
                         </div>
 
@@ -272,10 +278,10 @@
                         <table style="width: 100%" class="table table-bordered" id="images-preview-table">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Image</th>
-                                    <th>Image Url</th>
-                                    <th style="width: 20%">Featured Image</th>
-                                    <th class="text-center">Remove</th>
+                                    <th class="text-center">@lang('dashboard.product_add_image2')</th>
+                                    <th>@lang('dashboard.product_add_imageurl')</th>
+                                    <th style="width: 20%">@lang('dashboard.product_add_featuredimage')</th>
+                                    <th class="text-center">@lang('dashboard.product_add_remove')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -283,23 +289,23 @@
                         </table>
                     </div>
                 </fieldset>
-                <h3>Step 4: Additional Info.</h3>
+                <h3>@lang('dashboard.product_add_additional')</h3>
                 <fieldset>
                     <div id="data" role="tabpanel" class="tab-pane">
                         <div class="form-group">
-                            <label for="buyNowURL" class="col-sm-3 control-label">Buy Now URL</label>
+                            <label for="buyNowURL" class="col-sm-3 control-label">@lang('dashboard.product_add_url')</label>
                             <div class="col-sm-9">
                                 <input id="buyNowURL" name="buyNowURL" type="text" value="" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="aerialLookURL" class="col-sm-3 control-label">Promotion Video URL (Optional)</label>
+                            <label for="aerialLookURL" class="col-sm-3 control-label">@lang('dashboard.product_add_videourl')</label>
                             <div class="col-sm-9">
                                 <input id="aerialLookURL" name="aerialLookURL" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="aerial3DLookURL" class="col-sm-3 control-label">Matterport 3D Tour URL (Optional)</label>
+                            <label for="aerial3DLookURL" class="col-sm-3 control-label">@lang('dashboard.product_add_3d')</label>
                             <div class="col-sm-9">
                                 <input id="aerial3DLookURL" name='aerial3DLookURL' type="text" class="form-control">
                             </div>
@@ -414,7 +420,7 @@
             $('<tr><td class="text-center"><img width="100" class="img-thumbnail img-responsive" src="'+ images_array[i].path +'"></td><td><input type="text" disabled value="'+ images_array[i].filename + '" class="form-control" /><input name="images[]" type="hidden" value="'+ images_array[i].filename + '" /></td><td><div class="radio"><label><input type="radio" name="mainImage" data-dz-name data-rule-required="true" aria-required="true" value="' + i +'">Main Image</label></div></td><td class="text-center"><button type="button" class="btn btn-sm btn-outline btn-danger" onclick="deleteImg(this, '+i+', \''+ images_array[i].filename +'\')"><i class="ti-trash"></i></button></td></tr></tr>').appendTo(table);
         }
     }
-    function genControls({id, type, name, label, optionValues}){
+    /*function genControls({id, type, name, label, optionValues}){
         switch (type) {
             case 'textfield':
             case 'text':
@@ -441,7 +447,8 @@
             default:
             return '';
         }
-    }
+    }*/
+    
     $(document).ready(function () {
 
         $('#itemCategory').on('change',function(){
@@ -455,9 +462,33 @@
                     $('#itemSubCategory').show();
                 }
             });
-           
 
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url : '/api/ajax/optional-fields/'+id,
+                method : 'get',
+                success: function(result){  
+                    $('#optionFields').html(result);
+                    $('#optionFields').show();
+
+                }
+            });
         });
+         $('#itemSubCategory').on('change',function(){
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url : '/api/ajax/optional-fields/'+id,
+                method : 'get',
+                success: function(result){  
+                    $('#optionFields').append(result);
+                    
+                }
+            });
+        });
+        
+
 
         $('#editor-markdown').markdown();
 
@@ -468,7 +499,7 @@
                 $("#add-product-form").modal('show');
             } 
         });
-        $('#itemCategory').on('change', function(){
+        /*$('#itemCategory').on('change', function(){
             $.get({
                 url: '/api/category/'+ $('#itemCategory').val() + '/fields',
                 dataType: 'json',
@@ -481,7 +512,7 @@
                     }
                 }
             });
-        });
+        });*/
 
         $('#priceOnRequest').on('click', function(){
             $('#price').prop('disabled', $('#priceOnRequest').prop('checked') );

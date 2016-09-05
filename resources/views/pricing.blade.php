@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'Pricing')
+@section('title')
+  <title>{{ func::genTitle('Pricing', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
@@ -11,7 +13,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
 @section('content')
     <!-- main banner of the page -->
@@ -22,16 +24,16 @@
                     <!-- new grid -->
                       <div class="row">
                           <div class="col-lg-12">
-							<h1>Pricing</h1>
+							<h1>@lang('static.pricing_price')</h1>
 						   </div>
 					   </div>
                       <div class="row">
                           <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>Take your luxury business to the next level with Luxify</p>
+							<p>@lang('static.pricing_business')</p>
 					   </div>
 				   </div>
 				   <div class="button-wrap">
-						<a href="{{func::set_url('/contact')}}" class="btn btn-primary smooth-scroll">Contact Us</a>
+						<a href="{{func::set_url('/contact')}}" class="btn btn-primary smooth-scroll">@lang('static.pricing_contact')</a>
 					</div>
                 </div>
             </div>
@@ -52,14 +54,14 @@
                            </div>
                            <div class="col-sm-6">
                                <div class="text-top">
-                                   <h1>Our Value Proposition</h1>
-                                   <p>Take your business to the next level with Luxify. We have one of the world’s finest luxury dealer networks and we deliver results.</p>
+                                   <h1>@lang('static.pricing_value')</h1>
+                                   <p>@lang('static.pricing_business_level')</p>
                                    <ul class="checklist">
-                                      <li>Connect with luxury enthusiasts in Asia</li> 
-                                      <li>Tailored marketing campaigns to reach Asian buyers</li> 
-                                      <li>No obligation and lock-in period</li> 
-                                      <li>Personalized customer support</li> 
-                                      <li>Full control of your listings including prices and communication with potential buyers</li> 
+                                      <li>@lang('static.pricing_asia')</li> 
+                                      <li>@lang('static.pricing_tailor')</li> 
+                                      <li>@lang('static.pricing_obligation')</li> 
+                                      <li>@lang('static.pricing_support')</li> 
+                                      <li>@lang('static.pricing_control')</li> 
                                    </ul>
                                 </div>
                            </div>
@@ -71,17 +73,17 @@
         <!-- main of main content -->
         <!-- benefit block -->
         <div class="benefit-block parallax" style="background-image:url(assets/images/banner-technology.jpg);">
-            <div class="container">
+            <div class="container" style="z-index:4;">
                 <!-- new grid -->
                       <div class="row">
                           <div class="col-sm-10 col-sm-offset-1">
                 <header class="heading" id="heading1" style="margin-bottom: 45px;">
-                    <h2 class="h1">Our Technology</h2>
+                    <h2 class="h1">@lang('static.pricing_technology')</h2>
                 </header>
                 <!-- benefit articles -->
                 <div class="row">
                     <article class="col-sm-12">
-                        <p style="font-size: 16px;">Our technology allows us to integrate with most platforms making the uploading of your inventory effortless with the possibility of automatically updating your listings. As a Luxify dealer we can provide you detailed analytical reports on the performances of your listings including monthly traffic reports. Our dealer support team will help you get the most of your Luxify membership.</p>
+                        <p style="font-size: 16px;">@lang('static.pricing_integrate')</p>
                     </article>
                 </div>
                 </div>
@@ -95,13 +97,13 @@
                       <div class="row">
                           <div class="col-sm-10 col-sm-offset-1">
                 <header class="heading" id="heading1">
-                    <h2>Luxify offers tailored packages to suit your particular company needs.</h2>
+                    <h2>@lang('static.pricing_suit')</h2>
 					<div class="wrap">
-						<h5>Learn more about our dealer packages</h5>
+						<h5>@lang('static.pricing_package')</h5>
 					</div>
                 </header>
 				   <div class="button-wrap" style="text-align: center;">
-						<a href="{{func::set_url('/dealer-application')}}" class="btn btn-primary smooth-scroll">Dealer Application</a>
+						<a href="{{func::set_url('/dealer-application')}}" class="btn btn-primary smooth-scroll">@lang('static.pricing_dealer')</a>
 					</div>
                 <!-- image column wrapper -->
           </div>

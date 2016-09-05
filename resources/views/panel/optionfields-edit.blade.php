@@ -53,23 +53,13 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">Edit a Optional Field</h4>
+                        <h4 class="mt-0 mb-5">@lang('panel.optional_edit')</h4>
                         <ol class="breadcrumb mb-0">
-                            <li><a href="forms-wizard.html#">Super Admin Access</a></li>
+                            <li><a href="forms-wizard.html#">@lang('panel.optional_edit_admin')</a></li>
                         </ol>
                     </div>
-                    <div class="col-sm-6" style="display: none;">
-                        <div class="btn-group mt-5">
-                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                            <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                            </ul>
-                        </div>
+                    <div class="col-sm-6" >
+                        @include('inc.set-lang-dashboard-panel')
                     </div>
                 </div>
             </div>
@@ -77,17 +67,17 @@
 
                 <div class="widget">
                     <div class="widget-heading">
-                        <h3 class="widget-title">Edit a Optional Field</h3>
+                        <h3 class="widget-title">@lang('panel.optional_edit1')</h3>
                     </div>
                     <div class="widget-body">
                         <form id="form-tabs" name="optionalfield" method="post" action="" class="form-horizontal" enctype="multipart/form-data">
                             {!! csrf_field() !!}                            
-                            <h3>Optional Field Details</h3>
+                            <h3>@lang('panel.optional_edit_detail')</h3>
                             <fieldset>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="title" class="col-sm-3 col-md-4 control-label">Title</label>
+                                            <label for="title" class="col-sm-3 col-md-4 control-label">@lang('panel.optional_edit_title')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="title" name="title" type="text" class="form-control" placeholder="{{$formfields->title}}">
                                             </div>
@@ -97,7 +87,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="name" class="col-sm-3 col-md-4 control-label">Name</label>
+                                            <label for="name" class="col-sm-3 col-md-4 control-label">@lang('panel.optional_edit_name')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="name" name="name" type="text" class="form-control" placeholder="{{$formfields->name}}">
                                             </div>
@@ -107,7 +97,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="" class="col-sm-3 col-md-4 control-label">Label</label>
+                                            <label for="" class="col-sm-3 col-md-4 control-label">@lang('panel.optional_edit_label')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="" type="text" name="label"  class="form-control" placeholder="{{$formfields->label}}">                                               
                                             </div>
@@ -117,7 +107,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="meta_type" class="col-sm-3 col-md-4 control-label">Type</label>
+                                            <label for="meta_type" class="col-sm-3 col-md-4 control-label">@lang('panel.optional_edit_type')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <select id="meta_type" name="meta_type" class="form-control checktype" required>
                                                     <option value="">--Please Select--</option>
@@ -168,7 +158,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="description" class="col-sm-3 col-md-4 control-label">Description</label>
+                                            <label for="description" class="col-sm-3 col-md-4 control-label">@lang('panel.optional_edit_desc')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <Textarea id="description" name="meta_description" class="form-control">{{$formfields->meta_description}}</textarea>
                                             </div>
@@ -178,7 +168,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="country" class="col-sm-3 col-md-4 control-label">Placeholder</label>
+                                            <label for="country" class="col-sm-3 col-md-4 control-label">@lang('panel.optional_edit_place')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input type="text" class="form-control" name="placeholder" placeholder="{{$formfields->placeholder}}">
                                             </div>
@@ -187,7 +177,7 @@
                                    
                                 </div>
                             <div class="row p-10 text-right">
-                                <button id="save-btn" type="button"   class="btn btn-raised btn-success btn-lg">Save</button>
+                                <button id="save-btn" type="button"   class="btn btn-raised btn-success btn-lg">@lang('panel.optional_edit_save')</button>
                             </div>                                 
                             </fieldset>
                         </form>

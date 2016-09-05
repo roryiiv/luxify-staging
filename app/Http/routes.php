@@ -24,6 +24,16 @@ Route::group(['prefix' => Translation::getRoutePrefix()], function()
     Route::get('/about', function(){
         return view('about');
     });
+Route::get('/press', function(){
+  return view('presskit'); 
+});
+Route::get('press/{id}', function($id) {
+  if ($id) {
+    return view('presskit', ['release' => $id]);
+  } else {
+    return view('presskit');
+  }
+});
 
 Route::get('/contact', function(){
     return view('contact');
@@ -54,6 +64,12 @@ Route::get('/why-luxify', function(){
 Route::get('/pricing', function(){
     return view('pricing');
 });
+Route::get('/faq', function(){
+    return view('faq');
+});
+Route::get('/sitemap', function(){
+    return view('sitemap');
+});
 Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
 Route::post('datafeed/product/update/{id}', 'DataFeed@product_update');
@@ -70,6 +86,7 @@ Route::post('/public/images/upload', 'OpenAPI@upload');
 
 // Ajax endpoints
 Route::get('/api/category/{catId}/fields', 'Front@categories_optional_fields');
+Route::get('/api/ajax/optional-fields/{id}', 'Front@category_optional_fields');
 Route::post('/api/listing/createSlug', 'Slug@createSlug');
 Route::post('/api/user/createSlug', 'Slug@createUserSlug');
 Route::get('/api/mailbox', 'Mailbox@index');
@@ -89,6 +106,8 @@ Route::post('/api/ajax/checkemail/{email}', 'Front@EmailInUse');
 Route::post('/forget-password','LuxifyAuth@forgetPassword');
 Route::post('/reset-password','LuxifyAuth@resetPassword');
 Route::get('/api/ajax/category/{parent}', 'Dashboard@CategoryChoosen');
+Route::get('/api/getchild/', 'Front@zonk')->name('getchild');
+Route::get('/api/getchild/{id}', 'Front@getchild');
 
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
@@ -151,6 +170,8 @@ Route::post('/panel/products/delete/{id}','Panel@products_delete');
 //Categories and Optional Fields
 Route::get('/panel/categories','Panel@categories');
 Route::get('/panel/categories/add','Panel@categories_add');
+Route::get('/panel/optional-fields','Panel@optional_fields');
+Route::get('/panel/optional-fields/add{id}','Panel@optional_fields_add');
 Route::post('/panel/categories','Panel@category_add');
 Route::get('/panel/categories/delete/{id}','Panel@category_delete');
 Route::get('/panel/categories/edit/{id}', 'Panel@category_edit');
@@ -205,6 +226,7 @@ Route::post('/dashboard/product/delete/{itemId}', 'Dashboard@products_delete'); 
 Route::get('/dashboard/product/delete/{id}', 'Dashboard@product_delete'); // Delete Item from list
 // Dashboard Images Upload methods
 Route::post('/upload', 'Dashboard@single_upload');
+Route::post('/upload', 'Panel@category_upload');
 Route::post('/upload_multiple', 'Dashboard@multiple_upload');
 Route::post('/removeImage', 'Dashboard@remove_image');
 //Dashboard support

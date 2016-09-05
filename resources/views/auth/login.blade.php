@@ -32,22 +32,23 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
 <html lang="en" style="height: 100%">
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Member Login- Luxify- Asia's leading marketplace for luxury</title>
     <meta name="keywords" content="luxify member log in,luxury goods">
     <meta name="description" content="Log in to your account to discover one of the Internet’s largest collections of luxury goods and experiences.">
     <!-- PACE-->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/luxify.css">
     <link rel="stylesheet" type="text/css" href="./plugins/PACE/themes/blue/pace-theme-flash.css">
     <script type="text/javascript" src="./plugins/PACE/pace.min.js"></script>
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" type="text/css" href="./plugins/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Fonts-->
-    <link rel="stylesheet" type="text/css" href="./plugins/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/themify-icons/themify-icons.css')}}">
     <!-- Primary Style-->
-    <link rel="stylesheet" type="text/css" href="./build/css/first-layout.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./build/css/first-layout.css')}}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
     <!--[if lt IE 9]>
@@ -70,10 +71,9 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
         }
         .navbar-right {
             margin-right: 0px;
-            letter-spacing: 0px;
         }
         .navbar-nav {
-            padding-top: 0px;
+
         }
         .navbar-nav > li > a{
             margin: 0;
@@ -82,72 +82,11 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
             height: 34px;
         }
 
-
         .currency-selector-container {
-            margin-right: 2.4rem;
+            margin-right: 0 rem !important;
         }
-        .jcf-hidden {
-            position: absolute !important;
-            left: -9999px !important;
-            height: 1px !important;
-            width: 1px !important;
-            margin: 0px !important;
-            border-width: 0px !important;
-            -moz-appearance: none;
-        }
-        .currency-selector-container .jcf-select {
-            font-weight: 200;
-        }
-        .currency-selector-container .jcf-select {
-            background-color: transparent;
-            height: 30px;
-            border: 1px solid white;
-            border-radius: 0;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            cursor: default;
-            display: block;
-            font-size: 14px;
-        }
-        .jcf-unselectable {
-            -moz-user-select: none;
-        }
-        .jcf-select {
-            display: inline-block;
-            vertical-align: top;
-            position: relative;
-            background: #fff;
-            width: 100%;
-            height: 42px;
-            margin-right: 8px;
-            border: 1px solid #c5c5c5;
-        }
-        .currency-selector-container .jcf-select .jcf-select-text {
-            color: white;
-            line-height: 30px;
-        }
-        .jcf-select .jcf-select-text {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            cursor: default;
-            display: block;
-            font-size: 14px;
-            line-height: 40px;
-            color: #988866;
-            margin: 0 35px 0 8px;
-        }
-        .currency-selector-container .jcf-select .jcf-select-opener {
-            color: white;
-        }
-        .jcf-select .jcf-select-opener {
-            position: absolute;
-            text-align: center;
-            width: 26px;
-            bottom: 0;
-            right: 0;
-            top: 0;
+        .login_share_btn_width{
+            padding:5px 3px !important;
         }
 
         h2 {
@@ -238,7 +177,6 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
  
   
 </style>
-    </style>
 </head>
 
 <body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
@@ -264,7 +202,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
         @include('inc.loginheader')
         <div class="page-content">
             <div class="v2">
-                <div class="logo"><a target="_self" href='/'><img src="./build/images/logo/logo-dark.png" alt="" width="160"></a></div>
+                <div class="logo"><a target="_self" href='/'><img src="{{url('./build/images/logo/logo-dark.png')}}" alt="" width="160"></a></div>
                 <form name="form_login" method="post" action="/login" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -302,15 +240,15 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                 <hr>
                 <p class="text-muted" >@lang('auth.signInSocialAccount')</p>
                 <div class="clearfix row" >
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 col-md-4 login_share_btn_width">
                     <!--add class login_to_facebook-->
-                        <a href="#" type="button" style="width:97px;" class="btn btn-outline btn-rounded btn-primary login_to_facebook btn-sm"><i class="ti-facebook mr-5"></i>Facebook</a>
+                        <a href="#" type="button" style="width:100%;" class="btn btn-outline btn-rounded btn-primary login_to_facebook btn-sm"><i class="ti-facebook mr-5"></i>Facebook</a>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 col-md-4 login_share_btn_width">
                     <!--add class login_to_facebook-->
-                        <a href="#" type="button" style="width:97px;" class="btn btn-outline btn-rounded btn-primary login_to_linkedin btn-sm"><i class="ti-linkedin mr-5"></i>Linkedin</a>
+                        <a href="#" type="button" style="width:100%;" class="btn btn-outline btn-rounded btn-primary login_to_linkedin btn-sm"><i class="ti-linkedin mr-5"></i>Linkedin</a>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 col-md-4 login_share_btn_width">
                         <button type="button" style="width:100%;" class="btn btn-outline btn-rounded btn-primary login_to_twitter btn-sm"><i class="ti-twitter-alt mr-5"></i>Twitter</button>
                     </div>
                 </div>
@@ -323,20 +261,30 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
     </div>
 
     <!-- jQuery-->
-    <script type="text/javascript" src="./plugins/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url('./plugins/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap JavaScript-->
-    <script type="text/javascript" src="./plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{url('./plugins/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Custom JS-->
-    <script type="text/javascript" src="./build/js/first-layout/extra-demo.js"></script>
+    <script type="text/javascript" src="{{url('./build/js/first-layout/extra-demo.js')}}"></script>
     <script type="text/javascript" src="/js/bundle.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
 
     <!--require for main.js-->
-    <script src="/assets/js/parallax.js"></script>
-    <script src="/assets/js/carousel.js"></script>
-    <script src="/assets/js/ajaxchimp.js"></script>
-    <script src="/assets/js/jquery.counterup.min.js"></script>
-    <script src="/assets/js/jquery.main.js"></script>
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
+    <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.counterup.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jarallax.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.IonRangeSlider.js"></script>
+    <script type="text/javascript" src="/assets/js/common.js"></script>
+
+
+
+    <script type="text/javascript" src="/assets/js/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.customForms.js"></script>
+
+
+
     <script>
     $(document).ready(function() {
         @if(isset($_GET['err']))
@@ -375,7 +323,6 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
         });
         $('#login_btn').click(function(event){
             event.preventDefault();
-            console.log('stop the default action first');
 
             var email = $('input#email').val(), pass = $('input#password').val();
             var token = $('input[name=_token]').val();
@@ -411,19 +358,20 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
 
             }
         });
-    });
-    $('.dropdown-toggle').dropdown().hover(function() {
-        $(this).dropdown('toggle');
-    }, function(){
-    
-    });
-    $('.dropdown-menu').hover(function(){
-        }, 
-        function(e){
-          $(this).dropdown('toggle');
-          e.stopPropagation();
-        })
-    </script>
-</body>
+        $('.dropdown-toggle').dropdown().hover(function() {
+            $(this).dropdown('toggle');
+        }, function(){
 
+        });
+        $('.dropdown-menu').hover(function(){
+                },
+                function(e){
+                    $(this).dropdown('toggle');
+                    e.stopPropagation();
+                })
+    });
+
+    </script>
+
+  </body>
 </html>

@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'en_us',
 
     /*
     |--------------------------------------------------------------------------
@@ -219,6 +219,18 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'TNTSearch' => TeamTNT\TNTSearch\Facades\TNTSearch::class,
         'Translation' => Stevebauman\Translation\Facades\Translation::class,
+        'trans' => App\MyLibrary\TranslateAPI::class,
+        'MStranslation' => App\MyLibrary\PSKMicrosoftTranslatorAutoLoader::class,
+    ],
+
+    'locales' => [
+        'en' => 'English',
+        'en_us' => 'English',
+        'zh_cn' => 'Chinese',
+        'zh_hk' => 'Hongkong',
+        'cn' => 'Chinese',
+        'hk' => 'Hongkong',
+        'fr' => 'France',
     ],
 
 ];

@@ -62,25 +62,13 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">Inquiries</h4>
+                        <h4 class="mt-0 mb-5">@lang('dashboard.mail_inquiry')</h4>
                         <ol class="breadcrumb mb-0">
-                            <li><a href="">Customer Messages</a></li>
+                            <li><a href="">@lang('dashboard.mail_message')</a></li>
                         </ol>
                     </div>
                     <div class="col-sm-6">
-                        <div class="btn-group mt-5">
-                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                            <!--
-<ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-    <li><a href="mailbox.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-</ul>
--->
-                        </div>
+                        @include('inc.set-lang-dashboard-panel')
                     </div>
                 </div>
             </div>
@@ -92,7 +80,7 @@
                           <li data-brackets-id="207" class="media">
                                 <div data-brackets-id="208" class="pull-left">
                                     <div data-brackets-id="209" class="form-group has-feedback mb-0">
-                                        <input data-brackets-id="210" type="text" aria-describedby="inputSearchInbox" placeholder="Search inbox..." class="form-control rounded"><span data-brackets-id="211" aria-hidden="true" class="ti-search form-control-feedback"></span><span data-brackets-id="212" id="inputSearchInbox" class="sr-only">(default)</span>
+                                        <input data-brackets-id="210" type="text" aria-describedby="inputSearchInbox" placeholder="@lang('dashboard.mail_inbox')..." class="form-control rounded"><span data-brackets-id="211" aria-hidden="true" class="ti-search form-control-feedback"></span><span data-brackets-id="212" id="inputSearchInbox" class="sr-only">(default)</span>
                                     </div>
                                 </div>
                                 <div data-brackets-id="213" class="pull-right">
@@ -170,7 +158,7 @@
                             <div class="input-group inbox-text-input-box">
                               <input type="text" id="msgTxt" class="form-control input-lg" placeholder="">
                               <span class="input-group-btn">
-                                <button type="button" id="sendMsg" class="btn btn-raised btn-success btn-lg">Send</button>
+                                <button type="button" id="sendMsg" class="btn btn-raised btn-success btn-lg">@lang('dashboard.mail_send')</button>
                               </span>
                             </div>
                         </div>

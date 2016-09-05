@@ -3,13 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+
 use Cviebrock\EloquentSluggable\Sluggable;
+
 
 class newcategory extends Model
 {
-    protected $table = 'category_2';
-
-    //sluggable start here
+    //
     use Sluggable;
 
     /**
@@ -21,15 +21,19 @@ class newcategory extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'slug'
             ]
         ];
     }
+
+    protected $table = 'category_2';
+    public $timestamps = true;
     protected $fillable = [
     'name',
     'slug',
     'label',
     'description',
-    'parent'
+    'parent',
+    'mainImageURL'
     ];
 }

@@ -26,6 +26,7 @@ return[
     'more_dealerApplication'=>'成為經銷商',
     'more_luxifyEstates'=>'樂喜富的房產體驗',
     'more_contactUs'=>'聯系我們',
+    'more_faq' => '常見問題',
 
     //* Login menu - guest
     'welcome'=>'歡迎',

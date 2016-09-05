@@ -68,7 +68,7 @@ return [
         |
         */
 
-        'api_key' => env('TRANSLATE_API_KEY'),
+        'api_key' => 'AIzaSyBQfKac1H96dMy4R5Ri1O856InCfZDWl9Y',
     ],
 
     /*
@@ -152,12 +152,12 @@ return [
     */
 
     'locales' => [
-        'zh' => 'Chinese',
+        'en' => 'English',
+        'en_us' => 'English',
         'zh_cn' => 'Chinese',
         'zh_hk' => 'Hongkong',
         'cn' => 'Chinese',
-        'hk' => 'Chinese',
-        'en' => 'English',
+        'hk' => 'Hongkong',
         'fr' => 'France',
     ],
 

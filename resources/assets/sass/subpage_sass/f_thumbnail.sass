@@ -1,0 +1,115 @@
+@import 'base.sass'
+.thumbnail
+  border: none
+  /* 1px solid #4a4a4a
+  border-radius: 0
+  padding: 0
+  margin: 0px auto 17px auto
+  min-height: 324px
+  max-width: 300px
+  .caption
+    &:after
+      clear: both
+      display: table
+      content: ''
+    &:before
+      display: table
+      content: ''
+  &.borderless .caption
+    border: none
+  .favourite, .editListing, .deleteListing
+    width: 40px
+    height: 40px
+    background: rgba(150, 150, 150, 0.33)
+    position: absolute
+    border-radius: 50%
+    text-align: center
+    color: rgba(255, 255, 255, 0.8)
+    line-height: 4rem
+    -webkit-transition: color .3s
+    transition: color .3s
+    text-decoration: none
+    padding-top: 0.1rem
+    font-size: 1.4rem
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.26)
+    &:hover, &.added
+      text-decoration: none
+      color: #d0021b
+  .deleteListing, .editListing
+    &:hover
+      color: $gold
+  .favourite, .deleteListing
+    right: 32px
+    top: 0px
+  .editListing
+    top: 0px
+    right: 80px
+  .caption
+    padding: 11px 0px 8px
+  h3
+    font-weight: 300
+    min-height: 21px
+    font-size: 17px
+    line-height: 1.2
+    margin: 0
+    overflow: hidden
+    a
+      color: #000
+      -webkit-transition: color .3s
+      transition: color .3s
+      &:hover
+        color: #998967
+        text-decoration: none
+  .country-container
+    display: block
+    position: relative
+  .country
+    position: absolute
+    top: 27px
+    left: 0px
+    font-size: 1.6rem
+    font-weight: 200
+  .product-img-container
+    position: relative
+    height: 300px
+    //width: 300px
+    box-sizing: border-box
+    text-align: center
+    margin: 0 auto
+    img.product-img
+      position: absolute
+      top: 50%
+      left: 50%
+      -webkit-transform: translateY(-50%) translateX(-50%)
+      transform: translateY(-50%) translateX(-50%)
+      max-height: 300px
+      max-width: 270px
+      height: auto
+      width: auto
+  .price
+    color: #998967
+    font-weight: 400
+    font-size: 18px
+    letter-spacing: 1px
+    margin: 2px 0 0
+    display: block
+    float: left
+  .item-logo
+    height: 60px
+    max-width: 60px
+    float: right
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    > img
+      height: 60px
+      width: auto
+.estates
+  .slick-track .thumbnail .product-img-container
+    height: 206px
+    img.product-img
+      width: 100%
+      max-width: 275px
+      max-height: 206px
+  .thumbnail .caption
+    padding: 5px

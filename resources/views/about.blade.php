@@ -1,6 +1,8 @@
 @extends('layouts.front')
 
-@section('title', 'About Luxify')
+@section('title')
+  <title>{{ func::genTitle('About Us', false)}}</title>
+@endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
@@ -11,7 +13,7 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
 @section('content')
     <!-- main banner of the page -->
@@ -22,18 +24,18 @@
                     <!-- new grid -->
                       <div class="row">
                           <div class="col-lg-12">
-							<h1>About Us</h1>
+							<h1>@lang('static.about_aboutus')</h1>
 						   </div>
 					   </div>
                       <div class="row">
                           <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>Asia’s Leading Online Marketplace for Luxury</p>
+							<p>@lang('static.about_asialeading')</p>
 						   </div>
 					   </div>
                       <div class="row">
                           <div class="col-sm-10 col-sm-offset-1">
 							<ul class="banner-social">
-                <li><a class="btn btn-primary lightbox fancybox.iframe" href="https://www.youtube.com/embed/52cRWj9Rmxw"><span class="icon-play"></span> Watch video</a></li>
+                <li><a class="btn btn-primary lightbox fancybox.iframe" href="https://www.youtube.com/embed/52cRWj9Rmxw"><span class="icon-play"></span> @lang('static.about_watchvideo')</a></li>
 							</ul>
 						</div>
                      </div> <!-- end of new grid -->
@@ -49,12 +51,12 @@
             <div class="container">
 				<div class="row">
 					<div class="col-lg-4 col-sm-offset-1 col-sm-5 col-xs-10 col-xs-offset-1">
-					<h1>What's Luxify</h1>
-					<p>Luxify is Asia’s leading online marketplace for luxury. Our website is the go-to destination for luxury enthusiasts and collectors in Asia, providing easy, safe and reliable market access to the luxury market.</p>
-					<p>On Luxify you will discover one of the Internet's largest collections of luxury products. Our website is the perfect place to discover, search and browse through a whole host of the very finest luxury goods.”</p>
-					<a href="{{func::set_url('/why-luxify')}}" class="btn btn-primary">How it works?</a>
-			</div>
-			</div>
+						<h1>@lang('static.about_whatluxify')</h1>
+						<p>@lang('static.about_luxifyasia')</p>
+						<p>@lang('static.about_onluxify')</p>
+						<a href="{{func::set_url('/why-luxify')}}" class="btn btn-primary">@lang('static.about_itworks')</a>
+					</div>
+				</div>
             </div>
         </div>
         <!-- end of about block -->
@@ -65,7 +67,7 @@
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                 <header class="heading" id="heading1">
-                    <h1>Luxify Co-Founders</h1>
+                    <h1>@lang('static.about_luxify_cofounders')</h1>
 					<div class="wrap">
                             </div>
                 </header>
@@ -75,10 +77,10 @@
                             <figure class="figure">
                                 <img src="{{func::img_url('banners/about-us-florian.png', '', '', false, true)}}" alt="image description">
                             </figure>
-                            <p>Florian Martigny was born in Paris and started his career in New York with large European investment bank. After seven years in the banking industry, Martigny managed and sold his own cosmetic company in the US. Upon selling his company, he went on to enjoy a successful part two career in investment banking in Hong Kong where he has been based for the past nine years. Martigny is an avid kite surfer and yachting enthusiast.</p>
+                            <p>@lang('static.about_florian_desc')</p>
                             <span class="founder">
-								<span class="name">Florian Martigny</span>
-                            <span class="post">Co-Founder</span>
+								<span class="name">@lang('static.about_florian')</span>
+                            <span class="post">@lang('static.about_cofounder_1')</span>
                             </span>
                         </div>
                     </div>
@@ -87,10 +89,10 @@
                             <figure class="figure">
                                 <img src="{{func::img_url('banners/about-us-alexis.png', '', '', false, true)}}" alt="image description">
                             </figure>
-                            <p>Alexis Zirah was born in Paris, educated in Australia. His career has taken him from Paris to Sydney, Seoul, Shanghai and Hong Kong where he is based since 2008. He is an ex-management consultant with a top international consulting company and has a successful background in developing internet companies in Asia. Alexis holds a private pilot license and often compete in ultramarathons around the world.</p>
+                            <p>@lang('static.about_alexis_desc')</p>
                             <span class="founder">
-								<span class="name">Alexis Zirah</span>
-                            <span class="post">Co-Founder</span>
+								<span class="name">@lang('static.about_alexis')</span>
+                            <span class="post">@lang('static.about_cofounder2')</span>
                             </span>
                         </div>
                     </div>
@@ -107,33 +109,33 @@
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                 <header class="heading" id="heading1">
-                    <h1>Join us</h1>
+                    <h1>@lang('static.about_joinus')</h1>
                     <div class="wrap add">
-                        <p>Luxify is always looking for smart and passionate individuals to join our team in Hong Kong, Singapore or London. If you have an interest or experience in the luxury industry, email us at <a href="mailto:careers@luxify.com" target="_blank">careers@luxify.com</a>.</p>
+                        <p>@lang('static.about_looking') <a href="mailto:careers@luxify.com" target="_blank">@lang('static.about_careers')</a>.</p>
                     </div>
                 </header>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="holder">
-                            <strong class="title">Business Developer</strong>
-                            <p>Are you a talented, dynamic sales professional with a proven track record of success? Join Luxify as a Business Developer and help take a high-growth company to the next level. You'll work in Hong Kong to both prospect and grow your own sales pipeline.</p>
+                            <strong class="title">@lang('static.about_business')</strong>
+                            <p>@lang('static.about_talented')</p>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="holder">
-                            <strong class="title">SEM Analyst</strong>
-                            <p>Are you a dynamic, analytical SEM professional with a passion for challenges? Join Luxify as an SEM Associate! In this critical role, you'll help us increase that number exponentially by planning, designing, and building highly- scaled search campaigns across multiple engines.</p>
+                            <strong class="title">@lang('static.about_analyst')</strong>
+                            <p>@lang('static.about_dynamic')</p>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="holder">
-                            <strong class="title">Senior Designer</strong>
-                            <p>As a member of our Marketing team in Hong Kong, you will be responsible for creating both new design and executing against current brand standards in all channels, with a focus on web and social.</p>
+                            <strong class="title">@lang('static.about_senior_designer')</strong>
+                            <p>@lang('static.about_marketing')</p>
                         </div>
                     </div>
                 </div>
                 <div class="button-wrap">
-                    <a href="mailto:careers@luxify.com" target="_blank" class="btn btn-primary">Apply now</a>
+                    <a href="mailto:careers@luxify.com" target="_blank" class="btn btn-primary">@lang('static.about_apply')</a>
                 </div>
                 </div>
             </div> <!-- end of new grid -->
@@ -145,17 +147,15 @@
             <div class="container">
                 <div class="row">
                     <!-- new grid -->
-                    <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2">
-                    <div class="col-sm-8">
-                            <h1>Create your account for free</h1>
-                    </div>
-                    <div class="col-sm-4">
-						<a href="{{func::set_url('/register')}}" class="btn btn-primary">Get Started</a>
-                    </div>
-                </div>
-                </div>
-                 </div> <!-- end of new grid -->
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="col-sm-8 col-xs-12 col-md-8">
+							<h2>@lang('static.about_create_account')</h2>
+						</div>
+                    	<div class="col-sm-4">
+							<a href="{{func::set_url('/register')}}" class="btn btn-primary">@lang('static.about_started')</a>
+                    	</div>
+                	</div>
+                </div> <!-- end of new grid -->
             </div>
         </div>
         <!-- end of create account block -->
