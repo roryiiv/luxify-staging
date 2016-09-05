@@ -266,21 +266,15 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
     <script type="text/javascript" src="./plugins/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Custom JS-->
     <script type="text/javascript" src="./build/js/first-layout/extra-demo.js"></script>
-    <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/js/bundle.min.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
 
     <!--require for main.js-->
     <script type="text/javascript" src="/assets/js/carousel.js"></script>
     <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.counterup.min.js"></script>
-    <script type="text/javascript" src="/assets/js/jarallax.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery.IonRangeSlider.js"></script>
     <script type="text/javascript" src="/assets/js/common.js"></script>
 
-
-
-    <script type="text/javascript" src="/assets/js/jquery.fancybox.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.customForms.js"></script>
 
 

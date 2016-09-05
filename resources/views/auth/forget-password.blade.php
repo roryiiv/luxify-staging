@@ -81,7 +81,7 @@
     <script type="text/javascript" src="./plugins/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Custom JS-->
     <script type="text/javascript" src="./build/js/first-layout/extra-demo.js"></script>
-    <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/js/bundle.min.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
     <script>
       

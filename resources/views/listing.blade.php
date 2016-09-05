@@ -394,7 +394,7 @@
 @include('inc.send-message')
 @endsection
 @section('scripts')
-<link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+<!--<link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />-->
 <script type="text/javascript" src="/assets/js/jquery.fancybox-thumbs.js?v=1.0.7"></script>
 <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
