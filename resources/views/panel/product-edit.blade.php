@@ -534,7 +534,6 @@
 <script>
     
     <?php
-
     $otherImages = json_decode($item->images);
     $s3_url = 'https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
     if (is_array($otherImages)) {
@@ -566,7 +565,6 @@
     foreach($images_arr as $img) {
       $images[] = array('path' => func::img_url($img, 100, ''), 'filename'=> $img, 'onS3' => true, 'alt_text' => $s_meta::get_slug_img($img));
     }
-
     ?>
     var images_array = <?php echo json_encode($images, JSON_PRETTY_PRINT); ?>;
     var radiomainimage = '{{$item->mainImageUrl}}';

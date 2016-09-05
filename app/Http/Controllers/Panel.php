@@ -1145,39 +1145,40 @@ class Panel extends Controller
         }
         
         $optfield = '';
-        foreach ($opt as $id =>$isi) {
-           $data = DB::table('category_meta')->where('id',$id)->first();
-           $type = $data->meta_type;
-           $drop = json_decode($data->meta_value);
-           
-            if($type=='text'){
-                $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control" value="'.$isi.'"></div>';
-            }elseif($type=='number'){
-                $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control" value="'.$isi.'"></div>';
-            }elseif($type=='textarea'){
-                $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><textarea id="'. $data->label .'" name="optionfields['. $data->id .']" class="form-control">'.$isi.'</textarea></div>';
-            }elseif($type=='dropdown' || $type=='select'){
-                $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><select name="optionfields['. $data->id .']" class="form-control">';
-                foreach ($drop as $option) {
-                    $optfield .= "<option value='".$option->value."' " . func::selected($option->value, $isi) . ">".$option->text."</option>";
-                }
-                $optfield .= '</select></div>';
-            }elseif($type=='radiobutton'){
-                $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
-                foreach ($drop as $option) {
-                    $optfield .= "<input name='optionfields[".$data->id."]'  type='radio' value='".$option->value."' " . func::checked($option->value, $isi) . ">".$option->text."</br>";
-                }
-                $optfield .= '</div>';
-            }elseif($type=='checkbox'){
-                $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
-                for ($x=0; $x<count($drop); $x++) {
-                    $optfield .= "<input name='optionfields[".$data->id."][".$x."]' type='checkbox' value='".$drop[$x]->value."' " . func::checked($drop[$x]->value, $isi[$x]) . ">".$drop[$x]->text."</br>";
-                }
-                $optfield .= '</div>';                
-            }
+        if(is_array($opt)){
+        	foreach ($opt as $id =>$isi) {
+        	   $data = DB::table('category_meta')->where('id',$id)->first();
+        	   $type = $data->meta_type;
+        	   $drop = json_decode($data->meta_value);
+        	   
+        	    if($type=='text'){
+        	        $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control" value="'.$isi.'"></div>';
+        	    }elseif($type=='number'){
+        	        $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control" value="'.$isi.'"></div>';
+        	    }elseif($type=='textarea'){
+        	        $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><textarea id="'. $data->label .'" name="optionfields['. $data->id .']" class="form-control">'.$isi.'</textarea></div>';
+        	    }elseif($type=='dropdown' || $type=='select'){
+        	        $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><select name="optionfields['. $data->id .']" class="form-control">';
+        	        foreach ($drop as $option) {
+        	            $optfield .= "<option value='".$option->value."' " . func::selected($option->value, $isi) . ">".$option->text."</option>";
+        	        }
+        	        $optfield .= '</select></div>';
+        	    }elseif($type=='radiobutton'){
+        	        $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
+        	        foreach ($drop as $option) {
+        	            $optfield .= "<input name='optionfields[".$data->id."]'  type='radio' value='".$option->value."' " . func::checked($option->value, $isi) . ">".$option->text."</br>";
+        	        }
+        	        $optfield .= '</div>';
+        	    }elseif($type=='checkbox'){
+        	        $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
+        	        for ($x=0; $x<count($drop); $x++) {
+        	            $optfield .= "<input name='optionfields[".$data->id."][".$x."]' type='checkbox' value='".$drop[$x]->value."' " . func::checked($drop[$x]->value, $isi[$x]) . ">".$drop[$x]->text."</br>";
+        	        }
+        	        $optfield .= '</div>';                
+        	    }
+        	}
         }
-            $item['optionFields'] = $optfield;
-
+        $item['optionFields'] = $optfield;
 
         if ($item) {
             /*$optionalFields = DB::table('formfields')
