@@ -84,8 +84,19 @@ $categories = get_categories($argArr);
     <div class="container sitemap-main">
         <div class="row" >
             <div class="col-lg-12 title">Luxify by topic</div>
+            <div class="col-sm-offset-1">
+            <?php $i=0; ?>
             @foreach($categories as $category)
-                <div class="col-sm-3 col-xs-12 sitemap-topic" >
+                <?php
+                    $col = 'col-sm-4';
+                    if($i%3 == 0){
+                        $col = 'col-sm-4 col-sm-offset-1';
+                    }elseif($i%3 == 2){
+                        $col = 'col-sm-3';
+                    }
+                $col = 'col-sm-4';
+                ?>
+                <div class="{{$col}} col-xs-12 sitemap-topic" >
                     <div class="sub-title">{{$category->name}}</div>
                     <ul>
                         <?php
@@ -110,10 +121,10 @@ $categories = get_categories($argArr);
 
                     </ul>
                 </div>
-
+            <?php $i++; ?>
             @endforeach
             <!-- -->
-
+            </div>
         </div>
     </div>
 </div>

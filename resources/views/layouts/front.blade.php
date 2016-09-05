@@ -89,7 +89,7 @@
                                         <li><a href="/why-luxify">@lang('footer.howItWorks')</a></li>
                                         <li><a target="_blank" href="https://www.luxify.com/press">@lang('footer.press')</a> / <a href="/blog">@lang('footer.blog')</a></li>
                                         <li><a href="/dealer-directory">@lang('footer.dealerDirectory')</a></li>
-                                        <li><a href="/faq">@lang('footer.faq')</a></li>
+                                        <li><a href="/faq">@lang('footer.faq')</a> / <a href="/sitemap">@lang('footer.sitemap')</a></li>
                                     </ul>
                                 </nav>
                             </div>

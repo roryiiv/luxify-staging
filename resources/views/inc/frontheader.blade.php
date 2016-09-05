@@ -43,6 +43,7 @@
                                 <li><a href="/luxify-estates">@lang('header.more_luxifyEstates')</a></li>
                                 <li><a href="/contact">@lang('header.more_contactUs')</a></li>
                                 <li><a href="/faq">@lang('header.more_faq')</a></li>
+                                <li><a href="/sitemap">@lang('header.sitemap')</a></li>
                             </ul>
                         </div>
                     </li>
