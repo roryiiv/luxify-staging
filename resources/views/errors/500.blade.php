@@ -77,7 +77,7 @@
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css"> 
 @endsection
-@section('script')
+@section('scripts')
   @include('inc.send-message-script')
   <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
   <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
