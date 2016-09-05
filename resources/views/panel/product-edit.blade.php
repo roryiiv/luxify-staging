@@ -180,21 +180,25 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="itemCategory" class="col-sm-3 control-label">@lang('panel.product_edit_category3')</label>
-                        <div class="col-sm-9">
-                            <select id="itemCategory" name="itemCategory" class="form-control" required>
-
-                                <option value="">--Please Select--</option>
-                                <?php $categories = func::build_categories('leaf'); ?>
-
-                                @foreach($categories as $category)
-                                    <option {{func::selected($item->categoryId, $category['id'])}}  value="{{ $category['id'] }}">{{ $category['hierarchy'] }}</option>
-                                @endforeach
-
-                            </select>
+                   <div class="form-group">
+                            <label for="itemCategory" class="col-sm-3 control-label">@lang('dashboard.product_edit_itemcategory')</label>
+                            <div class="col-sm-9">
+                                <select id="itemCategory" name="itemCategory" class="form-control" required>
+                                    {!! $item->itemCategory!!}
+                                </select>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <label for="itemSubCategory" class="col-sm-3 control-label">@lang('dashboard.product_edit_itemsub')</label>
+                            <div class="col-sm-9">
+                           
+                                <select id="itemSubCategory" name="itemSubCategory" class="form-control" >
+                                    {!!$item->itemSubCategory!!}
+                                   
+                                </select>
+                            </div>
+                        </div>
                 </div>
             </fieldset>
 
@@ -305,10 +309,9 @@
                             <input id="startDate" name='expiryDate' type="text" class="form-control" value="{{ $expired_at ? date_format($expired_at, "Y-m-d"):'' }}">
                         </div>
                     </div>
-                    <div class="form-group details_specs">
-                        <label class="col-sm-3 control-label title_details">@lang('panel.product_edit_opt')<i class="fa fa-chevron-down" aria-hidden="true"></i></label>
-                        <div class="col-sm-9 details_box" id="optionFields">
-                        </div>
+                    <div class="form-group">
+                        <label for="optionalFields" class="col-sm-3 control-label title_details">@lang('dashboard.product_edit_optional')</label>
+                        <div class="col-sm-9 col-sm-offset-3" id="optionFields">{!! $item->optionFields !!}</div>
                     </div>
                 </div>
             </fieldset>
@@ -752,7 +755,44 @@
                 $("#update-product-form").modal('show');
             }
         });
-        $('#itemCategory').on('change', function(){
+
+        $('#itemCategory').on('change',function(){
+            var parent = $(this).val();
+            console.log(parent);
+            $.ajax({
+                url : '/api/ajax/category/'+parent,
+                method : 'get',
+                success: function(result){  
+                    $('#itemSubCategory').html(result);
+                    $('#itemSubCategory').show();
+                }
+            });
+
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url : '/api/ajax/optional-fields/'+id,
+                method : 'get',
+                success: function(result){  
+                    $('#optionFields').html(result);
+                    $('#optionFields').show();
+
+                }
+            });
+        });
+        $('#itemSubCategory').on('change',function(){
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url : '/api/ajax/optional-fields/'+id,
+                method : 'get',
+                success: function(result){  
+                    $('#optionFields').append(result);
+                    
+                }
+            });
+        });
+        /*$('#itemCategory').on('change', function(){
             var _token = $('input[name=_token]').val();
             $.get({
                 url: '/api/category/'+ $('#itemCategory').val() + '/fields',
@@ -768,7 +808,7 @@
                     }
                 }
             });
-        });
+        });*/
 
         $('#priceOnRequest').on('click', function(){
             $('#price').prop('disabled', $('#priceOnRequest').prop('checked') );

@@ -278,8 +278,7 @@
                         <div class="form-group">
                             <label for="optionalFields" class="col-sm-3 control-label title_details">@lang('dashboard.product_edit_optional')</label>
                             
-                                <div class="col-sm-9 col-sm-offset-3 details_box" id="optionFields">
-        
+                                <div class="col-sm-9 col-sm-offset-3" id="optionFields">{!! $item->optionFields !!}</div>
                         </div>
                         <!-- <div class="form-group details_specs">
                             <label class="col-sm-3 control-label title_details">Details/specs (Optional) <i class="fa fa-chevron-down" aria-hidden="true"></i></label>

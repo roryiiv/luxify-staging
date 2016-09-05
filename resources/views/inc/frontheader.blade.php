@@ -15,14 +15,11 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.shop')</a>
                         <div class="dropdown-menu">
-                        <?php
-                            $categories = DB::table('category_2')->where('parent',0)->get();
-
-                        ?>
+                        <?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
                             <ul>
                                 <li><a href="{{func::set_url('/luxify-estates/3d-estates')}}">@lang('header.shop_luxifyEstate3d')</a></li>
                                 @foreach($categories as $value)
-                                    <li><a href="{{func::set_url('/category/'.$value->slug)}}">{{$value->name}}</a></li>    
+                                    <li><a href="{{func::set_url('/category/'.$value->slug)}}">@lang('categories.'.$value->slug)</a></li>    
                                 @endforeach
                             </ul>
                         </div>
