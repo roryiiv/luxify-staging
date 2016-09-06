@@ -47,13 +47,13 @@
                     $sess_currency = null !==  session('currency') ? session('currency') : 'USD'; ?>
                 @if(Auth::user())
                     <ul class="nav navbar-nav navbar-right">
-<!--                         <li class="currency-selector-container">
+                        <li class="currency-selector-container">
                             <select id="langSelect" class="language-selector">
                                 @foreach($languages as $language)
                                     <option value="{{$language['val']}}"{{func::selected($language['code'], $sess_lang)}}>{{$language['label']}}</option>
                                 @endforeach
                             </select>
-                        </li> -->
+                        </li>
                         <li class="currency-selector-container">
                             <select id="currSelect" class="currency-selector">
                                 @foreach($currencies as $currency)
