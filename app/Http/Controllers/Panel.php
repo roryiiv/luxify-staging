@@ -1111,7 +1111,7 @@ class Panel extends Controller
     public function products_edit(Request $request, $itemId) {
         $item = Listings::where('id', $itemId)->first();
         $categoryId = $item->categoryId;
-        $activedata = DB::table('category_2')->where('id',$categoryId)->first();
+        $activedata = DB::table('category_2')->where('id', $categoryId)->first();
         $opt = json_decode($item->optional_field);
 
         if(($activedata->parent)== 0){
