@@ -1110,7 +1110,8 @@ class Panel extends Controller
 
     public function products_edit(Request $request, $itemId) {
         $item = Listings::where('id', $itemId)->first();
-        $categoryId = $item->categoryId;
+        //$categoryId = $item->categoryId;
+        $categoryId = $item->new_category;
         $activedata = DB::table('category_2')->where('id', $categoryId)->first();
         $opt = json_decode($item->optional_field);
 
