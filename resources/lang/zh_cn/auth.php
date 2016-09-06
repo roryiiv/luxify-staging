@@ -1,6 +1,6 @@
 <?php
 //zh_cn
-return[
+return [
 
     //file:auth.login
 	'email'=>'电子邮件',
