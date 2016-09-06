@@ -1,622 +1,622 @@
-<?php
+<?pp
 
 
-//need translate to zh_hk
-//en_us - frontend - footer
-//for file: index.blade.php
+//need translate to 
+//enus - frontend - footer
+//for file: index.blade.pp
 return[
-'index_banner_up'=>'[zh_hk]Luxury Within Reach',
-'index_banner_down'=>'[zh_hk]Asia’s leading marketplace for luxury',
+'indexbannerup'=>'[]Luxury Witin Reac',
+'indexbannerdown'=>'[]Asia’s leading maretplace for luxury',
 
-'index_banner_realestates'=>'[zh_hk]Real Estates',
-'index_banner_watches&jewelry'=>'[zh_hk]Watches & Jewelry',
-'index_banner_motors'=>'[zh_hk]Motors',
-'index_banner_handbags&accessories'=>'[zh_hk]Handbags & Accessories',
-'index_banner_experiences'=>'[zh_hk]Experiences',
-'index_banner_collectibles&furnitures'=>'[zh_hk]Collectibles & Furnitures',
-'index_banner_yachts'=>'[zh_hk]Yachts',
-'index_banner_aircrafts'=>'[zh_hk]Aircrafts',
-'index_banner_art&antiques'=>'[zh_hk]Art & Antiques',
-'index_banner_finewines&spirits'=>'[zh_hk]Fine Wines & Spirits',
+'indexbannerrealestates'=>'[]Real Estates',
+'indexbannerwatces&jewelry'=>'[]Watces & Jewelry',
+'indexbannermotors'=>'[]Motors',
+'indexbannerandbags&accessories'=>'[]Handbags & Accessories',
+'indexbannerexperiences'=>'[]Experiences',
+'indexbannercollectibles&furnitures'=>'[]Collectibles & Furnitures',
+'indexbanneryacts'=>'[]Yacts',
+'indexbanneraircrafts'=>'[]Aircrafts',
+'indexbannerart&antiques'=>'[]Art & Antiques',
+'indexbannerfinewines&spirits'=>'[]Fine Wines & Spirits',
 
 
 
-'index_banner_total_market'=>'[zh_hk]Total Market in USD',
-'index_banner_total_listing'=>'[zh_hk]Total Listings',
-'index_banner_total_newlisting'=>'[zh_hk]New Listings In The Past 30 Days',
+'indexbannertotalmaret'=>'[]Total Maret in USD',
+'indexbannertotallisting'=>'[]Total Listings',
+'indexbannertotalnewlisting'=>'[]New Listings In Te Past 30 Days',
 
 
-'index_feature_title'=>'[zh_hk]FEATURED',
-'index_feature_label'=>'[zh_hk]“Rees Rex”',
+'indexfeaturetitle'=>'[]FEATURED',
+'indexfeaturelabel'=>'[]“Rees Rex”',
 
-'index_feature_description'=>'[zh_hk]One of the most complete and well-preserved skulls of any Tyrannosaurus rex ever discovered, is now available ',
+'indexfeaturedescription'=>'[]One of te most complete and well-preserved sulls of any Tyrannosaurus rex ever discovered, is now available ',
 
-'index_feature_description_sale'=>'[zh_hk]for sale.',
+'indexfeaturedescriptionsale'=>'[]for sale.',
 
-'index_feature_view'=>'[zh_hk]View',
+'indexfeatureview'=>'[]View',
 
-'index_desc1'=>'[zh_hk]We Make Luxury Shopping Easier',
-'index_desc2'=>'[zh_hk]Luxify is the perfect place to discover, search and browse through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods in a safe and simple way.',
+'indexdesc1'=>'[]We Mae Luxury Sopping Easier',
+'indexdesc2'=>'[]Luxify is te perfect place to discover, searc and browse troug one of te Internet’s largest collections of new, vintage and pre-owned luxury goods in a safe and simple way.',
 
-'index_desc3'=>'[zh_hk]We Are A Lead Generation Platform',
+'indexdesc3'=>'[]We Are A Lead Generation Platform',
 
-'index_desc4'=>'[zh_hk]We will never ask you for your payment details. Instead we match buyers with reputable sellers who have each been carefully handpicked and vetted by us. This ensures you are matched with genuine sellers and can enjoy complete peace of mind when browsing with us',
+'indexdesc4'=>'[]We will never as you for your payment details. Instead we matc buyers wit reputable sellers wo ave eac been carefully andpiced and vetted by us. Tis ensures you are matced wit genuine sellers and can enjoy complete peace of mind wen browsing wit us',
 
-'index_desc5'=>'[zh_hk]Compare Products From All Sellers',
+'indexdesc5'=>'[]Compare Products From All Sellers',
 
-'index_desc6'=>'[zh_hk]When you have found a product you are interested in, we provide an easy way for you to communicate with the seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straightforward one to one basis',
+'indexdesc6'=>'[]Wen you ave found a product you are interested in, we provide an easy way for you to communicate wit te seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straigtforward one to one basis',
 
-'index_desc7'=>'[zh_hk]You Will Find Your Luxury Item',
-'index_desc8'=>'[zh_hk]Whether you are looking for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly what you are looking for on Luxify',
+'indexdesc7'=>'[]You Will Find Your Luxury Item',
+'indexdesc8'=>'[]Weter you are looing for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly wat you are looing for on Luxify',
 
-'index_search1'=>'[zh_hk]Search &amp; Compare',
+'indexsearc1'=>'[]Searc &amp; Compare',
 
-'index_search2'=>'[zh_hk]Search and compare through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods.',
+'indexsearc2'=>'[]Searc and compare troug one of te Internet’s largest collections of new, vintage and pre-owned luxury goods.',
 
-'index_search3'=>'[zh_hk]View more',
+'indexsearc3'=>'[]View more',
 
-'index_discover1'=>'[zh_hk]Discover',
-'index_discover2'=>'[zh_hk]Why Luxify',
+'indexdiscover1'=>'[]Discover',
+'indexdiscover2'=>'[]Wy Luxify',
 
-'index_discover3'=>'[zh_hk]We make online luxury shopping easier and more transparent.',
+'indexdiscover3'=>'[]We mae online luxury sopping easier and more transparent.',
 
-'index_discover4'=>'[zh_hk]View more',
+'indexdiscover4'=>'[]View more',
 
-'index_3D_1'=>'[zh_hk]3D Virtual Property Tour',
-'index_3D_2'=>'[zh_hk]Enjoy a new luxury property viewing experience',
-'index_3D_3'=>'[zh_hk]View more',
+'index3D1'=>'[]3D Virtual Property Tour',
+'index3D2'=>'[]Enjoy a new luxury property viewing experience',
+'index3D3'=>'[]View more',
 
-'index_subscribe_1'=>'[zh_hk]Subscribe to Luxify\'s ultimate luxury newsletter!',
-'index_subscribe_2'=>'[zh_hk]Get the latest luxury finds in your inbox',
-'index_subscribe_3'=>'[zh_hk]Subscribe',
+'indexsubscribe1'=>'[]Subscribe to Luxify\'s ultimate luxury newsletter!',
+'indexsubscribe2'=>'[]Get te latest luxury finds in your inbox',
+'indexsubscribe3'=>'[]Subscribe',
 
 
 
-//for file: about.blade.php
-'about_aboutus'=>'[zh_hk]About Us',
+//for file: about.blade.pp
+'aboutaboutus'=>'[]About Us',
 
-'about_asialeading'=>'[zh_hk]Asia’s Leading Online Marketplace for Luxury',
+'aboutasialeading'=>'[]Asia’s Leading Online Maretplace for Luxury',
 
-'about_watchvideo'=>'[zh_hk]Watch video',
+'aboutwatcvideo'=>'[]Watc video',
 
-'about_whatluxify'=>'[zh_hk]What\'s Luxify',
+'aboutwatluxify'=>'[]Wat\'s Luxify',
 
-'about_luxifyasia'=>'[zh_hk]Luxify is Asia’s leading online marketplace for luxury. Our website is the go-to destination for luxury enthusiasts and collectors in Asia, providing easy, safe and reliable market access to the luxury market.',
+'aboutluxifyasia'=>'[]Luxify is Asia’s leading online maretplace for luxury. Our website is te go-to destination for luxury entusiasts and collectors in Asia, providing easy, safe and reliable maret access to te luxury maret.',
 
-'about_onluxify'=>'[zh_hk]On Luxify you will discover one of the Internet\'s largest collections of luxury products. Our website is the perfect place to discover, search and browse through a whole host of the very finest luxury goods.”',
+'aboutonluxify'=>'[]On Luxify you will discover one of te Internet\'s largest collections of luxury products. Our website is te perfect place to discover, searc and browse troug a wole ost of te very finest luxury goods.”',
 
-'about_itworks'=>'[zh_hk]How it works?',
+'aboutitwors'=>'[]How it wors?',
 
-'about_luxify_cofounders'=>'[zh_hk]Luxify Co-Founders',
+'aboutluxifycofounders'=>'[]Luxify Co-Founders',
 
-'about_florian_desc'=>'[zh_hk]Florian Martigny was born in Paris and started his career in New York with large European investment bank. After seven years in the banking industry, Martigny managed and sold his own cosmetic company in the US. Upon selling his company, he went on to enjoy a successful part two career in investment banking in Hong Kong where he has been based for the past nine years. Martigny is an avid kite surfer and yachting enthusiast.',
+'aboutfloriandesc'=>'[]Florian Martigny was born in Paris and started is career in New Yor wit large European investment ban. After seven years in te baning industry, Martigny managed and sold is own cosmetic company in te US. Upon selling is company, e went on to enjoy a successful part two career in investment baning in Hong Kong were e as been based for te past nine years. Martigny is an avid ite surfer and yacting entusiast.',
 
-'about_florian'=>'[zh_hk]Florian Martigny',
+'aboutflorian'=>'[]Florian Martigny',
 
-'about_cofounder_1'=>'[zh_hk]Co-Founder ',
+'aboutcofounder1'=>'[]Co-Founder ',
 
-'about_alexis_desc'=>'[zh_hk]Alexis Zirah was born in Paris, educated in Australia. His career has taken him from Paris to Sydney, Seoul, Shanghai and Hong Kong where he is based since 2008. He is an ex-management consultant with a top international consulting company and has a successful background in developing internet companies in Asia. Alexis holds a private pilot license and often compete in ultramarathons around the world.',
+'aboutalexisdesc'=>'[]Alexis Zira was born in Paris, educated in Australia. His career as taen im from Paris to Sydney, Seoul, Sangai and Hong Kong were e is based since 2008. He is an ex-management consultant wit a top international consulting company and as a successful bacground in developing internet companies in Asia. Alexis olds a private pilot license and often compete in ultramaratons around te world.',
 
-'about_alexis'=>'[zh_hk]Alexis Zirah',
+'aboutalexis'=>'[]Alexis Zira',
 
-'about_cofounder2'=>'[zh_hk]Co-Founder',
+'aboutcofounder2'=>'[]Co-Founder',
 
-'about_joinus'=>'[zh_hk]Join us',
+'aboutjoinus'=>'[]Join us',
 
-'about_looking'=>'[zh_hk]Luxify is always looking for smart and passionate individuals to join our team in Hong Kong, Singapore or London. If you have an interest or experience in the luxury industry, email us at',
+'aboutlooing'=>'[]Luxify is always looing for smart and passionate individuals to join our team in Hong Kong, Singapore or London. If you ave an interest or experience in te luxury industry, email us at',
 
-'about_careers'=>'[zh_hk]careers@luxify.com',
+'aboutcareers'=>'[]careers@luxify.com',
 
-'about_business'=>'[zh_hk]Business Developer',
+'aboutbusiness'=>'[]Business Developer',
 
-'about_talented'=>'[zh_hk]Are you a talented, dynamic sales professional with a proven track record of success? Join Luxify as a Business Developer and help take a high-growth company to the next level. You\'ll work in Hong Kong to both prospect and grow your own sales pipeline.',
+'abouttalented'=>'[]Are you a talented, dynamic sales professional wit a proven trac record of success? Join Luxify as a Business Developer and elp tae a ig-growt company to te next level. You\'ll wor in Hong Kong to bot prospect and grow your own sales pipeline.',
 
-'about_analyst'=>'[zh_hk]SEM Analyst',
+'aboutanalyst'=>'[]SEM Analyst',
 
-'about_dynamic'=>'[zh_hk]Are you a dynamic, analytical SEM professional with a passion for challenges? Join Luxify as an SEM Associate! In this critical role, you\'ll help us increase that number exponentially by planning, designing, and building highly- scaled search campaigns across multiple engines.',
+'aboutdynamic'=>'[]Are you a dynamic, analytical SEM professional wit a passion for callenges? Join Luxify as an SEM Associate! In tis critical role, you\'ll elp us increase tat number exponentially by planning, designing, and building igly- scaled searc campaigns across multiple engines.',
 
-'about_senior_designer'=>'[zh_hk]Senior Designer',
+'aboutseniordesigner'=>'[]Senior Designer',
 
-'about_marketing'=>'[zh_hk]As a member of our Marketing team in Hong Kong, you will be responsible for creating both new design and executing against current brand standards in all channels, with a focus on web and social.',
+'aboutmareting'=>'[]As a member of our Mareting team in Hong Kong, you will be responsible for creating bot new design and executing against current brand standards in all cannels, wit a focus on web and social.',
 
-'about_apply'=>'[zh_hk]Apply now',
+'aboutapply'=>'[]Apply now',
 
-'about_create_account'=>'[zh_hk]Create your account for free',
+'aboutcreateaccount'=>'[]Create your account for free',
 
-'about_started'=>'[zh_hk]Get Started',
+'aboutstarted'=>'[]Get Started',
 
-//for file: why-luxify.blade.php
+//for file: wy-luxify.blade.pp
 
-'why_luxify_shop'=>'[zh_hk]Why Shop at Luxify',
+'wyluxifysop'=>'[]Wy Sop at Luxify',
 
-'why_luxify_discover'=>'[zh_hk]On Luxify you will discover one of the Internet’s largest collections of luxury products and experiences',
+'wyluxifydiscover'=>'[]On Luxify you will discover one of te Internet’s largest collections of luxury products and experiences',
 
-'why_luxify_facebook'=>'[zh_hk]Sign up with Facebook',
+'wyluxifyfaceboo'=>'[]Sign up wit Faceboo',
 
-'why_luxify_twitter'=>'[zh_hk]Sign up with Twitter',
+'wyluxifytwitter'=>'[]Sign up wit Twitter',
 
-'why_luxify_register'=>'[zh_hk]Register Now',
+'wyluxifyregister'=>'[]Register Now',
 
-'why_luxify_shopping'=>'[zh_hk]We Make Luxury Shopping Easier',
+'wyluxifysopping'=>'[]We Mae Luxury Sopping Easier',
 
-'why_luxify_perfect'=>'[zh_hk]Luxify is the perfect place to discover, search and browse through a whole host of the very finest new, vintage and pre-owned luxury goods in a safe and simple way.',
+'wyluxifyperfect'=>'[]Luxify is te perfect place to discover, searc and browse troug a wole ost of te very finest new, vintage and pre-owned luxury goods in a safe and simple way.',
 
-'why_luxify_lead'=>'[zh_hk]We Are A Lead Generation Platform',
+'wyluxifylead'=>'[]We Are A Lead Generation Platform',
 
-'why_luxify_payment'=>'[zh_hk]We will never ask you for your payment details. Instead we match buyers with reputable sellers who have each been carefully handpicked and vetted by us. This ensures you are matched with genuine sellers and can enjoy complete peace of mind when browsing with us',
+'wyluxifypayment'=>'[]We will never as you for your payment details. Instead we matc buyers wit reputable sellers wo ave eac been carefully andpiced and vetted by us. Tis ensures you are matced wit genuine sellers and can enjoy complete peace of mind wen browsing wit us',
 
-'why_luxify_compare'=>'[zh_hk]Compare Products From All Sellers',
+'wyluxifycompare'=>'[]Compare Products From All Sellers',
 
-'why_luxify_interest'=>'[zh_hk]When you have found a product you are interested in, we provide an easy way for you to communicate with the seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straightforward one to one basis.',
+'wyluxifyinterest'=>'[]Wen you ave found a product you are interested in, we provide an easy way for you to communicate wit te seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straigtforward one to one basis.',
 
-'why_luxify_find'=>'[zh_hk]You Will Find Your Luxury Item',
+'wyluxifyfind'=>'[]You Will Find Your Luxury Item',
 
-'why_luxify_unique'=>'[zh_hk]Whether you are looking for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly what you are looking for a Luxify',
+'wyluxifyunique'=>'[]Weter you are looing for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly wat you are looing for a Luxify',
 
-'why_luxify_how'=>'[zh_hk]How it works?',
+'wyluxifyow'=>'[]How it wors?',
 
-'why_luxify_simply'=>'[zh_hk]Luxify simply connects reputable luxury dealers with luxury buyers in Asia',
+'wyluxifysimply'=>'[]Luxify simply connects reputable luxury dealers wit luxury buyers in Asia',
 
-'why_luxify_reliable'=>'[zh_hk]who need a reliable source of luxury goods around the world',
+'wyluxifyreliable'=>'[]wo need a reliable source of luxury goods around te world',
 
-'why_luxify_discover1'=>'[zh_hk]Discover',
+'wyluxifydiscover1'=>'[]Discover',
 
-'why_luxify_browse'=>'[zh_hk]Browse and find your desired item accordingly',
+'wyluxifybrowse'=>'[]Browse and find your desired item accordingly',
 
-'why_luxify_compare1'=>'[zh_hk]Compare',
+'wyluxifycompare1'=>'[]Compare',
 
-'why_luxify_brand'=>'[zh_hk]Compare brand, price, and where the item is based',
+'wyluxifybrand'=>'[]Compare brand, price, and were te item is based',
 
-'why_luxify_seller'=>'[zh_hk]Contact Seller Directly',
+'wyluxifyseller'=>'[]Contact Seller Directly',
 
-'why_luxify_communicate'=>'[zh_hk]Communicate directly with the seller',
+'wyluxifycommunicate'=>'[]Communicate directly wit te seller',
 
-'why_luxify_create'=>'[zh_hk]Create your account for free',
+'wyluxifycreate'=>'[]Create your account for free',
 
-'why_luxify_get_started'=>'[zh_hk]Get Started',
+'wyluxifygetstarted'=>'[]Get Started',
 
-//for file: forget-password.blade.php
+//for file: forget-password.blade.pp
 
 
-'forget_password_email'=>'We have sent an email with URL to reset your password.',
+'forgetpasswordemail'=>'We ave sent an email wit URL to reset your password.',
 
-'forget_password_forgot'=>'Forgot Password',
+'forgetpasswordforgot'=>'Forgot Password',
 
-'forget_password_enter'=>'Enter the email address associated with',
+'forgetpasswordenter'=>'Enter te email address associated wit',
 
-'forget_password_account'=>'your account to reset your password',
+'forgetpasswordaccount'=>'your account to reset your password',
 
-'forget_password_reset'=>'Reset',
+'forgetpasswordreset'=>'Reset',
 
-//for file: pricing.blade.php
+//for file: pricing.blade.pp
 
-'pricing_price'=>'Pricing',
+'pricingprice'=>'Pricing',
 
-'pricing_business'=>'Take your luxury business to the next level with Luxify',
+'pricingbusiness'=>'Tae your luxury business to te next level wit Luxify',
 
-'pricing_contact'=>'Contact Us',
+'pricingcontact'=>'Contact Us',
 
-'pricing_value'=>'Our Value Proposition',
+'pricingvalue'=>'Our Value Proposition',
 
-'pricing_business_level'=>'Take your business to the next level with Luxify. We have one of the world\'s finest luxury dealer networks and we deliver results.',
+'pricingbusinesslevel'=>'Tae your business to te next level wit Luxify. We ave one of te world\'s finest luxury dealer networs and we deliver results.',
 
-'pricing_asia'=>'Connect with luxury enthusiasts in Asia',
+'pricingasia'=>'Connect wit luxury entusiasts in Asia',
 
-'pricing_tailor'=>'Tailored marketing campaigns to reach Asian buyers',
+'pricingtailor'=>'Tailored mareting campaigns to reac Asian buyers',
 
-'pricing_obligation'=>'No obligation and lock-in period',
+'pricingobligation'=>'No obligation and loc-in period',
 
-'pricing_support'=>'Personalized customer support',
+'pricingsupport'=>'Personalied customer support',
 
-'pricing_control'=>'Full control of your listings including prices and communication with potential buyers',
+'pricingcontrol'=>'Full control of your listings including prices and communication wit potential buyers',
 
-'pricing_technology'=>'Our Technology',
+'pricingtecnology'=>'Our Tecnology',
 
-'pricing_integrate'=>'Our technology allows us to integrate with most platforms making the uploading of your inventory effortless with the possibility of automatically updating your listings. As a Luxify dealer we can provide you detailed analytical reports on the performances of your listings including monthly traffic reports. Our dealer support team will help you get the most of your Luxify membership.',
+'pricingintegrate'=>'Our tecnology allows us to integrate wit most platforms maing te uploading of your inventory effortless wit te possibility of automatically updating your listings. As a Luxify dealer we can provide you detailed analytical reports on te performances of your listings including montly traffic reports. Our dealer support team will elp you get te most of your Luxify membersip.',
 
-'pricing_suit'=>'Luxify offers tailored packages to suit your particular company needs.',
+'pricingsuit'=>'Luxify offers tailored pacages to suit your particular company needs.',
 
-'pricing_package'=>'Learn more about our dealer packages',
+'pricingpacage'=>'Learn more about our dealer pacages',
 
-'pricing_dealer'=>'Dealer Application',
+'pricingdealer'=>'Dealer Application',
 
-//for file: dealer-application.blade.php
+//for file: dealer-application.blade.pp
 
-'dealer_application_dealer'=>'Dealer Application',
+'dealerapplicationdealer'=>'Dealer Application',
 
-'dealer_application_asia'=>'We are Asia\'s leading online marketplace for luxury. The go-to destination for luxury shoppers in Asia.',
+'dealerapplicationasia'=>'We are Asia\'s leading online maretplace for luxury. Te go-to destination for luxury soppers in Asia.',
 
-'dealer_application_apply'=>'Apply now',
+'dealerapplicationapply'=>'Apply now',
 
-'dealer_application_sent'=>'Your application has been sent, thank you.',
+'dealerapplicationsent'=>'Your application as been sent, tan you.',
 
-'dealer_application_contact'=>'Your application has not been sent, please contact',
+'dealerapplicationcontact'=>'Your application as not been sent, please contact',
 
-'dealer_application_admin'=>'Admin',
+'dealerapplicationadmin'=>'Admin',
 
-'dealer_application_support'=>'for support.',
+'dealerapplicationsupport'=>'for support.',
 
-'dealer_application_pdf'=>'View PDF',
+'dealerapplicationpdf'=>'View PDF',
 
-'dealer_application_power'=>'Learn more about the power and reach of Luxify',
+'dealerapplicationpower'=>'Learn more about te power and reac of Luxify',
 
-'dealer_application_our_dealer'=>'Our Dealers',
+'dealerapplicationourdealer'=>'Our Dealers',
 
-'dealer_application_prestigious'=>'We select only prestigious dealers to bring their products to our highly targeted and Asian audience',
+'dealerapplicationprestigious'=>'We select only prestigious dealers to bring teir products to our igly targeted and Asian audience',
 
-'dealer_application_sell'=>'Why sell on Luxify?',
+'dealerapplicationsell'=>'Wy sell on Luxify?',
 
-'dealer_application_audience'=>'Qualified luxury audience',
+'dealerapplicationaudience'=>'Qualified luxury audience',
 
-'dealer_application_reach'=>'Reach affluent, luxury enthusiasts and influential buyers in Asia.',
+'dealerapplicationreac'=>'Reac affluent, luxury entusiasts and influential buyers in Asia.',
 
-'dealer_application_brand'=>'Strong luxury brand association',
+'dealerapplicationbrand'=>'Strong luxury brand association',
 
-'dealer_application_reputable'=>'We only select reputable luxury dealers to bring their luxury products to our highly targeted audience',
+'dealerapplicationreputable'=>'We only select reputable luxury dealers to bring teir luxury products to our igly targeted audience',
 
-'dealer_application_control'=>'Full control of the sales process',
+'dealerapplicationcontrol'=>'Full control of te sales process',
 
-'dealer_application_inventory'=>'As a Luxify dealer, you are in full control of the sales process including your inventory on Luxify, pricing and communication with buyers',
+'dealerapplicationinventory'=>'As a Luxify dealer, you are in full control of te sales process including your inventory on Luxify, pricing and communication wit buyers',
 
-'dealer_application_cost'=>'Cost effective',
+'dealerapplicationcost'=>'Cost effective',
 
-'dealer_application_lead'=>'We are a lead generation engine and do not take commission on the transactions you generate on Luxify',
+'dealerapplicationlead'=>'We are a lead generation engine and do not tae commission on te transactions you generate on Luxify',
 
-'dealer_application_platform'=>'"Luxify is a great platform. We use it to bring us qualified buyers from Asia"',
+'dealerapplicationplatform'=>'"Luxify is a great platform. We use it to bring us qualified buyers from Asia"',
 
-'dealer_application_hem'=>'Hem Udani',
+'dealerapplicationem'=>'Hem Udani',
 
-'dealer_application_exotic'=>'Director, Exotic Cars London',
+'dealerapplicationexotic'=>'Director, Exotic Cars London',
 
-'dealer_application_thanks'=>'"Thanks to Luxify, we managed to get serious prospects and sales. Luxify provides us with more business opportunities."',
+'dealerapplicationtans'=>'"Tans to Luxify, we managed to get serious prospects and sales. Luxify provides us wit more business opportunities."',
 
-'dealer_application_frankie'=>'Frankie Ko',
+'dealerapplicationfranie'=>'Franie Ko',
 
-'dealer_application_director'=>'Director, Owner Celebrity Style.',
+'dealerapplicationdirector'=>'Director, Owner Celebrity Style.',
 
-'dealer_application_selling'=>'Start selling today',
+'dealerapplicationselling'=>'Start selling today',
 
-'dealer_application_transact'=>'Professional dealers use Luxify to transact successful sales of a wide selection of new, vintage and pre-owned luxury goods as well as luxury experiences',
+'dealerapplicationtransact'=>'Professional dealers use Luxify to transact successful sales of a wide selection of new, vintage and pre-owned luxury goods as well as luxury experiences',
 
-'dealer_application_applynow'=>'Apply Now',
+'dealerapplicationapplynow'=>'Apply Now',
 
-//for file: estates.blade.php
+//for file: estates.blade.pp
 
-'estates_luxify'=>'Luxify Estates',
+'estatesluxify'=>'Luxify Estates',
 
-'estates_partner'=>'Your trusted partner for investments in the U.S.',
+'estatespartner'=>'Your trusted partner for investments in te U.S.',
 
-'estates_experience'=>'Experience',
+'estatesexperience'=>'Experience',
 
-'estates_listings'=>'View Listings',
+'estateslistings'=>'View Listings',
 
-'estates_goal'=>'Our goal is to change the way property buyers search for and experience luxury real estate through 3D, virtual reality and video property tour',
+'estatesgoal'=>'Our goal is to cange te way property buyers searc for and experience luxury real estate troug 3D, virtual reality and video property tour',
 
-'estates_virtual'=>'Latest Estates with 3D Virtual Reality',
+'estatesvirtual'=>'Latest Estates wit 3D Virtual Reality',
 
-'estates_view'=>'View More',
+'estatesview'=>'View More',
 
-'estates_walk'=>'3D Virtual Walkthrough',
+'estateswal'=>'3D Virtual Waltroug',
 
-'estates_tools'=>'We give you the tools to market your luxury property in a new and exciting way',
+'estatestools'=>'We give you te tools to maret your luxury property in a new and exciting way',
 
-'estates_share'=>'Share and experience anywhere',
+'estatessare'=>'Sare and experience anywere',
 
-'estates_mobile'=>'Virtual property walkthrough from your mobile device, desktop or virtual reality headset',
+'estatesmobile'=>'Virtual property waltroug from your mobile device, destop or virtual reality eadset',
 
-'estates_immersive'=>'Full immersive experience',
+'estatesimmersive'=>'Full immersive experience',
 
-'estates_luxury'=>'Experience a luxury property as if you are on location',
+'estatesluxury'=>'Experience a luxury property as if you are on location',
 
-'estates_software'=>'No software required',
+'estatessoftware'=>'No software required',
 
-'estates_tour'=>'Automated and manual tour modes',
+'estatestour'=>'Automated and manual tour modes',
 
-'estates_informative'=>'Informative',
+'estatesinformative'=>'Informative',
 
-'estates_desc'=>'Contact information and property description',
+'estatesdesc'=>'Contact information and property description',
 
-'estates_easy'=>'Easy to share',
+'estateseasy'=>'Easy to sare',
 
-'estates_brand'=>'Branded &amp; unbranded tour link',
+'estatesbrand'=>'Branded &amp; unbranded tour lin',
 
-'estates_power'=>'Powerful tools for business',
+'estatespower'=>'Powerful tools for business',
 
-'estates_captivate'=>'Captivate customers before they even visit',
+'estatescaptivate'=>'Captivate customers before tey even visit',
 
-'estates_benefit'=>'Benefits',
+'estatesbenefit'=>'Benefits',
 
-'estates_drive'=>'Drive more property sales',
+'estatesdrive'=>'Drive more property sales',
 
-'estates_large'=>'Reaching a larger audience',
+'estateslarge'=>'Reacing a larger audience',
 
-'estates_geo'=>'Buyers from a wider geographic radius who typically would not be willing to travel for a viewing will physically visit or bid on a house they have toured on Luxify Estates',
+'estatesgeo'=>'Buyers from a wider geograpic radius wo typically would not be willing to travel for a viewing will pysically visit or bid on a ouse tey ave toured on Luxify Estates',
 
-'estates_correct'=>'Set the correct expectations',
+'estatescorrect'=>'Set te correct expectations',
 
-'estates_photos'=>'Poor quality photos make buyers hesitate because they know intuitively the photos are not realistic, making them less likely to visit or engage on a listing',
+'estatespotos'=>'Poor quality potos mae buyers esitate because tey now intuitively te potos are not realistic, maing tem less liely to visit or engage on a listing',
 
-'estates_appeal'=>'Greater appeal of your property',
+'estatesappeal'=>'Greater appeal of your property',
 
-'estates_generate'=>'We generate higher levels of online appeal to more potential buyers because they easily find what\'s important to them',
+'estatesgenerate'=>'We generate iger levels of online appeal to more potential buyers because tey easily find wat\'s important to tem',
 
-'estates_start'=>'Easy to get started',
+'estatesstart'=>'Easy to get started',
 
-'estates_produce'=>'We will send a photographer to your property, then we will produce',
+'estatesproduce'=>'We will send a potograper to your property, ten we will produce',
 
-'estates_email'=>'the virtual walkthrough and send it to you via email and list on Luxify',
+'estatesemail'=>'te virtual waltroug and send it to you via email and list on Luxify',
 
-'estates_concierge'=>'Our concierge is here to help',
+'estatesconcierge'=>'Our concierge is ere to elp',
 
-'estates_contact'=>'Contact Us',
+'estatescontact'=>'Contact Us',
 
-//for file: contact.blade.php
+//for file: contact.blade.pp
 
-'contact_us'=>'Contact Us',
+'contactus'=>'Contact Us',
 
-'contact_welcome'=>'We welcome any queries or feedback',
+'contactwelcome'=>'We welcome any queries or feedbac',
 
-'contact_global'=>'Our Global Reach',
+'contactglobal'=>'Our Global Reac',
 
-'contact_sell'=>'Whether you\'re seeking a recommendation for an item to sell, additional product information or clarification about the buying or listing processes, our concierge is here to help you.',
+'contactsell'=>'Weter you\'re seeing a recommendation for an item to sell, additional product information or clarification about te buying or listing processes, our concierge is ere to elp you.',
 
-'contact_account'=>'Create your account for free',
+'contactaccount'=>'Create your account for free',
 
-'contact_start'=>'Get Started',
+'contactstart'=>'Get Started',
 
-//for file: terms.blade.php
+//for file: terms.blade.pp
 
-'terms_title1'=>'Terms &amp; Conditions',
+'termstitle1'=>'Terms &amp; Conditions',
 
-'terms_title2'=>'Terms &amp; Conditions',
+'termstitle2'=>'Terms &amp; Conditions',
 
-'terms_online'=>'Luxify provides an online platform on which you can bid, negotiate and conclude transactions for luxury products listed on the Luxify websites (www.luxify.com, www.luxifyit.com, www.luxify.com, www.luxify.hk) (the "Website"), subject to these terms and conditions. The Website publishes information on products, adverts, links and content supplied by registered sellers and/or Luxify (the "Material"). All transactions take place directly between the seller and buyer and Luxify does not possess any listed products and does not process payments between the seller and buyer.',
+'termsonline'=>'Luxify provides an online platform on wic you can bid, negotiate and conclude transactions for luxury products listed on te Luxify websites (www.luxify.com, www.luxifyit.com, www.luxify.com, www.luxify.) (te "Website"), subject to tese terms and conditions. Te Website publises information on products, adverts, lins and content supplied by registered sellers and/or Luxify (te "Material"). All transactions tae place directly between te seller and buyer and Luxify does not possess any listed products and does not process payments between te seller and buyer.',
 
-'terms_policy'=>'These terms and conditions, including any amendments to these terms and conditions and Luxify policies are the "Terms" relating to your use of the services accessed through www.luxify.com (the "Website"), an online platform operated by Luxify Ltd and a Hong Kong company registered at Level 9, Core C, Cyperport 3, 100 Cyberport Road, Hong Kong ("Luxify", "us", "our" or "we"). These terms and conditions govern your use of the Website and at no point is or does Luxify become a party to any transaction between a buyer and seller. If you do not agree with these Terms you should not continue to use or access the Luxify website.',
+'termspolicy'=>'Tese terms and conditions, including any amendments to tese terms and conditions and Luxify policies are te "Terms" relating to your use of te services accessed troug www.luxify.com (te "Website"), an online platform operated by Luxify Ltd and a Hong Kong company registered at Level 9, Core C, Cyperport 3, 100 Cyberport Road, Hong Kong ("Luxify", "us", "our" or "we"). Tese terms and conditions govern your use of te Website and at no point is or does Luxify become a party to any transaction between a buyer and seller. If you do not agree wit tese Terms you sould not continue to use or access te Luxify website.',
 
-'terms_service'=>'Luxify Services And Fees',
+'termsservice'=>'Luxify Services And Fees',
 
-'terms_service1'=>'Luxify does not charge buyers to access the services or use the Website. All listed products on the Website are listed exclusive or government and/ or statutory charges, unless otherwise stated. Luxify makes the following services available to sellers and Luxify reserves the right to outsource part or all of these services to third parties:',
+'termsservice1'=>'Luxify does not carge buyers to access te services or use te Website. All listed products on te Website are listed exclusive or government and/ or statutory carges, unless oterwise stated. Luxify maes te following services available to sellers and Luxify reserves te rigt to outsource part or all of tese services to tird parties:',
 
-'terms_listing'=>'Listing products on the Website',
+'termslisting'=>'Listing products on te Website',
 
-'terms_listing1'=>'In exchange for a listing fee sellers may list luxury products on the Website, together with product details (including a current photograph of the product that has not been digitally altered, contain watermarks, include people and is in jpeg format) and the conditions of sale for the buyer.',
+'termslisting1'=>'In excange for a listing fee sellers may list luxury products on te Website, togeter wit product details (including a current potograp of te product tat as not been digitally altered, contain watermars, include people and is in jpeg format) and te conditions of sale for te buyer.',
 
-'terms_listing2'=>'Sellers will be charged a listing fee by Luxify prior to submitting product details on the Website. The listing fee will be calculated prior to submission and sellers will be charged in accordance with the in the manner set out in the application form and.',
+'termslisting2'=>'Sellers will be carged a listing fee by Luxify prior to submitting product details on te Website. Te listing fee will be calculated prior to submission and sellers will be carged in accordance wit te in te manner set out in te application form and.',
 
-'terms_listing3'=>'Once an application has been submitted it cannot be cancelled by the seller; however listing details may be removed at any time after publication. In such circumstances all listing fees remain payable to Luxify and will not be refunded to the seller. You accept and agree that Luxify\'s acceptance of your product for listing on the Website does not guarantee that your product will be sold through the Website or any of its services.',
+'termslisting3'=>'Once an application as been submitted it cannot be cancelled by te seller; owever listing details may be removed at any time after publication. In suc circumstances all listing fees remain payable to Luxify and will not be refunded to te seller. You accept and agree tat Luxify\'s acceptance of your product for listing on te Website does not guarantee tat your product will be sold troug te Website or any of its services.',
 
-'terms_listing4'=>'Luxify reserves the right not to publish products submitted by sellers on the Website for any reason, including if it does not believe the products to suit the brand image. In such events, Luxify will refund the seller the listing fee on confirmation that the product will not be listed on the Website.',
+'termslisting4'=>'Luxify reserves te rigt not to publis products submitted by sellers on te Website for any reason, including if it does not believe te products to suit te brand image. In suc events, Luxify will refund te seller te listing fee on confirmation tat te product will not be listed on te Website.',
 
-'terms_marketing'=>'Marketing Services',
+'termsmareting'=>'Mareting Services',
 
-'terms_marketing1'=>'Luxify offers bespoke services to sellers assisting them with the conclusion of transactions, including but not limited to, marketing, photography, consultancy and other such services. Marketing fees will be agreed between Luxify and the seller on an individual basis. You accept and agree that use of the marketing services does not guarantee that your product will be sold by Luxify or through the Website or any of its services.',
+'termsmareting1'=>'Luxify offers bespoe services to sellers assisting tem wit te conclusion of transactions, including but not limited to, mareting, potograpy, consultancy and oter suc services. Mareting fees will be agreed between Luxify and te seller on an individual basis. You accept and agree tat use of te mareting services does not guarantee tat your product will be sold by Luxify or troug te Website or any of its services.',
 
-'terms_marketing2'=>'Luxify will not consider you a private dealer if you: (i) are a licensed dealer; (ii) are an agent advertising a product for the owner; or (iii) advertise for sale more than 10 products in any single category within a 12 month period.',
+'termsmareting2'=>'Luxify will not consider you a private dealer if you: (i) are a licensed dealer; (ii) are an agent advertising a product for te owner; or (iii) advertise for sale more tan 10 products in any single category witin a 12 mont period.',
 
-'terms_marketing3'=>'If Luxify believes you are abusing the services or exposing or potentially exposing Luxify to any legal risk, not acting in good faith or otherwise acting in breach of these Terms Luxify shall, at its sole discretion, suspend or terminate all or part of your account or your access to the services, without prior notice.',
+'termsmareting3'=>'If Luxify believes you are abusing te services or exposing or potentially exposing Luxify to any legal ris, not acting in good fait or oterwise acting in breac of tese Terms Luxify sall, at its sole discretion, suspend or terminate all or part of your account or your access to te services, witout prior notice.',
 
-'terms_marketing4'=>'Through the Website Luxify offers sellers and buyers the opportunity to communicate with one another through the online platform, whether by private or public messaging. Luxify recommends buyers obtain as much information as much information as possible about products prior to transacting with sellers.',
+'termsmareting4'=>'Troug te Website Luxify offers sellers and buyers te opportunity to communicate wit one anoter troug te online platform, weter by private or public messaging. Luxify recommends buyers obtain as muc information as muc information as possible about products prior to transacting wit sellers.',
 
-'terms_website'=>'Use Of The Luxify Website',
+'termswebsite'=>'Use Of Te Luxify Website',
 
-'terms_website1'=>'Use of the Website and services is for non-commercial use only. Use of the Luxify Website and services offered by Luxify are only available to persons who are capable of forming legally binding contracts under applicable law, for the avoidance of doubt our Services are not available to minors. You represent and warrant that you are over 18 years of age and are capable of forming legally binding contracts.',
+'termswebsite1'=>'Use of te Website and services is for non-commercial use only. Use of te Luxify Website and services offered by Luxify are only available to persons wo are capable of forming legally binding contracts under applicable law, for te avoidance of doubt our Services are not available to minors. You represent and warrant tat you are over 18 years of age and are capable of forming legally binding contracts.',
 
-'terms_website2'=>'Use of the Website will give you the opportunity to contribute, add, create, upload, submit, distribute, facilitate the distribution of, collect and post Material. Material includes videos, photographs, images, comments, other materials and information, including associated trade marks and copyrightable works and other such materials (the "Content"). Luxify reserves the right to remove or amend any Content without notifying or explaining its reasoning for doing so.',
+'termswebsite2'=>'Use of te Website will give you te opportunity to contribute, add, create, upload, submit, distribute, facilitate te distribution of, collect and post Material. Material includes videos, potograps, images, comments, oter materials and information, including associated trade mars and copyrigtable wors and oter suc materials (te "Content"). Luxify reserves te rigt to remove or amend any Content witout notifying or explaining its reasoning for doing so.',
 
-'terms_website3'=>'Luxify does not control or the Content posted on the Website and does not guarantee the accuracy, completeness or quality of the Content. When accessing the services and using the Website you will not: (i) violate any laws, third party rights (including but not limited to intellectual property rights) or these Terms; (ii) upload, post, submit or transmit any misleading, deceptive, false, inaccurate, defamatory, infringing, obscene, indecent or unlawful information; (iii) defraud Luxify or users of the Website and services; (iv) transmit spam, junk mail, surveys or other forms of mass messaging to other users.',
+'termswebsite3'=>'Luxify does not control or te Content posted on te Website and does not guarantee te accuracy, completeness or quality of te Content. Wen accessing te services and using te Website you will not: (i) violate any laws, tird party rigts (including but not limited to intellectual property rigts) or tese Terms; (ii) upload, post, submit or transmit any misleading, deceptive, false, inaccurate, defamatory, infringing, obscene, indecent or unlawful information; (iii) defraud Luxify or users of te Website and services; (iv) transmit spam, jun mail, surveys or oter forms of mass messaging to oter users.',
 
-'terms_website4'=>'You are responsible for making any relevant searches, enquiries and investigations in relation to any listed product, including but not limited to in respect of any register write off or register security interest regarding vehicles.',
+'termswebsite4'=>'You are responsible for maing any relevant searces, enquiries and investigations in relation to any listed product, including but not limited to in respect of any register write off or register security interest regarding veicles.',
 
-'terms_website5'=>'Sellers will not list products that they do not have legitimate rights to sell or export or products that infringe third party rights and agree not to include an offer or referral to any services when listing products (e.g. finance services). You shall not complete transactions for products listed on the Website independently to the Website; impersonate third parties with the intent of misleading, confusing or deceiving others; misuse or disrupt the Website by knowingly or negligently introducing viruses, Trojans, worms, logic bombs or other malicious or harmful materials to the Website; modify, copy, distribute, display, reproduce, publish or licence any Material.',
+'termswebsite5'=>'Sellers will not list products tat tey do not ave legitimate rigts to sell or export or products tat infringe tird party rigts and agree not to include an offer or referral to any services wen listing products (e.g. finance services). You sall not complete transactions for products listed on te Website independently to te Website; impersonate tird parties wit te intent of misleading, confusing or deceiving oters; misuse or disrupt te Website by nowingly or negligently introducing viruses, Trojans, worms, logic bombs or oter malicious or armful materials to te Website; modify, copy, distribute, display, reproduce, publis or licence any Material.',
 
-'terms_website6'=>'You grant Luxify a non-exclusive, royalty-free, worldwide, perpetual, irrevocable, transferable and sub-licensable right to your Content and you waive your moral rights in your Content and as such you agree that Lucify may republish your product information on other websites, search engines, applications, print or other media as Luxify may determine from time to time in its absolute discretion. It is your sole responsibility to pay any and all royalties owed to any person or entity resulting from your Content on the Website.',
+'termswebsite6'=>'You grant Luxify a non-exclusive, royalty-free, worldwide, perpetual, irrevocable, transferable and sub-licensable rigt to your Content and you waive your moral rigts in your Content and as suc you agree tat Lucify may republis your product information on oter websites, searc engines, applications, print or oter media as Luxify may determine from time to time in its absolute discretion. It is your sole responsibility to pay any and all royalties owed to any person or entity resulting from your Content on te Website.',
 
-'terms_register'=>'Website Registration',
+'termsregister'=>'Website Registration',
 
-'terms_register1'=>'Registration is available to all Luxify users; however, all sellers are required to register a Luxify account in order to list products. If you choose to become a Luxify member additional products and services may be made available to you. You may use your social media account to register a Luxify account; however if you choose to do so authorise Luxify to access and obtain data stored about you on the social media platform.',
+'termsregister1'=>'Registration is available to all Luxify users; owever, all sellers are required to register a Luxify account in order to list products. If you coose to become a Luxify member additional products and services may be made available to you. You may use your social media account to register a Luxify account; owever if you coose to do so autorise Luxify to access and obtain data stored about you on te social media platform.',
 
-'terms_register2'=>'By registering an account you agree to (i) provide true, accurate and complete personally identifiable information about yourself; (ii) provide true, accurate and complete information about your Content; and (iii) maintain and update your personal information.',
+'termsregister2'=>'By registering an account you agree to (i) provide true, accurate and complete personally identifiable information about yourself; (ii) provide true, accurate and complete information about your Content; and (iii) maintain and update your personal information.',
 
-'terms_register3'=>'In order to complete the registration process you must provide Luxify with a username, password and email address. You must not transfer or provide third-parties with your Luxify account details. You are responsible for maintaining the security and confidentiality of your username and password and will be held personally responsible for any and all activities conducted through your account.',
+'termsregister3'=>'In order to complete te registration process you must provide Luxify wit a username, password and email address. You must not transfer or provide tird-parties wit your Luxify account details. You are responsible for maintaining te security and confidentiality of your username and password and will be eld personally responsible for any and all activities conducted troug your account.',
 
-'terms_register4'=>'You will immediately notify Luxify of any unauthorised use of your account or any other breach of security that you become aware of.',
+'termsregister4'=>'You will immediately notify Luxify of any unautorised use of your account or any oter breac of security tat you become aware of.',
 
-'terms_refund'=>'Disputes And Refunds',
+'termsrefund'=>'Disputes And Refunds',
 
-'terms_refund1'=>'All transactions are concluded directly between the seller and buyer on the terms stipulated by the seller or as agreed between the parties and as such Luxify is not a party to the transaction and does not offer refunds. Buyers will only be entitled to a refund where private sellers have created their own refund policy.',
+'termsrefund1'=>'All transactions are concluded directly between te seller and buyer on te terms stipulated by te seller or as agreed between te parties and as suc Luxify is not a party to te transaction and does not offer refunds. Buyers will only be entitled to a refund were private sellers ave created teir own refund policy.',
 
-'terms_refund2'=>'Sellers and buyers are responsible for ensuring that they have agreed to, and specified, all relevant conditions of sale and specifications for the listed products set out by the sellers, including but not limited to specifications on pricing, specifications, quantity, quality standards, inspection, shipping etc.',
+'termsrefund2'=>'Sellers and buyers are responsible for ensuring tat tey ave agreed to, and specified, all relevant conditions of sale and specifications for te listed products set out by te sellers, including but not limited to specifications on pricing, specifications, quantity, quality standards, inspection, sipping etc.',
 
-'terms_refund3'=>'Luxify is under no obligation to become involved in disputes between users, or between users and third parties. Including, but not limited to, in respect of delivery of goods or any other terms, conditions, warranties or representations associated with the product listed on the Website or intellectual property rights. However, Luxify may facilitate the resolution of disputes between users or between users and third parties but is under no obligation to assist with or resolve any such disputes.',
+'termsrefund3'=>'Luxify is under no obligation to become involved in disputes between users, or between users and tird parties. Including, but not limited to, in respect of delivery of goods or any oter terms, conditions, warranties or representations associated wit te product listed on te Website or intellectual property rigts. However, Luxify may facilitate te resolution of disputes between users or between users and tird parties but is under no obligation to assist wit or resolve any suc disputes.',
 
-'terms_refund4'=>'You agree not to hold Luxify responsible for any claims or damages of any kind, whether known or known, suspected or disclosed arising out of or connected to any dispute between users or with a third party.',
+'termsrefund4'=>'You agree not to old Luxify responsible for any claims or damages of any ind, weter nown or nown, suspected or disclosed arising out of or connected to any dispute between users or wit a tird party.',
 
-'terms_liability'=>'Luxify\'s Liability To You',
+'termsliability'=>'Luxify\'s Liability To You',
 
-'terms_liability1'=>'Luxify does not provide any warranty in relation to the quality or fitness for purpose of the products advertised on the Website or endorse the reliability, accuracy or completeness of any Material published on the Website or through links published on the Website. All Content you access through the Website and services is at your own risk, it is your responsibility to seek independent advice and valuations where you view this to be necessary or appropriate with regards to your use of the services and Website.',
+'termsliability1'=>'Luxify does not provide any warranty in relation to te quality or fitness for purpose of te products advertised on te Website or endorse te reliability, accuracy or completeness of any Material publised on te Website or troug lins publised on te Website. All Content you access troug te Website and services is at your own ris, it is your responsibility to see independent advice and valuations were you view tis to be necessary or appropriate wit regards to your use of te services and Website.',
 
-'terms_liability2'=>'The Website may contain a link to third-party websites, under no circumstances does Luxify endorse or control such third-party websites. Use of third-party websites, whether included as a link on the Website or otherwise, is entirely at your own risk and subject to the terms of use contained within any such website.',
+'termsliability2'=>'Te Website may contain a lin to tird-party websites, under no circumstances does Luxify endorse or control suc tird-party websites. Use of tird-party websites, weter included as a lin on te Website or oterwise, is entirely at your own ris and subject to te terms of use contained witin any suc website.',
 
-'terms_liability3'=>'These Terms do not intend to limit or exclude liability for death or personal injury caused by the negligence or fraudulent misrepresentation of Luxify, its employees or agents and nothing is intended to affect your statutory rights.',
+'termsliability3'=>'Tese Terms do not intend to limit or exclude liability for deat or personal injury caused by te negligence or fraudulent misrepresentation of Luxify, its employees or agents and noting is intended to affect your statutory rigts.',
 
-'terms_liability4'=>'Luxify shall not be liable for any special, exemplary, direct, indirect, punitive, incidental or consequential damages of any kind, whether based in contract, tort (including negligence) or otherwise or are in any way connected with these Terms, use of the services, a failure or delay or any actions or inactions of a user.',
+'termsliability4'=>'Luxify sall not be liable for any special, exemplary, direct, indirect, punitive, incidental or consequential damages of any ind, weter based in contract, tort (including negligence) or oterwise or are in any way connected wit tese Terms, use of te services, a failure or delay or any actions or inactions of a user.',
 
-'terms_liability5'=>'Notwithstanding the above, Luxify will only be liable for losses which are reasonably foreseeable consequences of a breach of these Terms by Luxify, up to an aggregate liability, for all claims arising from the use of the Website or services during any calendar year of the greater of (a) the amount of fees the user has paid to Luxify during the calendar year or (b) USD 500. All claims arising from the use of the Website or services must be filed within one year from the date the action arose.',
+'termsliability5'=>'Notwitstanding te above, Luxify will only be liable for losses wic are reasonably foreseeable consequences of a breac of tese Terms by Luxify, up to an aggregate liability, for all claims arising from te use of te Website or services during any calendar year of te greater of (a) te amount of fees te user as paid to Luxify during te calendar year or (b) USD 500. All claims arising from te use of te Website or services must be filed witin one year from te date te action arose.',
 
-'terms_liability6'=>'This clause will survive the expiration or termination of this agreement.',
+'termsliability6'=>'Tis clause will survive te expiration or termination of tis agreement.',
 
-'terms_yourliability'=>'Your Liability To Luxify',
+'termsyourliability'=>'Your Liability To Luxify',
 
-'terms_yourliability1'=>'You represent and warrant the accuracy and truthfulness of all information and Content provided by you (including but not limited to contact details) and submitted by you on the Website. You are solely responsible for any resulting damage or loss to any party who places reliance on any information or Content provided by you and warrant that the Content you submit does not contain third-party copyrighted material or material that is subject to other third-party proprietary rights unless you have been granted the relevant permissions from the owner of the material.',
+'termsyourliability1'=>'You represent and warrant te accuracy and trutfulness of all information and Content provided by you (including but not limited to contact details) and submitted by you on te Website. You are solely responsible for any resulting damage or loss to any party wo places reliance on any information or Content provided by you and warrant tat te Content you submit does not contain tird-party copyrigted material or material tat is subject to oter tird-party proprietary rigts unless you ave been granted te relevant permissions from te owner of te material.',
 
-'terms_yourliability2'=>'You represent and warrant that the use or other exploitation of the Content submitted by you will not infringe or violate the rights of any third-party, including but not limited to privacy rights, publicity rights, copyrights, contract rights or any other intellectual property rights.',
+'termsyourliability2'=>'You represent and warrant tat te use or oter exploitation of te Content submitted by you will not infringe or violate te rigts of any tird-party, including but not limited to privacy rigts, publicity rigts, copyrigts, contract rigts or any oter intellectual property rigts.',
 
-'terms_yourliability3'=>'You represent and warrant that your use of the Website and services will comply with the terms and conditions set out in these Terms and any other requirements or directions issued by Luxify from time to time.',
+'termsyourliability3'=>'You represent and warrant tat your use of te Website and services will comply wit te terms and conditions set out in tese Terms and any oter requirements or directions issued by Luxify from time to time.',
 
-'terms_yourliability4'=>'You represent and warrant that where Luxify allows you to email friends details of a product, the person to whom the email is addressed has consented to the email being sent and indemnify Luxify against all actions, claims and demands arising out of or in respect of sending the email.',
+'termsyourliability4'=>'You represent and warrant tat were Luxify allows you to email friends details of a product, te person to wom te email is addressed as consented to te email being sent and indemnify Luxify against all actions, claims and demands arising out of or in respect of sending te email.',
 
-'terms_yourliability5'=>'If you are a seller, you also represent and warrant that you are the owner of all products listed by you and that you have authority to sell such products and you have authority to grant the licence detailed in clause 2 of these Terms.',
+'termsyourliability5'=>'If you are a seller, you also represent and warrant tat you are te owner of all products listed by you and tat you ave autority to sell suc products and you ave autority to grant te licence detailed in clause 2 of tese Terms.',
 
-'terms_yourliability6'=>'You agree to indemnify Luxify and any Luxify users against any loss incurred as a result of any unauthorised use of your account or password.',
+'termsyourliability6'=>'You agree to indemnify Luxify and any Luxify users against any loss incurred as a result of any unautorised use of your account or password.',
 
-'terms_yourliability7'=>'You agree to indemnify Luxify against claims, causes of action and damages arising from the removal of a product listing pursuant to intellectual property infringement claims.',
+'termsyourliability7'=>'You agree to indemnify Luxify against claims, causes of action and damages arising from te removal of a product listing pursuant to intellectual property infringement claims.',
 
-'terms_yourliability8'=>'You agree to indemnify Luxify from and against any and all losses, damages, claims, liabilities (including any legal costs or other costs) which may arise directly or indirectly from any breach of these Terms, your use of the services or Website or any claim made by another user against you or Luxify as a result of your actions or omissions.',
+'termsyourliability8'=>'You agree to indemnify Luxify from and against any and all losses, damages, claims, liabilities (including any legal costs or oter costs) wic may arise directly or indirectly from any breac of tese Terms, your use of te services or Website or any claim made by anoter user against you or Luxify as a result of your actions or omissions.',
 
-'terms_general'=>'General',
+'termsgeneral'=>'General',
 
-'terms_general1'=>'These Terms supersede all prior understanding between you and Luxify. To the extent of any inconsistency between these Terms and any additional terms regarding bespoke services, the terms of the bespoke services will apply.',
+'termsgeneral1'=>'Tese Terms supersede all prior understanding between you and Luxify. To te extent of any inconsistency between tese Terms and any additional terms regarding bespoe services, te terms of te bespoe services will apply.',
 
-'terms_general2'=>'You may cancel your account at any time, if you choose to do so you agree that Luxify are entitled to recover the cost of any services provided to the point of cancellation and your information will be retained in accordance with the Privacy Statement. Luxify reserves the right to cancel any unconfirmed or inactive accounts at any time, without providing further notice.',
+'termsgeneral2'=>'You may cancel your account at any time, if you coose to do so you agree tat Luxify are entitled to recover te cost of any services provided to te point of cancellation and your information will be retained in accordance wit te Privacy Statement. Luxify reserves te rigt to cancel any unconfirmed or inactive accounts at any time, witout providing furter notice.',
 
-'terms_general3'=>'These Terms do not create or intend to create an agency, partnership, joint venture, employee-employer or franchiser-franchisee relationship between you and Luxify.',
+'termsgeneral3'=>'Tese Terms do not create or intend to create an agency, partnersip, joint venture, employee-employer or franciser-francisee relationsip between you and Luxify.',
 
-'terms_general4'=>'Luxify may assign or transfer its rights and obligations under these Terms without your prior consent, provided such assignment or transfer is on the same Terms to the relevant third party.',
+'termsgeneral4'=>'Luxify may assign or transfer its rigts and obligations under tese Terms witout your prior consent, provided suc assignment or transfer is on te same Terms to te relevant tird party.',
 
-'terms_general5'=>'If any part of these Terms is deemed unlawful, void, voidable or is otherwise unenforceable the relevant part of these Terms shall be severed from the Terms and rendered ineffective without modifying the remaining Terms or affecting the validity or enforcement of these Terms.',
+'termsgeneral5'=>'If any part of tese Terms is deemed unlawful, void, voidable or is oterwise unenforceable te relevant part of tese Terms sall be severed from te Terms and rendered ineffective witout modifying te remaining Terms or affecting te validity or enforcement of tese Terms.',
 
-'terms_general6'=>'Any failure or delay on the part of Luxify to enforce a right or provision under these Terms shall not be deemed to be a waiver of such right.',
+'termsgeneral6'=>'Any failure or delay on te part of Luxify to enforce a rigt or provision under tese Terms sall not be deemed to be a waiver of suc rigt.',
 
-'terms_general7'=>'Luxify will not be held responsible for any delay, failure or disruption of the services resulting directly or indirectly from an act of nature or cause beyond Luxify\'s reasonable control.',
+'termsgeneral7'=>'Luxify will not be eld responsible for any delay, failure or disruption of te services resulting directly or indirectly from an act of nature or cause beyond Luxify\'s reasonable control.',
 
-'terms_general8'=>'These Terms are governed by the laws of laws of Hong Kong SAR.',
+'termsgeneral8'=>'Tese Terms are governed by te laws of laws of Hong Kong SAR.',
 
-'terms_general9'=>'If you have a complaint about Luxify, we recommend that you contact us at contact@luxify.com before taking further action in the hope that we can resolve the dispute fairly and amicably. If we are unable to reach a resolution you agree to submit to the exclusive jurisdiction of the courts of Hong Kong who will have exclusive jurisdiction to settle any dispute or claim arising under these Terms.',
+'termsgeneral9'=>'If you ave a complaint about Luxify, we recommend tat you contact us at contact@luxify.com before taing furter action in te ope tat we can resolve te dispute fairly and amicably. If we are unable to reac a resolution you agree to submit to te exclusive jurisdiction of te courts of Hong Kong wo will ave exclusive jurisdiction to settle any dispute or claim arising under tese Terms.',
 
-//for file: privacy.blade.php
+//for file: privacy.blade.pp
 
-'privacy_title1'=>'Privacy Policy',
+'privacytitle1'=>'Privacy Policy',
 
-'privacy_title2'=>'Privacy Policy',
+'privacytitle2'=>'Privacy Policy',
 
-'privacy_personal'=>'Privacy Policy and Personal Information Collection Statement ("Privacy Statement")',
+'privacypersonal'=>'Privacy Policy and Personal Information Collection Statement ("Privacy Statement")',
 
-'privacy_personal1'=>'Welcome to www.luxify.com\'s online platform operated by Luxify Limited ("LUXIFY", the "Company", "we", "our", or "us"). By accessing to the LUXIFY website, all other websites owned and operated by LUXIFY including www.luxifyit.com, www.luxify.com.hk and www.luxify.com.hk that redirect to www.luxify.com, and its related websites (collectively, the "Site") and using of our platform and related services owned and operated by LUXIFY (collectively, the "Services"), you acknowledge that you have read, understood, and agree to the Privacy Policy and Personal Information Collection Statement (collectively, the "Privacy Statement"). Please note that this Privacy Statement may be amended from time to time without prior notice. You are advised to check for the latest version on a regular basis.',
+'privacypersonal1'=>'Welcome to www.luxify.com\'s online platform operated by Luxify Limited ("LUXIFY", te "Company", "we", "our", or "us"). By accessing to te LUXIFY website, all oter websites owned and operated by LUXIFY including www.luxifyit.com, www.luxify.com. and www.luxify.com. tat redirect to www.luxify.com, and its related websites (collectively, te "Site") and using of our platform and related services owned and operated by LUXIFY (collectively, te "Services"), you acnowledge tat you ave read, understood, and agree to te Privacy Policy and Personal Information Collection Statement (collectively, te "Privacy Statement"). Please note tat tis Privacy Statement may be amended from time to time witout prior notice. You are advised to cec for te latest version on a regular basis.',
 
-'privacy_personal2'=>'Your privacy is important to LUXIFY and we respect the privacy rights of visitors or users to the Site and of members who use the Company\'s Services.',
+'privacypersonal2'=>'Your privacy is important to LUXIFY and we respect te privacy rigts of visitors or users to te Site and of members wo use te Company\'s Services.',
 
-'privacy_personal3'=>'We are committed to protecting the privacy, confidentiality and security of the personal data we hold by complying with the requirements of Personal Data (Privacy) Ordinance (Chapter 486) under the laws of Hong Kong Special Administration Region of the People\'s Republic of China ("HKSAR") (the "PDPO") with respect to the management of personal data. In doing so, we endeavor to ensure that our employees shall comply with the PDPO in the strictest standards of security and confidentiality.',
+'privacypersonal3'=>'We are committed to protecting te privacy, confidentiality and security of te personal data we old by complying wit te requirements of Personal Data (Privacy) Ordinance (Capter 486) under te laws of Hong Kong Special Administration Region of te People\'s Republic of Cina ("HKSAR") (te "PDPO") wit respect to te management of personal data. In doing so, we endeavor to ensure tat our employees sall comply wit te PDPO in te strictest standards of security and confidentiality.',
 
-'privacy_purpose'=>'Purpose of Collection and Use of Personal Data',
+'privacypurpose'=>'Purpose of Collection and Use of Personal Data',
 
-'privacy_purpose1'=>'In order to facilitate or accessing certain Services in the Site, you may be requested by LUXIFY to give your personal data. You may decline to provide the Company with the requested personal data, but in such case the Company may not be able to provide certain Services to you.',
+'privacypurpose1'=>'In order to facilitate or accessing certain Services in te Site, you may be requested by LUXIFY to give your personal data. You may decline to provide te Company wit te requested personal data, but in suc case te Company may not be able to provide certain Services to you.',
 
-'privacy_purpose2'=>'Types of personal data are collected by the Company may include:',
+'privacypurpose2'=>'Types of personal data are collected by te Company may include:',
 
-'privacy_purpose3'=>'Your personal identification information and contact details (i.e. your name, gender, date of birth, identity card number, email address(es), telephone number(s), postal address, nationality, educational level, occupation and interests);',
+'privacypurpose3'=>'Your personal identification information and contact details (i.e. your name, gender, date of birt, identity card number, email address(es), telepone number(s), postal address, nationality, educational level, occupation and interests);',
 
-'privacy_purpose4'=>'Your business information (i.e. company name, business title, address of principal registered office and nature of the business);',
+'privacypurpose4'=>'Your business information (i.e. company name, business title, address of principal registered office and nature of te business);',
 
-'privacy_purpose5'=>'Your social media platforms account information (i.e. facebook accounts, WeChat accounts and etc.); and Other information (i.e. account activities, all sale and purchase transactions, types and specifications of the goods, pricing and delivery information, IP addresses, browser software, operating system, software and hardware attributes, pages viewed and etc.)',
+'privacypurpose5'=>'Your social media platforms account information (i.e. faceboo accounts, WeCat accounts and etc.); and Oter information (i.e. account activities, all sale and purcase transactions, types and specifications of te goods, pricing and delivery information, IP addresses, browser software, operating system, software and ardware attributes, pages viewed and etc.)',
 
-'privacy_purpose6'=>'Personal data collected online shall only be disclosed within our corporate group for internal use and to the Buyer/Seller for facilitation of transaction only.  We shall in no event provide your personal data to any other third parties for direct marketing or other unrelated purposes except with your express consent.',
+'privacypurpose6'=>'Personal data collected online sall only be disclosed witin our corporate group for internal use and to te Buyer/Seller for facilitation of transaction only.  We sall in no event provide your personal data to any oter tird parties for direct mareting or oter unrelated purposes except wit your express consent.',
 
-'privacy_purpose7'=>'We collect and may use your personal data for the following purposes:',
+'privacypurpose7'=>'We collect and may use your personal data for te following purposes:',
 
-'privacy_purpose8'=>'To process of your membership application for the Services;',
+'privacypurpose8'=>'To process of your membersip application for te Services;',
 
-'privacy_purpose9'=>'To enable the provision of the Services to you that you request;',
+'privacypurpose9'=>'To enable te provision of te Services to you tat you request;',
 
-'privacy_purpose10'=>'To administer and manage account and account activities;',
+'privacypurpose10'=>'To administer and manage account and account activities;',
 
-'privacy_purpose11'=>'To analyze, verify, enforce contractual rights, and/or check your credit, payment and/or status in relation to the provision of the Service to you;',
+'privacypurpose11'=>'To analye, verify, enforce contractual rigts, and/or cec your credit, payment and/or status in relation to te provision of te Service to you;',
 
-'privacy_purpose12'=>'To process payment instructions, direct debit facilities and/or credit facilities in relation to the provision of the Services in which we may transfer your PayPal account and credit card information to the seller and/or the payment processor we designate from time to time;',
+'privacypurpose12'=>'To process payment instructions, direct debit facilities and/or credit facilities in relation to te provision of te Services in wic we may transfer your PayPal account and credit card information to te seller and/or te payment processor we designate from time to time;',
 
-'privacy_purpose13'=>'To process orders placing by the Users and deliver the respective products and services to the Users in which we may transfer your address and contact details to the seller or the logistic partners we designate from time to time;',
+'privacypurpose13'=>'To process orders placing by te Users and deliver te respective products and services to te Users in wic we may transfer your address and contact details to te seller or te logistic partners we designate from time to time;',
 
-'privacy_purpose14'=>'To improve our marketing and promotional efforts by conducting market research or customer\'s surveys for service improvement;',
+'privacypurpose14'=>'To improve our mareting and promotional efforts by conducting maret researc or customer\'s surveys for service improvement;',
 
-'privacy_purpose15'=>'To advertise, promote and market our Services to you by the Company, related companies, agents and contractors;',
+'privacypurpose15'=>'To advertise, promote and maret our Services to you by te Company, related companies, agents and contractors;',
 
-'privacy_purpose16'=>'To compile aggregate statistics on website usage, generate reports and analyze the same;',
+'privacypurpose16'=>'To compile aggregate statistics on website usage, generate reports and analye te same;',
 
-'privacy_purpose17'=>'To improve our content and product offerings;',
+'privacypurpose17'=>'To improve our content and product offerings;',
 
-'privacy_purpose18'=>'To customize our Site\'s content, layout and service specifically for you;',
+'privacypurpose18'=>'To customie our Site\'s content, layout and service specifically for you;',
 
-'privacy_purpose19'=>'To handle your account enquiries and your complaints;',
+'privacypurpose19'=>'To andle your account enquiries and your complaints;',
 
-'privacy_purpose20'=>'To investigate your complaints and suspected suspicious transactions;',
+'privacypurpose20'=>'To investigate your complaints and suspected suspicious transactions;',
 
-'privacy_purpose21'=>'To facilitate proper operation of our Site and business activities of its Users including without limitation to facilitation of effective communication between buyers and Sellers and marketing activities of Users;',
+'privacypurpose21'=>'To facilitate proper operation of our Site and business activities of its Users including witout limitation to facilitation of effective communication between buyers and Sellers and mareting activities of Users;',
 
-'privacy_purpose22'=>'To make such disclosures as required by the applicable laws, rules and regulations; and',
+'privacypurpose22'=>'To mae suc disclosures as required by te applicable laws, rules and regulations; and',
 
-'privacy_purpose23'=>'Any other purposes relating to the activities identified above.',
+'privacypurpose23'=>'Any oter purposes relating to te activities identified above.',
 
-'privacy_cookies'=>'Cookies',
+'privacycooies'=>'Cooies',
 
-'privacy_cookies1'=>'We may use "Cookie" to store and track specific information about you and your visit to the Site, including your IP addresses, the types and configurations of browsers, internet service providers, language settings, geo-locations, operating systems, previous sites visited, and time/ durations and the pages visited (the "Visitor Data"). We may use the Visitor Data for website enhancement and optimization purposes. We do not use, and have no intention to use the visitor data to personally identify anyone.',
+'privacycooies1'=>'We may use "Cooie" to store and trac specific information about you and your visit to te Site, including your IP addresses, te types and configurations of browsers, internet service providers, language settings, geo-locations, operating systems, previous sites visited, and time/ durations and te pages visited (te "Visitor Data"). We may use te Visitor Data for website enancement and optimiation purposes. We do not use, and ave no intention to use te visitor data to personally identify anyone.',
 
-'privacy_cookies2'=>'"Cookies" used in any part of the Site shall in no event be deployed for collecting personally identifiable information. For your information, a "Cookie" is a small amount of data that is sent to your browser and can be stored in your computer\'s hard drive for the purposes of obtaining configuration information and analyzing your viewing habits.',
+'privacycooies2'=>'"Cooies" used in any part of te Site sall in no event be deployed for collecting personally identifiable information. For your information, a "Cooie" is a small amount of data tat is sent to your browser and can be stored in your computer\'s ard drive for te purposes of obtaining configuration information and analying your viewing abits.',
 
-'privacy_cookies3'=>'Most web browsers are initially set up to accept cookies. You can choose not to accept or reject the "cookies" by modifying the relevant Internet options or browsing preferences of your computer system at any time, but if you do so you may find that certain functions or Services provided or to be provided by us on the Site unavailable.',
+'privacycooies3'=>'Most web browsers are initially set up to accept cooies. You can coose not to accept or reject te "cooies" by modifying te relevant Internet options or browsing preferences of your computer system at any time, but if you do so you may find tat certain functions or Services provided or to be provided by us on te Site unavailable.',
 
-'privacy_marketing'=>'Direct Marketing',
+'privacymareting'=>'Direct Mareting',
 
-'privacy_marketing1'=>'Your personal identification information and contact details including your name, telephone number, mobile telephone number, email address, residential address, facebook account, and/or any other social medial platforms accounts collected by us will be used for direct marketing purposes in providing you with any information about our Services and special offers on the Services in relation to motors, yachting, fine wine and spirits, watches, jewellery, fashion, bags and footwear to be provided by us.',
+'privacymareting1'=>'Your personal identification information and contact details including your name, telepone number, mobile telepone number, email address, residential address, faceboo account, and/or any oter social medial platforms accounts collected by us will be used for direct mareting purposes in providing you wit any information about our Services and special offers on te Services in relation to motors, yacting, fine wine and spirits, watces, jewellery, fasion, bags and footwear to be provided by us.',
 
-'privacy_marketing2'=>'We cannot use your personal data unless we have received your consent or indication of no objection.',
+'privacymareting2'=>'We cannot use your personal data unless we ave received your consent or indication of no objection.',
 
-'privacy_retention'=>'Retention of Personal Data',
+'privacyretention'=>'Retention of Personal Data',
 
-'privacy_retention1'=>'The Company will only retain your personal data for as long as is necessary to fulfill the purposes specified above for which the personal data were originally created, unless there is a mandatory legal requirement for us to keep your personal data for a specified period.',
+'privacyretention1'=>'Te Company will only retain your personal data for as long as is necessary to fulfill te purposes specified above for wic te personal data were originally created, unless tere is a mandatory legal requirement for us to eep your personal data for a specified period.',
 
-'privacy_retention2'=>'The Company will destroy periodically any unnecessary personal data it may hold in its system in accordance with our internal policy.',
+'privacyretention2'=>'Te Company will destroy periodically any unnecessary personal data it may old in its system in accordance wit our internal policy.',
 
-'privacy_data'=>'Access to and Correction of Personal Data',
+'privacydata'=>'Access to and Correction of Personal Data',
 
-'privacy_data1'=>'Under the PDPO, you have the right to:',
+'privacydata1'=>'Under te PDPO, you ave te rigt to:',
 
-'privacy_data2'=>'ascertain whether the Company holds any of your personal data and if so, obtain copies of such data;',
+'privacydata2'=>'ascertain weter te Company olds any of your personal data and if so, obtain copies of suc data;',
 
-'privacy_data3'=>'request access to your personal data held by us;',
+'privacydata3'=>'request access to your personal data eld by us;',
 
-'privacy_data4'=>'request to correct your personal data which is inaccurate;',
+'privacydata4'=>'request to correct your personal data wic is inaccurate;',
 
-'privacy_data5'=>'ascertain the Company\'s policies and practices established from time to time in relation to personal data and the types of personal data held by us.',
+'privacydata5'=>'ascertain te Company\'s policies and practices establised from time to time in relation to personal data and te types of personal data eld by us.',
 
-'privacy_data6'=>'If you want to access and/or correct your personal data, or if you want to ascertain the kind of your personal data held by us, please contact our data protection officer in writing either by post or email at:',
+'privacydata6'=>'If you want to access and/or correct your personal data, or if you want to ascertain te ind of your personal data eld by us, please contact our data protection officer in writing eiter by post or email at:',
 
-'privacy_data7'=>'Level 9, Core C, Cyberport 3, 100 Cyberport Road, Hong Kong Email:',
+'privacydata7'=>'Level 9, Core C, Cyberport 3, 100 Cyberport Road, Hong Kong Email:',
 
-'privacy_data8'=>'The Company reserves the right to charge you a reasonable fee for complying with a data access request as permitted under the PDPO.',
+'privacydata8'=>'Te Company reserves te rigt to carge you a reasonable fee for complying wit a data access request as permitted under te PDPO.',
 
-'privacy_security'=>'Security, Transfer and Disclosure of Personal Data',
+'privacysecurity'=>'Security, Transfer and Disclosure of Personal Data',
 
-'privacy_security1'=>'All personal data you have submitted to the Site is secured on our website with restricted access by authorized personnel only. Our own personnel will be instructed to observe duty of confidentiality and the terms of this Privacy Statement when accessing your personal data.  All data transmission will be encrypted so as to ensure its privacy is maintained. However, no data transmission over the Internet or any wireless network can be guaranteed to be perfectly secured. You acknowledge that we cannot absolutely guarantee the security of any information you provide to us and you do so at your own risk.',
+'privacysecurity1'=>'All personal data you ave submitted to te Site is secured on our website wit restricted access by autoried personnel only. Our own personnel will be instructed to observe duty of confidentiality and te terms of tis Privacy Statement wen accessing your personal data.  All data transmission will be encrypted so as to ensure its privacy is maintained. However, no data transmission over te Internet or any wireless networ can be guaranteed to be perfectly secured. You acnowledge tat we cannot absolutely guarantee te security of any information you provide to us and you do so at your own ris.',
 
-'privacy_security2'=>'All personal data collected and held by the Company will be kept confidential. However, we reserve the rights, where such disclosure is necessary, to transfer or disclose your personal data and other related information you have provided to us to the following parties:',
+'privacysecurity2'=>'All personal data collected and eld by te Company will be ept confidential. However, we reserve te rigts, were suc disclosure is necessary, to transfer or disclose your personal data and oter related information you ave provided to us to te following parties:',
 
-'privacy_security3'=>'any company within the group of LUXIFY, their respective subsidiaries, our agents, contractors for the provision of products and/or services that you ordered and/or subscribed to;',
+'privacysecurity3'=>'any company witin te group of LUXIFY, teir respective subsidiaries, our agents, contractors for te provision of products and/or services tat you ordered and/or subscribed to;',
 
-'privacy_security4'=>'competent court of law, law enforcement agencies, statutory or regulatory authorities, institutions or organizations;',
+'privacysecurity4'=>'competent court of law, law enforcement agencies, statutory or regulatory autorities, institutions or organiations;',
 
-'privacy_security5'=>'banks, financial institutions, credit card issuing companies, debt collection agencies and other related service providers involved in the sale, administration or provision of the Services;',
+'privacysecurity5'=>'bans, financial institutions, credit card issuing companies, debt collection agencies and oter related service providers involved in te sale, administration or provision of te Services;',
 
-'privacy_security6'=>'our professional advisers;',
+'privacysecurity6'=>'our professional advisers;',
 
-'privacy_security7'=>'the counterparty of the transaction concluded through us for the purpose of facilitating transfer of funds;',
+'privacysecurity7'=>'te counterparty of te transaction concluded troug us for te purpose of facilitating transfer of funds;',
 
-'privacy_security8'=>'any of our actual or proposed assignees or transferees of our rights with respect to you.',
+'privacysecurity8'=>'any of our actual or proposed assignees or transferees of our rigts wit respect to you.',
 
-'privacy_language'=>'Language',
+'privacylanguage'=>'Language',
 
-'privacy_language1'=>'In case there is any inconsistency or conflict between the English and Chinese versions, the English version shall prevail.',
+'privacylanguage1'=>'In case tere is any inconsistency or conflict between te Englis and Cinese versions, te Englis version sall prevail.',
 
 
-//for file: dealer-directory.blade.php
+//for file: dealer-directory.blade.pp
 
-'dealer_directory'=>'Dealer Directory',
+'dealerdirectory'=>'Dealer Directory',
 
-'dealer_directory_quality'=>'High Quality Luxury Dealers Around The World.',
+'dealerdirectoryquality'=>'Hig Quality Luxury Dealers Around Te World.',
 
-'dealer_directory_becoming'=>'Becoming a Luxify Dealer',
+'dealerdirectorybecoming'=>'Becoming a Luxify Dealer',
 
-'dealer_directory_professional'=>'Professional dealers use Luxify to transact successful sales of a wide selection of new, vintage and pre-owned luxury goods as well as luxury experiences',
+'dealerdirectoryprofessional'=>'Professional dealers use Luxify to transact successful sales of a wide selection of new, vintage and pre-owned luxury goods as well as luxury experiences',
 
-'dealer_directory_apply'=>'Apply Now'
+'dealerdirectoryapply'=>'Apply Now'
 
 ];
