@@ -258,7 +258,7 @@ class Dashboard extends Controller
             $cat1= '';
 
             foreach ($dataparent as $value) {
-                $cat1 .= "<option value=".$value->id." ".func::selected($item->categoryId, $value->id).">".$value->name."</option>";
+                $cat1 .= "<option value=".$value->id." ".func::selected($item->new_category, $value->id).">".$value->name."</option>";
             }
 
             $item['itemCategory'] = $cat1;
@@ -429,9 +429,9 @@ class Dashboard extends Controller
 
         if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ){
             if( isset($_POST['itemSubCategory']) && !empty($_POST['itemSubCategory']) ){
-                $newItem->categoryId = $_POST['itemSubCategory'];
+                $newItem->new_category = $_POST['itemSubCategory'];
             } else {
-                $newItem->categoryId = $_POST['itemCategory'];
+                $newItem->new_category = $_POST['itemCategory'];
             }
         } else {
                 $error_arr['itemCategory'] = 'Item Category is not specified.';
@@ -561,9 +561,9 @@ class Dashboard extends Controller
 
         if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ){
             if( isset($_POST['itemSubCategory']) && !empty($_POST['itemSubCategory']) ){
-                $item->categoryId = $_POST['itemSubCategory'];
+                $item->new_category = $_POST['itemSubCategory'];
             } else {
-                $item->categoryId = $_POST['itemCategory'];
+                $item->new_category = $_POST['itemCategory'];
             }
         } else {
                 $error_arr['itemCategory'] = 'Item Category is not specified.';
