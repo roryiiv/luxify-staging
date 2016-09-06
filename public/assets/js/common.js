@@ -10,6 +10,7 @@ $(document).ready( function(){
   initSmoothScroll();
   luxifyParallax();
   initCustomForms();
+  suggestedSearchResults();
   //hidden on 2016 08 30
   ////initBackgroundImage();
   ////initIonRangeSlider();

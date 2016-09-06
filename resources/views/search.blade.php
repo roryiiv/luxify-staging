@@ -137,6 +137,7 @@
     <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
     <script>
     $(document).ready(function(){
+
         var newstart = $('#startrange').val(),
             newend = $('#endrange').val();
         updateInputs();
