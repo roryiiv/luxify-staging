@@ -457,7 +457,7 @@
     <!-- DropzoneJS-->
     <script type="text/javascript" src="/db/js/dropzone.min.js"></script>
     <script type="text/javascript" src="/db/js/dropzone-js.js"></script>
-    <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/js/bundle.min.js"></script>
     <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>

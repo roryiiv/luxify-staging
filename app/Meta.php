@@ -78,10 +78,10 @@ class Meta extends Model
 		return ($data)?$data:'';
 	}
 	public static function get_slug_img($img){
-		$data= Meta::where('object_type','images')
-		->where('object_id',$img)
+		$data= Meta::where('object_type', 'images')
+		->where('object_id', $img)
     ->select('meta_value')
     ->first();
-		return ($data)?$data['meta_value']:'';	
+		return ($data && isset($data) && !empty($data) && isset($data['meta_value']) && !empty($data['meta_value']))? $data['meta_value']:'';	
 	}
 }

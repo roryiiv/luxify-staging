@@ -75,15 +75,19 @@
 
 @section('style')
     <!-- include the site stylesheet -->
-    <link rel="stylesheet" href="/assets/css/luxify.css"> 
+    <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
-@section('script')
+@section('scripts')
+<<<<<<< HEAD
+    <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
+    <script type="text/javascript" src="/assets/js/carousel.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+    <script>
+        $(document).ready(function() {
+            initSlick();
+        });
+    </script>
+=======
+>>>>>>> a67244d6f140883876093004321cadf2a237f2b4
   @include('inc.send-message-script')
-  <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
-  <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
-  <script>
-      $(document).ready(function() {
-          initSlick();
-      });
-  </script>
 @endsection

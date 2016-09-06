@@ -543,7 +543,7 @@
     <script type="text/javascript" src="/db/js/dropzone-js.js"></script>
     <script type="text/javascript" src="/db/js/sweet-alert.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/js/bundle.min.js"></script>
     <!-- Boostraps_markdown Plugin Script -->
     <script type="text/javascript" src="/plugins/bootstrap-markdown/js/markdown.js"></script>
     <script type="text/javascript" src="/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>

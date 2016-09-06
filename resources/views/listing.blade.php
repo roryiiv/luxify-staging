@@ -161,7 +161,7 @@
 			<li><span class="icon icon-globe"></span><span class="text">{{ isset($country) ? $country->name : '' }}</span></li>
 		       @if($listing->price)
 			<div style="display:none;" {{schema::itemScope()}} {{schema::itemProp('offers')}} {{schema::itemType('Offer')}}>
-			  <div style="display:none;" {{schema::itemProp('price')}} {{schema::itemType('Number')}}>{{$listing->baseCurrencyPrice}}</div>
+			  <div style="display:none;" {{schema::itemProp('price')}} {{schema::itemType('Number')}}>{{(isset($listing->price) && !empty($listing->price))? $listing->price * $curr->rate: 0 }}</div>
 			  <div style="display:none;" {{schema::itemProp('priceCurrency')}} {{schema::itemType('String')}}>USD</div>
 			</div>
 		       @endif
@@ -243,7 +243,7 @@
 		    <div class="description">
 			<h5>Description</h5>
 			<p {{schema::itemProp('description')}} {{schema::itemType('Text')}}>
-			    {!! nl2br($listing->description) !!}
+			    {!! Markdown::parse($listing->description) !!}
 			</p>
 			@if(!empty($infos))
 			    <h5 style="margin-top:45px;">{{ _t('Specifications', [], App::getLocale()) }}</h5>
@@ -255,14 +255,14 @@
 				@foreach($infos as $key => $info)
 				    @if(isset($info->label))
 				      @if(gettype($info->label) === 'string' && gettype($info->value) === 'string')
-					<tr {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
+					<tr {{schema::itemScope()}} {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
 					    <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ _t($info->label, [], App::getLocale()) }}</th>
-					    <td class='text-center' {{schema::itemProp('')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
+					    <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
 					</tr>
 				      @endif
 				    @else
 				      @if(gettype($info) === 'string')
-					<tr>
+					<tr {{schema::itemScope()}} {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
 					    <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{$key}}</th>
 					    <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info}}</td>
 					</tr>
@@ -369,9 +369,8 @@
 					$rel_sess_currency = null !==  session('currency') ? session('currency') : 'USD';
 					$rel_price_format = func::formatPrice($rel->currencyId, $rel_sess_currency, $rel->price);
 					?>
-					    <div>
-						<span class="price">{{ $rel_price_format }}</span>
-					    </div>
+					<div>
+					</div>
 					<div class="country-container">
 					    <span class="country">{{$rel->country}}</span>
 					</div>
@@ -395,10 +394,11 @@
 @include('inc.send-message')
 @endsection
 @section('scripts')
-<link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+<!--<link rel="stylesheet" href="/assets/css/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />-->
 <script type="text/javascript" src="/assets/js/jquery.fancybox-thumbs.js?v=1.0.7"></script>
 <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
+
 <script>
 
 var popupSize = {
@@ -426,7 +426,7 @@ $('.social-links > li > a.social-link').on('click', function(e){
 {{ csrf_field() }}
 <script>
   $(document).ready(function(){
-    initSlick();
+	  initSlick();
     $(".3DTour").fancybox({
   	  fitToView	: true,
   	  width		: '90%',
