@@ -150,24 +150,24 @@
         ?>
         @if(Auth::user())
             <ul class="nav navbar-nav navbar-right">
-                <li class="currency-selector-container">
+<!--                 <li class="currency-selector-container">
                     <select id="langSelect" class="language-selector">
                     @foreach($languages as $language)
                         <option value="{{$language['val']}}"{{func::selected($language['code'], $sess_lang)}}>{{$language['label']}}</option>
                     @endforeach
                     </select>
-                </li>
+                </li> -->
                 <li><a href="{{func::set_url('/dashboard')}}">@lang('home.header_menu_welcome') {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}</a></li>
             </ul>
         @else
             <ul class="nav navbar-nav navbar-right">
-                <li class="currency-selector-container">
+                <!-- <li class="currency-selector-container">
                     <select id="langSelect" class="language-selector">
                     @foreach($languages as $language)
                         <option value="{{$language['val']}}"{{func::selected($language['code'], $sess_lang)}}>{{$language['label']}}</option>
                     @endforeach
                     </select>
-                </li>
+                </li> -->
                 <li><a href="{{func::set_url('/register')}}">@lang('header.signUp')</a></li>
                 <li><a href="{{func::set_url('/login')}}">@lang('header.login')</a></li>
             </ul>

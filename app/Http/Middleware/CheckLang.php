@@ -27,13 +27,14 @@ class CheckLang
             $languageId = Auth::user()->languageId;
             if($languageId !='' && !empty($languageId)){
                 $languages = DB::table('languages')->where('id',$languageId)->first();
-                $lang = $languages->code;
                 $lang_str = $languages->lang_str;
+//				$lang = $languages->code;
+				$lang = DB::table('languages')->where('lang_str',Translation::getRoutePrefix())->value('code');
                 //auto setprefix when log in
-                if(Translation::getRoutePrefix()!=$lang_str && $lang_str!='en'){
+/*                if(Translation::getRoutePrefix()!=$lang_str && $lang_str!='en'){
                     $getredirect =  $this->switchLanguage($request,$languages->id);
                     return redirect($getredirect);
-                }
+                }*/
             }else{
                 if(Translation::getRoutePrefix()==null){
                     $lang = Config::get('app.locale');
