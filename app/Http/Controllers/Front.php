@@ -53,6 +53,8 @@ use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
 
 use App\MyLibrary\MicrosoftTranslator\Client;*/
 
+use Captcha;
+
 class Front extends Controller {
     //Front end Controller
     public function index() {
