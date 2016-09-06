@@ -44,6 +44,8 @@ use TNTSearch;
 
 use Stevebauman\Translation\Facades\Translation;
 
+use Captcha;
+
 class Front extends Controller {
     //Front end Controller
     public function index() {

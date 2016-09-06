@@ -155,6 +155,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         TeamTNT\TNTSearch\TNTSearchServiceProvider::class,
         Stevebauman\Translation\TranslationServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -219,6 +220,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'TNTSearch' => TeamTNT\TNTSearch\Facades\TNTSearch::class,
         'Translation' => Stevebauman\Translation\Facades\Translation::class,
+	      'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ],
 
 ];

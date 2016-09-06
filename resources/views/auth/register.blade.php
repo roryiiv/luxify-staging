@@ -159,6 +159,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="col-xs-6">
+<?php echo captcha_img(); ?>
+                    </div>
+                    <div class="col-xs-6">
+                        <input name="captcha" required type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-xs-12">
                         <div style="margin-bottom: 7px" class="checkbox-inline checkbox-custom">
                             <input type="checkbox" id="agreeTerms" name='agreeTerms' />
