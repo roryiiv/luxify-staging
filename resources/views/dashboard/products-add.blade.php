@@ -164,7 +164,7 @@
                             <label for="itemSubCategory" class="col-sm-3 control-label">@lang('dashboard.product_add_itemsub')</label>
                             <div class="col-sm-9">
                            
-                                <select id="itemSubCategory" name="itemSubCategory" class="form-control" style="display: none">
+                                <select id="itemSubCategory" name="itemSubCategory" class="form-control" style="display: none" required>
                                     <option value="">--Please Select--</option>
                                 </select>
                             </div>
@@ -453,13 +453,25 @@
 
         $('#itemCategory').on('change',function(){
             var parent = $(this).val();
+                
+            if(parent == 135 || parent == 136 || parent == 137){
+                var status = true;
+            }
+            else{
+                var status = false;
+            }  
+            
             console.log(parent);
             $.ajax({
                 url : '/api/ajax/category/'+parent,
                 method : 'get',
-                success: function(result){  
-                    $('#itemSubCategory').html(result);
-                    $('#itemSubCategory').show();
+                success: function(result){
+                    if(status == false){  
+                        $('#itemSubCategory').html(result);
+                        $('#itemSubCategory').show();
+                    }else{
+                        $('#itemSubCategory').hide();
+                    }
                 }
             });
 

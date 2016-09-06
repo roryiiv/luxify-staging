@@ -8,8 +8,8 @@ $num_notif = count($notifs);
     <ul class="list-unstyled navigation mb-0">
         <li class="sidebar-category pt-0">@lang('dashboard.sb_db_main')</li>
         <li><a href="{{func::set_url('/dashboard/profile')}}" class="bubble active"><i class="ti-user"></i><span class="sidebar-title">@lang('dashboard.sb_db_profile')</span></a></li>
-        <li><a href="{{func::set_url('/dashboard/mailbox')}}" class="bubble"><i class="ti-email"></i><span class="sidebar-title">@lang('dashboard.sb_db_inquires')</span><span class="badge bg-danger">{{$num_notif}}</span></a></li>
-        <li><a href="{{func::set_url('/dashboard/wishlist')}}" class="bubble"><i class="ti-heart"></i><span class="sidebar-title">@lang('dashboard.sb_db_wishlist')</span></a></li>
+        <li><a href="{{func::set_url('/dashboard/mailbox')}}" class="bubble"><i class="ti-email"></i><span class="sidebar-title">@lang('dashboard.sb_db_wishlist')</span><span class="badge bg-danger">{{$num_notif}}</span></a></li>
+        <li><a href="{{func::set_url('/dashboard/wishlist')}}" class="bubble"><i class="ti-heart"></i><span class="sidebar-title">@lang('dashboard.sb_db_inquires')</span></a></li>
         <li class="sidebar-category">@lang('dashboard.sb_db_comingsoon')</li>
         <li><a href="" class="non-clickable"><i class="ti-comment"></i><span class="sidebar-title">@lang('dashboard.sb_db_chat') </span><span class="label label-outline label-default">@lang('dashboard.sb_db_comingsoon')</span></a></li>
         <li><a href="" class="non-clickable"><i class="ti-heart" ></i><span class="sidebar-title">@lang('dashboard.sb_db_crm')  </span><span class="label label-outline label-default">@lang('dashboard.sb_db_comingsoon')</span></a></li>

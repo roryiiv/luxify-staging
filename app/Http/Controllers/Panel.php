@@ -571,12 +571,22 @@ class Panel extends Controller
             $error_arr['itemAvailability'] = 'Item Availability is not specified.';
         }
 
-        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
+        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ){
+            if( isset($_POST['itemSubCategory']) && !empty($_POST['itemSubCategory']) ){
+                $item->new_category = $_POST['itemSubCategory'];
+            } else {
+                $item->new_category = $_POST['itemCategory'];
+            }
+        } else {
+                $error_arr['itemCategory'] = 'Item Category is not specified.';
+        }
+
+        /*if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
             echo '1';
-            $item->new_category = $_POST['itemCategory'];
+            $item->categoryId = $_POST['itemCategory'];
         } else {
             $error_arr['itemCategory'] = 'Item Category is not specified.';
-        }
+        }*/
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             echo '1';
@@ -1030,7 +1040,7 @@ class Panel extends Controller
           	$filter[] = ['listings.status', $_GET['status']];
       	}
       	if(isset($_GET['category']) && !empty($_GET['category'])){
-          	$filter[] = ['listings.new_category', $_GET['category']];
+          	$filter[] = ['listings.categoryId', $_GET['category']];
       	}
       	if(isset($_GET['view-perpage']) && !empty($_GET['view-perpage'])){
           	$per_page = $_GET['view-perpage'];
@@ -1110,27 +1120,27 @@ class Panel extends Controller
 
     public function products_edit(Request $request, $itemId) {
         $item = Listings::where('id', $itemId)->first();
-        //$categoryId = $item->categoryId;
         $categoryId = $item->new_category;
         $activedata = DB::table('category_2')->where('id',$categoryId)->first();
         $opt = json_decode($item->optional_field);
 
-        if(($activedata->parent)== 0){
+        if(($activedata->id)== 135 || ($activedata->id)== 136 || ($activedata->id)== 137){
             $dataparent = DB::table('category_2')->where('parent',0)->get();
-            $cat1= '';
+            $cat1= "<option value=''>--Please Select--</option>";
+            $cat2="<option value=''>-</option>";
 
             foreach ($dataparent as $value) {
-                $cat1 .= "<option value=".$value->id." ".func::selected($item->categoryId, $value->id).">".$value->name."</option>";
+                $cat1 .= "<option value=".$value->id." ".func::selected($item->new_category, $value->id).">".$value->name."</option>";
             }
 
             $item['itemCategory'] = $cat1;
-            $item['itemSubCategory'] = '';
+            $item['itemSubCategory'] = $cat2;
 
         } else {
             $dataparent = DB::table('category_2')->where('parent',0)->get();
             $parent = DB::table('category_2')->where('id',$activedata->id)->value('parent');
-            $cat1= '';
-            $cat2= '';
+            $cat1= "<option value=''>--Please Select--</option>";
+            $cat2= "<option value=''>--Please Select--</option>";
 
             foreach ($dataparent as $value) {
                 $cat1 .= "<option value=".$value->id." ".func::selected($value->id, $parent).">".$value->name."</option>";
@@ -1138,7 +1148,7 @@ class Panel extends Controller
 
             $datachild = DB::table('category_2')->where('parent',$parent)->get();
             foreach ($datachild as $values) {
-                $cat2 .= "<option value=".$values->id." ".func::selected($values->id, $datachild).">".$values->name."</option>";
+                $cat2 .= "<option value=".$values->id." ".func::selected($values->id, $categoryId).">".$values->name."</option>";
             }
             $item['itemCategory'] = $cat1;
             $item['itemSubCategory'] = $cat2;
