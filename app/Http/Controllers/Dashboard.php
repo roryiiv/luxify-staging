@@ -791,7 +791,7 @@ class Dashboard extends Controller
         $filter = array();
         $filter_or = array();
         $filter[] = ['wishlists.userId', $this->user_id];
-        // $filter[] = ['deleted', 0];
+        $filter[] = ['deleted', 0];
         if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
             $filter[] = ['listings.title', 'like', '%'.$_GET['txtProductName'].'%'];
             $filter_or[] = ['listings.description', 'like', '%'.$_GET['txtProductName'].'%'];
