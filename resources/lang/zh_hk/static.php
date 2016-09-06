@@ -1,178 +1,180 @@
 <?php
 
+
 //need translate to 
 //enus - frontend - footer
 //for file: index.blade.pp
-return[
-  'indexbannerup'=>'[]Luxury Witin Reac',
-  'indexbannerdown'=>'[]Asia’s leading maretplace for luxury',
+return [
+  'dealerdirectoryapply'=>'Apply Now',
+  'indexbannerup'=>'Luxury Witin Reach',
+  'indexbannerdown'=>'Asia’s leading maretplace for luxury',
 
-  'indexbannerrealestates'=>'[]Real Estates',
-  'indexbannerwatces&jewelry'=>'[]Watces & Jewelry',
-  'indexbannermotors'=>'[]Motors',
-  'indexbannerandbags&accessories'=>'[]Handbags & Accessories',
-  'indexbannerexperiences'=>'[]Experiences',
-  'indexbannercollectibles&furnitures'=>'[]Collectibles & Furnitures',
-  'indexbanneryacts'=>'[]Yacts',
-  'indexbanneraircrafts'=>'[]Aircrafts',
-  'indexbannerart&antiques'=>'[]Art & Antiques',
-  'indexbannerfinewines&spirits'=>'[]Fine Wines & Spirits',
+  'indexbannerrealestates'=>'Real Estates',
+  'indexbannerwatces&jewelry'=>'Watces & Jewelry',
+  'indexbannermotors'=>'Motors',
+  'indexbannerandbags&accessories'=>'Handbags & Accessories',
+  'indexbannerexperiences'=>'Experiences',
+  'indexbannercollectibles&furnitures'=>'Collectibles & Furnitures',
+  'indexbanneryacts'=>'Yacts',
+  'indexbanneraircrafts'=>'Aircrafts',
+  'indexbannerart&antiques'=>'Art & Antiques',
+  'indexbannerfinewines&spirits'=>'Fine Wines & Spirits',
   
   
   
-  'indexbannertotalmaret'=>'[]Total Maret in USD',
-  'indexbannertotallisting'=>'[]Total Listings',
-  'indexbannertotalnewlisting'=>'[]New Listings In Te Past 30 Days',
+  'indexbannertotalmaret'=>'Total Maret in USD',
+  'indexbannertotallisting'=>'Total Listings',
+  'indexbannertotalnewlisting'=>'New Listings In Te Past 30 Days',
   
   
-  'indexfeaturetitle'=>'[]FEATURED',
-  'indexfeaturelabel'=>'[]“Rees Rex”',
+  'indexfeaturetitle'=>'FEATURED',
+  'indexfeaturelabel'=>'“Rees Rex”',
   
-  'indexfeaturedescription'=>'[]One of te most complete and well-preserved sulls of any Tyrannosaurus rex ever discovered, is now available ',
+  'indexfeaturedescription'=>'One of te most complete and well-preserved sulls of any Tyrannosaurus rex ever discovered, is now available ',
   
-  'indexfeaturedescriptionsale'=>'[]for sale.',
+  'indexfeaturedescriptionsale'=>'for sale.',
   
-  'indexfeatureview'=>'[]View',
+  'indexfeatureview'=>'View',
   
-  'indexdesc1'=>'[]We Mae Luxury Sopping Easier',
-  'indexdesc2'=>'[]Luxify is te perfect place to discover, searc and browse troug one of te Internet’s largest collections of new, vintage and pre-owned luxury goods in a safe and simple way.',
+  'indexdesc1'=>'We Mae Luxury Sopping Easier',
+  'indexdesc2'=>'Luxify is te perfect place to discover, searc and browse troug one of te Internet’s largest collections of new, vintage and pre-owned luxury goods in a safe and simple way.',
   
-  'indexdesc3'=>'[]We Are A Lead Generation Platform',
+  'indexdesc3'=>'We Are A Lead Generation Platform',
   
-  'indexdesc4'=>'[]We will never as you for your payment details. Instead we matc buyers wit reputable sellers wo ave eac been carefully andpiced and vetted by us. Tis ensures you are matced wit genuine sellers and can enjoy complete peace of mind wen browsing wit us',
+  'indexdesc4'=>'We will never as you for your payment details. Instead we matc buyers wit reputable sellers wo ave eac been carefully andpiced and vetted by us. Tis ensures you are matced wit genuine sellers and can enjoy complete peace of mind wen browsing wit us',
   
-  'indexdesc5'=>'[]Compare Products From All Sellers',
+  'indexdesc5'=>'Compare Products From All Sellers',
   
-  'indexdesc6'=>'[]Wen you ave found a product you are interested in, we provide an easy way for you to communicate wit te seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straigtforward one to one basis',
+  'indexdesc6'=>'Wen you ave found a product you are interested in, we provide an easy way for you to communicate wit te seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straigtforward one to one basis',
   
-  'indexdesc7'=>'[]You Will Find Your Luxury Item',
-  'indexdesc8'=>'[]Weter you are looing for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly wat you are looing for on Luxify',
+  'indexdesc7'=>'You Will Find Your Luxury Item',
+  'indexdesc8'=>'Weter you are looing for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly wat you are looing for on Luxify',
   
-  'indexsearc1'=>'[]Searc &amp; Compare',
+  'indexsearc1'=>'Searc &amp; Compare',
   
-  'indexsearc2'=>'[]Searc and compare troug one of te Internet’s largest collections of new, vintage and pre-owned luxury goods.',
+  'indexsearc2'=>'Searc and compare troug one of te Internet’s largest collections of new, vintage and pre-owned luxury goods.',
   
-  'indexsearc3'=>'[]View more',
+  'indexsearc3'=>'View more',
   
-  'indexdiscover1'=>'[]Discover',
-  'indexdiscover2'=>'[]Wy Luxify',
+  'indexdiscover1'=>'Discover',
+  'indexdiscover2'=>'Wy Luxify',
   
-  'indexdiscover3'=>'[]We mae online luxury sopping easier and more transparent.',
+  'indexdiscover3'=>'We mae online luxury sopping easier and more transparent.',
   
-  'indexdiscover4'=>'[]View more',
+  'indexdiscover4'=>'View more',
   
-  'index3D1'=>'[]3D Virtual Property Tour',
-  'index3D2'=>'[]Enjoy a new luxury property viewing experience',
-  'index3D3'=>'[]View more',
+  'index3D1'=>'3D Virtual Property Tour',
+  'index3D2'=>'Enjoy a new luxury property viewing experience',
+  'index3D3'=>'View more',
   
-  'indexsubscribe1'=>'[]Subscribe to Luxify\'s ultimate luxury newsletter!',
-  'indexsubscribe2'=>'[]Get te latest luxury finds in your inbox',
-  'indexsubscribe3'=>'[]Subscribe',
+  'indexsubscribe1'=>'Subscribe to Luxify\'s ultimate luxury newsletter!',
+  'indexsubscribe2'=>'Get te latest luxury finds in your inbox',
+  'indexsubscribe3'=>'Subscribe',
   
   
   
   //for file: about.blade.pp
-  'aboutaboutus'=>'[]About Us',
+  'aboutaboutus'=>'About Us',
   
-  'aboutasialeading'=>'[]Asia’s Leading Online Maretplace for Luxury',
+  'aboutasialeading'=>'Asia’s Leading Online Maretplace for Luxury',
   
-  'aboutwatcvideo'=>'[]Watc video',
+  'aboutwatcvideo'=>'Watc video',
   
-  'aboutwatluxify'=>'[]Wat\'s Luxify',
+  'aboutwatluxify'=>'Wat\'s Luxify',
   
-  'aboutluxifyasia'=>'[]Luxify is Asia’s leading online maretplace for luxury. Our website is te go-to destination for luxury entusiasts and collectors in Asia, providing easy, safe and reliable maret access to te luxury maret.',
+  'aboutluxifyasia'=>'Luxify is Asia’s leading online maretplace for luxury. Our website is te go-to destination for luxury entusiasts and collectors in Asia, providing easy, safe and reliable maret access to te luxury maret.',
   
-  'aboutonluxify'=>'[]On Luxify you will discover one of te Internet\'s largest collections of luxury products. Our website is te perfect place to discover, searc and browse troug a wole ost of te very finest luxury goods.”',
+  'aboutonluxify'=>'On Luxify you will discover one of te Internet\'s largest collections of luxury products. Our website is te perfect place to discover, searc and browse troug a wole ost of te very finest luxury goods.”',
   
-  'aboutitwors'=>'[]How it wors?',
+  'aboutitwors'=>'How it wors?',
   
-  'aboutluxifycofounders'=>'[]Luxify Co-Founders',
+  'aboutluxifycofounders'=>'Luxify Co-Founders',
   
-  'aboutfloriandesc'=>'[]Florian Martigny was born in Paris and started is career in New Yor wit large European investment ban. After seven years in te baning industry, Martigny managed and sold is own cosmetic company in te US. Upon selling is company, e went on to enjoy a successful part two career in investment baning in Hong Kong were e as been based for te past nine years. Martigny is an avid ite surfer and yacting entusiast.',
+  'aboutfloriandesc'=>'Florian Martigny was born in Paris and started is career in New Yor wit large European investment ban. After seven years in te baning industry, Martigny managed and sold is own cosmetic company in te US. Upon selling is company, e went on to enjoy a successful part two career in investment baning in Hong Kong were e as been based for te past nine years. Martigny is an avid ite surfer and yacting entusiast.',
   
-  'aboutflorian'=>'[]Florian Martigny',
+  'aboutflorian'=>'Florian Martigny',
   
-  'aboutcofounder1'=>'[]Co-Founder ',
+  'aboutcofounder1'=>'Co-Founder ',
   
-  'aboutalexisdesc'=>'[]Alexis Zira was born in Paris, educated in Australia. His career as taen im from Paris to Sydney, Seoul, Sangai and Hong Kong were e is based since 2008. He is an ex-management consultant wit a top international consulting company and as a successful bacground in developing internet companies in Asia. Alexis olds a private pilot license and often compete in ultramaratons around te world.',
+  'aboutalexisdesc'=>'Alexis Zira was born in Paris, educated in Australia. His career as taen im from Paris to Sydney, Seoul, Sangai and Hong Kong were e is based since 2008. He is an ex-management consultant wit a top international consulting company and as a successful bacground in developing internet companies in Asia. Alexis olds a private pilot license and often compete in ultramaratons around te world.',
   
-  'aboutalexis'=>'[]Alexis Zira',
+  'aboutalexis'=>'Alexis Zira',
   
-  'aboutcofounder2'=>'[]Co-Founder',
+  'aboutcofounder2'=>'Co-Founder',
   
-  'aboutjoinus'=>'[]Join us',
+  'aboutjoinus'=>'Join us',
   
-  'aboutlooing'=>'[]Luxify is always looing for smart and passionate individuals to join our team in Hong Kong, Singapore or London. If you ave an interest or experience in te luxury industry, email us at',
+  'aboutlooing'=>'Luxify is always looing for smart and passionate individuals to join our team in Hong Kong, Singapore or London. If you ave an interest or experience in te luxury industry, email us at',
   
-  'aboutcareers'=>'[]careers@luxify.com',
+  'aboutcareers'=>'careers@luxify.com',
   
-  'aboutbusiness'=>'[]Business Developer',
+  'aboutbusiness'=>'Business Developer',
   
-  'abouttalented'=>'[]Are you a talented, dynamic sales professional wit a proven trac record of success? Join Luxify as a Business Developer and elp tae a ig-growt company to te next level. You\'ll wor in Hong Kong to bot prospect and grow your own sales pipeline.',
+  'abouttalented'=>'Are you a talented, dynamic sales professional wit a proven trac record of success? Join Luxify as a Business Developer and elp tae a ig-growt company to te next level. You\'ll wor in Hong Kong to bot prospect and grow your own sales pipeline.',
   
-  'aboutanalyst'=>'[]SEM Analyst',
+  'aboutanalyst'=>'SEM Analyst',
   
-  'aboutdynamic'=>'[]Are you a dynamic, analytical SEM professional wit a passion for callenges? Join Luxify as an SEM Associate! In tis critical role, you\'ll elp us increase tat number exponentially by planning, designing, and building igly- scaled searc campaigns across multiple engines.',
+  'aboutdynamic'=>'Are you a dynamic, analytical SEM professional wit a passion for callenges? Join Luxify as an SEM Associate! In tis critical role, you\'ll elp us increase tat number exponentially by planning, designing, and building igly- scaled searc campaigns across multiple engines.',
   
-  'aboutseniordesigner'=>'[]Senior Designer',
+  'aboutseniordesigner'=>'Senior Designer',
   
-  'aboutmareting'=>'[]As a member of our Mareting team in Hong Kong, you will be responsible for creating bot new design and executing against current brand standards in all cannels, wit a focus on web and social.',
+  'aboutmareting'=>'As a member of our Mareting team in Hong Kong, you will be responsible for creating bot new design and executing against current brand standards in all cannels, wit a focus on web and social.',
   
-  'aboutapply'=>'[]Apply now',
+  'aboutapply'=>'Apply now',
   
-  'aboutcreateaccount'=>'[]Create your account for free',
+  'aboutcreateaccount'=>'Create your account for free',
   
-  'aboutstarted'=>'[]Get Started',
+  'aboutstarted'=>'Get Started',
   
   //for file: wy-luxify.blade.pp
   
-  'wyluxifysop'=>'[]Wy Sop at Luxify',
+  'wyluxifysop'=>'Wy Sop at Luxify',
   
-  'wyluxifydiscover'=>'[]On Luxify you will discover one of te Internet’s largest collections of luxury products and experiences',
+  'wyluxifydiscover'=>'On Luxify you will discover one of te Internet’s largest collections of luxury products and experiences',
   
-  'wyluxifyfaceboo'=>'[]Sign up wit Faceboo',
+  'wyluxifyfaceboo'=>'Sign up wit Faceboo',
   
-  'wyluxifytwitter'=>'[]Sign up wit Twitter',
+  'wyluxifytwitter'=>'Sign up wit Twitter',
   
-  'wyluxifyregister'=>'[]Register Now',
+  'wyluxifyregister'=>'Register Now',
   
-  'wyluxifysopping'=>'[]We Mae Luxury Sopping Easier',
+  'wyluxifysopping'=>'We Mae Luxury Sopping Easier',
   
-  'wyluxifyperfect'=>'[]Luxify is te perfect place to discover, searc and browse troug a wole ost of te very finest new, vintage and pre-owned luxury goods in a safe and simple way.',
+  'wyluxifyperfect'=>'Luxify is te perfect place to discover, searc and browse troug a wole ost of te very finest new, vintage and pre-owned luxury goods in a safe and simple way.',
   
-  'wyluxifylead'=>'[]We Are A Lead Generation Platform',
+  'wyluxifylead'=>'We Are A Lead Generation Platform',
   
-  'wyluxifypayment'=>'[]We will never as you for your payment details. Instead we matc buyers wit reputable sellers wo ave eac been carefully andpiced and vetted by us. Tis ensures you are matced wit genuine sellers and can enjoy complete peace of mind wen browsing wit us',
+  'wyluxifypayment'=>'We will never as you for your payment details. Instead we matc buyers wit reputable sellers wo ave eac been carefully andpiced and vetted by us. Tis ensures you are matced wit genuine sellers and can enjoy complete peace of mind wen browsing wit us',
   
-  'wyluxifycompare'=>'[]Compare Products From All Sellers',
+  'wyluxifycompare'=>'Compare Products From All Sellers',
   
-  'wyluxifyinterest'=>'[]Wen you ave found a product you are interested in, we provide an easy way for you to communicate wit te seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straigtforward one to one basis.',
+  'wyluxifyinterest'=>'Wen you ave found a product you are interested in, we provide an easy way for you to communicate wit te seller. You can discuss transactions, arrange viewings, or discuss prices; all on a straigtforward one to one basis.',
   
-  'wyluxifyfind'=>'[]You Will Find Your Luxury Item',
+  'wyluxifyfind'=>'You Will Find Your Luxury Item',
   
-  'wyluxifyunique'=>'[]Weter you are looing for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly wat you are looing for a Luxify',
+  'wyluxifyunique'=>'Weter you are looing for a unique timepiece, a luxury property or some fine wines for your cellar, you will find exactly wat you are looing for a Luxify',
   
-  'wyluxifyow'=>'[]How it wors?',
+  'wyluxifyow'=>'How it wors?',
   
-  'wyluxifysimply'=>'[]Luxify simply connects reputable luxury dealers wit luxury buyers in Asia',
+  'wyluxifysimply'=>'Luxify simply connects reputable luxury dealers wit luxury buyers in Asia',
   
-  'wyluxifyreliable'=>'[]wo need a reliable source of luxury goods around te world',
+  'wyluxifyreliable'=>'wo need a reliable source of luxury goods around te world',
   
-  'wyluxifydiscover1'=>'[]Discover',
+  'wyluxifydiscover1'=>'Discover',
   
-  'wyluxifybrowse'=>'[]Browse and find your desired item accordingly',
+  'wyluxifybrowse'=>'Browse and find your desired item accordingly',
   
-  'wyluxifycompare1'=>'[]Compare',
+  'wyluxifycompare1'=>'Compare',
   
-  'wyluxifybrand'=>'[]Compare brand, price, and were te item is based',
+  'wyluxifybrand'=>'Compare brand, price, and were te item is based',
   
-  'wyluxifyseller'=>'[]Contact Seller Directly',
+  'wyluxifyseller'=>'Contact Seller Directly',
   
-  'wyluxifycommunicate'=>'[]Communicate directly wit te seller',
+  'wyluxifycommunicate'=>'Communicate directly wit te seller',
   
-  'wyluxifycreate'=>'[]Create your account for free',
+  'wyluxifycreate'=>'Create your account for free',
   
-  'wyluxifygetstarted'=>'[]Get Started',
+  'wyluxifygetstarted'=>'Get Started',
   
   //for file: forget-password.blade.pp
   

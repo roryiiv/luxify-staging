@@ -51,8 +51,9 @@ class Handler extends ExceptionHandler
 
     public function render($request, Exception $e)
     {
-      if ($_SERVER['HTTP_HOST'] === 'www.luxify.com' || $_SERVER['HTTP_HOST'] === 'luxify.com') {
+//      if ($_SERVER['HTTP_HOST'] === 'www.luxify.com' || $_SERVER['HTTP_HOST'] === 'luxify.com') {
       
+      if(false) {
         $mores = DB::table('listings') ->where('status', 'APPROVED')
         ->join('countries', 'countries.id', '=', 'listings.countryId')
         ->leftJoin('users', 'listings.userId', '=', 'users.id')

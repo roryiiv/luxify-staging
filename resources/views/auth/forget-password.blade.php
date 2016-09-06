@@ -132,7 +132,7 @@
             @else
             <div class="v2">
             @endif
-                <div class="logo"><a target="_self" href='/'><img src="./build/images/logo/logo-dark.png" alt="" width="160"></a></div>
+                <div class="logo"><a target="_self" href='/'><img src="{{ url('./build/images/logo/logo-dark.png') }}" alt="" width="160"></a></div>
                 @if(isset($_GET['success']))
                 	<div class="form-group">
                         <div class="col-xs-12">@lang('static.forget_password_email')</div>
@@ -178,10 +178,10 @@
     <!-- Bootstrap JavaScript-->
     <script type="text/javascript" src="{{url('./plugins/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Custom JS-->
-    <script type="text/javascript" src="./build/js/first-layout/extra-demo.js"></script>
-    <script type="text/javascript" src="/js/bundle.min.js"></script>
-    <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery.customForms.js"></script>
+    <script type="text/javascript" src="{{url('/build/js/first-layout/extra-demo.js') }}"></script>
+    <script type="text/javascript" src="{{url('js/bundle.min.js') }}"></script>
+    <script type="text/javascript" src="{{url('db/js/jquery.validate.min.js') }}"></script>
+    <script type="text/javascript" src="{{url('assets/js/jquery.customForms.js') }}"></script>
 
     <script>
       
