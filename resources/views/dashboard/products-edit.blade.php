@@ -278,8 +278,7 @@
                         <div class="form-group">
                             <label for="optionalFields" class="col-sm-3 control-label title_details">@lang('dashboard.product_edit_optional')</label>
                             
-                                <div class="col-sm-9 col-sm-offset-3 details_box" id="optionFields">
-        
+                                <div class="col-sm-9 col-sm-offset-3" id="optionFields">{!! $item->optionFields !!}</div>
                         </div>
                         <!-- <div class="form-group details_specs">
                             <label class="col-sm-3 control-label title_details">Details/specs (Optional) <i class="fa fa-chevron-down" aria-hidden="true"></i></label>
@@ -509,42 +508,39 @@
 
 <script>
     <?php
-    $otherImages = json_decode($item->images);
-    foreach ($otherImages as $key => $img) {
-        if(!file_exists(func::img_url($item->mainImageUrl, 100, ''))){
-        	unset($otherImages[$key]);
-        }
-    }
-    //check if the mainImage is exist on images
-    $check_mainImage = array();
-    $check_mainImage[] = $item->mainImageUrl;
 
-    // fix issue here.
-    if(is_array($otherImages && $otherImages != null)){
-    	$checking = array_intersect($otherImages, $check_mainImage);
-    }else{
-    	if ($otherImages != null) {
-    		$check_mainImage[] = $otherImages;
-    	}else{
-    		$checking = $check_mainImage;
-    	}
-    	$checking = $check_mainImage;
+    $otherImages = json_decode($item->images);
+    $s3_url = 'https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
+    if (is_array($otherImages)) {
+	    foreach ($otherImages as $key => $img) {
+	    	$check_img = get_headers($s3_url . $img);
+          // check where there are 404 images 
+	        if($check_img[0] != 'HTTP/1.1 200 OK'){
+		        unset($otherImages[$key]);
+	       }
+	     }
+    } else {
+      $otherImages = array(); 
     }
+
+    $check_mainImg = get_headers($s3_url . $item->mainImageUrl);
+    $mainImage = array();
+    if($check_mainImg[0] == 'HTTP/1.1 200 OK'){
+      $mainImage[] = $item->mainImageUrl; 
+    }
+
+    // Martins fix
+    // remove duplicate mainImage in other image
+    $otherImages = array_diff($otherImages, $mainImage);
+
+    // concat the all image array
+    $images_arr = array_merge($mainImage, $otherImages);
     $images = array();
-    if(count($checking)===0){
-        //images is not contain mainImageurl
-        if(file_exists(func::img_url($item->mainImageUrl, 100, ''))){
-            $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
-        }
-        for($i = 0; $i < count($otherImages); $i++) {
-            $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
-        }
-    }else{
-        //images is contain mainImageurl
-        for($i = 0; $i < count($checking); $i++) {
-        $images[] = array('path'=>func::img_url($checking[$i], 100, ''), 'filename'=>$checking[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($checking[$i]));
-        }
+
+    foreach($images_arr as $img) {
+      $images[] = array('path' => func::img_url($img, 100, ''), 'filename'=> $img, 'onS3' => true, 'alt_text' => $s_meta::get_slug_img($img));
     }
+
     ?>
     var images_array = <?php echo json_encode($images, JSON_PRETTY_PRINT); ?>;
     var optionalFields = <?php echo json_encode($item->optionFields, JSON_PRETTY_PRINT) ?>;

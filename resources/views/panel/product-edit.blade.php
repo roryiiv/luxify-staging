@@ -1,6 +1,5 @@
 @inject('s_meta', 'App\Meta')
 @extends('layouts.panel')
-
 @section('head')
 <!-- PACE-->
 <link rel="stylesheet" type="text/css" href="/db/css/pace-theme-flash.css">
@@ -180,21 +179,25 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="itemCategory" class="col-sm-3 control-label">@lang('panel.product_edit_category3')</label>
-                        <div class="col-sm-9">
-                            <select id="itemCategory" name="itemCategory" class="form-control" required>
-
-                                <option value="">--Please Select--</option>
-                                <?php $categories = func::build_categories('leaf'); ?>
-
-                                @foreach($categories as $category)
-                                    <option {{func::selected($item->categoryId, $category['id'])}}  value="{{ $category['id'] }}">{{ $category['hierarchy'] }}</option>
-                                @endforeach
-
-                            </select>
+                   <div class="form-group">
+                            <label for="itemCategory" class="col-sm-3 control-label">@lang('dashboard.product_edit_itemcategory')</label>
+                            <div class="col-sm-9">
+                                <select id="itemCategory" name="itemCategory" class="form-control" required>
+                                    {!! $item->itemCategory!!}
+                                </select>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <label for="itemSubCategory" class="col-sm-3 control-label">@lang('dashboard.product_edit_itemsub')</label>
+                            <div class="col-sm-9">
+                           
+                                <select id="itemSubCategory" name="itemSubCategory" class="form-control" >
+                                    {!!$item->itemSubCategory!!}
+                                   
+                                </select>
+                            </div>
+                        </div>
                 </div>
             </fieldset>
 
@@ -305,10 +308,9 @@
                             <input id="startDate" name='expiryDate' type="text" class="form-control" value="{{ $expired_at ? date_format($expired_at, "Y-m-d"):'' }}">
                         </div>
                     </div>
-                    <div class="form-group details_specs">
-                        <label class="col-sm-3 control-label title_details">@lang('panel.product_edit_opt')<i class="fa fa-chevron-down" aria-hidden="true"></i></label>
-                        <div class="col-sm-9 details_box" id="optionFields">
-                        </div>
+                    <div class="form-group">
+                        <label for="optionalFields" class="col-sm-3 control-label title_details">@lang('dashboard.product_edit_optional')</label>
+                        <div class="col-sm-9 col-sm-offset-3" id="optionFields">{!! $item->optionFields !!}</div>
                     </div>
                 </div>
             </fieldset>
@@ -532,46 +534,37 @@
 <script>
     
     <?php
+
     $otherImages = json_decode($item->images);
     $s3_url = 'https://s3-ap-southeast-1.amazonaws.com/luxify/images/';
     if (is_array($otherImages)) {
 	    foreach ($otherImages as $key => $img) {
 	    	$check_img = get_headers($s3_url . $img);
+          // check where there are 404 images 
 	        if($check_img[0] != 'HTTP/1.1 200 OK'){
 		        unset($otherImages[$key]);
-	        }
-	    }
+	       }
+	     }
+    } else {
+      $otherImages = array(); 
     }
-    
-    //check if the mainImage is exist on images
-    $check_mainImage = array();
-    $check_mainImage[] = $item->mainImageUrl;
-    // fix issue here.
-    if(is_array($otherImages) && $otherImages != null){
-    	$checking = array_intersect($otherImages, $check_mainImage);
-    }else{
-    	if ($otherImages != null) {
-    		$check_mainImage[] = $otherImages;
-    	}
-    	$checking = $check_mainImage;
-    }
-    $images = array();
-    if(count($checking)===0){
-        //images is not contain mainImageurl
-        $check_mainImg = get_headers($s3_url . $item->mainImageUrl);
-        
-        if($check_mainImg[0] == 'HTTP/1.1 200 OK'){
-            $images[] = array('path'=>func::img_url($item->mainImageUrl, 100, ''), 'filename'=>$item->mainImageUrl, 'onS3' => true, 'alt_text' =>$s_meta::get_slug_img($item->mainImageUrl) );
-        }
 
-        for($i = 0; $i < count($otherImages); $i++) {
-            $images[] = array('path'=>func::img_url($otherImages[$i], 100, ''), 'filename'=>$otherImages[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($otherImages[$i]));
-        }
-    }else{
-        //images contain mainImageurl
-        for($i = 0; $i < count($checking); $i++) {
-        $images[] = array('path'=>func::img_url($checking[$i], 100, ''), 'filename'=>$checking[$i], 'onS3' => true,'alt_text' =>$s_meta::get_slug_img($checking[$i]));
-        }
+    $check_mainImg = get_headers($s3_url . $item->mainImageUrl);
+    $mainImage = array();
+    if($check_mainImg[0] == 'HTTP/1.1 200 OK'){
+      $mainImage[] = $item->mainImageUrl; 
+    }
+
+    // Martins fix
+    // remove duplicate mainImage in other image
+    $otherImages = array_diff($otherImages, $mainImage);
+
+    // concat the all image array
+    $images_arr = array_merge($mainImage, $otherImages);
+    $images = array();
+
+    foreach($images_arr as $img) {
+      $images[] = array('path' => func::img_url($img, 100, ''), 'filename'=> $img, 'onS3' => true, 'alt_text' => $s_meta::get_slug_img($img));
     }
 
     ?>
@@ -752,7 +745,44 @@
                 $("#update-product-form").modal('show');
             }
         });
-        $('#itemCategory').on('change', function(){
+
+        $('#itemCategory').on('change',function(){
+            var parent = $(this).val();
+            console.log(parent);
+            $.ajax({
+                url : '/api/ajax/category/'+parent,
+                method : 'get',
+                success: function(result){  
+                    $('#itemSubCategory').html(result);
+                    $('#itemSubCategory').show();
+                }
+            });
+
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url : '/api/ajax/optional-fields/'+id,
+                method : 'get',
+                success: function(result){  
+                    $('#optionFields').html(result);
+                    $('#optionFields').show();
+
+                }
+            });
+        });
+        $('#itemSubCategory').on('change',function(){
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url : '/api/ajax/optional-fields/'+id,
+                method : 'get',
+                success: function(result){  
+                    $('#optionFields').append(result);
+                    
+                }
+            });
+        });
+        /*$('#itemCategory').on('change', function(){
             var _token = $('input[name=_token]').val();
             $.get({
                 url: '/api/category/'+ $('#itemCategory').val() + '/fields',
@@ -768,7 +798,7 @@
                     }
                 }
             });
-        });
+        });*/
 
         $('#priceOnRequest').on('click', function(){
             $('#price').prop('disabled', $('#priceOnRequest').prop('checked') );

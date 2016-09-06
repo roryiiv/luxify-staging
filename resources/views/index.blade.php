@@ -47,16 +47,10 @@
                         <!-- banner navigation -->
                         <nav class="banner-nav">
                             <ul>
-                                <li><a href="{{func::set_url('/category/real-estates')}}">@lang('static.index_banner_realestates')</a></li>
-                                <li><a href="{{func::set_url('/category/jewellery-watches')}}">@lang('static.index_banner_watches&jewelry')</a></li>
-                                <li><a href="{{func::set_url('/category/motors')}}">@lang('static.index_banner_motors')</a></li>
-                                <li><a href="{{func::set_url('/category/handbags-accessories')}}">@lang('static.index_banner_handbags&accessories')</a></li>
-                                <li><a href="{{func::set_url('/category/experiences')}}">@lang('static.index_banner_experiences')</a></li>
-                                <li><a href="{{func::set_url('/category/collectibles-furnitures')}}">@lang('static.index_banner_collectibles&furnitures')</a></li>
-                                <li><a href="{{func::set_url('/category/yachts')}}">@lang('static.index_banner_yachts')</a></li>
-                                <li><a href="{{func::set_url('/category/aircrafts')}}">@lang('static.index_banner_aircrafts')</a></li>
-                                <li><a href="{{func::set_url('/category/art-antiques')}}">@lang('static.index_banner_art&antiques')</a></li>
-                                <li><a href="{{func::set_url('/category/fine-wines-spirits')}}">@lang('static.index_banner_finewines&spirits')</a></li>
+                                <?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
+                                @foreach($categories as $value)
+                                    <li><a href="{{func::set_url('/category/'.$value->slug)}}">@lang('categories.'.$value->slug)</a></li>    
+                                @endforeach
                             </ul>
                         </nav>
                         <!-- end of banner navigation -->
@@ -129,8 +123,8 @@
                             <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
                                     <strong class="title">@lang('static.index_feature_title')</strong>
-                                    <h1 style="font-weight: 300;">@lang('static.index_feature_label')</h1>
-                                    <p>@lang('static.index_feature_description_sale')</p>
+                                    <h1 style="font-weight: 300;">“@lang('static.index_feature_label')”</h1>
+                                    <p>@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
                                     <a href="{{func::set_url('/listing/rees-rex-t-rex-skull')}}" class="btn btn-primary">@lang('static.index_feature_view')</a>
                                 </div>
                             </div>

@@ -294,6 +294,7 @@
                                 </div>
                             </div>
                             <div class="text-right mb-20">
+                            <input type="hidden" name="view-perpage" value="{{ isset($_GET['view-perpage']) && $_GET['view-perpage'] !='' ? $_GET['view-perpage'] : '' }}">
                                 <button type="submit" class="btn btn-lg btn-raised btn-success">@lang('panel.products_filter')</button>
                             </div>
                         </form>

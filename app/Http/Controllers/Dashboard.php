@@ -12,6 +12,7 @@ use App\Meta;
 use App\History;
 use App\Wishlists;
 use App\Analytics;
+use App\MyLibrary\Functions as func;
 use Response;
 
 Use Auth;
@@ -248,8 +249,79 @@ class Dashboard extends Controller
 
     public function products_edit($itemId) {
         $item = Listings::where('id', $itemId)->first();
+        $categoryId = $item->new_category;
+        $activedata = DB::table('category_2')->where('id',$categoryId)->first();
+        $opt = json_decode($item->optional_field);
+
+        if(($activedata->parent)== 0){
+            $dataparent = DB::table('category_2')->where('parent',0)->get();
+            $cat1= '';
+
+            foreach ($dataparent as $value) {
+                $cat1 .= "<option value=".$value->id." ".func::selected($item->categoryId, $value->id).">".$value->name."</option>";
+            }
+
+            $item['itemCategory'] = $cat1;
+            $item['itemSubCategory'] = '';
+
+        } else {
+            $dataparent = DB::table('category_2')->where('parent',0)->get();
+            $parent = DB::table('category_2')->where('id',$activedata->id)->value('parent');
+            $cat1= '';
+            $cat2= '';
+
+            foreach ($dataparent as $value) {
+                $cat1 .= "<option value=".$value->id." ".func::selected($value->id, $parent).">".$value->name."</option>";
+            }
+
+            $datachild = DB::table('category_2')->where('parent',$parent)->get();
+            foreach ($datachild as $values) {
+                $cat2 .= "<option value=".$values->id." ".func::selected($values->id, $datachild).">".$values->name."</option>";
+            }
+            $item['itemCategory'] = $cat1;
+            $item['itemSubCategory'] = $cat2;
+            
+        }
+
+        $optfield = '';
+        if(is_array($opt)){
+        	foreach ($opt as $id =>$isi) {
+        	   $data = DB::table('category_meta')->where('id',$id)->first();
+        	   $type = $data->meta_type;
+        	   $drop = json_decode($data->meta_value);
+        	   
+        	    if($type=='text'){
+        	        $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control" value="'.$isi.'"></div>';
+        	    }elseif($type=='number'){
+        	        $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control" value="'.$isi.'"></div>';
+        	    }elseif($type=='textarea'){
+        	        $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><textarea id="'. $data->label .'" name="optionfields['. $data->id .']" class="form-control">'.$isi.'</textarea></div>';
+        	    }elseif($type=='dropdown' || $type=='select'){
+        	        $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><select name="optionfields['. $data->id .']" class="form-control">';
+        	        foreach ($drop as $option) {
+        	            $optfield .= "<option value='".$option->value."' " . func::selected($option->value, $isi) . ">".$option->text."</option>";
+        	        }
+        	        $optfield .= '</select></div>';
+        	    }elseif($type=='radiobutton'){
+        	        $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
+        	        foreach ($drop as $option) {
+        	            $optfield .= "<input name='optionfields[".$data->id."]'  type='radio' value='".$option->value."' " . func::checked($option->value, $isi) . ">".$option->text."</br>";
+        	        }
+        	        $optfield .= '</div>';
+        	    }elseif($type=='checkbox'){
+        	        $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
+        	        for ($x=0; $x<count($drop); $x++) {
+        	            $optfield .= "<input name='optionfields[".$data->id."][".$x."]' type='checkbox' value='".$drop[$x]->value."' " . func::checked($drop[$x]->value, $isi[$x]) . ">".$drop[$x]->text."</br>";
+        	        }
+        	        $optfield .= '</div>';                
+        	    }
+        	}
+        }
+        
+        $item['optionFields'] = $optfield;
+
         if ($item) {
-            $optionalFields = DB::table('formfields')
+           /* $optionalFields = DB::table('formfields')
             ->join('formgroups', 'formgroups.formfieldId', '=', 'formfields.id')
             ->join('forms', 'formgroups.formId', '=', 'forms.id')
             ->where('forms.categoryId', $item->categoryId)
@@ -275,7 +347,7 @@ class Dashboard extends Controller
             }
             if ($optionalFields) {
                 $item['optionFields'] = $optionalFields;
-            }
+            }*/
             //additonal parameters
             $item->url_object = 'listing';
             $item->meta_title = Meta::get_data_listing($itemId,'title');
@@ -349,11 +421,22 @@ class Dashboard extends Controller
             $error_arr['itemAvailability'] = 'Item Availability is not specified.';
         }
 
-        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
+        /*if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
             $newItem->categoryId = $_POST['itemCategory'];
         } else {
             $error_arr['itemCategory'] = 'Item Category is not specified.';
+        }*/
+
+        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ){
+            if( isset($_POST['itemSubCategory']) && !empty($_POST['itemSubCategory']) ){
+                $newItem->categoryId = $_POST['itemSubCategory'];
+            } else {
+                $newItem->categoryId = $_POST['itemCategory'];
+            }
+        } else {
+                $error_arr['itemCategory'] = 'Item Category is not specified.';
         }
+
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             $newItem->title = $_POST['title'];
@@ -458,6 +541,10 @@ class Dashboard extends Controller
         $item = Listings::where('id', $itemId)->first();
         $error_arr = array();
 
+       
+        
+    
+
         //$item->userId = Auth::user()->id;
 
         if ( isset($_POST['itemLocation']) && !empty($_POST['itemLocation']) ) {
@@ -472,11 +559,21 @@ class Dashboard extends Controller
             $error_arr['itemAvailability'] = 'Item Availability is not specified.';
         }
 
-        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
+        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ){
+            if( isset($_POST['itemSubCategory']) && !empty($_POST['itemSubCategory']) ){
+                $item->categoryId = $_POST['itemSubCategory'];
+            } else {
+                $item->categoryId = $_POST['itemCategory'];
+            }
+        } else {
+                $error_arr['itemCategory'] = 'Item Category is not specified.';
+        }
+
+        /*if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
             $item->categoryId = $_POST['itemCategory'];
         } else {
             $error_arr['itemCategory'] = 'Item Category is not specified.';
-        }
+        }*/
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             $item->title = $_POST['title'];
@@ -599,6 +696,10 @@ class Dashboard extends Controller
 
         if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
             $meta['author'] = $_POST['meta_author'];
+        }
+
+        if (isset($_POST['optionfields']) && !empty($_POST['optionfields'])) {
+            $item->optional_field = json_encode($_POST['optionfields']);
         }
         //additional parameters
 /*        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
@@ -990,7 +1091,8 @@ class Dashboard extends Controller
     public  function CategoryChoosen($dataid){
 
         $cat = DB::table('category_2')->where('parent','=',$dataid)->get();
-        $return = "";
+
+        $return = "<option value=''>---Please Select---</option>";
         foreach ($cat as $value) {
             $return .= "<option value='".$value->id."'>".$value->name."</option>";
 
