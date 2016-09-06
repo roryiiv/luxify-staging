@@ -294,6 +294,7 @@
             mailChimpSub();
 
             //index category
+            suggestedSearchResults();
             search_ico();
 
             if(!isMobile()){
