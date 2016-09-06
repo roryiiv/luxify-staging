@@ -573,7 +573,7 @@ class Panel extends Controller
 
         if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
             echo '1';
-            $item->categoryId = $_POST['itemCategory'];
+            $item->new_category = $_POST['itemCategory'];
         } else {
             $error_arr['itemCategory'] = 'Item Category is not specified.';
         }
@@ -1030,7 +1030,7 @@ class Panel extends Controller
           	$filter[] = ['listings.status', $_GET['status']];
       	}
       	if(isset($_GET['category']) && !empty($_GET['category'])){
-          	$filter[] = ['listings.categoryId', $_GET['category']];
+          	$filter[] = ['listings.new_category', $_GET['category']];
       	}
       	if(isset($_GET['view-perpage']) && !empty($_GET['view-perpage'])){
           	$per_page = $_GET['view-perpage'];
@@ -1111,7 +1111,7 @@ class Panel extends Controller
     public function products_edit(Request $request, $itemId) {
         $item = Listings::where('id', $itemId)->first();
         $categoryId = $item->new_category;
-        $activedata = DB::table('category_2')->where('id', $categoryId)->first();
+        $activedata = DB::table('category_2')->where('id',$categoryId)->first();
         $opt = json_decode($item->optional_field);
 
         if(($activedata->parent)== 0){
