@@ -23,16 +23,16 @@ use Stevebauman\Translation\Facades\Translation;
 
 class Functions
 {
-    static function genTitle($pageName,  $categories) {
-      if (!($categories)) {
-          if ($pageName === 'homepage') {
-            return 'Luxify.com - Asia&#39;s Leading Marketplace for Luxury';
-          } else {
-            return $pageName . ' - Luxify';
-          } 
-      } else {
-        return $pageName;
-      }
+	static function genTitle($pageName,  $categories) {
+      	if (!($categories)) {
+          	if ($pageName === 'homepage') {
+            	return 'Luxify.com - Asia&#39;s Leading Marketplace for Luxury';
+          	}else{
+            	return $pageName . ' - Luxify';
+          	} 
+      	}else{
+        	return $pageName;
+      	}
     }
     static function trimDownText($txt, $len) {
         $txt = preg_replace('/\r|\n/', '', $txt);
