@@ -57,6 +57,7 @@ class Listings extends Model
       'description',
       'additionalInfo',
       'html_desc',
+      'optional_field',
       'metaProcessed',
       ];
     

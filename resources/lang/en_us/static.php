@@ -25,7 +25,7 @@ return[
 
 
 'index_feature_title'=>'FEATURED',
-'index_feature_label'=>'“Rees Rex”',
+'index_feature_label'=>'Rees Rex',
 
 'index_feature_description'=>'One of the most complete and well-preserved skulls of any Tyrannosaurus rex ever discovered, is now available ',
 

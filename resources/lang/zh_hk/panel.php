@@ -308,6 +308,8 @@ return[
 
 'product_edit_seo'=>'步驟5：SEO節',
 
+'category_product_edit_seo'=>'SEO節',
+
 'product_edit_seo1'=>'URL彈頭',
 
 'product_edit_seo2'=>'編輯URL',

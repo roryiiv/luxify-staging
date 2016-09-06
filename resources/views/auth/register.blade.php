@@ -9,17 +9,15 @@
     <meta name="keywords" content="luxify member registration,luxury goods">
     <meta name="description" content="Register for an account for free to discover one of the Internet’s largest collections of luxury goods and experiences.">
     <!-- PACE-->
-    <link rel="stylesheet" href="/assets/css/luxify.css">
-
-
-    <link rel="stylesheet" type="text/css" href="./plugins/PACE/themes/blue/pace-theme-flash.css">
-    <script type="text/javascript" src="./plugins/PACE/pace.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/PACE/themes/blue/pace-theme-flash.css')}}">
+    <script type="text/javascript" src="{{url('./plugins/PACE/pace.min.js')}}"></script>
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" type="text/css" href="./plugins/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Fonts-->
-    <link rel="stylesheet" type="text/css" href="./plugins/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/themify-icons/themify-icons.css')}}">
     <!-- Primary Style-->
-    <link rel="stylesheet" type="text/css" href="./build/css/first-layout.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./build/css/first-layout.css')}}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
     <!--[if lt IE 9]>

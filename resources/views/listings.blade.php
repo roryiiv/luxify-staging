@@ -82,7 +82,7 @@
                 		<!-- breadcrumb -->
                 		<ol class="breadcrumb">
                 			<li>
-                				<a href="/">Home</a>
+                				<a href="{{func::set_url('/')}}">Home</a>
                 			</li>
                 			<li class="active">{!! $title !!}</li>
                 		</ol>
@@ -100,7 +100,7 @@
                                         <?php $item = $listings[$i]; ?>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="thumbnail">
-                                                <a href="/listing/{{ $item->slug }}">
+                                                <a href="{{func::set_url('/listing/'.$item->slug) }}">
                                                     <figure>
                                                         <img class="listing-img" src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
                                                         @if(Auth::user())
@@ -114,7 +114,7 @@
                                                               @endif
                                                             @elseif(Auth::user()->role === 'admin')
                                   
-                                                                <a class="editListing" data-id="{{$item->id}}" href="/panel/product/edit/{{$item->id}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                                <a class="editListing" data-id="{{$item->id}}" href="{{func::set_url('/panel/product/edit/'.$item->id)}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
                                                                 <a class="deleteListing" data-id="{{$item->id}}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
                                                             @endif
                                                         @else
@@ -123,7 +123,7 @@
                                                     </figure>
                                                 </a>
                                                 <div class="caption">
-                                                    <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
+                                                    <h3><a href="{{func::set_url('/listing/'.$item->slug) }}">{{ $item->title }}</a></h3>
                                                     <?php
                                                     $dealer = func::getTableByID('users', $item->userId);
                                                     $sess_currency = null !==  session('currency') ? session('currency') : 'USD';
@@ -170,7 +170,6 @@
 @section('scripts')
     <script type="text/javascript" src="/assets/js/jquery.IonRangeSlider.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.unveil.js"></script>
-
     <script>
     $(document).ready(function(){
         var newstart = $('#startrange').val(),
