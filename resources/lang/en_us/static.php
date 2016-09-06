@@ -34,7 +34,7 @@ return[
 'index_feature_view'=>'View',
 
 'index_desc1'=>'We Make Luxury Shopping Easier',
-'index_desc2'=>'Luxify is the perfect place to discover, search and browse through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods in a safe and simple way.',
+'index_desc2'=>'Luxify is the perfect place to discover, search and browse through one of the Internetâ€™s largest collections of new, vintage and pre-owned luxury goods in a safe and simple way.',
 
 'index_desc3'=>'We Are A Lead Generation Platform',
 
@@ -49,7 +49,7 @@ return[
 
 'index_search1'=>'Search &amp; Compare',
 
-'index_search2'=>'Search and compare through one of the Internet’s largest collections of new, vintage and pre-owned luxury goods.',
+'index_search2'=>'Search and compare through one of the Internetâ€™s largest collections of new, vintage and pre-owned luxury goods.',
 
 'index_search3'=>'View more',
 
@@ -127,7 +127,7 @@ return[
 
 'why_luxify_shop'=>'Why Shop at Luxify',
 
-'why_luxify_discover'=>'On Luxify you will discover one of the Internet’s largest collections of luxury products and experiences',
+'why_luxify_discover'=>'On Luxify you will discover one of the Internetâ€™s largest collections of luxury products and experiences',
 
 'why_luxify_facebook'=>'Sign up with Facebook',
 
