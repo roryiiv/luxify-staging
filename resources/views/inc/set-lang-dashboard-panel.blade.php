@@ -1,4 +1,4 @@
-<div class="btn-group mt-5">
+<div class="btn-group mt-5" style="display: none;">
     <?php 
     $active = (Translation::getRoutePrefix()!=NULL)?Translation::getRoutePrefix():'en';
     $default = DB::table('languages')
