@@ -1795,7 +1795,7 @@ class Front extends Controller {
             $langcode=$code.'/';
         }
         $full_url = $request->header();
-        $host = 'http://'.$full_url['host'][0].'/';
+        $host = 'https://'.$full_url['host'][0].'/';
         $referer = $full_url['referer'][0];
 
         $get = DB::table('languages')->get();
