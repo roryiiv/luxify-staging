@@ -4,6 +4,9 @@ $num_notif = count($notifs);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<?php
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+?>
 
 <head>
     <meta charset="utf-8">
@@ -97,13 +100,13 @@ $num_notif = count($notifs);
     <!-- Header end-->
 
     <div class="main-container">
-        @if(Auth::user()->role == 'user')
+        @if($user_role == 'user')
             @include('inc.db-sidebar-user')
-        @elseif(Auth::user()->role == 'editor')
+        @elseif($user_role == 'editor')
             @include('inc.db-sidebar-editor')
-        @elseif(Auth::user()->role == 'seller')
+        @elseif($user_role == 'seller')
             @include('inc.db-sidebar-seller')
-        @elseif(Auth::user()->role == 'admin')
+        @elseif($user_role == 'admin')
             @include('inc.db-sidebar-admin')
         @else
             @include('inc.db-sidebar-user')

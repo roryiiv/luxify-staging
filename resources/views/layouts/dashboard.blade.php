@@ -4,12 +4,15 @@ $num_notif = count($notifs);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<?php
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+    ?>
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Luxify Dashboard - {{ucfirst(Auth::user()->role)}}</title>
+    <title>Luxify Dashboard - {{ucfirst($user_role)}}</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png?v=2">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png?v=2">
@@ -51,7 +54,7 @@ $num_notif = count($notifs);
 
         <ul class="notification-bar list-inline pull-right">
             <li class="visible-xs"><a href="javascript:;" role="button" class="header-icon search-bar-toggle"><i class="ti-search"></i></a></li>
-            @if(Auth::user()->role == 'seller' || Auth::user()->role == 'user')
+            @if($user_role == 'seller' || $user_role == 'user')
                 <li class="dropdown"><a id="dropdownMenu1" href="profile.html#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle bubble header-icon"><i class="ti-world"></i>
 
                         <span id="num_notif" class="badge bg-danger">{{ $num_notif == 0 ? '0' : $num_notif }}</span>
@@ -103,11 +106,11 @@ $num_notif = count($notifs);
     <!-- Header end-->
 
     <div class="main-container">
-        @if(Auth::user()->role == 'user')
+        @if($user_role == 'user')
             @include('inc.db-sidebar-user')
-        @elseif(Auth::user()->role == 'seller' && Auth::user()->dealer_status === 'approved')
+        @elseif($user_role == 'seller' && Auth::user()->dealer_status === 'approved')
             @include('inc.db-sidebar-seller')
-        @elseif(Auth::user()->role == 'admin')
+        @elseif($user_role == 'admin')
             @include('inc.db-sidebar-admin')
         @else
             @include('inc.db-sidebar-user')

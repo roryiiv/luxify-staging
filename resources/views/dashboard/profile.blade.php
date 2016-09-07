@@ -43,6 +43,9 @@
 @endsection
 
 @section('content')
+<?php
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+    ?>
     <div class="page-container">
             <div class="page-header clearfix">
                 <div class="row">
@@ -69,7 +72,7 @@
                             <h3>@lang('dashboard.profile_personal')</h3>
                             <fieldset>
                                 <div class="row">
-                                 @if(Auth::user()->role == 'user')
+                                 @if($user_role == 'user')
                                     <div class="col-md-6 pull-right">
                                         <div class="widget">
                                             <div class="widget-heading">
@@ -102,7 +105,7 @@
                                                 <input id="txtFirstNameBillingTab" name="txtFirstNameBillingTab" type="text" class="form-control" value="{{$user->username}}" disabled="disabled">
                                             </div>
                                         </div>
-                                         @if(Auth::user()->role == 'seller')
+                                         @if($user_role == 'seller')
                                     </div>
                                     <div class="col-md-6">
                                         @endif
@@ -112,7 +115,7 @@
                                                 <input id="txtUserRole" name="txtUserRole" type="text" class="form-control" value="{{ucfirst($user->role)}}" disabled="disabled">
                                             </div>
                                         </div>
-                                         @if(Auth::user()->role == 'seller')
+                                         @if($user_role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
@@ -125,7 +128,7 @@
                                                 <div class="log" style="display:none;"></div>
                                             </div>
                                         </div>
-                                         @if(Auth::user()->role == 'seller')
+                                         @if($user_role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
@@ -139,7 +142,7 @@
                                                 <input id="salt" type="hidden" name="salt">
                                             </div>
                                         </div>
-                                         @if(Auth::user()->role == 'seller')
+                                         @if($user_role == 'seller')
                                     </div>
                                     <div class="col-md-6">
                                         @endif
@@ -149,7 +152,7 @@
                                                 <input id="txtConfirmPassword" type="password" name="txtConfirmPassword" placeholder="Enter confirm password" class="form-control">
                                             </div>
                                         </div>
-                                         @if(Auth::user()->role == 'seller')
+                                         @if($user_role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
@@ -161,7 +164,7 @@
                                                 <input id="first_name" name="first_name" type="text" placeholder="{{ucfirst($user->firstName)}}" class="form-control" value="{{ !empty($user->firstName)? ucfirst($user->firstName): ''}}">
                                             </div>
                                         </div>
-                                         @if(Auth::user()->role == 'seller')
+                                         @if($user_role == 'seller')
                                     </div>
                                     <div class="col-md-6">
                                         @endif
@@ -171,7 +174,7 @@
                                                 <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ucfirst($user->lastName)}}" value="{{ !empty($user->lastName)? ucfirst($user->lastName): ''}}">
                                             </div>
                                         </div>
-                                         @if(Auth::user()->role == 'seller')
+                                         @if($user_role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
@@ -189,7 +192,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                         @if(Auth::user()->role == 'seller')
+                                         @if($user_role == 'seller')
                                     </div>
                                     <div class="col-md-6">
                                         @endif
@@ -205,7 +208,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        @if(Auth::user()->role == 'seller')
+                                        @if($user_role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
@@ -217,7 +220,7 @@
                                                 <input id="latitude" name="latitude" type="text" placeholder="{{$user->latitude}}" class="form-control">
                                             </div>
                                         </div>
-                                         @if(Auth::user()->role == 'seller')
+                                         @if($user_role == 'seller')
                                     </div>
                                     <div class="col-md-6">
                                         @endif
@@ -227,18 +230,18 @@
                                                 <input id="longitude" name="longitude" type="text" placeholder="{{$user->longitude}}" class="form-control">
                                             </div>
                                         </div>
-                                        @if(Auth::user()->role == 'seller')
+                                        @if($user_role == 'seller')
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         @endif
                                         <div class="form-group">
-                                        @if(Auth::user()->role == 'seller')
+                                        @if($user_role == 'seller')
                                             <label for="currency" class="col-sm-3 col-md-2 control-label">@lang('dashboard.profile_display1')</label>
                                             <div class="col-sm-9 col-md-10">
                                         @endif
-                                        @if(Auth::user()->role == 'user')
+                                        @if($user_role == 'user')
                                             <label for="currency" class="col-sm-3 col-md-4 control-label">@lang('dashboard.profile_display2')</label>
                                             <div class="col-sm-9 col-md-8">
                                         @endif
@@ -252,12 +255,12 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        @if(Auth::user()->role == 'seller')
+                                        @if($user_role == 'seller')
                                     </div>
                                 </div>
                                         @endif
                                 @if(Auth::user())
-                                    @if(Auth::user()->role == 'user')
+                                    @if($user_role == 'user')
                                                 <div class="col-sm-9 col-md-8 col-md-offset-4 col-sm-offset-3">
                                                     <label for="notificationCheck">
                                                         <input type="checkbox" id="notificationCheck"> @lang('dashboard.profile_wish')</label>
@@ -272,7 +275,7 @@
                                 </div>
                             </fieldset>
                             @if(Auth::user())
-                                @if(Auth::user()->role == 'seller')
+                                @if($user_role == 'seller')
                                     <h3>@lang('dashboard.profile_companyinformation')</h3>
                                     <fieldset>
                                         <div class="widget">
@@ -425,7 +428,7 @@
                                 </div>
                             </fieldset>
                             @if(Auth::user())
-                                @if(Auth::user()->role == 'seller')
+                                @if($user_role == 'seller')
                                      <h3>@lang('dashboard.profile_seo')</h3>
                                     <fieldset>
                                         <section>

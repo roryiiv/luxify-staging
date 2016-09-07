@@ -17,7 +17,8 @@
         "alfredo-ramos/parsedown-extra-laravel": "~0.4",
         "intervention/image": "^2.3",
         "teamtnt/tntsearch": "0.6.*",
-        "stevebauman/translation": "^1.4"
+        "stevebauman/translation": "^1.4",
+        "mews/captcha": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -27,6 +27,9 @@
 @endsection
 
 @section('content')
+<?php
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+?>
     <div class="page-container">
             <div class="page-header clearfix">
                 <div class="row">
@@ -173,7 +176,7 @@
                                     </div>
                                 </div>
                                 @if(Auth::user())
-                                    @if(Auth::user()->role == 'user')
+                                    @if($user_role == 'user')
                                         <div class="row">
                                             <div class="col-sm-9 col-md-10 col-md-offset-2 col-sm-offset-3">
                                                 <label for="notificationCheck">
@@ -187,7 +190,7 @@
                                 </div>
                             </fieldset>
                             @if(Auth::user())
-                                @if(Auth::user()->role == 'seller')
+                                @if($user_role == 'seller')
                                     <h3>Company Information</h3>
                                     <fieldset>
                                         <div class="widget">
@@ -305,7 +308,7 @@
                                 </div>
                             </fieldset>
                             @if(Auth::user())
-                                @if(Auth::user()->role == 'seller')
+                                @if($user_role == 'seller')
                                     <h3>Dealer Page URL</h3>
                                     <fieldset>
                                         <div class="row">

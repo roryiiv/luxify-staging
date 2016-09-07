@@ -1,3 +1,37 @@
+<?php
+if(Auth::user()->role == 'admin'){
+    
+    $admin = array(
+        'admin'=>'admin',
+        'user'=>'user',
+        'seller'=>'dealler',
+        'editor'=>'editor'
+        );
+    if(in_array(Auth::user()->role,array_keys($admin))){
+?>
+<div class="btn-group mt-5">view as :</div>
+<div class="btn-group mt-5">
+    <?php 
+    $active = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+    $label = $admin[$active];
+    ?>
+    <button type="button" class="btn btn-default btn-outline">{{$label}}</button>
+
+    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+    <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
+        <?php 
+        foreach($admin as $key => $value){ 
+            if($key!=$active){ ?>
+            <li><a href="/api/admin/switch/{{$key}}">{{$value}}</a></li>
+        <?php }
+        } ?>
+    </ul>
+</div>
+<?php
+    }
+}
+?>
+
 <div class="btn-group mt-5">
     <?php 
     $active = (Translation::getRoutePrefix()!=NULL)?Translation::getRoutePrefix():'en';

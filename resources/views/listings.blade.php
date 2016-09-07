@@ -7,7 +7,10 @@
   <title>{{ func::genTitle( $dealerName . ' Listings', false)}}</title>
 @endsection
 
-<?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+<?php 
+    $user_id = Auth::user() ? Auth::user()->id : '';
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+    ?>
 
 @section('style')
     <!-- include the site stylesheet -->
@@ -105,14 +108,14 @@
                                                         <img class="listing-img" src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
                                                         @if(Auth::user())
 
-                                                            @if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
+                                                            @if($user_role === 'user' || $user_role === 'seller')
                                                               <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
                                                               @if($added !== '')
                                                                 <a class="favourite {{$added}}" data-id="{{$item->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a>
                                                               @else
                                                                 <a class="favourite" data-id="{{$item->id}}" title="{{ $item->title }}" href="#"><span class="icon icon-heart"></span></a>
                                                               @endif
-                                                            @elseif(Auth::user()->role === 'admin')
+                                                            @elseif($user_role === 'admin')
                                   
                                                                 <a class="editListing" data-id="{{$item->id}}" href="/panel/product/edit/{{$item->id}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
                                                                 <a class="deleteListing" data-id="{{$item->id}}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
@@ -284,7 +287,7 @@
         });
         </script>
     @endif
-    @if(Auth::user() && Auth::user()->role == 'admin')
+    @if(Auth::user() && $user_role == 'admin')
       {{ csrf_field() }}
   
     @endif

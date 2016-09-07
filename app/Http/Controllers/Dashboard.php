@@ -32,6 +32,7 @@ use App\Http\Requests;
 Use Input;
 Use DB;
 use Cache;
+use Illuminate\Support\Facades\Session;
 
 class Dashboard extends Controller
 {
@@ -42,6 +43,9 @@ class Dashboard extends Controller
         if(Auth::user()){
             $this->user_id = Auth::user()->id;
             $this->user_role = Auth::user()->role;
+            if(Auth::user()->role== 'admin' && Session::get('view_as') != ''){
+                $this->user_role = Session::get('view_as');
+            }
         }
     }
     /**
@@ -429,9 +433,9 @@ class Dashboard extends Controller
 
         if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ){
             if( isset($_POST['itemSubCategory']) && !empty($_POST['itemSubCategory']) ){
-                $newItem->categoryId = $_POST['itemSubCategory'];
+                $newItem->new_category = $_POST['itemSubCategory'];
             } else {
-                $newItem->categoryId = $_POST['itemCategory'];
+                $newItem->new_category = $_POST['itemCategory'];
             }
         } else {
                 $error_arr['itemCategory'] = 'Item Category is not specified.';
@@ -561,9 +565,9 @@ class Dashboard extends Controller
 
         if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ){
             if( isset($_POST['itemSubCategory']) && !empty($_POST['itemSubCategory']) ){
-                $item->categoryId = $_POST['itemSubCategory'];
+                $item->new_category = $_POST['itemSubCategory'];
             } else {
-                $item->categoryId = $_POST['itemCategory'];
+                $item->new_category = $_POST['itemCategory'];
             }
         } else {
                 $error_arr['itemCategory'] = 'Item Category is not specified.';
@@ -789,7 +793,7 @@ class Dashboard extends Controller
         $filter = array();
         $filter_or = array();
         $filter[] = ['wishlists.userId', $this->user_id];
-        // $filter[] = ['deleted', 0];
+        $filter[] = ['deleted', 0];
         if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
             $filter[] = ['listings.title', 'like', '%'.$_GET['txtProductName'].'%'];
             $filter_or[] = ['listings.description', 'like', '%'.$_GET['txtProductName'].'%'];
@@ -1091,6 +1095,7 @@ class Dashboard extends Controller
     public  function CategoryChoosen($dataid){
 
         $cat = DB::table('category_2')->where('parent','=',$dataid)->get();
+        
 
         $return = "<option value=''>---Please Select---</option>";
         foreach ($cat as $value) {

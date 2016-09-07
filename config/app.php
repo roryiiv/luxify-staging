@@ -155,6 +155,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         TeamTNT\TNTSearch\TNTSearchServiceProvider::class,
         Stevebauman\Translation\TranslationServiceProvider::class,
+        //Mews\Captcha\CaptchaServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -221,6 +222,7 @@ return [
         'Translation' => Stevebauman\Translation\Facades\Translation::class,
         'trans' => App\MyLibrary\TranslateAPI::class,
         'MStranslation' => App\MyLibrary\PSKMicrosoftTranslatorAutoLoader::class,
+//	      'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ],
 
     'locales' => [

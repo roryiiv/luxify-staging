@@ -1,4 +1,7 @@
 @extends('layouts.panel')
+<?php
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+?>
 
 @section('head')
     <!-- PACE-->
@@ -331,13 +334,13 @@
                                                 <th>@lang('panel.products_image')</th>
                                                 <th>@lang('panel.products_name1')</th>
                                                 <th>@lang('panel.products_dealer')</th>
-                                                @if(Auth::user()->role == 'editor')
+                                                @if($user_role == 'editor')
                                                 <th class="text-right">@lang('panel.products_last')</th>
                                                 @endif
-                                                @if(Auth::user()->role != 'editor')
+                                                @if($user_role != 'editor')
                                                 <th class="text-right">@lang('panel.products_price1')</th>
                                                 @endif
-                                                @if(Auth::user()->role == 'admin')
+                                                @if($user_role == 'admin')
                                                     <th class="text-center">@lang('panel.products_status')</th>
                                                 @endif
                                                 <th class="text-center">@lang('panel.products_action')</th>
@@ -386,7 +389,7 @@
                                                     ?>
                                                     <td>{!! $customerName !!}</td>
                                                     {{--<td>{{date("Y-m-d H:i:s", strtotime($products[$i]->created_at))}}</td>--}}
-                                                    @if(Auth::user()->role == 'editor')
+                                                    @if($user_role == 'editor')
                                                         @if($products[$i]->edited_by != 0)
                                                             <?php $editor = func::getTableByID('users',$products[$i]->edited_by)?>
                                                             <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y H:m", strtotime($products[$i]->updated_at))}}</td>
@@ -394,7 +397,7 @@
                                                             <td class="text-right">-</td>
                                                         @endif
                                                     @endif
-                                                 @if(Auth::user()->role != 'editor')
+                                                 @if($user_role != 'editor')
                                                      @if($products[$i]->price)
                                                         <td class="text-right">{{$products[$i]->code}} ${{number_format($products[$i]->price)}}</td>
                                                      @else
@@ -402,7 +405,7 @@
                                                      @endif
                                                  @endif
                                                     {{-- <td class="text-right">320</td> --}}
-                                                    @if(Auth::user()->role == 'admin')
+                                                    @if($user_role == 'admin')
                                                     <td class="text-center" style="width: 20%;">
                                                        @if ($products[$i]->status == 'APROVED')
                                                          <div role="group" aria-label="soldExpiredButton" class="btn-group btn-group-sm">
@@ -425,7 +428,7 @@
                                                         <div role="group" aria-label="Basic example" class="btn-group btn-group-sm">
                                                             <a target='_blank' href="{{func::set_url('/listing/')}}{{ $products[$i]->slug }}" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
                                                             <a href="{{func::set_url('/panel/product/edit/')}}{{ $products[$i]->id }}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
-                                                            @if(Auth::user()->role == 'admin')
+                                                            @if($user_role == 'admin')
                                                                 <a href="{{func::set_url('/panel/product/delete/')}}{{ $products[$i]->id }}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                             @endif
                                                         </div>

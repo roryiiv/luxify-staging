@@ -16,6 +16,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.shop')</a>
                         <div class="dropdown-menu">
                         <?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
+
                             <ul>
                                 <li><a href="{{func::set_url('/luxify-estates/3d-estates')}}">@lang('header.shop_luxifyEstate3d')</a></li>
                                 @foreach($categories as $value)
@@ -32,9 +33,11 @@
                             <ul>
                                 <li><a href="{{func::set_url('/about')}}">@lang('header.more_aboutLuxify')</a></li>
                                 <li><a href="{{func::set_url('/pricing')}}">@lang('header.more_pricing')</a></li>
+                                <li><a href="{{func::set_url('/press')}}">@lang('footer.press')</a></li>
                                 <li><a href="{{func::set_url('/dealer-application')}}">@lang('header.more_dealerApplication')</a></li>
                                 <li><a href="{{func::set_url('/luxify-estates')}}">@lang('header.more_luxifyEstates')</a></li>
                                 <li><a href="{{func::set_url('/contact')}}">@lang('header.more_contactUs')</a></li>
+                                <li><a href="{{func::set_url('/faq')}}">@lang('header.more_faq')</a></li>
                             </ul>
                         </div>
                     </li>

@@ -48,6 +48,8 @@ use Cache;
 
 use Storage;
 
+use Illuminate\Support\Facades\Session;
+
 class Panel extends Controller
 {
     public function __construct() {
@@ -57,6 +59,9 @@ class Panel extends Controller
             $this->user_id = Auth::user()->id;
             $this->user_role = Auth::user()->role;
             $this->accepted = array('admin', 'editor');
+            if(Auth::user()->role== 'admin' && Session::get('view_as') != ''){
+                $this->user_role = Session::get('view_as');
+            }
         }
     }
 
@@ -96,9 +101,9 @@ class Panel extends Controller
     //Panel (super admin) Controller
     public function index() {
         // return 'panel index page';
-        if(Auth::user()->role === 'seller'){
+        if($this->user_role === 'seller'){
             return redirect('/dashboard');
-        }elseif(Auth::user()->role === 'user'){
+        }elseif($this->user_role == 'user'){
             return redirect('/dashboard/profile');
         }else{
             return redirect('/panel/users');
@@ -571,12 +576,22 @@ class Panel extends Controller
             $error_arr['itemAvailability'] = 'Item Availability is not specified.';
         }
 
-        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
+        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ){
+            if( isset($_POST['itemSubCategory']) && !empty($_POST['itemSubCategory']) ){
+                $item->new_category = $_POST['itemSubCategory'];
+            } else {
+                $item->new_category = $_POST['itemCategory'];
+            }
+        } else {
+                $error_arr['itemCategory'] = 'Item Category is not specified.';
+        }
+
+        /*if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
             echo '1';
             $item->categoryId = $_POST['itemCategory'];
         } else {
             $error_arr['itemCategory'] = 'Item Category is not specified.';
-        }
+        }*/
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             echo '1';
@@ -1110,7 +1125,7 @@ class Panel extends Controller
 
     public function products_edit(Request $request, $itemId) {
         $item = Listings::where('id', $itemId)->first();
-        $categoryId = $item->categoryId;
+        $categoryId = $item->new_category;
         $activedata = DB::table('category_2')->where('id',$categoryId)->first();
         $opt = json_decode($item->optional_field);
 
@@ -1119,7 +1134,7 @@ class Panel extends Controller
             $cat1= '';
 
             foreach ($dataparent as $value) {
-                $cat1 .= "<option value=".$value->id." ".func::selected($item->categoryId, $value->id).">".$value->name."</option>";
+                $cat1 .= "<option value=".$value->id." ".func::selected($item->new_category, $value->id).">".$value->name."</option>";
             }
 
             $item['itemCategory'] = $cat1;
@@ -1635,6 +1650,25 @@ class Panel extends Controller
 
         echo $return;
 
+    }
+    public  function switchadminas($admin){
+        $query = array(
+        'admin',
+        'user',
+        'editor',
+        'seller',
+        );
+
+            if(in_array($admin,$query)){
+                Session::put('view_as',$admin);
+                Auth::user()->role = $admin;
+                return redirect ('/dashboard');
+            }else{
+                return back();
+        }
+    }
+    public  function closeviewas(){
+        //
     }
 
 }

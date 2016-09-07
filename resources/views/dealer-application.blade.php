@@ -4,7 +4,10 @@
     <title>{{ func::genTitle('Dealer Application', false)}}</title>
 @endsection
 
-<?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+<?php 
+    $user_id = Auth::user() ? Auth::user()->id : '';
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+?>
 @section('meta-data')
     <meta name="keywords" content="sell online,dealers,luxury goods">
     <meta name="description" content="Sell online today. Professional dealers use Luxify to transact successful sales of a wide selection luxury goods as well as luxury experiences.">
@@ -208,7 +211,7 @@
             </div>
         </div>
         <!-- end of sell block -->
-        @if(Auth::user() && Auth::user()->role === 'seller')
+        @if(Auth::user() && $user_role === 'seller')
         @else
             <div class="application-form" id="application-form">
                 <form id='dealer-application-form' action="/dealer-application" method="POST" class="detail-form">

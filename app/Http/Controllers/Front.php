@@ -53,7 +53,25 @@ use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
 
 use App\MyLibrary\MicrosoftTranslator\Client;*/
 
+use Illuminate\Support\Facades\Session;
+
+use Captcha;
+
+use URL;
+
 class Front extends Controller {
+	// constructor
+	public function __construct(Request $request) {
+        $this->url = URL::previous();
+        if(Auth::user()){
+            $this->user_id = Auth::user()->id;
+            $this->user_role = Auth::user()->role;
+            if(Auth::user()->role== 'admin' && Session::get('view_as') != ''){
+                $this->user_role = Session::get('view_as');
+            }
+        }
+    }
+
     //Front end Controller
     public function index() {
         // return 'index page';
@@ -344,8 +362,7 @@ class Front extends Controller {
             foreach ($childs as  $value) {
                 array_push($cat_ids,$value->id);
             }
-            $banner = (empty($data->mainImageURL))?'banner-estate.jpg':empty($data->mainImageURL);
-
+            $banner = (empty($data->mainImageURL))?'banner-estate.jpg':$data->mainImageURL;
             $title_cat = $data->name;
 
         
@@ -509,7 +526,7 @@ class Front extends Controller {
             $listings->setPath($ref);
 
 
-            return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta, 'total' => $listings->total()]);
+            return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'data' => $data, 'childs' => $childs, 'filters' => $filters, 'meta' => $meta, 'total' => $listings->total()]);
         }else{
             return abort(404);
         }
@@ -915,7 +932,7 @@ class Front extends Controller {
         $input = $request->all();
         // dealer application based on existing user account
         if(Auth::user()) {
-          if(Auth::user()->email === $input['email'] && Auth::user()->role === 'user') {
+          if(Auth::user()->email === $input['email'] && $this->user_role === 'user') {
             $oldUser = Users::where('email', '=', $input['email'])->get();
             if ($oldUser) {
               if(isset($input['companyLogoUrl']) && !empty($input['companyLogoUrl'])){
@@ -1125,7 +1142,7 @@ class Front extends Controller {
                         $cat_ids = array(17);
                         break;
                         case 'accessories_men':
-                        $cat_ids = array(92.88);
+                        $cat_ids = array(92,88);
                         break;
                         case 'accessories_women':
                         $cat_ids = array(124, 160, 150, 120,119,118,117,161,159,116);
@@ -1795,8 +1812,8 @@ class Front extends Controller {
             $langcode=$code.'/';
         }
         $full_url = $request->header();
-        $host = 'http://'.$full_url['host'][0].'/';
-        $referer = $full_url['referer'][0];
+        $host = 'https://'.$full_url['host'][0].'/';
+        $referer = $this->url;
 
         $get = DB::table('languages')->get();
         foreach ($get as $key) {

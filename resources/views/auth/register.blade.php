@@ -7,19 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Member Registration- Luxify- Asia's leading marketplace for luxury</title>
     <meta name="keywords" content="luxify member registration,luxury goods">
-    <meta name="description" content="Register for an account for free to discover one of the Internet’s largest collections of luxury goods and experiences.">
+    <meta name="description" content="Register for an account for free to discover one of the Internet's largest collections of luxury goods and experiences.">
     <!-- PACE-->
-    <link rel="stylesheet" href="/assets/css/luxify.css">
-
-
-    <link rel="stylesheet" type="text/css" href="./plugins/PACE/themes/blue/pace-theme-flash.css">
-    <script type="text/javascript" src="./plugins/PACE/pace.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/PACE/themes/blue/pace-theme-flash.css')}}">
+    <script type="text/javascript" src="{{url('./plugins/PACE/pace.min.js')}}"></script>
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" type="text/css" href="./plugins/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Fonts-->
-    <link rel="stylesheet" type="text/css" href="./plugins/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./plugins/themify-icons/themify-icons.css')}}">
     <!-- Primary Style-->
-    <link rel="stylesheet" type="text/css" href="./build/css/first-layout.css">
+    <link rel="stylesheet" type="text/css" href="{{url('./build/css/first-layout.css')}}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
     <!--[if lt IE 9]>
@@ -132,7 +130,7 @@
     @include('inc.loginheader')
     <div class="page-content">
         <div class="v2">
-            <div class="logo"><a target="_self" href='/'><img src="./build/images/logo/logo-dark.png" alt="" width="160"></a></div>
+            <div class="logo"><a target="_self" href='/'><img src="{{ url('./build/images/logo/logo-dark.png') }}" alt="" width="160"></a></div>
             <form id='register-form' role="form" method="POST" action="{{ url('/register') }}" class="form-horizontal">
                 {{ csrf_field() }}
 
@@ -158,6 +156,16 @@
                         <input id="password_confirmation" name="password_confirmation" required type="password" placeholder="@lang('auth.confirmPassword')" class="form-control">
                     </div>
                 </div>
+<!--
+                <div class="form-group">
+                    <div class="col-xs-6">
+<?php //echo captcha_img(); ?>
+                    </div>
+                    <div class="col-xs-6">
+                        <input name="captcha" required type="text" class="form-control">
+                    </div>
+                </div>
+-->
                 <div class="form-group">
                     <div class="col-xs-12">
                         <div style="margin-bottom: 7px" class="checkbox-inline checkbox-custom">
@@ -194,13 +202,13 @@
 
 <!-- Demo Settings end-->
 <!-- jQuery-->
-<script type="text/javascript" src="./plugins/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="{{ url('./plugins/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap JavaScript-->
-<script type="text/javascript" src="./plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ url('./plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- Custom JS-->
-<script type="text/javascript" src="./build/js/first-layout/extra-demo.js"></script>
-<script type="text/javascript" src="/js/bundle.min.js"></script>
-<script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="{{ url('./build/js/first-layout/extra-demo.js') }}"></script>
+<script type="text/javascript" src="{{ url('./js/bundle.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('./db/js/jquery.validate.min.js') }}"></script>
 
 <!--require for main.js-->
 <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>

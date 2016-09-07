@@ -1,4 +1,7 @@
 @extends('layouts.panel')
+<?php
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+?>
 
 @section('head')
     <!-- PACE-->
@@ -139,14 +142,14 @@
                                                 </th>
                                                 <th>@lang('panel.users_name1')</th>
                                                 <th>@lang('panel.users_email')</th>
-                                                @if(Auth::user()->role != 'editor')
+                                                @if($user_role != 'editor')
                                                 <th>@lang('panel.users_group1')</th>
                                                 @endif
                                                 <th>@lang('panel.users_account')</th>
-                                                @if(Auth::user()->role == 'editor')
+                                                @if($user_role == 'editor')
                                                 <th class="text-right">@lang('panel.users_last')</th>
                                                 @endif
-                                                @if(Auth::user()->role != 'editor')
+                                                @if($user_role != 'editor')
                                                 <th>@lang('panel.users_date')</th>
                                                 @endif
                                                 <th class="text-center">@lang('panel.users_action')</th>
@@ -191,7 +194,7 @@
                                                     </td>
 
                                                     <td>{{$user->email}}</td>
-                                                    @if(Auth::user()->role != 'editor')
+                                                    @if($user_role != 'editor')
                                                     <td>{{ucfirst($user->role)}}</td>
                                                     @endif
                                                     <td>
@@ -206,7 +209,7 @@
                                                          </div>
                                                         @endif
                                                     </td>
-                                                     @if(Auth::user()->role == 'editor')
+                                                     @if($user_role == 'editor')
                                                          @if($user->edited_by != 0)
                                                             <?php $editor = func::getTableByID('users',$user->edited_by)?>
                                                             <td class="text-right">{{$editor->email}}</br>edited at {{date("d-m-Y H:m", strtotime($user->updated_at))}}</td>
@@ -214,7 +217,7 @@
                                                             <td class="text-right">-</td>
                                                         @endif
                                                     @endif
-                                                    @if(Auth::user()->role != 'editor')
+                                                    @if($user_role != 'editor')
                                                     <td>{{date("m/d/Y", strtotime($user->created_at))}}</td>
                                                     @endif
                                                     <td class="text-center" style="width: 17%;">
@@ -222,7 +225,7 @@
                                                             <?php $slug = $user->slug != '' ? $user->slug : strtolower($user->firstName).'-'.strtolower($user->lastName); ?>
                                                             <a href="{{ $user->role != 'seller' ? 'javascript:;' : url('/dealer') . '/' . $user->id . '/' . $slug }}" target="_blank" class="btn btn-outline btn-primary"><i class="ti-eye"></i></a>
                                                             <a href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
-                                                            @if(Auth::user()->role == 'admin')
+                                                            @if($user_role == 'admin')
                                                                 @if($user->isSuspended == 0)
                                                                     <a href="{{func::set_url('/panel/user/delete/')}}{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                                 @else
