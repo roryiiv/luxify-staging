@@ -61,7 +61,7 @@
                         <h3 class="widget-title">User Profile</h3>
                     </div>
                     <div class="widget-body">
-                        <form id="form-tabs" name="profile" method="post" action="/dashboard/profile" class="form-horizontal">
+                        <form id="form-tabs" name="profile" method="post" action="{{func::set_url('/dashboard/profile')}}" class="form-horizontal">
                             {!! csrf_field() !!}
                             <h3>Personal Infomation</h3>
                             <fieldset>

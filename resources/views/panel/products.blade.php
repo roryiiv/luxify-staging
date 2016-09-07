@@ -441,7 +441,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-2">
-                                <form id="bulkActionForm" action="/api/bulkActions" method="POST">
+                                <form id="bulkActionForm" action="{{func::set_url('/api/bulkActions')}}" method="POST">
                                    {!! csrf_field() !!}
                                    <input type="hidden" name="table" value="listings">
                                    <select class="form-control" id="bulkAction" name="bulkAction">

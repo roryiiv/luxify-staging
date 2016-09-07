@@ -52,7 +52,7 @@
                     </div>
                     <div class="widget-body">
 
-                        <form id="form-tabs_add{{$form_id}}" name="profile" method="post" action="/panel/add/user/register" class="form-horizontal" enctype="multipart/form-data">
+                        <form id="form-tabs_add{{$form_id}}" name="profile" method="post" action="{{func::set_url('/panel/add/user/register')}}" class="form-horizontal" enctype="multipart/form-data">
                             {!! csrf_field() !!}
                             <input name='salt' id='salt' type='hidden' />
                             <input name='hashed' id='hashed' type='hidden' />

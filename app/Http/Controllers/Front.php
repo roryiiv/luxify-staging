@@ -1811,8 +1811,10 @@ class Front extends Controller {
         }else{
             $langcode=$code.'/';
         }
+        $portal = $request->secure() == true ? 'https' : 'http'; // auto detect whether to use http or https.
+
         $full_url = $request->header();
-        $host = 'https://'.$full_url['host'][0].'/';
+        $host = $portal . '://'.$full_url['host'][0].'/';
         $referer = $this->url;
 
         $get = DB::table('languages')->get();

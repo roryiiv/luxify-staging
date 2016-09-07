@@ -547,6 +547,9 @@ class Panel extends Controller
         if(isset($_POST['txtTwitterLink']) && !empty($_POST['txtTwitterLink'])){
             $user->socialTwitter = $_POST['txtTwitterLink'];
         }
+        if(isset($_POST['phoneNumber']) && !empty($_POST['phoneNumber'])){
+            $user->phoneNumber= json_encode($_POST['phoneNumber']);
+        }
 
         if(!empty($error_arr)){
             $error = json_encode($error_arr);

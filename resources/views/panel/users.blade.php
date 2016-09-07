@@ -51,7 +51,7 @@
                         <h3 class="widget-title">@lang('panel.users_list1')</h3>
                     </div>
                     <div class="widget-body">
-                        <form id="users" name="users" method="get" action="/panel/users">
+                        <form id="users" name="users" method="get" action="{{func::set_url('/panel/users')}}">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">

@@ -9,8 +9,9 @@
     $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
 ?>
 @section('meta-data')
-    <meta name="keywords" content="sell online,dealers,luxury goods">
-    <meta name="description" content="Sell online today. Professional dealers use Luxify to transact successful sales of a wide selection luxury goods as well as luxury experiences.">
+<meta name='title' content='Luxify Dealer Application'>
+<meta name="keywords" content="luxify, luxury cars, private jets, used luxury cars, luxury goods, luxury marketplace, luxury market, authentic luxury, worthy">
+<meta name="description" content="Sell your luxury products on Luxify now. Apply here and become a Luxify dealer.">
 @endsection
 
 @section('style')
@@ -214,7 +215,7 @@
         @if(Auth::user() && $user_role === 'seller')
         @else
             <div class="application-form" id="application-form">
-                <form id='dealer-application-form' action="/dealer-application" method="POST" class="detail-form">
+                <form id='dealer-application-form' action="{{func::set_url('/dealer-application')}}" method="POST" class="detail-form">
                     {!! csrf_field() !!}
                     <div class="container">
                         <header class="heading">

@@ -60,7 +60,7 @@
                         <h3 class="widget-title">@lang('panel.users_edit1')</h3>
                     </div>
                     <div class="widget-body">
-                        <form id="form-tabs" name="profile" method="post" action="/panel/user/update" class="form-horizontal" enctype="multipart/form-data">
+                        <form id="form-tabs" name="profile" method="post" action="{{func::set_url('/panel/user/update')}}" class="form-horizontal" enctype="multipart/form-data">
                             {!! csrf_field() !!}
                             <input name='user_id' id='user_id' type='hidden' value="{{$user->id}}" />
                             <h3>@lang('panel.users_edit_personal')</h3>

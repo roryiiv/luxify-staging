@@ -9,9 +9,11 @@
     <meta name="description" content="{{ $meta['desc']}}">
 @endsection
 
-<?php 
-    $user_id = Auth::user() ? Auth::user()->id : '';
-    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+<?php
+	if(Auth::user()){
+		$user_id = Auth::user() ? Auth::user()->id : '';
+		$user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='') ? Session::get('view_as') : '';
+	} 
 ?>
 
 @section('style')
@@ -77,6 +79,18 @@
 							<div class="col-xs-12">
 								<div class="result-count" style="font-style: italic; font-size: 14px;">
 									Showing {{ number_format($total)}} matching results
+								</div>
+								<div class="filter-search">
+									<div class="row">
+										<div class="col-xs-12">
+											<div class="input-group">
+												<input type="text" class="form-control" placeholder="Search within results">
+												<div class="input-group-addon">
+										    		<button class="btn btn-default" type="button">Search!</button>
+										      	</div>
+										    </div><!-- /input-group -->
+										</div>											
+									</div>
 								</div>
 								<div class="filter-holder">
 									<div class="filter-title">
@@ -212,12 +226,12 @@
         	var status = $(this).attr('aria-expanded');
         	var x = $(this).find('h4 > span.pull-right > i');
         	console.log(status);
-        	if(status == true){
-        		x.removeClass('glyphicon glyphicon-menu-right');
-        		x.addClass('glyphicon glyphicon-menu-down');
-        	}else if(status == false){
+        	if(status == 'true'){
         		x.removeClass('glyphicon glyphicon-menu-down');
         		x.addClass('glyphicon glyphicon-menu-right');
+        	}else if(status == 'false'){
+        		x.removeClass('glyphicon glyphicon-menu-right');
+        		x.addClass('glyphicon glyphicon-menu-down');
         	}
         });
         function validatingrange(start,end){

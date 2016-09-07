@@ -67,7 +67,7 @@
                         <h3 class="widget-title">@lang('dashboard.profile_user1')</h3>
                     </div>
                     <div class="widget-body">
-                        <form id="form-tabs" name="profile" method="post" action="/dashboard/profile" class="form-horizontal" enctype="multipart/form-data">
+                        <form id="form-tabs" name="profile" method="post" action="" class="form-horizontal" enctype="multipart/form-data">
                             {!! csrf_field() !!}
                             <h3>@lang('dashboard.profile_personal')</h3>
                             <fieldset>

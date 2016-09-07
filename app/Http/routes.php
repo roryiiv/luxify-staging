@@ -15,7 +15,13 @@ use App\Listings;
 
 
 Route::get('/buildHashedId', 'Front@updateHashed');
-Route::group(['prefix' => Translation::getRoutePrefix()], function()
+
+//no prefix and no checklang
+Route::post('/searchAjax','Front@searchAjax');
+
+
+
+Route::group(['prefix' => Translation::getRoutePrefix(),'middleware' =>'checklang'], function()
 {
     //static front pages
     Route::get('/', function(){
@@ -140,7 +146,7 @@ Route::post('/login','LuxifyAuth@authenticate');
 Route::get('/logout','LuxifyAuth@logout');
 Route::get('/search','Front@search');
 Route::post('/search','Front@search');
-Route::post('/searchAjax','Front@searchAjax');
+
 Route::post('/wishlist/add','Front@wishlistAdd');
 Route::post('/dealer-application','Front@dealerApplication');
 Route::get('/forget-password','Front@forgetPassword');
