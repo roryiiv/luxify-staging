@@ -246,7 +246,7 @@
 			    {!! Markdown::parse($listing->description) !!}
 			</p>
 			@if(!empty($infos))
-			    <h5 style="margin-top:45px;">{{ trans::force('Specifications',App::getLocale()) }}</h5>
+			    <h5 style="margin-top:45px;">{{ _t('Specifications', [], App::getLocale()) }}</h5>
 			    <table class="table item-description">
 				<thead>
 				</thead>
@@ -256,7 +256,7 @@
 				    @if(isset($info->label))
 				      @if(gettype($info->label) === 'string' && gettype($info->value) === 'string')
 					<tr {{schema::itemScope()}} {{schema::itemProp('additionalProperty')}} {{schema::itemType('PropertyValue')}}>
-					    <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ trans::force($info->label,App::getLocale()) }}</th>
+					    <th scope="row" style="padding: 8px 0px;" {{schema::itemProp('propertyID')}} {{schema::itemType('Text')}}>{{ _t($info->label, [], App::getLocale()) }}</th>
 					    <td class='text-center' {{schema::itemProp('value')}} {{schema::itemType('Text')}}>{{$info->value}}</td>
 					</tr>
 				      @endif

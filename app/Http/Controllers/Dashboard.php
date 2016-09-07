@@ -253,22 +253,24 @@ class Dashboard extends Controller
         $activedata = DB::table('category_2')->where('id',$categoryId)->first();
         $opt = json_decode($item->optional_field);
 
-        if(($activedata->parent)== 0){
+        if(($activedata->id)== 135 || ($activedata->id)== 136 || ($activedata->id)== 137){
             $dataparent = DB::table('category_2')->where('parent',0)->get();
-            $cat1= '';
+            $cat1= "<option value=''>--Please Select--</option>";
+            //$cat2= "<select id='itemSubCategory' name='itemSubCategory' style='display:none'></select>";
+            $cat2= "<option value='' style='display:none'>-</option>";
 
             foreach ($dataparent as $value) {
                 $cat1 .= "<option value=".$value->id." ".func::selected($item->new_category, $value->id).">".$value->name."</option>";
             }
 
             $item['itemCategory'] = $cat1;
-            $item['itemSubCategory'] = '';
+            $item['itemSubCategory'] = $cat2;
 
         } else {
             $dataparent = DB::table('category_2')->where('parent',0)->get();
             $parent = DB::table('category_2')->where('id',$activedata->id)->value('parent');
-            $cat1= '';
-            $cat2= '';
+            $cat1= "<option value=''>--Please Select--</option>";
+            $cat2= "<option value=''>--Please Select--</option>";
 
             foreach ($dataparent as $value) {
                 $cat1 .= "<option value=".$value->id." ".func::selected($value->id, $parent).">".$value->name."</option>";
@@ -276,7 +278,7 @@ class Dashboard extends Controller
 
             $datachild = DB::table('category_2')->where('parent',$parent)->get();
             foreach ($datachild as $values) {
-                $cat2 .= "<option value=".$values->id." ".func::selected($values->id, $datachild).">".$values->name."</option>";
+                $cat2 .= "<option value=".$values->id." ".func::selected($values->id, $categoryId).">".$values->name."</option>";
             }
             $item['itemCategory'] = $cat1;
             $item['itemSubCategory'] = $cat2;
@@ -789,7 +791,7 @@ class Dashboard extends Controller
         $filter = array();
         $filter_or = array();
         $filter[] = ['wishlists.userId', $this->user_id];
-        // $filter[] = ['deleted', 0];
+        $filter[] = ['deleted', 0];
         if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
             $filter[] = ['listings.title', 'like', '%'.$_GET['txtProductName'].'%'];
             $filter_or[] = ['listings.description', 'like', '%'.$_GET['txtProductName'].'%'];
@@ -1091,12 +1093,14 @@ class Dashboard extends Controller
     public  function CategoryChoosen($dataid){
 
         $cat = DB::table('category_2')->where('parent','=',$dataid)->get();
+        
 
-        $return = "<option value=''>---Please Select---</option>";
+        $return = "<option value=''>--Please Select--</option>";
         foreach ($cat as $value) {
             $return .= "<option value='".$value->id."'>".$value->name."</option>";
 
         }
+        
 
         echo $return;
 

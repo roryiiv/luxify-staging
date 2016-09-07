@@ -746,15 +746,34 @@
             }
         });
 
+        var parent = $('#itemCategory').val();
+
+        if(parent == 135 || parent == 136 || parent == 137){
+            $('#itemSubCategory').hide();
+        }
+
         $('#itemCategory').on('change',function(){
             var parent = $(this).val();
+
+            if(parent == 135 || parent == 136 || parent == 137){
+                var status = true;
+            }
+            else{
+                var status = false;
+            }
+
             console.log(parent);
             $.ajax({
                 url : '/api/ajax/category/'+parent,
                 method : 'get',
                 success: function(result){  
-                    $('#itemSubCategory').html(result);
-                    $('#itemSubCategory').show();
+                    if(status == false){  
+                        $('#itemSubCategory').html(result);
+                        $('#itemSubCategory').show();
+                    }else{
+                        $('#itemSubCategory').hide();
+                    }
+
                 }
             });
 

@@ -55,7 +55,14 @@ use App\MyLibrary\MicrosoftTranslator\Client;*/
 
 use Captcha;
 
+use URL;
+
 class Front extends Controller {
+	// constructor
+	public function __construct(Request $request) {
+        $this->url = URL::previous();
+    }
+
     //Front end Controller
     public function index() {
         // return 'index page';
@@ -1798,7 +1805,7 @@ class Front extends Controller {
         }
         $full_url = $request->header();
         $host = 'https://'.$full_url['host'][0].'/';
-        $referer = $full_url['referer'][0];
+        $referer = $this->url;
 
         $get = DB::table('languages')->get();
         foreach ($get as $key) {
