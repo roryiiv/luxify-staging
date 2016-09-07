@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <meta charset="utf-8" />
     <!-- set the encoding of your site -->
     @yield('title')
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -22,10 +22,10 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png?v=2">
     <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png?v=2">
-    <link rel="icon" type="image/png?v=2" sizes="192x192"  href="/img/android-icon-192x192.png?v=2">
-    <link rel="icon" type="image/png?v=2" sizes="32x32" href="/img/favicon-32x32.png?v=2">
-    <link rel="icon" type="image/png?v=2" sizes="96x96" href="/img/favicon-96x96.png?v=2">
-    <link rel="icon" type="image/png?v=2" sizes="16x16" href="/img/favicon-16x16.png?v=2">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png?v=2">
     <link rel="manifest" href="/img/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png?v=2">
@@ -89,7 +89,7 @@
                                         <li><a href="/why-luxify">@lang('footer.howItWorks')</a></li>
                                         <li><a target="_blank" href="https://www.luxify.com/press">@lang('footer.press')</a> / <a href="/blog">@lang('footer.blog')</a></li>
                                         <li><a href="/dealer-directory">@lang('footer.dealerDirectory')</a></li>
-                                        <li><a href="/faq">@lang('footer.faq')</a></li>
+                                        <li><a href="/faq">@lang('footer.faq')</a> / <a href="/sitemap">@lang('footer.sitemap')</a></li>
                                     </ul>
                                 </nav>
                             </div>

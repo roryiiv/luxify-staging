@@ -354,7 +354,6 @@ class Front extends Controller {
                 array_push($cat_ids,$value->id);
             }
             $banner = (empty($data->mainImageURL))?'banner-estate.jpg':$data->mainImageURL;
-
             $title_cat = $data->name;
 
         

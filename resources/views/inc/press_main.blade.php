@@ -27,8 +27,8 @@ $newsLogoImgArr = array(
     </div>
 </div>
 <!-- press blog news -->
-<div class="press-block">
-    <div class="container press-news">
+<div class="press-block" id="blog-articles">
+    <div class="container press-news" >
         <div class="row">
             <div class="col-lg-12 title">What’s new at Luxify</div>
             <div class="col-lg-12 title-des">From the blog & articles</div>
@@ -69,7 +69,7 @@ $newsLogoImgArr = array(
     </div>
 </div>
 <!-- press Press Releases -->
-<div class="press-min-block">
+<div class="press-min-block" id="releases-post">
     <div class="container press-releases">
         <div class="row">
             <div class="col-lg-12 title">Press Releases</div>
@@ -96,7 +96,7 @@ $newsLogoImgArr = array(
     </div>
 </div>
 <!-- press Press coverage -->
-<div class="press-block ">
+<div class="press-block "  id="coverage-post">
     <div class="container press-coverage">
         <div class="row">
             <div class="col-lg-12 title">Press Coverage</div>
