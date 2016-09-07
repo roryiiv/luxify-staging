@@ -5,7 +5,7 @@
                 <!-- menu opener and logo -->
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">Menu<span></span></button>
                 <!-- logo of the page -->
-                <a class="navbar-brand" href="{{func::set_url('/')}}">
+                <a class="navbar-brand" href="/">
                     <img src="{{func::img_url('luxify-logo.png', '', '', false, true)}}" alt="Luxify" class="normal">
                 </a>
             </div>
@@ -15,7 +15,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.shop')</a>
                         <div class="dropdown-menu">
-                        <?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
+			<?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
 
                             <ul>
                                 <li><a href="{{func::set_url('/luxify-estates/3d-estates')}}">@lang('header.shop_luxifyEstate3d')</a></li>
@@ -31,14 +31,13 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.more')</a>
                         <div class="dropdown-menu sm">
                             <ul>
-                                <li><a href="/about">@lang('header.more_aboutLuxify')</a></li>
-                                <li><a href="/pricing">@lang('header.more_pricing')</a></li>
-                                <li><a href="/press">@lang('footer.press')</a></li>
-                                <li><a href="/dealer-application">@lang('header.more_dealerApplication')</a></li>
-                                <li><a href="/luxify-estates">@lang('header.more_luxifyEstates')</a></li>
-                                <li><a href="/contact">@lang('header.more_contactUs')</a></li>
-                                <li><a href="/faq">@lang('header.more_faq')</a></li>
-                                <li><a href="/sitemap">@lang('header.sitemap')</a></li>
+                                <li><a href="{{func::set_url('/about')}}">@lang('header.more_aboutLuxify')</a></li>
+                                <li><a href="{{func::set_url('/pricing')}}">@lang('header.more_pricing')</a></li>
+                                <li><a href="{{func::set_url('/press')}}">@lang('footer.press')</a></li>
+                                <li><a href="{{func::set_url('/dealer-application')}}">@lang('header.more_dealerApplication')</a></li>
+                                <li><a href="{{func::set_url('/luxify-estates')}}">@lang('header.more_luxifyEstates')</a></li>
+                                <li><a href="{{func::set_url('/contact')}}">@lang('header.more_contactUs')</a></li>
+                                <li><a href="{{func::set_url('/faq')}}">@lang('header.more_faq')</a></li>
                             </ul>
                         </div>
                     </li>
@@ -80,13 +79,13 @@
                     </ul>
                 @else
                     <ul class="nav navbar-nav navbar-right">
-<!--                         <li class="currency-selector-container">
+                        <li class="currency-selector-container">
                             <select id="langSelect" class="language-selector">
                                 @foreach($languages as $language)
                                     <option value="{{$language['val']}}"{{func::selected($language['code'], $sess_lang)}}>{{$language['label']}}</option>
                                 @endforeach
                             </select>
-                        </li> -->
+                        </li>
                         <li class="currency-selector-container">
                            <select id="currSelect" class="currency-selector">
                              @foreach($currencies as $currency)
