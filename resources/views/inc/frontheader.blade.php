@@ -15,18 +15,13 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.shop')</a>
                         <div class="dropdown-menu">
+			<?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
+
                             <ul>
-                                <li><a href="/luxify-estates/3d-estates">@lang('header.shop_luxifyEstate3d')</a></li>
-                                <li><a href="/category/real-estates">@lang('header.shop_realEstates')</a></li>
-                                <li><a href="/category/jewellery-watches">@lang('header.shop_whatches&Jewelry')</a></li>
-                                <li><a href="/category/motors">@lang('header.shop_motors')</a></li>
-                                <li><a href="/category/handbags-accessories">@lang('header.shop_handbags&Accessories')</a></li>
-                                <li><a href="/category/experiences">@lang('header.shop_experiences')</a></li>
-                                <li><a href="/category/collectibles-furnitures">@lang('header.shop_collectibles&Furnitures')</a></li>
-                                <li><a href="/category/yachts">@lang('header.shop_yachts')</a></li>
-                                <li><a href="/category/aircrafts">@lang('header.shop_aircrafts')</a></li>
-                                <li><a href="/category/art-antiques">@lang('header.shop_art&Antiques')</a></li>
-                                <li><a href="/category/fine-wines-spirits">@lang('header.shop_fineWines&Spirits')</a></li>
+                                <li><a href="{{func::set_url('/luxify-estates/3d-estates')}}">@lang('header.shop_luxifyEstate3d')</a></li>
+                                @foreach($categories as $value)
+                                    <li><a href="{{func::set_url('/category/'.$value->slug)}}">@lang('categories.'.$value->slug)</a></li>    
+                                @endforeach
                             </ul>
                         </div>
                     </li>
