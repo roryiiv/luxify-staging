@@ -1,14 +1,14 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{ func::genTitle('Privacy Policy', false)}}</title>
+  <title>{{ func::genTitle('Luxify Privacy Policy', false)}}</title>
 @endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
 @section('meta-data')
-  <meta name="keywords" content="luxify privacy policy"> 
-  <meta name="description" content=" Privacy Policy and Personal Information Collection Statement related to the access to the LUXIFY website.">
+  <meta name="keywords" content="luxify privacy policies, luxify privacy policy"> 
+  <meta name="description" content=" Privacy Policy and Personal Information Collection Statement related to the usage Luxify's website.">
 @endsection
 
 @section('style')

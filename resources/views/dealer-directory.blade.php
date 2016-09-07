@@ -1,12 +1,12 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{ func::genTitle('Dealer Directory', false)}}</title>
+  <title>{{ func::genTitle('Luxify Dealer Directory', false)}}</title>
 @endsection
 
 @section('meta-data')
-<meta name="keywords" content="Luxury Sellers, Luxury Dealers, Luxury Marketplace">
-<meta name="description" content="A directory of Luxify trusted dealers. High quality luxury dealers around the world.">
+<meta name="keywords" content="Find out more about our dealers.">
+<meta name="description" content="luxify, luxury dealers, luxify directory, luxury, worthy, luxury sellers">
 @endsection
 
 @section('style')

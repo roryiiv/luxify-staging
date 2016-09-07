@@ -333,9 +333,9 @@ class Front extends Controller {
 
         $title_cat = '3D Real Estates';
         $meta = array(
-          'title' => "3D Real Estate- Luxify- Asia&#39;s leading marketplace for luxury",
-          'keywords' => 'luxury real estate,virtual reality,luxury homes,estate',
-          'desc' => "Search for luxury real estate through virtual reality property tours on Luxify. Explore one of the Internet’s largest collections of luxury homes and estates."
+          'title' => "3D Virtual US Luxury Property Walkthroughs",
+          'keywords' => 'luxify, 3D virtual reality, luxury property',
+          'desc' => "Experience 3D virtual luxury property walkthroughs"
         );
         $banner = 'banner-estate.jpg';
         return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta, 'total' => $listings->total()]);

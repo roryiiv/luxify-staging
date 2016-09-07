@@ -1,13 +1,13 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{ func::genTitle('Contact Us', false)}}</title>
+  <title>{{ func::genTitle('Contact us at Luxify now', false)}}</title>
 @endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('meta-data')
-<meta name="keywords" content="luxify concierge,luxify contact information">
-<meta name="description" content="We welcome any queries or feedback. Whether you're seeking a recommendation for an item to sell or additional product information, our concierge is here to help you.">
+<meta name="keywords" content="luxify, luxify concierge,luxify contact information, luxify contact, luxify phone, luxify support">
+<meta name="description" content="Asia's leading marketplace for luxury. Contact our concierge team for support.">
 @endsection
 
 @section('style')

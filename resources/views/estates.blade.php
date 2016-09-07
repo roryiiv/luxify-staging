@@ -1,14 +1,14 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{ func::genTitle('Virtual Reality Property Tour', false)}}</title>
+  <title>{{ func::genTitle('Luxury Real Estate Virtual Tour', false)}}</title>
 @endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
 @section('meta-data')
-    <meta name="keywords" content="real estate investment,luxury real estate,virtual reality">
-    <meta name="description" content="Partner with us for real estate investment in the US. Our goal is to change the way property buyers experience luxury real estate through 3D virtual reality tour.">
+    <meta name="keywords" content="real estate investment,luxury real estate,virtual reality, real estate virtual tour, 3d virtual tours, virtual 360 real estate">
+    <meta name="description" content="We change the way property buyers experience luxury real estate through 3D virtual reality tours.">
 @endsection
 
 @section('style')
