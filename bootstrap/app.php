@@ -1,8 +1,10 @@
 <?php
 
-//require '';
-if (file_exists(realpath(__DIR__ . '/../../presskit/wp-load.php'))){
+if (file_exists(realpath(__DIR__ . '/../../presskit/wp-load.php'))) {
   require (realpath(__DIR__ . '/../../presskit/wp-load.php'));
+}
+if (file_exists(realpath(__DIR__ . '/../../blog/wp-load.php'))) {
+  require (realpath(__DIR__ . '/../../blog/wp-load.php'));
 }
 
 /*
@@ -16,8 +18,9 @@ if (file_exists(realpath(__DIR__ . '/../../presskit/wp-load.php'))){
 |
 */
 
-if(file_exists('../public/blog/wp-load.php'))
-    require '../public/blog/wp-load.php';
+if(file_exists('../public/blog/wp-load.php')) {
+    require ('../public/blog/wp-load.php');
+}
 
 
 $app = new Illuminate\Foundation\Application(

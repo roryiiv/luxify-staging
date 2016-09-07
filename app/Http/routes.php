@@ -67,8 +67,14 @@ Route::get('/pricing', function(){
 Route::get('/faq', function(){
     return view('faq');
 });
+
+
 Route::get('/sitemap', function(){
     return view('sitemap');
+});
+
+Route::get('/sitemap/{id}', function() {
+    return view('sitemap', ['release' => $id]);
 });
 Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
