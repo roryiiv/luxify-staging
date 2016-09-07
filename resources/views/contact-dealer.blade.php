@@ -35,7 +35,7 @@
                     <div class="col-md-6">
                         <h1>Contact Dealer:</h1>
                         <p>{{ $dealer->firstName . ' ' . $dealer->lastName }} {{ !empty($dealer->companyName) ? '- ' . $dealer->companyName : '' }}</p>
-                        <form name="form_dealer" method="post" action="/contact/dealer" class="form-horizontal">
+                        <form name="form_dealer" method="post" action="{{func::set_url('/contact/dealer')}}" class="form-horizontal">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <div class="col-xs-12">

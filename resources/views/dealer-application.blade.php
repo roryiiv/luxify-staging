@@ -4,10 +4,13 @@
   <title>{{ func::genTitle('Dealer Application', false)}}</title>
 @endsection
 
-<?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+<?php 
+    $user_id = Auth::user() ? Auth::user()->id : '';
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+?>
 @section('meta-data')
-<meta name="keywords" content="sell online,dealers,luxury goods">
-<meta name="description" content="Sell online today. Professional dealers use Luxify to transact successful sales of a wide selection luxury goods as well as luxury experiences.">
+    <meta name="keywords" content="sell online,dealers,luxury goods">
+    <meta name="description" content="Sell online today. Professional dealers use Luxify to transact successful sales of a wide selection luxury goods as well as luxury experiences.">
 @endsection
 
 @section('style')
@@ -15,53 +18,53 @@
     <link rel="stylesheet" href="/assets/css/luxify.css">
     <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
     <style>
-      .dz-message {
-        border: 2px dashed grey;
-        height: 80px;
-        padding-top: 31px;
-      }
-      .dz-image{
-        margin-top: 13px;
-      }
-      .dz-error-message {
-        color: #a94442;
-        font-size: 1.5rem;
-        font-weight: 500;
-      }
-      .bootstrap-tagsinput {
-        width: 100%;
-        border-radius: 0px;
-        border: 1px solid #c5c5c5;
-        height: 43px;
-        padding: 7px 6px;
-      }
-      .bootstrap-tagsinput .tag {
-        background-color: #958867!important;
-        background-color: #958867;
-        font-weight: 100;
-        font-size: 1.4rem;
-      }
+        .dz-message {
+            border: 2px dashed grey;
+            height: 80px;
+            padding-top: 31px;
+        }
+        .dz-image{
+            margin-top: 13px;
+        }
+        .dz-error-message {
+            color: #a94442;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        .bootstrap-tagsinput {
+            width: 100%;
+            border-radius: 0px;
+            border: 1px solid #c5c5c5;
+            height: 43px;
+            padding: 7px 6px;
+        }
+        .bootstrap-tagsinput .tag {
+            background-color: #958867!important;
+            background-color: #958867;
+            font-weight: 100;
+            font-size: 1.4rem;
+        }
     </style>
 @endsection
 @section('content')
-  <!-- main banner of the page -->
-	<section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/dealer-application-main.jpg', '', '', false, true)}});">
-		<div class="container">
+    <!-- main banner of the page -->
+    <section class="inner-banner parallax" style="background-image:url({{func::img_url('banners/dealer-application-main.jpg', '', '', false, true)}});">
+        <div class="container">
             <div class="banner-text">
                 <div class="banner-center">
                     <!-- new grid -->
                       <div class="row">
                           <div class="col-lg-12">
-							<h1>Dealer Application</h1>
+							<h1>@lang('static.dealer_application_dealer')</h1>
 						   </div>
 					   </div>
                       <div class="row">
                           <div class="col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-							<p>We are Asia’s leading online marketplace for luxury. The go-to destination for luxury shoppers in Asia.</p>
+							<p>@lang('static.dealer_application_asia')</p>
 					   </div>
 				   </div>
 				   <div class="button-wrap">
-						 <a href="#application-form" id="apply-btn-one" class="btn btn-primary">Apply now</a>
+						 <a href="#application-form" id="apply-btn-one" class="btn btn-primary">@lang('static.dealer_application_apply')</a>
 					</div>
                 </div>
             </div>
@@ -76,16 +79,16 @@
                 @if(isset($_GET['message']))
                     @if($_GET['message'] == 'sent')
                         <p class="alert alert-success">
-                            Your application has been sent, thank you.
+                            @lang('static.dealer_application_sent')
                         </p>
                     @else
                         <p class="alert alert-warning">
-                            Your application has not been sent, please contact <a href="mailto:technology@luxify.com">Admin</a> for support.
+                            @lang('static.dealer_application_contact') <a href="mailto:technology@luxify.com">@lang('static.dealer_application_admin')</a> @lang('static.dealer_application_support')
                         </p>
                     @endif
                 @endif
-                <a data-fancybox-type="iframe" href="https://s3-ap-southeast-1.amazonaws.com/luxify/static/Luxify_Presentation.pdf" class="fancybox btn btn-info">View PDF</a>
-                <span class="txt">Learn more about the power and reach of Luxify</span>
+                <a data-fancybox-type="iframe" href="https://s3-ap-southeast-1.amazonaws.com/luxify/static/Luxify_Presentation.pdf" class="fancybox btn btn-info">@lang('static.dealer_application_pdf')</a>
+                <span class="txt">@lang('static.dealer_application_power')</span>
             </div>
         </div>
         <!-- end of learn more block -->
@@ -95,8 +98,8 @@
                     <div class="row">
                           <div class="col-sm-10 col-sm-offset-1">
                 <div class="col-sm-6 col-md-5">
-                    <h3>Our Dealers</h3>
-                    <p>We select only prestigious dealers to bring their products to our highly targeted and Asian audience</p>
+                    <h3>@lang('static.dealer_application_our_dealer')</h3>
+                    <p>@lang('static.dealer_application_prestigious')</p>
                 </div>
                 <div class="col-sm-5 col-sm-offset-1 col-md-6">
                     <!-- dealer list -->
@@ -132,35 +135,33 @@
                 <!-- new grid -->
                       <div class="row">
                           <div class="col-sm-10 col-sm-offset-1">
-                <h1>Why sell on Luxify?</h1>
+                <h1>@lang('static.dealer_application_sell')</h1>
                 <div class="row custom-col">
                     <div class="col-xs-12 col-sm-6">
                         <div class="text-wrap">
-                            <strong class="title">Qualified luxury audience</strong>
-                            <p>Reach affluent, luxury enthusiasts and influential buyers in Asia.</p>
+                            <strong class="title">@lang('static.dealer_application_audience')</strong>
+                            <p>@lang('static.dealer_application_reach')</p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="text-wrap">
-                            <strong class="title">Strong luxury brand association</strong>
-                            <p>We only select reputable luxury dealers to bring their luxury products to our highly targeted audience</p>
+                            <strong class="title">@lang('static.dealer_application_brand')</strong>
+                            <p>@lang('static.dealer_application_reputable')</p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="text-wrap">
-                            <strong class="title">Full control of the sales process</strong>
-                            <p>As a Luxify dealer, you are in full control of the sales process including your inventory on Luxify, pricing and communication with buyers</p>
+                            <strong class="title">@lang('static.dealer_application_control')</strong>
+                            <p>@lang('static.dealer_application_inventory')</p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="text-wrap">
-                            <strong class="title">Cost effective</strong>
-                            <p>We are a lead generation engine and do not take commission on the transactions you generate on Luxify</p>
+                            <strong class="title">@lang('static.dealer_application_cost')</strong>
+                            <p>@lang('static.dealer_application_lead')</p>
                         </div>
                     </div>
-                </div>
-                </div>
-                 </div> <!-- end of new grid -->
+                </div> <!-- end of new grid -->
             </div>
         </div>
         <!-- end of information block -->
@@ -177,8 +178,8 @@
                                 <img src="{{func::img_url('banners/dealer-application-quote-exotic-cars.jpg', '', '', false, true)}}" alt="image description">
                             </div>
                             <div class="text">
-                                <q>“Luxify is a great platform. We use it to bring us qualified buyers from Asia”</q>
-                                <cite>Hem Udani <span class="post">Director, Exotic Cars London</span></cite>
+                                <q>@lang('static.dealer_application_platform')</q>
+                                <cite>@lang('static.dealer_application_hem') <span class="post">@lang('static.dealer_application_exotic')</span></cite>
                             </div>
                         </blockquote>
                     </div>
@@ -188,8 +189,8 @@
                                 <img src="{{func::img_url('banners/dealer-application-quote-watch-dealer.jpg', '', '', false, true)}}" alt="image description">
                             </div>
                             <div class="text">
-                                <q>“Thanks to Luxify, we managed to get serious prospects and sales. Luxify provides us with more business opportunities.”</q>
-                                <cite>Frankie Ko<span class="post">Director, Owner Celebrity Style.</span></cite>
+                                <q>@lang('static.dealer_application_thanks')</q>
+                                <cite>@lang('static.dealer_application_frankie')<span class="post">@lang('static.dealer_application_director')</span></cite>
                             </div>
                         </blockquote>
                     </div>
@@ -203,39 +204,40 @@
         <div class="sell-block">
             <div class="container">
                 <div class="wrap">
-                    <h2 class="h1">Start selling today</h2>
-                    <p>Professional dealers use Luxify to transact successful sales of a wide selection of new, vintage and pre-owned luxury goods as well as luxury experiences</p>
-                    <a href="#application-form" id="apply-btn-two" class="btn btn-primary lightbox">Apply Now</a>
+                    <h2 class="h1">@lang('static.dealer_application_selling')</h2>
+                    <p>@lang('static.dealer_application_transact')</p>
+                    <a href="#application-form" id="apply-btn-two" class="btn btn-primary lightbox">@lang('static.dealer_application_applynow')</a>
                 </div>
             </div>
         </div>
         <!-- end of sell block -->
-    @if(Auth::user() && Auth::user()->role === 'seller')
-    @else
-		<div class="application-form" id="application-form">
-			<form id='dealer-application-form' action="/dealer-application" method="POST" class="detail-form">
-                {!! csrf_field() !!}
-                <div class="container">
-					<header class="heading">
-						<h2 class="h1">Business Details</h2>
-						<div class="wrap">
-							<h5>All fields are required unless marked as optional</h5>
-						</div>
-					</header>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2 col-sm-9 col-sm-offset-1">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-4">
-                                        <label for="emai">Login Email:</label>
-                                    </div>
-                                    <div class="col-lg-9 col-sm-8">
+        @if(Auth::user() && $user_role === 'seller')
+        @else
+            <div class="application-form" id="application-form">
+                <form id='dealer-application-form' action="{{func::set_url('/dealer-application')}}" method="POST" class="detail-form">
+                    {!! csrf_field() !!}
+                    <div class="container">
+                        <header class="heading">
+                            <h2 class="h1">Business Details</h2>
+                            <div class="wrap">
+                                <h5>All fields are required unless marked as optional</h5>
+                            </div>
+                        </header>
+                        <div class="row">
+                            <div class="col-md-7 col-md-offset-2 col-sm-9 col-sm-offset-1">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-sm-4">
+                                            <label for="emai">Login Email:</label>
+                                        </div>
+                                        <div class="col-lg-9 col-sm-8">
 
-                                    @if(Auth::user())
-                                        <input disabled type="text" name="email" class="form-control" value="{{Auth::user()->email}}" required>
-                                    @else
-                                        <input type="text" name="email" class="form-control" required>
-                                    @endif
+                                            @if(Auth::user())
+                                                <input disabled type="text" name="email" class="form-control" value="{{Auth::user()->email}}" required>
+                                            @else
+                                                <input type="text" name="email" class="form-control" required>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -441,7 +443,7 @@
 										<input type="button" id="application-submit-btn" class="btn btn-primary btn-block" value="Submit Application">
 									</div>
 							<div class="form-info-txt" style="text-align: left;">
-								<p>Should you be a private seller or a collector, simply contact our team at <a href="mailto:concierge@luxify.com">concierge@luxify.com</a> and we will help you to leverage Luxify’s dealer network to assist you in selling your items.</p>
+								<p>Should you be a private seller or a collector, simply contact our team at <a href="mailto:concierge@luxify.com">concierge@luxify.com</a> and we will help you to leverage Luxify�s dealer network to assist you in selling your items.</p>
 							</div>
 								</div>
 							</div>
@@ -459,7 +461,7 @@
     <!-- DropzoneJS-->
     <script type="text/javascript" src="/db/js/dropzone.min.js"></script>
     <script type="text/javascript" src="/db/js/dropzone-js.js"></script>
-    <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/js/bundle.min.js"></script>
     <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>

@@ -140,7 +140,7 @@
                 </div>
             </div>
             <div class="page-content container-fluid">
-              <form id="form-tabs_edit_product" class="form-horizontal" action="/dashboard/products/{{$item->id}}" method="post" enctype="multipart/form-data">
+              <form id="form-tabs_edit_product" class="form-horizontal" action="{{func::set_url('/dashboard/products/')}}{{$item->id}}" method="post" enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 <h3>@lang('dashboard.product_edit_category')</h3>
                 <fieldset>

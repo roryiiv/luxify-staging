@@ -99,7 +99,7 @@
                         <h3 class="widget-title">@lang('panel.category_addcategory2')</h3>
                     </div>
                     <div class="widget-body">
-                        <form id="form-tabs" name="category" method="post" action="/panel/categories" class="form-horizontal" enctype="multipart/form-data">
+                        <form id="form-tabs" name="category" method="post" action="{{func::set_url('/panel/categories')}}" class="form-horizontal" enctype="multipart/form-data">
                             {!! csrf_field() !!}
                             
                             <h3>Category Details</h3>
