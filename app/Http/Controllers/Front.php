@@ -353,7 +353,7 @@ class Front extends Controller {
             foreach ($childs as  $value) {
                 array_push($cat_ids,$value->id);
             }
-            $banner = (empty($data->mainImageURL))?'banner-estate.jpg':empty($data->mainImageURL);
+            $banner = (empty($data->mainImageURL))?'banner-estate.jpg':($data->mainImageURL);
 
             $title_cat = $data->name;
 
