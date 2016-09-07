@@ -53,6 +53,8 @@ use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
 
 use App\MyLibrary\MicrosoftTranslator\Client;*/
 
+use Illuminate\Support\Facades\Session;
+
 use Captcha;
 
 use URL;
@@ -61,6 +63,13 @@ class Front extends Controller {
 	// constructor
 	public function __construct(Request $request) {
         $this->url = URL::previous();
+        if(Auth::user()){
+            $this->user_id = Auth::user()->id;
+            $this->user_role = Auth::user()->role;
+            if(Auth::user()->role== 'admin' && Session::get('view_as') != ''){
+                $this->user_role = Session::get('view_as');
+            }
+        }
     }
 
     //Front end Controller
@@ -517,7 +526,7 @@ class Front extends Controller {
             $listings->setPath($ref);
 
 
-            return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta, 'total' => $listings->total()]);
+            return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'data' => $data, 'childs' => $childs, 'filters' => $filters, 'meta' => $meta, 'total' => $listings->total()]);
         }else{
             return abort(404);
         }
@@ -923,7 +932,7 @@ class Front extends Controller {
         $input = $request->all();
         // dealer application based on existing user account
         if(Auth::user()) {
-          if(Auth::user()->email === $input['email'] && Auth::user()->role === 'user') {
+          if(Auth::user()->email === $input['email'] && $this->user_role === 'user') {
             $oldUser = Users::where('email', '=', $input['email'])->get();
             if ($oldUser) {
               if(isset($input['companyLogoUrl']) && !empty($input['companyLogoUrl'])){

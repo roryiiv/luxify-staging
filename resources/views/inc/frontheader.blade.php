@@ -5,7 +5,7 @@
                 <!-- menu opener and logo -->
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">Menu<span></span></button>
                 <!-- logo of the page -->
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="{{func::set_url('/')}}">
                     <img src="{{func::img_url('luxify-logo.png', '', '', false, true)}}" alt="Luxify" class="normal">
                 </a>
             </div>
@@ -15,7 +15,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.shop')</a>
                         <div class="dropdown-menu">
-			<?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
+                        <?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
 
                             <ul>
                                 <li><a href="{{func::set_url('/luxify-estates/3d-estates')}}">@lang('header.shop_luxifyEstate3d')</a></li>

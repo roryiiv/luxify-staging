@@ -67,8 +67,6 @@ Route::get('/pricing', function(){
 Route::get('/faq', function(){
     return view('faq');
 });
-
-
 Route::get('/sitemap', function(){
     return view('sitemap');
 });

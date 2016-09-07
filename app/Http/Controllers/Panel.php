@@ -48,6 +48,8 @@ use Cache;
 
 use Storage;
 
+use Illuminate\Support\Facades\Session;
+
 class Panel extends Controller
 {
     public function __construct() {
@@ -57,6 +59,9 @@ class Panel extends Controller
             $this->user_id = Auth::user()->id;
             $this->user_role = Auth::user()->role;
             $this->accepted = array('admin', 'editor');
+            if(Auth::user()->role== 'admin' && Session::get('view_as') != ''){
+                $this->user_role = Session::get('view_as');
+            }
         }
     }
 
@@ -96,9 +101,9 @@ class Panel extends Controller
     //Panel (super admin) Controller
     public function index() {
         // return 'panel index page';
-        if(Auth::user()->role === 'seller'){
+        if($this->user_role === 'seller'){
             return redirect('/dashboard');
-        }elseif(Auth::user()->role === 'user'){
+        }elseif($this->user_role == 'user'){
             return redirect('/dashboard/profile');
         }else{
             return redirect('/panel/users');
@@ -1646,6 +1651,25 @@ class Panel extends Controller
 
         echo $return;
 
+    }
+    public  function switchadminas($admin){
+        $query = array(
+        'admin',
+        'user',
+        'editor',
+        'seller',
+        );
+
+            if(in_array($admin,$query)){
+                Session::put('view_as',$admin);
+                Auth::user()->role = $admin;
+                return redirect ('/dashboard');
+            }else{
+                return back();
+        }
+    }
+    public  function closeviewas(){
+        //
     }
 
 }

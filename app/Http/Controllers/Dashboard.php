@@ -32,6 +32,7 @@ use App\Http\Requests;
 Use Input;
 Use DB;
 use Cache;
+use Illuminate\Support\Facades\Session;
 
 class Dashboard extends Controller
 {
@@ -42,6 +43,9 @@ class Dashboard extends Controller
         if(Auth::user()){
             $this->user_id = Auth::user()->id;
             $this->user_role = Auth::user()->role;
+            if(Auth::user()->role== 'admin' && Session::get('view_as') != ''){
+                $this->user_role = Session::get('view_as');
+            }
         }
     }
     /**

@@ -9,7 +9,10 @@
     <meta name="description" content="{{ $meta['desc']}}">
 @endsection
 
-<?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+<?php 
+    $user_id = Auth::user() ? Auth::user()->id : '';
+    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+?>
 
 @section('style')
     <!-- include the site stylesheet -->
@@ -75,6 +78,30 @@
 								<div class="result-count" style="font-style: italic; font-size: 14px;">
 									Showing {{ number_format($total)}} matching results
 								</div>
+								<div class="filter-holder">
+									<div class="filter-title">
+										<a role="button" class="facetController" data-toggle="collapse" href="#categoryFilter" aria-expanded="true" aria-controls="categoryFilter">
+											<h4>
+												Category
+												<span class="pull-right">
+													<i class="glyphicon glyphicon-menu-down"></i>
+												</span>
+											</h4>
+										</a>
+									</div>
+									<div class="filter-opts collapse in" aria-expanded="true" id="categoryFilter">
+										<h4>{{ $title_cat }}</h4>
+										<div class="filter-opts-content">
+											<ul>
+												@foreach ($childs as $cat)
+													<li>
+														<a href="/category/{{ $data->slug }}/{{ $cat->slug }}">{{ $cat->name }}</a>
+													</li>
+												@endforeach
+											</ul>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -95,14 +122,14 @@
                                                     <img class="listing-img" src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
                                                     @if(Auth::user())
 
-                                                        @if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
+                                                        @if($user_role === 'user' || $user_role === 'seller')
                                                           <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
                                                           @if($added !== '')
                                                             <a class="favourite {{$added}}" data-id="{{$item->id}}" data-toggle='tooltip' data-placement='bottom' title="Remove from your wishlist" href="#"><span class="icon icon-heart"></span></a>
                                                           @else
                                                             <a class="favourite" data-id="{{$item->id}}" title="{{ $item->title }}" href="#"><span class="icon icon-heart"></span></a>
                                                           @endif
-                                                        @elseif(Auth::user()->role === 'admin')
+                                                        @elseif($user_role === 'admin')
                               
                                                             <a class="editListing" data-id="{{$item->id}}" href="{{func::set_url('/panel/product/edit/'.$item->id)}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
                                                             <a class="deleteListing" data-id="{{$item->id}}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
@@ -181,6 +208,18 @@
                 $(this).fadeIn('slow');
             });
         });
+        $('.facetController').click(function(event){
+        	var status = $(this).attr('aria-expanded');
+        	var x = $(this).find('h4 > span.pull-right > i');
+        	console.log(status);
+        	if(status == true){
+        		x.removeClass('glyphicon glyphicon-menu-right');
+        		x.addClass('glyphicon glyphicon-menu-down');
+        	}else if(status == false){
+        		x.removeClass('glyphicon glyphicon-menu-down');
+        		x.addClass('glyphicon glyphicon-menu-right');
+        	}
+        });
         function validatingrange(start,end){
             start = parseInt(start);
             end = parseInt(end);
@@ -256,7 +295,7 @@
         <link rel="stylesheet" type="text/css" href="/db/css/sweetalert.css">
         <script type="text/javascript" src="/db/js/sweetalert.min.js"></script>
     @endif
-    @if(Auth::user() && Auth::user()->role == 'admin')
+    @if(Auth::user() && $user_role == 'admin')
       {{ csrf_field() }}
     @endif
     @include('inc.send-message-script')
