@@ -38,7 +38,7 @@
 							<!-- breadcrumb -->
 							<ol class="breadcrumb">
 								<li>
-									<a href="/">Home</a>
+									<a href="{{func::set_url('/')}}">Home</a>
 								</li>
 								<li class="active">Search</li>
 							</ol>
@@ -57,7 +57,7 @@
                    <?php $item = $listings[$i]; ?>
                    <div class="col-md-4 col-sm-6">
         			   	   <div class="thumbnail">
-                        <a href="/listing/{{ $item->slug }}">
+                        <a href="{{func::set_url('/listing/'.$item->slug)}}">
             	   	   		<figure>
             	   	   			<img src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 400) : func::img_url('default-logo.png', 400) }}" alt="{{ $item->title }}">
                               @if(Auth::user())
@@ -67,7 +67,7 @@
             	   	   		</figure>
                         </a>
         			   	     <div class="caption">
-        			   	   	  <h3><a href="/listing/{{ $item->slug }}">{{ $item->title }}</a></h3>
+        			   	   	  <h3><a href="{{func::set_url('/listing/'.$item->slug)}}">{{ $item->title }}</a></h3>
                             <?php
                               $curr = func::getTableByID('currencies', $item->currencyId);
                               $dealer = func::getTableByID('users', $item->userId);

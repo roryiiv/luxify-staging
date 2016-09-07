@@ -15,12 +15,17 @@ use App\Listings;
 
 
 Route::get('/buildHashedId', 'Front@updateHashed');
-//static front pages
-Route::get('/', function(){
-    return View::make('index');
-});
-Route::get('/presskit', function(){
-  return view('presskit'); 
+Route::group(['prefix' => Translation::getRoutePrefix()], function()
+{
+    //static front pages
+    Route::get('/', function(){
+        return View::make('index');
+    });
+    Route::get('/about', function(){
+        return view('about');
+    });
+Route::get('/press', function(){
+  return view('presskit');
 });
 Route::get('presskit/{id}', function($id) {
   if ($id) {
@@ -29,14 +34,12 @@ Route::get('presskit/{id}', function($id) {
     return view('presskit');
   }
 });
-Route::get('/about', function(){
-    return view('about');
-});
+
 Route::get('/contact', function(){
     return view('contact');
 });
 Route::get('/luxify-estates', function(){
-   	$listings = Listings::where('status', 'APPROVED') 
+   	$listings = Listings::where('status', 'APPROVED')
  	->whereNotNull('aerialLook3DUrl')
  	->leftJoin('users', 'listings.userId', '=', 'users.id')
  	->join('countries', 'countries.id', '=', 'listings.countryId')
@@ -84,8 +87,6 @@ Route::get('datafeed/product/{id}', 'DataFeed@product_get');
 Route::get('datafeed/dealers', 'DataFeed@dealers_list');
 Route::get('datafeed/getTable/{tableName}', 'DataFeed@getTable');
 Route::post('datafeed/images/upload', 'DataFeed@downloadImageToS3');
-Route::post('datafeed/meta/update', 'DataFeed@updateMeta');
-Route::post('datafeed/meta/noMeta', 'DataFeed@getNoMetaRecords');
 
 // Open for public dealer application
 // TODO: add captcha to the application form form
@@ -93,6 +94,7 @@ Route::post('/public/images/upload', 'OpenAPI@upload');
 
 // Ajax endpoints
 Route::get('/api/category/{catId}/fields', 'Front@categories_optional_fields');
+Route::get('/api/ajax/optional-fields/{id}', 'Front@category_optional_fields');
 Route::post('/api/listing/createSlug', 'Slug@createSlug');
 Route::post('/api/user/createSlug', 'Slug@createUserSlug');
 Route::get('/api/mailbox', 'Mailbox@index');
@@ -111,6 +113,10 @@ Route::post('/update/{id}', 'Dashboard@FeaturedItem');
 Route::post('/api/ajax/checkemail/{email}', 'Front@EmailInUse');
 Route::post('/forget-password','LuxifyAuth@forgetPassword');
 Route::post('/reset-password','LuxifyAuth@resetPassword');
+Route::get('/api/ajax/category/{parent}', 'Dashboard@CategoryChoosen');
+Route::get('/api/getchild/', 'Front@zonk')->name('getchild');
+Route::get('/api/getchild/{id}', 'Front@getchild');
+
 // Test the API URL
 // Route::get('/api/product/setStatus', 'Panel@product_change_status');
 
@@ -179,6 +185,13 @@ Route::get('/panel/categories/delete/{id}','Panel@category_delete');
 Route::get('/panel/categories/edit/{id}', 'Panel@category_edit');
 Route::post('/panel/category', 'Panel@category_update');
 
+Route::get('/panel/optional-fields','Panel@optional_fields');
+Route::get('/panel/optional-fields/add','Panel@optional_fields_add');
+Route::post('/panel/optional-fields/add','Panel@post_optional_fields_add');
+Route::get('/panel/optional-fields/delete/{id}','Panel@optional_fields_delete');
+Route::get('/panel/optional-fields/edit/{id}', 'Panel@optional_fields_edit');
+Route::post('/panel/optional-fields/edit/{id}', 'Panel@optional_fields_update');
+
 //Other Database related operations
 Route::get('/panel/categories/rebuild','Panel@cat_rebuild');
 Route::get('/panel/listings/rebuild','Panel@listing_rebuild');
@@ -221,6 +234,7 @@ Route::post('/dashboard/product/delete/{itemId}', 'Dashboard@products_delete'); 
 Route::get('/dashboard/product/delete/{id}', 'Dashboard@product_delete'); // Delete Item from list
 // Dashboard Images Upload methods
 Route::post('/upload', 'Dashboard@single_upload');
+Route::post('/upload', 'Panel@category_upload');
 Route::post('/upload_multiple', 'Dashboard@multiple_upload');
 Route::post('/removeImage', 'Dashboard@remove_image');
 //Dashboard support
@@ -230,3 +244,5 @@ Route::get('/download-image/{image}', 'Panel@downloadImage');
 
 // Route::auth();
 Route::get('/home', 'HomeController@index');
+
+});

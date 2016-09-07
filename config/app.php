@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'en_us',
 
     /*
     |--------------------------------------------------------------------------
@@ -155,6 +155,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         TeamTNT\TNTSearch\TNTSearchServiceProvider::class,
         Stevebauman\Translation\TranslationServiceProvider::class,
+        //Mews\Captcha\CaptchaServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -219,6 +220,19 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'TNTSearch' => TeamTNT\TNTSearch\Facades\TNTSearch::class,
         'Translation' => Stevebauman\Translation\Facades\Translation::class,
+        'trans' => App\MyLibrary\TranslateAPI::class,
+        'MStranslation' => App\MyLibrary\PSKMicrosoftTranslatorAutoLoader::class,
+//	      'Captcha' => Mews\Captcha\Facades\Captcha::class,
+    ],
+
+    'locales' => [
+        'en' => 'English',
+        'en_us' => 'English',
+        'zh_cn' => 'Chinese',
+        'zh_hk' => 'Hongkong',
+        'cn' => 'Chinese',
+        'hk' => 'Hongkong',
+        'fr' => 'France',
     ],
 
 ];

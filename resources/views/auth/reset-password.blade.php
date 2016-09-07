@@ -9,14 +9,14 @@
     <meta name="keywords" content="luxify member registration,luxury goods">
     <meta name="description" content="Register for an account for free to discover one of the Internet’s largest collections of luxury goods and experiences.">
     <!-- PACE-->
-    <link rel="stylesheet" type="text/css" href="/plugins/PACE/themes/blue/pace-theme-flash.css">
-    <script type="text/javascript" src="/plugins/PACE/pace.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url('./plugins/PACE/themes/blue/pace-theme-flash.css') }}">
+    <script type="text/javascript" src="{{ url('/plugins/PACE/pace.min.js') }}"></script>
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/plugins/bootstrap/dist/css/bootstrap.min.css') }}">
     <!-- Fonts-->
-    <link rel="stylesheet" type="text/css" href="/plugins/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/plugins/themify-icons/themify-icons.css') }}">
     <!-- Primary Style-->
-    <link rel="stylesheet" type="text/css" href="/build/css/first-layout.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/build/css/first-layout.css') }}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
     <!--[if lt IE 9]>
@@ -25,7 +25,7 @@
     <![endif]-->
 </head>
 
-<body style="background-image: url('/build/images/backgrounds/30.jpg')" class="body-bg-full v2">
+<body style="background-image: url({{func::img_url('banners/login-main.jpg', '', '', false, true)}})" class="body-bg-full v2">
     <div class="container page-container">
         @include('inc.loginheader')
         <div class="page-content">
@@ -68,14 +68,39 @@
 
     <!-- Demo Settings end-->
     <!-- jQuery-->
-    <script type="text/javascript" src="/plugins/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url('/plugins/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap JavaScript-->
-    <script type="text/javascript" src="/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ url('/plugins/bootstrap/dist/js/bootstrap.min.js"') }}></script>
     <!-- Custom JS-->
-    <script type="text/javascript" src="/build/js/first-layout/extra-demo.js"></script>
-    <script type="text/javascript" src="/js/bundle.js"></script>
-    <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{{ url('/build/js/first-layout/extra-demo.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/js/bundle.min.js"') }}></script>
+    <script type="text/javascript" src="{{ url('/db/js/jquery.validate.min.js"') }}></script>
     <script>
+    function changeHeaderSelectMenu(){
+    
+      $('#currSelect').on('change', function(){
+        var code = $(this).val();
+        // alert(code);
+        window.location.href = '/api/currency/switch/' + code;
+      });
+      $('#langSelect').on('change', function(){
+        var code = $(this).val();
+        // alert(code);
+        window.location.href = '/api/lang/switch/' + code;
+      });
+    
+    }
+    // initialize custom form elements
+    function initCustomForms() {
+      jcf.setOptions('Select', {
+        wrapNative: false
+      });
+      jcf.replaceAll();
+    }
+    $(document).ready(function() {
+        changeHeaderSelectMenu();
+        initCustomForms();
+    });
   	$('#reset-form').validate({
     	rules: {
       		password: {

@@ -32,49 +32,39 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">Customer List</h4>
+                        <h4 class="mt-0 mb-5">@lang('panel.users_list')</h4>
                         <ol class="breadcrumb mb-0">
-                            <li><a href="">Powerful Admint to see everyone</a></li>
+                            <li><a href="">@lang('panel.users_admin')</a></li>
                         </ol>
                     </div>
-                    <div class="col-sm-6" style="display: none;">
-                        <div class="btn-group mt-5">
-                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                            <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                                <li><a href="product-list.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                            </ul>
-                        </div>
+                    <div class="col-sm-6" >
+                        @include('inc.set-lang-dashboard-panel')
                     </div>
                 </div>
             </div>
             <div class="page-content container-fluid">
                 <div class="widget">
                     <div class="widget-heading">
-                        <h3 class="widget-title">Customer List</h3>
+                        <h3 class="widget-title">@lang('panel.users_list1')</h3>
                     </div>
                     <div class="widget-body">
                         <form id="users" name="users" method="get" action="/panel/users">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="txtCustomerName">Customer Name</label>
+                                        <label for="txtCustomerName">@lang('panel.users_name')</label>
                                         <input id="txtCustomerName" name="txtCustomerName" type="text" class="form-control" value="{{isset($filters['txtCustomerName']) ? ucfirst($filters['txtCustomerName']) : ''}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="txtCompanyName">Company Name</label>
+                                        <label for="txtCompanyName">@lang('panel.users_company')</label>
                                         <input id="txtCompanyName" name="txtCompanyName" type="text" class="form-control" value="{{isset($filters['txtCompanyName']) ? ucfirst($filters['txtCompanyName']) : ''}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="ddlCustomerGroup">Customer Group</label>
+                                        <label for="ddlCustomerGroup">@lang('panel.users_group')</label>
                                         <select id="ddlCustomerGroup" name="ddlCustomerGroup" class="form-control">
                                             <option value="">Choose</option>
                                             <option value="user"{{isset($filters['ddlCustomerGroup']) ? func::selected($filters['ddlCustomerGroup'],'user') : ''}}>User</option>
@@ -86,13 +76,13 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="txtEmail">Email</label>
+                                        <label for="txtEmail">@lang('panel.users_email')</label>
                                         <input id="txtEmail" name="txtEmail" type="text" class="form-control" value="{{isset($filters['txtEmail']) ? ucfirst($filters['txtEmail']) : ''}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="ddlStatus">Status</label>
+                                        <label for="ddlStatus">@lang('panel.users_status')</label>
                                         <select id="ddlStatus" name="ddlStatus" class="form-control">
                                             <option value="">Choose</option>
                                             <option value="0"{{isset($filters['ddlStatus']) ? func::selected($filters['ddlStatus'],0) : ''}}>Enabled</option>
@@ -102,7 +92,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="ddlApproved">Dealer Status</label>
+                                        <label for="ddlApproved">@lang('panel.users_dealer')</label>
                                         <select id="ddlApproved" name="ddlApproved" class="form-control">
                                             <option value="">Choose</option>
                                             <option value="approved"{{isset($filters['ddlApproved']) ? func::selected($filters['ddlApproved'], 'approved') : ''}}>Approved</option>
@@ -113,7 +103,7 @@
                                 </div>
                             </div>
                             <div class="row mb-15 p-10 text-right">
-                                <button type="submit" class="btn btn-raised btn-success btn-lg">Filter</button>
+                                <button type="submit" class="btn btn-raised btn-success btn-lg">@lang('panel.users_filter')</button>
                             </div>
                         </form>
                         <div id="product-list_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
@@ -121,18 +111,18 @@
                                 <div class="col-sm-6">
                                     <div class="dataTables_length" id="product-list_length">
                                         <form id="sorter" name="sorter" method="get" action="{{ $_SERVER['REQUEST_URI'] }}">
-                                            <label>Show
+                                            <label>@lang('panel.users_show')
                                             <select id="view" name="view-perpage" aria-controls="product-list" class="form-control input-sm">
                                                 <option value="10"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],10) : ''}}>10</option>
                                                 <option value="20"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],20) : ''}}>20</option>
                                                 <option value="50"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],50) : ''}}>50</option>
                                                 {{-- <option value="-1"{{isset($_GET['view-perpage']) ? func::selected($_GET['view-perpage'],-1) : ''}}>All</option> --}}
                                             </select>
-                                            entries
+                                            @lang('panel.users_entries')
                                             </label>
                                         </form>
                                         </br>
-                                        <td>Showing {{ $users->count() }} of {{ $users->total() }} entries</td>
+                                        <td>@lang('panel.users_showing') {{ $users->count() }} @lang('panel.users_of') {{ $users->total() }} @lang('panel.users_entries1')</td>
                                     </div>
                                 </div>
                             </div>
@@ -147,19 +137,19 @@
                                                         <label for="checkAll" class="pl-0">&nbsp;</label>
                                                     </div>
                                                 </th>
-                                                <th>Customer Name</th>
-                                                <th>Email</th>
+                                                <th>@lang('panel.users_name1')</th>
+                                                <th>@lang('panel.users_email')</th>
                                                 @if(Auth::user()->role != 'editor')
-                                                <th>Customer Group</th>
+                                                <th>@lang('panel.users_group1')</th>
                                                 @endif
-                                                <th>Account Status</th>
+                                                <th>@lang('panel.users_account')</th>
                                                 @if(Auth::user()->role == 'editor')
-                                                <th class="text-right">Last Edited By</th>
+                                                <th class="text-right">@lang('panel.users_last')</th>
                                                 @endif
                                                 @if(Auth::user()->role != 'editor')
-                                                <th>Date Added</th>
+                                                <th>@lang('panel.users_date')</th>
                                                 @endif
-                                                <th class="text-center">Action</th>
+                                                <th class="text-center">@lang('panel.users_action')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -234,9 +224,9 @@
                                                             <a href="/panel/user/edit/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-pencil"></i></a>
                                                             @if(Auth::user()->role == 'admin')
                                                                 @if($user->isSuspended == 0)
-                                                                    <a href="/panel/user/delete/{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
+                                                                    <a href="{{func::set_url('/panel/user/delete/')}}{{$user->id}}" class="btn btn-outline btn-danger"><i class="ti-trash"></i></a>
                                                                 @else
-                                                                    <a href="/panel/user/revoke/{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-power-off"></i></a>
+                                                                    <a href="{{func::set_url('/panel/user/revoke/')}}{{$user->id}}" class="btn btn-outline btn-success"><i class="ti-power-off"></i></a>
                                                                 @endif
                                                             @endif
                                                         </div>
@@ -263,7 +253,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="dataTables_info" id="product-list_info" role="status" aria-live="polite">
-                                        Showing {{ $users->count() }} of {{ $users->total() }} entries
+                                        @lang('panel.users_showing1') {{ $users->count() }} @lang('panel.users_of1') {{ $users->total() }} @lang('panel.users_entries2')
                                     </div>
                                 </div>
                                 <div class="col-sm-7">

@@ -1,5 +1,5 @@
 <script src="/db/js/jquery.validate.min.js"></script>
-<script src="/js/bundle.js"></script>
+<script src="/js/bundle.min.js"></script>
 <script>
   function changeListingStatus(ele, listingId) {
       if (listingId) {

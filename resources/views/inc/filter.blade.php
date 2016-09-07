@@ -38,18 +38,15 @@ $subs = func::categories('all');
                     <div class="col-sm-3">
                         <div class="select-hold">
                             <strong class="form-title">Category</strong>
+                            <?php
+                                $categories = DB::table('category_2')->where('parent',0)->get();
+                            ?>
                             <select id="category" name="category">
                                 <option>Category</option>
-                                <option value="real-estates">Real Estates</option>
-                                <option value="jewellery-watches">Watches & Jewelry</option>
-                                <option value="motors">Motors</option>
-                                <option value="handbags-accessories">Handbags & Accessories</option>
-                                <option value="experiences">Experiences</option>
-                                <option value="collectibles-furnitures">Collectibles & Furnitures</option>
-                                <option value="yachts">Yachts</option>
-                                <option value="aircrafts">Aircrafts</option>
-                                <option value="art-antiques">Art & Antiques</option>
-                                <option value="fine-wines-spirits">Fine Wines & Spirits</option>
+                               @foreach($categories as $value)
+                                    <option value="{{$value->slug}}">{{$value->name}}</option>
+                                @endforeach
+                                
                             </select>
                         </div>
                     </div>

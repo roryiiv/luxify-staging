@@ -41,14 +41,14 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
     <!-- PACE-->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/luxify.css">
-    <link rel="stylesheet" type="text/css" href="./plugins/PACE/themes/blue/pace-theme-flash.css">
-    <script type="text/javascript" src="./plugins/PACE/pace.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/plugins/PACE/themes/blue/pace-theme-flash.css">
+    <script type="text/javascript" src="/plugins/PACE/pace.min.js"></script>
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" type="text/css" href="./plugins/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Fonts-->
-    <link rel="stylesheet" type="text/css" href="./plugins/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{url('/plugins/themify-icons/themify-icons.css')}}">
     <!-- Primary Style-->
-    <link rel="stylesheet" type="text/css" href="./build/css/first-layout.css">
+    <link rel="stylesheet" type="text/css" href="{{url('/build/css/first-layout.css')}}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
     <!--[if lt IE 9]>
@@ -179,7 +179,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
 </style>
 </head>
 
-<body style="background-image: url('./build/images/backgrounds/30.jpg')" class="body-bg-full v2">
+<body style="background-image: url({{func::img_url('banners/login-main.jpg', '', '', false, true)}})" class="body-bg-full v2">
     <div class="parallax"></div>
     <div class="container page-container">
     @if(isset($_GET['err']))
@@ -202,7 +202,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
         @include('inc.loginheader')
         <div class="page-content">
             <div class="v2">
-                <div class="logo"><a target="_self" href='/'><img src="./build/images/logo/logo-dark.png" alt="" width="160"></a></div>
+                <div class="logo"><a target="_self" href='/'><img src="{{url('./build/images/logo/logo-dark.png')}}" alt="" width="160"></a></div>
                 <form name="form_login" method="post" action="/login" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -221,7 +221,7 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                                 <input id="exampleCheckboxRemember" type="checkbox" value="remember">
                                 <label for="exampleCheckboxRemember" class="checkbox-muted text-muted">@lang('auth.rememberMe')</label>
                             </div>
-                            <div class="pull-right"><a href="/forget-password" class="inline-block form-control-static">@lang('auth.forgotPassword?')</a></div>
+                            <div class="pull-right"><a href="{{func::set_url('/forget-password')}}" class="inline-block form-control-static">@lang('auth.forgotPassword?')</a></div>
                         </div>
                     </div>
                     <button id="login_btn" type="submit" class="btn-lg btn btn-primary btn-block" style="border-radius: 0px;">@lang('auth.signIn')</button>
@@ -254,39 +254,56 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
                 </div>
                 <hr>
                 <div class="clearfix">
-                    <p class="text-muted mb-0 pull-left">@lang('auth.createANewAccount')</p><a href="/register" class="inline-block pull-right">@lang('auth.signUp')</a>
+                    <p class="text-muted mb-0 pull-left">@lang('auth.createANewAccount')</p><a href="{{func::set_url('/register')}}" class="inline-block pull-right">@lang('auth.signUp')</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- jQuery-->
-    <script type="text/javascript" src="./plugins/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url('./plugins/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap JavaScript-->
-    <script type="text/javascript" src="./plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{url('./plugins/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Custom JS-->
-    <script type="text/javascript" src="./build/js/first-layout/extra-demo.js"></script>
-    <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/build/js/first-layout/extra-demo.js"></script>
+    <script type="text/javascript" src="/js/bundle.min.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
 
     <!--require for main.js-->
     <script type="text/javascript" src="/assets/js/carousel.js"></script>
     <script type="text/javascript" src="/assets/js/ajaxchimp.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery.counterup.min.js"></script>
-    <script type="text/javascript" src="/assets/js/jarallax.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery.slick.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery.IonRangeSlider.js"></script>
-    <script type="text/javascript" src="/assets/js/common.js"></script>
 
-
-
-    <script type="text/javascript" src="/assets/js/jquery.fancybox.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.customForms.js"></script>
 
 
 
     <script>
+    function changeHeaderSelectMenu(){
+    
+      $('#currSelect').on('change', function(){
+        var code = $(this).val();
+        // alert(code);
+        window.location.href = '/api/currency/switch/' + code;
+      });
+      $('#langSelect').on('change', function(){
+        var code = $(this).val();
+        // alert(code);
+        window.location.href = '/api/lang/switch/' + code;
+      });
+    
+    }
+    // initialize custom form elements
+    function initCustomForms() {
+      jcf.setOptions('Select', {
+        wrapNative: false
+      });
+      jcf.replaceAll();
+    }
     $(document).ready(function() {
+
+        changeHeaderSelectMenu();
+        initCustomForms();
+
         @if(isset($_GET['err']))
             @if($_GET['err']==104 || $_GET['err']==105 || $_GET['err']==106)
                 $("#cancel-form").modal('show');

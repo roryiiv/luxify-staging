@@ -43,23 +43,13 @@
             <div class="page-header clearfix">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="mt-0 mb-5">User Profile</h4>
+                        <h4 class="mt-0 mb-5">@lang('panel.users_edit')</h4>
                         <ol class="breadcrumb mb-0">
-                            <li><a href="forms-wizard.html#">Settings</a></li>
+                            <li><a href="forms-wizard.html#">@lang('panel.users_edit_setting')</a></li>
                         </ol>
                     </div>
-                    <div class="col-sm-6" style="display: none;">
-                        <div class="btn-group mt-5">
-                            <button type="button" class="btn btn-default btn-outline"><i class="flag-icon flag-icon-us mr-5"></i> English</button>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-outline dropdown-toggle"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                            <ul class="dropdown-menu dropdown-menu-right animated fadeInDown">
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-de mr-5"></i> German</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-fr mr-5"></i> French</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-es mr-5"></i> Spanish</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-it mr-5"></i> Italian</a></li>
-                                <li><a href="forms-wizard.html#"><i class="flag-icon flag-icon-jp mr-5"></i> Japanese</a></li>
-                            </ul>
-                        </div>
+                    <div class="col-sm-6" >
+                        @include('inc.set-lang-dashboard-panel')
                     </div>
                 </div>
             </div>
@@ -67,18 +57,18 @@
 
                 <div class="widget">
                     <div class="widget-heading">
-                        <h3 class="widget-title">User Profile</h3>
+                        <h3 class="widget-title">@lang('panel.users_edit1')</h3>
                     </div>
                     <div class="widget-body">
                         <form id="form-tabs" name="profile" method="post" action="/panel/user/update" class="form-horizontal" enctype="multipart/form-data">
                             {!! csrf_field() !!}
                             <input name='user_id' id='user_id' type='hidden' value="{{$user->id}}" />
-                            <h3>Personal Information</h3>
+                            <h3>@lang('panel.users_edit_personal')</h3>
                             <fieldset>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="txtFirstNameBillingTab" class="col-sm-3 col-md-4 control-label">Username</label>
+                                            <label for="txtFirstNameBillingTab" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_username')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtFirstNameBillingTab" name="txtFirstNameBillingTab" type="text" class="form-control" value="{{$user->username}}" disabled="disabled">
                                             </div>
@@ -86,7 +76,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">User Role</label>
+                                            <label for="txtUserRole" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_role')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <select id="txtUserRole" name="txtUserRole" class="form-control">
                                                     <option value="user" {{ $user->role === 'user' ? 'selected' : ''}}>User</option>
@@ -100,7 +90,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="txtEmailAddress" class="col-sm-3 col-md-4 control-label">Email</label>
+                                            <label for="txtEmailAddress" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_email')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtEmailAddress" name="txtEmailAddress" type="text" class="form-control" value="{{$user->email}}" onblur="IsEmailInUse()">
                                                 <div class="log" style="display:none;"></div>
@@ -111,7 +101,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="txtPassword" class="col-sm-3 col-md-4 control-label">Password</label>
+                                            <label for="txtPassword" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_password')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtPassword" type="password" name="txtPassword" placeholder="Enter password" class="form-control">
                                                 <input id="hashed" type="hidden" name="hashed">
@@ -121,7 +111,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="txtConfirmPassword" class="col-sm-3 col-md-4 control-label">Confirm password</label>
+                                            <label for="txtConfirmPassword" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_confirm')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="txtConfirmPassword" type="password" name="txtConfirmPassword" placeholder="Enter confirm password" class="form-control">
                                             </div>
@@ -131,7 +121,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="first_name" class="col-sm-3 col-md-4 control-label">First Name</label>
+                                            <label for="first_name" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_first')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="first_name" name="first_name" type="text" placeholder="{{ucfirst($user->firstName)}}" class="form-control">
                                             </div>
@@ -139,7 +129,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="last_name" class="col-sm-3 col-md-4 control-label">Last Name</label>
+                                            <label for="last_name" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_last')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ucfirst($user->lastName)}}">
                                             </div>
@@ -149,7 +139,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="country" class="col-sm-3 col-md-4 control-label">Location</label>
+                                            <label for="country" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_location')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <?php $countries = func::build_countries(); ?>
                                                 <select id="country" name="country" class="form-control">
@@ -163,7 +153,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="language" class="col-sm-3 col-md-4 control-label">Language</label>
+                                            <label for="language" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_language')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <?php $langs = func::build_lang(); ?>
                                                 <select id="language" name="language" class="form-control">
@@ -179,7 +169,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="first_name" class="col-sm-3 col-md-4 control-label">Latitude</label>
+                                            <label for="first_name" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_latitude')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="latitude" name="latitude" type="text" placeholder="{{$user->latitude}}" class="form-control">
                                             </div>
@@ -187,7 +177,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="last_name" class="col-sm-3 col-md-4 control-label">Longitude</label>
+                                            <label for="last_name" class="col-sm-3 col-md-4 control-label">@lang('panel.users_edit_longitude')</label>
                                             <div class="col-sm-9 col-md-8">
                                                 <input id="longitude" name="longitude" type="text" class="form-control" placeholder="{{$user->longitude}}">
                                             </div>
@@ -197,7 +187,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="form-group">
-                                            <label for="currency" class="col-sm-3 col-md-2 control-label">Price Display In</label>
+                                            <label for="currency" class="col-sm-3 col-md-2 control-label">@lang('panel.users_edit_price')</label>
                                             <div class="col-sm-9 col-md-10">
                                                 <?php $currs = func::build_curr(); ?>
                                                 <select id="currency" name="currency" class="form-control">
@@ -215,37 +205,37 @@
                                         <div class="row">
                                             <div class="col-sm-9 col-md-10 col-md-offset-2 col-sm-offset-3">
                                                 <label for="notificationCheck">
-                                                    <input type="checkbox" id="notificationCheck"> Email Notifications on New Listing</label>
+                                                    <input type="checkbox" id="notificationCheck"> @lang('panel.users_edit_emailnotif')</label>
                                             </div>
                                         </div>
                                     @endif
                                 @endif
                                 <div class="row p-10 text-right">
-                                    <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">Update</button>
+                                    <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">@lang('panel.users_edit_update')</button>
                                 </div>
                             </fieldset>
                             @if($user)
                                 @if($user->role == 'seller')
-                                    <h3>Company Information</h3>
+                                    <h3>@lang('panel.users_edit_companyinfo')</h3>
                                     <fieldset>
                                         <div class="widget">
                                             <div class="widget-heading">
-                                                <h5 class="m-0">Company Page Cover Image</h5>
+                                                <h5 class="m-0">@lang('panel.users_edit_companycover')</h5>
                                             </div>
                                             <div class="widget-body">
                                                 <div id="api-cover-image" class="dropzone text-center"></div>
                                                 <input type="hidden" name="cover_img" id="cover_img" value="" />
                                             </div>
                                             <div class="widget-heading pt-0">
-                                                <h6 class="m-0">For best results, upload high quality 16:9 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
+                                                <h6 class="m-0">@lang('panel.users_edit_best1')</h6>
                                             </div>
                                             <div class="widget-body">
-                                                <h6>Current Company Cover Image</h6>
+                                                <h6>@lang('panel.users_edit_currentcover')</h6>
                                                 <div id="current-cover-image" class="text-center">
                                                     @if(!empty($user->coverImageUrl))
                                                         <img src="{{func::img_url($user->coverImageUrl, 900, '')}}" alt="{{$user->coverImageUrl}}" />
                                                     @else
-                                                        <p>You have not uploaded any Cover Image yet, please upload one.</p>
+                                                        <p>@lang('panel.users_edit_imageyet')</p>
                                                     @endif
                                                 </div>
                                             </div>
@@ -254,22 +244,22 @@
                                             <div class="col-xs-12 col-md-6 pull-right mb-20">
                                                 <div class="widget">
                                                     <div class="widget-heading">
-                                                        <h5 class="m-0">Company Logo</h5>
+                                                        <h5 class="m-0">@lang('panel.users_edit_companylogo')</h5>
                                                     </div>
                                                     <div class="widget-body">
                                                         <div id="api-profile-image" class="dropzone text-center"></div>
                                                         <input type="hidden" name="profile_img" id="profile_img" value="" />
                                                     </div>
                                                     <div class="widget-heading pt-0">
-                                                        <h6 class="m-0">For best results, upload high quality 3:2 landscape-oriented PNG or JPG files, each with a maximum file size of 10MB.</h6>
+                                                        <h6 class="m-0">@lang('panel.users_edit_best2')</h6>
                                                     </div>
                                                     <div class="widget-body">
-                                                        <h6>Current Company Logo Image</h6>
+                                                        <h6>@lang('panel.users_edit_currentlogo')</h6>
                                                         <div id="current-cover-image" class="text-center">
                                                             @if(!empty($user->companyLogoUrl))
                                                                 <img src="{{func::img_url($user->companyLogoUrl, 425, '')}}" alt="{{$user->companyLogoUrl}}" />
                                                             @else
-                                                                <p>You have not uploaded any Company Logo Image yet, please upload one.</p>
+                                                                <p>@lang('panel.users_edit_imageyet1')</p>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -279,7 +269,7 @@
                                             <div class="col-md-6">
 
                                                 <div class="form-group m-0">
-                                                    <label for="txtFirstNameShippingTab" class="control-label">Company Name</label>
+                                                    <label for="txtFirstNameShippingTab" class="control-label">@lang('panel.users_edit_companyname')</label>
                                                     <?php 
                                                     $company = json_decode($user->companyName); 
                                                     // var_dump($company);
@@ -304,7 +294,7 @@
 
                                                 </div>
                                                 <div class="form-group m-0">
-                                                    <label for="phoneNumber" data-role='taginput' class="control-label">Contact Phone Numbers</label>
+                                                    <label for="phoneNumber" data-role='taginput' class="control-label">@lang('panel.users_edit_contact')</label>
                                                     <?php 
                                                     $phones = null;
                                                     if (isset($user->phoneNumber) && !empty($user->phoneNumber)) {
@@ -322,25 +312,25 @@
                                                 </div>
                                                 
                                                 <div class="form-group m-0">
-                                                    <label for="website" class="control-label">Company Website</label>
+                                                    <label for="website" class="control-label">@lang('panel.users_edit_website')</label>
                                                     <div class="pt-15">
                                                         <input id="website" name="website" type="text" class="form-control" placeholder="{{$user->website}}" value="{{$user->website}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
-                                                    <label for="txtCompanyRegNum" class="control-label">Company Registration No.:</label>
+                                                    <label for="txtCompanyRegNum" class="control-label">@lang('panel.users_edit_registration')</label>
                                                     <div class="pt-15">
                                                         <input id="companyRegNumber" name="companyRegNumber" type="text" class="form-control" placeholder="{{$user->companyRegNumber}}" value="{{$user->companyRegNumber}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
-                                                    <label for="companyAddress" class="control-label">Company Address</label>
+                                                    <label for="companyAddress" class="control-label">@lang('panel.users_edit_address')</label>
                                                     <div class="pt-15">
                                                         <textarea name="companyAddress" id="companyAddress" cols="3" rows="3" class="form-control" placeholder="{{$user->companyAddress}}">{{ $user->companyAddress }}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
-                                                    <label for="companySummary" class="control-label">Company Summary</label>
+                                                    <label for="companySummary" class="control-label">@lang('panel.users_edit_summary')</label>
                                                     <div class="pt-15">
                                                         <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}">{{ $user->companySummary}}</textarea>
                                                     </div>
@@ -356,18 +346,18 @@
                                         </div>
 
                                         <div class="row p-10 text-right">
-                                            <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">Update</button>
+                                            <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">@lang('panel.users_edit_update1')</button>
 
                                         </div>
                                     </fieldset>
                                 @endif
                             @endif
-                            <h3>Social Connections</h3>
+                            <h3>@lang('panel.users_edit_social')</h3>
                             <fieldset>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
-                                            <label for="txtFacebookLink" class="control-label pb-10"><i class="fa fa-facebook-official"></i> Facebook</label>
+                                            <label for="txtFacebookLink" class="control-label pb-10"><i class="fa fa-facebook-official"></i> @lang('panel.users_edit_facebook')</label>
                                             <div class="">
                                                 <input id="txtFacebookLink" name="txtFacebookLink" type="text" class="form-control" placeholder="{{$user->socialFacebook}}">
                                             </div>
@@ -375,7 +365,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
-                                            <label for="txtInstagramLink" class="control-label pb-10"><i class="fa fa-instagram"></i> Instagram</label>
+                                            <label for="txtInstagramLink" class="control-label pb-10"><i class="fa fa-instagram"></i> @lang('panel.users_edit_instagram')</label>
                                             <div class="">
                                                 <input id="txtInstagramLink" name="txtInstagramLink" type="text" class="form-control" placeholder="{{$user->socialInstagram}}">
                                             </div>
@@ -385,7 +375,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
-                                            <label for="txtPinterestLink" class="control-label pb-10"><i class="fa fa-pinterest-square"></i> Pinterest</label>
+                                            <label for="txtPinterestLink" class="control-label pb-10"><i class="fa fa-pinterest-square"></i>@lang('panel.users_edit_pin') </label>
                                             <div class="">
                                                 <input id="txtPinterestLink" name="txtPinterestLink" type="text" class="form-control" placeholder="{{$user->socialPinterest}}">
                                             </div>
@@ -393,7 +383,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group ml-0 mr-0">
-                                            <label for="txtTwitterLink" class="control-label pb-10"><i class="fa fa-twitter-square"></i> Twitter</label>
+                                            <label for="txtTwitterLink" class="control-label pb-10"><i class="fa fa-twitter-square"></i> @lang('panel.users_edit_twitter')</label>
                                             <div class="">
                                                 <input id="txtTwitterLink" name="txtTwitterLink" type="text" class="form-control" placeholder="{{$user->socialTwitter}}">
                                             </div>
@@ -405,16 +395,16 @@
                                     <div class="well well-sm"><strong>Profile Updated At</strong> 2016-02-05 08:57</div>
                                 </div>
                                 <div class="row p-10 text-right">
-                                    <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">Update</button>
+                                    <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">@lang('panel.users_edit_update1')</button>
                                 </div>
                             </fieldset>
                             @if($user)
                                 @if($user->role == 'seller')
-                                     <h3>SEO Section</h3>
+                                     <h3>@lang('panel.users_edit_seo1')</h3>
                                     <fieldset>
                                         <section>
                                                 <div class="form-group">
-                                                    <label for="urlslug" class="col-sm-3 control-label">Url Slug</label>
+                                                    <label for="urlslug" class="col-sm-3 control-label">@lang('panel.users_edit_seo2')</label>
                                                     <div class="col-sm-9">
                                                         <div class="hideslug">
                                                             <div class="bootstrap-filestyle input-group">
@@ -423,7 +413,7 @@
                                                                 <input class="get_slug form-control" data-id ="{{$user->id}}" type="text" value="{{$slug }}" name="slug">
                                                                 <span class="group-span-filestyle input-group-btn" tabindex="0">
                                                                         <label for="fulImage" class="btn btn-outline btn-primary">
-                                                                            <span class="buttonText editslugajax">Save URL</span>
+                                                                            <span class="buttonText editslugajax">@lang('panel.users_edit_seo3')</span>
                                                                         </label>
                                                                 </span>
                                                             </div> 
@@ -438,32 +428,32 @@
                                                             $newslug = substr($user->slug,0,20).' ....... '.substr($user->slug,$count-20,$count);
                                                         }
                                                         ?>
-                                                            <a class="updatelink" href="{!! url('/dealer') . '/' .  $user->id . '/'.$slug !!}" target="_blank" style="text-decoration: underline;" >{!! url('/dealer') . '/' . $user->id . '/<strong>'.$slug.'</strong>' !!}</a>
-                                                             &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">Edit URL</span>
+                                                            <a class="updatelink" href="{{func::set_url('/dealer').'/'.$user->id.'/'.$slug}}" target="_blank" style="text-decoration: underline;" >{!! url('/dealer') . '/' . $user->id . '/<strong>'.$slug.'</strong>' !!}</a>
+                                                             &nbsp;<span class="btn btn-sm btn-outline btn-danger edit_slug">@lang('panel.users_edit_seo9')</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="meta_title" class="col-sm-3 control-label">Title</label>
+                                                    <label for="meta_title" class="col-sm-3 control-label">@lang('panel.users_edit_seo4')</label>
                                                     <div class="col-sm-9">
                                                    	<?php $meta_title_alt = $user->companyName == '' ? $user->firstName.' '.$user->lastName : $company[0].' '. $company[1]; ?>
                                                         <input id="meta_title" name='meta_title' maxlength="60" type="text" class="form-control" placeholder="{{$user->meta_title == '' ? $meta_title_alt : $user->meta_title}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group" style="display:none;">
-                                                    <label for="meta_alttext" class="col-sm-3 control-label">Alt Text</label>
+                                                    <label for="meta_alttext" class="col-sm-3 control-label">@lang('panel.users_edit_seo5')</label>
                                                     <div class="col-sm-9">
                                                         <input id="alttext" name='meta_alttext' type="text" class="form-control" placeholder="{{$user->meta_alt_text}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="meta_description" class="col-sm-3 control-label">Meta Description</label>
+                                                    <label for="meta_description" class="col-sm-3 control-label">@lang('panel.users_edit_seo6')</label>
                                                     <div class="col-sm-9">
                                                         <textarea id="meta_description" name='meta_description' class="form-control " maxlength="500" placeholder="{{$user->meta_description == '' ? $user->companySummary : $user->meta_description}}"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="meta_keyword" class="col-sm-3 control-label">Meta Keyword</label>
+                                                    <label for="meta_keyword" class="col-sm-3 control-label">@lang('panel.users_edit_seo7')</label>
                                                     <div class="col-sm-9 "><div class="tagit-sugestion">
                                                         
                                                         <style>
@@ -479,14 +469,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                     <label for="meta_author" class="col-sm-3 control-label">Meta Author</label>
+                                                     <label for="meta_author" class="col-sm-3 control-label">@lang('panel.users_edit_seo8')</label>
                                                     <div class="col-sm-9">
                                                         <input id="meta_author" maxlength="60" name='meta_author' type="text" class="form-control" placeholder="{{$user->meta_author == '' ? $meta_title_alt : $user->meta_author}}">
                                                     </div>
                                                 </div>
                                             </section>
                                         <div class="row p-10 text-right">
-                                            <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">Update</button>
+                                            <button id="update" type="button"  data-toggle="modal" data-target="#update-form" class="btn btn-raised btn-success btn-lg">@lang('panel.users_edit_update1')</button>
                                         </div>
                                     </fieldset> 
                                 @endif
@@ -525,7 +515,7 @@
     <script type="text/javascript" src="/db/js/dropzone-js.js"></script>
     <script type="text/javascript" src="/db/js/sweet-alert.js"></script>
     <script type="text/javascript" src="/db/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="/js/bundle.js"></script>
+    <script type="text/javascript" src="/js/bundle.min.js"></script>
     <!-- Booostraps_tagit input plugin -->
     <script type="text/javascript" src="/plugins/typeahead.js/dist/typeahead.bundle.min.js"></script>
     <script type="text/javascript" src="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>

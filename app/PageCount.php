@@ -56,7 +56,7 @@ class PageCount extends Model
         $date_60 = Carbon::today()->subDays(60)->toDateString();
         $visitor_last2month = PageCount::where('visited_at','<=',$date_31)
         ->where('visited_at','>=',$date_60)->count();
-        $visitor_last2month=($visitor_last2month===0)?1:$visitor_last2month;
+        $visitor_last2month=($visitor_last2month==0)?1:$visitor_last2month;
         $pr_visitor = $visitor_monthly/$visitor_last2month *100;
         if($visitor_last2month>$visitor_monthly){
             $pr_visitor='<span class="text-danger"><i class="ti-arrow-down fs-13"></i> '.$pr_visitor.'%</span>';

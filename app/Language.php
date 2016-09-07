@@ -11,23 +11,6 @@ use DB;
 
 class Language extends Model
 {
-    public static function setlang(){
-        if(Auth::user()){
-            $languageId = Auth::user()->languageId;
-            if($languageId !='' && !empty($languageId)){
-                $lang = DB::table('languages')->where('id',$languageId)->value('code');
-            }else{
-                if(Session::has('lang')){
-                    $lang = Session::get('lang');
-                }else{
-                    $lang = Config::get('app.locale');                  
-                }
-            }
-            return App::setLocale($lang);
-        }else{
-            return App::setLocale(Session::has('lang') ? Session::get('lang') : Config::get('app.locale'));
-        }
-    }
     public static function updatelang($val){
         $code = DB::table('languages')->where('id',$val)->value('code');
     	if(Auth::user()){

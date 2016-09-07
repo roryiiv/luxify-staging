@@ -267,7 +267,32 @@ class Panel extends Controller
         $input->created_by = $creator;
         $input->optional_field = $optionalfields;
         $input->save();
+        $id = $input->id;
 
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+        $object_type = 'categories';
+        $savemeta = Meta::saveorupdate($id,$meta,$object_type);
         return redirect('/panel/categories');
         
     }
@@ -279,12 +304,17 @@ class Panel extends Controller
 
     public function category_edit($id){
         $category = DB::table('category_2')->where('id',$id)->first();
+        //additonal parameters
+        $category->meta_title = Meta::get_data_categories($id,'title');
+        $category->meta_alt_text = Meta::get_data_categories($id,'alt_text');
+        $category->meta_description = Meta::get_data_categories($id,'description');
+        $category->meta_author = Meta::get_data_categories($id,'author');
+        $category->meta_keyword = Meta::get_data_categories($id,'keyword');
         
         return view('panel.category-edit',['category' => $category]);
     }
 
     public function category_update(){
-        $newslug = SlugService::createSlug(newcategory::class, 'slug', $_POST['txtSlugCategory']);
         $editor = Auth::user()->id;
         if(empty($_POST['optionalfield']) || $_POST['optionalfield']==''){
             $optionalfields =array();
@@ -295,6 +325,11 @@ class Panel extends Controller
         }
 
         $update = newcategory::where('id',$_POST['id'])->first();
+        if($update->slug == '' && $_POST['txtSlugCategory'] != $update->slug){
+        	$newslug = SlugService::createSlug(newcategory::class, 'slug', $_POST['txtSlugCategory']);
+        }else{
+        	$newslug = $update->slug;
+        }
         if(isset($_POST['profile_img']) && !empty($_POST['profile_img'])){
             $image = base_path() . '/public/temp/' . $_POST['profile_img'];
             $s3 = \Storage::disk('s3');
@@ -306,6 +341,32 @@ class Panel extends Controller
               }
             }
         }
+        $meta = array();
+        if (isset($_POST['meta_title']) && !empty($_POST['meta_title'])){
+            $meta['title'] = $_POST['meta_title'];
+        }
+
+        if (isset($_POST['meta_alttext']) && !empty($_POST['meta_alttext'])){
+            $meta['alt_text'] = $_POST['meta_alttext'];
+        }
+        
+        if (isset($_POST['meta_description']) && !empty($_POST['meta_description'])) {
+            $meta['description'] = $_POST['meta_description'];
+        }
+
+        if (isset($_POST['meta_keyword']) && !empty($_POST['meta_keyword'])) {
+            $meta['keyword'] = $_POST['meta_keyword'];
+        }
+
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }        
+        if (isset($_POST['meta_author']) && !empty($_POST['meta_author'])) {
+            $meta['author'] = $_POST['meta_author'];
+        }
+        if (isset($_POST['txtOrder']) && !empty($_POST['txtOrder'])) {
+            $update->order = $_POST['txtOrder'];
+        }
         $update->name = $_POST['txtNameCategory'];
         $update->slug = $newslug;
         $update->label = $_POST['txtLabelCategory'];
@@ -313,7 +374,13 @@ class Panel extends Controller
         $update->parent = $_POST['parent'];
         $update->updated_by = $editor;
         $update->optional_field = $optionalfields;
+
+        
         $update->save();
+        //updatemeta
+        $id = $_POST['id'];
+        $object_type = 'categories';
+        $savemeta = Meta::saveorupdate($id,$meta,$object_type);
 
         return redirect('/panel/categories');
     }
@@ -504,12 +571,22 @@ class Panel extends Controller
             $error_arr['itemAvailability'] = 'Item Availability is not specified.';
         }
 
-        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
+        if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ){
+            if( isset($_POST['itemSubCategory']) && !empty($_POST['itemSubCategory']) ){
+                $item->new_category = $_POST['itemSubCategory'];
+            } else {
+                $item->new_category = $_POST['itemCategory'];
+            }
+        } else {
+                $error_arr['itemCategory'] = 'Item Category is not specified.';
+        }
+
+        /*if ( isset($_POST['itemCategory']) && !empty($_POST['itemCategory']) ) {
             echo '1';
             $item->categoryId = $_POST['itemCategory'];
         } else {
             $error_arr['itemCategory'] = 'Item Category is not specified.';
-        }
+        }*/
 
         if ( isset($_POST['title']) && !empty($_POST['title']) ) {
             echo '1';
@@ -632,7 +709,9 @@ class Panel extends Controller
         if (isset($_POST['aerial3DLookURL']) && !empty($_POST['aerial3DLookURL'])) {
             $item->aerialLook3DUrl = $_POST['aerial3DLookURL'];
         }
-
+         if (isset($_POST['optionfields']) && !empty($_POST['optionfields'])) {
+            $item->optional_field = json_encode($_POST['optionfields']);
+        }
         //additional parameters
 /*        if (isset($_POST['slug']) && !empty($_POST['slug'])) {
             //$newslug = SlugService::createSlug(Listings::class, 'slug', $_POST['slug']);
@@ -936,40 +1015,47 @@ class Panel extends Controller
     }
 
     public function products() {
-      if(!in_array($this->user_role, $this->accepted)) return redirect('/');
-      $filter = array();
-      //TODO: Searching is case incentive?
-      if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
-          $filter[] = ['listings.title', 'like', '%'.$_GET['txtProductName'].'%'];
-      }
-      if(isset($_GET['txtPrice']) && !empty($_GET['txtPrice'])){
-          $filter[] = ['listings.price', $_GET['txtPrice']];
-      }
-      if(isset($_GET['startDate']) && !empty($_GET['startDate'])){
-          $setDate = $_GET['startDate'];
+		if(!in_array($this->user_role, $this->accepted)) return redirect('/');
+		$filter = array();
+      	$per_page = 10;
+      	if(isset($_GET['view-perpage']) && $_GET['view-perpage'] != ''){
+      		$per_page = $_GET['view-perpage'];
+      	}
+      	//TODO: Searching is case incentive?
+      	if(isset($_GET['txtProductName']) && !empty($_GET['txtProductName'])){
+          	$filter[] = ['listings.title', 'like', '%'.$_GET['txtProductName'].'%'];
+      	}
+      	if(isset($_GET['txtPrice']) && !empty($_GET['txtPrice'])){
+          	$filter[] = ['listings.price', $_GET['txtPrice']];
+      	}
+      	if(isset($_GET['startDate']) && !empty($_GET['startDate'])){
+          	$setDate = $_GET['startDate'];
 
-          $a = date('Y-m-d H:i:s', strtotime($setDate));
-          $b = date('Y-m-d H:i:s', strtotime($setDate . ' +1 day'));
-          $filter[] = ['listings.created_at', '>=', $a];
-          $filter[] = ['listings.created_at', '<=', $b];
-      }
-      if(isset($_GET['status']) && !empty($_GET['status'])){
-          $filter[] = ['listings.status', $_GET['status']];
-      }
-      if(isset($_GET['category']) && !empty($_GET['category'])){
-          $filter[] = ['listings.categoryId', $_GET['category']];
-      }
-      $products = DB::table('listings')
-      ->where($filter)
-      ->join('currencies', 'listings.currencyId', '=', 'currencies.id')
-      ->join('users', 'listings.userId', '=', 'users.id')
-      ->orderby('listings.created_at', 'desc')
-      ->select('listings.*', 'currencies.code', 'users.firstName', 'users.lastName', 'users.username', 'users.companyName', 'users.fullName')
-      ->where('status', '<>', 'EXPIRED')
-      ->paginate(10);
+          	$a = date('Y-m-d H:i:s', strtotime($setDate));
+          	$b = date('Y-m-d H:i:s', strtotime($setDate . ' +1 day'));
+          	$filter[] = ['listings.created_at', '>=', $a];
+          	$filter[] = ['listings.created_at', '<=', $b];
+      	}
+      	if(isset($_GET['status']) && !empty($_GET['status'])){
+          	$filter[] = ['listings.status', $_GET['status']];
+      	}
+      	if(isset($_GET['category']) && !empty($_GET['category'])){
+          	$filter[] = ['listings.categoryId', $_GET['category']];
+      	}
+      	if(isset($_GET['view-perpage']) && !empty($_GET['view-perpage'])){
+          	$per_page = $_GET['view-perpage'];
+      	}
+      	$products = DB::table('listings')
+      	->where($filter)
+      	->join('currencies', 'listings.currencyId', '=', 'currencies.id')
+      	->join('users', 'listings.userId', '=', 'users.id')
+      	->orderby('listings.created_at', 'desc')
+      	->select('listings.*', 'currencies.code', 'users.firstName', 'users.lastName', 'users.username', 'users.companyName', 'users.fullName')
+      	->where('status', '<>', 'EXPIRED')
+      	->paginate($per_page);
 
-      $products->setPath($_SERVER['REQUEST_URI']);
-      return view('panel.products', ['products' => $products]);
+      	$products->setPath($_SERVER['REQUEST_URI']);
+      	return view('panel.products', ['products' => $products]);
     }
 
     public function dealer_change_status() {
@@ -1034,8 +1120,79 @@ class Panel extends Controller
 
     public function products_edit(Request $request, $itemId) {
         $item = Listings::where('id', $itemId)->first();
+        $categoryId = $item->new_category;
+        $activedata = DB::table('category_2')->where('id',$categoryId)->first();
+        $opt = json_decode($item->optional_field);
+
+        if(($activedata->id)== 135 || ($activedata->id)== 136 || ($activedata->id)== 137){
+            $dataparent = DB::table('category_2')->where('parent',0)->get();
+            $cat1= "<option value=''>--Please Select--</option>";
+            $cat2="<option value=''>-</option>";
+
+            foreach ($dataparent as $value) {
+                $cat1 .= "<option value=".$value->id." ".func::selected($item->new_category, $value->id).">".$value->name."</option>";
+            }
+
+            $item['itemCategory'] = $cat1;
+            $item['itemSubCategory'] = $cat2;
+
+        } else {
+            $dataparent = DB::table('category_2')->where('parent',0)->get();
+            $parent = DB::table('category_2')->where('id',$activedata->id)->value('parent');
+            $cat1= "<option value=''>--Please Select--</option>";
+            $cat2= "<option value=''>--Please Select--</option>";
+
+            foreach ($dataparent as $value) {
+                $cat1 .= "<option value=".$value->id." ".func::selected($value->id, $parent).">".$value->name."</option>";
+            }
+
+            $datachild = DB::table('category_2')->where('parent',$parent)->get();
+            foreach ($datachild as $values) {
+                $cat2 .= "<option value=".$values->id." ".func::selected($values->id, $categoryId).">".$values->name."</option>";
+            }
+            $item['itemCategory'] = $cat1;
+            $item['itemSubCategory'] = $cat2;
+            
+        }
+        
+        $optfield = '';
+        if(is_array($opt)){
+        	foreach ($opt as $id =>$isi) {
+        	   $data = DB::table('category_meta')->where('id',$id)->first();
+        	   $type = $data->meta_type;
+        	   $drop = json_decode($data->meta_value);
+        	   
+        	    if($type=='text'){
+        	        $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control" value="'.$isi.'"></div>';
+        	    }elseif($type=='number'){
+        	        $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><input id="'. $data->label .'" name="optionfields['. $data->id .']" type="text" class="form-control" value="'.$isi.'"></div>';
+        	    }elseif($type=='textarea'){
+        	        $optfield .= '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><textarea id="'. $data->label .'" name="optionfields['. $data->id .']" class="form-control">'.$isi.'</textarea></div>';
+        	    }elseif($type=='dropdown' || $type=='select'){
+        	        $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label><select name="optionfields['. $data->id .']" class="form-control">';
+        	        foreach ($drop as $option) {
+        	            $optfield .= "<option value='".$option->value."' " . func::selected($option->value, $isi) . ">".$option->text."</option>";
+        	        }
+        	        $optfield .= '</select></div>';
+        	    }elseif($type=='radiobutton'){
+        	        $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
+        	        foreach ($drop as $option) {
+        	            $optfield .= "<input name='optionfields[".$data->id."]'  type='radio' value='".$option->value."' " . func::checked($option->value, $isi) . ">".$option->text."</br>";
+        	        }
+        	        $optfield .= '</div>';
+        	    }elseif($type=='checkbox'){
+        	        $optfield .=  '<div class="col-sm-4"><label for="'. $data->label .'" class="control-label">'. $data->label .'</label></br>';
+        	        for ($x=0; $x<count($drop); $x++) {
+        	            $optfield .= "<input name='optionfields[".$data->id."][".$x."]' type='checkbox' value='".$drop[$x]->value."' " . func::checked($drop[$x]->value, $isi[$x]) . ">".$drop[$x]->text."</br>";
+        	        }
+        	        $optfield .= '</div>';                
+        	    }
+        	}
+        }
+        $item['optionFields'] = $optfield;
+
         if ($item) {
-            $optionalFields = DB::table('formfields')
+            /*$optionalFields = DB::table('formfields')
             ->join('formgroups', 'formgroups.formfieldId', '=', 'formfields.id')
             ->join('forms', 'formgroups.formId', '=', 'forms.id')
             ->where('forms.categoryId', $item->categoryId)
@@ -1062,7 +1219,7 @@ class Panel extends Controller
             }
             if ($optionalFields) {
                 $item['optionFields'] = $optionalFields;
-            }
+            }*/
             //additonal parameters
             $item->url_object = 'listing';
             $item->meta_title = Meta::get_data_listing($itemId,'title');
@@ -1475,6 +1632,20 @@ class Panel extends Controller
                 return response()->json($filename);
             }
         }
+    }
+
+    public  function CategoryChoosen($dataid){
+
+        $cat = DB::table('category_2')->where('parent','=',$dataid)->get();
+
+        $return = "<option value=''>---Please Select---</option>";
+        foreach ($cat as $value) {
+            $return .= "<option value='".$value->id."'>".$value->name."</option>";
+
+        }
+
+        echo $return;
+
     }
 
 }
