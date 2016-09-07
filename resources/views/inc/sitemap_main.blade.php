@@ -5,7 +5,7 @@ global $post;
 
 //gen the sitemap topic
 $argArr = array('orderby' => 'term_order,name','order' => 'ASC','parent'  => 11);
-$categories = get_categories($argArr);
+$categories = get_categories($argArr); 
 
 ?>
 <div class="sitemap-block full-line-block">
