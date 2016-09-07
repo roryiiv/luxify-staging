@@ -170,6 +170,7 @@
                         <?php 
                             $webpage = str_replace('http://', '', $dealer->website);
                             $webpage = str_replace('https://', '', $webpage);
+                            $webpage = preg_replace('/\\/$/','', $webpage);
                             function addhttp($url) {
                                 if (!preg_match('~^(?:f|ht)tps?://~i', $url)) {
                                     $url = "http://" . $url;
