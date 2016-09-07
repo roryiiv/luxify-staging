@@ -54,7 +54,7 @@
     </section>
     <!-- end of banner -->
     <section>
-        <div class="carousel-block" style="padding-bottom: 0px;border-bottom:0px;">
+        <div id="Latest-Estates" class="carousel-block" style="padding-bottom: 0px;border-bottom:0px;">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
@@ -185,7 +185,7 @@
         </div>
         <!-- main of main content -->
         <!-- benefit block -->
-        <div class="benefit-block parallax" style="background-image:url({{func::img_url('banners/estates-benefits-main.jpg', '', '', false, true)}});">
+        <div id="Benefits" class="benefit-block parallax" style="background-image:url({{func::img_url('banners/estates-benefits-main.jpg', '', '', false, true)}});">
             <div class="container" style="z-index: 4;">
                 <!-- new grid -->
                 <div class="row">

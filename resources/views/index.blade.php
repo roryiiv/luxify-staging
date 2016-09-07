@@ -60,6 +60,7 @@
                     </div>
                 </div> <!-- end of new grid -->
             </div>
+        </div>
     </section>
     <!-- end of banner -->
     <!-- main informative part of the page -->

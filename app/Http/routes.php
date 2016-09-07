@@ -25,9 +25,9 @@ Route::group(['prefix' => Translation::getRoutePrefix()], function()
         return view('about');
     });
 Route::get('/press', function(){
-  return view('presskit'); 
+  return view('presskit');
 });
-Route::get('press/{id}', function($id) {
+Route::get('presskit/{id}', function($id) {
   if ($id) {
     return view('presskit', ['release' => $id]);
   } else {
@@ -39,7 +39,7 @@ Route::get('/contact', function(){
     return view('contact');
 });
 Route::get('/luxify-estates', function(){
-   	$listings = Listings::where('status', 'APPROVED') 
+   	$listings = Listings::where('status', 'APPROVED')
  	->whereNotNull('aerialLook3DUrl')
  	->leftJoin('users', 'listings.userId', '=', 'users.id')
  	->join('countries', 'countries.id', '=', 'listings.countryId')
@@ -67,9 +67,19 @@ Route::get('/pricing', function(){
 Route::get('/faq', function(){
     return view('faq');
 });
+
+
 Route::get('/sitemap', function(){
     return view('sitemap');
 });
+Route::get('sitemap/{id}', function($id) {
+    if ($id) {
+        return view('sitemap', ['release' => $id]);
+    } else {
+        return view('sitemap');
+    }
+});
+
 Route::get('/dealer-directory', 'Front@dealerDirectory');
 // Datafeed endpoints
 Route::post('datafeed/product/update/{id}', 'DataFeed@product_update');

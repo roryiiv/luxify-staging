@@ -1,57 +1,70 @@
 @extends('layouts.front')
-
-<?php $my_query = new WP_Query('category_name=blog-post&showposts=4'); ?>
-
 <?php
+$getPostID = '';
+$mainTitle = 'Sitemap';
+$mainDes = '';
+$mainBG = 'background-color:#4a4a4a;';
+$getPostName = isset($release)? $release :'';
+if(!empty($getPostName)){
+    global $post;
+    $queryArr = array(
+            'category_name' => 'blog-post',
+            'name' => $getPostName,
+            'showposts' => 1
+    );
+    $my_query = new WP_Query($queryArr);
+    while ($my_query->have_posts()) : $my_query->the_post();
+        $postInf = array();
 
+        $postInf['id']                      = $getPostID  =  $post->ID;
+        $postInf['header']['title']         = $mainTitle  =  $post->post_title;
+        $postInf['header']['description']   = $mainDes    =  get_field('header_description');
 
-$argArr = array('orderby' => 'term_order,name','order' => 'ASC','parent'  => 11);
-$categories = get_categories($argArr);
+        for($i=1;$i<=3;$i++){
+//            $postInf['section_'.$i]['style']    = (get_field('section_'.$i.'_style'))?get_field('section_'.$i.'_style'):'';
+//            $postInf['section_'.$i]['title']    = (get_field('section_'.$i.'_title'))?get_field('section_'.$i.'_title'):'';
+//            $postInf['section_'.$i]['bg']       = (get_field('section_'.$i.'_background_image'))?get_field('section_'.$i.'_background_image'):'';
+//            $postInf['section_'.$i]['description'] = (get_field('section_'.$i.'_description'))?get_field('section_'.$i.'_description'):'';
 
-foreach ( $categories as $category ) {
-    echo '<hr>';
-    echo 'A:'.$category->name;
-    echo '<br>';
-    $subArgArr = array('orderby' => 'term_order,name','order' => 'ASC','parent'  => $category->cat_ID);
-    $subCategories = get_categories($subArgArr);
-    foreach ( $subCategories as $subCategory ) {
-        echo 'B:'.$subCategory->name;
-        echo '<br>';
-    }
+            $postInf['section_'.$i]['style']            =  get_field('section_'.$i.'_style');
+            $postInf['section_'.$i]['title']            =  get_field('section_'.$i.'_title');
+            $postInf['section_'.$i]['bg']               =  get_field('section_'.$i.'_background_image');
+            $postInf['section_'.$i]['description']      =  get_field('section_'.$i.'_description');
+        }
+
+        if(get_field('header_background_image')){
+            $temp = get_field('header_background_image');
+            $mainBG = 'background-image:url("'.$temp['url'].'");';
+        }
+        wp_reset_postdata();
+    endwhile;
+}else{
+    $getPostID = (isset($release) && intval($release))?intval($release):'';
 }
-
-
-
-
-exit;
 ?>
 @section('title')
     <title>{{func::genTitle('Sitemap', false)}}</title>
 @endsection
-
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">
 @endsection
-
 @section('meta-data')
     <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
     <meta name="description" content="We are Asia&#39;s leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
 @endsection
-
 @section('content')
-    <!-- main banner of the page -->
-    <!-- end of banner -->
     <!-- main informative part of the page -->
     <main id="main" class="sitemap-page">
-        <section class="inner-banner parallax top-banner-image" style="background-image:url({{func::img_url('banners/press-main.jpg', '', '', false, true)}});">
+        <section class="inner-banner parallax top-banner-image" style="{{$mainBG}}">
             <div class="container">
                 <div class="banner-text">
                     <div class="banner-center">
                         <!-- new grid -->
                         <div class="row">
                             <div class="col-lg-12 ">
-                                <h1>Sitemap</h1>
+                                <h1>{{$mainTitle}}</h1>
+                                <div class="headerDescription">{{$mainDes}}</div>
                             </div>
                         </div>
                     </div>
@@ -59,7 +72,7 @@ exit;
             </div>
         </section>
     @if($getPostID!='')
-        @include('inc.sitemap_contentPage')
+        @include('inc.sitemap_contentPage',$postInf)
     @else
         @include('inc.sitemap_main')
     @endif
@@ -68,40 +81,10 @@ exit;
     <!-- end of main part -->
 @endsection
 @section('scripts')
-
-
     <script>
-
         $(document).ready(function(){
-            if(!isMobile()){
-                resizeend();
-            }
-            jQuery('#jarallax-container-0 > div').css('top', '-350px');
-
+            $('#jarallax-container-0 > div').css('top', '-150px');
+            //$('.style_image').addClass('animated fadeInRight');
         });
-        //resize contorl
-        var rtime;
-        var timeout = false;
-        var delta = 200;
-        $(window).resize(function() {
-            rtime = new Date();
-            if (timeout === false) {
-                timeout = true;
-                setTimeout(resizeend, delta);
-            }
-        });
-
-        function resizeend() {
-            if (new Date() - rtime < delta) {
-                setTimeout(resizeend, delta);
-            } else {
-                timeout = false;
-                //action
-                //console.log($('body').height());
-                //$('.top-banner-image').height($('body').height()/2.5);
-
-
-            }
-        }
     </script>
 @endsection

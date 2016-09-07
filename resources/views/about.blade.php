@@ -61,8 +61,8 @@
         </div>
         <!-- end of about block -->
         <!-- founder block -->
-        <div class="founder-block grey-bg">
-            <div class="container">
+        <div class="founder-block grey-bg" id="Co-Founders">
+            <div class="container" >
                 <!-- new grid -->
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
@@ -103,7 +103,7 @@
         </div>
         <!-- end of founder block -->
         <!-- join block -->
-        <div class="join-block">
+        <div class="join-block" id="Join-us">
             <div class="container">
                 <!-- new grid -->
                     <div class="row">

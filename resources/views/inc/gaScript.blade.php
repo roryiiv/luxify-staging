@@ -6,7 +6,8 @@
   ga('create', 'UA-60047995-4', 'auto');
   ga('send', 'pageview');
 </script>
-
+<?php
+        /*
 <!-- Start of Async HubSpot Analytics Code
 <script type="text/javascript">
     (function(d,s,i,r) {
@@ -36,3 +37,4 @@
     })(window,document,'script','dataLayer','GTM-KH9H7Z');</script>
 
 <!-- End Google Tag Manager -->
+        */ ?>

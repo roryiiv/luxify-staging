@@ -1,0 +1,46 @@
+<div class="sitemap-content">
+@for($i=1; $i<=3; $i++)
+    @if($postInf['section_'.$i]['title']!='')
+        @if($postInf['section_'.$i]['style']=='1')
+            <div class="col-sm-12 style_{{$i}}_div">
+                <div class="col-lg-4 col-lg-offset-1 col-sm-6 style_text ">
+                    <div class="col-sm-12 style_title">{!!$postInf['section_'.$i]['title']!!}</div>
+                    <div class="col-sm-12 style_description">{!!$postInf['section_'.$i]['description']!!}</div>
+                </div>
+            @if(is_array($postInf['section_'.$i]['bg']))
+                    <div class="style_image ">
+                        <img src="{{$postInf['section_'.$i]['bg']['url']}}" />
+                    </div>
+                @endif
+            </div>
+
+        @elseif($postInf['section_'.$i]['style']=='2')
+            <div class="col-sm-12 style_2_div">
+                <div class="col-lg-4 col-lg-offset-1 col-sm-6 style_text ">
+                    <div class="col-sm-12 style_title">{!!$postInf['section_'.$i]['title']!!}</div>
+                    <div class="col-sm-12 style_description">{!!$postInf['section_'.$i]['description']!!}</div>
+                </div>
+            @if(is_array($postInf['section_'.$i]['bg']))
+                    <div class="style_image" style="background-image:url('{{$postInf['section_'.$i]['bg']['url']}}');">
+                    </div>
+                @endif
+            </div>
+        @elseif($postInf['section_'.$i]['style']=='3')
+            <div class="col-sm-12 style_{{$i}}_div" >
+                <div class="col-lg-4 col-lg-offset-1 col-sm-6 style_text ">
+                    <div class="col-sm-12 style_title">{!!$postInf['section_'.$i]['title']!!}</div>
+                    <div class="col-sm-12 style_description">{!!$postInf['section_'.$i]['description']!!}</div>
+                </div>
+            @if(is_array($postInf['section_'.$i]['bg']))
+                <div class="style_image ">
+                    <img src="{{$postInf['section_'.$i]['bg']['url']}}" />
+                </div>
+                @endif
+            </div>
+        @elseif($postInf['section_'.$i]['style']=='4')
+        @endif
+    @else
+
+    @endif
+@endfor
+</div>
