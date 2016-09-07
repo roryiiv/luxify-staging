@@ -121,10 +121,12 @@ img
   border-bottom: 2px solid #e1e1dc
 
 a
-  color: #958867
+  color: #767676
   text-decoration: none
-  @include transition(color 0.3s linear)
+  @include transition(color 0.2s linear)
   &:hover , &:focus
+    @include transition(color 0.2s linear)
+    text-decoration: none
     color: #958867
 
 
