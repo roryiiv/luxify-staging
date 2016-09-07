@@ -25,19 +25,19 @@
                             </ul>
                         </div>
                     </li>
-                    <li><a href="/why-luxify">@lang('header.whyLuxify')</a></li>
-                    <li><a target="_blank" href="/blog">@lang('header.blog')</a></li>
+                    <li><a href="{{func::set_url('/why-luxify')}}">@lang('header.whyLuxify')</a></li>
+                    <li><a target="_blank" href="{{func::set_url('/blog')}}">@lang('header.blog')</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('header.more')</a>
                         <div class="dropdown-menu sm">
                             <ul>
-                                <li><a href="/about">@lang('header.more_aboutLuxify')</a></li>
-                                <li><a href="/pricing">@lang('header.more_pricing')</a></li>
-                                <li><a href="/press">@lang('footer.press')</a></li>
-                                <li><a href="/dealer-application">@lang('header.more_dealerApplication')</a></li>
-                                <li><a href="/luxify-estates">@lang('header.more_luxifyEstates')</a></li>
-                                <li><a href="/contact">@lang('header.more_contactUs')</a></li>
-                                <li><a href="/faq">@lang('header.more_faq')</a></li>
+                                <li><a href="{{func::set_url('/about')}}">@lang('header.more_aboutLuxify')</a></li>
+                                <li><a href="{{func::set_url('/pricing')}}">@lang('header.more_pricing')</a></li>
+                                <li><a href="{{func::set_url('/press')}}">@lang('footer.press')</a></li>
+                                <li><a href="{{func::set_url('/dealer-application')}}">@lang('header.more_dealerApplication')</a></li>
+                                <li><a href="{{func::set_url('/luxify-estates')}}">@lang('header.more_luxifyEstates')</a></li>
+                                <li><a href="{{func::set_url('/contact')}}">@lang('header.more_contactUs')</a></li>
+                                <li><a href="{{func::set_url('/faq')}}">@lang('header.more_faq')</a></li>
                             </ul>
                         </div>
                     </li>
@@ -68,11 +68,11 @@
                           <div class="dropdown-menu" id="user-menu">
                               <ul>
                                   @if(Auth::user()->role == 'admin')
-                                    <li><a href="/panel">@lang('header.adminPanel')</a></li>
+                                    <li><a href="{{func::set_url('/panel')}}">@lang('header.adminPanel')</a></li>
                                   @else
-                                    <li><a href="/dashboard">@lang('header.dashboard')</a></li>
+                                    <li><a href="{{func::set_url('/dashboard')}}">@lang('header.dashboard')</a></li>
                                   @endif
-                                  <li><a href="/logout">@lang('header.logout')</a></li>
+                                  <li><a href="{{func::set_url('/logout')}}">@lang('header.logout')</a></li>
                               </ul>
                           </div>
                         </li>
@@ -93,8 +93,8 @@
                              @endforeach
                            </select>
                         </li>
-                        <li><a href="/register">@lang('header.signUp')</a></li>
-                        <li><a href="/login">@lang('header.login')</a></li>
+                        <li><a href="{{func::set_url('/register')}}">@lang('header.signUp')</a></li>
+                        <li><a href="{{func::set_url('/login')}}">@lang('header.login')</a></li>
                     </ul>
                 @endif
             </div>
