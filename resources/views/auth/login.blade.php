@@ -35,8 +35,8 @@ if(isset($_GET['err']) && $_GET['err'] != ''){
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Member Login- Luxify- Asia's leading marketplace for luxury</title>
-    <meta name="keywords" content="luxify member log in,luxury goods">
+    <title>Luxify Login- Luxify- Asia's leading marketplace for luxury</title>
+    <meta name="keywords" content="luxify member login,luxury goods, luxify login ">
     <meta name="description" content="Log in to your account to discover one of the Internet’s largest collections of luxury goods and experiences.">
     <!-- PACE-->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
