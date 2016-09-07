@@ -22,8 +22,10 @@
 @endsection
 @section('content')
 <?php
-    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
-    ?>
+    if (Auth::user()) {
+		$user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+	}
+?>
     <section class="inner-banner auto-height parallax" style="background-image:url({{func::img_url('banners/about-us-main.jpg', 1920, '', false, true)}});">
 		<div class="container">
             <div class="banner-text">

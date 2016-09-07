@@ -28,7 +28,9 @@
 
 @section('content')
 <?php
-    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+	if (Auth::user()) {
+		$user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+	}
 ?>
     <div class="page-container">
             <div class="page-header clearfix">

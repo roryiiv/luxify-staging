@@ -5,8 +5,10 @@
 @endsection
 
 <?php 
-    $user_id = Auth::user() ? Auth::user()->id : '';
-    $user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='')?Session::get('view_as'):Auth::user()->role;
+    if(Auth::user()){
+		$user_id = Auth::user() ? Auth::user()->id : '';
+		$user_role = (Auth::user()->role == 'admin' && Session::get('view_as') !='') ? Session::get('view_as') : '';
+	}
 ?>
 @section('meta-data')
 <meta name='title' content='Luxify Dealer Application'>
