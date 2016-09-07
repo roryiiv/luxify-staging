@@ -346,7 +346,7 @@ class Front extends Controller {
             foreach ($childs as  $value) {
                 array_push($cat_ids,$value->id);
             }
-            $banner = (empty($data->mainImageURL))?'banner-estate.jpg':empty($data->mainImageURL);
+            $banner = (empty($data->mainImageURL))?'banner-estate.jpg':$data->mainImageURL;
 
             $title_cat = $data->name;
 
@@ -1127,7 +1127,7 @@ class Front extends Controller {
                         $cat_ids = array(17);
                         break;
                         case 'accessories_men':
-                        $cat_ids = array(92.88);
+                        $cat_ids = array(92,88);
                         break;
                         case 'accessories_women':
                         $cat_ids = array(124, 160, 150, 120,119,118,117,161,159,116);
