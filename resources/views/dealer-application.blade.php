@@ -62,7 +62,11 @@
 					   </div>
 				   </div>
 				   <div class="button-wrap">
-						 <a href="#application-form" id="apply-btn-one" class="btn btn-primary">Apply now</a>
+             @if(Auth::user() && Auth::user()->role === 'seller')
+               <a href="/dashboard" class="btn btn-primary">Start Selling</a>
+             @else
+               <a href="#application-form" id="apply-btn-one" class="btn btn-primary">Apply now</a> 
+             @endif
 					</div>
                 </div>
             </div>
@@ -206,7 +210,11 @@
                 <div class="wrap">
                     <h2 class="h1">Start selling today</h2>
                     <p>Professional dealers use Luxify to transact successful sales of a wide selection of new, vintage and pre-owned luxury goods as well as luxury experiences</p>
-                    <a href="#application-form" id="apply-btn-two" class="btn btn-primary lightbox">Apply Now</a>
+                    @if(Auth::user() && Auth::user()->role === 'seller')
+                      <a href="/dashboard" class="btn btn-primary">Start Selling</a>
+                    @else
+                      <a href="#application-form" id="apply-btn-two" class="btn btn-primary lightbox">Apply Now</a>
+                    @endif
                 </div>
             </div>
         </div>
