@@ -16,6 +16,12 @@
     <meta name="description" content="{{ func::trimDownText($listing->description, 160)}}">
     <meta name="keyword" content="{{$meta->keyword}}">
     <meta name="author" content="{{$meta->author}}">
+    <meta property="og:site_name" content="{{ $opengraphs['site_name'] }}">
+    <meta property="og:title" content="{{ $opengraphs['title'] }}" />
+    <meta property="og:description" content="{{ $opengraphs['description'] }}" />
+    <meta property="og:image" itemprop="image" content="{{ $opengraphs['image'] }}">
+    <meta property="og:type" content="website" />
+    <meta property="og:updated_time" content="{{ $opengraphs['updated_at'] }}" />
 @endsection
 
 @section('style')
@@ -64,7 +70,7 @@
         <section class="images" id="listing-image">
             <?php
                 //process the image json before decode
-				$listing->images = str_replace('\"', '"', $listing->images);
+				        $listing->images = str_replace('\"', '"', $listing->images);
                 $otherImages = json_decode($listing->images, true);
                 //check if the mainImage is exist on images
                 $mainImage = array();

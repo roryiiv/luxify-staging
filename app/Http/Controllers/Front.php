@@ -223,16 +223,23 @@ class Front extends Controller {
             }
             $meta->keyword = Meta::get_data_listing($listing->id,'keyword');
             $translate = new TranslateAPI();
+
             $description = Markdown::parse($listing->description);
-            
             $translate->translate($description,App::getLocale());
             $listing->description = $translate->translation;
-            
             
             $title = $listing->title;
             $translate->translate($title,App::getLocale());
             $listing->title = $translate->translation;
-          	return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
+
+            $opengraphs = [
+            	'site_name' => strip_tags($listing->title),
+            	'title' => strip_tags($listing->title),
+            	'description' => strip_tags($listing->description),
+            	'image' => urldecode(func::img_url($listing->mainImageUrl, '', 320)),
+            	'updated_at' => strtotime($listing->updated_at)
+            ];
+          	return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta, 'opengraphs' => $opengraphs]);
         }else {
             return abort(404);
         }
