@@ -19,7 +19,12 @@ if(!empty($getPostName)){
    }
 ?>
 @section('title')
-    <title>{{func::genTitle('Luxify in the Press', false)}}</title>
+    <title>{{ func::genTitle(trans('metaheader.meta_press_title'), false)}}</title>
+@endsection
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_press_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_press_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_press_description')">
 @endsection
 
 @section('style')
@@ -35,10 +40,6 @@ if(!empty($getPostName)){
     </style>
 @endsection
 
-@section('meta-data')
-    <meta name="keywords" content="luxify press releases,luxify press kit, luxify media, online luxury, luxury marketplace">
-    <meta name="description" content="Luxify in the Press. Luxify has been covered widely in international press as Asia's leading marketplace for luxury.">
-@endsection
 
 @section('content')
 
