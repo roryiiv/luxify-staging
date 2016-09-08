@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{func::genTitle($meta['title'], true)}}</title>
+  <title>{{func::genTitle($title_cat, true)}}</title>
 @endsection
    
 @section('meta-data')
@@ -55,7 +55,7 @@
 							<!-- breadcrumb -->
 							<ol class="breadcrumb">
 								<li>
-									<a href="/">Home</a>
+									<a href="{{func::set_url('/')}}">Home</a>
 								</li>
 								<li class="active">{{ $title_cat }}</li>
                 <li class="result-count" style="font-style: italic;">Showing {{ number_format($total)}} matching results</li>
