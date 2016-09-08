@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="/db/css/jquery.steps.css">
     <!-- Primary Style-->
     <link rel="stylesheet" type="text/css" href="/db/css/first-layout.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
     <!-- Boostraps_tagit Plugin Style -->
     <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
     <link rel="stylesheet" type="text/css" href="/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
@@ -33,9 +34,6 @@
     }
     .showslug{
         display: block;
-    }
-    .bootstrap-tagsinput{
-        width: 100%;
     }
     </style>
 @endsection
@@ -62,7 +60,7 @@
                         <h3 class="widget-title">@lang('panel.users_edit1')</h3>
                     </div>
                     <div class="widget-body">
-                        <form id="form-tabs" name="profile" method="post" action="/panel/user/update" class="form-horizontal" enctype="multipart/form-data">
+                        <form id="form-tabs" name="profile" method="post" action="{{func::set_url('/panel/user/update')}}" class="form-horizontal" enctype="multipart/form-data">
                             {!! csrf_field() !!}
                             <input name='user_id' id='user_id' type='hidden' value="{{$user->id}}" />
                             <h3>@lang('panel.users_edit_personal')</h3>
@@ -337,6 +335,13 @@
                                                         <textarea name="companySummary" id="companySummary" cols="3" rows="3" class="form-control" placeholder="{{$user->companySummary}}">{{ $user->companySummary}}</textarea>
                                                     </div>
                                                 </div>
+                                                
+                                               <!-- <div class="form-group m-0">
+                                                    <label for="contactDetails" class="control-label">Company Details</label>
+                                                    <div class="pt-15">
+                                                        <textarea name="contactDetails" id="contactDetails" cols="3" rows="3" class="form-control" placeholder="{{$user->contactDetails}}"></textarea>
+                                                    </div>
+                                                </div>-->
                                             </div>
                                         </div>
 
@@ -451,6 +456,11 @@
                                                     <label for="meta_keyword" class="col-sm-3 control-label">@lang('panel.users_edit_seo7')</label>
                                                     <div class="col-sm-9 "><div class="tagit-sugestion">
                                                         
+                                                        <style>
+                                                            .bootstrap-tagsinput{
+                                                                width: 100%;
+                                                            }
+                                                        </style>
                                                         <div>
                                                             
                                                         <input type="text" id="meta_keyword" name='meta_keyword' class="form-control typeahead" value="{{$user->meta_keyword}}">

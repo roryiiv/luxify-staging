@@ -48,7 +48,7 @@
                         <h3 class="widget-title">@lang('panel.optional_list1')</h3>
                     </div>
                     <div class="widget-body">
-                      <form id="categories" name="categories" method="get" action="/panel/categories">
+                      <form id="categories" name="categories" method="get" action="{{func::set_url('/panel/categories')}}">
                         <div id="product-list_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                             <div class="row">
                                 <div class="col-sm-6">

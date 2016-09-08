@@ -15,7 +15,13 @@ use App\Listings;
 
 
 Route::get('/buildHashedId', 'Front@updateHashed');
-Route::group(['prefix' => Translation::getRoutePrefix()], function()
+
+//no prefix and no checklang
+Route::post('/searchAjax','Front@searchAjax');
+
+
+
+Route::group(['prefix' => Translation::getRoutePrefix(),'middleware' =>'checklang'], function()
 {
     //static front pages
     Route::get('/', function(){
@@ -67,8 +73,6 @@ Route::get('/pricing', function(){
 Route::get('/faq', function(){
     return view('faq');
 });
-
-
 Route::get('/sitemap', function(){
     return view('sitemap');
 });
@@ -107,6 +111,7 @@ Route::post('/api/product/setStatus', 'Panel@product_change_status');
 Route::post('/api/dealer/setStatus', 'Panel@dealer_change_status');
 Route::get('/api/currency/switch/{code}', 'Front@switchCurrency');
 Route::get('/api/lang/switch/{code}', 'Front@switchLanguage');
+Route::get('/api/admin/switch/{admin}', 'Panel@switchadminas');
 Route::post('/api/bulkActions', 'Panel@bulkActions');
 Route::get('/api/ajax/checkemail/{email}', 'Dashboard@IsEmailInUse');
 Route::get('/api/ajax/checkemail/{email}', 'Panel@IsEmailInUse');
@@ -141,7 +146,7 @@ Route::post('/login','LuxifyAuth@authenticate');
 Route::get('/logout','LuxifyAuth@logout');
 Route::get('/search','Front@search');
 Route::post('/search','Front@search');
-Route::post('/searchAjax','Front@searchAjax');
+
 Route::post('/wishlist/add','Front@wishlistAdd');
 Route::post('/dealer-application','Front@dealerApplication');
 Route::get('/forget-password','Front@forgetPassword');

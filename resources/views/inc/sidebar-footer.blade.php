@@ -6,7 +6,7 @@
                 <h4 id="myModalLabel" class="modal-title">Send Message for Support</h4>
             </div>
             <div class="modal-body">
-                <form name="" action="/dashboard/support" method="post">
+                <form name="" action="{{func::set_url('/dashboard/support')}}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="supportSubject">Subject</label>

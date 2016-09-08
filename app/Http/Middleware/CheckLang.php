@@ -27,14 +27,13 @@ class CheckLang
             $languageId = Auth::user()->languageId;
             if($languageId !='' && !empty($languageId)){
                 $languages = DB::table('languages')->where('id',$languageId)->first();
+				$lang = $languages->code;
                 $lang_str = $languages->lang_str;
-//				$lang = $languages->code;
-				$lang = DB::table('languages')->where('lang_str',Translation::getRoutePrefix())->value('code');
                 //auto setprefix when log in
-/*                if(Translation::getRoutePrefix()!=$lang_str && $lang_str!='en'){
-                    $getredirect =  $this->switchLanguage($request,$languages->id);
+                if(Translation::getRoutePrefix()!=$lang_str && $lang_str!='en'){
+                    $getredirect = $this->switchLanguage($request,$languages->id);
                     return redirect($getredirect);
-                }*/
+                }
             }else{
                 if(Translation::getRoutePrefix()==null){
                     $lang = Config::get('app.locale');
@@ -57,8 +56,10 @@ class CheckLang
         }else{
             $langcode=$code.'/';
         }
+        $portal = $request->secure() == true ? 'https' : 'http';
+        // dd($portal);
         $full_url = $request->header();
-        $host = 'http://'.$full_url['host'][0].'/';
+        $host = $portal . '://'.$full_url['host'][0].'/';
         $path = ($request->path()=='/')?'':$request->path();
         $referer = $host.$path;
         $get = DB::table('languages')->get();
