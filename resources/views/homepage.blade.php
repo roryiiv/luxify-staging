@@ -1,14 +1,14 @@
 @extends('layouts.front')
 
-
+@section('title')
+    <title>{{ func::genTitle(trans('metaheader.meta_homepage_title'), false)}}</title>
+@endsection
 @section('meta-data')
-  <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-  <meta name="description" content="We are Asia's leading online marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+    <meta name="title" content"@lang('metaheader.meta_homepage_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_homepage_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_homepage_description')">
 @endsection
 
-@section('page-title')
-  <title>Luxify - Asia&#39;s leading marketplace for Luxury.</title>
-@endsection
 
 @section('style')
     <!-- include the site stylesheet -->

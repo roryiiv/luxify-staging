@@ -5,6 +5,7 @@
 @endsection
    
 @section('meta-data')
+    <meta name="title" content"{{func::genTitle($title_cat, true)}}">
     <meta name="keywords" content="{{ $meta['keywords']}}">
     <meta name="description" content="{{ $meta['desc']}}">
 @endsection
@@ -64,6 +65,9 @@
 							@include('inc.filter')
 							<!-- end of filter block -->
 						</div>
+					</div>
+				</div>
+				<div class="col-lg-12 col-xs-12">
 					<!-- </div> of 1st container removal for resizing -->
 					<!-- items list -->
 					<div class="item-list">
@@ -87,7 +91,7 @@
                                                                 <a class="favourite" data-id="{{$item->id}}" title="{{ $item->title }}" href="#"><span class="icon icon-heart"></span></a>
                                                               @endif
                                                             @elseif(Auth::user()->role === 'admin')
-                                  
+
                                                                 <a class="editListing" data-id="{{$item->id}}" href="/panel/product/edit/{{$item->id}}" target="_blank"><span class="glyphicon glyphicon-pencil"></span></a>
                                                                 <a class="deleteListing" data-id="{{$item->id}}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
                                                             @endif

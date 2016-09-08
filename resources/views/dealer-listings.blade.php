@@ -1,9 +1,15 @@
 @extends('layouts.front')
 
-@section('title', 'Luxify - Search')
-
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
+@section('title')
+    <title>{{ func::genTitle(trans('metaheader.meta_dealer_listing_title'), false)}}</title>
+@endsection
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_dealer_listing_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_dealer_listing_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_dealer_listing_description')">
+@endsection
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">

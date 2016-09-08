@@ -13,6 +13,7 @@
 @endsection
 
 @section('meta')
+	<meta name="title" content"{{ $title }}">
     <meta name="description" content="{{ func::trimDownText($listing->description, 160)}}">
     <meta name="keyword" content="{{$meta->keyword}}">
     <meta name="author" content="{{$meta->author}}">

@@ -1,14 +1,15 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{ func::genTitle('Dealer Application', false)}}</title>
+    <title>{{ func::genTitle(trans('metaheader.meta_dealer_application_title'), false)}}</title>
 @endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+
 @section('meta-data')
-<meta name='title' content='Luxify Dealer Application'>
-<meta name="keywords" content="luxify, luxury cars, private jets, used luxury cars, luxury goods, luxury marketplace, luxury market, authentic luxury, worthy">
-<meta name="description" content="Sell your luxury products on Luxify now. Apply here and become a Luxify dealer.">
+    <meta name='title' content='@lang('metaheader.meta_dealer_application_title')'>
+    <meta name="keywords" content="@lang('metaheader.meta_dealer_application_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_dealer_application_description')">
 @endsection
 
 @section('style')
@@ -62,7 +63,11 @@
 					   </div>
 				   </div>
 				   <div class="button-wrap">
-						 <a href="#application-form" id="apply-btn-one" class="btn btn-primary">Apply now</a>
+             @if(Auth::user() && Auth::user()->role === 'seller')
+               <a href="/dashboard" class="btn btn-primary">Start Selling</a>
+             @else
+               <a href="#application-form" id="apply-btn-one" class="btn btn-primary">Apply now</a> 
+             @endif
 					</div>
                 </div>
             </div>
@@ -206,7 +211,11 @@
                 <div class="wrap">
                     <h2 class="h1">Start selling today</h2>
                     <p>Professional dealers use Luxify to transact successful sales of a wide selection of new, vintage and pre-owned luxury goods as well as luxury experiences</p>
-                    <a href="#application-form" id="apply-btn-two" class="btn btn-primary lightbox">Apply Now</a>
+                    @if(Auth::user() && Auth::user()->role === 'seller')
+                      <a href="/dashboard" class="btn btn-primary">Start Selling</a>
+                    @else
+                      <a href="#application-form" id="apply-btn-two" class="btn btn-primary lightbox">Apply Now</a>
+                    @endif
                 </div>
             </div>
         </div>

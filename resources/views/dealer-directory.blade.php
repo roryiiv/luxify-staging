@@ -1,14 +1,14 @@
 @extends('layouts.front')
+<?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
 @section('title')
-  <title>{{ func::genTitle('Luxify Dealer Directory', false)}}</title>
+    <title>{{ func::genTitle(trans('metaheader.meta_dealer_directory_title'), false)}}</title>
 @endsection
-
 @section('meta-data')
-<meta name="keywords" content="Find out more about our dealers.">
-<meta name="description" content="luxify, luxury dealers, luxify directory, luxury, worthy, luxury sellers">
+    <meta name="title" content"@lang('metaheader.meta_dealer_directory_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_dealer_directory_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_dealer_directory_description')">
 @endsection
-
 @section('style')
   <!-- include the site stylesheet -->
   <link rel="stylesheet" href="/assets/css/luxify.css">
