@@ -34,7 +34,7 @@ class TranslateAPI {
 		$data = array();
 
 		$params = [
-			'key' => $this->api,
+			'key' => 'AIzaSyBQfKac1H96dMy4R5Ri1O856InCfZDWl9Y',
 			'source' => $source,
 			'target' => $target,
 			'q' => $text
@@ -43,7 +43,7 @@ class TranslateAPI {
 		
 		$response = $this->fetch($host, $params);
 		$data = json_decode($response);
-		
+
 		//set the geoPlugin vars
 		if(!array_key_exists('error',$data)){
 			$replace = $data->data->translations[0]->translatedText;
@@ -80,6 +80,7 @@ class TranslateAPI {
 		
 		return $response;
 	}
+
 	public static function force($text,$target=null,$source=false) {
 		$new = new TranslateAPI;
 		if ( (!$source ) ) {
@@ -101,7 +102,7 @@ class TranslateAPI {
 		$data = array();
 
 		$params = [
-			'key' => $this->api,
+			'key' => 'AIzaSyBQfKac1H96dMy4R5Ri1O856InCfZDWl9Y',
 			'source' => $source,
 			'target' => $target,
 			'format' => 'html',
