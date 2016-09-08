@@ -184,9 +184,10 @@ class Front extends Controller {
 
 
             $relates = DB::table('listings')
-            ->where('categoryId', $listing->categoryId)
+            ->where('categoryId', $listing->new_category)
             ->where('status', 'APPROVED')
-            ->orWhere('title', 'like', '%'.$listing->title.'%')
+	    ->where('listings.id', '!=', $listing->id )
+            //->orWhere('title', 'like', '%'.$listing->title.'%')
             ->orWhere('description', 'like', '%'.$listing->title.'%')
             ->join('countries', 'countries.id', '=', 'listings.countryId')
             ->select('listings.*', 'countries.name as country')
