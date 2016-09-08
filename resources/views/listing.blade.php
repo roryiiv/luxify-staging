@@ -64,7 +64,7 @@
         <section class="images" id="listing-image">
             <?php
                 //process the image json before decode
-				        $listing->images = str_replace('\"', '"', $listing->images);
+				$listing->images = str_replace('\"', '"', $listing->images);
                 $otherImages = json_decode($listing->images, true);
                 //check if the mainImage is exist on images
                 $mainImage = array();
