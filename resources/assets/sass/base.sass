@@ -4,8 +4,13 @@ $font-Montserrat: "Montserrat", $font-normal
 $font-icomoon: icomoon, $font-normal
 $font-Playfair: "Playfair Display", Times,$font-normal
 $font-Roboto: "Roboto", $font-normal
+
+
 $fonts-path-icomoon: "/assets/fonts/icomoon/"
 $fonts-path-bootstrap: "/assets/fonts/bootstrap/"
+
+
+
 
 @function unicode($str)
   @return unquote("\"")+unquote(str-insert($str, "\\", 1))+unquote("\"")
@@ -15,6 +20,12 @@ $fonts-path-bootstrap: "/assets/fonts/bootstrap/"
 //ico import
 @include font-face("icomoon", font-files("#{$fonts-path-icomoon}icomoon.eot","#{$fonts-path-icomoon}icomoon.ttf","#{$fonts-path-icomoon}icomoon.woff","#{$fonts-path-icomoon}icomoon.svg"))
 @include font-face("Glyphicons Halflings", font-files("#{$fonts-path-bootstrap}glyphicons-halflings-regular.eot","#{$fonts-path-bootstrap}glyphicons-halflings-regular.ttf","#{$fonts-path-bootstrap}glyphicons-halflings-regular.woff","#{$fonts-path-bootstrap}glyphicons-halflings-regular.svg"))
+@font-face
+  font-family: 'MillerDisplay'
+  src: url("/assets/fonts/MillerDisplay-Light.woff")
+
+.title-font
+  font-family: 'MillerDisplay', $font-Roboto !important
 
 // Import Bootstrap Compass integration
 @import "bootstrap-compass"
