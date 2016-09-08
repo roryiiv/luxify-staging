@@ -43,15 +43,19 @@ if(!empty($getPostName)){
 }
 ?>
 @section('title')
-    <title>{{func::genTitle('Sitemap', false)}}</title>
+    <title>{{ func::genTitle(trans('metaheader.meta_sitemap_title'), false)}}</title>
 @endsection
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_sitemap_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_sitemap_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_sitemap_description')">
+@endsection
+
+
+
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">
-@endsection
-@section('meta-data')
-    <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-    <meta name="description" content="We are Asia&#39;s leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
 @endsection
 @section('content')
     <!-- main informative part of the page -->

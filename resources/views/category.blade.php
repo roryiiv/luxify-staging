@@ -5,6 +5,7 @@
 @endsection
    
 @section('meta-data')
+    <meta name="title" content"{{func::genTitle($title_cat, true)}}">
     <meta name="keywords" content="{{ $meta['keywords']}}">
     <meta name="description" content="{{ $meta['desc']}}">
 @endsection
@@ -94,7 +95,6 @@
                                                 <figure>
                                                     <img class="listing-img" src="/img/spin.gif" data-src="{{ !empty($item->mainImageUrl) ? func::img_url($item->mainImageUrl, 346, '', true) : func::img_url('default-logo.png', 346, '', true) }}" alt="{{ $item->title }}">
                                                     @if(Auth::user())
-
                                                         @if(Auth::user()->role === 'user' || Auth::user()->role === 'seller')
                                                           <?php $added = func::is_wishlist($user_id, $item->id) == 1 ? ' added' : ''; ?>
                                                           @if($added !== '')

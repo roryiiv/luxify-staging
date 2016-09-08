@@ -1,14 +1,17 @@
 @extends('layouts.front')
 
+<?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+
 @section('title')
-    <title>{{ func::genTitle('Luxify FAQs', false)}}</title>
+    <title>{{ func::genTitle(trans('metaheader.meta_faqs_title'), false)}}</title>
+@endsection
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_faqs_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_faqs_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_faqs_description')">
 @endsection
 
-<?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
-@section('meta-data')
-    <meta name="keywords" content="online shopping,luxury goods,pre-owned,vintage, luxify faqs, luxury frequently asked questions">
-    <meta name="description" content="Asia's leading marketplace for luxury.">
-@endsection
+
 
 @section('style')
     <!-- include the site stylesheet -->

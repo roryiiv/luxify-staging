@@ -1,14 +1,15 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{ func::genTitle('Dealer Application', false)}}</title>
+    <title>{{ func::genTitle(trans('metaheader.meta_dealer_application_title'), false)}}</title>
 @endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+
 @section('meta-data')
-<meta name='title' content='Luxify Dealer Application'>
-<meta name="keywords" content="luxify, luxury cars, private jets, used luxury cars, luxury goods, luxury marketplace, luxury market, authentic luxury, worthy">
-<meta name="description" content="Sell your luxury products on Luxify now. Apply here and become a Luxify dealer.">
+    <meta name='title' content='@lang('metaheader.meta_dealer_application_title')'>
+    <meta name="keywords" content="@lang('metaheader.meta_dealer_application_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_dealer_application_description')">
 @endsection
 
 @section('style')

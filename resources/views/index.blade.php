@@ -1,9 +1,12 @@
 @extends('layouts.front')
-
 @section('title')
-    <title>{{func::genTitle('homepage', false)}}</title>
+    <title>{{ func::genTitle(trans('metaheader.meta_index_title'), false)}}</title>
 @endsection
-
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_index_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_index_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_index_description')">
+@endsection
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">
@@ -17,10 +20,6 @@
     </style>
 @endsection
 
-@section('meta-data')
-    <meta name="keywords" content="luxury goods,worthy, luxury items, authentic luxury goods, luxify, luxury websites, luxury market, buy luxury, sell luxury">
-    <meta name="description" content="Asia’s leading online marketplace for luxury. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
-@endsection
 
 @section('content')
     <!-- main banner of the page -->
