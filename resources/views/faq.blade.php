@@ -1,13 +1,13 @@
 @extends('layouts.front')
 
 @section('title')
-    <title>{{ func::genTitle('Frequently Asked Questions', false)}}</title>
+    <title>{{ func::genTitle('Luxify FAQs', false)}}</title>
 @endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 @section('meta-data')
-    <meta name="keywords" content="luxify Frequently Asked Questions (FAQs)">
-    <meta name="description" content="Frequently Asked Questions (FAQs)">
+    <meta name="keywords" content="online shopping,luxury goods,pre-owned,vintage, luxify faqs, luxury frequently asked questions">
+    <meta name="description" content="Asia's leading marketplace for luxury.">
 @endsection
 
 @section('style')

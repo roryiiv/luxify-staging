@@ -18,8 +18,8 @@
 @endsection
 
 @section('meta-data')
-    <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-    <meta name="description" content="We are Asia&#39;s leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+    <meta name="keywords" content="luxury goods,worthy, luxury items, authentic luxury goods, luxify, luxury websites, luxury market, buy luxury, sell luxury">
+    <meta name="description" content="Asia’s leading online marketplace for luxury. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
 @endsection
 
 @section('content')

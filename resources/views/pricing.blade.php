@@ -7,8 +7,9 @@
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
 @section('meta-data')
-<meta name="keywords" content="marketing campaign,asian market,tailored">
-<meta name="description" content="We have one of the world’s finest luxury dealer networks and we offer tailored marketing campaign to reach the asian market.">
+<meta name="title" content"Buy & Sell Luxury on Luxify">
+<meta name="keywords" content="luxury goods,worthy, luxury items, authentic luxury goods, luxify, luxury websites, luxury market, buy luxury, sell luxury">
+<meta name="description" content="Asia’s leading online marketplace for luxury. Become a Luxify dealer.">
 @endsection
 
 @section('style')
