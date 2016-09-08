@@ -1,14 +1,13 @@
 @extends('layouts.front')
-
-@section('title')
-  <title>{{ func::genTitle('About Us', false)}}</title>
-@endsection
-
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
+@section('title')
+  <title>{{ func::genTitle(trans('metaheader.meta_about_title'), false)}}</title>
+@endsection
 @section('meta-data')
-<meta name="keywords" content="online marketplace,luxury goods,luxury">
-<meta name="description" content="Luxify is Asia’s leading online marketplace for luxury. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
+    <meta name="title" content"@lang('metaheader.meta_about_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_about_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_about_description')">
 @endsection
 
 @section('style')

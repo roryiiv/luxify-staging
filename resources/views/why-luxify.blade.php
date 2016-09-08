@@ -1,16 +1,14 @@
 @extends('layouts.front')
 
-@section('title')
-  <title>{{ func::genTitle('Why Shop At Luxify', false)}}</title>
-@endsection
-
-@section('meta-data')
-<meta name="keywords" content="online shopping,luxury goods,pre owned,vintage">
-<meta name="description" content="we make online shopping easier and more transparent. luxify is the perfect place to explore a large collection of new, vintage and pre-owned luxury goods.">
-@endsection
-
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
-
+@section('title')
+    <title>{{ func::genTitle(trans('metaheader.meta_why_luxify_title'), false)}}</title>
+@endsection
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_why_luxify_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_why_luxify_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_why_luxify_description')">
+@endsection
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">

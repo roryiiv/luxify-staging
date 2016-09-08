@@ -1,15 +1,16 @@
 @extends('layouts.front')
-
-@section('title')
-  <title>{{ func::genTitle('Pricing', false)}}</title>
-@endsection
-
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
-@section('meta-data')
-<meta name="keywords" content="marketing campaign,asian market,tailored">
-<meta name="description" content="We have one of the world’s finest luxury dealer networks and we offer tailored marketing campaign to reach the asian market.">
+@section('title')
+    <title>{{ func::genTitle(trans('metaheader.meta_pricing_title'), false)}}</title>
 @endsection
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_pricing_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_pricing_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_pricing_description')">
+@endsection
+
+
 
 @section('style')
     <!-- include the site stylesheet -->

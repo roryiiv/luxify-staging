@@ -1,15 +1,13 @@
 @extends('layouts.front')
-
-@section('title')
-  <title>{{ func::genTitle('Terms of Service', false)}}</title>
-@endsection
-
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
-@section('meta-data')
-  <meta name="keywords" content="luxify terms and conditions">
-  <meta name="description" content="The terms and conditions relating to the use of the services accessed through www.luxify.com.">
+@section('title')
+    <title>{{ func::genTitle(trans('metaheader.meta_terms_title'), false)}}</title>
 @endsection
-
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_terms_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_terms_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_terms_description')">
+@endsection
 @section('style')
     <!-- include the site stylesheet -->
     <link rel="stylesheet" href="/assets/css/luxify.css">

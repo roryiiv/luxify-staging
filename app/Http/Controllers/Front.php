@@ -153,7 +153,7 @@ class Front extends Controller {
             PageCount::counting($listing->id,$users_id);
             $category = array();
             foreach($cat_ids as $key => $val){
-                if(in_array($listing->categoryId, $val)){
+                if(in_array($listing->new_category, $val)){
                     $category['slug'] = $key;
                     // var_dump($val); exit;
                     $category['title'] = $val['cat_title'];
@@ -170,7 +170,7 @@ class Front extends Controller {
             $infos = DB::table('formfields')
             ->join('formgroups', 'formgroups.formfieldId', '=', 'formfields.id')
             ->join('forms', 'formgroups.formId', '=', 'forms.id')
-            ->where('forms.categoryId', $listing->categoryId)
+            ->where('forms.categoryId', $listing->new_category)
             ->where('forms.languageId', 1)
             ->leftJoin('extrainfos', 'formgroups.id', '=', 'extrainfos.formgroupId')
             ->where('extrainfos.listingId', $listing->id)
@@ -184,9 +184,10 @@ class Front extends Controller {
 
 
             $relates = DB::table('listings')
-            ->where('categoryId', $listing->categoryId)
+            ->where('new_category', $listing->new_category)
             ->where('status', 'APPROVED')
-            ->orWhere('title', 'like', '%'.$listing->title.'%')
+	    ->where('listings.id', '!=', $listing->id )
+            //->orWhere('title', 'like', '%'.$listing->title.'%')
             ->orWhere('description', 'like', '%'.$listing->title.'%')
             ->join('countries', 'countries.id', '=', 'listings.countryId')
             ->select('listings.*', 'countries.name as country')
@@ -223,16 +224,23 @@ class Front extends Controller {
             }
             $meta->keyword = Meta::get_data_listing($listing->id,'keyword');
             $translate = new TranslateAPI();
+
             $description = Markdown::parse($listing->description);
-            
             $translate->translate($description,App::getLocale());
             $listing->description = $translate->translation;
-            
             
             $title = $listing->title;
             $translate->translate($title,App::getLocale());
             $listing->title = $translate->translation;
-          	return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta]);
+
+            $opengraphs = [
+            	'site_name' => strip_tags($listing->title),
+            	'title' => strip_tags($listing->title),
+            	'description' => strip_tags($listing->description),
+            	'image' => urldecode(func::img_url($listing->mainImageUrl, '', 320)),
+            	'updated_at' => strtotime($listing->updated_at)
+            ];
+          	return view('listing', ['listing' => $listing,'infos'=> $infos, 'mores' => $mores, 'relates' => $relates, 'category' => $category, 'meta' => $meta, 'opengraphs' => $opengraphs]);
         }else {
             return abort(404);
         }
@@ -342,9 +350,9 @@ class Front extends Controller {
 
         $title_cat = '3D Real Estates';
         $meta = array(
-          'title' => "3D Real Estate- Luxify- Asia&#39;s leading marketplace for luxury",
-          'keywords' => 'luxury real estate,virtual reality,luxury homes,estate',
-          'desc' => "Search for luxury real estate through virtual reality property tours on Luxify. Explore one of the Internet’s largest collections of luxury homes and estates."
+          'title' => "3D Virtual US Luxury Property Walkthroughs",
+          'keywords' => 'luxify, 3D virtual reality, luxury property',
+          'desc' => "Experience 3D virtual luxury property walkthroughs"
         );
         $banner = 'banner-estate.jpg';
         return view('category', ['listings' => $listings, 'title_cat' => $title_cat, 'banner' => $banner, 'filters' => $filters, 'meta' => $meta, 'total' => $listings->total()]);
@@ -475,7 +483,7 @@ class Front extends Controller {
                 // var_dump($filtered_listing); exit;
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
-                ->whereIn('listings.categoryId', $cat_ids)
+                ->whereIn('listings.new_category', $cat_ids)
                 ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
@@ -1280,7 +1288,7 @@ class Front extends Controller {
         if(is_array($listings) && !empty($listings)){
             foreach($listings as $list){
                 $loc_arr[] = $list->countryId;
-                $cat_arr[] = $list->categoryId;
+                $cat_arr[] = $list->new_category;
                 $cond_arr[] = $list->condition;
             }
 
@@ -1578,7 +1586,7 @@ class Front extends Controller {
                 // var_dump($filtered_listing); exit;
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
-                ->whereIn('categoryId', $cat_ids)
+                ->whereIn('new_category', $cat_ids)
                 ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
@@ -1588,7 +1596,7 @@ class Front extends Controller {
             }else{
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
-                ->whereIn('categoryId', $cat_ids)
+                ->whereIn('new_category', $cat_ids)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
                 ->join('countries', 'countries.id', '=', 'listings.countryId')
@@ -1653,7 +1661,7 @@ class Front extends Controller {
                 $cats = DB::table('categories')->where('title', 'like', '%'.$search.'%')->get();
                 if(!empty($cats) && is_array($cats)){
                     foreach($cats as $cat){
-                        $search_arr[] = ['categoryId', $cat->id];
+                        $search_arr[] = ['new_category', $cat->id];
                     }
                 }
 
@@ -1692,7 +1700,7 @@ class Front extends Controller {
                     $return .= '<div class="row-header"><a href="/search?_token='.$_POST['_token'].'&action='.$_POST['action'].'&search='. $search .'" class="pull-right" title="View More">More</a><div class="category-label"><span>Showing '.$listings->count().' of '.$listings->total().' result(s)</span></div></div>';
                     $return .= '<ul class="results-found">';
                     foreach($listings as $list){
-                        $cats[] = $list->categoryId;
+                        $cats[] = $list->new_category;
                         $dealers[] = $list->userId;
 
                         //outputting left rows

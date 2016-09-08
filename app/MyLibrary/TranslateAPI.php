@@ -5,7 +5,8 @@ use App;
 class TranslateAPI {
 		
 	//the GOOGLE SERVER
-	var $host = 'https://www.googleapis.com/language/translate/v2?key={API_KEY}&source={source}&target={target}&format=html&q={text}';
+	// var $host = 'https://www.googleapis.com/language/translate/v2?key={API_KEY}&source={source}&target={target}&format=html&q={text}';
+	var $host = 'https://www.googleapis.com/language/translate/v2';
 	//default
 	//setting API
 	var $api = 'AIzaSyBQfKac1H96dMy4R5Ri1O856InCfZDWl9Y';
@@ -32,9 +33,17 @@ class TranslateAPI {
 		$host = str_replace( '{text}',  $text, $host );
 		$data = array();
 
+		$params = [
+			'key' => 'AIzaSyBQfKac1H96dMy4R5Ri1O856InCfZDWl9Y',
+			'source' => $source,
+			'target' => $target,
+			'q' => $text
+		];
+
 		
-		$response = $this->fetch($host);
+		$response = $this->fetch($host, $params);
 		$data = json_decode($response);
+
 		//set the geoPlugin vars
 		if(!array_key_exists('error',$data)){
 			$replace = $data->data->translations[0]->translatedText;
@@ -44,13 +53,15 @@ class TranslateAPI {
 		$this->translation = $replace;
 	}
 	
-	function fetch($host) {
-
+	function fetch($host, $params) {
 		if ( function_exists('curl_init') ) {
 			//use cURL to fetch data
 			$ch = curl_init();
-			curl_setopt( $ch, CURLOPT_URL, $host);
+			curl_setopt($ch, CURLOPT_URL, $host);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+			curl_setopt($ch, CURLOPT_HTTPHEADER,array('X-HTTP-Method-Override: GET'));
 			curl_setopt($ch, CURLOPT_USERAGENT, 'FA translation google API');
 			$response = curl_exec($ch);
 			curl_close ($ch);
@@ -69,6 +80,7 @@ class TranslateAPI {
 		
 		return $response;
 	}
+
 	public static function force($text,$target=null,$source=false) {
 		$new = new TranslateAPI;
 		if ( (!$source ) ) {
@@ -89,8 +101,16 @@ class TranslateAPI {
 		$host = str_replace( '{text}',  $text, $host );
 		$data = array();
 
+		$params = [
+			'key' => 'AIzaSyBQfKac1H96dMy4R5Ri1O856InCfZDWl9Y',
+			'source' => $source,
+			'target' => $target,
+			'format' => 'html',
+			'q' => $text
+		];
+
 		
-		$response = $new->fetch($host);
+		$response = $new->fetch($host, $params);
 		$data = json_decode($response);
 		//set the geoPlugin vars
 		if(!array_key_exists('error',$data)){

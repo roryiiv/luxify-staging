@@ -19,7 +19,12 @@ if(!empty($getPostName)){
    }
 ?>
 @section('title')
-    <title>{{func::genTitle('Press', false)}}</title>
+    <title>{{ func::genTitle(trans('metaheader.meta_press_title'), false)}}</title>
+@endsection
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_press_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_press_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_press_description')">
 @endsection
 
 @section('style')
@@ -35,10 +40,6 @@ if(!empty($getPostName)){
     </style>
 @endsection
 
-@section('meta-data')
-    <meta name="keywords" content="luxury,online marketplace,luxury goods,collectors">
-    <meta name="description" content="We are Asia&#39;s leading online luxury marketplace for luxury enthusiasts and collectors. On Luxify you will discover one of the Internet's largest collections of luxury goods.">
-@endsection
 
 @section('content')
 

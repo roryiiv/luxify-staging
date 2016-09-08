@@ -1,14 +1,17 @@
 @extends('layouts.front')
 
+<?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
+
 @section('title')
-    <title>{{ func::genTitle('Frequently Asked Questions', false)}}</title>
+    <title>{{ func::genTitle(trans('metaheader.meta_faqs_title'), false)}}</title>
+@endsection
+@section('meta-data')
+    <meta name="title" content"@lang('metaheader.meta_faqs_title')">
+    <meta name="keywords" content="@lang('metaheader.meta_faqs_keywords')">
+    <meta name="description" content="@lang('metaheader.meta_faqs_description')">
 @endsection
 
-<?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
-@section('meta-data')
-    <meta name="keywords" content="luxify Frequently Asked Questions (FAQs)">
-    <meta name="description" content="Frequently Asked Questions (FAQs)">
-@endsection
+
 
 @section('style')
     <!-- include the site stylesheet -->
@@ -51,7 +54,7 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    Luxify is Asia’s leading marketplace for luxury. Luxury enthusiasts visit our platform to to discover, search and browse through a whole host of the very finest new, vintage and pre-owned luxury goods in a safe and simple way.
+                                    Luxify is Asia’s leading marketplace for luxury. Luxury enthusiasts visit our platform to discover, search and browse through a whole host of the very finest new, vintage and pre-owned luxury goods in a safe and simple way.
                                 </div>
                             </div>
                         </div>
@@ -63,7 +66,7 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    Our headquarters is located in Hong Kong and we have operating offices in London, Singapore and Shanghai.
+                                    Our headquarters is located in Hong Kong and we have operating offices in London, Singapore and Shanghai as well as partners in Jakarta and Manilla.
                                 </div>
                             </div>
                         </div>
@@ -75,7 +78,7 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    Buying on Luxify is free of charge. Luxify simply connects buyers and dealers of luxury.
+                                    Buying on Luxify is free of charge. Luxify simply connects buyers with the best dealers of luxury around the world.
                                 </div>
                             </div>
                         </div>
@@ -87,7 +90,7 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    Luxify is the leading marketplace for luxury in Asia. Our audience is from across the world with a primary user base in Asia (China, Hong Kong and South East Asia).
+                                    Luxify is the leading marketplace for luxury in Asia. Our audience is from across the world with a primary user base made of affluent shoppers from Asia (China, Hong Kong and South East Asia).
                                 </div>
                             </div>
                         </div>
@@ -113,9 +116,9 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    Luxify only showcases products from Luxify registered luxury dealers, all of which are carefully selected through an approval process. Additionally, we have very strict acceptance criteria on the products listed on Luxify and our Concierge team check and manually approved every single listing before they are released on Luxify. As part of the listing process, our dealers are encouraged to provide proof of authenticity.
+                                    Luxify only showcases products from reputable luxury dealers, all of which are carefully selected through an approval process. Additionally, we have very strict acceptance criteria on the products listed on Luxify and our Concierge team check and manually approved every single listing before they are released on Luxify. As part of the listing process, our dealers are encouraged to provide proof of authenticity.
                                     <br/><br/>
-                                    As a buyer, we highly encourage you to ask for any stamps or marks that verify the authenticity of your desired product in your discussion with the dealer.
+                                    As a buyer, we highly encourage you to ask for any stamps or marks that verify the authenticity of your desired product in your discussions with the dealer.
                                     <br/><br/>
                                     Finally, depending on the product category, Luxify has access to a network of qualified experts that can help you in assessing both the authenticity and value of a product that is of interest to you.
 
@@ -168,7 +171,7 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    In some cases, a dealer may have a small operating and you may need to allow them a few days to respond to your inquiry. However, if you do not hear from them, please contact us at concierge@luxify.com and we will assist you in connecting with the dealer.
+                                    In some cases, a dealer may have a small operation and you may need to allow them a few days to respond to your inquiry. However, if you do not hear from them, please contact us at concierge@luxify.com and we will assist you in connecting with the dealer.
                                 </div>
                             </div>
                         </div>
@@ -180,7 +183,7 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    Buying on Luxify is free of charge. We do not take any commission and get involved in the transactions between buyers and Luxify dealers. As a buyer you simply contact Luxify dealers directly online and settle the transaction offline or offline.
+                                    Buying on Luxify is free of charge. As a buyer you simply contact Luxify dealers directly online and settle the transaction offline or offline.
                                 </div>
                             </div>
                         </div>
@@ -194,7 +197,7 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    Luxify only showcases products from Luxify registered luxury dealers, all of which are carefully selected through an approval process. To become a Luxify dealers, simply apply [Insert Link to Dealer Application] and our Concierge team will review your application within two working days.
+                                    Luxify only showcases products from reputable luxury dealers, all of which are carefully selected through an approval process. To become a Luxify dealers, simply apply <a href="https://www.luxify.com/dealer-application"> HERE </a> and our Concierge team will review your application within two working days.
                                 </div>
                             </div>
                         </div>
@@ -206,7 +209,7 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    Once our Concierge team has approved your account, you will be notified by email that you can start uploading your products. Products can be uploaded manually or automatically. We have experience in working with large dealers and can easily integrate with a wide of systems to make the listing process of large of quantity of products effortless.
+                                    Once our Concierge team has approved your account, you will be notified by email that you can start uploading your products. Products can be uploaded manually or automatically. We have experience in working with large dealers and can easily integrate with a wide of systems to make the listing process of large quantity of products effortless.
                                 </div>
                             </div>
                         </div>
@@ -218,7 +221,7 @@
                             </div>
                             <div class="answer"><div class="BigQA">A.</div>
                                 <div class="BigQAction">
-                                    Once a product is listing on Luxify, you can cancel it if it has been sold and edit all the parameters such product description, photos or price information.
+                                    Once a product is listing on Luxify, you can cancel it if it has been sold and edit all the parameters such products description, photos or price information.
                                 </div>
                             </div>
                         </div>

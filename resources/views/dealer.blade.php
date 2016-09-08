@@ -2,15 +2,16 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{trim(preg_replace('/\s\s+/', ' ', $meta->title))}} - Luxify</title>
+    <title>{{ func::genTitle(trim(preg_replace('/\s\s+/', ' ', $meta->title)), false)}}</title>
 @endsection
 
 <?php $user_id = Auth::user() ? Auth::user()->id : ''; ?>
 
 @section('meta')
-  <meta name="description" content="{{ func::trimDownText($dealer->companySummary, 160)}}">
-  <meta name="keyword" content="{{$meta->keyword}}">
-  <meta name="author" content="{{$meta->author}}">
+    <meta name="title" content"{{trim(preg_replace('/\s\s+/', ' ', $meta->title))}}">
+    <meta name="description" content="{{ func::trimDownText($dealer->companySummary, 160)}}">
+    <meta name="keyword" content="{{$meta->keyword}}">
+    <meta name="author" content="{{$meta->author}}">
 @endsection
 
 @section('style')
