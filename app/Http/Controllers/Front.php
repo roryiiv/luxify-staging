@@ -153,7 +153,7 @@ class Front extends Controller {
             PageCount::counting($listing->id,$users_id);
             $category = array();
             foreach($cat_ids as $key => $val){
-                if(in_array($listing->categoryId, $val)){
+                if(in_array($listing->new_category, $val)){
                     $category['slug'] = $key;
                     // var_dump($val); exit;
                     $category['title'] = $val['cat_title'];
@@ -170,7 +170,7 @@ class Front extends Controller {
             $infos = DB::table('formfields')
             ->join('formgroups', 'formgroups.formfieldId', '=', 'formfields.id')
             ->join('forms', 'formgroups.formId', '=', 'forms.id')
-            ->where('forms.categoryId', $listing->categoryId)
+            ->where('forms.categoryId', $listing->new_category)
             ->where('forms.languageId', 1)
             ->leftJoin('extrainfos', 'formgroups.id', '=', 'extrainfos.formgroupId')
             ->where('extrainfos.listingId', $listing->id)
@@ -184,7 +184,7 @@ class Front extends Controller {
 
 
             $relates = DB::table('listings')
-            ->where('categoryId', $listing->new_category)
+            ->where('new_category', $listing->new_category)
             ->where('status', 'APPROVED')
 	    ->where('listings.id', '!=', $listing->id )
             //->orWhere('title', 'like', '%'.$listing->title.'%')
@@ -476,7 +476,7 @@ class Front extends Controller {
                 // var_dump($filtered_listing); exit;
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
-                ->whereIn('listings.categoryId', $cat_ids)
+                ->whereIn('listings.new_category', $cat_ids)
                 ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
@@ -1281,7 +1281,7 @@ class Front extends Controller {
         if(is_array($listings) && !empty($listings)){
             foreach($listings as $list){
                 $loc_arr[] = $list->countryId;
-                $cat_arr[] = $list->categoryId;
+                $cat_arr[] = $list->new_category;
                 $cond_arr[] = $list->condition;
             }
 
@@ -1579,7 +1579,7 @@ class Front extends Controller {
                 // var_dump($filtered_listing); exit;
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
-                ->whereIn('categoryId', $cat_ids)
+                ->whereIn('new_category', $cat_ids)
                 ->whereNotIn('listings.id', $filtered_listing)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
@@ -1589,7 +1589,7 @@ class Front extends Controller {
             }else{
                 $listings = DB::table('listings')
                 ->where('status', 'APPROVED')
-                ->whereIn('categoryId', $cat_ids)
+                ->whereIn('new_category', $cat_ids)
                 ->where($search_arr)
                 ->orderBy($orderby, $order)
                 ->join('countries', 'countries.id', '=', 'listings.countryId')
@@ -1654,7 +1654,7 @@ class Front extends Controller {
                 $cats = DB::table('categories')->where('title', 'like', '%'.$search.'%')->get();
                 if(!empty($cats) && is_array($cats)){
                     foreach($cats as $cat){
-                        $search_arr[] = ['categoryId', $cat->id];
+                        $search_arr[] = ['new_category', $cat->id];
                     }
                 }
 
@@ -1693,7 +1693,7 @@ class Front extends Controller {
                     $return .= '<div class="row-header"><a href="/search?_token='.$_POST['_token'].'&action='.$_POST['action'].'&search='. $search .'" class="pull-right" title="View More">More</a><div class="category-label"><span>Showing '.$listings->count().' of '.$listings->total().' result(s)</span></div></div>';
                     $return .= '<ul class="results-found">';
                     foreach($listings as $list){
-                        $cats[] = $list->categoryId;
+                        $cats[] = $list->new_category;
                         $dealers[] = $list->userId;
 
                         //outputting left rows
