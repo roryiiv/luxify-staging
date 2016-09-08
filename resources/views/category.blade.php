@@ -67,7 +67,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9 col-xs-12">
+				<div class="col-lg-12 col-xs-12">
 					<!-- </div> of 1st container removal for resizing -->
 					<!-- items list -->
 					<div class="item-list">
