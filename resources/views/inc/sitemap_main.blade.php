@@ -10,7 +10,7 @@ global $post;
         <div class="row" >
             <div class="col-lg-12 title">@lang('static.sitemap_content_sitemap')</div>
             <div class="col-xs-12" >
-                <div class="col-sm-3  col-xs-12" >
+                <div class="col-sm-3 col-xs-6  col-xxs-6 col-xxxs-12" >
                     <div class="sub-title">@lang('static.sitemap_content_luxify')</div>
                     <ul>
                         <li>
@@ -24,7 +24,7 @@ global $post;
                         <li><a href="/why-luxify">@lang('static.sitemap_content_how_it_works')</a></li>
                     </ul>
                 </div>
-                <div class="col-sm-3 col-xs-12" >
+                <div class="col-sm-3 col-xs-6  col-xxs-6 col-xxxs-12" >
                     <div class="sub-title">&nbsp;</div>
                     <ul>
                         <li><a href="/dealer-directory">@lang('static.sitemap_content_dealer_directory')</a></li>
@@ -40,7 +40,7 @@ global $post;
                     </ul>
                 </div>
 
-                <div class="col-sm-3 col-xs-12">
+                <div class="col-sm-3 col-xs-6  col-xxs-6 col-xxxs-12">
                     <div class="sub-title">@lang('static.sitemap_content_platform')</div>
                     <ul>
                         <li><a href="/login">@lang('static.sitemap_content_member_login')</a></li>
@@ -54,7 +54,7 @@ global $post;
                         <li><a href="/dealer-application">@lang('static.sitemap_content_dealer_application')</a></li>
                     </ul>
                 </div>
-                <div class="col-sm-3 col-xs-12">
+                <div class="col-sm-3 col-xs-6  col-xxs-6 col-xxxs-12">
                     <div class="sub-title">&nbsp;</div>
                     <ul>
                         <li>
@@ -104,7 +104,7 @@ global $post;
                         $float = 'right';
                     }
                     ?>
-                    <div class="col-sm-3 col-xs-12" style="float:{{$float}};">
+                    <div class="col-sm-3 col-xs-6  col-xxs-6 col-xxxs-12" style="float:{{$float}};">
                         <div class="sub-title"><a href="{{func::set_url('/category/'.$mainCat['slug'])}}">@lang('categories.'.$mainCat['slug'])</a></div>
                         @if(isset($mainCat['sub']) && count($mainCat['sub'])>0)
                             <ul class="sub-ul">
