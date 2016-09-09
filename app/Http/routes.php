@@ -33,7 +33,7 @@ Route::group(['prefix' => Translation::getRoutePrefix(),'middleware' =>'checklan
         return view('about');
     });
 
-    Route::get('/press', function(){
+    Route::get('/presskit', function(){
     return view('presskit');
     });
     Route::get('presskit/{id}', function($id) {

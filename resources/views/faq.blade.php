@@ -98,7 +98,7 @@
                         <div class="FAQTitle title-fontction"><u>Buying on Luxify</u></div>
                         <div class="FAQBox">
                             <div class="question"><div class="BigQA title-font">Q.</div>
-                                <div class="BigQAction  title-fontction">
+                                <div class="BigQAction title-font">
                                     Is it safe to buy luxury products on Luxify?
                                 </div>
                             </div>

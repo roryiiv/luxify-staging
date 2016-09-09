@@ -18,7 +18,7 @@ $newsLogoImgArr = array(
 <div class="press-block full-line-block" >
     <div class="container press-contact">
         <div class="row">
-            <div class="col-lg-12 title">Contact us</div>
+            <div class="col-lg-12 title title-font">Contact us</div>
             <div class="col-lg-12 press-link"><a href="mailto:press@luxify.com">press@luxify.com</a></div>
             <div class="col-lg-11 col-lg-offset-1">
                 <?php echo get_post_field('post_content', 11); ?>
@@ -30,8 +30,8 @@ $newsLogoImgArr = array(
 <div class="press-block" id="blog-articles">
     <div class="container press-news" >
         <div class="row">
-            <div class="col-lg-12 title">What’s new at Luxify</div>
-            <div class="col-lg-12 title-des">From the blog & articles</div>
+            <div class="col-lg-12 title title-font">What’s new at Luxify</div>
+            <div class="col-lg-12 title-des title-font">From the blog & articles</div>
             <div class="col-lg-12 ">
                 <?php $my_query = new WP_Query('category_name=blog-post&showposts=4'); ?>
                 <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
@@ -72,7 +72,7 @@ $newsLogoImgArr = array(
 <div class="press-min-block" id="releases-post">
     <div class="container press-releases">
         <div class="row">
-            <div class="col-lg-12 title">Press Releases</div>
+            <div class="col-lg-12 title title-font">Press Releases</div>
             <div class="col-lg-12 ">
                 <?php $my_query = new WP_Query('category_name=press-releases&showposts=-1'); ?>
                 <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
@@ -99,7 +99,7 @@ $newsLogoImgArr = array(
 <div class="press-block "  id="coverage-post">
     <div class="container press-coverage">
         <div class="row">
-            <div class="col-lg-12 title">Press Coverage</div>
+            <div class="col-lg-12 title title-font">Press Coverage</div>
             <div class="col-lg-12 ">
                 <?php $my_query = new WP_Query('category_name=press-coverage&showposts=-1'); ?>
                 <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>

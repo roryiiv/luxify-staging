@@ -47,7 +47,7 @@
                             <ul>
                                 <?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
                                 @foreach($categories as $value)
-                                    <li><a href="{{func::set_url('/category/'.$value->slug)}}">@lang('categories.'.$value->slug)</a></li>
+                                    <li class="title-font"><a href="{{func::set_url('/category/'.$value->slug)}}">@lang('categories.'.$value->slug)</a></li>
                                 @endforeach
                             </ul>
                         </nav>
@@ -123,7 +123,7 @@
                                 <div class="text-box">
                                     <strong class="title">@lang('static.index_feature_title')</strong>
                                     <h1 class="title-font" style="font-weight: 300;">“@lang('static.index_feature_label')”</h1>
-                                    <p>@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
+                                    <p class="title-font" >@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
                                     <a href="{{func::set_url('/listing/rees-rex-t-rex-skull')}}" class="btn btn-primary">@lang('static.index_feature_view')</a>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@
                             <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
                                     <h1 class="title-font" style="line-height:4.0rem;">@lang('static.index_search1')</h1>
-                                    <p >@lang('static.index_search2')</p>
+                                    <p class="title-font">@lang('static.index_search2')</p>
                                     <a href="{{func::set_url('/category/handbags-accessories')}}" class="btn btn-primary">@lang('static.index_search3')</a>
                                 </div>
                             </div>
