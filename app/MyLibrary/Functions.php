@@ -175,7 +175,8 @@ class Functions
     }
 
     public static function build_curr(){
-        $curr = DB::table('currencies')->orderby('id', 'asc')->get();
+
+        $curr = DB::table('currencies')->orderby('id', 'asc')->limit(20)->get();
         if(is_array($curr)){
             $return = array();
             for ($x = 0; $x < count($curr); $x++) {
@@ -183,7 +184,6 @@ class Functions
                 $return[$x]['label'] = $curr[$x]->name;
                 $return[$x]['code'] = $curr[$x]->code;
                 $return[$x]['symbol'] = $curr[$x]->symbol;
-
             }
         }
         return $return;

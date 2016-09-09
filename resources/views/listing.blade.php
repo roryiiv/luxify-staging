@@ -239,7 +239,7 @@
 			<li class="active">{{ $cat && !empty($cat) ? $cat->title : $listing->title }}</li>
 		    </ol>
 		    <header class="block-header">
-			<h1 {{schema::itemProp('name')}} {{ schema::itemType('Text') }} class="item-title">{{ $listing->title }}</h1>
+			<h1 {{schema::itemProp('name')}} {{ schema::itemType('Text') }} class="item-title title-font">{{ $listing->title }}</h1>
 			@if(!empty($listing->aerialLook3DUrl))
 			    <a href="{{ $listing->aerialLook3DUrl }}" rel="lightbox_3d_video" data-fancybox-type="iframe" class="btn btn-primary lightbox">3D Virtual Tour &nbsp;<span class="glyphicon glyphicon-play"></span></a>
 			@endif
@@ -289,7 +289,7 @@
 </div>
 <!-- end of item description -->
 <!-- carousel block -->
-<div class="carousel-block">
+<div class="carousel-block" style="padding:40px 0 10px 0;">
     <div class="container">
 	<!-- new grid -->
 	<div class="row">
@@ -350,7 +350,7 @@
 	<!-- new grid -->
 	<div class="row">
 	    <div class="col-sm-10 col-sm-offset-1">
-		<h1 class="text-center">@lang('home.listing_ymalike')</h1>
+		<h1 class="text-center" style="margin-bottom:10px;">@lang('home.listing_ymalike')</h1>
 		<div class="slider">
 		    @if(!empty($relates))
 			@foreach($relates as $rel)

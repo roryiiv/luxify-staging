@@ -1,11 +1,11 @@
 @extends('layouts.front')
 
 @section('title')
-  <title>{{func::genTitle($title_cat, true)}}</title>
+  <title>{{func::genTitle($meta['title'], true)}}</title>
 @endsection
    
 @section('meta-data')
-    <meta name="title" content"{{func::genTitle($title_cat, true)}}">
+    <meta name="title" content"{{func::genTitle($meta['title'], true)}}">
     <meta name="keywords" content="{{ $meta['keywords']}}">
     <meta name="description" content="{{ $meta['desc']}}">
 @endsection
