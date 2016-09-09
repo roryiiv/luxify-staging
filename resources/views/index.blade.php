@@ -123,7 +123,7 @@
                                 <div class="text-box">
                                     <strong class="title">@lang('static.index_feature_title')</strong>
                                     <h1 class="title-font" style="font-weight: 300;">“@lang('static.index_feature_label')”</h1>
-                                    <p class="title-font" >@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
+                                    <p  style="font-width:1.5rem" >@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
                                     <a href="{{func::set_url('/listing/rees-rex-t-rex-skull')}}" class="btn btn-primary">@lang('static.index_feature_view')</a>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                         <header class="heading">
                             <h2 class="h1 title-font">@lang('static.index_desc1')</h2>
                             <div class="wrap">
-                                <h5>@lang('static.index_desc2')</h5>
+                                <h5 style="font-width:1.5rem">@lang('static.index_desc2')</h5>
                             </div>
                         </header>
                     </div>
@@ -186,7 +186,7 @@
                             <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
                                     <h1 class="title-font" style="line-height:4.0rem;">@lang('static.index_search1')</h1>
-                                    <p class="title-font">@lang('static.index_search2')</p>
+                                    <p  style="font-width:1.5rem">@lang('static.index_search2')</p>
                                     <a href="{{func::set_url('/category/handbags-accessories')}}" class="btn btn-primary">@lang('static.index_search3')</a>
                                 </div>
                             </div>

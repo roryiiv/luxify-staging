@@ -23,7 +23,7 @@ Route::post('/searchAjax','Front@searchAjax');
 
 Route::group(['prefix' => Translation::getRoutePrefix(),'middleware' =>'checklang'], function(){
 
-    
+
 
     Route::get('/', function(){
         return View::make('index');
@@ -34,57 +34,64 @@ Route::group(['prefix' => Translation::getRoutePrefix(),'middleware' =>'checklan
     });
 
     Route::get('/press', function(){
-    return view('presskit');
+        return view('presskit');
     });
     Route::get('press/{id}', function($id) {
-    if ($id) {
-	return view('presskit', ['release' => $id]);
-    } else {
-	return view('presskit');
-    }
+        if ($id) {
+            return view('presskit', ['release' => $id]);
+        } else {
+            return view('presskit');
+        }
+    });
+    Route::get('press/{id}', function($id) {
+        if ($id) {
+            return view('presskit', ['release' => $id]);
+        } else {
+            return view('presskit');
+        }
     });
 
     Route::get('/contact', function(){
-    return view('contact');
+        return view('contact');
     });
     Route::get('/luxify-estates', function(){
-    $listings = Listings::where('status', 'APPROVED')
-    ->whereNotNull('aerialLook3DUrl')
-    ->leftJoin('users', 'listings.userId', '=', 'users.id')
-    ->join('countries', 'countries.id', '=', 'listings.countryId')
-    ->select('listings.slug', 'listings.mainImageUrl', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'users.fullName')
-    ->orderby('listings.created_at', 'desc')
-    ->limit(10)
-    ->get();
-    return view('estates', ['mores'=>$listings]);
+        $listings = Listings::where('status', 'APPROVED')
+            ->whereNotNull('aerialLook3DUrl')
+            ->leftJoin('users', 'listings.userId', '=', 'users.id')
+            ->join('countries', 'countries.id', '=', 'listings.countryId')
+            ->select('listings.slug', 'listings.mainImageUrl', 'listings.id','listings.title', 'listings.currencyId', 'listings.price', 'countries.name as country', 'users.companyLogoUrl', 'users.fullName')
+            ->orderby('listings.created_at', 'desc')
+            ->limit(10)
+            ->get();
+        return view('estates', ['mores'=>$listings]);
     });
     Route::get('/terms', function(){
-    return view('terms');
+        return view('terms');
     });
     Route::get('/privacy', function(){
-    return view('privacy');
+        return view('privacy');
     });
     Route::get('/dealer-application', function(){
-    return view('dealer-application');
+        return view('dealer-application');
     });
     Route::get('/why-luxify', function(){
-    return view('why-luxify');
+        return view('why-luxify');
     });
     Route::get('/pricing', function(){
-    return view('pricing');
+        return view('pricing');
     });
     Route::get('/faq', function(){
-    return view('faq');
+        return view('faq');
     });
     Route::get('/sitemap', function(){
-    return view('sitemap');
+        return view('sitemap');
     });
     Route::get('sitemap/{id}', function($id) {
-    if ($id) {
-    return view('sitemap', ['release' => $id]);
-    } else {
-    return view('sitemap');
-    }
+        if ($id) {
+            return view('sitemap', ['release' => $id]);
+        } else {
+            return view('sitemap');
+        }
     });
 
     Route::get('/dealer-directory', 'Front@dealerDirectory');
@@ -159,7 +166,7 @@ Route::group(['prefix' => Translation::getRoutePrefix(),'middleware' =>'checklan
     Route::get('/oauth/redirect/facebook', 'SocialAuthController@fb_redirect')->name("redirect_fb");
     Route::get('/oauth/redirect/twitter', 'SocialAuthController@tw_redirect')->name("redirect_tw");
     Route::get('/oauth/redirect/linkedin', 'SocialAuthController@in_redirect')->name("redirect_in");
-    Route::get('/oauth/callback/{provider}', 'SocialAuthController@provider_callback');  
+    Route::get('/oauth/callback/{provider}', 'SocialAuthController@provider_callback');
     //get flotchart json
     Route::get('/dashboard/get_flot_chart/', 'Dashboard@zonk')->name('get_json_flot');
     Route::get('/dashboard/get_flot_chart/{start}/{end}', 'Dashboard@get_flot_chart');
@@ -250,9 +257,9 @@ Route::group(['prefix' => Translation::getRoutePrefix(),'middleware' =>'checklan
         Route::get('/panel/cu_slug_user/{id}/{slug}', 'Panel@createupdatesluguser');
         Route::get('/panel/cu_slug/{id}/{slug}', 'Panel@createupdateslug');
         //get keywords json
-        
 
-      
+
+
     });
 
 });
