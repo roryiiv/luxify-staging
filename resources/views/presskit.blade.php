@@ -65,7 +65,7 @@ if(!empty($getPostName)){
         <div class="press-block " >
             <div class="container press-release-page">
                 <div class="row">
-                    <div class="col-lg-8 col-lg-offset-1 title"><?php echo get_the_title($getPostID); ?></div>
+                    <div class="col-lg-8 col-lg-offset-1 title title-font"><?php echo get_the_title($getPostID); ?></div>
                     <div class="col-lg-8 col-lg-offset-1 release-date"><?php echo get_the_time('F j , Y',$getPostID); ?></div>
                     <div class="col-lg-8 col-lg-offset-1 release-page-content">
                         <?php echo get_post_field('post_content', $getPostID); ?>
