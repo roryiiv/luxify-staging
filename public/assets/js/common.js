@@ -307,7 +307,8 @@ function initNavbarToggle() {
 // initialize custom form elements
 function initCustomForms() {
   jcf.setOptions('Select', {
-    wrapNative: false
+    wrapNative: false,
+    maxVisibleItems: 15,
   });
   jcf.replaceAll();
 }
