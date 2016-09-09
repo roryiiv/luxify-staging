@@ -235,7 +235,7 @@
 			<li><a href="/">Home</a></li>
 			@if($category && $category != '')
 			    <li><a  {{schema::itemProp('category')}} {{schema::itemType("Text")}} href="/category/{{ $category['parent-slug'] }}">{{ $category['parent-name'] }}</a></li>
-			    <li style="display: none;"><a  {{schema::itemProp('category')}} {{schema::itemType("Text")}} href="/category/{{ $category['parent-slug'] }}/{{$category['slug']}}">{{ $category['name'] }}</a></li>
+			    <li style=""><span {{schema::itemProp('category')}} {{schema::itemType("Text")}}">{{ $category['name'] }}</span></li>
 			@endif
 			<li class="active" style="display: none;">{{ $cat && !empty($cat) ? $cat->title : $listing->title }}</li>
 		    </ol>
