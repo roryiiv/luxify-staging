@@ -17,7 +17,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         // Commands\Inspire::class,
     	Commands\Index::class,
-        Commands\MigrationCategory::class
+        Commands\MigrationCategory::class,
+        Commands\MigrationOptional::class,
+        Commands\MigrationCategoryMeta::class
     ];
 
     /**
@@ -26,8 +28,7 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
-    {
+    protected function schedule(Schedule $schedule){
         // $schedule->command('inspire')
         //          ->hourly();
 
@@ -55,5 +56,7 @@ class Kernel extends ConsoleKernel
                 ->update(['rate' => $rate]);
             }
         })->twiceDaily(1, 13);
+
+        $schedule->command('index:luxify --force')->daily();
     }
 }
