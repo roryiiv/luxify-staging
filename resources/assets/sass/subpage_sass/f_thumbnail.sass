@@ -37,9 +37,9 @@
     padding: 11px 0px 8px
   h3
     font-weight: 300
-    min-height: 21px
-    font-size: 17px
-    line-height: 1.2
+    min-height: 3.4rem
+    font-size: 1.7rem
+    line-height: 2.0rem
     margin: 0
     overflow: hidden
     a
@@ -77,8 +77,8 @@
       width: auto
   .price
     color: #998967
-    font-weight: 400
-    font-size: 18px
+    font-weight: 300
+    font-size: 1.6rem
     letter-spacing: 1px
     margin: 2px 0 0
     display: block
@@ -90,8 +90,8 @@
     flex-direction: column
     justify-content: center
     align-items: center
+    display: flex
     > img
-      height: 60px
       width: auto
 .estates
   .slick-track .thumbnail .product-img-container
@@ -102,3 +102,162 @@
       max-height: 206px
   .thumbnail .caption
     padding: 5px
+
+
+.slider
+  padding: 60px 0 0
+  .slick-arrow
+    background: transparent
+    border: none
+    position: absolute
+    top: 50%
+    margin-top: -21px
+    font-size: 0
+    line-height: 0
+    padding: 0
+    outline: none !important
+    &:before
+      font-size: 42px
+  .slick-next
+    right: -40px
+    &:before
+      content: "\e905"
+      font-family: "icomoon"
+      line-height: 1
+      display: block
+  .slick-prev
+    left: -40px
+    &:before
+      content: "\e910"
+      font-family: "icomoon"
+      line-height: 1
+      display: block
+  .thumbnail
+    margin: 0 15px
+    width: auto
+    background-color: transparent
+
+.listing-main .slider .slick-prev
+  left: -25px
+
+@media (max-width: 1199px)
+  .item-list .thumbnail figure
+    width: 293px
+    height: 293px
+    vertical-align: middle
+    display: table-cell
+    text-align: center
+    /* background-color:#f4f4f4;
+    background-color: #fff
+    img
+      max-height: 100%
+      max-width: 100%
+  .slick-track .thumbnail
+    min-height: 350px
+    h3 , h3 a
+      font-size: 1.6rem
+      min-height: 34px
+    .price , .country
+      font-size: 1.5rem
+    .product-img-container
+      height: 180px
+      img.product-img
+
+        max-width: 200px
+        max-height: 180px
+
+@media (max-width: 991px)
+  .slider .thumbnail
+    padding: 0px
+  .item-list .thumbnail figure
+    width: 345px !important
+    height: 345px !important
+    vertical-align: middle
+    display: table-cell
+    text-align: center
+    /* background-color:#f4f4f4;
+    background-color: #fff
+    img
+      max-height: 100%
+      max-width: 100%
+
+@media (max-width: 767px)
+  .slider
+    padding: 20px 0 0
+    .slick-prev
+      left: auto
+      right: 31px
+    .thumbnail
+      padding: 0 5px
+  .item-list .thumbnail figure
+    width: 100% !important
+    height: auto !important
+    vertical-align: middle
+    text-align: center
+    /* background-color:#f4f4f4;
+    background-color: #fff
+    display: block
+    margin: 0 auto
+    img
+      height: auto
+      width: 100%
+  .thumbnail
+    max-width: 400px
+    margin: 0 auto 30px
+    min-height: 310px
+    > .caption
+      padding: 11px 0px 8px
+      > .item-logo
+        height: 40px
+        display: flex
+        > img
+          max-height: 40px
+          widht: auto
+    .favourite
+      top: 6px
+      right: 20px
+  .slider
+    .slick-prev, .slick-next
+      top: 0
+  .estates
+    .slick-track .thumbnail
+      min-height: 350px
+      h3 , h3 a
+        font-size: 1.3rem
+        min-height: 34px
+      .price , .country
+        font-size: 1.6rem
+      .product-img-container
+
+        height: 230px
+        img.product-img
+          width: auto
+          max-width: 250px
+          max-height: 230px
+
+@media (max-width: 479px)
+  .thumbnail
+    width: 275px
+  .slider
+    padding: 60px 0
+    .slick-prev
+      top: 0
+      right: 30px
+    .slick-next
+      top: 0
+      right: 0px
+    .thumbnail
+      display: block
+      margin: 0
+  .slick-track .thumbnail
+    h3 , h3 a
+      font-size: 1.6rem
+      min-height: 34px
+    .price , .country
+      font-size: 1.5rem
+    .product-img-container
+      height: 225px
+      img.product-img
+        width: auto
+        max-width: 275px
+        max-height: 225px
