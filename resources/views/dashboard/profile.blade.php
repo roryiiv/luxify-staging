@@ -340,9 +340,16 @@
                                                 </div>
                                                 <div class="form-group m-0">
                                                     <label for="phoneNumber" class="control-label">@lang('dashboard.profile_contact')</label>
-                                                    <?php $phones = json_decode($user->phoneNumber); ?>
+                                                    <?php 
+							$phones = '';
+							if(is_array(json_decode($user->phoneNumber))) {
+							   $phones = implode(',', json_decode($user->phoneNumber));
+							} else {
+							   $phones = $user->phoneNumber;
+							}
+							?>
                                                     <div class="pt-15">
-                                                        <input id="phoneNumber"  data-role='taginput' type="text" class="form-control" value="{{ !empty($phones) ? join(',', $phones): ''}}">
+                                                        <input id="phoneNumber"  data-role='taginput' type="text" class="form-control" value="{{ $phones }}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-0">
