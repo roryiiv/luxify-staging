@@ -127,8 +127,8 @@ class Front extends Controller {
             	->where('id', $listing->catParent)
             	->first();
             }
-            $category['parent-name'] = $parent_cat->name;
-            $category['parent-slug'] = $parent_cat->slug;
+            $category['parent-name'] = isset($parent_cat) && !empty($parent_cat) ? $parent_cat->name : '';
+            $category['parent-slug'] = isset($parent_cat) && !empty($parent_cat) ? $parent_cat->slug: '';
 
             $infos = DB::table('formfields')
             ->join('formgroups', 'formgroups.formfieldId', '=', 'formfields.id')
