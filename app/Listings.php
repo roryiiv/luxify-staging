@@ -146,7 +146,7 @@ class Listings extends Model
       	}
     }
 
-    public static function insertToIndex($listings) {
+    /*public static function insertToIndex($listings) {
         TNTSearch::selectIndex("luxify.index");
         $index = TNTSearch::getIndex();
         $index->insert($listings->toArray());
@@ -162,6 +162,6 @@ class Listings extends Model
         TNTSearch::selectIndex("luxify.index");
         $index = TNTSearch::getIndex();
         $index->update($listings->id, $user->toArray());
-    }
+    }*/
 
 }
