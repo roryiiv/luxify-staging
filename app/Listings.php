@@ -5,9 +5,16 @@ use Validator;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use DB;
+use TNTSearch;
 
 class Listings extends Model
 {
+    public static function boot(){
+        Listings::created([__CLASS__, 'insertToIndex']);
+        Listings::updated([__CLASS__, 'updateIndex']);
+        Listings::deleted([__CLASS__, 'deleteFromIndex']);
+    }
+
     //sluggable start here
     use Sluggable;
 
@@ -122,23 +129,39 @@ class Listings extends Model
       return $this->errors;    
     }
     public static function generateslug($slug){
-      $explode = explode('-', $slug);
-      if(is_array($explode)){
-        //eksekusi array
-        $count = count($explode);
-        $lastarray = intval($explode[$count-1]);
-        if(is_int($lastarray)){
-          $status = true;
-          $i = 1;
-          while($status){
-          $data = Generate::where('password',$key)->first();
-              if($data == 0) $status = false;
-              return $key;
-          }
-        }
-      }else{
+      	$explode = explode('-', $slug);
+      	if(is_array($explode)){
+        	//eksekusi array
+        	$count = count($explode);
+        	$lastarray = intval($explode[$count-1]);
+        	if(is_int($lastarray)){
+          		$status = true;
+          		$i = 1;
+          		while($status){
+          			$data = Generate::where('password',$key)->first();
+              		if($data == 0) $status = false;
+              		return $key;
+          		}
+        	}
+      	}
+    }
 
-      }
+    public static function insertToIndex($listings) {
+        TNTSearch::selectIndex("luxify.index");
+        $index = TNTSearch::getIndex();
+        $index->insert($listings->toArray());
+    }
+
+    public static function deleteFromIndex($listings) {
+        TNTSearch::selectIndex("luxify.index");
+        $index = TNTSearch::getIndex();
+        $index->delete($listings->id);
+    }
+
+    public static function updateIndex($listings) {
+        TNTSearch::selectIndex("luxify.index");
+        $index = TNTSearch::getIndex();
+        $index->update($listings->id, $user->toArray());
     }
 
 }
