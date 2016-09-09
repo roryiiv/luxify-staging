@@ -5,7 +5,7 @@
 @endsection
    
 @section('meta-data')
-    <meta name="title" content"{{func::genTitle($title_cat, true)}}">
+    <meta name="title" content"{{func::genTitle($meta['title'], true)}}">
     <meta name="keywords" content="{{ $meta['keywords']}}">
     <meta name="description" content="{{ $meta['desc']}}">
 @endsection
@@ -55,7 +55,7 @@
 							<!-- breadcrumb -->
 							<ol class="breadcrumb">
 								<li>
-									<a href="/">Home</a>
+									<a href="{{func::set_url('/')}}">Home</a>
 								</li>
 								<li class="active">{{ $title_cat }}</li>
                 <li class="result-count" style="font-style: italic;">Showing {{ number_format($total)}} matching results</li>
@@ -67,7 +67,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9 col-xs-12">
+				<div class="col-lg-12 col-xs-12">
 					<!-- </div> of 1st container removal for resizing -->
 					<!-- items list -->
 					<div class="item-list">
