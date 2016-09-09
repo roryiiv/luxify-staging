@@ -47,7 +47,7 @@
                             <ul>
                                 <?php $categories = DB::table('category_2')->where('parent',0)->get(); ?>
                                 @foreach($categories as $value)
-                                    <li><a href="{{func::set_url('/category/'.$value->slug)}}">@lang('categories.'.$value->slug)</a></li>    
+                                    <li><a href="{{func::set_url('/category/'.$value->slug)}}">@lang('categories.'.$value->slug)</a></li>
                                 @endforeach
                             </ul>
                         </nav>
@@ -297,7 +297,6 @@
             search_ico();
 
             if(!isMobile()){
-
                 $('#video_bg').YTPlayer({
                     fitToBackground: true,
                     videoId: '15VwTs0nFlM',
