@@ -72,7 +72,7 @@
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2">
                     <div class="col-sm-8">
-                            <h1>@lang('static.contact_account')</h1>
+                            <h2>@lang('static.contact_account')</h2>
                     </div>
                     <div class="col-sm-4">
 						<a href="{{func::set_url('/register')}}" class="btn btn-primary">@lang('static.contact_start')</a>

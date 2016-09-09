@@ -1,16 +1,14 @@
 @charset "UTF-8"
 $font-normal: "Arial", "Helvetica Neue", "Helvetica", sans-serif
-$font-Montserrat: "Montserrat", $font-normal
-$font-icomoon: icomoon, $font-normal
-$font-Playfair: "Playfair Display", Times,$font-normal
+$font-normal2 : "Times New Roman", Times, serif
+
 $font-Roboto: "Roboto", $font-normal
 
+$font-Lato: "Lato", $font-normal
+$title-font : "Cormorant", "Times New Roman", Times, serif
 
 $fonts-path-icomoon: "/assets/fonts/icomoon/"
 $fonts-path-bootstrap: "/assets/fonts/bootstrap/"
-
-
-
 
 @function unicode($str)
   @return unquote("\"")+unquote(str-insert($str, "\\", 1))+unquote("\"")
@@ -20,12 +18,9 @@ $fonts-path-bootstrap: "/assets/fonts/bootstrap/"
 //ico import
 @include font-face("icomoon", font-files("#{$fonts-path-icomoon}icomoon.eot","#{$fonts-path-icomoon}icomoon.ttf","#{$fonts-path-icomoon}icomoon.woff","#{$fonts-path-icomoon}icomoon.svg"))
 @include font-face("Glyphicons Halflings", font-files("#{$fonts-path-bootstrap}glyphicons-halflings-regular.eot","#{$fonts-path-bootstrap}glyphicons-halflings-regular.ttf","#{$fonts-path-bootstrap}glyphicons-halflings-regular.woff","#{$fonts-path-bootstrap}glyphicons-halflings-regular.svg"))
-@font-face
-  font-family: 'MillerDisplay'
-  src: url("/assets/fonts/MillerDisplay-Light.woff")
 
 .title-font
-  font-family: 'MillerDisplay', $font-Roboto !important
+  font-family: $title-font !important
 
 // Import Bootstrap Compass integration
 @import "bootstrap-compass"
@@ -114,7 +109,7 @@ html
   font-size: 62.5%
 
 body
-  font-family: $font-Roboto !important
+  font-family: $font-Lato !important
   height: 100%
   min-width: 320px
   font-weight: 300
@@ -146,21 +141,27 @@ h1, .h1
   font-weight: 100
   font-size: 2.8rem
   color: #4a4a4a
+  font-family: $title-font !important
 
 h2, .h2
   margin: 0 0 20px
   color: #4a4a4a
   font-size: 28px
+  font-weight: 100
+  font-family: $title-font !important
+
 
 h3, .h3
   margin: 0 0 20px
   font-size: 2.1rem
   color: #4a4a4a
+  font-family: $title-font !important
 
 h4, .h4
   margin: 0 0 20px
   font-size: 1.9rem
   font-weight: 400
+
 
 
 p

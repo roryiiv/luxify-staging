@@ -4,7 +4,7 @@
 //en_us - frontend - footer
 //for file: index.blade.php
 return [
-    'index_banner_up'                      => 'Luxury Within Reach',
+    'index_banner_up'                      => 'Luxury within reach',
     'index_banner_down'                    => "Asia's leading marketplace for luxury",
     'index_banner_realestates'             => 'Real Estates',
     'index_banner_watches&jewelry'         => 'Watches & Jewelry',

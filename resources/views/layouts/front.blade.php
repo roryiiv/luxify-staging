@@ -31,12 +31,7 @@
     <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png?v=2">
     <meta name="theme-color" content="#ffffff">
     <!-- link to google font -->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,700,100,400italic|Montserrat' rel='stylesheet' type='text/css'>
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css?family=Assistant:200|Martel+Sans:200|Raleway:200|Source+Sans+Pro:200|PT+Serif" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cormorant:300,400|Lato:100,300,400,700" rel="stylesheet">
     <!--
     <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">

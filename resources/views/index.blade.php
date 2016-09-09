@@ -36,7 +36,7 @@
         <div class="container">
             <div class="holder" id="search_holder">
                 <h1 class="title-font">@lang('static.index_banner_up')</h1>
-                <h2 class="title-font">@lang('static.index_banner_down')</h2>
+                <h2>@lang('static.index_banner_down')</h2>
             @include('inc.search')
             <!-- end of category search form -->
                 <!-- new grid -->
@@ -93,17 +93,17 @@
                     <div class="col-sm-10 col-sm-offset-1">
                         <ul class="count-list">
                             <li>
-                                <span class="count counter">{{ func::countMarketValue() }}</span>
+                                <span class="count counter title-font">{{ func::countMarketValue() }}</span>
                                 <span class="info">@lang('static.index_banner_total_market')</span>
                             </li>
                             <li>
                                 <?php $num_listings = number_format(func::countListings(), 0); ?>
-                                <span class="count counter">{{$num_listings}}</span>
+                                <span class="count counter title-font">{{$num_listings}}</span>
                                 <span class="info">@lang('static.index_banner_total_listing')</span>
                             </li>
                             <li>
                                 <?php $num_recents = number_format(func::countNewListings(), 0); ?>
-                                <span class="count counter">{{$num_recents}}</span>
+                                <span class="count counter title-font">{{$num_recents}}</span>
                                 <span class="info">@lang('static.index_banner_total_newlisting')</span>
                             </li>
                         </ul>
@@ -123,7 +123,7 @@
                                 <div class="text-box">
                                     <strong class="title">@lang('static.index_feature_title')</strong>
                                     <h1 class="title-font" style="font-weight: 300;">“@lang('static.index_feature_label')”</h1>
-                                    <p class="title-font">@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
+                                    <p>@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
                                     <a href="{{func::set_url('/listing/rees-rex-t-rex-skull')}}" class="btn btn-primary">@lang('static.index_feature_view')</a>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
                         <header class="heading">
-                            <h2 class="h1">@lang('static.index_desc1')</h2>
+                            <h2 class="h1 title-font">@lang('static.index_desc1')</h2>
                             <div class="wrap">
                                 <h5>@lang('static.index_desc2')</h5>
                             </div>
@@ -158,15 +158,15 @@
                         <div class="col-sm-5 col-sm-offset-1">
                             <ol class="service-list">
                                 <li>
-                                    <h3>@lang('static.index_desc3')</h3>
+                                    <h3 class="title-font">@lang('static.index_desc3')</h3>
                                     <p>@lang('static.index_desc4')</p>
                                 </li>
                                 <li>
-                                    <h3>@lang('static.index_desc5')</h3>
+                                    <h3 class="title-font">@lang('static.index_desc5')</h3>
                                     <p>@lang('static.index_desc6')</p>
                                 </li>
                                 <li>
-                                    <h3>@lang('static.index_desc7')</h3>
+                                    <h3 class="title-font">@lang('static.index_desc7')</h3>
                                     <p>@lang('static.index_desc8')</p>
                                 </li>
                             </ol>
@@ -185,8 +185,8 @@
                         <div class="row">
                             <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
-                                    <h1 class="title-font">@lang('static.index_search1')</h1>
-                                    <p class="title-font">@lang('static.index_search2')</p>
+                                    <h1 class="title-font" style="line-height:4.0rem;">@lang('static.index_search1')</h1>
+                                    <p >@lang('static.index_search2')</p>
                                     <a href="{{func::set_url('/category/handbags-accessories')}}" class="btn btn-primary">@lang('static.index_search3')</a>
                                 </div>
                             </div>
@@ -204,8 +204,8 @@
                             <div class="col-sm-5 col-sm-offset-1 pull-right">
                                 <div class="text-hold">
                                     <strong class="title">@lang('static.index_discover1')</strong>
-                                    <h1>@lang('static.index_discover2')</h1>
-                                    <p>@lang('static.index_discover3')</p>
+                                    <h1 class="title-font">@lang('static.index_discover2')</h1>
+                                    <p >@lang('static.index_discover3')</p>
                                     <a href="{{func::set_url('/why-luxify')}}" class="btn btn-primary">@lang('static.index_discover4')</a>
                                 </div>
                             </div>
@@ -223,7 +223,7 @@
         <div class="imageinfo-block parallax" style="background-image:url({{func::img_url('realestate.jpg')}})">
             <div class="container" style="z-index: 4;">
                 <div class="info-wrap heading">
-                    <h2 class="h1">@lang('static.index_3D_1')</h2>
+                    <h2 class="h1 title-font">@lang('static.index_3D_1')</h2>
                     <div class="wrap">
                         <h5>@lang('static.index_3D_2')</h5>
                     </div>
@@ -238,9 +238,9 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="heading">
-                            <h2>@lang('static.index_subscribe_1')</h2>
+                            <h2 class=" title-font">@lang('static.index_subscribe_1')</h2>
                             <div class="wrap text-center">
-                                <h5>@lang('static.index_subscribe_2')</h5>
+                                <h5 >@lang('static.index_subscribe_2')</h5>
                             </div>
                         </div>
                     </div>
