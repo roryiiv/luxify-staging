@@ -35,9 +35,8 @@
         <!-- end of banner slideshow -->
         <div class="container">
             <div class="holder" id="search_holder">
-                <h1>@lang('static.index_banner_up')</h1>
-                <h2>@lang('static.index_banner_down')</h2>
-                <!-- category search form -->
+                <h1 class="title-font">@lang('static.index_banner_up')</h1>
+                <h2 class="title-font">@lang('static.index_banner_down')</h2>
             @include('inc.search')
             <!-- end of category search form -->
                 <!-- new grid -->
@@ -123,8 +122,8 @@
                             <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
                                     <strong class="title">@lang('static.index_feature_title')</strong>
-                                    <h1 style="font-weight: 300;">“@lang('static.index_feature_label')”</h1>
-                                    <p>@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
+                                    <h1 class="title-font" style="font-weight: 300;">“@lang('static.index_feature_label')”</h1>
+                                    <p class="title-font">@lang('static.index_feature_description')<br>@lang('static.index_feature_description_sale')</p>
                                     <a href="{{func::set_url('/listing/rees-rex-t-rex-skull')}}" class="btn btn-primary">@lang('static.index_feature_view')</a>
                                 </div>
                             </div>
@@ -186,8 +185,8 @@
                         <div class="row">
                             <div class="col-sm-6 col-xs-12">
                                 <div class="text-box">
-                                    <h1>@lang('static.index_search1')</h1>
-                                    <p>@lang('static.index_search2')</p>
+                                    <h1 class="title-font">@lang('static.index_search1')</h1>
+                                    <p class="title-font">@lang('static.index_search2')</p>
                                     <a href="{{func::set_url('/category/handbags-accessories')}}" class="btn btn-primary">@lang('static.index_search3')</a>
                                 </div>
                             </div>

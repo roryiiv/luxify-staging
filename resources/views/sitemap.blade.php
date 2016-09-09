@@ -68,7 +68,7 @@ if(!empty($getPostName)){
                         <div class="row">
                             <div class="col-lg-12 ">
                                 <h1>{{$mainTitle}}</h1>
-                                <div class="headerDescription">{{$mainDes}}</div>
+                                <div class="headerDescription">{!!$mainDes!!}</div>
                             </div>
                         </div>
                     </div>
