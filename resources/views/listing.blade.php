@@ -234,9 +234,10 @@
 		    <ol class="breadcrumb">
 			<li><a href="/">Home</a></li>
 			@if($category && $category != '')
-			    <li><a  {{schema::itemProp('category')}} {{schema::itemType("Text")}} href="/category/{{ $category['slug'] }}">{{ $category['title'] }}</a></li>
+			    <li><a  {{schema::itemProp('category')}} {{schema::itemType("Text")}} href="/category/{{ $category['parent-slug'] }}">{{ $category['parent-name'] }}</a></li>
+			    <li style="display: none;"><a  {{schema::itemProp('category')}} {{schema::itemType("Text")}} href="/category/{{ $category['parent-slug'] }}/{{$category['slug']}}">{{ $category['name'] }}</a></li>
 			@endif
-			<li class="active">{{ $cat && !empty($cat) ? $cat->title : $listing->title }}</li>
+			<li class="active" style="display: none;">{{ $cat && !empty($cat) ? $cat->title : $listing->title }}</li>
 		    </ol>
 		    <header class="block-header">
 			<h1 {{schema::itemProp('name')}} {{ schema::itemType('Text') }} class="item-title title-font">{{ $listing->title }}</h1>
